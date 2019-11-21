@@ -33,7 +33,11 @@ try:
     from ._models_py3 import FileServiceItems
     from ._models_py3 import FileServiceProperties
     from ._models_py3 import FileShare
+    from ._models_py3 import FileShareCreateParameters
     from ._models_py3 import FileShareItem
+    from ._models_py3 import FileSharePropertiesCreateParameters
+    from ._models_py3 import FileSharePropertiesUpdateParameters
+    from ._models_py3 import FileShareUpdateParameters
     from ._models_py3 import GeoReplicationStats
     from ._models_py3 import Identity
     from ._models_py3 import ImmutabilityPolicy
@@ -67,15 +71,19 @@ try:
     from ._models_py3 import ProxyResource
     from ._models_py3 import Resource
     from ._models_py3 import Restriction
+    from ._models_py3 import RoutingPreference
     from ._models_py3 import ServiceSasParameters
     from ._models_py3 import ServiceSpecification
     from ._models_py3 import Sku
     from ._models_py3 import SKUCapability
+    from ._models_py3 import SkuInformation
     from ._models_py3 import StorageAccount
     from ._models_py3 import StorageAccountCheckNameAvailabilityParameters
     from ._models_py3 import StorageAccountCreateParameters
+    from ._models_py3 import StorageAccountInternetEndpoints
     from ._models_py3 import StorageAccountKey
     from ._models_py3 import StorageAccountListKeysResult
+    from ._models_py3 import StorageAccountMicrosoftEndpoints
     from ._models_py3 import StorageAccountRegenerateKeyParameters
     from ._models_py3 import StorageAccountUpdateParameters
     from ._models_py3 import TagProperty
@@ -108,7 +116,11 @@ except (SyntaxError, ImportError):
     from ._models import FileServiceItems
     from ._models import FileServiceProperties
     from ._models import FileShare
+    from ._models import FileShareCreateParameters
     from ._models import FileShareItem
+    from ._models import FileSharePropertiesCreateParameters
+    from ._models import FileSharePropertiesUpdateParameters
+    from ._models import FileShareUpdateParameters
     from ._models import GeoReplicationStats
     from ._models import Identity
     from ._models import ImmutabilityPolicy
@@ -142,15 +154,19 @@ except (SyntaxError, ImportError):
     from ._models import ProxyResource
     from ._models import Resource
     from ._models import Restriction
+    from ._models import RoutingPreference
     from ._models import ServiceSasParameters
     from ._models import ServiceSpecification
     from ._models import Sku
     from ._models import SKUCapability
+    from ._models import SkuInformation
     from ._models import StorageAccount
     from ._models import StorageAccountCheckNameAvailabilityParameters
     from ._models import StorageAccountCreateParameters
+    from ._models import StorageAccountInternetEndpoints
     from ._models import StorageAccountKey
     from ._models import StorageAccountListKeysResult
+    from ._models import StorageAccountMicrosoftEndpoints
     from ._models import StorageAccountRegenerateKeyParameters
     from ._models import StorageAccountUpdateParameters
     from ._models import TagProperty
@@ -163,7 +179,7 @@ from ._paged_models import BlobServicePropertiesPaged
 from ._paged_models import FileShareItemPaged
 from ._paged_models import ListContainerItemPaged
 from ._paged_models import OperationPaged
-from ._paged_models import SkuPaged
+from ._paged_models import SkuInformationPaged
 from ._paged_models import StorageAccountPaged
 from ._paged_models import UsagePaged
 from ._storage_management_client_enums import (
@@ -180,6 +196,7 @@ from ._storage_management_client_enums import (
     DirectoryServiceOptions,
     AccessTier,
     LargeFileSharesState,
+    RoutingChoice,
     GeoReplicationStatus,
     ProvisioningState,
     AccountStatus,
@@ -198,6 +215,8 @@ from ._storage_management_client_enums import (
     LeaseDuration,
     ImmutabilityPolicyState,
     ImmutabilityPolicyUpdateType,
+    EnabledProtocols,
+    RootSquash,
     StorageAccountExpand,
     ListKeyExpand,
 )
@@ -226,7 +245,11 @@ __all__ = [
     'FileServiceItems',
     'FileServiceProperties',
     'FileShare',
+    'FileShareCreateParameters',
     'FileShareItem',
+    'FileSharePropertiesCreateParameters',
+    'FileSharePropertiesUpdateParameters',
+    'FileShareUpdateParameters',
     'GeoReplicationStats',
     'Identity',
     'ImmutabilityPolicy',
@@ -260,15 +283,19 @@ __all__ = [
     'ProxyResource',
     'Resource',
     'Restriction',
+    'RoutingPreference',
     'ServiceSasParameters',
     'ServiceSpecification',
     'Sku',
     'SKUCapability',
+    'SkuInformation',
     'StorageAccount',
     'StorageAccountCheckNameAvailabilityParameters',
     'StorageAccountCreateParameters',
+    'StorageAccountInternetEndpoints',
     'StorageAccountKey',
     'StorageAccountListKeysResult',
+    'StorageAccountMicrosoftEndpoints',
     'StorageAccountRegenerateKeyParameters',
     'StorageAccountUpdateParameters',
     'TagProperty',
@@ -278,7 +305,7 @@ __all__ = [
     'UsageName',
     'VirtualNetworkRule',
     'OperationPaged',
-    'SkuPaged',
+    'SkuInformationPaged',
     'StorageAccountPaged',
     'UsagePaged',
     'BlobServicePropertiesPaged',
@@ -297,6 +324,7 @@ __all__ = [
     'DirectoryServiceOptions',
     'AccessTier',
     'LargeFileSharesState',
+    'RoutingChoice',
     'GeoReplicationStatus',
     'ProvisioningState',
     'AccountStatus',
@@ -315,6 +343,8 @@ __all__ = [
     'LeaseDuration',
     'ImmutabilityPolicyState',
     'ImmutabilityPolicyUpdateType',
+    'EnabledProtocols',
+    'RootSquash',
     'StorageAccountExpand',
     'ListKeyExpand',
 ]

@@ -125,7 +125,7 @@ class FileSharesOperations(object):
     list.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/fileServices/default/shares'}
 
     def create(
-            self, resource_group_name, account_name, share_name, metadata=None, share_quota=None, custom_headers=None, raw=False, **operation_config):
+            self, resource_group_name, account_name, share_name, properties=None, custom_headers=None, raw=False, **operation_config):
         """Creates a new share under the specified account as described by request
         body. The share resource includes metadata and properties for that
         share. It does not include a list of the files contained by the share.
@@ -144,12 +144,10 @@ class FileSharesOperations(object):
          dash (-) character must be immediately preceded and followed by a
          letter or number.
         :type share_name: str
-        :param metadata: A name-value pair to associate with the share as
-         metadata.
-        :type metadata: dict[str, str]
-        :param share_quota: The maximum size of the share, in gigabytes. Must
-         be greater than 0, and less than or equal to 5TB (5120).
-        :type share_quota: int
+        :param properties: Properties of the file share to create the file
+         share.
+        :type properties:
+         ~azure.mgmt.storage.v2019_06_01.models.FileSharePropertiesCreateParameters
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
@@ -160,7 +158,7 @@ class FileSharesOperations(object):
          ~msrest.pipeline.ClientRawResponse
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
-        file_share = models.FileShare(metadata=metadata, share_quota=share_quota)
+        file_share = models.FileShareCreateParameters(properties=properties)
 
         # Construct URL
         url = self.create.metadata['url']
@@ -188,7 +186,7 @@ class FileSharesOperations(object):
             header_parameters['accept-language'] = self._serialize.header("self.config.accept_language", self.config.accept_language, 'str')
 
         # Construct body
-        body_content = self._serialize.body(file_share, 'FileShare')
+        body_content = self._serialize.body(file_share, 'FileShareCreateParameters')
 
         # Construct and send request
         request = self._client.put(url, query_parameters, header_parameters, body_content)
@@ -213,7 +211,7 @@ class FileSharesOperations(object):
     create.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/fileServices/default/shares/{shareName}'}
 
     def update(
-            self, resource_group_name, account_name, share_name, metadata=None, share_quota=None, custom_headers=None, raw=False, **operation_config):
+            self, resource_group_name, account_name, share_name, properties=None, custom_headers=None, raw=False, **operation_config):
         """Updates share properties as specified in request body. Properties not
         mentioned in the request will not be changed. Update fails if the
         specified share does not already exist. .
@@ -231,12 +229,10 @@ class FileSharesOperations(object):
          dash (-) character must be immediately preceded and followed by a
          letter or number.
         :type share_name: str
-        :param metadata: A name-value pair to associate with the share as
-         metadata.
-        :type metadata: dict[str, str]
-        :param share_quota: The maximum size of the share, in gigabytes. Must
-         be greater than 0, and less than or equal to 5TB (5120).
-        :type share_quota: int
+        :param properties: Properties of the file share to update the file
+         share.
+        :type properties:
+         ~azure.mgmt.storage.v2019_06_01.models.FileSharePropertiesUpdateParameters
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
@@ -247,7 +243,7 @@ class FileSharesOperations(object):
          ~msrest.pipeline.ClientRawResponse
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
-        file_share = models.FileShare(metadata=metadata, share_quota=share_quota)
+        file_share = models.FileShareUpdateParameters(properties=properties)
 
         # Construct URL
         url = self.update.metadata['url']
@@ -275,7 +271,7 @@ class FileSharesOperations(object):
             header_parameters['accept-language'] = self._serialize.header("self.config.accept_language", self.config.accept_language, 'str')
 
         # Construct body
-        body_content = self._serialize.body(file_share, 'FileShare')
+        body_content = self._serialize.body(file_share, 'FileShareUpdateParameters')
 
         # Construct and send request
         request = self._client.patch(url, query_parameters, header_parameters, body_content)

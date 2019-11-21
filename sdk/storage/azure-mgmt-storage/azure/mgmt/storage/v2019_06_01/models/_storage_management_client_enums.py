@@ -104,6 +104,12 @@ class LargeFileSharesState(str, Enum):
     enabled = "Enabled"
 
 
+class RoutingChoice(str, Enum):
+
+    microsoft_routing = "MicrosoftRouting"
+    internet_routing = "InternetRouting"
+
+
 class GeoReplicationStatus(str, Enum):
 
     live = "Live"
@@ -235,6 +241,19 @@ class ImmutabilityPolicyUpdateType(str, Enum):
     put = "put"
     lock = "lock"
     extend = "extend"
+
+
+class EnabledProtocols(str, Enum):
+
+    smb = "SMB"
+    nfs = "NFS"
+
+
+class RootSquash(str, Enum):
+
+    no_root_squash = "NoRootSquash"
+    root_squash = "RootSquash"
+    all_squash = "AllSquash"
 
 
 class StorageAccountExpand(str, Enum):
