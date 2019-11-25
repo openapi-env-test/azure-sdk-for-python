@@ -270,7 +270,8 @@ class VirtualMachinesOperations(object):
 
     def create_or_update(
             self, resource_group_name, vm_name, parameters, custom_headers=None, raw=False, polling=True, **operation_config):
-        """The operation to create or update a virtual machine.
+        """The operation to create or update a virtual machine. Some properties
+        can be set only during provisioning the virtual machine.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
@@ -797,7 +798,9 @@ class VirtualMachinesOperations(object):
 
     def generalize(
             self, resource_group_name, vm_name, custom_headers=None, raw=False, **operation_config):
-        """Sets the state of the virtual machine to generalized.
+        """Sets the OS state of the virtual machine to generalized. It is
+        recommended to sysprep the virtual machine before performing this
+        operation.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
