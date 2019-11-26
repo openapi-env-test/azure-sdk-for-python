@@ -11,13 +11,12 @@
 
 import uuid
 from msrest.pipeline import ClientRawResponse
-from msrestazure.azure_exceptions import CloudError
 
 from .. import models
 
 
-class SubscriptionOperationOperations(object):
-    """SubscriptionOperationOperations operations.
+class SupportPlanDefaultOperations(object):
+    """SupportPlanDefaultOperations operations.
 
     You should not instantiate directly this class, but create a Client instance that will create it for you and attach it as attribute.
 
@@ -25,7 +24,7 @@ class SubscriptionOperationOperations(object):
     :param config: Configuration of service client.
     :param serializer: An object model serializer.
     :param deserializer: An object model deserializer.
-    :ivar api_version: Version of the API to be used with the client request. Current version is 2018-11-01-preview. Constant value: "2018-11-01-preview".
+    :ivar api_version: Version of the API to be used with the client request. Current version is 2019-10-01-preview. Constant value: "2019-10-01-preview".
     """
 
     models = models
@@ -35,31 +34,33 @@ class SubscriptionOperationOperations(object):
         self._client = client
         self._serialize = serializer
         self._deserialize = deserializer
-        self.api_version = "2018-11-01-preview"
+        self.api_version = "2019-10-01-preview"
 
         self.config = config
 
     def get(
-            self, operation_id, custom_headers=None, raw=False, **operation_config):
-        """Get the status of the pending Microsoft.Subscription API operations.
+            self, subscription_id, custom_headers=None, raw=False, **operation_config):
+        """The operation to find out the support plan.
 
-        :param operation_id: The operation ID, which can be found from the
-         Location field in the generate recommendation response header.
-        :type operation_id: str
+        :param subscription_id: Subscription Id.
+        :type subscription_id: str
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :return: SubscriptionCreationResult or ClientRawResponse if raw=true
-        :rtype: ~azure.mgmt.subscription.models.SubscriptionCreationResult or
+        :return: DefaultSupportPlanResponseResult or ClientRawResponse if
+         raw=true
+        :rtype:
+         ~azure.mgmt.subscription.models.DefaultSupportPlanResponseResult or
          ~msrest.pipeline.ClientRawResponse
-        :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
+        :raises:
+         :class:`ErrorResponseException<azure.mgmt.subscription.models.ErrorResponseException>`
         """
         # Construct URL
         url = self.get.metadata['url']
         path_format_arguments = {
-            'operationId': self._serialize.url("operation_id", operation_id, 'str')
+            'subscriptionId': self._serialize.url("subscription_id", subscription_id, 'str')
         }
         url = self._client.format_url(url, **path_format_arguments)
 
@@ -81,24 +82,16 @@ class SubscriptionOperationOperations(object):
         request = self._client.get(url, query_parameters, header_parameters)
         response = self._client.send(request, stream=False, **operation_config)
 
-        if response.status_code not in [200, 202]:
-            exp = CloudError(response)
-            exp.request_id = response.headers.get('x-ms-request-id')
-            raise exp
+        if response.status_code not in [200]:
+            raise models.ErrorResponseException(self._deserialize, response)
 
-        header_dict = {}
         deserialized = None
         if response.status_code == 200:
-            deserialized = self._deserialize('SubscriptionCreationResult', response)
-            header_dict = {
-                'Location': 'str',
-                'Retry-After': 'int',
-            }
+            deserialized = self._deserialize('DefaultSupportPlanResponseResult', response)
 
         if raw:
             client_raw_response = ClientRawResponse(deserialized, response)
-            client_raw_response.add_headers(header_dict)
             return client_raw_response
 
         return deserialized
-    get.metadata = {'url': '/providers/Microsoft.Subscription/subscriptionOperations/{operationId}'}
+    get.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Subscription/SupportPlan/default'}

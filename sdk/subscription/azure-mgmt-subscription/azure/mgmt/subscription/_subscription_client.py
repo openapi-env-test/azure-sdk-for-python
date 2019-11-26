@@ -13,33 +13,27 @@ from msrest.service_client import SDKClient
 from msrest import Serializer, Deserializer
 
 from ._configuration import SubscriptionClientConfiguration
-from .operations import SubscriptionsOperations
-from .operations import SubscriptionOperationOperations
-from .operations import SubscriptionFactoryOperations
-from .operations import SubscriptionOperations
-from .operations import Operations
-from .operations import TenantsOperations
+from .operations import GetOperationStatusOperations
+from .operations import SupportPlanOperations
+from .operations import SupportPlanDefaultOperations
+from .operations import PurchaseSupportPlanOperations
 from . import models
 
 
 class SubscriptionClient(SDKClient):
-    """The subscription client
+    """Subscription client provides an interface to create and manage Azure subscriptions programmatically.
 
     :ivar config: Configuration for client.
     :vartype config: SubscriptionClientConfiguration
 
-    :ivar subscriptions: Subscriptions operations
-    :vartype subscriptions: azure.mgmt.subscription.operations.SubscriptionsOperations
-    :ivar subscription_operation: SubscriptionOperation operations
-    :vartype subscription_operation: azure.mgmt.subscription.operations.SubscriptionOperationOperations
-    :ivar subscription_factory: SubscriptionFactory operations
-    :vartype subscription_factory: azure.mgmt.subscription.operations.SubscriptionFactoryOperations
-    :ivar subscription_operations: SubscriptionOperations operations
-    :vartype subscription_operations: azure.mgmt.subscription.operations.SubscriptionOperations
-    :ivar operations: Operations operations
-    :vartype operations: azure.mgmt.subscription.operations.Operations
-    :ivar tenants: Tenants operations
-    :vartype tenants: azure.mgmt.subscription.operations.TenantsOperations
+    :ivar get_operation_status: GetOperationStatus operations
+    :vartype get_operation_status: azure.mgmt.subscription.operations.GetOperationStatusOperations
+    :ivar support_plan: SupportPlan operations
+    :vartype support_plan: azure.mgmt.subscription.operations.SupportPlanOperations
+    :ivar support_plan_default: SupportPlanDefault operations
+    :vartype support_plan_default: azure.mgmt.subscription.operations.SupportPlanDefaultOperations
+    :ivar purchase_support_plan: PurchaseSupportPlan operations
+    :vartype purchase_support_plan: azure.mgmt.subscription.operations.PurchaseSupportPlanOperations
 
     :param credentials: Credentials needed for the client to connect to Azure.
     :type credentials: :mod:`A msrestazure Credentials
@@ -54,18 +48,15 @@ class SubscriptionClient(SDKClient):
         super(SubscriptionClient, self).__init__(self.config.credentials, self.config)
 
         client_models = {k: v for k, v in models.__dict__.items() if isinstance(v, type)}
+        self.api_version = '2019-10-01-preview'
         self._serialize = Serializer(client_models)
         self._deserialize = Deserializer(client_models)
 
-        self.subscriptions = SubscriptionsOperations(
+        self.get_operation_status = GetOperationStatusOperations(
             self._client, self.config, self._serialize, self._deserialize)
-        self.subscription_operation = SubscriptionOperationOperations(
+        self.support_plan = SupportPlanOperations(
             self._client, self.config, self._serialize, self._deserialize)
-        self.subscription_factory = SubscriptionFactoryOperations(
+        self.support_plan_default = SupportPlanDefaultOperations(
             self._client, self.config, self._serialize, self._deserialize)
-        self.subscription_operations = SubscriptionOperations(
-            self._client, self.config, self._serialize, self._deserialize)
-        self.operations = Operations(
-            self._client, self.config, self._serialize, self._deserialize)
-        self.tenants = TenantsOperations(
+        self.purchase_support_plan = PurchaseSupportPlanOperations(
             self._client, self.config, self._serialize, self._deserialize)

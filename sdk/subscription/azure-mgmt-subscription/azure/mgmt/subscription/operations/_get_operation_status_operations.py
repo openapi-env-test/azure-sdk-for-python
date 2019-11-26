@@ -15,8 +15,8 @@ from msrest.pipeline import ClientRawResponse
 from .. import models
 
 
-class SubscriptionOperations(object):
-    """SubscriptionOperations operations.
+class GetOperationStatusOperations(object):
+    """GetOperationStatusOperations operations.
 
     You should not instantiate directly this class, but create a Client instance that will create it for you and attach it as attribute.
 
@@ -24,7 +24,7 @@ class SubscriptionOperations(object):
     :param config: Configuration of service client.
     :param serializer: An object model serializer.
     :param deserializer: An object model deserializer.
-    :ivar api_version: Version of the API to be used with the client request. Current version is 2015-06-01. Constant value: "2018-03-01-preview".
+    :ivar api_version: Version of the API to be used with the client request. Current version is 2019-10-01-preview. Constant value: "2019-10-01-preview".
     """
 
     models = models
@@ -34,30 +34,37 @@ class SubscriptionOperations(object):
         self._client = client
         self._serialize = serializer
         self._deserialize = deserializer
-        self.api_version = "2018-03-01-preview"
+        self.api_version = "2019-10-01-preview"
 
         self.config = config
 
-    def list(
-            self, custom_headers=None, raw=False, **operation_config):
-        """Lists all of the available pending Microsoft.Subscription API
-        operations.
+    def get(
+            self, subscription_id, id, custom_headers=None, raw=False, **operation_config):
+        """The operation to find out the purchase Operation status.
 
+        :param subscription_id: Subscription Id.
+        :type subscription_id: str
+        :param id: Id.
+        :type id: str
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :return: SubscriptionOperationListResult or ClientRawResponse if
+        :return: OperationStatusResponseResult or ClientRawResponse if
          raw=true
-        :rtype:
-         ~azure.mgmt.subscription.models.SubscriptionOperationListResult or
-         ~msrest.pipeline.ClientRawResponse
+        :rtype: ~azure.mgmt.subscription.models.OperationStatusResponseResult
+         or ~msrest.pipeline.ClientRawResponse
         :raises:
          :class:`ErrorResponseException<azure.mgmt.subscription.models.ErrorResponseException>`
         """
         # Construct URL
-        url = self.list.metadata['url']
+        url = self.get.metadata['url']
+        path_format_arguments = {
+            'subscriptionId': self._serialize.url("subscription_id", subscription_id, 'str'),
+            'Id': self._serialize.url("id", id, 'str')
+        }
+        url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}
@@ -77,16 +84,22 @@ class SubscriptionOperations(object):
         request = self._client.get(url, query_parameters, header_parameters)
         response = self._client.send(request, stream=False, **operation_config)
 
-        if response.status_code not in [200]:
+        if response.status_code not in [200, 202]:
             raise models.ErrorResponseException(self._deserialize, response)
 
+        header_dict = {}
         deserialized = None
         if response.status_code == 200:
-            deserialized = self._deserialize('SubscriptionOperationListResult', response)
+            deserialized = self._deserialize('OperationStatusResponseResult', response)
+            header_dict = {
+                'Location': 'str',
+                'Retry-After': 'str',
+            }
 
         if raw:
             client_raw_response = ClientRawResponse(deserialized, response)
+            client_raw_response.add_headers(header_dict)
             return client_raw_response
 
         return deserialized
-    list.metadata = {'url': '/providers/Microsoft.Subscription/subscriptionOperations'}
+    get.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Subscription/OperationStatus/{Id}'}
