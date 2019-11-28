@@ -750,7 +750,7 @@ class DatabaseBlobAuditingPolicy(ProxyResource):
     :type state: str or ~azure.mgmt.sql.models.BlobAuditingPolicyState
     :param storage_endpoint: Specifies the blob storage endpoint (e.g.
      https://MyAccount.blob.core.windows.net). If state is Enabled,
-     storageEndpoint is required.
+     storageEndpoint or isAzureMonitorTargetEnabled is required.
     :type storage_endpoint: str
     :param storage_account_access_key: Specifies the identifier key of the
      auditing storage account. If state is Enabled and storageEndpoint is
@@ -843,6 +843,11 @@ class DatabaseBlobAuditingPolicy(ProxyResource):
      or [Diagnostic Settings
      PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043)
     :type is_azure_monitor_target_enabled: bool
+    :param queue_delay_ms: Specifies the amount of time in milliseconds that
+     can elapse before audit actions are forced to be processed.
+     The default minimum value is 1000 (1 second). The maximum is
+     2,147,483,647.
+    :type queue_delay_ms: int
     """
 
     _validation = {
@@ -866,6 +871,7 @@ class DatabaseBlobAuditingPolicy(ProxyResource):
         'storage_account_subscription_id': {'key': 'properties.storageAccountSubscriptionId', 'type': 'str'},
         'is_storage_secondary_key_in_use': {'key': 'properties.isStorageSecondaryKeyInUse', 'type': 'bool'},
         'is_azure_monitor_target_enabled': {'key': 'properties.isAzureMonitorTargetEnabled', 'type': 'bool'},
+        'queue_delay_ms': {'key': 'properties.queueDelayMs', 'type': 'int'},
     }
 
     def __init__(self, **kwargs):
@@ -879,6 +885,7 @@ class DatabaseBlobAuditingPolicy(ProxyResource):
         self.storage_account_subscription_id = kwargs.get('storage_account_subscription_id', None)
         self.is_storage_secondary_key_in_use = kwargs.get('is_storage_secondary_key_in_use', None)
         self.is_azure_monitor_target_enabled = kwargs.get('is_azure_monitor_target_enabled', None)
+        self.queue_delay_ms = kwargs.get('queue_delay_ms', None)
 
 
 class DatabaseOperation(ProxyResource):
@@ -2594,7 +2601,7 @@ class ExtendedDatabaseBlobAuditingPolicy(ProxyResource):
     :type state: str or ~azure.mgmt.sql.models.BlobAuditingPolicyState
     :param storage_endpoint: Specifies the blob storage endpoint (e.g.
      https://MyAccount.blob.core.windows.net). If state is Enabled,
-     storageEndpoint is required.
+     storageEndpoint or isAzureMonitorTargetEnabled is required.
     :type storage_endpoint: str
     :param storage_account_access_key: Specifies the identifier key of the
      auditing storage account. If state is Enabled and storageEndpoint is
@@ -2687,6 +2694,11 @@ class ExtendedDatabaseBlobAuditingPolicy(ProxyResource):
      or [Diagnostic Settings
      PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043)
     :type is_azure_monitor_target_enabled: bool
+    :param queue_delay_ms: Specifies the amount of time in milliseconds that
+     can elapse before audit actions are forced to be processed.
+     The default minimum value is 1000 (1 second). The maximum is
+     2,147,483,647.
+    :type queue_delay_ms: int
     """
 
     _validation = {
@@ -2709,6 +2721,7 @@ class ExtendedDatabaseBlobAuditingPolicy(ProxyResource):
         'storage_account_subscription_id': {'key': 'properties.storageAccountSubscriptionId', 'type': 'str'},
         'is_storage_secondary_key_in_use': {'key': 'properties.isStorageSecondaryKeyInUse', 'type': 'bool'},
         'is_azure_monitor_target_enabled': {'key': 'properties.isAzureMonitorTargetEnabled', 'type': 'bool'},
+        'queue_delay_ms': {'key': 'properties.queueDelayMs', 'type': 'int'},
     }
 
     def __init__(self, **kwargs):
@@ -2722,6 +2735,7 @@ class ExtendedDatabaseBlobAuditingPolicy(ProxyResource):
         self.storage_account_subscription_id = kwargs.get('storage_account_subscription_id', None)
         self.is_storage_secondary_key_in_use = kwargs.get('is_storage_secondary_key_in_use', None)
         self.is_azure_monitor_target_enabled = kwargs.get('is_azure_monitor_target_enabled', None)
+        self.queue_delay_ms = kwargs.get('queue_delay_ms', None)
 
 
 class ExtendedServerBlobAuditingPolicy(ProxyResource):
@@ -2747,7 +2761,7 @@ class ExtendedServerBlobAuditingPolicy(ProxyResource):
     :type state: str or ~azure.mgmt.sql.models.BlobAuditingPolicyState
     :param storage_endpoint: Specifies the blob storage endpoint (e.g.
      https://MyAccount.blob.core.windows.net). If state is Enabled,
-     storageEndpoint is required.
+     storageEndpoint or isAzureMonitorTargetEnabled is required.
     :type storage_endpoint: str
     :param storage_account_access_key: Specifies the identifier key of the
      auditing storage account. If state is Enabled and storageEndpoint is
@@ -2840,6 +2854,11 @@ class ExtendedServerBlobAuditingPolicy(ProxyResource):
      or [Diagnostic Settings
      PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043)
     :type is_azure_monitor_target_enabled: bool
+    :param queue_delay_ms: Specifies the amount of time in milliseconds that
+     can elapse before audit actions are forced to be processed.
+     The default minimum value is 1000 (1 second). The maximum is
+     2,147,483,647.
+    :type queue_delay_ms: int
     """
 
     _validation = {
@@ -2862,6 +2881,7 @@ class ExtendedServerBlobAuditingPolicy(ProxyResource):
         'storage_account_subscription_id': {'key': 'properties.storageAccountSubscriptionId', 'type': 'str'},
         'is_storage_secondary_key_in_use': {'key': 'properties.isStorageSecondaryKeyInUse', 'type': 'bool'},
         'is_azure_monitor_target_enabled': {'key': 'properties.isAzureMonitorTargetEnabled', 'type': 'bool'},
+        'queue_delay_ms': {'key': 'properties.queueDelayMs', 'type': 'int'},
     }
 
     def __init__(self, **kwargs):
@@ -2875,6 +2895,7 @@ class ExtendedServerBlobAuditingPolicy(ProxyResource):
         self.storage_account_subscription_id = kwargs.get('storage_account_subscription_id', None)
         self.is_storage_secondary_key_in_use = kwargs.get('is_storage_secondary_key_in_use', None)
         self.is_azure_monitor_target_enabled = kwargs.get('is_azure_monitor_target_enabled', None)
+        self.queue_delay_ms = kwargs.get('queue_delay_ms', None)
 
 
 class FailoverGroup(ProxyResource):
@@ -7102,7 +7123,7 @@ class ServerAutomaticTuning(ProxyResource):
 
 
 class ServerAzureADAdministrator(ProxyResource):
-    """An server Active Directory Administrator.
+    """Azure Active Directory administrator.
 
     Variables are only populated by the server, and will be ignored when
     sending a request.
@@ -7115,15 +7136,14 @@ class ServerAzureADAdministrator(ProxyResource):
     :vartype name: str
     :ivar type: Resource type.
     :vartype type: str
-    :ivar administrator_type: Required. The type of administrator. Default
-     value: "ActiveDirectory" .
+    :ivar administrator_type: Required. Type of the sever administrator.
+     Default value: "ActiveDirectory" .
     :vartype administrator_type: str
-    :param login: Required. The server administrator login value.
+    :param login: Required. Login name of the server administrator.
     :type login: str
-    :param sid: Required. The server administrator Sid (Secure ID).
+    :param sid: Required. SID (object ID) of the server administrator.
     :type sid: str
-    :param tenant_id: Required. The server Active Directory Administrator
-     tenant id.
+    :param tenant_id: Tenant ID of the administrator.
     :type tenant_id: str
     """
 
@@ -7134,7 +7154,6 @@ class ServerAzureADAdministrator(ProxyResource):
         'administrator_type': {'required': True, 'constant': True},
         'login': {'required': True},
         'sid': {'required': True},
-        'tenant_id': {'required': True},
     }
 
     _attribute_map = {
@@ -7176,7 +7195,7 @@ class ServerBlobAuditingPolicy(ProxyResource):
     :type state: str or ~azure.mgmt.sql.models.BlobAuditingPolicyState
     :param storage_endpoint: Specifies the blob storage endpoint (e.g.
      https://MyAccount.blob.core.windows.net). If state is Enabled,
-     storageEndpoint is required.
+     storageEndpoint or isAzureMonitorTargetEnabled is required.
     :type storage_endpoint: str
     :param storage_account_access_key: Specifies the identifier key of the
      auditing storage account. If state is Enabled and storageEndpoint is
@@ -7269,6 +7288,11 @@ class ServerBlobAuditingPolicy(ProxyResource):
      or [Diagnostic Settings
      PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043)
     :type is_azure_monitor_target_enabled: bool
+    :param queue_delay_ms: Specifies the amount of time in milliseconds that
+     can elapse before audit actions are forced to be processed.
+     The default minimum value is 1000 (1 second). The maximum is
+     2,147,483,647.
+    :type queue_delay_ms: int
     """
 
     _validation = {
@@ -7290,6 +7314,7 @@ class ServerBlobAuditingPolicy(ProxyResource):
         'storage_account_subscription_id': {'key': 'properties.storageAccountSubscriptionId', 'type': 'str'},
         'is_storage_secondary_key_in_use': {'key': 'properties.isStorageSecondaryKeyInUse', 'type': 'bool'},
         'is_azure_monitor_target_enabled': {'key': 'properties.isAzureMonitorTargetEnabled', 'type': 'bool'},
+        'queue_delay_ms': {'key': 'properties.queueDelayMs', 'type': 'int'},
     }
 
     def __init__(self, **kwargs):
@@ -7302,6 +7327,7 @@ class ServerBlobAuditingPolicy(ProxyResource):
         self.storage_account_subscription_id = kwargs.get('storage_account_subscription_id', None)
         self.is_storage_secondary_key_in_use = kwargs.get('is_storage_secondary_key_in_use', None)
         self.is_azure_monitor_target_enabled = kwargs.get('is_azure_monitor_target_enabled', None)
+        self.queue_delay_ms = kwargs.get('queue_delay_ms', None)
 
 
 class ServerCommunicationLink(ProxyResource):
@@ -9219,3 +9245,124 @@ class VulnerabilityAssessmentScanRecord(ProxyResource):
         self.errors = None
         self.storage_container_path = None
         self.number_of_failed_security_checks = None
+
+
+class WorkloadClassifier(ProxyResource):
+    """Workload classifier operations for a data warehouse.
+
+    Variables are only populated by the server, and will be ignored when
+    sending a request.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :ivar id: Resource ID.
+    :vartype id: str
+    :ivar name: Resource name.
+    :vartype name: str
+    :ivar type: Resource type.
+    :vartype type: str
+    :param member_name: Required. The workload classifier member name.
+    :type member_name: str
+    :param label: The workload classifier label.
+    :type label: str
+    :param context: The workload classifier context.
+    :type context: str
+    :param start_time: The workload classifier start time for classification.
+    :type start_time: str
+    :param end_time: The workload classifier end time for classification.
+    :type end_time: str
+    :param importance: The workload classifier importance.
+    :type importance: str
+    """
+
+    _validation = {
+        'id': {'readonly': True},
+        'name': {'readonly': True},
+        'type': {'readonly': True},
+        'member_name': {'required': True},
+    }
+
+    _attribute_map = {
+        'id': {'key': 'id', 'type': 'str'},
+        'name': {'key': 'name', 'type': 'str'},
+        'type': {'key': 'type', 'type': 'str'},
+        'member_name': {'key': 'properties.memberName', 'type': 'str'},
+        'label': {'key': 'properties.label', 'type': 'str'},
+        'context': {'key': 'properties.context', 'type': 'str'},
+        'start_time': {'key': 'properties.startTime', 'type': 'str'},
+        'end_time': {'key': 'properties.endTime', 'type': 'str'},
+        'importance': {'key': 'properties.importance', 'type': 'str'},
+    }
+
+    def __init__(self, **kwargs):
+        super(WorkloadClassifier, self).__init__(**kwargs)
+        self.member_name = kwargs.get('member_name', None)
+        self.label = kwargs.get('label', None)
+        self.context = kwargs.get('context', None)
+        self.start_time = kwargs.get('start_time', None)
+        self.end_time = kwargs.get('end_time', None)
+        self.importance = kwargs.get('importance', None)
+
+
+class WorkloadGroup(ProxyResource):
+    """Workload group operations for a data warehouse.
+
+    Variables are only populated by the server, and will be ignored when
+    sending a request.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :ivar id: Resource ID.
+    :vartype id: str
+    :ivar name: Resource name.
+    :vartype name: str
+    :ivar type: Resource type.
+    :vartype type: str
+    :param min_resource_percent: Required. The workload group minimum
+     percentage resource.
+    :type min_resource_percent: int
+    :param max_resource_percent: Required. The workload group cap percentage
+     resource.
+    :type max_resource_percent: int
+    :param min_resource_percent_per_request: Required. The workload group
+     request minimum grant percentage.
+    :type min_resource_percent_per_request: float
+    :param max_resource_percent_per_request: The workload group request
+     maximum grant percentage.
+    :type max_resource_percent_per_request: float
+    :param importance: The workload group importance level.
+    :type importance: str
+    :param query_execution_timeout: The workload group query execution
+     timeout.
+    :type query_execution_timeout: int
+    """
+
+    _validation = {
+        'id': {'readonly': True},
+        'name': {'readonly': True},
+        'type': {'readonly': True},
+        'min_resource_percent': {'required': True},
+        'max_resource_percent': {'required': True},
+        'min_resource_percent_per_request': {'required': True},
+    }
+
+    _attribute_map = {
+        'id': {'key': 'id', 'type': 'str'},
+        'name': {'key': 'name', 'type': 'str'},
+        'type': {'key': 'type', 'type': 'str'},
+        'min_resource_percent': {'key': 'properties.minResourcePercent', 'type': 'int'},
+        'max_resource_percent': {'key': 'properties.maxResourcePercent', 'type': 'int'},
+        'min_resource_percent_per_request': {'key': 'properties.minResourcePercentPerRequest', 'type': 'float'},
+        'max_resource_percent_per_request': {'key': 'properties.maxResourcePercentPerRequest', 'type': 'float'},
+        'importance': {'key': 'properties.importance', 'type': 'str'},
+        'query_execution_timeout': {'key': 'properties.queryExecutionTimeout', 'type': 'int'},
+    }
+
+    def __init__(self, **kwargs):
+        super(WorkloadGroup, self).__init__(**kwargs)
+        self.min_resource_percent = kwargs.get('min_resource_percent', None)
+        self.max_resource_percent = kwargs.get('max_resource_percent', None)
+        self.min_resource_percent_per_request = kwargs.get('min_resource_percent_per_request', None)
+        self.max_resource_percent_per_request = kwargs.get('max_resource_percent_per_request', None)
+        self.importance = kwargs.get('importance', None)
+        self.query_execution_timeout = kwargs.get('query_execution_timeout', None)
