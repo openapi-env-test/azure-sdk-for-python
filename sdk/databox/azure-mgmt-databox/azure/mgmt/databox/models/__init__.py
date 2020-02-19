@@ -32,11 +32,11 @@ try:
     from ._models_py3 import DataBoxHeavyJobSecrets
     from ._models_py3 import DataBoxHeavySecret
     from ._models_py3 import DataBoxJobDetails
-    from ._models_py3 import DataboxJobSecrets
     from ._models_py3 import DataBoxScheduleAvailabilityRequest
     from ._models_py3 import DataBoxSecret
     from ._models_py3 import DataDestinationDetailsValidationRequest
     from ._models_py3 import DataDestinationDetailsValidationResponseProperties
+    from ._models_py3 import DataboxJobSecrets
     from ._models_py3 import DcAccessSecurityCode
     from ._models_py3 import DestinationAccountDetails
     from ._models_py3 import DestinationManagedDiskDetails
@@ -111,11 +111,11 @@ except (SyntaxError, ImportError):
     from ._models import DataBoxHeavyJobSecrets
     from ._models import DataBoxHeavySecret
     from ._models import DataBoxJobDetails
-    from ._models import DataboxJobSecrets
     from ._models import DataBoxScheduleAvailabilityRequest
     from ._models import DataBoxSecret
     from ._models import DataDestinationDetailsValidationRequest
     from ._models import DataDestinationDetailsValidationResponseProperties
+    from ._models import DataboxJobSecrets
     from ._models import DcAccessSecurityCode
     from ._models import DestinationAccountDetails
     from ._models import DestinationManagedDiskDetails
@@ -212,11 +212,11 @@ __all__ = [
     'DataBoxHeavyJobSecrets',
     'DataBoxHeavySecret',
     'DataBoxJobDetails',
-    'DataboxJobSecrets',
     'DataBoxScheduleAvailabilityRequest',
     'DataBoxSecret',
     'DataDestinationDetailsValidationRequest',
     'DataDestinationDetailsValidationResponseProperties',
+    'DataboxJobSecrets',
     'DcAccessSecurityCode',
     'DestinationAccountDetails',
     'DestinationManagedDiskDetails',
