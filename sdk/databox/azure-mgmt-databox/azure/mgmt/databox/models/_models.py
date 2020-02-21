@@ -1312,37 +1312,6 @@ class DataBoxJobDetails(JobDetails):
         self.job_details_type = 'DataBox'
 
 
-class DataboxJobSecrets(JobSecrets):
-    """The secrets related to a databox job.
-
-    All required parameters must be populated in order to send to Azure.
-
-    :param dc_access_security_code: Dc Access Security Code for Customer
-     Managed Shipping
-    :type dc_access_security_code:
-     ~azure.mgmt.databox.models.DcAccessSecurityCode
-    :param job_secrets_type: Required. Constant filled by server.
-    :type job_secrets_type: str
-    :param pod_secrets: Contains the list of secret objects for a job.
-    :type pod_secrets: list[~azure.mgmt.databox.models.DataBoxSecret]
-    """
-
-    _validation = {
-        'job_secrets_type': {'required': True},
-    }
-
-    _attribute_map = {
-        'dc_access_security_code': {'key': 'dcAccessSecurityCode', 'type': 'DcAccessSecurityCode'},
-        'job_secrets_type': {'key': 'jobSecretsType', 'type': 'str'},
-        'pod_secrets': {'key': 'podSecrets', 'type': '[DataBoxSecret]'},
-    }
-
-    def __init__(self, **kwargs):
-        super(DataboxJobSecrets, self).__init__(**kwargs)
-        self.pod_secrets = kwargs.get('pod_secrets', None)
-        self.job_secrets_type = 'DataBox'
-
-
 class ScheduleAvailabilityRequest(Model):
     """Request body to get the availability for scheduling orders.
 
@@ -1521,6 +1490,37 @@ class DataDestinationDetailsValidationResponseProperties(ValidationInputResponse
         super(DataDestinationDetailsValidationResponseProperties, self).__init__(**kwargs)
         self.status = None
         self.validation_type = 'ValidateDataDestinationDetails'
+
+
+class DataboxJobSecrets(JobSecrets):
+    """The secrets related to a databox job.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param dc_access_security_code: Dc Access Security Code for Customer
+     Managed Shipping
+    :type dc_access_security_code:
+     ~azure.mgmt.databox.models.DcAccessSecurityCode
+    :param job_secrets_type: Required. Constant filled by server.
+    :type job_secrets_type: str
+    :param pod_secrets: Contains the list of secret objects for a job.
+    :type pod_secrets: list[~azure.mgmt.databox.models.DataBoxSecret]
+    """
+
+    _validation = {
+        'job_secrets_type': {'required': True},
+    }
+
+    _attribute_map = {
+        'dc_access_security_code': {'key': 'dcAccessSecurityCode', 'type': 'DcAccessSecurityCode'},
+        'job_secrets_type': {'key': 'jobSecretsType', 'type': 'str'},
+        'pod_secrets': {'key': 'podSecrets', 'type': '[DataBoxSecret]'},
+    }
+
+    def __init__(self, **kwargs):
+        super(DataboxJobSecrets, self).__init__(**kwargs)
+        self.pod_secrets = kwargs.get('pod_secrets', None)
+        self.job_secrets_type = 'DataBox'
 
 
 class DcAccessSecurityCode(Model):
