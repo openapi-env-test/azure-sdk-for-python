@@ -82,6 +82,9 @@ class Cache(Model):
     :ivar mount_addresses: Array of IP addresses that can be used by clients
      mounting this Cache.
     :vartype mount_addresses: list[str]
+    :param mtu: The IPv4 maximum transmission unit configured for the subnet.
+     Default value: 1500 .
+    :type mtu: int
     :param provisioning_state: ARM provisioning state, see
      https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property.
      Possible values include: 'Succeeded', 'Failed', 'Cancelled', 'Creating',
@@ -102,6 +105,7 @@ class Cache(Model):
         'type': {'readonly': True},
         'health': {'readonly': True},
         'mount_addresses': {'readonly': True},
+        'mtu': {'maximum': 1500, 'minimum': 576},
     }
 
     _attribute_map = {
@@ -113,13 +117,14 @@ class Cache(Model):
         'cache_size_gb': {'key': 'properties.cacheSizeGB', 'type': 'int'},
         'health': {'key': 'properties.health', 'type': 'CacheHealth'},
         'mount_addresses': {'key': 'properties.mountAddresses', 'type': '[str]'},
+        'mtu': {'key': 'properties.mtu', 'type': 'int'},
         'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
         'subnet': {'key': 'properties.subnet', 'type': 'str'},
         'upgrade_status': {'key': 'properties.upgradeStatus', 'type': 'CacheUpgradeStatus'},
         'sku': {'key': 'sku', 'type': 'CacheSku'},
     }
 
-    def __init__(self, *, tags=None, location: str=None, cache_size_gb: int=None, provisioning_state=None, subnet: str=None, upgrade_status=None, sku=None, **kwargs) -> None:
+    def __init__(self, *, tags=None, location: str=None, cache_size_gb: int=None, mtu: int=1500, provisioning_state=None, subnet: str=None, upgrade_status=None, sku=None, **kwargs) -> None:
         super(Cache, self).__init__(**kwargs)
         self.tags = tags
         self.id = None
@@ -129,6 +134,7 @@ class Cache(Model):
         self.cache_size_gb = cache_size_gb
         self.health = None
         self.mount_addresses = None
+        self.mtu = mtu
         self.provisioning_state = provisioning_state
         self.subnet = subnet
         self.upgrade_status = upgrade_status
@@ -495,10 +501,6 @@ class StorageTarget(Model):
     :param junctions: List of Cache namespace junctions to target for
      namespace associations.
     :type junctions: list[~azure.mgmt.storagecache.models.NamespaceJunction]
-    :param target_type: Type of the Storage Target. Possible values include:
-     'nfs3', 'clfs', 'unknown'
-    :type target_type: str or
-     ~azure.mgmt.storagecache.models.StorageTargetType
     :param provisioning_state: ARM provisioning state, see
      https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property.
      Possible values include: 'Succeeded', 'Failed', 'Cancelled', 'Creating',
@@ -524,20 +526,18 @@ class StorageTarget(Model):
         'id': {'key': 'id', 'type': 'str'},
         'type': {'key': 'type', 'type': 'str'},
         'junctions': {'key': 'properties.junctions', 'type': '[NamespaceJunction]'},
-        'target_type': {'key': 'properties.targetType', 'type': 'str'},
         'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
         'nfs3': {'key': 'properties.nfs3', 'type': 'Nfs3Target'},
         'clfs': {'key': 'properties.clfs', 'type': 'ClfsTarget'},
         'unknown': {'key': 'properties.unknown', 'type': 'UnknownTarget'},
     }
 
-    def __init__(self, *, junctions=None, target_type=None, provisioning_state=None, nfs3=None, clfs=None, unknown=None, **kwargs) -> None:
+    def __init__(self, *, junctions=None, provisioning_state=None, nfs3=None, clfs=None, unknown=None, **kwargs) -> None:
         super(StorageTarget, self).__init__(**kwargs)
         self.name = None
         self.id = None
         self.type = None
         self.junctions = junctions
-        self.target_type = target_type
         self.provisioning_state = provisioning_state
         self.nfs3 = nfs3
         self.clfs = clfs

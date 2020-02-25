@@ -57,7 +57,6 @@ from ._storage_cache_management_client_enums import (
     ProvisioningStateType,
     FirmwareStatusType,
     ReasonCode,
-    StorageTargetType,
 )
 
 __all__ = [
@@ -88,5 +87,4 @@ __all__ = [
     'ProvisioningStateType',
     'FirmwareStatusType',
     'ReasonCode',
-    'StorageTargetType',
 ]

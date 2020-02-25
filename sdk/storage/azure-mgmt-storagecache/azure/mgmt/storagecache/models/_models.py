@@ -82,6 +82,9 @@ class Cache(Model):
     :ivar mount_addresses: Array of IP addresses that can be used by clients
      mounting this Cache.
     :vartype mount_addresses: list[str]
+    :param mtu: The IPv4 maximum transmission unit configured for the subnet.
+     Default value: 1500 .
+    :type mtu: int
     :param provisioning_state: ARM provisioning state, see
      https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property.
      Possible values include: 'Succeeded', 'Failed', 'Cancelled', 'Creating',
@@ -102,6 +105,7 @@ class Cache(Model):
         'type': {'readonly': True},
         'health': {'readonly': True},
         'mount_addresses': {'readonly': True},
+        'mtu': {'maximum': 1500, 'minimum': 576},
     }
 
     _attribute_map = {
@@ -113,6 +117,7 @@ class Cache(Model):
         'cache_size_gb': {'key': 'properties.cacheSizeGB', 'type': 'int'},
         'health': {'key': 'properties.health', 'type': 'CacheHealth'},
         'mount_addresses': {'key': 'properties.mountAddresses', 'type': '[str]'},
+        'mtu': {'key': 'properties.mtu', 'type': 'int'},
         'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
         'subnet': {'key': 'properties.subnet', 'type': 'str'},
         'upgrade_status': {'key': 'properties.upgradeStatus', 'type': 'CacheUpgradeStatus'},
@@ -129,6 +134,7 @@ class Cache(Model):
         self.cache_size_gb = kwargs.get('cache_size_gb', None)
         self.health = None
         self.mount_addresses = None
+        self.mtu = kwargs.get('mtu', 1500)
         self.provisioning_state = kwargs.get('provisioning_state', None)
         self.subnet = kwargs.get('subnet', None)
         self.upgrade_status = kwargs.get('upgrade_status', None)
@@ -495,10 +501,6 @@ class StorageTarget(Model):
     :param junctions: List of Cache namespace junctions to target for
      namespace associations.
     :type junctions: list[~azure.mgmt.storagecache.models.NamespaceJunction]
-    :param target_type: Type of the Storage Target. Possible values include:
-     'nfs3', 'clfs', 'unknown'
-    :type target_type: str or
-     ~azure.mgmt.storagecache.models.StorageTargetType
     :param provisioning_state: ARM provisioning state, see
      https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property.
      Possible values include: 'Succeeded', 'Failed', 'Cancelled', 'Creating',
@@ -524,7 +526,6 @@ class StorageTarget(Model):
         'id': {'key': 'id', 'type': 'str'},
         'type': {'key': 'type', 'type': 'str'},
         'junctions': {'key': 'properties.junctions', 'type': '[NamespaceJunction]'},
-        'target_type': {'key': 'properties.targetType', 'type': 'str'},
         'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
         'nfs3': {'key': 'properties.nfs3', 'type': 'Nfs3Target'},
         'clfs': {'key': 'properties.clfs', 'type': 'ClfsTarget'},
@@ -537,7 +538,6 @@ class StorageTarget(Model):
         self.id = None
         self.type = None
         self.junctions = kwargs.get('junctions', None)
-        self.target_type = kwargs.get('target_type', None)
         self.provisioning_state = kwargs.get('provisioning_state', None)
         self.nfs3 = kwargs.get('nfs3', None)
         self.clfs = kwargs.get('clfs', None)
