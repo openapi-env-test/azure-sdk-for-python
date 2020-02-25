@@ -1651,9 +1651,9 @@ class ContentKeyPolicyRsaTokenKey(ContentKeyPolicyRestrictionTokenKey):
 
     :param odatatype: Required. Constant filled by server.
     :type odatatype: str
-    :param exponent: Required. The RSA Parameter exponent
+    :param exponent: Required. The RSA Parameter exponent.
     :type exponent: bytearray
-    :param modulus: Required. The RSA Parameter modulus
+    :param modulus: Required. The RSA Parameter modulus.
     :type modulus: bytearray
     """
 
@@ -3478,14 +3478,13 @@ class JpgLayer(Layer):
 
 
 class ListContainerSasInput(Model):
-    """The parameters to the list SAS request.
+    """ListContainerSasInput.
 
-    :param permissions: The permissions to set on the SAS URL. Possible values
-     include: 'Read', 'ReadWrite', 'ReadWriteDelete'
+    :param permissions: Possible values include: 'Read', 'ReadWrite',
+     'ReadWriteDelete'
     :type permissions: str or
      ~azure.mgmt.media.models.AssetContainerPermission
-    :param expiry_time: The SAS URL expiration time.  This must be less than
-     24 hours from the current time.
+    :param expiry_time:
     :type expiry_time: datetime
     """
 

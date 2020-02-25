@@ -413,12 +413,11 @@ class AssetsOperations(object):
         :type account_name: str
         :param asset_name: The Asset name.
         :type asset_name: str
-        :param permissions: The permissions to set on the SAS URL. Possible
-         values include: 'Read', 'ReadWrite', 'ReadWriteDelete'
+        :param permissions: Possible values include: 'Read', 'ReadWrite',
+         'ReadWriteDelete'
         :type permissions: str or
          ~azure.mgmt.media.models.AssetContainerPermission
-        :param expiry_time: The SAS URL expiration time.  This must be less
-         than 24 hours from the current time.
+        :param expiry_time:
         :type expiry_time: datetime
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
