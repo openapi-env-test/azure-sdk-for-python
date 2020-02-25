@@ -110,7 +110,7 @@ class NamespacesOperations(object):
             self, resource_group_name, custom_headers=None, raw=False, **operation_config):
         """Lists the available Namespaces within a resource group.
 
-        :param resource_group_name: Name of the resource group within the
+        :param resource_group_name: Name of the Resource group within the
          Azure subscription.
         :type resource_group_name: str
         :param dict custom_headers: headers that will be added to the request
@@ -230,7 +230,7 @@ class NamespacesOperations(object):
         """Creates or updates a namespace. Once created, this namespace's resource
         manifest is immutable. This operation is idempotent.
 
-        :param resource_group_name: Name of the resource group within the
+        :param resource_group_name: Name of the Resource group within the
          Azure subscription.
         :type resource_group_name: str
         :param namespace_name: The Namespace name
@@ -320,7 +320,7 @@ class NamespacesOperations(object):
         """Deletes an existing namespace. This operation also removes all
         associated resources under the namespace.
 
-        :param resource_group_name: Name of the resource group within the
+        :param resource_group_name: Name of the Resource group within the
          Azure subscription.
         :type resource_group_name: str
         :param namespace_name: The Namespace name
@@ -363,7 +363,7 @@ class NamespacesOperations(object):
             self, resource_group_name, namespace_name, custom_headers=None, raw=False, **operation_config):
         """Gets the description of the specified namespace.
 
-        :param resource_group_name: Name of the resource group within the
+        :param resource_group_name: Name of the Resource group within the
          Azure subscription.
         :type resource_group_name: str
         :param namespace_name: The Namespace name
@@ -427,7 +427,7 @@ class NamespacesOperations(object):
         """Creates or updates a namespace. Once created, this namespace's resource
         manifest is immutable. This operation is idempotent.
 
-        :param resource_group_name: Name of the resource group within the
+        :param resource_group_name: Name of the Resource group within the
          Azure subscription.
         :type resource_group_name: str
         :param namespace_name: The Namespace name
@@ -497,7 +497,7 @@ class NamespacesOperations(object):
             self, resource_group_name, namespace_name, custom_headers=None, raw=False, **operation_config):
         """Gets a list of IP Filter rules for a Namespace.
 
-        :param resource_group_name: Name of the resource group within the
+        :param resource_group_name: Name of the Resource group within the
          Azure subscription.
         :type resource_group_name: str
         :param namespace_name: The Namespace name
@@ -569,7 +569,7 @@ class NamespacesOperations(object):
             self, resource_group_name, namespace_name, ip_filter_rule_name, parameters, custom_headers=None, raw=False, **operation_config):
         """Creates or updates an IpFilterRule for a Namespace.
 
-        :param resource_group_name: Name of the resource group within the
+        :param resource_group_name: Name of the Resource group within the
          Azure subscription.
         :type resource_group_name: str
         :param namespace_name: The Namespace name
@@ -640,7 +640,7 @@ class NamespacesOperations(object):
             self, resource_group_name, namespace_name, ip_filter_rule_name, custom_headers=None, raw=False, **operation_config):
         """Deletes an IpFilterRule for a Namespace.
 
-        :param resource_group_name: Name of the resource group within the
+        :param resource_group_name: Name of the Resource group within the
          Azure subscription.
         :type resource_group_name: str
         :param namespace_name: The Namespace name
@@ -696,7 +696,7 @@ class NamespacesOperations(object):
             self, resource_group_name, namespace_name, ip_filter_rule_name, custom_headers=None, raw=False, **operation_config):
         """Gets an IpFilterRule for a Namespace by rule name.
 
-        :param resource_group_name: Name of the resource group within the
+        :param resource_group_name: Name of the Resource group within the
          Azure subscription.
         :type resource_group_name: str
         :param namespace_name: The Namespace name
@@ -760,7 +760,7 @@ class NamespacesOperations(object):
             self, resource_group_name, namespace_name, custom_headers=None, raw=False, **operation_config):
         """Gets a list of VirtualNetwork rules for a Namespace.
 
-        :param resource_group_name: Name of the resource group within the
+        :param resource_group_name: Name of the Resource group within the
          Azure subscription.
         :type resource_group_name: str
         :param namespace_name: The Namespace name
@@ -832,7 +832,7 @@ class NamespacesOperations(object):
             self, resource_group_name, namespace_name, virtual_network_rule_name, virtual_network_subnet_id=None, custom_headers=None, raw=False, **operation_config):
         """Creates or updates an VirtualNetworkRule for a Namespace.
 
-        :param resource_group_name: Name of the resource group within the
+        :param resource_group_name: Name of the Resource group within the
          Azure subscription.
         :type resource_group_name: str
         :param namespace_name: The Namespace name
@@ -905,7 +905,7 @@ class NamespacesOperations(object):
             self, resource_group_name, namespace_name, virtual_network_rule_name, custom_headers=None, raw=False, **operation_config):
         """Deletes an VirtualNetworkRule for a Namespace.
 
-        :param resource_group_name: Name of the resource group within the
+        :param resource_group_name: Name of the Resource group within the
          Azure subscription.
         :type resource_group_name: str
         :param namespace_name: The Namespace name
@@ -961,7 +961,7 @@ class NamespacesOperations(object):
             self, resource_group_name, namespace_name, virtual_network_rule_name, custom_headers=None, raw=False, **operation_config):
         """Gets an VirtualNetworkRule for a Namespace by rule name.
 
-        :param resource_group_name: Name of the resource group within the
+        :param resource_group_name: Name of the Resource group within the
          Azure subscription.
         :type resource_group_name: str
         :param namespace_name: The Namespace name
@@ -1026,7 +1026,7 @@ class NamespacesOperations(object):
             self, resource_group_name, namespace_name, parameters, custom_headers=None, raw=False, **operation_config):
         """Create or update NetworkRuleSet for a Namespace.
 
-        :param resource_group_name: Name of the resource group within the
+        :param resource_group_name: Name of the Resource group within the
          Azure subscription.
         :type resource_group_name: str
         :param namespace_name: The Namespace name
@@ -1094,7 +1094,7 @@ class NamespacesOperations(object):
             self, resource_group_name, namespace_name, custom_headers=None, raw=False, **operation_config):
         """Gets NetworkRuleSet for a Namespace.
 
-        :param resource_group_name: Name of the resource group within the
+        :param resource_group_name: Name of the Resource group within the
          Azure subscription.
         :type resource_group_name: str
         :param namespace_name: The Namespace name

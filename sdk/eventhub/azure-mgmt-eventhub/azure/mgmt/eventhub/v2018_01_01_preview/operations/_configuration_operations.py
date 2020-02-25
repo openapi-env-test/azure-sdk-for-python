@@ -44,7 +44,7 @@ class ConfigurationOperations(object):
         in the request body. Leaves the settings not specified in the request
         body unmodified.
 
-        :param resource_group_name: Name of the resource group within the
+        :param resource_group_name: Name of the Resource group within the
          Azure subscription.
         :type resource_group_name: str
         :param cluster_name: The name of the Event Hubs Cluster.
@@ -120,7 +120,7 @@ class ConfigurationOperations(object):
         """Get all Event Hubs Cluster settings - a collection of key/value pairs
         which represent the quotas and settings imposed on the cluster.
 
-        :param resource_group_name: Name of the resource group within the
+        :param resource_group_name: Name of the Resource group within the
          Azure subscription.
         :type resource_group_name: str
         :param cluster_name: The name of the Event Hubs Cluster.

@@ -100,7 +100,7 @@ class ClustersOperations(object):
             self, resource_group_name, custom_headers=None, raw=False, **operation_config):
         """Lists the available Event Hubs Clusters within an ARM resource group.
 
-        :param resource_group_name: Name of the resource group within the
+        :param resource_group_name: Name of the Resource group within the
          Azure subscription.
         :type resource_group_name: str
         :param dict custom_headers: headers that will be added to the request
@@ -169,7 +169,7 @@ class ClustersOperations(object):
             self, resource_group_name, cluster_name, custom_headers=None, raw=False, **operation_config):
         """Gets the resource description of the specified Event Hubs Cluster.
 
-        :param resource_group_name: Name of the resource group within the
+        :param resource_group_name: Name of the Resource group within the
          Azure subscription.
         :type resource_group_name: str
         :param cluster_name: The name of the Event Hubs Cluster.
@@ -276,7 +276,7 @@ class ClustersOperations(object):
             self, resource_group_name, cluster_name, custom_headers=None, raw=False, polling=True, **operation_config):
         """Creates or updates an instance of an Event Hubs Cluster.
 
-        :param resource_group_name: Name of the resource group within the
+        :param resource_group_name: Name of the Resource group within the
          Azure subscription.
         :type resource_group_name: str
         :param cluster_name: The name of the Event Hubs Cluster.
@@ -376,7 +376,7 @@ class ClustersOperations(object):
         """Modifies mutable properties on the Event Hubs Cluster. This operation
         is idempotent.
 
-        :param resource_group_name: Name of the resource group within the
+        :param resource_group_name: Name of the Resource group within the
          Azure subscription.
         :type resource_group_name: str
         :param cluster_name: The name of the Event Hubs Cluster.
@@ -466,7 +466,7 @@ class ClustersOperations(object):
             self, resource_group_name, cluster_name, custom_headers=None, raw=False, polling=True, **operation_config):
         """Deletes an existing Event Hubs Cluster. This operation is idempotent.
 
-        :param resource_group_name: Name of the resource group within the
+        :param resource_group_name: Name of the Resource group within the
          Azure subscription.
         :type resource_group_name: str
         :param cluster_name: The name of the Event Hubs Cluster.
@@ -509,7 +509,7 @@ class ClustersOperations(object):
             self, resource_group_name, cluster_name, custom_headers=None, raw=False, **operation_config):
         """List all Event Hubs Namespace IDs in an Event Hubs Dedicated Cluster.
 
-        :param resource_group_name: Name of the resource group within the
+        :param resource_group_name: Name of the Resource group within the
          Azure subscription.
         :type resource_group_name: str
         :param cluster_name: The name of the Event Hubs Cluster.

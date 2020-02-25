@@ -13,10 +13,12 @@ from ._operations import Operations
 from ._clusters_operations import ClustersOperations
 from ._configuration_operations import ConfigurationOperations
 from ._namespaces_operations import NamespacesOperations
+from ._namespace_operations import NamespaceOperations
 
 __all__ = [
     'Operations',
     'ClustersOperations',
     'ConfigurationOperations',
     'NamespacesOperations',
+    'NamespaceOperations',
 ]

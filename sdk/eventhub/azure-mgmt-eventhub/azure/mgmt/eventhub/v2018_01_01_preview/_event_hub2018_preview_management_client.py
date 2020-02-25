@@ -17,6 +17,7 @@ from .operations import Operations
 from .operations import ClustersOperations
 from .operations import ConfigurationOperations
 from .operations import NamespacesOperations
+from .operations import NamespaceOperations
 from . import models
 
 
@@ -34,6 +35,8 @@ class EventHub2018PreviewManagementClient(SDKClient):
     :vartype configuration: azure.mgmt.eventhub.v2018_01_01_preview.operations.ConfigurationOperations
     :ivar namespaces: Namespaces operations
     :vartype namespaces: azure.mgmt.eventhub.v2018_01_01_preview.operations.NamespacesOperations
+    :ivar namespace_operations: NamespaceOperations operations
+    :vartype namespace_operations: azure.mgmt.eventhub.v2018_01_01_preview.operations.NamespaceOperations
 
     :param credentials: Credentials needed for the client to connect to Azure.
     :type credentials: :mod:`A msrestazure Credentials
@@ -63,4 +66,6 @@ class EventHub2018PreviewManagementClient(SDKClient):
         self.configuration = ConfigurationOperations(
             self._client, self.config, self._serialize, self._deserialize)
         self.namespaces = NamespacesOperations(
+            self._client, self.config, self._serialize, self._deserialize)
+        self.namespace_operations = NamespaceOperations(
             self._client, self.config, self._serialize, self._deserialize)
