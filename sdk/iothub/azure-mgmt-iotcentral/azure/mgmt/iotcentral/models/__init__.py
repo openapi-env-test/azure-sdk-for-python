@@ -15,6 +15,7 @@ try:
     from ._models_py3 import AppPatch
     from ._models_py3 import AppSkuInfo
     from ._models_py3 import AppTemplate
+    from ._models_py3 import ARMErrorResponseBody
     from ._models_py3 import ErrorDetails, ErrorDetailsException
     from ._models_py3 import ErrorResponseBody
     from ._models_py3 import Operation
@@ -27,6 +28,7 @@ except (SyntaxError, ImportError):
     from ._models import AppPatch
     from ._models import AppSkuInfo
     from ._models import AppTemplate
+    from ._models import ARMErrorResponseBody
     from ._models import ErrorDetails, ErrorDetailsException
     from ._models import ErrorResponseBody
     from ._models import Operation
@@ -46,6 +48,7 @@ __all__ = [
     'AppPatch',
     'AppSkuInfo',
     'AppTemplate',
+    'ARMErrorResponseBody',
     'ErrorDetails', 'ErrorDetailsException',
     'ErrorResponseBody',
     'Operation',

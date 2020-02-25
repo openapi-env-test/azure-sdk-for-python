@@ -273,6 +273,28 @@ class AppTemplate(Model):
         self.description = None
 
 
+class ARMErrorResponseBody(Model):
+    """ARM error response body.
+
+    :param message: Gets or sets the string that describes the error in detail
+     and provides debugging information.
+    :type message: str
+    :param code: Gets or sets the string that can be used to programmatically
+     identify the error.
+    :type code: str
+    """
+
+    _attribute_map = {
+        'message': {'key': 'message', 'type': 'str'},
+        'code': {'key': 'code', 'type': 'str'},
+    }
+
+    def __init__(self, *, message: str=None, code: str=None, **kwargs) -> None:
+        super(ARMErrorResponseBody, self).__init__(**kwargs)
+        self.message = message
+        self.code = code
+
+
 class CloudError(Model):
     """CloudError.
     """

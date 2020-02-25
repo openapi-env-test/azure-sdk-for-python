@@ -136,7 +136,7 @@ class AppsOperations(object):
         request = self._client.put(url, query_parameters, header_parameters, body_content)
         response = self._client.send(request, stream=False, **operation_config)
 
-        if response.status_code not in [200, 201, 202]:
+        if response.status_code not in [200, 201, 202, 400]:
             raise models.ErrorDetailsException(self._deserialize, response)
 
         deserialized = None
@@ -145,6 +145,8 @@ class AppsOperations(object):
             deserialized = self._deserialize('App', response)
         if response.status_code == 201:
             deserialized = self._deserialize('App', response)
+        if response.status_code == 400:
+            deserialized = self._deserialize('ARMErrorResponseBody', response)
 
         if raw:
             client_raw_response = ClientRawResponse(deserialized, response)
@@ -173,12 +175,10 @@ class AppsOperations(object):
          direct response alongside the deserialized response
         :param polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
-        :return: An instance of LROPoller that returns App or
-         ClientRawResponse<App> if raw==True
-        :rtype:
-         ~msrestazure.azure_operation.AzureOperationPoller[~azure.mgmt.iotcentral.models.App]
-         or
-         ~msrestazure.azure_operation.AzureOperationPoller[~msrest.pipeline.ClientRawResponse[~azure.mgmt.iotcentral.models.App]]
+        :return: An instance of LROPoller that returns object or
+         ClientRawResponse<object> if raw==True
+        :rtype: ~msrestazure.azure_operation.AzureOperationPoller[object] or
+         ~msrestazure.azure_operation.AzureOperationPoller[~msrest.pipeline.ClientRawResponse[object]]
         :raises:
          :class:`ErrorDetailsException<azure.mgmt.iotcentral.models.ErrorDetailsException>`
         """
@@ -192,7 +192,7 @@ class AppsOperations(object):
         )
 
         def get_long_running_output(response):
-            deserialized = self._deserialize('App', response)
+            deserialized = self._deserialize('object', response)
 
             if raw:
                 client_raw_response = ClientRawResponse(deserialized, response)
@@ -243,13 +243,15 @@ class AppsOperations(object):
         request = self._client.patch(url, query_parameters, header_parameters, body_content)
         response = self._client.send(request, stream=False, **operation_config)
 
-        if response.status_code not in [200, 202]:
+        if response.status_code not in [200, 202, 400]:
             raise models.ErrorDetailsException(self._deserialize, response)
 
         deserialized = None
 
         if response.status_code == 200:
             deserialized = self._deserialize('App', response)
+        if response.status_code == 400:
+            deserialized = self._deserialize('ARMErrorResponseBody', response)
 
         if raw:
             client_raw_response = ClientRawResponse(deserialized, response)
@@ -275,12 +277,10 @@ class AppsOperations(object):
          direct response alongside the deserialized response
         :param polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
-        :return: An instance of LROPoller that returns App or
-         ClientRawResponse<App> if raw==True
-        :rtype:
-         ~msrestazure.azure_operation.AzureOperationPoller[~azure.mgmt.iotcentral.models.App]
-         or
-         ~msrestazure.azure_operation.AzureOperationPoller[~msrest.pipeline.ClientRawResponse[~azure.mgmt.iotcentral.models.App]]
+        :return: An instance of LROPoller that returns object or
+         ClientRawResponse<object> if raw==True
+        :rtype: ~msrestazure.azure_operation.AzureOperationPoller[object] or
+         ~msrestazure.azure_operation.AzureOperationPoller[~msrest.pipeline.ClientRawResponse[object]]
         :raises:
          :class:`ErrorDetailsException<azure.mgmt.iotcentral.models.ErrorDetailsException>`
         """
@@ -294,7 +294,7 @@ class AppsOperations(object):
         )
 
         def get_long_running_output(response):
-            deserialized = self._deserialize('App', response)
+            deserialized = self._deserialize('object', response)
 
             if raw:
                 client_raw_response = ClientRawResponse(deserialized, response)
