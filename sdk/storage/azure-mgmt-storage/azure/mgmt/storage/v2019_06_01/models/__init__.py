@@ -29,6 +29,8 @@ try:
     from ._models_py3 import DeleteRetentionPolicy
     from ._models_py3 import Dimension
     from ._models_py3 import Encryption
+    from ._models_py3 import EncryptionScope
+    from ._models_py3 import EncryptionScopeKeyVaultProperties
     from ._models_py3 import EncryptionService
     from ._models_py3 import EncryptionServices
     from ._models_py3 import Endpoints
@@ -86,6 +88,7 @@ try:
     from ._models_py3 import StorageAccountMicrosoftEndpoints
     from ._models_py3 import StorageAccountRegenerateKeyParameters
     from ._models_py3 import StorageAccountUpdateParameters
+    from ._models_py3 import TagFilter
     from ._models_py3 import TagProperty
     from ._models_py3 import TrackedResource
     from ._models_py3 import UpdateHistoryProperty
@@ -112,6 +115,8 @@ except (SyntaxError, ImportError):
     from ._models import DeleteRetentionPolicy
     from ._models import Dimension
     from ._models import Encryption
+    from ._models import EncryptionScope
+    from ._models import EncryptionScopeKeyVaultProperties
     from ._models import EncryptionService
     from ._models import EncryptionServices
     from ._models import Endpoints
@@ -169,6 +174,7 @@ except (SyntaxError, ImportError):
     from ._models import StorageAccountMicrosoftEndpoints
     from ._models import StorageAccountRegenerateKeyParameters
     from ._models import StorageAccountUpdateParameters
+    from ._models import TagFilter
     from ._models import TagProperty
     from ._models import TrackedResource
     from ._models import UpdateHistoryProperty
@@ -176,6 +182,7 @@ except (SyntaxError, ImportError):
     from ._models import UsageName
     from ._models import VirtualNetworkRule
 from ._paged_models import BlobServicePropertiesPaged
+from ._paged_models import EncryptionScopePaged
 from ._paged_models import FileShareItemPaged
 from ._paged_models import ListContainerItemPaged
 from ._paged_models import OperationPaged
@@ -211,6 +218,8 @@ from ._storage_management_client_enums import (
     Permissions,
     HttpProtocol,
     SignedResource,
+    EncryptionScopeSource,
+    EncryptionScopeState,
     PublicAccess,
     LeaseStatus,
     LeaseState,
@@ -241,6 +250,8 @@ __all__ = [
     'DeleteRetentionPolicy',
     'Dimension',
     'Encryption',
+    'EncryptionScope',
+    'EncryptionScopeKeyVaultProperties',
     'EncryptionService',
     'EncryptionServices',
     'Endpoints',
@@ -298,6 +309,7 @@ __all__ = [
     'StorageAccountMicrosoftEndpoints',
     'StorageAccountRegenerateKeyParameters',
     'StorageAccountUpdateParameters',
+    'TagFilter',
     'TagProperty',
     'TrackedResource',
     'UpdateHistoryProperty',
@@ -308,6 +320,7 @@ __all__ = [
     'SkuInformationPaged',
     'StorageAccountPaged',
     'UsagePaged',
+    'EncryptionScopePaged',
     'BlobServicePropertiesPaged',
     'ListContainerItemPaged',
     'FileShareItemPaged',
@@ -339,6 +352,8 @@ __all__ = [
     'Permissions',
     'HttpProtocol',
     'SignedResource',
+    'EncryptionScopeSource',
+    'EncryptionScopeState',
     'PublicAccess',
     'LeaseStatus',
     'LeaseState',
