@@ -467,8 +467,10 @@ class BlobServiceProperties(Resource):
      delete.
     :type delete_retention_policy:
      ~azure.mgmt.storage.v2019_06_01.models.DeleteRetentionPolicy
-    :param automatic_snapshot_policy_enabled: Automatic Snapshot is enabled if
-     set to true.
+    :param is_versioning_enabled: Versioning is enabled if set to true.
+    :type is_versioning_enabled: bool
+    :param automatic_snapshot_policy_enabled: Deprecated in favor of
+     isVersioningEnabled property.
     :type automatic_snapshot_policy_enabled: bool
     :param change_feed: The blob service properties for change feed events.
     :type change_feed: ~azure.mgmt.storage.v2019_06_01.models.ChangeFeed
@@ -494,17 +496,19 @@ class BlobServiceProperties(Resource):
         'cors': {'key': 'properties.cors', 'type': 'CorsRules'},
         'default_service_version': {'key': 'properties.defaultServiceVersion', 'type': 'str'},
         'delete_retention_policy': {'key': 'properties.deleteRetentionPolicy', 'type': 'DeleteRetentionPolicy'},
+        'is_versioning_enabled': {'key': 'properties.isVersioningEnabled', 'type': 'bool'},
         'automatic_snapshot_policy_enabled': {'key': 'properties.automaticSnapshotPolicyEnabled', 'type': 'bool'},
         'change_feed': {'key': 'properties.changeFeed', 'type': 'ChangeFeed'},
         'restore_policy': {'key': 'properties.restorePolicy', 'type': 'RestorePolicyProperties'},
         'sku': {'key': 'sku', 'type': 'Sku'},
     }
 
-    def __init__(self, *, cors=None, default_service_version: str=None, delete_retention_policy=None, automatic_snapshot_policy_enabled: bool=None, change_feed=None, restore_policy=None, **kwargs) -> None:
+    def __init__(self, *, cors=None, default_service_version: str=None, delete_retention_policy=None, is_versioning_enabled: bool=None, automatic_snapshot_policy_enabled: bool=None, change_feed=None, restore_policy=None, **kwargs) -> None:
         super(BlobServiceProperties, self).__init__(**kwargs)
         self.cors = cors
         self.default_service_version = default_service_version
         self.delete_retention_policy = delete_retention_policy
+        self.is_versioning_enabled = is_versioning_enabled
         self.automatic_snapshot_policy_enabled = automatic_snapshot_policy_enabled
         self.change_feed = change_feed
         self.restore_policy = restore_policy
@@ -767,6 +771,28 @@ class DateAfterModification(Model):
         self.days_after_modification_greater_than = days_after_modification_greater_than
 
 
+class DeletedShare(Model):
+    """The deleted share to be restored.
+
+    :param deleted_share_name: Required. Identify the name of the deleted
+     share that will be restored.
+    :type deleted_share_name: str
+    :param deleted_share_version: Required. Identify the version of the
+     deleted share that will be restored.
+    :type deleted_share_version: str
+    """
+
+    _attribute_map = {
+        'deleted_share_name': {'key': 'deletedShareName', 'type': 'str'},
+        'deleted_share_version': {'key': 'deletedShareVersion', 'type': 'str'},
+    }
+
+    def __init__(self, *, deleted_share_name: str=None, deleted_share_version: str=None, **kwargs) -> None:
+        super(DeletedShare, self).__init__(**kwargs)
+        self.deleted_share_name = deleted_share_name
+        self.deleted_share_version = deleted_share_version
+
+
 class DeleteRetentionPolicy(Model):
     """The service properties for soft delete.
 
@@ -845,6 +871,91 @@ class Encryption(Model):
         self.services = services
         self.key_source = key_source
         self.key_vault_properties = key_vault_properties
+
+
+class EncryptionScope(Resource):
+    """The Encryption Scope resource.
+
+    Variables are only populated by the server, and will be ignored when
+    sending a request.
+
+    :ivar id: Fully qualified resource Id for the resource. Ex -
+     /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+    :vartype id: str
+    :ivar name: The name of the resource
+    :vartype name: str
+    :ivar type: The type of the resource. Ex-
+     Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
+    :vartype type: str
+    :param source: The provider for the encryption scope. Possible values
+     (case-insensitive):  Microsoft.Storage, Microsoft.KeyVault. Possible
+     values include: 'Microsoft.Storage', 'Microsoft.KeyVault'
+    :type source: str or
+     ~azure.mgmt.storage.v2019_06_01.models.EncryptionScopeSource
+    :param state: The state of the encryption scope. Possible values
+     (case-insensitive):  Enabled, Disabled. Possible values include:
+     'Enabled', 'Disabled'
+    :type state: str or
+     ~azure.mgmt.storage.v2019_06_01.models.EncryptionScopeState
+    :ivar creation_time: Gets the creation date and time of the encryption
+     scope in UTC.
+    :vartype creation_time: datetime
+    :ivar last_modified_time: Gets the last modification date and time of the
+     encryption scope in UTC.
+    :vartype last_modified_time: datetime
+    :param key_vault_properties: The key vault properties for the encryption
+     scope. This is a required field if encryption scope 'source' attribute is
+     set to 'Microsoft.KeyVault'.
+    :type key_vault_properties:
+     ~azure.mgmt.storage.v2019_06_01.models.EncryptionScopeKeyVaultProperties
+    """
+
+    _validation = {
+        'id': {'readonly': True},
+        'name': {'readonly': True},
+        'type': {'readonly': True},
+        'creation_time': {'readonly': True},
+        'last_modified_time': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'id': {'key': 'id', 'type': 'str'},
+        'name': {'key': 'name', 'type': 'str'},
+        'type': {'key': 'type', 'type': 'str'},
+        'source': {'key': 'properties.source', 'type': 'str'},
+        'state': {'key': 'properties.state', 'type': 'str'},
+        'creation_time': {'key': 'properties.creationTime', 'type': 'iso-8601'},
+        'last_modified_time': {'key': 'properties.lastModifiedTime', 'type': 'iso-8601'},
+        'key_vault_properties': {'key': 'properties.keyVaultProperties', 'type': 'EncryptionScopeKeyVaultProperties'},
+    }
+
+    def __init__(self, *, source=None, state=None, key_vault_properties=None, **kwargs) -> None:
+        super(EncryptionScope, self).__init__(**kwargs)
+        self.source = source
+        self.state = state
+        self.creation_time = None
+        self.last_modified_time = None
+        self.key_vault_properties = key_vault_properties
+
+
+class EncryptionScopeKeyVaultProperties(Model):
+    """The key vault properties for the encryption scope. This is a required field
+    if encryption scope 'source' attribute is set to 'Microsoft.KeyVault'.
+
+    :param key_uri: The object identifier for a key vault key object. When
+     applied, the encryption scope will use the key referenced by the
+     identifier to enable customer-managed key support on this encryption
+     scope.
+    :type key_uri: str
+    """
+
+    _attribute_map = {
+        'key_uri': {'key': 'keyUri', 'type': 'str'},
+    }
+
+    def __init__(self, *, key_uri: str=None, **kwargs) -> None:
+        super(EncryptionScopeKeyVaultProperties, self).__init__(**kwargs)
+        self.key_uri = key_uri
 
 
 class EncryptionService(Model):
@@ -1107,6 +1218,15 @@ class FileShare(AzureEntityResource):
      greater than 0, and less than or equal to 5TB (5120). For Large File
      Shares, the maximum size is 102400.
     :type share_quota: int
+    :param version: The version of the share.
+    :type version: str
+    :ivar deleted: Indicates whether the share was deleted.
+    :vartype deleted: bool
+    :ivar deleted_time: The deleted time if the share was deleted.
+    :vartype deleted_time: datetime
+    :ivar remaining_retention_days: Remaining retention days for share that
+     was soft deleted.
+    :vartype remaining_retention_days: int
     """
 
     _validation = {
@@ -1116,6 +1236,9 @@ class FileShare(AzureEntityResource):
         'etag': {'readonly': True},
         'last_modified_time': {'readonly': True},
         'share_quota': {'maximum': 102400, 'minimum': 1},
+        'deleted': {'readonly': True},
+        'deleted_time': {'readonly': True},
+        'remaining_retention_days': {'readonly': True},
     }
 
     _attribute_map = {
@@ -1126,13 +1249,21 @@ class FileShare(AzureEntityResource):
         'last_modified_time': {'key': 'properties.lastModifiedTime', 'type': 'iso-8601'},
         'metadata': {'key': 'properties.metadata', 'type': '{str}'},
         'share_quota': {'key': 'properties.shareQuota', 'type': 'int'},
+        'version': {'key': 'properties.version', 'type': 'str'},
+        'deleted': {'key': 'properties.deleted', 'type': 'bool'},
+        'deleted_time': {'key': 'properties.deletedTime', 'type': 'iso-8601'},
+        'remaining_retention_days': {'key': 'properties.remainingRetentionDays', 'type': 'int'},
     }
 
-    def __init__(self, *, metadata=None, share_quota: int=None, **kwargs) -> None:
+    def __init__(self, *, metadata=None, share_quota: int=None, version: str=None, **kwargs) -> None:
         super(FileShare, self).__init__(**kwargs)
         self.last_modified_time = None
         self.metadata = metadata
         self.share_quota = share_quota
+        self.version = version
+        self.deleted = None
+        self.deleted_time = None
+        self.remaining_retention_days = None
 
 
 class FileShareItem(AzureEntityResource):
@@ -1161,6 +1292,15 @@ class FileShareItem(AzureEntityResource):
      greater than 0, and less than or equal to 5TB (5120). For Large File
      Shares, the maximum size is 102400.
     :type share_quota: int
+    :param version: The version of the share.
+    :type version: str
+    :ivar deleted: Indicates whether the share was deleted.
+    :vartype deleted: bool
+    :ivar deleted_time: The deleted time if the share was deleted.
+    :vartype deleted_time: datetime
+    :ivar remaining_retention_days: Remaining retention days for share that
+     was soft deleted.
+    :vartype remaining_retention_days: int
     """
 
     _validation = {
@@ -1170,6 +1310,9 @@ class FileShareItem(AzureEntityResource):
         'etag': {'readonly': True},
         'last_modified_time': {'readonly': True},
         'share_quota': {'maximum': 102400, 'minimum': 1},
+        'deleted': {'readonly': True},
+        'deleted_time': {'readonly': True},
+        'remaining_retention_days': {'readonly': True},
     }
 
     _attribute_map = {
@@ -1180,13 +1323,21 @@ class FileShareItem(AzureEntityResource):
         'last_modified_time': {'key': 'properties.lastModifiedTime', 'type': 'iso-8601'},
         'metadata': {'key': 'properties.metadata', 'type': '{str}'},
         'share_quota': {'key': 'properties.shareQuota', 'type': 'int'},
+        'version': {'key': 'properties.version', 'type': 'str'},
+        'deleted': {'key': 'properties.deleted', 'type': 'bool'},
+        'deleted_time': {'key': 'properties.deletedTime', 'type': 'iso-8601'},
+        'remaining_retention_days': {'key': 'properties.remainingRetentionDays', 'type': 'int'},
     }
 
-    def __init__(self, *, metadata=None, share_quota: int=None, **kwargs) -> None:
+    def __init__(self, *, metadata=None, share_quota: int=None, version: str=None, **kwargs) -> None:
         super(FileShareItem, self).__init__(**kwargs)
         self.last_modified_time = None
         self.metadata = metadata
         self.share_quota = share_quota
+        self.version = version
+        self.deleted = None
+        self.deleted_time = None
+        self.remaining_retention_days = None
 
 
 class GeoReplicationStats(Model):
@@ -1279,8 +1430,6 @@ class ImmutabilityPolicy(AzureEntityResource):
     Variables are only populated by the server, and will be ignored when
     sending a request.
 
-    All required parameters must be populated in order to send to Azure.
-
     :ivar id: Fully qualified resource Id for the resource. Ex -
      /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
     :vartype id: str
@@ -1291,15 +1440,21 @@ class ImmutabilityPolicy(AzureEntityResource):
     :vartype type: str
     :ivar etag: Resource Etag.
     :vartype etag: str
-    :param immutability_period_since_creation_in_days: Required. The
-     immutability period for the blobs in the container since the policy
-     creation, in days.
+    :param immutability_period_since_creation_in_days: The immutability period
+     for the blobs in the container since the policy creation, in days.
     :type immutability_period_since_creation_in_days: int
     :ivar state: The ImmutabilityPolicy state of a blob container, possible
      values include: Locked and Unlocked. Possible values include: 'Locked',
      'Unlocked'
     :vartype state: str or
      ~azure.mgmt.storage.v2019_06_01.models.ImmutabilityPolicyState
+    :param allow_protected_append_writes: This property can only be changed
+     for unlocked time-based retention policies. When enabled, new blocks can
+     be written to an append blob while maintaining immutability protection and
+     compliance. Only new blocks can be added and any existing blocks cannot be
+     modified or deleted. This property cannot be changed with
+     ExtendImmutabilityPolicy API
+    :type allow_protected_append_writes: bool
     """
 
     _validation = {
@@ -1307,7 +1462,6 @@ class ImmutabilityPolicy(AzureEntityResource):
         'name': {'readonly': True},
         'type': {'readonly': True},
         'etag': {'readonly': True},
-        'immutability_period_since_creation_in_days': {'required': True},
         'state': {'readonly': True},
     }
 
@@ -1318,12 +1472,14 @@ class ImmutabilityPolicy(AzureEntityResource):
         'etag': {'key': 'etag', 'type': 'str'},
         'immutability_period_since_creation_in_days': {'key': 'properties.immutabilityPeriodSinceCreationInDays', 'type': 'int'},
         'state': {'key': 'properties.state', 'type': 'str'},
+        'allow_protected_append_writes': {'key': 'properties.allowProtectedAppendWrites', 'type': 'bool'},
     }
 
-    def __init__(self, *, immutability_period_since_creation_in_days: int, **kwargs) -> None:
+    def __init__(self, *, immutability_period_since_creation_in_days: int=None, allow_protected_append_writes: bool=None, **kwargs) -> None:
         super(ImmutabilityPolicy, self).__init__(**kwargs)
         self.immutability_period_since_creation_in_days = immutability_period_since_creation_in_days
         self.state = None
+        self.allow_protected_append_writes = allow_protected_append_writes
 
 
 class ImmutabilityPolicyProperties(Model):
@@ -1332,17 +1488,21 @@ class ImmutabilityPolicyProperties(Model):
     Variables are only populated by the server, and will be ignored when
     sending a request.
 
-    All required parameters must be populated in order to send to Azure.
-
-    :param immutability_period_since_creation_in_days: Required. The
-     immutability period for the blobs in the container since the policy
-     creation, in days.
+    :param immutability_period_since_creation_in_days: The immutability period
+     for the blobs in the container since the policy creation, in days.
     :type immutability_period_since_creation_in_days: int
     :ivar state: The ImmutabilityPolicy state of a blob container, possible
      values include: Locked and Unlocked. Possible values include: 'Locked',
      'Unlocked'
     :vartype state: str or
      ~azure.mgmt.storage.v2019_06_01.models.ImmutabilityPolicyState
+    :param allow_protected_append_writes: This property can only be changed
+     for unlocked time-based retention policies. When enabled, new blocks can
+     be written to an append blob while maintaining immutability protection and
+     compliance. Only new blocks can be added and any existing blocks cannot be
+     modified or deleted. This property cannot be changed with
+     ExtendImmutabilityPolicy API
+    :type allow_protected_append_writes: bool
     :ivar etag: ImmutabilityPolicy Etag.
     :vartype etag: str
     :ivar update_history: The ImmutabilityPolicy update history of the blob
@@ -1352,7 +1512,6 @@ class ImmutabilityPolicyProperties(Model):
     """
 
     _validation = {
-        'immutability_period_since_creation_in_days': {'required': True},
         'state': {'readonly': True},
         'etag': {'readonly': True},
         'update_history': {'readonly': True},
@@ -1361,14 +1520,16 @@ class ImmutabilityPolicyProperties(Model):
     _attribute_map = {
         'immutability_period_since_creation_in_days': {'key': 'properties.immutabilityPeriodSinceCreationInDays', 'type': 'int'},
         'state': {'key': 'properties.state', 'type': 'str'},
+        'allow_protected_append_writes': {'key': 'properties.allowProtectedAppendWrites', 'type': 'bool'},
         'etag': {'key': 'etag', 'type': 'str'},
         'update_history': {'key': 'updateHistory', 'type': '[UpdateHistoryProperty]'},
     }
 
-    def __init__(self, *, immutability_period_since_creation_in_days: int, **kwargs) -> None:
+    def __init__(self, *, immutability_period_since_creation_in_days: int=None, allow_protected_append_writes: bool=None, **kwargs) -> None:
         super(ImmutabilityPolicyProperties, self).__init__(**kwargs)
         self.immutability_period_since_creation_in_days = immutability_period_since_creation_in_days
         self.state = None
+        self.allow_protected_append_writes = allow_protected_append_writes
         self.etag = None
         self.update_history = None
 

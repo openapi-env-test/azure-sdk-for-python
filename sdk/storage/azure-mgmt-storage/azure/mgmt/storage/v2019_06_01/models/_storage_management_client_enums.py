@@ -215,6 +215,18 @@ class SignedResource(str, Enum):
     s = "s"
 
 
+class EncryptionScopeSource(str, Enum):
+
+    microsoft_storage = "Microsoft.Storage"
+    microsoft_key_vault = "Microsoft.KeyVault"
+
+
+class EncryptionScopeState(str, Enum):
+
+    enabled = "Enabled"
+    disabled = "Disabled"
+
+
 class PublicAccess(str, Enum):
 
     container = "Container"
@@ -265,3 +277,8 @@ class StorageAccountExpand(str, Enum):
 class ListKeyExpand(str, Enum):
 
     kerb = "kerb"
+
+
+class ListSharesExpand(str, Enum):
+
+    deleted = "deleted"
