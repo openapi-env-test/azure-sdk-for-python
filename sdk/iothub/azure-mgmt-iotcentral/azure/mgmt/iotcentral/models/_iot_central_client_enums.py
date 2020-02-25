@@ -14,8 +14,6 @@ from enum import Enum
 
 class AppSku(str, Enum):
 
-    f1 = "F1"
-    s1 = "S1"
     st0 = "ST0"
     st1 = "ST1"
     st2 = "ST2"
