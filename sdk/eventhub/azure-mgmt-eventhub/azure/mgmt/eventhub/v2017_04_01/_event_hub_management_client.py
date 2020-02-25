@@ -19,6 +19,7 @@ from .operations import DisasterRecoveryConfigsOperations
 from .operations import EventHubsOperations
 from .operations import ConsumerGroupsOperations
 from .operations import RegionsOperations
+from .operations import NamespaceOperations
 from . import models
 
 
@@ -40,6 +41,8 @@ class EventHubManagementClient(SDKClient):
     :vartype consumer_groups: azure.mgmt.eventhub.v2017_04_01.operations.ConsumerGroupsOperations
     :ivar regions: Regions operations
     :vartype regions: azure.mgmt.eventhub.v2017_04_01.operations.RegionsOperations
+    :ivar namespace_operations: NamespaceOperations operations
+    :vartype namespace_operations: azure.mgmt.eventhub.v2017_04_01.operations.NamespaceOperations
 
     :param credentials: Credentials needed for the client to connect to Azure.
     :type credentials: :mod:`A msrestazure Credentials
@@ -73,4 +76,6 @@ class EventHubManagementClient(SDKClient):
         self.consumer_groups = ConsumerGroupsOperations(
             self._client, self.config, self._serialize, self._deserialize)
         self.regions = RegionsOperations(
+            self._client, self.config, self._serialize, self._deserialize)
+        self.namespace_operations = NamespaceOperations(
             self._client, self.config, self._serialize, self._deserialize)

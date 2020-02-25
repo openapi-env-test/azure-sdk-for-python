@@ -159,6 +159,19 @@ class EventHubManagementClient(MultiApiClientMixin, SDKClient):
         return OperationClass(self._client, self.config, Serializer(self._models_dict(api_version)), Deserializer(self._models_dict(api_version)))
 
     @property
+    def namespace_operations(self):
+        """Instance depends on the API version:
+
+           * 2017-04-01: :class:`NamespaceOperations<azure.mgmt.eventhub.v2017_04_01.operations.NamespaceOperations>`
+        """
+        api_version = self._get_api_version('namespace_operations')
+        if api_version == '2017-04-01':
+            from .v2017_04_01.operations import NamespaceOperations as OperationClass
+        else:
+            raise NotImplementedError("APIVersion {} is not available".format(api_version))
+        return OperationClass(self._client, self.config, Serializer(self._models_dict(api_version)), Deserializer(self._models_dict(api_version)))
+
+    @property
     def namespaces(self):
         """Instance depends on the API version:
 

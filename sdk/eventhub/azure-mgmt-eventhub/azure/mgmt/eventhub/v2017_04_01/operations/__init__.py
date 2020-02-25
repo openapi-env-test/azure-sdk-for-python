@@ -15,6 +15,7 @@ from ._disaster_recovery_configs_operations import DisasterRecoveryConfigsOperat
 from ._event_hubs_operations import EventHubsOperations
 from ._consumer_groups_operations import ConsumerGroupsOperations
 from ._regions_operations import RegionsOperations
+from ._namespace_operations import NamespaceOperations
 
 __all__ = [
     'Operations',
@@ -23,4 +24,5 @@ __all__ = [
     'EventHubsOperations',
     'ConsumerGroupsOperations',
     'RegionsOperations',
+    'NamespaceOperations',
 ]
