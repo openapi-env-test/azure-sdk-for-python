@@ -986,8 +986,8 @@ class AppServiceEnvironment(Model):
     :type multi_size: str
     :param multi_role_count: Number of front-end instances.
     :type multi_role_count: int
-    :param worker_pools: Required. Description of worker pools with worker
-     size IDs, VM sizes, and number of workers in each pool.
+    :param worker_pools: Description of worker pools with worker size IDs, VM
+     sizes, and number of workers in each pool.
     :type worker_pools: list[~azure.mgmt.web.v2019_08_01.models.WorkerPool]
     :param ipssl_address_count: Number of IP SSL addresses reserved for the
      App Service Environment.
@@ -1080,7 +1080,6 @@ class AppServiceEnvironment(Model):
         'provisioning_state': {'readonly': True},
         'status': {'readonly': True},
         'virtual_network': {'required': True},
-        'worker_pools': {'required': True},
         'database_edition': {'readonly': True},
         'database_service_objective': {'readonly': True},
         'upgrade_domains': {'readonly': True},
@@ -1140,7 +1139,7 @@ class AppServiceEnvironment(Model):
         'ssl_cert_key_vault_secret_name': {'key': 'sslCertKeyVaultSecretName', 'type': 'str'},
     }
 
-    def __init__(self, *, name: str, location: str, virtual_network, worker_pools, vnet_name: str=None, vnet_resource_group_name: str=None, vnet_subnet_name: str=None, internal_load_balancing_mode=None, multi_size: str=None, multi_role_count: int=None, ipssl_address_count: int=None, dns_suffix: str=None, network_access_control_list=None, front_end_scale_factor: int=None, api_management_account_id: str=None, suspended: bool=None, dynamic_cache_enabled: bool=None, cluster_settings=None, user_whitelisted_ip_ranges=None, has_linux_workers: bool=None, ssl_cert_key_vault_id: str=None, ssl_cert_key_vault_secret_name: str=None, **kwargs) -> None:
+    def __init__(self, *, name: str, location: str, virtual_network, vnet_name: str=None, vnet_resource_group_name: str=None, vnet_subnet_name: str=None, internal_load_balancing_mode=None, multi_size: str=None, multi_role_count: int=None, worker_pools=None, ipssl_address_count: int=None, dns_suffix: str=None, network_access_control_list=None, front_end_scale_factor: int=None, api_management_account_id: str=None, suspended: bool=None, dynamic_cache_enabled: bool=None, cluster_settings=None, user_whitelisted_ip_ranges=None, has_linux_workers: bool=None, ssl_cert_key_vault_id: str=None, ssl_cert_key_vault_secret_name: str=None, **kwargs) -> None:
         super(AppServiceEnvironment, self).__init__(**kwargs)
         self.name = name
         self.location = location
@@ -1233,8 +1232,8 @@ class AppServiceEnvironmentPatchResource(ProxyOnlyResource):
     :type multi_size: str
     :param multi_role_count: Number of front-end instances.
     :type multi_role_count: int
-    :param worker_pools: Required. Description of worker pools with worker
-     size IDs, VM sizes, and number of workers in each pool.
+    :param worker_pools: Description of worker pools with worker size IDs, VM
+     sizes, and number of workers in each pool.
     :type worker_pools: list[~azure.mgmt.web.v2019_08_01.models.WorkerPool]
     :param ipssl_address_count: Number of IP SSL addresses reserved for the
      App Service Environment.
@@ -1330,7 +1329,6 @@ class AppServiceEnvironmentPatchResource(ProxyOnlyResource):
         'provisioning_state': {'readonly': True},
         'status': {'readonly': True},
         'virtual_network': {'required': True},
-        'worker_pools': {'required': True},
         'database_edition': {'readonly': True},
         'database_service_objective': {'readonly': True},
         'upgrade_domains': {'readonly': True},
@@ -1394,7 +1392,7 @@ class AppServiceEnvironmentPatchResource(ProxyOnlyResource):
         'ssl_cert_key_vault_secret_name': {'key': 'properties.sslCertKeyVaultSecretName', 'type': 'str'},
     }
 
-    def __init__(self, *, app_service_environment_patch_resource_name: str, location: str, virtual_network, worker_pools, kind: str=None, vnet_name: str=None, vnet_resource_group_name: str=None, vnet_subnet_name: str=None, internal_load_balancing_mode=None, multi_size: str=None, multi_role_count: int=None, ipssl_address_count: int=None, dns_suffix: str=None, network_access_control_list=None, front_end_scale_factor: int=None, api_management_account_id: str=None, suspended: bool=None, dynamic_cache_enabled: bool=None, cluster_settings=None, user_whitelisted_ip_ranges=None, has_linux_workers: bool=None, ssl_cert_key_vault_id: str=None, ssl_cert_key_vault_secret_name: str=None, **kwargs) -> None:
+    def __init__(self, *, app_service_environment_patch_resource_name: str, location: str, virtual_network, kind: str=None, vnet_name: str=None, vnet_resource_group_name: str=None, vnet_subnet_name: str=None, internal_load_balancing_mode=None, multi_size: str=None, multi_role_count: int=None, worker_pools=None, ipssl_address_count: int=None, dns_suffix: str=None, network_access_control_list=None, front_end_scale_factor: int=None, api_management_account_id: str=None, suspended: bool=None, dynamic_cache_enabled: bool=None, cluster_settings=None, user_whitelisted_ip_ranges=None, has_linux_workers: bool=None, ssl_cert_key_vault_id: str=None, ssl_cert_key_vault_secret_name: str=None, **kwargs) -> None:
         super(AppServiceEnvironmentPatchResource, self).__init__(kind=kind, **kwargs)
         self.app_service_environment_patch_resource_name = app_service_environment_patch_resource_name
         self.location = location
@@ -1491,8 +1489,8 @@ class AppServiceEnvironmentResource(Resource):
     :type multi_size: str
     :param multi_role_count: Number of front-end instances.
     :type multi_role_count: int
-    :param worker_pools: Required. Description of worker pools with worker
-     size IDs, VM sizes, and number of workers in each pool.
+    :param worker_pools: Description of worker pools with worker size IDs, VM
+     sizes, and number of workers in each pool.
     :type worker_pools: list[~azure.mgmt.web.v2019_08_01.models.WorkerPool]
     :param ipssl_address_count: Number of IP SSL addresses reserved for the
      App Service Environment.
@@ -1589,7 +1587,6 @@ class AppServiceEnvironmentResource(Resource):
         'provisioning_state': {'readonly': True},
         'status': {'readonly': True},
         'virtual_network': {'required': True},
-        'worker_pools': {'required': True},
         'database_edition': {'readonly': True},
         'database_service_objective': {'readonly': True},
         'upgrade_domains': {'readonly': True},
@@ -1655,7 +1652,7 @@ class AppServiceEnvironmentResource(Resource):
         'ssl_cert_key_vault_secret_name': {'key': 'properties.sslCertKeyVaultSecretName', 'type': 'str'},
     }
 
-    def __init__(self, *, location: str, app_service_environment_resource_name: str, app_service_environment_resource_location: str, virtual_network, worker_pools, kind: str=None, tags=None, vnet_name: str=None, vnet_resource_group_name: str=None, vnet_subnet_name: str=None, internal_load_balancing_mode=None, multi_size: str=None, multi_role_count: int=None, ipssl_address_count: int=None, dns_suffix: str=None, network_access_control_list=None, front_end_scale_factor: int=None, api_management_account_id: str=None, suspended: bool=None, dynamic_cache_enabled: bool=None, cluster_settings=None, user_whitelisted_ip_ranges=None, has_linux_workers: bool=None, ssl_cert_key_vault_id: str=None, ssl_cert_key_vault_secret_name: str=None, **kwargs) -> None:
+    def __init__(self, *, location: str, app_service_environment_resource_name: str, app_service_environment_resource_location: str, virtual_network, kind: str=None, tags=None, vnet_name: str=None, vnet_resource_group_name: str=None, vnet_subnet_name: str=None, internal_load_balancing_mode=None, multi_size: str=None, multi_role_count: int=None, worker_pools=None, ipssl_address_count: int=None, dns_suffix: str=None, network_access_control_list=None, front_end_scale_factor: int=None, api_management_account_id: str=None, suspended: bool=None, dynamic_cache_enabled: bool=None, cluster_settings=None, user_whitelisted_ip_ranges=None, has_linux_workers: bool=None, ssl_cert_key_vault_id: str=None, ssl_cert_key_vault_secret_name: str=None, **kwargs) -> None:
         super(AppServiceEnvironmentResource, self).__init__(kind=kind, location=location, tags=tags, **kwargs)
         self.app_service_environment_resource_name = app_service_environment_resource_name
         self.app_service_environment_resource_location = app_service_environment_resource_location
@@ -5717,6 +5714,30 @@ class HostingEnvironmentProfile(Model):
         self.type = None
 
 
+class HostKeys(Model):
+    """Functions host level keys.
+
+    :param master_key: Secret key.
+    :type master_key: str
+    :param function_keys: Host level function keys.
+    :type function_keys: dict[str, str]
+    :param system_keys: System keys.
+    :type system_keys: dict[str, str]
+    """
+
+    _attribute_map = {
+        'master_key': {'key': 'masterKey', 'type': 'str'},
+        'function_keys': {'key': 'functionKeys', 'type': '{str}'},
+        'system_keys': {'key': 'systemKeys', 'type': '{str}'},
+    }
+
+    def __init__(self, *, master_key: str=None, function_keys=None, system_keys=None, **kwargs) -> None:
+        super(HostKeys, self).__init__(**kwargs)
+        self.master_key = master_key
+        self.function_keys = function_keys
+        self.system_keys = system_keys
+
+
 class HostName(Model):
     """Details of a hostname derived from a domain.
 
@@ -6180,6 +6201,26 @@ class IpSecurityRestriction(Model):
         self.priority = priority
         self.name = name
         self.description = description
+
+
+class KeyInfo(Model):
+    """Function key info.
+
+    :param name: Key name
+    :type name: str
+    :param value: Key value
+    :type value: str
+    """
+
+    _attribute_map = {
+        'name': {'key': 'name', 'type': 'str'},
+        'value': {'key': 'value', 'type': 'str'},
+    }
+
+    def __init__(self, *, name: str=None, value: str=None, **kwargs) -> None:
+        super(KeyInfo, self).__init__(**kwargs)
+        self.name = name
+        self.value = value
 
 
 class KeyVaultReferenceCollection(ProxyOnlyResource):

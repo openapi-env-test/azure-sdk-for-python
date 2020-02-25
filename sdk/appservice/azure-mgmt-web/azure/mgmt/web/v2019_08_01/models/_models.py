@@ -986,8 +986,8 @@ class AppServiceEnvironment(Model):
     :type multi_size: str
     :param multi_role_count: Number of front-end instances.
     :type multi_role_count: int
-    :param worker_pools: Required. Description of worker pools with worker
-     size IDs, VM sizes, and number of workers in each pool.
+    :param worker_pools: Description of worker pools with worker size IDs, VM
+     sizes, and number of workers in each pool.
     :type worker_pools: list[~azure.mgmt.web.v2019_08_01.models.WorkerPool]
     :param ipssl_address_count: Number of IP SSL addresses reserved for the
      App Service Environment.
@@ -1080,7 +1080,6 @@ class AppServiceEnvironment(Model):
         'provisioning_state': {'readonly': True},
         'status': {'readonly': True},
         'virtual_network': {'required': True},
-        'worker_pools': {'required': True},
         'database_edition': {'readonly': True},
         'database_service_objective': {'readonly': True},
         'upgrade_domains': {'readonly': True},
@@ -1233,8 +1232,8 @@ class AppServiceEnvironmentPatchResource(ProxyOnlyResource):
     :type multi_size: str
     :param multi_role_count: Number of front-end instances.
     :type multi_role_count: int
-    :param worker_pools: Required. Description of worker pools with worker
-     size IDs, VM sizes, and number of workers in each pool.
+    :param worker_pools: Description of worker pools with worker size IDs, VM
+     sizes, and number of workers in each pool.
     :type worker_pools: list[~azure.mgmt.web.v2019_08_01.models.WorkerPool]
     :param ipssl_address_count: Number of IP SSL addresses reserved for the
      App Service Environment.
@@ -1330,7 +1329,6 @@ class AppServiceEnvironmentPatchResource(ProxyOnlyResource):
         'provisioning_state': {'readonly': True},
         'status': {'readonly': True},
         'virtual_network': {'required': True},
-        'worker_pools': {'required': True},
         'database_edition': {'readonly': True},
         'database_service_objective': {'readonly': True},
         'upgrade_domains': {'readonly': True},
@@ -1491,8 +1489,8 @@ class AppServiceEnvironmentResource(Resource):
     :type multi_size: str
     :param multi_role_count: Number of front-end instances.
     :type multi_role_count: int
-    :param worker_pools: Required. Description of worker pools with worker
-     size IDs, VM sizes, and number of workers in each pool.
+    :param worker_pools: Description of worker pools with worker size IDs, VM
+     sizes, and number of workers in each pool.
     :type worker_pools: list[~azure.mgmt.web.v2019_08_01.models.WorkerPool]
     :param ipssl_address_count: Number of IP SSL addresses reserved for the
      App Service Environment.
@@ -1589,7 +1587,6 @@ class AppServiceEnvironmentResource(Resource):
         'provisioning_state': {'readonly': True},
         'status': {'readonly': True},
         'virtual_network': {'required': True},
-        'worker_pools': {'required': True},
         'database_edition': {'readonly': True},
         'database_service_objective': {'readonly': True},
         'upgrade_domains': {'readonly': True},
@@ -5717,6 +5714,30 @@ class HostingEnvironmentProfile(Model):
         self.type = None
 
 
+class HostKeys(Model):
+    """Functions host level keys.
+
+    :param master_key: Secret key.
+    :type master_key: str
+    :param function_keys: Host level function keys.
+    :type function_keys: dict[str, str]
+    :param system_keys: System keys.
+    :type system_keys: dict[str, str]
+    """
+
+    _attribute_map = {
+        'master_key': {'key': 'masterKey', 'type': 'str'},
+        'function_keys': {'key': 'functionKeys', 'type': '{str}'},
+        'system_keys': {'key': 'systemKeys', 'type': '{str}'},
+    }
+
+    def __init__(self, **kwargs):
+        super(HostKeys, self).__init__(**kwargs)
+        self.master_key = kwargs.get('master_key', None)
+        self.function_keys = kwargs.get('function_keys', None)
+        self.system_keys = kwargs.get('system_keys', None)
+
+
 class HostName(Model):
     """Details of a hostname derived from a domain.
 
@@ -6180,6 +6201,26 @@ class IpSecurityRestriction(Model):
         self.priority = kwargs.get('priority', None)
         self.name = kwargs.get('name', None)
         self.description = kwargs.get('description', None)
+
+
+class KeyInfo(Model):
+    """Function key info.
+
+    :param name: Key name
+    :type name: str
+    :param value: Key value
+    :type value: str
+    """
+
+    _attribute_map = {
+        'name': {'key': 'name', 'type': 'str'},
+        'value': {'key': 'value', 'type': 'str'},
+    }
+
+    def __init__(self, **kwargs):
+        super(KeyInfo, self).__init__(**kwargs)
+        self.name = kwargs.get('name', None)
+        self.value = kwargs.get('value', None)
 
 
 class KeyVaultReferenceCollection(ProxyOnlyResource):
