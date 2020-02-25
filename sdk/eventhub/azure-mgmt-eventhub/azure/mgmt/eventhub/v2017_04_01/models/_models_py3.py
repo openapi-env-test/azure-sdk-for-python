@@ -385,6 +385,12 @@ class Destination(Model):
      Here all the parameters (Namespace,EventHub .. etc) are mandatory
      irrespective of order
     :type archive_name_format: str
+    :param data_lake_subscription_id: DataLake SubscriptionId
+    :type data_lake_subscription_id: str
+    :param data_lake_account_name: DataLake AccountName
+    :type data_lake_account_name: str
+    :param data_lake_folder_path: DataLake FolderPath
+    :type data_lake_folder_path: str
     """
 
     _attribute_map = {
@@ -392,14 +398,20 @@ class Destination(Model):
         'storage_account_resource_id': {'key': 'properties.storageAccountResourceId', 'type': 'str'},
         'blob_container': {'key': 'properties.blobContainer', 'type': 'str'},
         'archive_name_format': {'key': 'properties.archiveNameFormat', 'type': 'str'},
+        'data_lake_subscription_id': {'key': 'properties.dataLakeSubscriptionId', 'type': 'str'},
+        'data_lake_account_name': {'key': 'properties.dataLakeAccountName', 'type': 'str'},
+        'data_lake_folder_path': {'key': 'properties.dataLakeFolderPath', 'type': 'str'},
     }
 
-    def __init__(self, *, name: str=None, storage_account_resource_id: str=None, blob_container: str=None, archive_name_format: str=None, **kwargs) -> None:
+    def __init__(self, *, name: str=None, storage_account_resource_id: str=None, blob_container: str=None, archive_name_format: str=None, data_lake_subscription_id: str=None, data_lake_account_name: str=None, data_lake_folder_path: str=None, **kwargs) -> None:
         super(Destination, self).__init__(**kwargs)
         self.name = name
         self.storage_account_resource_id = storage_account_resource_id
         self.blob_container = blob_container
         self.archive_name_format = archive_name_format
+        self.data_lake_subscription_id = data_lake_subscription_id
+        self.data_lake_account_name = data_lake_account_name
+        self.data_lake_folder_path = data_lake_folder_path
 
 
 class TrackedResource(Resource):
