@@ -12,6 +12,19 @@
 from msrest.paging import Paged
 
 
+class ManagedClusterPaged(Paged):
+    """
+    A paging container for iterating over a list of :class:`ManagedCluster <azure.mgmt.servicefabric.models.ManagedCluster>` object
+    """
+
+    _attribute_map = {
+        'next_link': {'key': 'nextLink', 'type': 'str'},
+        'current_page': {'key': 'value', 'type': '[ManagedCluster]'}
+    }
+
+    def __init__(self, *args, **kwargs):
+
+        super(ManagedClusterPaged, self).__init__(*args, **kwargs)
 class OperationResultPaged(Paged):
     """
     A paging container for iterating over a list of :class:`OperationResult <azure.mgmt.servicefabric.models.OperationResult>` object
@@ -25,3 +38,16 @@ class OperationResultPaged(Paged):
     def __init__(self, *args, **kwargs):
 
         super(OperationResultPaged, self).__init__(*args, **kwargs)
+class NodeTypePaged(Paged):
+    """
+    A paging container for iterating over a list of :class:`NodeType <azure.mgmt.servicefabric.models.NodeType>` object
+    """
+
+    _attribute_map = {
+        'next_link': {'key': 'nextLink', 'type': 'str'},
+        'current_page': {'key': 'value', 'type': '[NodeType]'}
+    }
+
+    def __init__(self, *args, **kwargs):
+
+        super(NodeTypePaged, self).__init__(*args, **kwargs)
