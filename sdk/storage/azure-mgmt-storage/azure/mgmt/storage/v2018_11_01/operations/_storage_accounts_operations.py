@@ -42,12 +42,15 @@ class StorageAccountsOperations(object):
         self.config = config
 
     def check_name_availability(
-            self, name, custom_headers=None, raw=False, **operation_config):
+            self, account_name, custom_headers=None, raw=False, **operation_config):
         """Checks that the storage account name is valid and is not already in
         use.
 
-        :param name: The storage account name.
-        :type name: str
+        :param account_name: The name of the storage account within the
+         specified resource group. Storage account names must be between 3 and
+         24 characters in length and use numbers and lower-case letters only.
+        :type account_name:
+         ~azure.mgmt.storage.v2018_11_01.models.StorageAccountCheckNameAvailabilityParameters
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
@@ -59,8 +62,6 @@ class StorageAccountsOperations(object):
          ~msrest.pipeline.ClientRawResponse
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
-        account_name = models.StorageAccountCheckNameAvailabilityParameters(name=name)
-
         # Construct URL
         url = self.check_name_availability.metadata['url']
         path_format_arguments = {
@@ -631,7 +632,7 @@ class StorageAccountsOperations(object):
     list_keys.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/listKeys'}
 
     def regenerate_key(
-            self, resource_group_name, account_name, key_name, custom_headers=None, raw=False, **operation_config):
+            self, resource_group_name, account_name, regenerate_key, custom_headers=None, raw=False, **operation_config):
         """Regenerates one of the access keys for the specified storage account.
 
         :param resource_group_name: The name of the resource group within the
@@ -641,9 +642,10 @@ class StorageAccountsOperations(object):
          specified resource group. Storage account names must be between 3 and
          24 characters in length and use numbers and lower-case letters only.
         :type account_name: str
-        :param key_name: The name of storage keys that want to be regenerated,
-         possible values are key1, key2.
-        :type key_name: str
+        :param regenerate_key: Specifies name of the key which should be
+         regenerated -- key1 or key2.
+        :type regenerate_key:
+         ~azure.mgmt.storage.v2018_11_01.models.StorageAccountRegenerateKeyParameters
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
@@ -655,8 +657,6 @@ class StorageAccountsOperations(object):
          ~msrest.pipeline.ClientRawResponse
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
-        regenerate_key1 = models.StorageAccountRegenerateKeyParameters(key_name=key_name)
-
         # Construct URL
         url = self.regenerate_key.metadata['url']
         path_format_arguments = {
@@ -682,7 +682,7 @@ class StorageAccountsOperations(object):
             header_parameters['accept-language'] = self._serialize.header("self.config.accept_language", self.config.accept_language, 'str')
 
         # Construct body
-        body_content = self._serialize.body(regenerate_key1, 'StorageAccountRegenerateKeyParameters')
+        body_content = self._serialize.body(regenerate_key, 'StorageAccountRegenerateKeyParameters')
 
         # Construct and send request
         request = self._client.post(url, query_parameters, header_parameters, body_content)

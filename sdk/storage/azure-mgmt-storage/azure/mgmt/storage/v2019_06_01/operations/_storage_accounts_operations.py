@@ -943,9 +943,7 @@ class StorageAccountsOperations(object):
 
 
     def _restore_blob_ranges_initial(
-            self, resource_group_name, account_name, time_to_restore, blob_ranges, custom_headers=None, raw=False, **operation_config):
-        parameters = models.BlobRestoreParameters(time_to_restore=time_to_restore, blob_ranges=blob_ranges)
-
+            self, resource_group_name, account_name, parameters, custom_headers=None, raw=False, **operation_config):
         # Construct URL
         url = self.restore_blob_ranges.metadata['url']
         path_format_arguments = {
@@ -996,7 +994,7 @@ class StorageAccountsOperations(object):
         return deserialized
 
     def restore_blob_ranges(
-            self, resource_group_name, account_name, time_to_restore, blob_ranges, custom_headers=None, raw=False, polling=True, **operation_config):
+            self, resource_group_name, account_name, parameters, custom_headers=None, raw=False, polling=True, **operation_config):
         """Restore blobs in the specified blob ranges.
 
         :param resource_group_name: The name of the resource group within the
@@ -1006,11 +1004,9 @@ class StorageAccountsOperations(object):
          specified resource group. Storage account names must be between 3 and
          24 characters in length and use numbers and lower-case letters only.
         :type account_name: str
-        :param time_to_restore: Restore blob to the specified time.
-        :type time_to_restore: datetime
-        :param blob_ranges: Blob ranges to restore.
-        :type blob_ranges:
-         list[~azure.mgmt.storage.v2019_06_01.models.BlobRestoreRange]
+        :param parameters: The parameters to provide for restore blob ranges.
+        :type parameters:
+         ~azure.mgmt.storage.v2019_06_01.models.BlobRestoreParameters
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: The poller return type is ClientRawResponse, the
          direct response alongside the deserialized response
@@ -1027,8 +1023,7 @@ class StorageAccountsOperations(object):
         raw_result = self._restore_blob_ranges_initial(
             resource_group_name=resource_group_name,
             account_name=account_name,
-            time_to_restore=time_to_restore,
-            blob_ranges=blob_ranges,
+            parameters=parameters,
             custom_headers=custom_headers,
             raw=True,
             **operation_config

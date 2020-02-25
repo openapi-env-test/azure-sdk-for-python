@@ -110,7 +110,7 @@ class ManagementPoliciesOperations(object):
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/managementPolicies/{managementPolicyName}'}
 
     def create_or_update(
-            self, resource_group_name, account_name, policy=None, custom_headers=None, raw=False, **operation_config):
+            self, resource_group_name, account_name, properties, custom_headers=None, raw=False, **operation_config):
         """Sets the data policy rules associated with the specified storage
         account.
 
@@ -121,10 +121,9 @@ class ManagementPoliciesOperations(object):
          specified resource group. Storage account names must be between 3 and
          24 characters in length and use numbers and lower-case letters only.
         :type account_name: str
-        :param policy: The Storage Account ManagementPolicies Rules, in JSON
-         format. See more details in:
-         https://docs.microsoft.com/en-us/azure/storage/common/storage-lifecycle-managment-concepts.
-        :type policy: object
+        :param properties: The data policy rules to set to a storage account.
+        :type properties:
+         ~azure.mgmt.storage.v2018_07_01.models.ManagementPoliciesRulesSetParameter
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
@@ -137,8 +136,6 @@ class ManagementPoliciesOperations(object):
          or ~msrest.pipeline.ClientRawResponse
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
-        properties = models.ManagementPoliciesRulesSetParameter(policy=policy)
-
         # Construct URL
         url = self.create_or_update.metadata['url']
         path_format_arguments = {

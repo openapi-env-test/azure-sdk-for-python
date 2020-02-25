@@ -107,7 +107,7 @@ class BlobContainersOperations(object):
     list.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/default/containers'}
 
     def create(
-            self, resource_group_name, account_name, container_name, public_access=None, metadata=None, custom_headers=None, raw=False, **operation_config):
+            self, resource_group_name, account_name, container_name, blob_container, custom_headers=None, raw=False, **operation_config):
         """Creates a new container under the specified account as described by
         request body. The container resource includes metadata and properties
         for that container. It does not include a list of the blobs contained
@@ -126,14 +126,9 @@ class BlobContainersOperations(object):
          (-) only. Every dash (-) character must be immediately preceded and
          followed by a letter or number.
         :type container_name: str
-        :param public_access: Specifies whether data in the container may be
-         accessed publicly and the level of access. Possible values include:
-         'Container', 'Blob', 'None'
-        :type public_access: str or
-         ~azure.mgmt.storage.v2018_02_01.models.PublicAccess
-        :param metadata: A name-value pair to associate with the container as
-         metadata.
-        :type metadata: dict[str, str]
+        :param blob_container: Properties of the blob container to create.
+        :type blob_container:
+         ~azure.mgmt.storage.v2018_02_01.models.BlobContainer
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
@@ -144,8 +139,6 @@ class BlobContainersOperations(object):
          ~msrest.pipeline.ClientRawResponse
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
-        blob_container = models.BlobContainer(public_access=public_access, metadata=metadata)
-
         # Construct URL
         url = self.create.metadata['url']
         path_format_arguments = {
@@ -195,7 +188,7 @@ class BlobContainersOperations(object):
     create.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/default/containers/{containerName}'}
 
     def update(
-            self, resource_group_name, account_name, container_name, public_access=None, metadata=None, custom_headers=None, raw=False, **operation_config):
+            self, resource_group_name, account_name, container_name, blob_container, custom_headers=None, raw=False, **operation_config):
         """Updates container properties as specified in request body. Properties
         not mentioned in the request will be unchanged. Update fails if the
         specified container doesn't already exist. .
@@ -213,14 +206,9 @@ class BlobContainersOperations(object):
          (-) only. Every dash (-) character must be immediately preceded and
          followed by a letter or number.
         :type container_name: str
-        :param public_access: Specifies whether data in the container may be
-         accessed publicly and the level of access. Possible values include:
-         'Container', 'Blob', 'None'
-        :type public_access: str or
-         ~azure.mgmt.storage.v2018_02_01.models.PublicAccess
-        :param metadata: A name-value pair to associate with the container as
-         metadata.
-        :type metadata: dict[str, str]
+        :param blob_container: Properties to update for the blob container.
+        :type blob_container:
+         ~azure.mgmt.storage.v2018_02_01.models.BlobContainer
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
@@ -231,8 +219,6 @@ class BlobContainersOperations(object):
          ~msrest.pipeline.ClientRawResponse
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
-        blob_container = models.BlobContainer(public_access=public_access, metadata=metadata)
-
         # Construct URL
         url = self.update.metadata['url']
         path_format_arguments = {
@@ -416,7 +402,7 @@ class BlobContainersOperations(object):
     delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/default/containers/{containerName}'}
 
     def set_legal_hold(
-            self, resource_group_name, account_name, container_name, tags, custom_headers=None, raw=False, **operation_config):
+            self, resource_group_name, account_name, container_name, legal_hold, custom_headers=None, raw=False, **operation_config):
         """Sets legal hold tags. Setting the same tag results in an idempotent
         operation. SetLegalHold follows an append pattern and does not clear
         out the existing tags that are not specified in the request.
@@ -434,9 +420,9 @@ class BlobContainersOperations(object):
          (-) only. Every dash (-) character must be immediately preceded and
          followed by a letter or number.
         :type container_name: str
-        :param tags: Each tag should be 3 to 23 alphanumeric characters and is
-         normalized to lower case at SRP.
-        :type tags: list[str]
+        :param legal_hold: The LegalHold property that will be set to a blob
+         container.
+        :type legal_hold: ~azure.mgmt.storage.v2018_02_01.models.LegalHold
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
@@ -447,8 +433,6 @@ class BlobContainersOperations(object):
          ~msrest.pipeline.ClientRawResponse
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
-        legal_hold = models.LegalHold(tags=tags)
-
         # Construct URL
         url = self.set_legal_hold.metadata['url']
         path_format_arguments = {
@@ -498,7 +482,7 @@ class BlobContainersOperations(object):
     set_legal_hold.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/default/containers/{containerName}/setLegalHold'}
 
     def clear_legal_hold(
-            self, resource_group_name, account_name, container_name, tags, custom_headers=None, raw=False, **operation_config):
+            self, resource_group_name, account_name, container_name, legal_hold, custom_headers=None, raw=False, **operation_config):
         """Clears legal hold tags. Clearing the same or non-existent tag results
         in an idempotent operation. ClearLegalHold clears out only the
         specified tags in the request.
@@ -516,9 +500,9 @@ class BlobContainersOperations(object):
          (-) only. Every dash (-) character must be immediately preceded and
          followed by a letter or number.
         :type container_name: str
-        :param tags: Each tag should be 3 to 23 alphanumeric characters and is
-         normalized to lower case at SRP.
-        :type tags: list[str]
+        :param legal_hold: The LegalHold property that will be clear from a
+         blob container.
+        :type legal_hold: ~azure.mgmt.storage.v2018_02_01.models.LegalHold
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
@@ -529,8 +513,6 @@ class BlobContainersOperations(object):
          ~msrest.pipeline.ClientRawResponse
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
-        legal_hold = models.LegalHold(tags=tags)
-
         # Construct URL
         url = self.clear_legal_hold.metadata['url']
         path_format_arguments = {
@@ -580,7 +562,7 @@ class BlobContainersOperations(object):
     clear_legal_hold.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/default/containers/{containerName}/clearLegalHold'}
 
     def create_or_update_immutability_policy(
-            self, resource_group_name, account_name, container_name, immutability_period_since_creation_in_days, if_match=None, custom_headers=None, raw=False, **operation_config):
+            self, resource_group_name, account_name, container_name, parameters=None, if_match=None, custom_headers=None, raw=False, **operation_config):
         """Creates or updates an unlocked immutability policy. ETag in If-Match is
         honored if given but not required for this operation.
 
@@ -597,10 +579,10 @@ class BlobContainersOperations(object):
          (-) only. Every dash (-) character must be immediately preceded and
          followed by a letter or number.
         :type container_name: str
-        :param immutability_period_since_creation_in_days: The immutability
-         period for the blobs in the container since the policy creation, in
-         days.
-        :type immutability_period_since_creation_in_days: int
+        :param parameters: The ImmutabilityPolicy Properties that will be
+         created or updated to a blob container.
+        :type parameters:
+         ~azure.mgmt.storage.v2018_02_01.models.ImmutabilityPolicy
         :param if_match: The entity state (ETag) version of the immutability
          policy to update. A value of "*" can be used to apply the operation
          only if the immutability policy already exists. If omitted, this
@@ -616,10 +598,6 @@ class BlobContainersOperations(object):
          ~msrest.pipeline.ClientRawResponse
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
-        parameters = None
-        if immutability_period_since_creation_in_days is not None:
-            parameters = models.ImmutabilityPolicy(immutability_period_since_creation_in_days=immutability_period_since_creation_in_days)
-
         # Construct URL
         url = self.create_or_update_immutability_policy.metadata['url']
         path_format_arguments = {
@@ -936,7 +914,7 @@ class BlobContainersOperations(object):
     lock_immutability_policy.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/default/containers/{containerName}/immutabilityPolicies/default/lock'}
 
     def extend_immutability_policy(
-            self, resource_group_name, account_name, container_name, if_match, immutability_period_since_creation_in_days, custom_headers=None, raw=False, **operation_config):
+            self, resource_group_name, account_name, container_name, if_match, parameters=None, custom_headers=None, raw=False, **operation_config):
         """Extends the immutabilityPeriodSinceCreationInDays of a locked
         immutabilityPolicy. The only action allowed on a Locked policy will be
         this action. ETag in If-Match is required for this operation.
@@ -959,10 +937,10 @@ class BlobContainersOperations(object):
          only if the immutability policy already exists. If omitted, this
          operation will always be applied.
         :type if_match: str
-        :param immutability_period_since_creation_in_days: The immutability
-         period for the blobs in the container since the policy creation, in
-         days.
-        :type immutability_period_since_creation_in_days: int
+        :param parameters: The ImmutabilityPolicy Properties that will be
+         extended for a blob container.
+        :type parameters:
+         ~azure.mgmt.storage.v2018_02_01.models.ImmutabilityPolicy
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
@@ -973,10 +951,6 @@ class BlobContainersOperations(object):
          ~msrest.pipeline.ClientRawResponse
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
-        parameters = None
-        if immutability_period_since_creation_in_days is not None:
-            parameters = models.ImmutabilityPolicy(immutability_period_since_creation_in_days=immutability_period_since_creation_in_days)
-
         # Construct URL
         url = self.extend_immutability_policy.metadata['url']
         path_format_arguments = {
