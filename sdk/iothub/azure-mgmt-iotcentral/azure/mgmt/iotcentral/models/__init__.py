@@ -15,7 +15,9 @@ try:
     from ._models_py3 import AppPatch
     from ._models_py3 import AppSkuInfo
     from ._models_py3 import AppTemplate
+    from ._models_py3 import ErrorAdditionalInfo
     from ._models_py3 import ErrorDetails, ErrorDetailsException
+    from ._models_py3 import ErrorResponse, ErrorResponseException
     from ._models_py3 import ErrorResponseBody
     from ._models_py3 import Operation
     from ._models_py3 import OperationDisplay
@@ -27,7 +29,9 @@ except (SyntaxError, ImportError):
     from ._models import AppPatch
     from ._models import AppSkuInfo
     from ._models import AppTemplate
+    from ._models import ErrorAdditionalInfo
     from ._models import ErrorDetails, ErrorDetailsException
+    from ._models import ErrorResponse, ErrorResponseException
     from ._models import ErrorResponseBody
     from ._models import Operation
     from ._models import OperationDisplay
@@ -46,7 +50,9 @@ __all__ = [
     'AppPatch',
     'AppSkuInfo',
     'AppTemplate',
+    'ErrorAdditionalInfo',
     'ErrorDetails', 'ErrorDetailsException',
+    'ErrorResponse', 'ErrorResponseException',
     'ErrorResponseBody',
     'Operation',
     'OperationDisplay',

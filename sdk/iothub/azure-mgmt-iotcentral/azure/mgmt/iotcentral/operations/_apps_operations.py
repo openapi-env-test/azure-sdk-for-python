@@ -137,7 +137,7 @@ class AppsOperations(object):
         response = self._client.send(request, stream=False, **operation_config)
 
         if response.status_code not in [200, 201, 202]:
-            raise models.ErrorDetailsException(self._deserialize, response)
+            raise models.ErrorResponseException(self._deserialize, response)
 
         deserialized = None
 
@@ -180,7 +180,7 @@ class AppsOperations(object):
          or
          ~msrestazure.azure_operation.AzureOperationPoller[~msrest.pipeline.ClientRawResponse[~azure.mgmt.iotcentral.models.App]]
         :raises:
-         :class:`ErrorDetailsException<azure.mgmt.iotcentral.models.ErrorDetailsException>`
+         :class:`ErrorResponseException<azure.mgmt.iotcentral.models.ErrorResponseException>`
         """
         raw_result = self._create_or_update_initial(
             resource_group_name=resource_group_name,
