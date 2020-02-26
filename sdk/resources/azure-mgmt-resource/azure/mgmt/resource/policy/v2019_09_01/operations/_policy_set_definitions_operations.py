@@ -25,7 +25,7 @@ class PolicySetDefinitionsOperations(object):
     :param config: Configuration of service client.
     :param serializer: An object model serializer.
     :param deserializer: An object model deserializer.
-    :ivar api_version: The API version to use for the operation. Constant value: "2019-09-01".
+    :ivar api_version: The API version to use for the request. Constant value: "2019-09-01".
     """
 
     models = models

@@ -13,6 +13,7 @@ try:
     from ._models_py3 import AliasPathType
     from ._models_py3 import AliasType
     from ._models_py3 import BasicDependency
+    from ._models_py3 import Componentsschemasidentitypropertiesuserassignedidentitiesadditionalproperties
     from ._models_py3 import DebugSetting
     from ._models_py3 import Dependency
     from ._models_py3 import Deployment
@@ -31,10 +32,10 @@ try:
     from ._models_py3 import ErrorResponse
     from ._models_py3 import ExportTemplateRequest
     from ._models_py3 import GenericResource
+    from ._models_py3 import GenericResourceExpanded
     from ._models_py3 import GenericResourceFilter
     from ._models_py3 import HttpMessage
     from ._models_py3 import Identity
-    from ._models_py3 import IdentityUserAssignedIdentitiesValue
     from ._models_py3 import OnErrorDeployment
     from ._models_py3 import OnErrorDeploymentExtended
     from ._models_py3 import Operation
@@ -67,6 +68,7 @@ except (SyntaxError, ImportError):
     from ._models import AliasPathType
     from ._models import AliasType
     from ._models import BasicDependency
+    from ._models import Componentsschemasidentitypropertiesuserassignedidentitiesadditionalproperties
     from ._models import DebugSetting
     from ._models import Dependency
     from ._models import Deployment
@@ -85,10 +87,10 @@ except (SyntaxError, ImportError):
     from ._models import ErrorResponse
     from ._models import ExportTemplateRequest
     from ._models import GenericResource
+    from ._models import GenericResourceExpanded
     from ._models import GenericResourceFilter
     from ._models import HttpMessage
     from ._models import Identity
-    from ._models import IdentityUserAssignedIdentitiesValue
     from ._models import OnErrorDeployment
     from ._models import OnErrorDeploymentExtended
     from ._models import Operation
@@ -119,7 +121,7 @@ except (SyntaxError, ImportError):
     from ._models import WhatIfPropertyChange
 from ._paged_models import DeploymentExtendedPaged
 from ._paged_models import DeploymentOperationPaged
-from ._paged_models import GenericResourcePaged
+from ._paged_models import GenericResourceExpandedPaged
 from ._paged_models import OperationPaged
 from ._paged_models import ProviderPaged
 from ._paged_models import ResourceGroupPaged
@@ -137,6 +139,7 @@ __all__ = [
     'AliasPathType',
     'AliasType',
     'BasicDependency',
+    'Componentsschemasidentitypropertiesuserassignedidentitiesadditionalproperties',
     'DebugSetting',
     'Dependency',
     'Deployment',
@@ -155,10 +158,10 @@ __all__ = [
     'ErrorResponse',
     'ExportTemplateRequest',
     'GenericResource',
+    'GenericResourceExpanded',
     'GenericResourceFilter',
     'HttpMessage',
     'Identity',
-    'IdentityUserAssignedIdentitiesValue',
     'OnErrorDeployment',
     'OnErrorDeploymentExtended',
     'Operation',
@@ -190,7 +193,7 @@ __all__ = [
     'OperationPaged',
     'DeploymentExtendedPaged',
     'ProviderPaged',
-    'GenericResourcePaged',
+    'GenericResourceExpandedPaged',
     'ResourceGroupPaged',
     'TagDetailsPaged',
     'DeploymentOperationPaged',

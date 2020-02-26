@@ -107,6 +107,34 @@ class CloudErrorException(HttpOperationError):
         super(CloudErrorException, self).__init__(deserialize, response, 'CloudError', *args)
 
 
+class Componentsschemasidentitypropertiesuserassignedidentitiesadditionalproperties(Model):
+    """Componentsschemasidentitypropertiesuserassignedidentitiesadditionalproperties.
+
+    Variables are only populated by the server, and will be ignored when
+    sending a request.
+
+    :ivar principal_id: The principal id of user assigned identity.
+    :vartype principal_id: str
+    :ivar client_id: The client id of user assigned identity.
+    :vartype client_id: str
+    """
+
+    _validation = {
+        'principal_id': {'readonly': True},
+        'client_id': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'principal_id': {'key': 'principalId', 'type': 'str'},
+        'client_id': {'key': 'clientId', 'type': 'str'},
+    }
+
+    def __init__(self, **kwargs) -> None:
+        super(Componentsschemasidentitypropertiesuserassignedidentitiesadditionalproperties, self).__init__(**kwargs)
+        self.principal_id = None
+        self.client_id = None
+
+
 class DebugSetting(Model):
     """The debug setting.
 
@@ -712,7 +740,6 @@ class GenericResource(Resource):
         'id': {'readonly': True},
         'name': {'readonly': True},
         'type': {'readonly': True},
-        'kind': {'pattern': r'^[-\w\._,\(\)]+$'},
     }
 
     _attribute_map = {
@@ -737,6 +764,78 @@ class GenericResource(Resource):
         self.managed_by = managed_by
         self.sku = sku
         self.identity = identity
+
+
+class GenericResourceExpanded(GenericResource):
+    """Resource information.
+
+    Variables are only populated by the server, and will be ignored when
+    sending a request.
+
+    :ivar id: Resource ID
+    :vartype id: str
+    :ivar name: Resource name
+    :vartype name: str
+    :ivar type: Resource type
+    :vartype type: str
+    :param location: Resource location
+    :type location: str
+    :param tags: Resource tags
+    :type tags: dict[str, str]
+    :param plan: The plan of the resource.
+    :type plan: ~azure.mgmt.resource.resources.v2019_05_01.models.Plan
+    :param properties: The resource properties.
+    :type properties: object
+    :param kind: The kind of the resource.
+    :type kind: str
+    :param managed_by: ID of the resource that manages this resource.
+    :type managed_by: str
+    :param sku: The SKU of the resource.
+    :type sku: ~azure.mgmt.resource.resources.v2019_05_01.models.Sku
+    :param identity: The identity of the resource.
+    :type identity: ~azure.mgmt.resource.resources.v2019_05_01.models.Identity
+    :ivar created_time: The created time of the resource. This is only present
+     if requested via the $expand query parameter.
+    :vartype created_time: datetime
+    :ivar changed_time: The changed time of the resource. This is only present
+     if requested via the $expand query parameter.
+    :vartype changed_time: datetime
+    :ivar provisioning_state: The provisioning state of the resource. This is
+     only present if requested via the $expand query parameter.
+    :vartype provisioning_state: str
+    """
+
+    _validation = {
+        'id': {'readonly': True},
+        'name': {'readonly': True},
+        'type': {'readonly': True},
+        'created_time': {'readonly': True},
+        'changed_time': {'readonly': True},
+        'provisioning_state': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'id': {'key': 'id', 'type': 'str'},
+        'name': {'key': 'name', 'type': 'str'},
+        'type': {'key': 'type', 'type': 'str'},
+        'location': {'key': 'location', 'type': 'str'},
+        'tags': {'key': 'tags', 'type': '{str}'},
+        'plan': {'key': 'plan', 'type': 'Plan'},
+        'properties': {'key': 'properties', 'type': 'object'},
+        'kind': {'key': 'kind', 'type': 'str'},
+        'managed_by': {'key': 'managedBy', 'type': 'str'},
+        'sku': {'key': 'sku', 'type': 'Sku'},
+        'identity': {'key': 'identity', 'type': 'Identity'},
+        'created_time': {'key': 'createdTime', 'type': 'iso-8601'},
+        'changed_time': {'key': 'changedTime', 'type': 'iso-8601'},
+        'provisioning_state': {'key': 'provisioningState', 'type': 'str'},
+    }
+
+    def __init__(self, *, location: str=None, tags=None, plan=None, properties=None, kind: str=None, managed_by: str=None, sku=None, identity=None, **kwargs) -> None:
+        super(GenericResourceExpanded, self).__init__(location=location, tags=tags, plan=plan, properties=properties, kind=kind, managed_by=managed_by, sku=sku, identity=identity, **kwargs)
+        self.created_time = None
+        self.changed_time = None
+        self.provisioning_state = None
 
 
 class GenericResourceFilter(Model):
@@ -798,7 +897,7 @@ class Identity(Model):
      resource ids in the form:
      '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
     :type user_assigned_identities: dict[str,
-     ~azure.mgmt.resource.resources.v2019_05_01.models.IdentityUserAssignedIdentitiesValue]
+     ~azure.mgmt.resource.resources.v2019_05_01.models.Componentsschemasidentitypropertiesuserassignedidentitiesadditionalproperties]
     """
 
     _validation = {
@@ -810,7 +909,7 @@ class Identity(Model):
         'principal_id': {'key': 'principalId', 'type': 'str'},
         'tenant_id': {'key': 'tenantId', 'type': 'str'},
         'type': {'key': 'type', 'type': 'ResourceIdentityType'},
-        'user_assigned_identities': {'key': 'userAssignedIdentities', 'type': '{IdentityUserAssignedIdentitiesValue}'},
+        'user_assigned_identities': {'key': 'userAssignedIdentities', 'type': '{Componentsschemasidentitypropertiesuserassignedidentitiesadditionalproperties}'},
     }
 
     def __init__(self, *, type=None, user_assigned_identities=None, **kwargs) -> None:
@@ -819,34 +918,6 @@ class Identity(Model):
         self.tenant_id = None
         self.type = type
         self.user_assigned_identities = user_assigned_identities
-
-
-class IdentityUserAssignedIdentitiesValue(Model):
-    """IdentityUserAssignedIdentitiesValue.
-
-    Variables are only populated by the server, and will be ignored when
-    sending a request.
-
-    :ivar principal_id: The principal id of user assigned identity.
-    :vartype principal_id: str
-    :ivar client_id: The client id of user assigned identity.
-    :vartype client_id: str
-    """
-
-    _validation = {
-        'principal_id': {'readonly': True},
-        'client_id': {'readonly': True},
-    }
-
-    _attribute_map = {
-        'principal_id': {'key': 'principalId', 'type': 'str'},
-        'client_id': {'key': 'clientId', 'type': 'str'},
-    }
-
-    def __init__(self, **kwargs) -> None:
-        super(IdentityUserAssignedIdentitiesValue, self).__init__(**kwargs)
-        self.principal_id = None
-        self.client_id = None
 
 
 class OnErrorDeployment(Model):

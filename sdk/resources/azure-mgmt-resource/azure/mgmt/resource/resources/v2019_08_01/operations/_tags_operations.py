@@ -25,7 +25,7 @@ class TagsOperations(object):
     :param config: Configuration of service client.
     :param serializer: An object model serializer.
     :param deserializer: An object model deserializer.
-    :ivar api_version: The API version to use for this operation. Constant value: "2019-08-01".
+    :ivar api_version: The API version to use for the request. Constant value: "2019-08-01".
     """
 
     models = models

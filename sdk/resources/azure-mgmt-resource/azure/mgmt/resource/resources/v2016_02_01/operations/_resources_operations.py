@@ -27,7 +27,7 @@ class ResourcesOperations(object):
     :param config: Configuration of service client.
     :param serializer: An object model serializer.
     :param deserializer: An object model deserializer.
-    :ivar api_version: Client Api Version. Constant value: "2016-02-01".
+    :ivar api_version: The API version to use for the request. Constant value: "2016-02-01".
     """
 
     models = models
@@ -135,7 +135,10 @@ class ResourcesOperations(object):
 
         :param filter: The filter to apply on the operation.
         :type filter: str
-        :param expand: The $expand query parameter.
+        :param expand: Comma-separated list of additional properties to be
+         included in the response. Valid values include `createdTime`,
+         `changedTime` and `provisioningState`. For example,
+         `$expand=createdTime,changedTime`.
         :type expand: str
         :param top: Query parameters. If null is passed returns all resource
          groups.
@@ -145,9 +148,9 @@ class ResourcesOperations(object):
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :return: An iterator like instance of GenericResource
+        :return: An iterator like instance of GenericResourceExpanded
         :rtype:
-         ~azure.mgmt.resource.resources.v2016_02_01.models.GenericResourcePaged[~azure.mgmt.resource.resources.v2016_02_01.models.GenericResource]
+         ~azure.mgmt.resource.resources.v2016_02_01.models.GenericResourceExpandedPaged[~azure.mgmt.resource.resources.v2016_02_01.models.GenericResourceExpanded]
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
         def prepare_request(next_link=None):
@@ -203,13 +206,13 @@ class ResourcesOperations(object):
         header_dict = None
         if raw:
             header_dict = {}
-        deserialized = models.GenericResourcePaged(internal_paging, self._deserialize.dependencies, header_dict)
+        deserialized = models.GenericResourceExpandedPaged(internal_paging, self._deserialize.dependencies, header_dict)
 
         return deserialized
     list.metadata = {'url': '/subscriptions/{subscriptionId}/resources'}
 
     def check_existence(
-            self, resource_group_name, resource_provider_namespace, parent_resource_path, resource_type, resource_name, api_version, custom_headers=None, raw=False, **operation_config):
+            self, resource_group_name, resource_provider_namespace, parent_resource_path, resource_type, resource_name, custom_headers=None, raw=False, **operation_config):
         """Checks whether resource exists.
 
         :param resource_group_name: The name of the resource group. The name
@@ -223,8 +226,6 @@ class ResourcesOperations(object):
         :type resource_type: str
         :param resource_name: Resource identity.
         :type resource_name: str
-        :param api_version:
-        :type api_version: str
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
@@ -248,7 +249,7 @@ class ResourcesOperations(object):
 
         # Construct parameters
         query_parameters = {}
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
 
         # Construct headers
         header_parameters = {}
@@ -276,7 +277,7 @@ class ResourcesOperations(object):
     check_existence.metadata = {'url': '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}'}
 
     def delete(
-            self, resource_group_name, resource_provider_namespace, parent_resource_path, resource_type, resource_name, api_version, custom_headers=None, raw=False, **operation_config):
+            self, resource_group_name, resource_provider_namespace, parent_resource_path, resource_type, resource_name, custom_headers=None, raw=False, **operation_config):
         """Delete resource and all of its resources. .
 
         :param resource_group_name: The name of the resource group. The name
@@ -290,8 +291,6 @@ class ResourcesOperations(object):
         :type resource_type: str
         :param resource_name: Resource identity.
         :type resource_name: str
-        :param api_version:
-        :type api_version: str
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
@@ -315,7 +314,7 @@ class ResourcesOperations(object):
 
         # Construct parameters
         query_parameters = {}
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
 
         # Construct headers
         header_parameters = {}
@@ -341,7 +340,7 @@ class ResourcesOperations(object):
     delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}'}
 
     def create_or_update(
-            self, resource_group_name, resource_provider_namespace, parent_resource_path, resource_type, resource_name, api_version, parameters, custom_headers=None, raw=False, **operation_config):
+            self, resource_group_name, resource_provider_namespace, parent_resource_path, resource_type, resource_name, parameters, custom_headers=None, raw=False, **operation_config):
         """Create a resource.
 
         :param resource_group_name: The name of the resource group. The name
@@ -355,8 +354,6 @@ class ResourcesOperations(object):
         :type resource_type: str
         :param resource_name: Resource identity.
         :type resource_name: str
-        :param api_version:
-        :type api_version: str
         :param parameters: Create or update resource parameters.
         :type parameters:
          ~azure.mgmt.resource.resources.v2016_02_01.models.GenericResource
@@ -385,7 +382,7 @@ class ResourcesOperations(object):
 
         # Construct parameters
         query_parameters = {}
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
 
         # Construct headers
         header_parameters = {}
@@ -425,7 +422,7 @@ class ResourcesOperations(object):
 
 
     def _update_initial(
-            self, resource_group_name, resource_provider_namespace, parent_resource_path, resource_type, resource_name, api_version, parameters, custom_headers=None, raw=False, **operation_config):
+            self, resource_group_name, resource_provider_namespace, parent_resource_path, resource_type, resource_name, parameters, custom_headers=None, raw=False, **operation_config):
         # Construct URL
         url = self.update.metadata['url']
         path_format_arguments = {
@@ -440,7 +437,7 @@ class ResourcesOperations(object):
 
         # Construct parameters
         query_parameters = {}
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
 
         # Construct headers
         header_parameters = {}
@@ -477,7 +474,7 @@ class ResourcesOperations(object):
         return deserialized
 
     def update(
-            self, resource_group_name, resource_provider_namespace, parent_resource_path, resource_type, resource_name, api_version, parameters, custom_headers=None, raw=False, polling=True, **operation_config):
+            self, resource_group_name, resource_provider_namespace, parent_resource_path, resource_type, resource_name, parameters, custom_headers=None, raw=False, polling=True, **operation_config):
         """Updates a resource.
 
         :param resource_group_name: The name of the resource group for the
@@ -492,8 +489,6 @@ class ResourcesOperations(object):
         :type resource_type: str
         :param resource_name: The name of the resource to update.
         :type resource_name: str
-        :param api_version: The API version to use for the operation.
-        :type api_version: str
         :param parameters: Parameters for updating the resource.
         :type parameters:
          ~azure.mgmt.resource.resources.v2016_02_01.models.GenericResource
@@ -516,7 +511,6 @@ class ResourcesOperations(object):
             parent_resource_path=parent_resource_path,
             resource_type=resource_type,
             resource_name=resource_name,
-            api_version=api_version,
             parameters=parameters,
             custom_headers=custom_headers,
             raw=True,
@@ -542,7 +536,7 @@ class ResourcesOperations(object):
     update.metadata = {'url': '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}'}
 
     def get(
-            self, resource_group_name, resource_provider_namespace, parent_resource_path, resource_type, resource_name, api_version, custom_headers=None, raw=False, **operation_config):
+            self, resource_group_name, resource_provider_namespace, parent_resource_path, resource_type, resource_name, custom_headers=None, raw=False, **operation_config):
         """Returns a resource belonging to a resource group.
 
         :param resource_group_name: The name of the resource group. The name
@@ -556,8 +550,6 @@ class ResourcesOperations(object):
         :type resource_type: str
         :param resource_name: Resource identity.
         :type resource_name: str
-        :param api_version:
-        :type api_version: str
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
@@ -583,7 +575,7 @@ class ResourcesOperations(object):
 
         # Construct parameters
         query_parameters = {}
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
 
         # Construct headers
         header_parameters = {}

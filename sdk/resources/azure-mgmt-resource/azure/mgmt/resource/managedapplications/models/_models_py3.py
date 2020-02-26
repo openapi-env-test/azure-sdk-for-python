@@ -157,7 +157,7 @@ class Application(GenericResource):
         'managed_resource_group_id': {'required': True},
         'outputs': {'readonly': True},
         'provisioning_state': {'readonly': True},
-        'kind': {'required': True, 'pattern': r'^[-\w\._,\(\)]+$'},
+        'kind': {'required': True},
     }
 
     _attribute_map = {
@@ -365,7 +365,6 @@ class ApplicationPatchable(GenericResource):
         'type': {'readonly': True},
         'outputs': {'readonly': True},
         'provisioning_state': {'readonly': True},
-        'kind': {'pattern': r'^[-\w\._,\(\)]+$'},
     }
 
     _attribute_map = {

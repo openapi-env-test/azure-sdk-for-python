@@ -27,7 +27,7 @@ class ResourceGroupsOperations(object):
     :param config: Configuration of service client.
     :param serializer: An object model serializer.
     :param deserializer: An object model deserializer.
-    :ivar api_version: The API version to use for this operation. Constant value: "2019-10-01".
+    :ivar api_version: The API version to use for the request. Constant value: "2019-10-01".
     """
 
     models = models
@@ -386,7 +386,7 @@ class ResourceGroupsOperations(object):
         # Construct URL
         url = self.export_template.metadata['url']
         path_format_arguments = {
-            'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str'),
+            'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str', min_length=1),
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$')
         }
         url = self._client.format_url(url, **path_format_arguments)

@@ -13,6 +13,7 @@ try:
     from ._models_py3 import AliasPathType
     from ._models_py3 import AliasType
     from ._models_py3 import BasicDependency
+    from ._models_py3 import Componentsschemasidentitypropertiesuserassignedidentitiesadditionalproperties
     from ._models_py3 import DebugSetting
     from ._models_py3 import Dependency
     from ._models_py3 import Deployment
@@ -31,10 +32,10 @@ try:
     from ._models_py3 import ErrorResponse
     from ._models_py3 import ExportTemplateRequest
     from ._models_py3 import GenericResource
+    from ._models_py3 import GenericResourceExpanded
     from ._models_py3 import GenericResourceFilter
     from ._models_py3 import HttpMessage
     from ._models_py3 import Identity
-    from ._models_py3 import IdentityUserAssignedIdentitiesValue
     from ._models_py3 import OnErrorDeployment
     from ._models_py3 import OnErrorDeploymentExtended
     from ._models_py3 import Operation
@@ -50,14 +51,15 @@ try:
     from ._models_py3 import ResourceGroupPatchable
     from ._models_py3 import ResourceGroupProperties
     from ._models_py3 import ResourceProviderOperationDisplayProperties
+    from ._models_py3 import ResourceReference
     from ._models_py3 import ResourcesMoveInfo
     from ._models_py3 import ScopedDeployment
     from ._models_py3 import Sku
     from ._models_py3 import SubResource
     from ._models_py3 import TagCount
     from ._models_py3 import TagDetails
-    from ._models_py3 import TagPatchRequest
     from ._models_py3 import Tags
+    from ._models_py3 import TagsPatchResource
     from ._models_py3 import TagsResource
     from ._models_py3 import TagValue
     from ._models_py3 import TargetResource
@@ -70,6 +72,7 @@ except (SyntaxError, ImportError):
     from ._models import AliasPathType
     from ._models import AliasType
     from ._models import BasicDependency
+    from ._models import Componentsschemasidentitypropertiesuserassignedidentitiesadditionalproperties
     from ._models import DebugSetting
     from ._models import Dependency
     from ._models import Deployment
@@ -88,10 +91,10 @@ except (SyntaxError, ImportError):
     from ._models import ErrorResponse
     from ._models import ExportTemplateRequest
     from ._models import GenericResource
+    from ._models import GenericResourceExpanded
     from ._models import GenericResourceFilter
     from ._models import HttpMessage
     from ._models import Identity
-    from ._models import IdentityUserAssignedIdentitiesValue
     from ._models import OnErrorDeployment
     from ._models import OnErrorDeploymentExtended
     from ._models import Operation
@@ -107,14 +110,15 @@ except (SyntaxError, ImportError):
     from ._models import ResourceGroupPatchable
     from ._models import ResourceGroupProperties
     from ._models import ResourceProviderOperationDisplayProperties
+    from ._models import ResourceReference
     from ._models import ResourcesMoveInfo
     from ._models import ScopedDeployment
     from ._models import Sku
     from ._models import SubResource
     from ._models import TagCount
     from ._models import TagDetails
-    from ._models import TagPatchRequest
     from ._models import Tags
+    from ._models import TagsPatchResource
     from ._models import TagsResource
     from ._models import TagValue
     from ._models import TargetResource
@@ -125,7 +129,7 @@ except (SyntaxError, ImportError):
     from ._models import WhatIfPropertyChange
 from ._paged_models import DeploymentExtendedPaged
 from ._paged_models import DeploymentOperationPaged
-from ._paged_models import GenericResourcePaged
+from ._paged_models import GenericResourceExpandedPaged
 from ._paged_models import OperationPaged
 from ._paged_models import ProviderPaged
 from ._paged_models import ResourceGroupPaged
@@ -143,6 +147,7 @@ __all__ = [
     'AliasPathType',
     'AliasType',
     'BasicDependency',
+    'Componentsschemasidentitypropertiesuserassignedidentitiesadditionalproperties',
     'DebugSetting',
     'Dependency',
     'Deployment',
@@ -161,10 +166,10 @@ __all__ = [
     'ErrorResponse',
     'ExportTemplateRequest',
     'GenericResource',
+    'GenericResourceExpanded',
     'GenericResourceFilter',
     'HttpMessage',
     'Identity',
-    'IdentityUserAssignedIdentitiesValue',
     'OnErrorDeployment',
     'OnErrorDeploymentExtended',
     'Operation',
@@ -180,14 +185,15 @@ __all__ = [
     'ResourceGroupPatchable',
     'ResourceGroupProperties',
     'ResourceProviderOperationDisplayProperties',
+    'ResourceReference',
     'ResourcesMoveInfo',
     'ScopedDeployment',
     'Sku',
     'SubResource',
     'TagCount',
     'TagDetails',
-    'TagPatchRequest',
     'Tags',
+    'TagsPatchResource',
     'TagsResource',
     'TagValue',
     'TargetResource',
@@ -199,7 +205,7 @@ __all__ = [
     'OperationPaged',
     'DeploymentExtendedPaged',
     'ProviderPaged',
-    'GenericResourcePaged',
+    'GenericResourceExpandedPaged',
     'ResourceGroupPaged',
     'TagDetailsPaged',
     'DeploymentOperationPaged',

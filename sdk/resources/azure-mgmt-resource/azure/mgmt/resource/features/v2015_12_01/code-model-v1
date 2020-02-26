@@ -1,0 +1,2232 @@
+{
+ "$id": "1",
+ "modelTypes": [
+  {
+   "$id": "2",
+   "$type": "CompositeType",
+   "properties": [
+    {
+     "$id": "3",
+     "isReadOnly": false,
+     "realPath": [
+      "state"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "4",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "5",
+      "fixed": false,
+      "raw": "The registration state of the feature for the subscription."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "6",
+      "fixed": false,
+      "raw": "state"
+     },
+     "serializedName": "state",
+     "modelType": {
+      "$id": "7",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "8",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    }
+   ],
+   "serializedName": "FeatureProperties",
+   "documentation": "Information about feature.",
+   "containsConstantProperties": false,
+   "name": {
+    "$id": "9",
+    "fixed": false,
+    "raw": "FeatureProperties"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2015-12-01"
+     ],
+     "filename": [
+      "mem:///245?oai3.shaken.json"
+     ],
+     "name": "FeatureProperties",
+     "originalLocations": [
+      "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Features/stable/2015-12-01/features.json#/components/schemas/FeatureProperties"
+     ]
+    }
+   },
+   "deprecated": false
+  },
+  {
+   "$id": "10",
+   "$type": "CompositeType",
+   "properties": [
+    {
+     "$id": "11",
+     "isReadOnly": false,
+     "realPath": [
+      "name"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "12",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "13",
+      "fixed": false,
+      "raw": "The name of the feature."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "14",
+      "fixed": false,
+      "raw": "name"
+     },
+     "serializedName": "name",
+     "modelType": {
+      "$id": "15",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "16",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "17",
+     "isReadOnly": false,
+     "realPath": [
+      "properties"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "18",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "19",
+      "fixed": false,
+      "raw": "Properties of the previewed feature."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "20",
+      "fixed": false,
+      "raw": "properties"
+     },
+     "serializedName": "properties",
+     "modelType": {
+      "$ref": "2"
+     }
+    },
+    {
+     "$id": "21",
+     "isReadOnly": false,
+     "realPath": [
+      "id"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "22",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "23",
+      "fixed": false,
+      "raw": "The resource ID of the feature."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "24",
+      "fixed": false,
+      "raw": "id"
+     },
+     "serializedName": "id",
+     "modelType": {
+      "$id": "25",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "26",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "27",
+     "isReadOnly": false,
+     "realPath": [
+      "type"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "28",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "29",
+      "fixed": false,
+      "raw": "The resource type of the feature."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "30",
+      "fixed": false,
+      "raw": "type"
+     },
+     "serializedName": "type",
+     "modelType": {
+      "$id": "31",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "32",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    }
+   ],
+   "serializedName": "FeatureResult",
+   "documentation": "Previewed feature information.",
+   "containsConstantProperties": false,
+   "name": {
+    "$id": "33",
+    "fixed": false,
+    "raw": "FeatureResult"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2015-12-01"
+     ],
+     "filename": [
+      "mem:///245?oai3.shaken.json"
+     ],
+     "name": "FeatureResult",
+     "originalLocations": [
+      "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Features/stable/2015-12-01/features.json#/components/schemas/FeatureResult"
+     ]
+    }
+   },
+   "deprecated": false
+  },
+  {
+   "$id": "34",
+   "$type": "CompositeType",
+   "properties": [
+    {
+     "$id": "35",
+     "isReadOnly": false,
+     "realPath": [
+      "value"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "36",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "37",
+      "fixed": false,
+      "raw": "The array of features."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "38",
+      "fixed": false,
+      "raw": "value"
+     },
+     "serializedName": "value",
+     "modelType": {
+      "$id": "39",
+      "$type": "SequenceType",
+      "elementType": {
+       "$ref": "10"
+      },
+      "name": {
+       "$id": "40",
+       "fixed": false
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "41",
+     "isReadOnly": false,
+     "realPath": [
+      "nextLink"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "42",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "43",
+      "fixed": false,
+      "raw": "The URL to use for getting the next set of results."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "44",
+      "fixed": false,
+      "raw": "nextLink"
+     },
+     "serializedName": "nextLink",
+     "modelType": {
+      "$id": "45",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "46",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    }
+   ],
+   "serializedName": "FeatureOperationsListResult",
+   "documentation": "List of previewed features.",
+   "containsConstantProperties": false,
+   "name": {
+    "$id": "47",
+    "fixed": false,
+    "raw": "FeatureOperationsListResult"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2015-12-01"
+     ],
+     "filename": [
+      "mem:///245?oai3.shaken.json"
+     ],
+     "name": "FeatureOperationsListResult",
+     "originalLocations": [
+      "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Features/stable/2015-12-01/features.json#/components/schemas/FeatureOperationsListResult"
+     ]
+    }
+   },
+   "deprecated": false
+  },
+  {
+   "$id": "48",
+   "$type": "CompositeType",
+   "properties": [
+    {
+     "$id": "49",
+     "isReadOnly": false,
+     "realPath": [
+      "provider"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "50",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "51",
+      "fixed": false,
+      "raw": "Service provider: Microsoft.Features"
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "52",
+      "fixed": false,
+      "raw": "provider"
+     },
+     "serializedName": "provider",
+     "modelType": {
+      "$id": "53",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "54",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "55",
+     "isReadOnly": false,
+     "realPath": [
+      "resource"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "56",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "57",
+      "fixed": false,
+      "raw": "Resource on which the operation is performed: Profile, endpoint, etc."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "58",
+      "fixed": false,
+      "raw": "resource"
+     },
+     "serializedName": "resource",
+     "modelType": {
+      "$id": "59",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "60",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "61",
+     "isReadOnly": false,
+     "realPath": [
+      "operation"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "62",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "63",
+      "fixed": false,
+      "raw": "Operation type: Read, write, delete, etc."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "64",
+      "fixed": false,
+      "raw": "operation"
+     },
+     "serializedName": "operation",
+     "modelType": {
+      "$id": "65",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "66",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    }
+   ],
+   "serializedName": "Operation-display",
+   "documentation": "The object that represents the operation.",
+   "containsConstantProperties": false,
+   "name": {
+    "$id": "67",
+    "fixed": false,
+    "raw": "Operation-display"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2015-12-01"
+     ],
+     "filename": [
+      "mem:///245?oai3.shaken.json"
+     ],
+     "name": "Operation-display",
+     "originalLocations": [
+      "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Features/stable/2015-12-01/features.json#/components/schemas/Operation-display"
+     ]
+    }
+   },
+   "deprecated": false
+  },
+  {
+   "$id": "68",
+   "$type": "CompositeType",
+   "properties": [
+    {
+     "$id": "69",
+     "isReadOnly": false,
+     "realPath": [
+      "name"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "70",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "71",
+      "fixed": false,
+      "raw": "Operation name: {provider}/{resource}/{operation}"
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "72",
+      "fixed": false,
+      "raw": "name"
+     },
+     "serializedName": "name",
+     "modelType": {
+      "$id": "73",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "74",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "75",
+     "isReadOnly": false,
+     "realPath": [
+      "display"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "76",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "77",
+      "fixed": false,
+      "raw": "The object that represents the operation."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "78",
+      "fixed": false,
+      "raw": "display"
+     },
+     "serializedName": "display",
+     "modelType": {
+      "$ref": "48"
+     }
+    }
+   ],
+   "serializedName": "Operation",
+   "documentation": "Microsoft.Features operation",
+   "containsConstantProperties": false,
+   "name": {
+    "$id": "79",
+    "fixed": false,
+    "raw": "Operation"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2015-12-01"
+     ],
+     "filename": [
+      "mem:///245?oai3.shaken.json"
+     ],
+     "name": "Operation",
+     "originalLocations": [
+      "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Features/stable/2015-12-01/features.json#/components/schemas/Operation"
+     ]
+    }
+   },
+   "deprecated": false
+  },
+  {
+   "$id": "80",
+   "$type": "CompositeType",
+   "properties": [
+    {
+     "$id": "81",
+     "isReadOnly": false,
+     "realPath": [
+      "value"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "82",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "83",
+      "fixed": false,
+      "raw": "List of Microsoft.Features operations."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "84",
+      "fixed": false,
+      "raw": "value"
+     },
+     "serializedName": "value",
+     "modelType": {
+      "$id": "85",
+      "$type": "SequenceType",
+      "elementType": {
+       "$ref": "68"
+      },
+      "name": {
+       "$id": "86",
+       "fixed": false
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "87",
+     "isReadOnly": false,
+     "realPath": [
+      "nextLink"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "88",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "89",
+      "fixed": false,
+      "raw": "URL to get the next set of operation list results if there are any."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "90",
+      "fixed": false,
+      "raw": "nextLink"
+     },
+     "serializedName": "nextLink",
+     "modelType": {
+      "$id": "91",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "92",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    }
+   ],
+   "serializedName": "OperationListResult",
+   "documentation": "Result of the request to list Microsoft.Features operations. It contains a list of operations and a URL link to get the next set of results.",
+   "containsConstantProperties": false,
+   "name": {
+    "$id": "93",
+    "fixed": false,
+    "raw": "OperationListResult"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2015-12-01"
+     ],
+     "filename": [
+      "mem:///245?oai3.shaken.json"
+     ],
+     "name": "OperationListResult",
+     "originalLocations": [
+      "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Features/stable/2015-12-01/features.json#/components/schemas/OperationListResult"
+     ]
+    }
+   },
+   "deprecated": false
+  }
+ ],
+ "name": "FeatureClient",
+ "namespace": "Azure.mgmt.resource.features.v20151201",
+ "modelsName": "Models",
+ "apiVersion": "2015-12-01",
+ "baseUrl": "https://management.azure.com",
+ "documentation": "Azure Feature Exposure Control (AFEC) provides a mechanism for the resource providers to control feature exposure to users. Resource providers typically use this mechanism to provide public/private preview for new features prior to making them generally available. Users need to explicitly register for AFEC features to get access to such functionality.",
+ "extensions": {
+  "security": [
+   {
+    "azure_auth": [
+     "user_impersonation"
+    ]
+   }
+  ]
+ },
+ "properties": [
+  {
+   "$id": "94",
+   "isReadOnly": false,
+   "realPath": [
+    "subscriptionId"
+   ],
+   "collectionFormat": "none",
+   "defaultValue": {
+    "$id": "95",
+    "fixed": false
+   },
+   "deprecated": false,
+   "documentation": {
+    "$id": "96",
+    "fixed": false,
+    "raw": "The ID of the target subscription."
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2015-12-01"
+     ],
+     "filename": [
+      "mem:///245?oai3.shaken.json"
+     ],
+     "name": "SubscriptionIdParameter",
+     "originalLocations": [
+      "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Features/stable/2015-12-01/features.json#/components/parameters/SubscriptionIdParameter"
+     ]
+    }
+   },
+   "isRequired": true,
+   "isConstant": false,
+   "name": {
+    "$id": "97",
+    "fixed": false,
+    "raw": "subscriptionId"
+   },
+   "serializedName": "subscriptionId",
+   "modelType": {
+    "$id": "98",
+    "$type": "PrimaryType",
+    "knownPrimaryType": "string",
+    "name": {
+     "$id": "99",
+     "fixed": false,
+     "raw": "String"
+    },
+    "deprecated": false
+   }
+  },
+  {
+   "$id": "100",
+   "isReadOnly": false,
+   "realPath": [
+    "api-version"
+   ],
+   "collectionFormat": "none",
+   "defaultValue": {
+    "$id": "101",
+    "fixed": false
+   },
+   "deprecated": false,
+   "documentation": {
+    "$id": "102",
+    "fixed": false,
+    "raw": "The API version to use for this operation."
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2015-12-01"
+     ],
+     "filename": [
+      "mem:///245?oai3.shaken.json"
+     ],
+     "name": "ApiVersionParameter",
+     "originalLocations": [
+      "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Features/stable/2015-12-01/features.json#/components/parameters/ApiVersionParameter"
+     ]
+    }
+   },
+   "isRequired": true,
+   "isConstant": false,
+   "name": {
+    "$id": "103",
+    "fixed": false,
+    "raw": "api-version"
+   },
+   "serializedName": "api-version",
+   "modelType": {
+    "$id": "104",
+    "$type": "PrimaryType",
+    "knownPrimaryType": "string",
+    "name": {
+     "$id": "105",
+     "fixed": false,
+     "raw": "String"
+    },
+    "deprecated": false
+   }
+  },
+  {
+   "$id": "106",
+   "isReadOnly": false,
+   "realPath": [
+    "resourceProviderNamespace"
+   ],
+   "collectionFormat": "none",
+   "defaultValue": {
+    "$id": "107",
+    "fixed": false
+   },
+   "deprecated": false,
+   "documentation": {
+    "$id": "108",
+    "fixed": false,
+    "raw": "The namespace of the resource provider for getting features."
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2015-12-01"
+     ],
+     "filename": [
+      "mem:///245?oai3.shaken.json"
+     ],
+     "name": "paths·subscriptions-subscriptionid-providers-microsoft-features-providers-resourceprovidernamespace-features·get·parameters·0",
+     "originalLocations": [
+      "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Features/stable/2015-12-01/features.json#/components/parameters/paths·subscriptions-subscriptionid-providers-microsoft-features-providers-resourceprovidernamespace-features·get·parameters·0"
+     ]
+    },
+    "x-ms-parameter-location": "method"
+   },
+   "isRequired": true,
+   "isConstant": false,
+   "name": {
+    "$id": "109",
+    "fixed": false,
+    "raw": "resourceProviderNamespace"
+   },
+   "serializedName": "resourceProviderNamespace",
+   "modelType": {
+    "$id": "110",
+    "$type": "PrimaryType",
+    "knownPrimaryType": "string",
+    "name": {
+     "$id": "111",
+     "fixed": false,
+     "raw": "String"
+    },
+    "deprecated": false
+   }
+  },
+  {
+   "$id": "112",
+   "isReadOnly": false,
+   "realPath": [
+    "resourceProviderNamespace"
+   ],
+   "collectionFormat": "none",
+   "defaultValue": {
+    "$id": "113",
+    "fixed": false
+   },
+   "deprecated": false,
+   "documentation": {
+    "$id": "114",
+    "fixed": false,
+    "raw": "The resource provider namespace for the feature."
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2015-12-01"
+     ],
+     "filename": [
+      "mem:///245?oai3.shaken.json"
+     ],
+     "name": "paths·subscriptions-subscriptionid-providers-microsoft-features-providers-resourceprovidernamespace-features-featurename·get·parameters·0",
+     "originalLocations": [
+      "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Features/stable/2015-12-01/features.json#/components/parameters/paths·subscriptions-subscriptionid-providers-microsoft-features-providers-resourceprovidernamespace-features-featurename·get·parameters·0"
+     ]
+    },
+    "x-ms-parameter-location": "method"
+   },
+   "isRequired": true,
+   "isConstant": false,
+   "name": {
+    "$id": "115",
+    "fixed": false,
+    "raw": "ResourceProviderNamespace1"
+   },
+   "serializedName": "resourceProviderNamespace",
+   "modelType": {
+    "$id": "116",
+    "$type": "PrimaryType",
+    "knownPrimaryType": "string",
+    "name": {
+     "$id": "117",
+     "fixed": false,
+     "raw": "String"
+    },
+    "deprecated": false
+   }
+  },
+  {
+   "$id": "118",
+   "isReadOnly": false,
+   "realPath": [
+    "featureName"
+   ],
+   "collectionFormat": "none",
+   "defaultValue": {
+    "$id": "119",
+    "fixed": false
+   },
+   "deprecated": false,
+   "documentation": {
+    "$id": "120",
+    "fixed": false,
+    "raw": "The name of the feature to get."
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2015-12-01"
+     ],
+     "filename": [
+      "mem:///245?oai3.shaken.json"
+     ],
+     "name": "paths·subscriptions-subscriptionid-providers-microsoft-features-providers-resourceprovidernamespace-features-featurename·get·parameters·1",
+     "originalLocations": [
+      "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Features/stable/2015-12-01/features.json#/components/parameters/paths·subscriptions-subscriptionid-providers-microsoft-features-providers-resourceprovidernamespace-features-featurename·get·parameters·1"
+     ]
+    },
+    "x-ms-parameter-location": "method"
+   },
+   "isRequired": true,
+   "isConstant": false,
+   "name": {
+    "$id": "121",
+    "fixed": false,
+    "raw": "featureName"
+   },
+   "serializedName": "featureName",
+   "modelType": {
+    "$id": "122",
+    "$type": "PrimaryType",
+    "knownPrimaryType": "string",
+    "name": {
+     "$id": "123",
+     "fixed": false,
+     "raw": "String"
+    },
+    "deprecated": false
+   }
+  },
+  {
+   "$id": "124",
+   "isReadOnly": false,
+   "realPath": [
+    "resourceProviderNamespace"
+   ],
+   "collectionFormat": "none",
+   "defaultValue": {
+    "$id": "125",
+    "fixed": false
+   },
+   "deprecated": false,
+   "documentation": {
+    "$id": "126",
+    "fixed": false,
+    "raw": "The namespace of the resource provider."
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2015-12-01"
+     ],
+     "filename": [
+      "mem:///245?oai3.shaken.json"
+     ],
+     "name": "paths·subscriptions-subscriptionid-providers-microsoft-features-providers-resourceprovidernamespace-features-featurename-register·post·parameters·0",
+     "originalLocations": [
+      "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Features/stable/2015-12-01/features.json#/components/parameters/paths·subscriptions-subscriptionid-providers-microsoft-features-providers-resourceprovidernamespace-features-featurename-register·post·parameters·0"
+     ]
+    },
+    "x-ms-parameter-location": "method"
+   },
+   "isRequired": true,
+   "isConstant": false,
+   "name": {
+    "$id": "127",
+    "fixed": false,
+    "raw": "ResourceProviderNamespace2"
+   },
+   "serializedName": "resourceProviderNamespace",
+   "modelType": {
+    "$id": "128",
+    "$type": "PrimaryType",
+    "knownPrimaryType": "string",
+    "name": {
+     "$id": "129",
+     "fixed": false,
+     "raw": "String"
+    },
+    "deprecated": false
+   }
+  },
+  {
+   "$id": "130",
+   "isReadOnly": false,
+   "realPath": [
+    "featureName"
+   ],
+   "collectionFormat": "none",
+   "defaultValue": {
+    "$id": "131",
+    "fixed": false
+   },
+   "deprecated": false,
+   "documentation": {
+    "$id": "132",
+    "fixed": false,
+    "raw": "The name of the feature to register."
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2015-12-01"
+     ],
+     "filename": [
+      "mem:///245?oai3.shaken.json"
+     ],
+     "name": "paths·subscriptions-subscriptionid-providers-microsoft-features-providers-resourceprovidernamespace-features-featurename-register·post·parameters·1",
+     "originalLocations": [
+      "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Features/stable/2015-12-01/features.json#/components/parameters/paths·subscriptions-subscriptionid-providers-microsoft-features-providers-resourceprovidernamespace-features-featurename-register·post·parameters·1"
+     ]
+    },
+    "x-ms-parameter-location": "method"
+   },
+   "isRequired": true,
+   "isConstant": false,
+   "name": {
+    "$id": "133",
+    "fixed": false,
+    "raw": "FeatureName1"
+   },
+   "serializedName": "featureName",
+   "modelType": {
+    "$id": "134",
+    "$type": "PrimaryType",
+    "knownPrimaryType": "string",
+    "name": {
+     "$id": "135",
+     "fixed": false,
+     "raw": "String"
+    },
+    "deprecated": false
+   }
+  }
+ ],
+ "operations": [
+  {
+   "$id": "136",
+   "methods": [
+    {
+     "$id": "137",
+     "parameters": [
+      {
+       "$id": "138",
+       "location": "query",
+       "collectionFormat": "none",
+       "defaultValue": {
+        "$id": "139",
+        "fixed": false,
+        "raw": "2015-12-01"
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "140",
+        "fixed": false,
+        "raw": "The API version to use for the request."
+       },
+       "isRequired": true,
+       "isConstant": true,
+       "name": {
+        "$id": "141",
+        "fixed": false,
+        "raw": "api-version"
+       },
+       "serializedName": "api-version",
+       "modelType": {
+        "$id": "142",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "name": {
+         "$id": "143",
+         "fixed": false,
+         "raw": "String"
+        },
+        "deprecated": false
+       }
+      }
+     ],
+     "name": {
+      "$id": "144",
+      "fixed": false,
+      "raw": "ListOperations"
+     },
+     "group": {
+      "$id": "145",
+      "fixed": false,
+      "raw": ""
+     },
+     "serializedName": "ListOperations",
+     "url": "/providers/Microsoft.Features/operations",
+     "isAbsoluteUrl": false,
+     "httpMethod": "get",
+     "responses": {
+      "OK": {
+       "$id": "146",
+       "body": {
+        "$ref": "80"
+       },
+       "extensions": {
+        "$id": "147",
+        "x-ms-metadata": {
+         "apiVersions": [
+          "2015-12-01"
+         ],
+         "filename": [
+          "mem:///245?oai3.shaken.json"
+         ],
+         "name": "paths·providers-microsoft-features-operations·get·responses·200",
+         "originalLocations": [
+          "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Features/stable/2015-12-01/features.json#/components/responses/paths·providers-microsoft-features-operations·get·responses·200"
+         ]
+        }
+       },
+       "isNullable": true
+      }
+     },
+     "defaultResponse": {
+      "$id": "148",
+      "isNullable": true
+     },
+     "returnType": {
+      "$id": "149",
+      "body": {
+       "$ref": "80"
+      },
+      "isNullable": true
+     },
+     "description": "Lists all of the available Microsoft.Features REST API operations.",
+     "requestContentType": "application/json; charset=utf-8",
+     "responseContentTypes": [
+      "application/json",
+      "text/json"
+     ],
+     "extensions": {
+      "servers": [
+       {
+        "url": "https://management.azure.com/"
+       }
+      ],
+      "x-ms-examples": {
+       "List Features operations": {
+        "parameters": {
+         "api-version": "2015-12-01"
+        },
+        "responses": {
+         "200": {
+          "headers": {},
+          "body": {
+           "value": [
+            {
+             "name": "FeaturesOpeartion1",
+             "display": {
+              "provider": "Microsoft.ResourceProvider",
+              "resource": "Resource1",
+              "operation": "Read"
+             }
+            },
+            {
+             "name": "FeaturesOpeartion2",
+             "display": {
+              "provider": "Microsoft.ResourceProvider",
+              "resource": "Resource2",
+              "operation": "Write"
+             }
+            }
+           ]
+          }
+         }
+        }
+       }
+      },
+      "x-ms-pageable": {
+       "nextLinkName": "nextLink"
+      }
+     },
+     "deprecated": false,
+     "hidden": false
+    }
+   ],
+   "name": {
+    "$id": "150",
+    "fixed": false,
+    "raw": ""
+   },
+   "typeName": {
+    "$id": "151",
+    "fixed": false
+   },
+   "nameForProperty": "FeatureClient"
+  },
+  {
+   "$id": "152",
+   "methods": [
+    {
+     "$id": "153",
+     "parameters": [
+      {
+       "$id": "154",
+       "location": "query",
+       "collectionFormat": "none",
+       "defaultValue": {
+        "$id": "155",
+        "fixed": false,
+        "raw": "2015-12-01"
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "156",
+        "fixed": false,
+        "raw": "The API version to use for the request."
+       },
+       "isRequired": true,
+       "isConstant": true,
+       "name": {
+        "$id": "157",
+        "fixed": false,
+        "raw": "api-version"
+       },
+       "serializedName": "api-version",
+       "modelType": {
+        "$id": "158",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "name": {
+         "$id": "159",
+         "fixed": false,
+         "raw": "String"
+        },
+        "deprecated": false
+       }
+      },
+      {
+       "$id": "160",
+       "clientProperty": {
+        "$ref": "94"
+       },
+       "location": "path",
+       "collectionFormat": "none",
+       "defaultValue": {
+        "$id": "161",
+        "fixed": false
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "162",
+        "fixed": false,
+        "raw": "The ID of the target subscription."
+       },
+       "extensions": {
+        "x-ms-metadata": {
+         "apiVersions": [
+          "2015-12-01"
+         ],
+         "filename": [
+          "mem:///245?oai3.shaken.json"
+         ],
+         "name": "SubscriptionIdParameter",
+         "originalLocations": [
+          "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Features/stable/2015-12-01/features.json#/components/parameters/SubscriptionIdParameter"
+         ]
+        }
+       },
+       "isRequired": true,
+       "isConstant": false,
+       "name": {
+        "$id": "163",
+        "fixed": false,
+        "raw": "subscriptionId"
+       },
+       "serializedName": "subscriptionId",
+       "modelType": {
+        "$id": "164",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "name": {
+         "$id": "165",
+         "fixed": false,
+         "raw": "String"
+        },
+        "deprecated": false
+       }
+      }
+     ],
+     "name": {
+      "$id": "166",
+      "fixed": false,
+      "raw": "ListAll"
+     },
+     "group": {
+      "$id": "167",
+      "fixed": false,
+      "raw": "Features"
+     },
+     "serializedName": "Features_ListAll",
+     "url": "/subscriptions/{subscriptionId}/providers/Microsoft.Features/features",
+     "isAbsoluteUrl": false,
+     "httpMethod": "get",
+     "responses": {
+      "OK": {
+       "$id": "168",
+       "body": {
+        "$ref": "34"
+       },
+       "extensions": {
+        "$id": "169",
+        "x-ms-metadata": {
+         "apiVersions": [
+          "2015-12-01"
+         ],
+         "filename": [
+          "mem:///245?oai3.shaken.json"
+         ],
+         "name": "paths·subscriptions-subscriptionid-providers-microsoft-features-features·get·responses·200",
+         "originalLocations": [
+          "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Features/stable/2015-12-01/features.json#/components/responses/paths·subscriptions-subscriptionid-providers-microsoft-features-features·get·responses·200"
+         ]
+        }
+       },
+       "isNullable": true
+      }
+     },
+     "defaultResponse": {
+      "$id": "170",
+      "isNullable": true
+     },
+     "returnType": {
+      "$id": "171",
+      "body": {
+       "$ref": "34"
+      },
+      "isNullable": true
+     },
+     "description": "Gets all the preview features that are available through AFEC for the subscription.",
+     "requestContentType": "application/json; charset=utf-8",
+     "responseContentTypes": [
+      "application/json",
+      "text/json"
+     ],
+     "extensions": {
+      "servers": [
+       {
+        "url": "https://management.azure.com/"
+       }
+      ],
+      "x-ms-examples": {
+       "List subscription Features": {
+        "parameters": {
+         "api-version": "2015-12-01",
+         "subscriptionId": "subid"
+        },
+        "responses": {
+         "200": {
+          "headers": {},
+          "body": {
+           "value": [
+            {
+             "name": "Feature1",
+             "properties": {
+              "state": "registered"
+             },
+             "id": "feature_id1",
+             "type": "type1"
+            },
+            {
+             "name": "Feature2",
+             "properties": {
+              "state": "unregistered"
+             },
+             "id": "feature_id2",
+             "type": "type2"
+            }
+           ]
+          }
+         }
+        }
+       }
+      },
+      "x-ms-pageable": {
+       "nextLinkName": "nextLink"
+      }
+     },
+     "deprecated": false,
+     "hidden": false
+    },
+    {
+     "$id": "172",
+     "parameters": [
+      {
+       "$id": "173",
+       "clientProperty": {
+        "$ref": "106"
+       },
+       "location": "path",
+       "collectionFormat": "none",
+       "defaultValue": {
+        "$id": "174",
+        "fixed": false
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "175",
+        "fixed": false,
+        "raw": "The namespace of the resource provider for getting features."
+       },
+       "extensions": {
+        "x-ms-metadata": {
+         "apiVersions": [
+          "2015-12-01"
+         ],
+         "filename": [
+          "mem:///245?oai3.shaken.json"
+         ],
+         "name": "paths·subscriptions-subscriptionid-providers-microsoft-features-providers-resourceprovidernamespace-features·get·parameters·0",
+         "originalLocations": [
+          "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Features/stable/2015-12-01/features.json#/components/parameters/paths·subscriptions-subscriptionid-providers-microsoft-features-providers-resourceprovidernamespace-features·get·parameters·0"
+         ]
+        },
+        "x-ms-parameter-location": "method"
+       },
+       "isRequired": true,
+       "isConstant": false,
+       "name": {
+        "$id": "176",
+        "fixed": false,
+        "raw": "resourceProviderNamespace"
+       },
+       "serializedName": "resourceProviderNamespace",
+       "modelType": {
+        "$id": "177",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "name": {
+         "$id": "178",
+         "fixed": false,
+         "raw": "String"
+        },
+        "deprecated": false
+       }
+      },
+      {
+       "$id": "179",
+       "location": "query",
+       "collectionFormat": "none",
+       "defaultValue": {
+        "$id": "180",
+        "fixed": false,
+        "raw": "2015-12-01"
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "181",
+        "fixed": false,
+        "raw": "The API version to use for the request."
+       },
+       "isRequired": true,
+       "isConstant": true,
+       "name": {
+        "$id": "182",
+        "fixed": false,
+        "raw": "api-version"
+       },
+       "serializedName": "api-version",
+       "modelType": {
+        "$id": "183",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "name": {
+         "$id": "184",
+         "fixed": false,
+         "raw": "String"
+        },
+        "deprecated": false
+       }
+      },
+      {
+       "$id": "185",
+       "clientProperty": {
+        "$ref": "94"
+       },
+       "location": "path",
+       "collectionFormat": "none",
+       "defaultValue": {
+        "$id": "186",
+        "fixed": false
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "187",
+        "fixed": false,
+        "raw": "The ID of the target subscription."
+       },
+       "extensions": {
+        "x-ms-metadata": {
+         "apiVersions": [
+          "2015-12-01"
+         ],
+         "filename": [
+          "mem:///245?oai3.shaken.json"
+         ],
+         "name": "SubscriptionIdParameter",
+         "originalLocations": [
+          "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Features/stable/2015-12-01/features.json#/components/parameters/SubscriptionIdParameter"
+         ]
+        }
+       },
+       "isRequired": true,
+       "isConstant": false,
+       "name": {
+        "$id": "188",
+        "fixed": false,
+        "raw": "subscriptionId"
+       },
+       "serializedName": "subscriptionId",
+       "modelType": {
+        "$id": "189",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "name": {
+         "$id": "190",
+         "fixed": false,
+         "raw": "String"
+        },
+        "deprecated": false
+       }
+      }
+     ],
+     "name": {
+      "$id": "191",
+      "fixed": false,
+      "raw": "List"
+     },
+     "group": {
+      "$id": "192",
+      "fixed": false,
+      "raw": "Features"
+     },
+     "serializedName": "Features_List",
+     "url": "/subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features",
+     "isAbsoluteUrl": false,
+     "httpMethod": "get",
+     "responses": {
+      "OK": {
+       "$id": "193",
+       "body": {
+        "$ref": "34"
+       },
+       "extensions": {
+        "$id": "194",
+        "x-ms-metadata": {
+         "apiVersions": [
+          "2015-12-01"
+         ],
+         "filename": [
+          "mem:///245?oai3.shaken.json"
+         ],
+         "name": "paths·subscriptions-subscriptionid-providers-microsoft-features-providers-resourceprovidernamespace-features·get·responses·200",
+         "originalLocations": [
+          "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Features/stable/2015-12-01/features.json#/components/responses/paths·subscriptions-subscriptionid-providers-microsoft-features-providers-resourceprovidernamespace-features·get·responses·200"
+         ]
+        }
+       },
+       "isNullable": true
+      }
+     },
+     "defaultResponse": {
+      "$id": "195",
+      "isNullable": true
+     },
+     "returnType": {
+      "$id": "196",
+      "body": {
+       "$ref": "34"
+      },
+      "isNullable": true
+     },
+     "description": "Gets all the preview features in a provider namespace that are available through AFEC for the subscription.",
+     "requestContentType": "application/json; charset=utf-8",
+     "responseContentTypes": [
+      "application/json",
+      "text/json"
+     ],
+     "extensions": {
+      "servers": [
+       {
+        "url": "https://management.azure.com/"
+       }
+      ],
+      "x-ms-examples": {
+       "List provider Features": {
+        "parameters": {
+         "resourceProviderNamespace": "Resource Provider Namespace",
+         "api-version": "2015-12-01",
+         "subscriptionId": "subid"
+        },
+        "responses": {
+         "200": {
+          "headers": {},
+          "body": {
+           "value": [
+            {
+             "name": "Feature1",
+             "properties": {
+              "state": "registered"
+             },
+             "id": "feature_id1",
+             "type": "type1"
+            },
+            {
+             "name": "Feature2",
+             "properties": {
+              "state": "unregistered"
+             },
+             "id": "feature_id2",
+             "type": "type2"
+            }
+           ]
+          }
+         }
+        }
+       }
+      },
+      "x-ms-pageable": {
+       "nextLinkName": "nextLink"
+      }
+     },
+     "deprecated": false,
+     "hidden": false
+    },
+    {
+     "$id": "197",
+     "parameters": [
+      {
+       "$id": "198",
+       "clientProperty": {
+        "$ref": "106"
+       },
+       "location": "path",
+       "collectionFormat": "none",
+       "defaultValue": {
+        "$id": "199",
+        "fixed": false
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "200",
+        "fixed": false,
+        "raw": "The resource provider namespace for the feature."
+       },
+       "extensions": {
+        "x-ms-metadata": {
+         "apiVersions": [
+          "2015-12-01"
+         ],
+         "filename": [
+          "mem:///245?oai3.shaken.json"
+         ],
+         "name": "paths·subscriptions-subscriptionid-providers-microsoft-features-providers-resourceprovidernamespace-features-featurename·get·parameters·0",
+         "originalLocations": [
+          "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Features/stable/2015-12-01/features.json#/components/parameters/paths·subscriptions-subscriptionid-providers-microsoft-features-providers-resourceprovidernamespace-features-featurename·get·parameters·0"
+         ]
+        },
+        "x-ms-parameter-location": "method"
+       },
+       "isRequired": true,
+       "isConstant": false,
+       "name": {
+        "$id": "201",
+        "fixed": false,
+        "raw": "resourceProviderNamespace"
+       },
+       "serializedName": "resourceProviderNamespace",
+       "modelType": {
+        "$id": "202",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "name": {
+         "$id": "203",
+         "fixed": false,
+         "raw": "String"
+        },
+        "deprecated": false
+       }
+      },
+      {
+       "$id": "204",
+       "clientProperty": {
+        "$ref": "118"
+       },
+       "location": "path",
+       "collectionFormat": "none",
+       "defaultValue": {
+        "$id": "205",
+        "fixed": false
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "206",
+        "fixed": false,
+        "raw": "The name of the feature to get."
+       },
+       "extensions": {
+        "x-ms-metadata": {
+         "apiVersions": [
+          "2015-12-01"
+         ],
+         "filename": [
+          "mem:///245?oai3.shaken.json"
+         ],
+         "name": "paths·subscriptions-subscriptionid-providers-microsoft-features-providers-resourceprovidernamespace-features-featurename·get·parameters·1",
+         "originalLocations": [
+          "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Features/stable/2015-12-01/features.json#/components/parameters/paths·subscriptions-subscriptionid-providers-microsoft-features-providers-resourceprovidernamespace-features-featurename·get·parameters·1"
+         ]
+        },
+        "x-ms-parameter-location": "method"
+       },
+       "isRequired": true,
+       "isConstant": false,
+       "name": {
+        "$id": "207",
+        "fixed": false,
+        "raw": "featureName"
+       },
+       "serializedName": "featureName",
+       "modelType": {
+        "$id": "208",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "name": {
+         "$id": "209",
+         "fixed": false,
+         "raw": "String"
+        },
+        "deprecated": false
+       }
+      },
+      {
+       "$id": "210",
+       "location": "query",
+       "collectionFormat": "none",
+       "defaultValue": {
+        "$id": "211",
+        "fixed": false,
+        "raw": "2015-12-01"
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "212",
+        "fixed": false,
+        "raw": "The API version to use for the request."
+       },
+       "isRequired": true,
+       "isConstant": true,
+       "name": {
+        "$id": "213",
+        "fixed": false,
+        "raw": "api-version"
+       },
+       "serializedName": "api-version",
+       "modelType": {
+        "$id": "214",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "name": {
+         "$id": "215",
+         "fixed": false,
+         "raw": "String"
+        },
+        "deprecated": false
+       }
+      },
+      {
+       "$id": "216",
+       "clientProperty": {
+        "$ref": "94"
+       },
+       "location": "path",
+       "collectionFormat": "none",
+       "defaultValue": {
+        "$id": "217",
+        "fixed": false
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "218",
+        "fixed": false,
+        "raw": "The ID of the target subscription."
+       },
+       "extensions": {
+        "x-ms-metadata": {
+         "apiVersions": [
+          "2015-12-01"
+         ],
+         "filename": [
+          "mem:///245?oai3.shaken.json"
+         ],
+         "name": "SubscriptionIdParameter",
+         "originalLocations": [
+          "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Features/stable/2015-12-01/features.json#/components/parameters/SubscriptionIdParameter"
+         ]
+        }
+       },
+       "isRequired": true,
+       "isConstant": false,
+       "name": {
+        "$id": "219",
+        "fixed": false,
+        "raw": "subscriptionId"
+       },
+       "serializedName": "subscriptionId",
+       "modelType": {
+        "$id": "220",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "name": {
+         "$id": "221",
+         "fixed": false,
+         "raw": "String"
+        },
+        "deprecated": false
+       }
+      }
+     ],
+     "name": {
+      "$id": "222",
+      "fixed": false,
+      "raw": "Get"
+     },
+     "group": {
+      "$id": "223",
+      "fixed": false,
+      "raw": "Features"
+     },
+     "serializedName": "Features_Get",
+     "url": "/subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}",
+     "isAbsoluteUrl": false,
+     "httpMethod": "get",
+     "responses": {
+      "OK": {
+       "$id": "224",
+       "body": {
+        "$ref": "10"
+       },
+       "extensions": {
+        "$id": "225",
+        "x-ms-metadata": {
+         "apiVersions": [
+          "2015-12-01"
+         ],
+         "filename": [
+          "mem:///245?oai3.shaken.json"
+         ],
+         "name": "paths·subscriptions-subscriptionid-providers-microsoft-features-providers-resourceprovidernamespace-features-featurename·get·responses·200",
+         "originalLocations": [
+          "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Features/stable/2015-12-01/features.json#/components/responses/paths·subscriptions-subscriptionid-providers-microsoft-features-providers-resourceprovidernamespace-features-featurename·get·responses·200"
+         ]
+        }
+       },
+       "isNullable": true
+      }
+     },
+     "defaultResponse": {
+      "$id": "226",
+      "isNullable": true
+     },
+     "returnType": {
+      "$id": "227",
+      "body": {
+       "$ref": "10"
+      },
+      "isNullable": true
+     },
+     "description": "Gets the preview feature with the specified name.",
+     "requestContentType": "application/json; charset=utf-8",
+     "responseContentTypes": [
+      "application/json",
+      "text/json"
+     ],
+     "extensions": {
+      "servers": [
+       {
+        "url": "https://management.azure.com/"
+       }
+      ],
+      "x-ms-examples": {
+       "Get feature": {
+        "parameters": {
+         "resourceProviderNamespace": "Resource Provider Namespace",
+         "featureName": "feature",
+         "api-version": "2015-12-01",
+         "subscriptionId": "subid"
+        },
+        "responses": {
+         "200": {
+          "headers": {},
+          "body": {
+           "name": "Feature1",
+           "properties": {
+            "state": "registered"
+           },
+           "id": "feature_id1",
+           "type": "type1"
+          }
+         }
+        }
+       }
+      }
+     },
+     "deprecated": false,
+     "hidden": false
+    },
+    {
+     "$id": "228",
+     "parameters": [
+      {
+       "$id": "229",
+       "clientProperty": {
+        "$ref": "106"
+       },
+       "location": "path",
+       "collectionFormat": "none",
+       "defaultValue": {
+        "$id": "230",
+        "fixed": false
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "231",
+        "fixed": false,
+        "raw": "The namespace of the resource provider."
+       },
+       "extensions": {
+        "x-ms-metadata": {
+         "apiVersions": [
+          "2015-12-01"
+         ],
+         "filename": [
+          "mem:///245?oai3.shaken.json"
+         ],
+         "name": "paths·subscriptions-subscriptionid-providers-microsoft-features-providers-resourceprovidernamespace-features-featurename-register·post·parameters·0",
+         "originalLocations": [
+          "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Features/stable/2015-12-01/features.json#/components/parameters/paths·subscriptions-subscriptionid-providers-microsoft-features-providers-resourceprovidernamespace-features-featurename-register·post·parameters·0"
+         ]
+        },
+        "x-ms-parameter-location": "method"
+       },
+       "isRequired": true,
+       "isConstant": false,
+       "name": {
+        "$id": "232",
+        "fixed": false,
+        "raw": "resourceProviderNamespace"
+       },
+       "serializedName": "resourceProviderNamespace",
+       "modelType": {
+        "$id": "233",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "name": {
+         "$id": "234",
+         "fixed": false,
+         "raw": "String"
+        },
+        "deprecated": false
+       }
+      },
+      {
+       "$id": "235",
+       "clientProperty": {
+        "$ref": "118"
+       },
+       "location": "path",
+       "collectionFormat": "none",
+       "defaultValue": {
+        "$id": "236",
+        "fixed": false
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "237",
+        "fixed": false,
+        "raw": "The name of the feature to register."
+       },
+       "extensions": {
+        "x-ms-metadata": {
+         "apiVersions": [
+          "2015-12-01"
+         ],
+         "filename": [
+          "mem:///245?oai3.shaken.json"
+         ],
+         "name": "paths·subscriptions-subscriptionid-providers-microsoft-features-providers-resourceprovidernamespace-features-featurename-register·post·parameters·1",
+         "originalLocations": [
+          "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Features/stable/2015-12-01/features.json#/components/parameters/paths·subscriptions-subscriptionid-providers-microsoft-features-providers-resourceprovidernamespace-features-featurename-register·post·parameters·1"
+         ]
+        },
+        "x-ms-parameter-location": "method"
+       },
+       "isRequired": true,
+       "isConstant": false,
+       "name": {
+        "$id": "238",
+        "fixed": false,
+        "raw": "featureName"
+       },
+       "serializedName": "featureName",
+       "modelType": {
+        "$id": "239",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "name": {
+         "$id": "240",
+         "fixed": false,
+         "raw": "String"
+        },
+        "deprecated": false
+       }
+      },
+      {
+       "$id": "241",
+       "location": "query",
+       "collectionFormat": "none",
+       "defaultValue": {
+        "$id": "242",
+        "fixed": false,
+        "raw": "2015-12-01"
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "243",
+        "fixed": false,
+        "raw": "The API version to use for the request."
+       },
+       "isRequired": true,
+       "isConstant": true,
+       "name": {
+        "$id": "244",
+        "fixed": false,
+        "raw": "api-version"
+       },
+       "serializedName": "api-version",
+       "modelType": {
+        "$id": "245",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "name": {
+         "$id": "246",
+         "fixed": false,
+         "raw": "String"
+        },
+        "deprecated": false
+       }
+      },
+      {
+       "$id": "247",
+       "clientProperty": {
+        "$ref": "94"
+       },
+       "location": "path",
+       "collectionFormat": "none",
+       "defaultValue": {
+        "$id": "248",
+        "fixed": false
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "249",
+        "fixed": false,
+        "raw": "The ID of the target subscription."
+       },
+       "extensions": {
+        "x-ms-metadata": {
+         "apiVersions": [
+          "2015-12-01"
+         ],
+         "filename": [
+          "mem:///245?oai3.shaken.json"
+         ],
+         "name": "SubscriptionIdParameter",
+         "originalLocations": [
+          "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Features/stable/2015-12-01/features.json#/components/parameters/SubscriptionIdParameter"
+         ]
+        }
+       },
+       "isRequired": true,
+       "isConstant": false,
+       "name": {
+        "$id": "250",
+        "fixed": false,
+        "raw": "subscriptionId"
+       },
+       "serializedName": "subscriptionId",
+       "modelType": {
+        "$id": "251",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "name": {
+         "$id": "252",
+         "fixed": false,
+         "raw": "String"
+        },
+        "deprecated": false
+       }
+      }
+     ],
+     "name": {
+      "$id": "253",
+      "fixed": false,
+      "raw": "Register"
+     },
+     "group": {
+      "$id": "254",
+      "fixed": false,
+      "raw": "Features"
+     },
+     "serializedName": "Features_Register",
+     "url": "/subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}/register",
+     "isAbsoluteUrl": false,
+     "httpMethod": "post",
+     "responses": {
+      "OK": {
+       "$id": "255",
+       "body": {
+        "$ref": "10"
+       },
+       "extensions": {
+        "$id": "256",
+        "x-ms-metadata": {
+         "apiVersions": [
+          "2015-12-01"
+         ],
+         "filename": [
+          "mem:///245?oai3.shaken.json"
+         ],
+         "name": "paths·subscriptions-subscriptionid-providers-microsoft-features-providers-resourceprovidernamespace-features-featurename-register·post·responses·200",
+         "originalLocations": [
+          "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Features/stable/2015-12-01/features.json#/components/responses/paths·subscriptions-subscriptionid-providers-microsoft-features-providers-resourceprovidernamespace-features-featurename-register·post·responses·200"
+         ]
+        }
+       },
+       "isNullable": true
+      }
+     },
+     "defaultResponse": {
+      "$id": "257",
+      "isNullable": true
+     },
+     "returnType": {
+      "$id": "258",
+      "body": {
+       "$ref": "10"
+      },
+      "isNullable": true
+     },
+     "description": "Registers the preview feature for the subscription.",
+     "requestContentType": "application/json; charset=utf-8",
+     "responseContentTypes": [
+      "application/json",
+      "text/json"
+     ],
+     "extensions": {
+      "servers": [
+       {
+        "url": "https://management.azure.com/"
+       }
+      ],
+      "x-ms-examples": {
+       "Register feature": {
+        "parameters": {
+         "resourceProviderNamespace": "Resource Provider Namespace",
+         "featureName": "feature",
+         "api-version": "2015-12-01",
+         "subscriptionId": "subid"
+        },
+        "responses": {
+         "200": {
+          "headers": {},
+          "body": {
+           "name": "Feature1",
+           "properties": {
+            "state": "registered"
+           },
+           "id": "feature_id1",
+           "type": "type1"
+          }
+         }
+        }
+       }
+      }
+     },
+     "deprecated": false,
+     "hidden": false
+    }
+   ],
+   "name": {
+    "$id": "259",
+    "fixed": false,
+    "raw": "Features"
+   },
+   "typeName": {
+    "$id": "260",
+    "fixed": false
+   },
+   "nameForProperty": "Features"
+  }
+ ]
+}

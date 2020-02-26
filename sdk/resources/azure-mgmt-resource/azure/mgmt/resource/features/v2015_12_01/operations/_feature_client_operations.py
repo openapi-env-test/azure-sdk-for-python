@@ -31,6 +31,8 @@ class FeatureClientOperationsMixin(object):
          ~azure.mgmt.resource.features.v2015_12_01.models.OperationPaged[~azure.mgmt.resource.features.v2015_12_01.models.Operation]
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
+        api_version = "2015-12-01"
+
         def prepare_request(next_link=None):
             if not next_link:
                 # Construct URL
@@ -38,7 +40,7 @@ class FeatureClientOperationsMixin(object):
 
                 # Construct parameters
                 query_parameters = {}
-                query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
+                query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
 
             else:
                 url = next_link

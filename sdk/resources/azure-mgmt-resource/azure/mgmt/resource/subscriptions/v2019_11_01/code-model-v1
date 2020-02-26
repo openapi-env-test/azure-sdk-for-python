@@ -1,0 +1,3340 @@
+{
+ "$id": "1",
+ "modelTypes": [
+  {
+   "$id": "2",
+   "$type": "CompositeType",
+   "properties": [
+    {
+     "$id": "3",
+     "isReadOnly": true,
+     "realPath": [
+      "name"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "4",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "5",
+      "fixed": false,
+      "raw": "The name of the paired region."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "6",
+      "fixed": false,
+      "raw": "name"
+     },
+     "serializedName": "name",
+     "modelType": {
+      "$id": "7",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "8",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "9",
+     "isReadOnly": true,
+     "realPath": [
+      "id"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "10",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "11",
+      "fixed": false,
+      "raw": "The fully qualified ID of the location. For example, /subscriptions/00000000-0000-0000-0000-000000000000/locations/westus."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "12",
+      "fixed": false,
+      "raw": "id"
+     },
+     "serializedName": "id",
+     "modelType": {
+      "$id": "13",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "14",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "15",
+     "isReadOnly": true,
+     "realPath": [
+      "subscriptionId"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "16",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "17",
+      "fixed": false,
+      "raw": "The subscription ID."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "18",
+      "fixed": false,
+      "raw": "subscriptionId"
+     },
+     "serializedName": "subscriptionId",
+     "modelType": {
+      "$id": "19",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "20",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    }
+   ],
+   "serializedName": "PairedRegion",
+   "documentation": "Information regarding paired region.",
+   "containsConstantProperties": false,
+   "name": {
+    "$id": "21",
+    "fixed": false,
+    "raw": "PairedRegion"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2019-11-01"
+     ],
+     "filename": [
+      "mem:///243?oai3.shaken.json"
+     ],
+     "name": "PairedRegion",
+     "originalLocations": [
+      "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Resources/stable/2019-11-01/subscriptions.json#/components/schemas/PairedRegion"
+     ]
+    }
+   },
+   "deprecated": false
+  },
+  {
+   "$id": "22",
+   "$type": "CompositeType",
+   "properties": [
+    {
+     "$id": "23",
+     "isReadOnly": true,
+     "realPath": [
+      "regionType"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "24",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "25",
+      "fixed": false,
+      "raw": "The type of the region."
+     },
+     "extensions": {
+      "x-ms-metadata": {
+       "apiVersions": [
+        "2019-11-01"
+       ],
+       "filename": [
+        "mem:///243?oai3.shaken.json"
+       ],
+       "name": "RegionType",
+       "originalLocations": [
+        "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Resources/stable/2019-11-01/subscriptions.json#/components/schemas/LocationMetadata-regionType"
+       ]
+      },
+      "x-ms-enum": {
+       "name": "RegionType",
+       "modelAsString": true
+      }
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "26",
+      "fixed": false,
+      "raw": "regionType"
+     },
+     "serializedName": "regionType",
+     "modelType": {
+      "$id": "27",
+      "$type": "EnumType",
+      "modelAsExtensible": false,
+      "values": [
+       {
+        "$id": "28",
+        "name": "Physical",
+        "serializedName": "Physical"
+       },
+       {
+        "$id": "29",
+        "name": "Logical",
+        "serializedName": "Logical"
+       }
+      ],
+      "modelAsString": true,
+      "underlyingType": {
+       "$id": "30",
+       "$type": "PrimaryType",
+       "knownPrimaryType": "string",
+       "name": {
+        "$id": "31",
+        "fixed": false,
+        "raw": "String"
+       },
+       "deprecated": false
+      },
+      "name": {
+       "$id": "32",
+       "fixed": false,
+       "raw": "RegionType"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "33",
+     "isReadOnly": true,
+     "realPath": [
+      "regionCategory"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "34",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "35",
+      "fixed": false,
+      "raw": "The category of the region."
+     },
+     "extensions": {
+      "x-ms-metadata": {
+       "apiVersions": [
+        "2019-11-01"
+       ],
+       "filename": [
+        "mem:///243?oai3.shaken.json"
+       ],
+       "name": "RegionCategory",
+       "originalLocations": [
+        "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Resources/stable/2019-11-01/subscriptions.json#/components/schemas/LocationMetadata-regionCategory"
+       ]
+      },
+      "x-ms-enum": {
+       "name": "RegionCategory",
+       "modelAsString": true
+      }
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "36",
+      "fixed": false,
+      "raw": "regionCategory"
+     },
+     "serializedName": "regionCategory",
+     "modelType": {
+      "$id": "37",
+      "$type": "EnumType",
+      "modelAsExtensible": false,
+      "values": [
+       {
+        "$id": "38",
+        "name": "Recommended",
+        "serializedName": "Recommended"
+       },
+       {
+        "$id": "39",
+        "name": "Other",
+        "serializedName": "Other"
+       }
+      ],
+      "modelAsString": true,
+      "underlyingType": {
+       "$id": "40",
+       "$type": "PrimaryType",
+       "knownPrimaryType": "string",
+       "name": {
+        "$id": "41",
+        "fixed": false,
+        "raw": "String"
+       },
+       "deprecated": false
+      },
+      "name": {
+       "$id": "42",
+       "fixed": false,
+       "raw": "RegionCategory"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "43",
+     "isReadOnly": true,
+     "realPath": [
+      "geographyGroup"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "44",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "45",
+      "fixed": false,
+      "raw": "The geography group of the location."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "46",
+      "fixed": false,
+      "raw": "geographyGroup"
+     },
+     "serializedName": "geographyGroup",
+     "modelType": {
+      "$id": "47",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "48",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "49",
+     "isReadOnly": true,
+     "realPath": [
+      "longitude"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "50",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "51",
+      "fixed": false,
+      "raw": "The longitude of the location."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "52",
+      "fixed": false,
+      "raw": "longitude"
+     },
+     "serializedName": "longitude",
+     "modelType": {
+      "$id": "53",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "54",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "55",
+     "isReadOnly": true,
+     "realPath": [
+      "latitude"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "56",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "57",
+      "fixed": false,
+      "raw": "The latitude of the location."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "58",
+      "fixed": false,
+      "raw": "latitude"
+     },
+     "serializedName": "latitude",
+     "modelType": {
+      "$id": "59",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "60",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "61",
+     "isReadOnly": true,
+     "realPath": [
+      "physicalLocation"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "62",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "63",
+      "fixed": false,
+      "raw": "The physical location of the Azure location."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "64",
+      "fixed": false,
+      "raw": "physicalLocation"
+     },
+     "serializedName": "physicalLocation",
+     "modelType": {
+      "$id": "65",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "66",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "67",
+     "isReadOnly": false,
+     "realPath": [
+      "pairedRegion"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "68",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "69",
+      "fixed": false,
+      "raw": "The regions paired to this region."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "70",
+      "fixed": false,
+      "raw": "pairedRegion"
+     },
+     "serializedName": "pairedRegion",
+     "modelType": {
+      "$id": "71",
+      "$type": "SequenceType",
+      "elementType": {
+       "$ref": "2"
+      },
+      "name": {
+       "$id": "72",
+       "fixed": false
+      },
+      "deprecated": false
+     }
+    }
+   ],
+   "serializedName": "LocationMetadata",
+   "documentation": "Location metadata information",
+   "containsConstantProperties": false,
+   "name": {
+    "$id": "73",
+    "fixed": false,
+    "raw": "LocationMetadata"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2019-11-01"
+     ],
+     "filename": [
+      "mem:///243?oai3.shaken.json"
+     ],
+     "name": "LocationMetadata",
+     "originalLocations": [
+      "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Resources/stable/2019-11-01/subscriptions.json#/components/schemas/LocationMetadata"
+     ]
+    }
+   },
+   "deprecated": false
+  },
+  {
+   "$id": "74",
+   "$type": "CompositeType",
+   "properties": [
+    {
+     "$id": "75",
+     "isReadOnly": true,
+     "realPath": [
+      "id"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "76",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "77",
+      "fixed": false,
+      "raw": "The fully qualified ID of the location. For example, /subscriptions/00000000-0000-0000-0000-000000000000/locations/westus."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "78",
+      "fixed": false,
+      "raw": "id"
+     },
+     "serializedName": "id",
+     "modelType": {
+      "$id": "79",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "80",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "81",
+     "isReadOnly": true,
+     "realPath": [
+      "subscriptionId"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "82",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "83",
+      "fixed": false,
+      "raw": "The subscription ID."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "84",
+      "fixed": false,
+      "raw": "subscriptionId"
+     },
+     "serializedName": "subscriptionId",
+     "modelType": {
+      "$id": "85",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "86",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "87",
+     "isReadOnly": true,
+     "realPath": [
+      "name"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "88",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "89",
+      "fixed": false,
+      "raw": "The location name."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "90",
+      "fixed": false,
+      "raw": "name"
+     },
+     "serializedName": "name",
+     "modelType": {
+      "$id": "91",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "92",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "93",
+     "isReadOnly": true,
+     "realPath": [
+      "displayName"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "94",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "95",
+      "fixed": false,
+      "raw": "The display name of the location."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "96",
+      "fixed": false,
+      "raw": "displayName"
+     },
+     "serializedName": "displayName",
+     "modelType": {
+      "$id": "97",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "98",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "99",
+     "isReadOnly": true,
+     "realPath": [
+      "regionalDisplayName"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "100",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "101",
+      "fixed": false,
+      "raw": "The display name of the location and its region."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "102",
+      "fixed": false,
+      "raw": "regionalDisplayName"
+     },
+     "serializedName": "regionalDisplayName",
+     "modelType": {
+      "$id": "103",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "104",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "105",
+     "isReadOnly": false,
+     "realPath": [
+      "metadata"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "106",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "107",
+      "fixed": false,
+      "raw": "Metadata of the location, such as lat/long, paired region, and others."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "108",
+      "fixed": false,
+      "raw": "metadata"
+     },
+     "serializedName": "metadata",
+     "modelType": {
+      "$ref": "22"
+     }
+    }
+   ],
+   "serializedName": "Location",
+   "documentation": "Location information.",
+   "containsConstantProperties": false,
+   "name": {
+    "$id": "109",
+    "fixed": false,
+    "raw": "Location"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2019-11-01"
+     ],
+     "filename": [
+      "mem:///243?oai3.shaken.json"
+     ],
+     "name": "Location",
+     "originalLocations": [
+      "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Resources/stable/2019-11-01/subscriptions.json#/components/schemas/Location"
+     ]
+    }
+   },
+   "deprecated": false
+  },
+  {
+   "$id": "110",
+   "$type": "CompositeType",
+   "properties": [
+    {
+     "$id": "111",
+     "isReadOnly": false,
+     "realPath": [
+      "value"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "112",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "113",
+      "fixed": false,
+      "raw": "An array of locations."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "114",
+      "fixed": false,
+      "raw": "value"
+     },
+     "serializedName": "value",
+     "modelType": {
+      "$id": "115",
+      "$type": "SequenceType",
+      "elementType": {
+       "$ref": "74"
+      },
+      "name": {
+       "$id": "116",
+       "fixed": false
+      },
+      "deprecated": false
+     }
+    }
+   ],
+   "serializedName": "LocationListResult",
+   "documentation": "Location list operation response.",
+   "containsConstantProperties": false,
+   "name": {
+    "$id": "117",
+    "fixed": false,
+    "raw": "LocationListResult"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2019-11-01"
+     ],
+     "filename": [
+      "mem:///243?oai3.shaken.json"
+     ],
+     "name": "LocationListResult",
+     "originalLocations": [
+      "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Resources/stable/2019-11-01/subscriptions.json#/components/schemas/LocationListResult"
+     ]
+    }
+   },
+   "deprecated": false
+  },
+  {
+   "$id": "118",
+   "$type": "CompositeType",
+   "properties": [
+    {
+     "$id": "119",
+     "isReadOnly": true,
+     "realPath": [
+      "locationPlacementId"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "120",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "121",
+      "fixed": false,
+      "raw": "The subscription location placement ID. The ID indicates which regions are visible for a subscription. For example, a subscription with a location placement Id of Public_2014-09-01 has access to Azure public regions."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "122",
+      "fixed": false,
+      "raw": "locationPlacementId"
+     },
+     "serializedName": "locationPlacementId",
+     "modelType": {
+      "$id": "123",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "124",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "125",
+     "isReadOnly": true,
+     "realPath": [
+      "quotaId"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "126",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "127",
+      "fixed": false,
+      "raw": "The subscription quota ID."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "128",
+      "fixed": false,
+      "raw": "quotaId"
+     },
+     "serializedName": "quotaId",
+     "modelType": {
+      "$id": "129",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "130",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "131",
+     "isReadOnly": true,
+     "realPath": [
+      "spendingLimit"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "132",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "133",
+      "fixed": false,
+      "raw": "The subscription spending limit."
+     },
+     "extensions": {
+      "x-ms-metadata": {
+       "apiVersions": [
+        "2019-11-01"
+       ],
+       "filename": [
+        "mem:///243?oai3.shaken.json"
+       ],
+       "name": "spendingLimit",
+       "originalLocations": [
+        "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Resources/stable/2019-11-01/subscriptions.json#/components/schemas/SubscriptionPolicies-spendingLimit"
+       ]
+      },
+      "x-ms-enum": {
+       "name": "spendingLimit",
+       "modelAsString": false
+      }
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "134",
+      "fixed": false,
+      "raw": "spendingLimit"
+     },
+     "serializedName": "spendingLimit",
+     "modelType": {
+      "$id": "135",
+      "$type": "EnumType",
+      "modelAsExtensible": false,
+      "values": [
+       {
+        "$id": "136",
+        "name": "On",
+        "serializedName": "On"
+       },
+       {
+        "$id": "137",
+        "name": "Off",
+        "serializedName": "Off"
+       },
+       {
+        "$id": "138",
+        "name": "CurrentPeriodOff",
+        "serializedName": "CurrentPeriodOff"
+       }
+      ],
+      "modelAsString": false,
+      "underlyingType": {
+       "$id": "139",
+       "$type": "PrimaryType",
+       "knownPrimaryType": "string",
+       "name": {
+        "$id": "140",
+        "fixed": false,
+        "raw": "String"
+       },
+       "deprecated": false
+      },
+      "name": {
+       "$id": "141",
+       "fixed": false,
+       "raw": "spendingLimit"
+      },
+      "deprecated": false
+     }
+    }
+   ],
+   "serializedName": "SubscriptionPolicies",
+   "documentation": "Subscription policies.",
+   "containsConstantProperties": false,
+   "name": {
+    "$id": "142",
+    "fixed": false,
+    "raw": "SubscriptionPolicies"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2019-11-01"
+     ],
+     "filename": [
+      "mem:///243?oai3.shaken.json"
+     ],
+     "name": "SubscriptionPolicies",
+     "originalLocations": [
+      "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Resources/stable/2019-11-01/subscriptions.json#/components/schemas/SubscriptionPolicies"
+     ]
+    }
+   },
+   "deprecated": false
+  },
+  {
+   "$id": "143",
+   "$type": "CompositeType",
+   "properties": [
+    {
+     "$id": "144",
+     "isReadOnly": true,
+     "realPath": [
+      "tenantId"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "145",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "146",
+      "fixed": false,
+      "raw": "The tenant ID of the managing tenant. This is a GUID."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "147",
+      "fixed": false,
+      "raw": "tenantId"
+     },
+     "serializedName": "tenantId",
+     "modelType": {
+      "$id": "148",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "149",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    }
+   ],
+   "serializedName": "ManagedByTenant",
+   "documentation": "Information about a tenant managing the subscription.",
+   "containsConstantProperties": false,
+   "name": {
+    "$id": "150",
+    "fixed": false,
+    "raw": "ManagedByTenant"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2019-11-01"
+     ],
+     "filename": [
+      "mem:///243?oai3.shaken.json"
+     ],
+     "name": "ManagedByTenant",
+     "originalLocations": [
+      "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Resources/stable/2019-11-01/subscriptions.json#/components/schemas/ManagedByTenant"
+     ]
+    }
+   },
+   "deprecated": false
+  },
+  {
+   "$id": "151",
+   "$type": "CompositeType",
+   "properties": [
+    {
+     "$id": "152",
+     "isReadOnly": true,
+     "realPath": [
+      "id"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "153",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "154",
+      "fixed": false,
+      "raw": "The fully qualified ID for the subscription. For example, /subscriptions/00000000-0000-0000-0000-000000000000."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "155",
+      "fixed": false,
+      "raw": "id"
+     },
+     "serializedName": "id",
+     "modelType": {
+      "$id": "156",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "157",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "158",
+     "isReadOnly": true,
+     "realPath": [
+      "subscriptionId"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "159",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "160",
+      "fixed": false,
+      "raw": "The subscription ID."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "161",
+      "fixed": false,
+      "raw": "subscriptionId"
+     },
+     "serializedName": "subscriptionId",
+     "modelType": {
+      "$id": "162",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "163",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "164",
+     "isReadOnly": true,
+     "realPath": [
+      "displayName"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "165",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "166",
+      "fixed": false,
+      "raw": "The subscription display name."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "167",
+      "fixed": false,
+      "raw": "displayName"
+     },
+     "serializedName": "displayName",
+     "modelType": {
+      "$id": "168",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "169",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "170",
+     "isReadOnly": true,
+     "realPath": [
+      "tenantId"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "171",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "172",
+      "fixed": false,
+      "raw": "The subscription tenant ID."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "173",
+      "fixed": false,
+      "raw": "tenantId"
+     },
+     "serializedName": "tenantId",
+     "modelType": {
+      "$id": "174",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "175",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "176",
+     "isReadOnly": true,
+     "realPath": [
+      "state"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "177",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "178",
+      "fixed": false,
+      "raw": "The subscription state. Possible values are Enabled, Warned, PastDue, Disabled, and Deleted."
+     },
+     "extensions": {
+      "x-ms-metadata": {
+       "apiVersions": [
+        "2019-11-01"
+       ],
+       "filename": [
+        "mem:///243?oai3.shaken.json"
+       ],
+       "name": "SubscriptionState",
+       "originalLocations": [
+        "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Resources/stable/2019-11-01/subscriptions.json#/components/schemas/Subscription-state"
+       ]
+      },
+      "x-ms-enum": {
+       "name": "SubscriptionState",
+       "modelAsString": false
+      }
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "179",
+      "fixed": false,
+      "raw": "state"
+     },
+     "serializedName": "state",
+     "modelType": {
+      "$id": "180",
+      "$type": "EnumType",
+      "modelAsExtensible": false,
+      "values": [
+       {
+        "$id": "181",
+        "name": "Enabled",
+        "serializedName": "Enabled"
+       },
+       {
+        "$id": "182",
+        "name": "Warned",
+        "serializedName": "Warned"
+       },
+       {
+        "$id": "183",
+        "name": "PastDue",
+        "serializedName": "PastDue"
+       },
+       {
+        "$id": "184",
+        "name": "Disabled",
+        "serializedName": "Disabled"
+       },
+       {
+        "$id": "185",
+        "name": "Deleted",
+        "serializedName": "Deleted"
+       }
+      ],
+      "modelAsString": false,
+      "underlyingType": {
+       "$id": "186",
+       "$type": "PrimaryType",
+       "knownPrimaryType": "string",
+       "name": {
+        "$id": "187",
+        "fixed": false,
+        "raw": "String"
+       },
+       "deprecated": false
+      },
+      "name": {
+       "$id": "188",
+       "fixed": false,
+       "raw": "SubscriptionState"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "189",
+     "isReadOnly": false,
+     "realPath": [
+      "subscriptionPolicies"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "190",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "191",
+      "fixed": false,
+      "raw": "The subscription policies."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "192",
+      "fixed": false,
+      "raw": "subscriptionPolicies"
+     },
+     "serializedName": "subscriptionPolicies",
+     "modelType": {
+      "$ref": "118"
+     }
+    },
+    {
+     "$id": "193",
+     "isReadOnly": false,
+     "realPath": [
+      "authorizationSource"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "194",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "195",
+      "fixed": false,
+      "raw": "The authorization source of the request. Valid values are one or more combinations of Legacy, RoleBased, Bypassed, Direct and Management. For example, 'Legacy, RoleBased'."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "196",
+      "fixed": false,
+      "raw": "authorizationSource"
+     },
+     "serializedName": "authorizationSource",
+     "modelType": {
+      "$id": "197",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "198",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "199",
+     "isReadOnly": false,
+     "realPath": [
+      "managedByTenants"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "200",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "201",
+      "fixed": false,
+      "raw": "An array containing the tenants managing the subscription."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "202",
+      "fixed": false,
+      "raw": "managedByTenants"
+     },
+     "serializedName": "managedByTenants",
+     "modelType": {
+      "$id": "203",
+      "$type": "SequenceType",
+      "elementType": {
+       "$ref": "143"
+      },
+      "name": {
+       "$id": "204",
+       "fixed": false
+      },
+      "deprecated": false
+     }
+    }
+   ],
+   "serializedName": "Subscription",
+   "documentation": "Subscription information.",
+   "containsConstantProperties": false,
+   "name": {
+    "$id": "205",
+    "fixed": false,
+    "raw": "Subscription"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2019-11-01"
+     ],
+     "filename": [
+      "mem:///243?oai3.shaken.json"
+     ],
+     "name": "Subscription",
+     "originalLocations": [
+      "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Resources/stable/2019-11-01/subscriptions.json#/components/schemas/Subscription"
+     ]
+    }
+   },
+   "deprecated": false
+  },
+  {
+   "$id": "206",
+   "$type": "CompositeType",
+   "properties": [
+    {
+     "$id": "207",
+     "isReadOnly": false,
+     "realPath": [
+      "value"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "208",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "209",
+      "fixed": false,
+      "raw": "An array of subscriptions."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "210",
+      "fixed": false,
+      "raw": "value"
+     },
+     "serializedName": "value",
+     "modelType": {
+      "$id": "211",
+      "$type": "SequenceType",
+      "elementType": {
+       "$ref": "151"
+      },
+      "name": {
+       "$id": "212",
+       "fixed": false
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "213",
+     "isReadOnly": false,
+     "realPath": [
+      "nextLink"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "214",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "215",
+      "fixed": false,
+      "raw": "The URL to get the next set of results."
+     },
+     "isRequired": true,
+     "isConstant": false,
+     "name": {
+      "$id": "216",
+      "fixed": false,
+      "raw": "nextLink"
+     },
+     "serializedName": "nextLink",
+     "modelType": {
+      "$id": "217",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "218",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    }
+   ],
+   "serializedName": "SubscriptionListResult",
+   "documentation": "Subscription list operation response.",
+   "containsConstantProperties": false,
+   "name": {
+    "$id": "219",
+    "fixed": false,
+    "raw": "SubscriptionListResult"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2019-11-01"
+     ],
+     "filename": [
+      "mem:///243?oai3.shaken.json"
+     ],
+     "name": "SubscriptionListResult",
+     "originalLocations": [
+      "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Resources/stable/2019-11-01/subscriptions.json#/components/schemas/SubscriptionListResult"
+     ]
+    }
+   },
+   "deprecated": false
+  },
+  {
+   "$id": "220",
+   "$type": "CompositeType",
+   "properties": [
+    {
+     "$id": "221",
+     "isReadOnly": true,
+     "realPath": [
+      "id"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "222",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "223",
+      "fixed": false,
+      "raw": "The fully qualified ID of the tenant. For example, /tenants/00000000-0000-0000-0000-000000000000."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "224",
+      "fixed": false,
+      "raw": "id"
+     },
+     "serializedName": "id",
+     "modelType": {
+      "$id": "225",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "226",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "227",
+     "isReadOnly": true,
+     "realPath": [
+      "tenantId"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "228",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "229",
+      "fixed": false,
+      "raw": "The tenant ID. For example, 00000000-0000-0000-0000-000000000000."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "230",
+      "fixed": false,
+      "raw": "tenantId"
+     },
+     "serializedName": "tenantId",
+     "modelType": {
+      "$id": "231",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "232",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "233",
+     "isReadOnly": true,
+     "realPath": [
+      "tenantCategory"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "234",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "235",
+      "fixed": false,
+      "raw": "Category of the tenant."
+     },
+     "extensions": {
+      "x-ms-metadata": {
+       "apiVersions": [
+        "2019-11-01"
+       ],
+       "filename": [
+        "mem:///243?oai3.shaken.json"
+       ],
+       "name": "TenantCategory",
+       "originalLocations": [
+        "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Resources/stable/2019-11-01/subscriptions.json#/components/schemas/TenantIdDescription-tenantCategory"
+       ]
+      },
+      "x-ms-enum": {
+       "name": "TenantCategory",
+       "modelAsString": false
+      }
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "236",
+      "fixed": false,
+      "raw": "tenantCategory"
+     },
+     "serializedName": "tenantCategory",
+     "modelType": {
+      "$id": "237",
+      "$type": "EnumType",
+      "modelAsExtensible": false,
+      "values": [
+       {
+        "$id": "238",
+        "name": "Home",
+        "serializedName": "Home"
+       },
+       {
+        "$id": "239",
+        "name": "ProjectedBy",
+        "serializedName": "ProjectedBy"
+       },
+       {
+        "$id": "240",
+        "name": "ManagedBy",
+        "serializedName": "ManagedBy"
+       }
+      ],
+      "modelAsString": false,
+      "underlyingType": {
+       "$id": "241",
+       "$type": "PrimaryType",
+       "knownPrimaryType": "string",
+       "name": {
+        "$id": "242",
+        "fixed": false,
+        "raw": "String"
+       },
+       "deprecated": false
+      },
+      "name": {
+       "$id": "243",
+       "fixed": false,
+       "raw": "TenantCategory"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "244",
+     "isReadOnly": true,
+     "realPath": [
+      "country"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "245",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "246",
+      "fixed": false,
+      "raw": "Country/region name of the address for the tenant."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "247",
+      "fixed": false,
+      "raw": "country"
+     },
+     "serializedName": "country",
+     "modelType": {
+      "$id": "248",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "249",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "250",
+     "isReadOnly": true,
+     "realPath": [
+      "countryCode"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "251",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "252",
+      "fixed": false,
+      "raw": "Country/region abbreviation for the tenant."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "253",
+      "fixed": false,
+      "raw": "countryCode"
+     },
+     "serializedName": "countryCode",
+     "modelType": {
+      "$id": "254",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "255",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "256",
+     "isReadOnly": true,
+     "realPath": [
+      "displayName"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "257",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "258",
+      "fixed": false,
+      "raw": "The display name of the tenant."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "259",
+      "fixed": false,
+      "raw": "displayName"
+     },
+     "serializedName": "displayName",
+     "modelType": {
+      "$id": "260",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "261",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "262",
+     "isReadOnly": true,
+     "realPath": [
+      "domains"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "263",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "264",
+      "fixed": false,
+      "raw": "The list of domains for the tenant."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "265",
+      "fixed": false,
+      "raw": "domains"
+     },
+     "serializedName": "domains",
+     "modelType": {
+      "$id": "266",
+      "$type": "SequenceType",
+      "elementType": {
+       "$id": "267",
+       "$type": "PrimaryType",
+       "knownPrimaryType": "string",
+       "name": {
+        "$id": "268",
+        "fixed": false,
+        "raw": "String"
+       },
+       "deprecated": false
+      },
+      "name": {
+       "$id": "269",
+       "fixed": false
+      },
+      "deprecated": false
+     }
+    }
+   ],
+   "serializedName": "TenantIdDescription",
+   "documentation": "Tenant Id information.",
+   "containsConstantProperties": false,
+   "name": {
+    "$id": "270",
+    "fixed": false,
+    "raw": "TenantIdDescription"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2019-11-01"
+     ],
+     "filename": [
+      "mem:///243?oai3.shaken.json"
+     ],
+     "name": "TenantIdDescription",
+     "originalLocations": [
+      "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Resources/stable/2019-11-01/subscriptions.json#/components/schemas/TenantIdDescription"
+     ]
+    }
+   },
+   "deprecated": false
+  },
+  {
+   "$id": "271",
+   "$type": "CompositeType",
+   "properties": [
+    {
+     "$id": "272",
+     "isReadOnly": false,
+     "realPath": [
+      "value"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "273",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "274",
+      "fixed": false,
+      "raw": "An array of tenants."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "275",
+      "fixed": false,
+      "raw": "value"
+     },
+     "serializedName": "value",
+     "modelType": {
+      "$id": "276",
+      "$type": "SequenceType",
+      "elementType": {
+       "$ref": "220"
+      },
+      "name": {
+       "$id": "277",
+       "fixed": false
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "278",
+     "isReadOnly": false,
+     "realPath": [
+      "nextLink"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "279",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "280",
+      "fixed": false,
+      "raw": "The URL to use for getting the next set of results."
+     },
+     "isRequired": true,
+     "isConstant": false,
+     "name": {
+      "$id": "281",
+      "fixed": false,
+      "raw": "nextLink"
+     },
+     "serializedName": "nextLink",
+     "modelType": {
+      "$id": "282",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "283",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    }
+   ],
+   "serializedName": "TenantListResult",
+   "documentation": "Tenant Ids information.",
+   "containsConstantProperties": false,
+   "name": {
+    "$id": "284",
+    "fixed": false,
+    "raw": "TenantListResult"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2019-11-01"
+     ],
+     "filename": [
+      "mem:///243?oai3.shaken.json"
+     ],
+     "name": "TenantListResult",
+     "originalLocations": [
+      "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Resources/stable/2019-11-01/subscriptions.json#/components/schemas/TenantListResult"
+     ]
+    }
+   },
+   "deprecated": false
+  },
+  {
+   "$id": "285",
+   "$type": "CompositeType",
+   "properties": [
+    {
+     "$id": "286",
+     "isReadOnly": false,
+     "realPath": [
+      "provider"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "287",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "288",
+      "fixed": false,
+      "raw": "Service provider: Microsoft.Resources"
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "289",
+      "fixed": false,
+      "raw": "provider"
+     },
+     "serializedName": "provider",
+     "modelType": {
+      "$id": "290",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "291",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "292",
+     "isReadOnly": false,
+     "realPath": [
+      "resource"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "293",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "294",
+      "fixed": false,
+      "raw": "Resource on which the operation is performed: Profile, endpoint, etc."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "295",
+      "fixed": false,
+      "raw": "resource"
+     },
+     "serializedName": "resource",
+     "modelType": {
+      "$id": "296",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "297",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "298",
+     "isReadOnly": false,
+     "realPath": [
+      "operation"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "299",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "300",
+      "fixed": false,
+      "raw": "Operation type: Read, write, delete, etc."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "301",
+      "fixed": false,
+      "raw": "operation"
+     },
+     "serializedName": "operation",
+     "modelType": {
+      "$id": "302",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "303",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "304",
+     "isReadOnly": false,
+     "realPath": [
+      "description"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "305",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "306",
+      "fixed": false,
+      "raw": "Description of the operation."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "307",
+      "fixed": false,
+      "raw": "description"
+     },
+     "serializedName": "description",
+     "modelType": {
+      "$id": "308",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "309",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    }
+   ],
+   "serializedName": "Operation-display",
+   "documentation": "The object that represents the operation.",
+   "containsConstantProperties": false,
+   "name": {
+    "$id": "310",
+    "fixed": false,
+    "raw": "Operation-display"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2019-11-01"
+     ],
+     "filename": [
+      "mem:///243?oai3.shaken.json"
+     ],
+     "name": "Operation-display",
+     "originalLocations": [
+      "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Resources/stable/2019-11-01/subscriptions.json#/components/schemas/Operation-display"
+     ]
+    }
+   },
+   "deprecated": false
+  },
+  {
+   "$id": "311",
+   "$type": "CompositeType",
+   "properties": [
+    {
+     "$id": "312",
+     "isReadOnly": false,
+     "realPath": [
+      "name"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "313",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "314",
+      "fixed": false,
+      "raw": "Operation name: {provider}/{resource}/{operation}"
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "315",
+      "fixed": false,
+      "raw": "name"
+     },
+     "serializedName": "name",
+     "modelType": {
+      "$id": "316",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "317",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "318",
+     "isReadOnly": false,
+     "realPath": [
+      "display"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "319",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "320",
+      "fixed": false,
+      "raw": "The object that represents the operation."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "321",
+      "fixed": false,
+      "raw": "display"
+     },
+     "serializedName": "display",
+     "modelType": {
+      "$ref": "285"
+     }
+    }
+   ],
+   "serializedName": "Operation",
+   "documentation": "Microsoft.Resources operation",
+   "containsConstantProperties": false,
+   "name": {
+    "$id": "322",
+    "fixed": false,
+    "raw": "Operation"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2019-11-01"
+     ],
+     "filename": [
+      "mem:///243?oai3.shaken.json"
+     ],
+     "name": "Operation",
+     "originalLocations": [
+      "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Resources/stable/2019-11-01/subscriptions.json#/components/schemas/Operation"
+     ]
+    }
+   },
+   "deprecated": false
+  },
+  {
+   "$id": "323",
+   "$type": "CompositeType",
+   "properties": [
+    {
+     "$id": "324",
+     "isReadOnly": false,
+     "realPath": [
+      "value"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "325",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "326",
+      "fixed": false,
+      "raw": "List of Microsoft.Resources operations."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "327",
+      "fixed": false,
+      "raw": "value"
+     },
+     "serializedName": "value",
+     "modelType": {
+      "$id": "328",
+      "$type": "SequenceType",
+      "elementType": {
+       "$ref": "311"
+      },
+      "name": {
+       "$id": "329",
+       "fixed": false
+      },
+      "deprecated": false
+     }
+    },
+    {
+     "$id": "330",
+     "isReadOnly": false,
+     "realPath": [
+      "nextLink"
+     ],
+     "collectionFormat": "none",
+     "defaultValue": {
+      "$id": "331",
+      "fixed": false
+     },
+     "deprecated": false,
+     "documentation": {
+      "$id": "332",
+      "fixed": false,
+      "raw": "URL to get the next set of operation list results if there are any."
+     },
+     "isRequired": false,
+     "isConstant": false,
+     "name": {
+      "$id": "333",
+      "fixed": false,
+      "raw": "nextLink"
+     },
+     "serializedName": "nextLink",
+     "modelType": {
+      "$id": "334",
+      "$type": "PrimaryType",
+      "knownPrimaryType": "string",
+      "name": {
+       "$id": "335",
+       "fixed": false,
+       "raw": "String"
+      },
+      "deprecated": false
+     }
+    }
+   ],
+   "serializedName": "OperationListResult",
+   "documentation": "Result of the request to list Microsoft.Resources operations. It contains a list of operations and a URL link to get the next set of results.",
+   "containsConstantProperties": false,
+   "name": {
+    "$id": "336",
+    "fixed": false,
+    "raw": "OperationListResult"
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2019-11-01"
+     ],
+     "filename": [
+      "mem:///243?oai3.shaken.json"
+     ],
+     "name": "OperationListResult",
+     "originalLocations": [
+      "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Resources/stable/2019-11-01/subscriptions.json#/components/schemas/OperationListResult"
+     ]
+    }
+   },
+   "deprecated": false
+  }
+ ],
+ "enumTypes": [
+  {
+   "$ref": "27"
+  },
+  {
+   "$ref": "37"
+  },
+  {
+   "$ref": "180"
+  },
+  {
+   "$ref": "135"
+  },
+  {
+   "$ref": "237"
+  }
+ ],
+ "name": "SubscriptionClient",
+ "namespace": "Azure.mgmt.resource.subscriptions.v20191101",
+ "modelsName": "Models",
+ "apiVersion": "2019-11-01",
+ "baseUrl": "https://management.azure.com",
+ "documentation": "All resource groups and resources exist within subscriptions. These operation enable you get information about your subscriptions and tenants. A tenant is a dedicated instance of Azure Active Directory (Azure AD) for your organization.",
+ "extensions": {
+  "security": [
+   {
+    "azure_auth": [
+     "user_impersonation"
+    ]
+   }
+  ]
+ },
+ "properties": [
+  {
+   "$id": "337",
+   "isReadOnly": false,
+   "realPath": [
+    "subscriptionId"
+   ],
+   "collectionFormat": "none",
+   "defaultValue": {
+    "$id": "338",
+    "fixed": false
+   },
+   "deprecated": false,
+   "documentation": {
+    "$id": "339",
+    "fixed": false,
+    "raw": "The ID of the target subscription."
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2019-11-01"
+     ],
+     "filename": [
+      "mem:///243?oai3.shaken.json"
+     ],
+     "name": "SubscriptionIdParameter",
+     "originalLocations": [
+      "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Resources/stable/2019-11-01/subscriptions.json#/components/parameters/SubscriptionIdParameter"
+     ]
+    },
+    "x-ms-parameter-location": "method"
+   },
+   "isRequired": true,
+   "isConstant": false,
+   "name": {
+    "$id": "340",
+    "fixed": false,
+    "raw": "subscriptionId"
+   },
+   "serializedName": "subscriptionId",
+   "modelType": {
+    "$id": "341",
+    "$type": "PrimaryType",
+    "knownPrimaryType": "string",
+    "name": {
+     "$id": "342",
+     "fixed": false,
+     "raw": "String"
+    },
+    "deprecated": false
+   }
+  },
+  {
+   "$id": "343",
+   "isReadOnly": false,
+   "realPath": [
+    "api-version"
+   ],
+   "collectionFormat": "none",
+   "defaultValue": {
+    "$id": "344",
+    "fixed": false
+   },
+   "deprecated": false,
+   "documentation": {
+    "$id": "345",
+    "fixed": false,
+    "raw": "The API version to use for the operation."
+   },
+   "extensions": {
+    "x-ms-metadata": {
+     "apiVersions": [
+      "2019-11-01"
+     ],
+     "filename": [
+      "mem:///243?oai3.shaken.json"
+     ],
+     "name": "ApiVersionParameter",
+     "originalLocations": [
+      "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Resources/stable/2019-11-01/subscriptions.json#/components/parameters/ApiVersionParameter"
+     ]
+    },
+    "x-ms-parameter-location": "client"
+   },
+   "isRequired": true,
+   "isConstant": false,
+   "name": {
+    "$id": "346",
+    "fixed": false,
+    "raw": "api-version"
+   },
+   "serializedName": "api-version",
+   "modelType": {
+    "$id": "347",
+    "$type": "PrimaryType",
+    "knownPrimaryType": "string",
+    "name": {
+     "$id": "348",
+     "fixed": false,
+     "raw": "String"
+    },
+    "deprecated": false
+   }
+  }
+ ],
+ "operations": [
+  {
+   "$id": "349",
+   "methods": [
+    {
+     "$id": "350",
+     "parameters": [
+      {
+       "$id": "351",
+       "location": "query",
+       "collectionFormat": "none",
+       "defaultValue": {
+        "$id": "352",
+        "fixed": false,
+        "raw": "2019-11-01"
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "353",
+        "fixed": false,
+        "raw": "The API version to use for the request."
+       },
+       "isRequired": true,
+       "isConstant": true,
+       "name": {
+        "$id": "354",
+        "fixed": false,
+        "raw": "api-version"
+       },
+       "serializedName": "api-version",
+       "modelType": {
+        "$id": "355",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "name": {
+         "$id": "356",
+         "fixed": false,
+         "raw": "String"
+        },
+        "deprecated": false
+       }
+      }
+     ],
+     "name": {
+      "$id": "357",
+      "fixed": false,
+      "raw": "List"
+     },
+     "group": {
+      "$id": "358",
+      "fixed": false,
+      "raw": "Operations"
+     },
+     "serializedName": "Operations_List",
+     "url": "/providers/Microsoft.Resources/operations",
+     "isAbsoluteUrl": false,
+     "httpMethod": "get",
+     "responses": {
+      "OK": {
+       "$id": "359",
+       "body": {
+        "$ref": "323"
+       },
+       "extensions": {
+        "$id": "360",
+        "x-ms-metadata": {
+         "apiVersions": [
+          "2019-11-01"
+         ],
+         "filename": [
+          "mem:///243?oai3.shaken.json"
+         ],
+         "name": "paths·providers-microsoft-resources-operations·get·responses·200",
+         "originalLocations": [
+          "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Resources/stable/2019-11-01/subscriptions.json#/components/responses/paths·providers-microsoft-resources-operations·get·responses·200"
+         ]
+        }
+       },
+       "isNullable": true
+      }
+     },
+     "defaultResponse": {
+      "$id": "361",
+      "isNullable": true
+     },
+     "returnType": {
+      "$id": "362",
+      "body": {
+       "$ref": "323"
+      },
+      "isNullable": true
+     },
+     "description": "Lists all of the available Microsoft.Resources REST API operations.",
+     "requestContentType": "application/json; charset=utf-8",
+     "responseContentTypes": [
+      "application/json"
+     ],
+     "extensions": {
+      "servers": [
+       {
+        "url": "https://management.azure.com/"
+       }
+      ],
+      "x-ms-pageable": {
+       "nextLinkName": "nextLink"
+      }
+     },
+     "deprecated": false,
+     "hidden": false
+    }
+   ],
+   "name": {
+    "$id": "363",
+    "fixed": false,
+    "raw": "Operations"
+   },
+   "typeName": {
+    "$id": "364",
+    "fixed": false
+   },
+   "nameForProperty": "Operations"
+  },
+  {
+   "$id": "365",
+   "methods": [
+    {
+     "$id": "366",
+     "parameters": [
+      {
+       "$id": "367",
+       "clientProperty": {
+        "$ref": "337"
+       },
+       "location": "path",
+       "collectionFormat": "none",
+       "defaultValue": {
+        "$id": "368",
+        "fixed": false
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "369",
+        "fixed": false,
+        "raw": "The ID of the target subscription."
+       },
+       "extensions": {
+        "x-ms-metadata": {
+         "apiVersions": [
+          "2019-11-01"
+         ],
+         "filename": [
+          "mem:///243?oai3.shaken.json"
+         ],
+         "name": "SubscriptionIdParameter",
+         "originalLocations": [
+          "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Resources/stable/2019-11-01/subscriptions.json#/components/parameters/SubscriptionIdParameter"
+         ]
+        },
+        "x-ms-parameter-location": "method"
+       },
+       "isRequired": true,
+       "isConstant": false,
+       "name": {
+        "$id": "370",
+        "fixed": false,
+        "raw": "subscriptionId"
+       },
+       "serializedName": "subscriptionId",
+       "modelType": {
+        "$id": "371",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "name": {
+         "$id": "372",
+         "fixed": false,
+         "raw": "String"
+        },
+        "deprecated": false
+       }
+      },
+      {
+       "$id": "373",
+       "location": "query",
+       "collectionFormat": "none",
+       "defaultValue": {
+        "$id": "374",
+        "fixed": false,
+        "raw": "2019-11-01"
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "375",
+        "fixed": false,
+        "raw": "The API version to use for the request."
+       },
+       "isRequired": true,
+       "isConstant": true,
+       "name": {
+        "$id": "376",
+        "fixed": false,
+        "raw": "api-version"
+       },
+       "serializedName": "api-version",
+       "modelType": {
+        "$id": "377",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "name": {
+         "$id": "378",
+         "fixed": false,
+         "raw": "String"
+        },
+        "deprecated": false
+       }
+      }
+     ],
+     "name": {
+      "$id": "379",
+      "fixed": false,
+      "raw": "ListLocations"
+     },
+     "group": {
+      "$id": "380",
+      "fixed": false,
+      "raw": "Subscriptions"
+     },
+     "serializedName": "Subscriptions_ListLocations",
+     "url": "/subscriptions/{subscriptionId}/locations",
+     "isAbsoluteUrl": false,
+     "httpMethod": "get",
+     "responses": {
+      "OK": {
+       "$id": "381",
+       "body": {
+        "$ref": "110"
+       },
+       "extensions": {
+        "$id": "382",
+        "x-ms-metadata": {
+         "apiVersions": [
+          "2019-11-01"
+         ],
+         "filename": [
+          "mem:///243?oai3.shaken.json"
+         ],
+         "name": "paths·subscriptions-subscriptionid-locations·get·responses·200",
+         "originalLocations": [
+          "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Resources/stable/2019-11-01/subscriptions.json#/components/responses/paths·subscriptions-subscriptionid-locations·get·responses·200"
+         ]
+        }
+       },
+       "isNullable": true
+      }
+     },
+     "defaultResponse": {
+      "$id": "383",
+      "isNullable": true
+     },
+     "returnType": {
+      "$id": "384",
+      "body": {
+       "$ref": "110"
+      },
+      "isNullable": true
+     },
+     "description": "This operation provides all the locations that are available for resource providers; however, each resource provider may support a subset of this list.",
+     "summary": "Gets all available geo-locations.",
+     "requestContentType": "application/json; charset=utf-8",
+     "responseContentTypes": [
+      "application/json"
+     ],
+     "extensions": {
+      "servers": [
+       {
+        "url": "https://management.azure.com/"
+       }
+      ],
+      "x-ms-pageable": {
+       "nextLinkName": null
+      },
+      "x-ms-examples": {
+       "Get locations with a subscription id": {
+        "parameters": {
+         "subscriptionId": "291bba3f-e0a5-47bc-a099-3bdcb2a50a05",
+         "api-version": "2019-11-01"
+        },
+        "responses": {
+         "200": {
+          "body": [
+           {
+            "id": "/subscriptions/291bba3f-e0a5-47bc-a099-3bdcb2a50a05/locations/centralus",
+            "name": "centralus",
+            "displayName": "Central US",
+            "regionalDisplayName": "(US) Central US",
+            "metadata": {
+             "regionType": "Physical",
+             "regionCategory": "Recommended",
+             "geographyGroup": "US",
+             "longitude": "-93.6208",
+             "latitude": "41.5908",
+             "physicalLocation": "Iowa",
+             "pairedRegion": [
+              {
+               "name": "eastus2",
+               "id": "/subscriptions/291bba3f-e0a5-47bc-a099-3bdcb2a50a05/locations/eastus2"
+              }
+             ]
+            }
+           },
+           {
+            "id": "/subscriptions/291bba3f-e0a5-47bc-a099-3bdcb2a50a05/locations/eastasia",
+            "name": "eastasia",
+            "displayName": "East Asia",
+            "regionalDisplayName": "(Asia Pacific) East Asia",
+            "metadata": {
+             "regionType": "Physical",
+             "regionCategory": "Recommended",
+             "geographyGroup": "Asia Pacific",
+             "longitude": "114.188",
+             "latitude": "22.267",
+             "physicalLocation": "Hong Kong",
+             "pairedRegion": [
+              {
+               "name": "southeastasia",
+               "id": "/subscriptions/291bba3f-e0a5-47bc-a099-3bdcb2a50a05/locations/southeastasia"
+              }
+             ]
+            }
+           }
+          ]
+         }
+        }
+       }
+      }
+     },
+     "deprecated": false,
+     "hidden": false
+    },
+    {
+     "$id": "385",
+     "parameters": [
+      {
+       "$id": "386",
+       "clientProperty": {
+        "$ref": "337"
+       },
+       "location": "path",
+       "collectionFormat": "none",
+       "defaultValue": {
+        "$id": "387",
+        "fixed": false
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "388",
+        "fixed": false,
+        "raw": "The ID of the target subscription."
+       },
+       "extensions": {
+        "x-ms-metadata": {
+         "apiVersions": [
+          "2019-11-01"
+         ],
+         "filename": [
+          "mem:///243?oai3.shaken.json"
+         ],
+         "name": "SubscriptionIdParameter",
+         "originalLocations": [
+          "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Resources/stable/2019-11-01/subscriptions.json#/components/parameters/SubscriptionIdParameter"
+         ]
+        },
+        "x-ms-parameter-location": "method"
+       },
+       "isRequired": true,
+       "isConstant": false,
+       "name": {
+        "$id": "389",
+        "fixed": false,
+        "raw": "subscriptionId"
+       },
+       "serializedName": "subscriptionId",
+       "modelType": {
+        "$id": "390",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "name": {
+         "$id": "391",
+         "fixed": false,
+         "raw": "String"
+        },
+        "deprecated": false
+       }
+      },
+      {
+       "$id": "392",
+       "location": "query",
+       "collectionFormat": "none",
+       "defaultValue": {
+        "$id": "393",
+        "fixed": false,
+        "raw": "2019-11-01"
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "394",
+        "fixed": false,
+        "raw": "The API version to use for the request."
+       },
+       "isRequired": true,
+       "isConstant": true,
+       "name": {
+        "$id": "395",
+        "fixed": false,
+        "raw": "api-version"
+       },
+       "serializedName": "api-version",
+       "modelType": {
+        "$id": "396",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "name": {
+         "$id": "397",
+         "fixed": false,
+         "raw": "String"
+        },
+        "deprecated": false
+       }
+      }
+     ],
+     "name": {
+      "$id": "398",
+      "fixed": false,
+      "raw": "Get"
+     },
+     "group": {
+      "$id": "399",
+      "fixed": false,
+      "raw": "Subscriptions"
+     },
+     "serializedName": "Subscriptions_Get",
+     "url": "/subscriptions/{subscriptionId}",
+     "isAbsoluteUrl": false,
+     "httpMethod": "get",
+     "responses": {
+      "OK": {
+       "$id": "400",
+       "body": {
+        "$ref": "151"
+       },
+       "extensions": {
+        "$id": "401",
+        "x-ms-metadata": {
+         "apiVersions": [
+          "2019-11-01"
+         ],
+         "filename": [
+          "mem:///243?oai3.shaken.json"
+         ],
+         "name": "paths·subscriptions-subscriptionid·get·responses·200",
+         "originalLocations": [
+          "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Resources/stable/2019-11-01/subscriptions.json#/components/responses/paths·subscriptions-subscriptionid·get·responses·200"
+         ]
+        }
+       },
+       "isNullable": true
+      }
+     },
+     "defaultResponse": {
+      "$id": "402",
+      "isNullable": true
+     },
+     "returnType": {
+      "$id": "403",
+      "body": {
+       "$ref": "151"
+      },
+      "isNullable": true
+     },
+     "description": "Gets details about a specified subscription.",
+     "requestContentType": "application/json; charset=utf-8",
+     "responseContentTypes": [
+      "application/json"
+     ],
+     "extensions": {
+      "servers": [
+       {
+        "url": "https://management.azure.com/"
+       }
+      ],
+      "x-ms-examples": {
+       "Get a single subscription.": {
+        "parameters": {
+         "subscriptionId": "291bba3f-e0a5-47bc-a099-3bdcb2a50a05",
+         "api-version": "2019-11-01"
+        },
+        "responses": {
+         "200": {
+          "body": {
+           "id": "/subscriptions/291bba3f-e0a5-47bc-a099-3bdcb2a50a05",
+           "subscriptionId": "291bba3f-e0a5-47bc-a099-3bdcb2a50a05",
+           "tenantId": "31c75423-32d6-4322-88b7-c478bdde4858",
+           "displayName": "Example Subscription",
+           "state": "Enabled",
+           "subscriptionPolicies": {
+            "locationPlacementId": "Internal_2014-09-01",
+            "quotaId": "Internal_2014-09-01",
+            "spendingLimit": "Off"
+           },
+           "authorizationSource": "Bypassed",
+           "managedByTenants": [
+            {
+             "tenantId": "8f70baf1-1f6e-46a2-a1ff-238dac1ebfb7"
+            }
+           ]
+          }
+         }
+        }
+       }
+      }
+     },
+     "deprecated": false,
+     "hidden": false
+    },
+    {
+     "$id": "404",
+     "parameters": [
+      {
+       "$id": "405",
+       "location": "query",
+       "collectionFormat": "none",
+       "defaultValue": {
+        "$id": "406",
+        "fixed": false,
+        "raw": "2019-11-01"
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "407",
+        "fixed": false,
+        "raw": "The API version to use for the request."
+       },
+       "isRequired": true,
+       "isConstant": true,
+       "name": {
+        "$id": "408",
+        "fixed": false,
+        "raw": "api-version"
+       },
+       "serializedName": "api-version",
+       "modelType": {
+        "$id": "409",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "name": {
+         "$id": "410",
+         "fixed": false,
+         "raw": "String"
+        },
+        "deprecated": false
+       }
+      }
+     ],
+     "name": {
+      "$id": "411",
+      "fixed": false,
+      "raw": "List"
+     },
+     "group": {
+      "$id": "412",
+      "fixed": false,
+      "raw": "Subscriptions"
+     },
+     "serializedName": "Subscriptions_List",
+     "url": "/subscriptions",
+     "isAbsoluteUrl": false,
+     "httpMethod": "get",
+     "responses": {
+      "OK": {
+       "$id": "413",
+       "body": {
+        "$ref": "206"
+       },
+       "extensions": {
+        "$id": "414",
+        "x-ms-metadata": {
+         "apiVersions": [
+          "2019-11-01"
+         ],
+         "filename": [
+          "mem:///243?oai3.shaken.json"
+         ],
+         "name": "paths·subscriptions·get·responses·200",
+         "originalLocations": [
+          "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Resources/stable/2019-11-01/subscriptions.json#/components/responses/paths·subscriptions·get·responses·200"
+         ]
+        }
+       },
+       "isNullable": true
+      }
+     },
+     "defaultResponse": {
+      "$id": "415",
+      "isNullable": true
+     },
+     "returnType": {
+      "$id": "416",
+      "body": {
+       "$ref": "206"
+      },
+      "isNullable": true
+     },
+     "description": "Gets all subscriptions for a tenant.",
+     "requestContentType": "application/json; charset=utf-8",
+     "responseContentTypes": [
+      "application/json"
+     ],
+     "extensions": {
+      "servers": [
+       {
+        "url": "https://management.azure.com/"
+       }
+      ],
+      "x-ms-examples": {
+       "Get all subscriptions.": {
+        "parameters": {
+         "api-version": "2019-11-01"
+        },
+        "responses": {
+         "200": {
+          "body": {
+           "value": [
+            {
+             "id": "/subscriptions/291bba3f-e0a5-47bc-a099-3bdcb2a50a05",
+             "subscriptionId": "291bba3f-e0a5-47bc-a099-3bdcb2a50a05",
+             "tenantId": "31c75423-32d6-4322-88b7-c478bdde4858",
+             "displayName": "Example Subscription",
+             "state": "Enabled",
+             "subscriptionPolicies": {
+              "locationPlacementId": "Internal_2014-09-01",
+              "quotaId": "Internal_2014-09-01",
+              "spendingLimit": "Off"
+             },
+             "authorizationSource": "RoleBased",
+             "managedByTenants": [
+              {
+               "tenantId": "8f70baf1-1f6e-46a2-a1ff-238dac1ebfb7"
+              }
+             ]
+            },
+            {
+             "id": "/subscriptions/72ac930a-f34e-42d8-b06d-dc2a9e12ed71",
+             "subscriptionId": "72ac930a-f34e-42d8-b06d-dc2a9e12ed71",
+             "tenantId": "2a0ff0de-96b2-4859-bb7c-a430d07a3e0c",
+             "displayName": "Example Subscription2",
+             "state": "Enabled",
+             "subscriptionPolicies": {
+              "locationPlacementId": "Internal_2014-09-01",
+              "quotaId": "Internal_2014-09-01",
+              "spendingLimit": "Off"
+             },
+             "authorizationSource": "RoleBased",
+             "managedByTenants": [
+              {
+               "tenantId": "8f70baf1-1f6e-46a2-a1ff-238dac1ebfb7"
+              },
+              {
+               "tenantId": "f7fb6af2-321d-47c8-9c0f-b0239eaad39a"
+              }
+             ]
+            }
+           ],
+           "nextLink": "..."
+          }
+         }
+        }
+       }
+      },
+      "x-ms-pageable": {
+       "nextLinkName": "nextLink"
+      }
+     },
+     "deprecated": false,
+     "hidden": false
+    }
+   ],
+   "name": {
+    "$id": "417",
+    "fixed": false,
+    "raw": "Subscriptions"
+   },
+   "typeName": {
+    "$id": "418",
+    "fixed": false
+   },
+   "nameForProperty": "Subscriptions"
+  },
+  {
+   "$id": "419",
+   "methods": [
+    {
+     "$id": "420",
+     "parameters": [
+      {
+       "$id": "421",
+       "location": "query",
+       "collectionFormat": "none",
+       "defaultValue": {
+        "$id": "422",
+        "fixed": false,
+        "raw": "2019-11-01"
+       },
+       "deprecated": false,
+       "documentation": {
+        "$id": "423",
+        "fixed": false,
+        "raw": "The API version to use for the request."
+       },
+       "isRequired": true,
+       "isConstant": true,
+       "name": {
+        "$id": "424",
+        "fixed": false,
+        "raw": "api-version"
+       },
+       "serializedName": "api-version",
+       "modelType": {
+        "$id": "425",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "name": {
+         "$id": "426",
+         "fixed": false,
+         "raw": "String"
+        },
+        "deprecated": false
+       }
+      }
+     ],
+     "name": {
+      "$id": "427",
+      "fixed": false,
+      "raw": "List"
+     },
+     "group": {
+      "$id": "428",
+      "fixed": false,
+      "raw": "Tenants"
+     },
+     "serializedName": "Tenants_List",
+     "url": "/tenants",
+     "isAbsoluteUrl": false,
+     "httpMethod": "get",
+     "responses": {
+      "OK": {
+       "$id": "429",
+       "body": {
+        "$ref": "271"
+       },
+       "extensions": {
+        "$id": "430",
+        "x-ms-metadata": {
+         "apiVersions": [
+          "2019-11-01"
+         ],
+         "filename": [
+          "mem:///243?oai3.shaken.json"
+         ],
+         "name": "paths·tenants·get·responses·200",
+         "originalLocations": [
+          "file:///z/work/azure-rest-api-specs/specification/resources/resource-manager/Microsoft.Resources/stable/2019-11-01/subscriptions.json#/components/responses/paths·tenants·get·responses·200"
+         ]
+        }
+       },
+       "isNullable": true
+      }
+     },
+     "defaultResponse": {
+      "$id": "431",
+      "isNullable": true
+     },
+     "returnType": {
+      "$id": "432",
+      "body": {
+       "$ref": "271"
+      },
+      "isNullable": true
+     },
+     "description": "Gets the tenants for your account.",
+     "requestContentType": "application/json; charset=utf-8",
+     "responseContentTypes": [
+      "application/json"
+     ],
+     "extensions": {
+      "servers": [
+       {
+        "url": "https://management.azure.com/"
+       }
+      ],
+      "x-ms-pageable": {
+       "nextLinkName": "nextLink"
+      }
+     },
+     "deprecated": false,
+     "hidden": false
+    }
+   ],
+   "name": {
+    "$id": "433",
+    "fixed": false,
+    "raw": "Tenants"
+   },
+   "typeName": {
+    "$id": "434",
+    "fixed": false
+   },
+   "nameForProperty": "Tenants"
+  }
+ ]
+}
