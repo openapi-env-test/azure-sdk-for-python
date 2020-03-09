@@ -17,6 +17,7 @@ try:
     from ._models_py3 import ActivityRun
     from ._models_py3 import ActivityRunsQueryResponse
     from ._models_py3 import AddDataFlowToDebugSessionResponse
+    from ._models_py3 import AdditionalColumns
     from ._models_py3 import AmazonMWSLinkedService
     from ._models_py3 import AmazonMWSObjectDataset
     from ._models_py3 import AmazonMWSSource
@@ -217,6 +218,7 @@ try:
     from ._models_py3 import ExecutePipelineActivity
     from ._models_py3 import ExecuteSSISPackageActivity
     from ._models_py3 import ExecutionActivity
+    from ._models_py3 import ExportSettings
     from ._models_py3 import ExposureControlRequest
     from ._models_py3 import ExposureControlResponse
     from ._models_py3 import Expression
@@ -287,6 +289,7 @@ try:
     from ._models_py3 import ImpalaLinkedService
     from ._models_py3 import ImpalaObjectDataset
     from ._models_py3 import ImpalaSource
+    from ._models_py3 import ImportSettings
     from ._models_py3 import InformixLinkedService
     from ._models_py3 import InformixSink
     from ._models_py3 import InformixSource
@@ -426,9 +429,7 @@ try:
     from ._models_py3 import RedshiftUnloadSettings
     from ._models_py3 import RelationalSource
     from ._models_py3 import RelationalTableDataset
-    from ._models_py3 import RerunTriggerResource
     from ._models_py3 import RerunTumblingWindowTrigger
-    from ._models_py3 import RerunTumblingWindowTriggerActionParameters
     from ._models_py3 import Resource
     from ._models_py3 import ResponsysLinkedService
     from ._models_py3 import ResponsysObjectDataset
@@ -492,6 +493,13 @@ try:
     from ._models_py3 import ShopifyLinkedService
     from ._models_py3 import ShopifyObjectDataset
     from ._models_py3 import ShopifySource
+    from ._models_py3 import SkipErrorFile
+    from ._models_py3 import SnowflakeDataset
+    from ._models_py3 import SnowflakeExportCopyCommand
+    from ._models_py3 import SnowflakeImportCopyCommand
+    from ._models_py3 import SnowflakeLinkedService
+    from ._models_py3 import SnowflakeSink
+    from ._models_py3 import SnowflakeSource
     from ._models_py3 import SparkLinkedService
     from ._models_py3 import SparkObjectDataset
     from ._models_py3 import SparkSource
@@ -546,7 +554,9 @@ try:
     from ._models_py3 import Transformation
     from ._models_py3 import Trigger
     from ._models_py3 import TriggerDependencyReference
+    from ._models_py3 import TriggerFilterParameters
     from ._models_py3 import TriggerPipelineReference
+    from ._models_py3 import TriggerQueryResponse
     from ._models_py3 import TriggerReference
     from ._models_py3 import TriggerResource
     from ._models_py3 import TriggerRun
@@ -589,6 +599,7 @@ except (SyntaxError, ImportError):
     from ._models import ActivityRun
     from ._models import ActivityRunsQueryResponse
     from ._models import AddDataFlowToDebugSessionResponse
+    from ._models import AdditionalColumns
     from ._models import AmazonMWSLinkedService
     from ._models import AmazonMWSObjectDataset
     from ._models import AmazonMWSSource
@@ -789,6 +800,7 @@ except (SyntaxError, ImportError):
     from ._models import ExecutePipelineActivity
     from ._models import ExecuteSSISPackageActivity
     from ._models import ExecutionActivity
+    from ._models import ExportSettings
     from ._models import ExposureControlRequest
     from ._models import ExposureControlResponse
     from ._models import Expression
@@ -859,6 +871,7 @@ except (SyntaxError, ImportError):
     from ._models import ImpalaLinkedService
     from ._models import ImpalaObjectDataset
     from ._models import ImpalaSource
+    from ._models import ImportSettings
     from ._models import InformixLinkedService
     from ._models import InformixSink
     from ._models import InformixSource
@@ -998,9 +1011,7 @@ except (SyntaxError, ImportError):
     from ._models import RedshiftUnloadSettings
     from ._models import RelationalSource
     from ._models import RelationalTableDataset
-    from ._models import RerunTriggerResource
     from ._models import RerunTumblingWindowTrigger
-    from ._models import RerunTumblingWindowTriggerActionParameters
     from ._models import Resource
     from ._models import ResponsysLinkedService
     from ._models import ResponsysObjectDataset
@@ -1064,6 +1075,13 @@ except (SyntaxError, ImportError):
     from ._models import ShopifyLinkedService
     from ._models import ShopifyObjectDataset
     from ._models import ShopifySource
+    from ._models import SkipErrorFile
+    from ._models import SnowflakeDataset
+    from ._models import SnowflakeExportCopyCommand
+    from ._models import SnowflakeImportCopyCommand
+    from ._models import SnowflakeLinkedService
+    from ._models import SnowflakeSink
+    from ._models import SnowflakeSource
     from ._models import SparkLinkedService
     from ._models import SparkObjectDataset
     from ._models import SparkSource
@@ -1118,7 +1136,9 @@ except (SyntaxError, ImportError):
     from ._models import Transformation
     from ._models import Trigger
     from ._models import TriggerDependencyReference
+    from ._models import TriggerFilterParameters
     from ._models import TriggerPipelineReference
+    from ._models import TriggerQueryResponse
     from ._models import TriggerReference
     from ._models import TriggerResource
     from ._models import TriggerRun
@@ -1161,7 +1181,6 @@ from ._paged_models import IntegrationRuntimeResourcePaged
 from ._paged_models import LinkedServiceResourcePaged
 from ._paged_models import OperationPaged
 from ._paged_models import PipelineResourcePaged
-from ._paged_models import RerunTriggerResourcePaged
 from ._paged_models import TriggerResourcePaged
 from ._data_factory_management_client_enums import (
     IntegrationRuntimeState,
@@ -1177,11 +1196,6 @@ from ._data_factory_management_client_enums import (
     RunQueryOrder,
     TriggerRunStatus,
     DataFlowDebugCommandType,
-    TumblingWindowFrequency,
-    BlobEventTypes,
-    DayOfWeek,
-    DaysOfWeek,
-    RecurrenceFrequency,
     GoogleAdWordsAuthenticationType,
     SparkServerType,
     SparkThriftTransportProtocol,
@@ -1210,6 +1224,11 @@ from ._data_factory_management_client_enums import (
     DynamicsAuthenticationType,
     OrcCompressionCodec,
     AvroCompressionCodec,
+    TumblingWindowFrequency,
+    BlobEventTypes,
+    DayOfWeek,
+    DaysOfWeek,
+    RecurrenceFrequency,
     DataFlowComputeType,
     AzureFunctionActivityMethod,
     WebActivityMethod,
@@ -1250,6 +1269,7 @@ __all__ = [
     'ActivityRun',
     'ActivityRunsQueryResponse',
     'AddDataFlowToDebugSessionResponse',
+    'AdditionalColumns',
     'AmazonMWSLinkedService',
     'AmazonMWSObjectDataset',
     'AmazonMWSSource',
@@ -1450,6 +1470,7 @@ __all__ = [
     'ExecutePipelineActivity',
     'ExecuteSSISPackageActivity',
     'ExecutionActivity',
+    'ExportSettings',
     'ExposureControlRequest',
     'ExposureControlResponse',
     'Expression',
@@ -1520,6 +1541,7 @@ __all__ = [
     'ImpalaLinkedService',
     'ImpalaObjectDataset',
     'ImpalaSource',
+    'ImportSettings',
     'InformixLinkedService',
     'InformixSink',
     'InformixSource',
@@ -1659,9 +1681,7 @@ __all__ = [
     'RedshiftUnloadSettings',
     'RelationalSource',
     'RelationalTableDataset',
-    'RerunTriggerResource',
     'RerunTumblingWindowTrigger',
-    'RerunTumblingWindowTriggerActionParameters',
     'Resource',
     'ResponsysLinkedService',
     'ResponsysObjectDataset',
@@ -1725,6 +1745,13 @@ __all__ = [
     'ShopifyLinkedService',
     'ShopifyObjectDataset',
     'ShopifySource',
+    'SkipErrorFile',
+    'SnowflakeDataset',
+    'SnowflakeExportCopyCommand',
+    'SnowflakeImportCopyCommand',
+    'SnowflakeLinkedService',
+    'SnowflakeSink',
+    'SnowflakeSource',
     'SparkLinkedService',
     'SparkObjectDataset',
     'SparkSource',
@@ -1779,7 +1806,9 @@ __all__ = [
     'Transformation',
     'Trigger',
     'TriggerDependencyReference',
+    'TriggerFilterParameters',
     'TriggerPipelineReference',
+    'TriggerQueryResponse',
     'TriggerReference',
     'TriggerResource',
     'TriggerRun',
@@ -1821,7 +1850,6 @@ __all__ = [
     'DatasetResourcePaged',
     'PipelineResourcePaged',
     'TriggerResourcePaged',
-    'RerunTriggerResourcePaged',
     'DataFlowResourcePaged',
     'DataFlowDebugSessionInfoPaged',
     'IntegrationRuntimeState',
@@ -1837,11 +1865,6 @@ __all__ = [
     'RunQueryOrder',
     'TriggerRunStatus',
     'DataFlowDebugCommandType',
-    'TumblingWindowFrequency',
-    'BlobEventTypes',
-    'DayOfWeek',
-    'DaysOfWeek',
-    'RecurrenceFrequency',
     'GoogleAdWordsAuthenticationType',
     'SparkServerType',
     'SparkThriftTransportProtocol',
@@ -1870,6 +1893,11 @@ __all__ = [
     'DynamicsAuthenticationType',
     'OrcCompressionCodec',
     'AvroCompressionCodec',
+    'TumblingWindowFrequency',
+    'BlobEventTypes',
+    'DayOfWeek',
+    'DaysOfWeek',
+    'RecurrenceFrequency',
     'DataFlowComputeType',
     'AzureFunctionActivityMethod',
     'WebActivityMethod',
