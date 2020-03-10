@@ -9,21 +9,10 @@
 # regenerated.
 # --------------------------------------------------------------------------
 
-from msrest.serialization import Model
+from enum import Enum
 
 
-class TagsResource(Model):
-    """A container holding only the Tags for a resource, allowing the user to
-    update the tags on a WebTest instance.
+class DownloadAs(str, Enum):
 
-    :param tags: Resource tags
-    :type tags: dict[str, str]
-    """
-
-    _attribute_map = {
-        'tags': {'key': 'tags', 'type': '{str}'},
-    }
-
-    def __init__(self, **kwargs):
-        super(TagsResource, self).__init__(**kwargs)
-        self.tags = kwargs.get('tags', None)
+    web_test_result = "WebTestResult"  #: Returned file will be in visual studio webtestresult file format.
+    json = "Json"  #: Returned file will be in json file format.
