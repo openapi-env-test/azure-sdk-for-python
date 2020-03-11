@@ -66,7 +66,7 @@ class StorageTargetsOperations(object):
                 path_format_arguments = {
                     'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
                     'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str'),
-                    'cacheName': self._serialize.url("cache_name", cache_name, 'str', pattern=r'^[-0-9a-zA-Z_]{1,31}$')
+                    'cacheName': self._serialize.url("cache_name", cache_name, 'str', pattern=r'^[-0-9a-zA-Z_]{1,80}$')
                 }
                 url = self._client.format_url(url, **path_format_arguments)
 
@@ -121,7 +121,7 @@ class StorageTargetsOperations(object):
         path_format_arguments = {
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
             'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str'),
-            'cacheName': self._serialize.url("cache_name", cache_name, 'str', pattern=r'^[-0-9a-zA-Z_]{1,31}$'),
+            'cacheName': self._serialize.url("cache_name", cache_name, 'str', pattern=r'^[-0-9a-zA-Z_]{1,80}$'),
             'storageTargetName': self._serialize.url("storage_target_name", storage_target_name, 'str', pattern=r'^[-0-9a-zA-Z_]{1,31}$')
         }
         url = self._client.format_url(url, **path_format_arguments)
@@ -241,7 +241,7 @@ class StorageTargetsOperations(object):
         path_format_arguments = {
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
             'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str'),
-            'cacheName': self._serialize.url("cache_name", cache_name, 'str', pattern=r'^[-0-9a-zA-Z_]{1,31}$'),
+            'cacheName': self._serialize.url("cache_name", cache_name, 'str', pattern=r'^[-0-9a-zA-Z_]{1,80}$'),
             'storageTargetName': self._serialize.url("storage_target_name", storage_target_name, 'str', pattern=r'^[-0-9a-zA-Z_]{1,31}$')
         }
         url = self._client.format_url(url, **path_format_arguments)
@@ -282,13 +282,13 @@ class StorageTargetsOperations(object):
 
 
     def _create_or_update_initial(
-            self, resource_group_name, cache_name, storage_target_name, storagetarget=None, custom_headers=None, raw=False, **operation_config):
+            self, resource_group_name, cache_name, storage_target_name, storagetarget, custom_headers=None, raw=False, **operation_config):
         # Construct URL
         url = self.create_or_update.metadata['url']
         path_format_arguments = {
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
             'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str'),
-            'cacheName': self._serialize.url("cache_name", cache_name, 'str', pattern=r'^[-0-9a-zA-Z_]{1,31}$'),
+            'cacheName': self._serialize.url("cache_name", cache_name, 'str', pattern=r'^[-0-9a-zA-Z_]{1,80}$'),
             'storageTargetName': self._serialize.url("storage_target_name", storage_target_name, 'str', pattern=r'^[-0-9a-zA-Z_]{1,31}$')
         }
         url = self._client.format_url(url, **path_format_arguments)
@@ -309,10 +309,7 @@ class StorageTargetsOperations(object):
             header_parameters['accept-language'] = self._serialize.header("self.config.accept_language", self.config.accept_language, 'str')
 
         # Construct body
-        if storagetarget is not None:
-            body_content = self._serialize.body(storagetarget, 'StorageTarget')
-        else:
-            body_content = None
+        body_content = self._serialize.body(storagetarget, 'StorageTarget')
 
         # Construct and send request
         request = self._client.put(url, query_parameters, header_parameters, body_content)
@@ -337,7 +334,7 @@ class StorageTargetsOperations(object):
         return deserialized
 
     def create_or_update(
-            self, resource_group_name, cache_name, storage_target_name, storagetarget=None, custom_headers=None, raw=False, polling=True, **operation_config):
+            self, resource_group_name, cache_name, storage_target_name, storagetarget, custom_headers=None, raw=False, polling=True, **operation_config):
         """Create or update a Storage Target. This operation is allowed at any
         time, but if the Cache is down or unhealthy, the actual
         creation/modification of the Storage Target may be delayed until the
