@@ -21,6 +21,7 @@ try:
     from ._models_py3 import Resource
     from ._models_py3 import ResourceProviderOperation
     from ._models_py3 import ResourceProviderOperationDisplay
+    from ._models_py3 import ResourceProviderOperationList
     from ._models_py3 import ResourceProvidersUpdate
 except (SyntaxError, ImportError):
     from ._models import Association
@@ -34,10 +35,10 @@ except (SyntaxError, ImportError):
     from ._models import Resource
     from ._models import ResourceProviderOperation
     from ._models import ResourceProviderOperationDisplay
+    from ._models import ResourceProviderOperationList
     from ._models import ResourceProvidersUpdate
 from ._paged_models import AssociationPaged
 from ._paged_models import CustomRPManifestPaged
-from ._paged_models import ResourceProviderOperationPaged
 from ._custom_providers_client_enums import (
     ActionRouting,
     ResourceTypeRouting,
@@ -57,8 +58,8 @@ __all__ = [
     'Resource',
     'ResourceProviderOperation',
     'ResourceProviderOperationDisplay',
+    'ResourceProviderOperationList',
     'ResourceProvidersUpdate',
-    'ResourceProviderOperationPaged',
     'CustomRPManifestPaged',
     'AssociationPaged',
     'ActionRouting',

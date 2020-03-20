@@ -32,7 +32,7 @@ class Association(Model):
      Possible values include: 'Accepted', 'Deleting', 'Running', 'Succeeded',
      'Failed'
     :vartype provisioning_state: str or
-     ~azure.mgmt.customproviders.models.ProvisioningState
+     ~azure.mgmt.customproviders.fake.models.ProvisioningState
     """
 
     _validation = {
@@ -118,7 +118,7 @@ class CustomRPActionRouteDefinition(CustomRPRouteDefinition):
     :param routing_type: The routing types that are supported for action
      requests. Possible values include: 'Proxy'
     :type routing_type: str or
-     ~azure.mgmt.customproviders.models.ActionRouting
+     ~azure.mgmt.customproviders.fake.models.ActionRouting
     """
 
     _validation = {
@@ -202,20 +202,20 @@ class CustomRPManifest(Resource):
     :param actions: A list of actions that the custom resource provider
      implements.
     :type actions:
-     list[~azure.mgmt.customproviders.models.CustomRPActionRouteDefinition]
+     list[~azure.mgmt.customproviders.fake.models.CustomRPActionRouteDefinition]
     :param resource_types: A list of resource types that the custom resource
      provider implements.
     :type resource_types:
-     list[~azure.mgmt.customproviders.models.CustomRPResourceTypeRouteDefinition]
+     list[~azure.mgmt.customproviders.fake.models.CustomRPResourceTypeRouteDefinition]
     :param validations: A list of validations to run on the custom resource
      provider's requests.
     :type validations:
-     list[~azure.mgmt.customproviders.models.CustomRPValidations]
+     list[~azure.mgmt.customproviders.fake.models.CustomRPValidations]
     :ivar provisioning_state: The provisioning state of the resource provider.
      Possible values include: 'Accepted', 'Deleting', 'Running', 'Succeeded',
      'Failed'
     :vartype provisioning_state: str or
-     ~azure.mgmt.customproviders.models.ProvisioningState
+     ~azure.mgmt.customproviders.fake.models.ProvisioningState
     """
 
     _validation = {
@@ -264,7 +264,7 @@ class CustomRPResourceTypeRouteDefinition(CustomRPRouteDefinition):
     :param routing_type: The routing types that are supported for resource
      requests. Possible values include: 'Proxy', 'Proxy,Cache'
     :type routing_type: str or
-     ~azure.mgmt.customproviders.models.ResourceTypeRouting
+     ~azure.mgmt.customproviders.fake.models.ResourceTypeRouting
     """
 
     _validation = {
@@ -291,7 +291,7 @@ class CustomRPValidations(Model):
     :param validation_type: The type of validation to run against a matching
      request. Possible values include: 'Swagger'
     :type validation_type: str or
-     ~azure.mgmt.customproviders.models.ValidationType
+     ~azure.mgmt.customproviders.fake.models.ValidationType
     :param specification: Required. A link to the validation specification.
      The specification must be hosted on raw.githubusercontent.com.
     :type specification: str
@@ -324,7 +324,8 @@ class ErrorDefinition(Model):
     :ivar message: Description of the error.
     :vartype message: str
     :ivar details: Internal error details.
-    :vartype details: list[~azure.mgmt.customproviders.models.ErrorDefinition]
+    :vartype details:
+     list[~azure.mgmt.customproviders.fake.models.ErrorDefinition]
     """
 
     _validation = {
@@ -350,7 +351,7 @@ class ErrorResponse(Model):
     """Error response.
 
     :param error: The error details.
-    :type error: ~azure.mgmt.customproviders.models.ErrorDefinition
+    :type error: ~azure.mgmt.customproviders.fake.models.ErrorDefinition
     """
 
     _attribute_map = {
@@ -382,7 +383,7 @@ class ResourceProviderOperation(Model):
     :type name: str
     :param display: Display metadata associated with the operation.
     :type display:
-     ~azure.mgmt.customproviders.models.ResourceProviderOperationDisplay
+     ~azure.mgmt.customproviders.fake.models.ResourceProviderOperationDisplay
     """
 
     _attribute_map = {
@@ -422,6 +423,27 @@ class ResourceProviderOperationDisplay(Model):
         self.resource = kwargs.get('resource', None)
         self.operation = kwargs.get('operation', None)
         self.description = kwargs.get('description', None)
+
+
+class ResourceProviderOperationList(Model):
+    """Results of the request to list operations.
+
+    :param value: List of operations supported by this resource provider.
+    :type value:
+     list[~azure.mgmt.customproviders.fake.models.ResourceProviderOperation]
+    :param next_link: The URL to use for getting the next set of results.
+    :type next_link: str
+    """
+
+    _attribute_map = {
+        'value': {'key': 'value', 'type': '[ResourceProviderOperation]'},
+        'next_link': {'key': 'nextLink', 'type': 'str'},
+    }
+
+    def __init__(self, **kwargs):
+        super(ResourceProviderOperationList, self).__init__(**kwargs)
+        self.value = kwargs.get('value', None)
+        self.next_link = kwargs.get('next_link', None)
 
 
 class ResourceProvidersUpdate(Model):

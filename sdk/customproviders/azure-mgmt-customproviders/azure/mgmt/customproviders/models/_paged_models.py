@@ -12,22 +12,9 @@
 from msrest.paging import Paged
 
 
-class ResourceProviderOperationPaged(Paged):
-    """
-    A paging container for iterating over a list of :class:`ResourceProviderOperation <azure.mgmt.customproviders.models.ResourceProviderOperation>` object
-    """
-
-    _attribute_map = {
-        'next_link': {'key': 'nextLink', 'type': 'str'},
-        'current_page': {'key': 'value', 'type': '[ResourceProviderOperation]'}
-    }
-
-    def __init__(self, *args, **kwargs):
-
-        super(ResourceProviderOperationPaged, self).__init__(*args, **kwargs)
 class CustomRPManifestPaged(Paged):
     """
-    A paging container for iterating over a list of :class:`CustomRPManifest <azure.mgmt.customproviders.models.CustomRPManifest>` object
+    A paging container for iterating over a list of :class:`CustomRPManifest <azure.mgmt.customproviders.fake.models.CustomRPManifest>` object
     """
 
     _attribute_map = {
@@ -40,7 +27,7 @@ class CustomRPManifestPaged(Paged):
         super(CustomRPManifestPaged, self).__init__(*args, **kwargs)
 class AssociationPaged(Paged):
     """
-    A paging container for iterating over a list of :class:`Association <azure.mgmt.customproviders.models.Association>` object
+    A paging container for iterating over a list of :class:`Association <azure.mgmt.customproviders.fake.models.Association>` object
     """
 
     _attribute_map = {

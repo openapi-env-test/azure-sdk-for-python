@@ -42,7 +42,7 @@ class CustomResourceProviderOperations(object):
 
 
     def _create_or_update_initial(
-            self, resource_group_name, resource_provider_name, resource_provider, custom_headers=None, raw=False, **operation_config):
+            self, resource_group_name, resource_provider_name, custom_headers=None, raw=False, **operation_config):
         # Construct URL
         url = self.create_or_update.metadata['url']
         path_format_arguments = {
@@ -59,7 +59,6 @@ class CustomResourceProviderOperations(object):
         # Construct headers
         header_parameters = {}
         header_parameters['Accept'] = 'application/json'
-        header_parameters['Content-Type'] = 'application/json; charset=utf-8'
         if self.config.generate_client_request_id:
             header_parameters['x-ms-client-request-id'] = str(uuid.uuid1())
         if custom_headers:
@@ -67,11 +66,8 @@ class CustomResourceProviderOperations(object):
         if self.config.accept_language is not None:
             header_parameters['accept-language'] = self._serialize.header("self.config.accept_language", self.config.accept_language, 'str')
 
-        # Construct body
-        body_content = self._serialize.body(resource_provider, 'CustomRPManifest')
-
         # Construct and send request
-        request = self._client.put(url, query_parameters, header_parameters, body_content)
+        request = self._client.put(url, query_parameters, header_parameters)
         response = self._client.send(request, stream=False, **operation_config)
 
         if response.status_code not in [200, 201]:
@@ -91,17 +87,13 @@ class CustomResourceProviderOperations(object):
         return deserialized
 
     def create_or_update(
-            self, resource_group_name, resource_provider_name, resource_provider, custom_headers=None, raw=False, polling=True, **operation_config):
+            self, resource_group_name, resource_provider_name, custom_headers=None, raw=False, polling=True, **operation_config):
         """Creates or updates the custom resource provider.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
         :param resource_provider_name: The name of the resource provider.
         :type resource_provider_name: str
-        :param resource_provider: The parameters required to create or update
-         a custom resource provider definition.
-        :type resource_provider:
-         ~azure.mgmt.customproviders.models.CustomRPManifest
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: The poller return type is ClientRawResponse, the
          direct response alongside the deserialized response
@@ -110,16 +102,15 @@ class CustomResourceProviderOperations(object):
         :return: An instance of LROPoller that returns CustomRPManifest or
          ClientRawResponse<CustomRPManifest> if raw==True
         :rtype:
-         ~msrestazure.azure_operation.AzureOperationPoller[~azure.mgmt.customproviders.models.CustomRPManifest]
+         ~msrestazure.azure_operation.AzureOperationPoller[~azure.mgmt.customproviders.fake.models.CustomRPManifest]
          or
-         ~msrestazure.azure_operation.AzureOperationPoller[~msrest.pipeline.ClientRawResponse[~azure.mgmt.customproviders.models.CustomRPManifest]]
+         ~msrestazure.azure_operation.AzureOperationPoller[~msrest.pipeline.ClientRawResponse[~azure.mgmt.customproviders.fake.models.CustomRPManifest]]
         :raises:
-         :class:`ErrorResponseException<azure.mgmt.customproviders.models.ErrorResponseException>`
+         :class:`ErrorResponseException<azure.mgmt.customproviders.fake.models.ErrorResponseException>`
         """
         raw_result = self._create_or_update_initial(
             resource_group_name=resource_group_name,
             resource_provider_name=resource_provider_name,
-            resource_provider=resource_provider,
             custom_headers=custom_headers,
             raw=True,
             **operation_config
@@ -197,7 +188,7 @@ class CustomResourceProviderOperations(object):
         :rtype: ~msrestazure.azure_operation.AzureOperationPoller[None] or
          ~msrestazure.azure_operation.AzureOperationPoller[~msrest.pipeline.ClientRawResponse[None]]
         :raises:
-         :class:`ErrorResponseException<azure.mgmt.customproviders.models.ErrorResponseException>`
+         :class:`ErrorResponseException<azure.mgmt.customproviders.fake.models.ErrorResponseException>`
         """
         raw_result = self._delete_initial(
             resource_group_name=resource_group_name,
@@ -235,10 +226,10 @@ class CustomResourceProviderOperations(object):
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
         :return: CustomRPManifest or ClientRawResponse if raw=true
-        :rtype: ~azure.mgmt.customproviders.models.CustomRPManifest or
+        :rtype: ~azure.mgmt.customproviders.fake.models.CustomRPManifest or
          ~msrest.pipeline.ClientRawResponse
         :raises:
-         :class:`ErrorResponseException<azure.mgmt.customproviders.models.ErrorResponseException>`
+         :class:`ErrorResponseException<azure.mgmt.customproviders.fake.models.ErrorResponseException>`
         """
         # Construct URL
         url = self.get.metadata['url']
@@ -298,10 +289,10 @@ class CustomResourceProviderOperations(object):
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
         :return: CustomRPManifest or ClientRawResponse if raw=true
-        :rtype: ~azure.mgmt.customproviders.models.CustomRPManifest or
+        :rtype: ~azure.mgmt.customproviders.fake.models.CustomRPManifest or
          ~msrest.pipeline.ClientRawResponse
         :raises:
-         :class:`ErrorResponseException<azure.mgmt.customproviders.models.ErrorResponseException>`
+         :class:`ErrorResponseException<azure.mgmt.customproviders.fake.models.ErrorResponseException>`
         """
         patchable_resource = models.ResourceProvidersUpdate(tags=tags)
 
@@ -363,9 +354,9 @@ class CustomResourceProviderOperations(object):
          overrides<msrest:optionsforoperations>`.
         :return: An iterator like instance of CustomRPManifest
         :rtype:
-         ~azure.mgmt.customproviders.models.CustomRPManifestPaged[~azure.mgmt.customproviders.models.CustomRPManifest]
+         ~azure.mgmt.customproviders.fake.models.CustomRPManifestPaged[~azure.mgmt.customproviders.fake.models.CustomRPManifest]
         :raises:
-         :class:`ErrorResponseException<azure.mgmt.customproviders.models.ErrorResponseException>`
+         :class:`ErrorResponseException<azure.mgmt.customproviders.fake.models.ErrorResponseException>`
         """
         def prepare_request(next_link=None):
             if not next_link:
@@ -429,9 +420,9 @@ class CustomResourceProviderOperations(object):
          overrides<msrest:optionsforoperations>`.
         :return: An iterator like instance of CustomRPManifest
         :rtype:
-         ~azure.mgmt.customproviders.models.CustomRPManifestPaged[~azure.mgmt.customproviders.models.CustomRPManifest]
+         ~azure.mgmt.customproviders.fake.models.CustomRPManifestPaged[~azure.mgmt.customproviders.fake.models.CustomRPManifest]
         :raises:
-         :class:`ErrorResponseException<azure.mgmt.customproviders.models.ErrorResponseException>`
+         :class:`ErrorResponseException<azure.mgmt.customproviders.fake.models.ErrorResponseException>`
         """
         def prepare_request(next_link=None):
             if not next_link:

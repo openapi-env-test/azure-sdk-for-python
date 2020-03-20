@@ -113,11 +113,11 @@ class AssociationsOperations(object):
         :return: An instance of LROPoller that returns Association or
          ClientRawResponse<Association> if raw==True
         :rtype:
-         ~msrestazure.azure_operation.AzureOperationPoller[~azure.mgmt.customproviders.models.Association]
+         ~msrestazure.azure_operation.AzureOperationPoller[~azure.mgmt.customproviders.fake.models.Association]
          or
-         ~msrestazure.azure_operation.AzureOperationPoller[~msrest.pipeline.ClientRawResponse[~azure.mgmt.customproviders.models.Association]]
+         ~msrestazure.azure_operation.AzureOperationPoller[~msrest.pipeline.ClientRawResponse[~azure.mgmt.customproviders.fake.models.Association]]
         :raises:
-         :class:`ErrorResponseException<azure.mgmt.customproviders.models.ErrorResponseException>`
+         :class:`ErrorResponseException<azure.mgmt.customproviders.fake.models.ErrorResponseException>`
         """
         raw_result = self._create_or_update_initial(
             scope=scope,
@@ -199,7 +199,7 @@ class AssociationsOperations(object):
         :rtype: ~msrestazure.azure_operation.AzureOperationPoller[None] or
          ~msrestazure.azure_operation.AzureOperationPoller[~msrest.pipeline.ClientRawResponse[None]]
         :raises:
-         :class:`ErrorResponseException<azure.mgmt.customproviders.models.ErrorResponseException>`
+         :class:`ErrorResponseException<azure.mgmt.customproviders.fake.models.ErrorResponseException>`
         """
         raw_result = self._delete_initial(
             scope=scope,
@@ -237,10 +237,10 @@ class AssociationsOperations(object):
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
         :return: Association or ClientRawResponse if raw=true
-        :rtype: ~azure.mgmt.customproviders.models.Association or
+        :rtype: ~azure.mgmt.customproviders.fake.models.Association or
          ~msrest.pipeline.ClientRawResponse
         :raises:
-         :class:`ErrorResponseException<azure.mgmt.customproviders.models.ErrorResponseException>`
+         :class:`ErrorResponseException<azure.mgmt.customproviders.fake.models.ErrorResponseException>`
         """
         # Construct URL
         url = self.get.metadata['url']
@@ -295,9 +295,9 @@ class AssociationsOperations(object):
          overrides<msrest:optionsforoperations>`.
         :return: An iterator like instance of Association
         :rtype:
-         ~azure.mgmt.customproviders.models.AssociationPaged[~azure.mgmt.customproviders.models.Association]
+         ~azure.mgmt.customproviders.fake.models.AssociationPaged[~azure.mgmt.customproviders.fake.models.Association]
         :raises:
-         :class:`ErrorResponseException<azure.mgmt.customproviders.models.ErrorResponseException>`
+         :class:`ErrorResponseException<azure.mgmt.customproviders.fake.models.ErrorResponseException>`
         """
         def prepare_request(next_link=None):
             if not next_link:

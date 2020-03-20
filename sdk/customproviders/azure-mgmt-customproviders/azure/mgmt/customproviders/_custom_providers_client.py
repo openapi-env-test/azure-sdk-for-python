@@ -13,7 +13,6 @@ from msrest.service_client import SDKClient
 from msrest import Serializer, Deserializer
 
 from ._configuration import CustomProvidersClientConfiguration
-from .operations import Operations
 from .operations import CustomResourceProviderOperations
 from .operations import AssociationsOperations
 from . import models
@@ -25,12 +24,10 @@ class CustomProvidersClient(SDKClient):
     :ivar config: Configuration for client.
     :vartype config: CustomProvidersClientConfiguration
 
-    :ivar operations: Operations operations
-    :vartype operations: azure.mgmt.customproviders.operations.Operations
     :ivar custom_resource_provider: CustomResourceProvider operations
-    :vartype custom_resource_provider: azure.mgmt.customproviders.operations.CustomResourceProviderOperations
+    :vartype custom_resource_provider: azure.mgmt.customproviders.fake.operations.CustomResourceProviderOperations
     :ivar associations: Associations operations
-    :vartype associations: azure.mgmt.customproviders.operations.AssociationsOperations
+    :vartype associations: azure.mgmt.customproviders.fake.operations.AssociationsOperations
 
     :param credentials: Credentials needed for the client to connect to Azure.
     :type credentials: :mod:`A msrestazure Credentials
@@ -52,8 +49,6 @@ class CustomProvidersClient(SDKClient):
         self._serialize = Serializer(client_models)
         self._deserialize = Deserializer(client_models)
 
-        self.operations = Operations(
-            self._client, self.config, self._serialize, self._deserialize)
         self.custom_resource_provider = CustomResourceProviderOperations(
             self._client, self.config, self._serialize, self._deserialize)
         self.associations = AssociationsOperations(
