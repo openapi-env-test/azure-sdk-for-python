@@ -39,6 +39,8 @@ try:
     from ._models_py3 import EventInfo
     from ._models_py3 import EventRequestMessage
     from ._models_py3 import EventResponseMessage
+    from ._models_py3 import ExportPipeline
+    from ._models_py3 import ExportPipelineTargetProperties
     from ._models_py3 import FileTaskRunRequest
     from ._models_py3 import FileTaskStep
     from ._models_py3 import FileTaskStepUpdateParameters
@@ -48,6 +50,8 @@ try:
     from ._models_py3 import ImageDescriptor
     from ._models_py3 import ImageUpdateTrigger
     from ._models_py3 import ImportImageParameters
+    from ._models_py3 import ImportPipeline
+    from ._models_py3 import ImportPipelineSourceProperties
     from ._models_py3 import ImportSource
     from ._models_py3 import ImportSourceCredentials
     from ._models_py3 import IPRule
@@ -58,6 +62,15 @@ try:
     from ._models_py3 import OperationMetricSpecificationDefinition
     from ._models_py3 import OperationServiceSpecificationDefinition
     from ._models_py3 import OverrideTaskStepProperties
+    from ._models_py3 import PipelineRun
+    from ._models_py3 import PipelineRunRequest
+    from ._models_py3 import PipelineRunResponse
+    from ._models_py3 import PipelineRunSourceProperties
+    from ._models_py3 import PipelineRunTargetProperties
+    from ._models_py3 import PipelineSourceTriggerDescriptor
+    from ._models_py3 import PipelineSourceTriggerProperties
+    from ._models_py3 import PipelineTriggerDescriptor
+    from ._models_py3 import PipelineTriggerProperties
     from ._models_py3 import PlatformProperties
     from ._models_py3 import PlatformUpdateParameters
     from ._models_py3 import Policies
@@ -65,6 +78,7 @@ try:
     from ._models_py3 import PrivateEndpointConnection
     from ._models_py3 import PrivateLinkResource
     from ._models_py3 import PrivateLinkServiceConnectionState
+    from ._models_py3 import ProgressProperties
     from ._models_py3 import ProxyResource
     from ._models_py3 import QuarantinePolicy
     from ._models_py3 import RegenerateCredentialParameters
@@ -155,6 +169,8 @@ except (SyntaxError, ImportError):
     from ._models import EventInfo
     from ._models import EventRequestMessage
     from ._models import EventResponseMessage
+    from ._models import ExportPipeline
+    from ._models import ExportPipelineTargetProperties
     from ._models import FileTaskRunRequest
     from ._models import FileTaskStep
     from ._models import FileTaskStepUpdateParameters
@@ -164,6 +180,8 @@ except (SyntaxError, ImportError):
     from ._models import ImageDescriptor
     from ._models import ImageUpdateTrigger
     from ._models import ImportImageParameters
+    from ._models import ImportPipeline
+    from ._models import ImportPipelineSourceProperties
     from ._models import ImportSource
     from ._models import ImportSourceCredentials
     from ._models import IPRule
@@ -174,6 +192,15 @@ except (SyntaxError, ImportError):
     from ._models import OperationMetricSpecificationDefinition
     from ._models import OperationServiceSpecificationDefinition
     from ._models import OverrideTaskStepProperties
+    from ._models import PipelineRun
+    from ._models import PipelineRunRequest
+    from ._models import PipelineRunResponse
+    from ._models import PipelineRunSourceProperties
+    from ._models import PipelineRunTargetProperties
+    from ._models import PipelineSourceTriggerDescriptor
+    from ._models import PipelineSourceTriggerProperties
+    from ._models import PipelineTriggerDescriptor
+    from ._models import PipelineTriggerProperties
     from ._models import PlatformProperties
     from ._models import PlatformUpdateParameters
     from ._models import Policies
@@ -181,6 +208,7 @@ except (SyntaxError, ImportError):
     from ._models import PrivateEndpointConnection
     from ._models import PrivateLinkResource
     from ._models import PrivateLinkServiceConnectionState
+    from ._models import ProgressProperties
     from ._models import ProxyResource
     from ._models import QuarantinePolicy
     from ._models import RegenerateCredentialParameters
@@ -243,7 +271,10 @@ except (SyntaxError, ImportError):
     from ._models import WebhookUpdateParameters
 from ._paged_models import AgentPoolPaged
 from ._paged_models import EventPaged
+from ._paged_models import ExportPipelinePaged
+from ._paged_models import ImportPipelinePaged
 from ._paged_models import OperationDefinitionPaged
+from ._paged_models import PipelineRunPaged
 from ._paged_models import PrivateEndpointConnectionPaged
 from ._paged_models import PrivateLinkResourcePaged
 from ._paged_models import RegistryPaged
@@ -255,13 +286,18 @@ from ._paged_models import TaskRunPaged
 from ._paged_models import TokenPaged
 from ._paged_models import WebhookPaged
 from ._container_registry_management_client_enums import (
+    ResourceIdentityType,
+    PipelineOptions,
+    ProvisioningState,
     ImportMode,
+    PipelineSourceType,
+    TriggerStatus,
+    PipelineRunSourceType,
+    PipelineRunTargetType,
     Status,
     ActionsRequired,
-    ProvisioningState,
     SkuName,
     SkuTier,
-    ResourceIdentityType,
     DefaultAction,
     Action,
     PolicyStatus,
@@ -278,7 +314,6 @@ from ._container_registry_management_client_enums import (
     Variant,
     TaskStatus,
     BaseImageDependencyType,
-    TriggerStatus,
     SourceControlType,
     TokenType,
     SourceTriggerEvent,
@@ -321,6 +356,8 @@ __all__ = [
     'EventInfo',
     'EventRequestMessage',
     'EventResponseMessage',
+    'ExportPipeline',
+    'ExportPipelineTargetProperties',
     'FileTaskRunRequest',
     'FileTaskStep',
     'FileTaskStepUpdateParameters',
@@ -330,6 +367,8 @@ __all__ = [
     'ImageDescriptor',
     'ImageUpdateTrigger',
     'ImportImageParameters',
+    'ImportPipeline',
+    'ImportPipelineSourceProperties',
     'ImportSource',
     'ImportSourceCredentials',
     'IPRule',
@@ -340,6 +379,15 @@ __all__ = [
     'OperationMetricSpecificationDefinition',
     'OperationServiceSpecificationDefinition',
     'OverrideTaskStepProperties',
+    'PipelineRun',
+    'PipelineRunRequest',
+    'PipelineRunResponse',
+    'PipelineRunSourceProperties',
+    'PipelineRunTargetProperties',
+    'PipelineSourceTriggerDescriptor',
+    'PipelineSourceTriggerProperties',
+    'PipelineTriggerDescriptor',
+    'PipelineTriggerProperties',
     'PlatformProperties',
     'PlatformUpdateParameters',
     'Policies',
@@ -347,6 +395,7 @@ __all__ = [
     'PrivateEndpointConnection',
     'PrivateLinkResource',
     'PrivateLinkServiceConnectionState',
+    'ProgressProperties',
     'ProxyResource',
     'QuarantinePolicy',
     'RegenerateCredentialParameters',
@@ -407,9 +456,12 @@ __all__ = [
     'Webhook',
     'WebhookCreateParameters',
     'WebhookUpdateParameters',
+    'ExportPipelinePaged',
     'RegistryPaged',
     'PrivateLinkResourcePaged',
+    'ImportPipelinePaged',
     'OperationDefinitionPaged',
+    'PipelineRunPaged',
     'PrivateEndpointConnectionPaged',
     'ReplicationPaged',
     'WebhookPaged',
@@ -420,13 +472,18 @@ __all__ = [
     'TaskPaged',
     'ScopeMapPaged',
     'TokenPaged',
+    'ResourceIdentityType',
+    'PipelineOptions',
+    'ProvisioningState',
     'ImportMode',
+    'PipelineSourceType',
+    'TriggerStatus',
+    'PipelineRunSourceType',
+    'PipelineRunTargetType',
     'Status',
     'ActionsRequired',
-    'ProvisioningState',
     'SkuName',
     'SkuTier',
-    'ResourceIdentityType',
     'DefaultAction',
     'Action',
     'PolicyStatus',
@@ -443,7 +500,6 @@ __all__ = [
     'Variant',
     'TaskStatus',
     'BaseImageDependencyType',
-    'TriggerStatus',
     'SourceControlType',
     'TokenType',
     'SourceTriggerEvent',

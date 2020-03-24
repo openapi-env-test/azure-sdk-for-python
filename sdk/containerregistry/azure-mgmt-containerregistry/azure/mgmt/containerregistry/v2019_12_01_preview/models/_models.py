@@ -381,7 +381,7 @@ class BaseImageTrigger(Model):
     :type update_trigger_payload_type: str or
      ~azure.mgmt.containerregistry.v2019_12_01_preview.models.UpdateTriggerPayloadType
     :param status: The current status of trigger. Possible values include:
-     'Disabled', 'Enabled'. Default value: "Enabled" .
+     'Enabled', 'Disabled'. Default value: "Enabled" .
     :type status: str or
      ~azure.mgmt.containerregistry.v2019_12_01_preview.models.TriggerStatus
     :param name: Required. The name of the trigger.
@@ -427,7 +427,7 @@ class BaseImageTriggerUpdateParameters(Model):
     :type update_trigger_payload_type: str or
      ~azure.mgmt.containerregistry.v2019_12_01_preview.models.UpdateTriggerPayloadType
     :param status: The current status of trigger. Possible values include:
-     'Disabled', 'Enabled'. Default value: "Enabled" .
+     'Enabled', 'Disabled'. Default value: "Enabled" .
     :type status: str or
      ~azure.mgmt.containerregistry.v2019_12_01_preview.models.TriggerStatus
     :param name: Required. The name of the trigger.
@@ -1313,6 +1313,131 @@ class EventResponseMessage(Model):
         self.version = kwargs.get('version', None)
 
 
+class ProxyResource(Model):
+    """The resource model definition for a ARM proxy resource. It will have
+    everything other than required location and tags.
+
+    Variables are only populated by the server, and will be ignored when
+    sending a request.
+
+    :ivar id: The resource ID.
+    :vartype id: str
+    :ivar name: The name of the resource.
+    :vartype name: str
+    :ivar type: The type of the resource.
+    :vartype type: str
+    """
+
+    _validation = {
+        'id': {'readonly': True},
+        'name': {'readonly': True},
+        'type': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'id': {'key': 'id', 'type': 'str'},
+        'name': {'key': 'name', 'type': 'str'},
+        'type': {'key': 'type', 'type': 'str'},
+    }
+
+    def __init__(self, **kwargs):
+        super(ProxyResource, self).__init__(**kwargs)
+        self.id = None
+        self.name = None
+        self.type = None
+
+
+class ExportPipeline(ProxyResource):
+    """An object that represents an export pipeline for a container registry.
+
+    Variables are only populated by the server, and will be ignored when
+    sending a request.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :ivar id: The resource ID.
+    :vartype id: str
+    :ivar name: The name of the resource.
+    :vartype name: str
+    :ivar type: The type of the resource.
+    :vartype type: str
+    :param identity: The identity of the export pipeline.
+    :type identity:
+     ~azure.mgmt.containerregistry.v2019_12_01_preview.models.IdentityProperties
+    :param target: Required. The target properties of the export pipeline.
+    :type target:
+     ~azure.mgmt.containerregistry.v2019_12_01_preview.models.ExportPipelineTargetProperties
+    :param options: The list of all options configured for the pipeline.
+    :type options: list[str or
+     ~azure.mgmt.containerregistry.v2019_12_01_preview.models.PipelineOptions]
+    :ivar provisioning_state: The provisioning state of the pipeline at the
+     time the operation was called. Possible values include: 'Creating',
+     'Updating', 'Deleting', 'Succeeded', 'Failed', 'Canceled'
+    :vartype provisioning_state: str or
+     ~azure.mgmt.containerregistry.v2019_12_01_preview.models.ProvisioningState
+    """
+
+    _validation = {
+        'id': {'readonly': True},
+        'name': {'readonly': True},
+        'type': {'readonly': True},
+        'target': {'required': True},
+        'provisioning_state': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'id': {'key': 'id', 'type': 'str'},
+        'name': {'key': 'name', 'type': 'str'},
+        'type': {'key': 'type', 'type': 'str'},
+        'identity': {'key': 'identity', 'type': 'IdentityProperties'},
+        'target': {'key': 'properties.target', 'type': 'ExportPipelineTargetProperties'},
+        'options': {'key': 'properties.options', 'type': '[str]'},
+        'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
+    }
+
+    def __init__(self, **kwargs):
+        super(ExportPipeline, self).__init__(**kwargs)
+        self.identity = kwargs.get('identity', None)
+        self.target = kwargs.get('target', None)
+        self.options = kwargs.get('options', None)
+        self.provisioning_state = None
+
+
+class ExportPipelineTargetProperties(Model):
+    """The properties of the export pipeline target.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param type: The type of target for the export pipeline.
+    :type type: str
+    :param uri: The target uri of the export pipeline.
+     When 'AzureStorageBlob':
+     "https://accountName.blob.core.windows.net/containerName/blobName"
+     When 'AzureStorageBlobContainer':
+     "https://accountName.blob.core.windows.net/containerName"
+    :type uri: str
+    :param key_vault_uri: Required. They key vault secret uri to obtain the
+     target storage SAS token.
+    :type key_vault_uri: str
+    """
+
+    _validation = {
+        'key_vault_uri': {'required': True},
+    }
+
+    _attribute_map = {
+        'type': {'key': 'type', 'type': 'str'},
+        'uri': {'key': 'uri', 'type': 'str'},
+        'key_vault_uri': {'key': 'keyVaultUri', 'type': 'str'},
+    }
+
+    def __init__(self, **kwargs):
+        super(ExportPipelineTargetProperties, self).__init__(**kwargs)
+        self.type = kwargs.get('type', None)
+        self.uri = kwargs.get('uri', None)
+        self.key_vault_uri = kwargs.get('key_vault_uri', None)
+
+
 class FileTaskRunRequest(RunRequest):
     """The request parameters for a scheduling run against a task file.
 
@@ -1671,6 +1796,106 @@ class ImportImageParameters(Model):
         self.mode = kwargs.get('mode', "NoForce")
 
 
+class ImportPipeline(ProxyResource):
+    """An object that represents an import pipeline for a container registry.
+
+    Variables are only populated by the server, and will be ignored when
+    sending a request.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :ivar id: The resource ID.
+    :vartype id: str
+    :ivar name: The name of the resource.
+    :vartype name: str
+    :ivar type: The type of the resource.
+    :vartype type: str
+    :param identity: The identity of the import pipeline.
+    :type identity:
+     ~azure.mgmt.containerregistry.v2019_12_01_preview.models.IdentityProperties
+    :param source: Required. The source properties of the import pipeline.
+    :type source:
+     ~azure.mgmt.containerregistry.v2019_12_01_preview.models.ImportPipelineSourceProperties
+    :param trigger: The properties that describe the trigger of the import
+     pipeline.
+    :type trigger:
+     ~azure.mgmt.containerregistry.v2019_12_01_preview.models.PipelineTriggerProperties
+    :param options: The list of all options configured for the pipeline.
+    :type options: list[str or
+     ~azure.mgmt.containerregistry.v2019_12_01_preview.models.PipelineOptions]
+    :ivar provisioning_state: The provisioning state of the pipeline at the
+     time the operation was called. Possible values include: 'Creating',
+     'Updating', 'Deleting', 'Succeeded', 'Failed', 'Canceled'
+    :vartype provisioning_state: str or
+     ~azure.mgmt.containerregistry.v2019_12_01_preview.models.ProvisioningState
+    """
+
+    _validation = {
+        'id': {'readonly': True},
+        'name': {'readonly': True},
+        'type': {'readonly': True},
+        'source': {'required': True},
+        'provisioning_state': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'id': {'key': 'id', 'type': 'str'},
+        'name': {'key': 'name', 'type': 'str'},
+        'type': {'key': 'type', 'type': 'str'},
+        'identity': {'key': 'identity', 'type': 'IdentityProperties'},
+        'source': {'key': 'properties.source', 'type': 'ImportPipelineSourceProperties'},
+        'trigger': {'key': 'properties.trigger', 'type': 'PipelineTriggerProperties'},
+        'options': {'key': 'properties.options', 'type': '[str]'},
+        'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
+    }
+
+    def __init__(self, **kwargs):
+        super(ImportPipeline, self).__init__(**kwargs)
+        self.identity = kwargs.get('identity', None)
+        self.source = kwargs.get('source', None)
+        self.trigger = kwargs.get('trigger', None)
+        self.options = kwargs.get('options', None)
+        self.provisioning_state = None
+
+
+class ImportPipelineSourceProperties(Model):
+    """The properties of the import pipeline source.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param type: The type of source for the import pipeline. Possible values
+     include: 'AzureStorageBlob', 'AzureStorageBlobContainer'. Default value:
+     "AzureStorageBlobContainer" .
+    :type type: str or
+     ~azure.mgmt.containerregistry.v2019_12_01_preview.models.PipelineSourceType
+    :param uri: The source uri of the import pipeline.
+     When 'AzureStorageBlob':
+     "https://accountName.blob.core.windows.net/containerName/blobName"
+     When 'AzureStorageBlobContainer':
+     "https://accountName.blob.core.windows.net/containerName"
+    :type uri: str
+    :param key_vault_uri: Required. They key vault secret uri to obtain the
+     source storage SAS token.
+    :type key_vault_uri: str
+    """
+
+    _validation = {
+        'key_vault_uri': {'required': True},
+    }
+
+    _attribute_map = {
+        'type': {'key': 'type', 'type': 'str'},
+        'uri': {'key': 'uri', 'type': 'str'},
+        'key_vault_uri': {'key': 'keyVaultUri', 'type': 'str'},
+    }
+
+    def __init__(self, **kwargs):
+        super(ImportPipelineSourceProperties, self).__init__(**kwargs)
+        self.type = kwargs.get('type', "AzureStorageBlobContainer")
+        self.uri = kwargs.get('uri', None)
+        self.key_vault_uri = kwargs.get('key_vault_uri', None)
+
+
 class ImportSource(Model):
     """ImportSource.
 
@@ -1993,6 +2218,287 @@ class OverrideTaskStepProperties(Model):
         self.update_trigger_token = kwargs.get('update_trigger_token', None)
 
 
+class PipelineRun(ProxyResource):
+    """An object that represents a pipeline run for a container registry.
+
+    Variables are only populated by the server, and will be ignored when
+    sending a request.
+
+    :ivar id: The resource ID.
+    :vartype id: str
+    :ivar name: The name of the resource.
+    :vartype name: str
+    :ivar type: The type of the resource.
+    :vartype type: str
+    :ivar provisioning_state: The provisioning state of a pipeline run.
+     Possible values include: 'Creating', 'Updating', 'Deleting', 'Succeeded',
+     'Failed', 'Canceled'
+    :vartype provisioning_state: str or
+     ~azure.mgmt.containerregistry.v2019_12_01_preview.models.ProvisioningState
+    :param request: The request parameters for a pipeline run.
+    :type request:
+     ~azure.mgmt.containerregistry.v2019_12_01_preview.models.PipelineRunRequest
+    :ivar response: The response of a pipeline run.
+    :vartype response:
+     ~azure.mgmt.containerregistry.v2019_12_01_preview.models.PipelineRunResponse
+    :param force_update_tag: How the pipeline run should be forced to recreate
+     even if the pipeline run configuration has not changed.
+    :type force_update_tag: str
+    """
+
+    _validation = {
+        'id': {'readonly': True},
+        'name': {'readonly': True},
+        'type': {'readonly': True},
+        'provisioning_state': {'readonly': True},
+        'response': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'id': {'key': 'id', 'type': 'str'},
+        'name': {'key': 'name', 'type': 'str'},
+        'type': {'key': 'type', 'type': 'str'},
+        'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
+        'request': {'key': 'properties.request', 'type': 'PipelineRunRequest'},
+        'response': {'key': 'properties.response', 'type': 'PipelineRunResponse'},
+        'force_update_tag': {'key': 'properties.forceUpdateTag', 'type': 'str'},
+    }
+
+    def __init__(self, **kwargs):
+        super(PipelineRun, self).__init__(**kwargs)
+        self.provisioning_state = None
+        self.request = kwargs.get('request', None)
+        self.response = None
+        self.force_update_tag = kwargs.get('force_update_tag', None)
+
+
+class PipelineRunRequest(Model):
+    """The request properties provided for a pipeline run.
+
+    :param pipeline_resource_id: The resource ID of the pipeline to run.
+    :type pipeline_resource_id: str
+    :param artifacts: List of source artifacts to be transferred by the
+     pipeline.
+     Specify an image by repository ('hello-world'). This will use the 'latest'
+     tag.
+     Specify an image by tag ('hello-world:latest').
+     Specify an image by sha256-based manifest digest
+     ('hello-world@sha256:abc123').
+    :type artifacts: list[str]
+    :param source: The source properties of the pipeline run.
+    :type source:
+     ~azure.mgmt.containerregistry.v2019_12_01_preview.models.PipelineRunSourceProperties
+    :param target: The target properties of the pipeline run.
+    :type target:
+     ~azure.mgmt.containerregistry.v2019_12_01_preview.models.PipelineRunTargetProperties
+    :param catalog_digest: The digest of the tar used to transfer the
+     artifacts.
+    :type catalog_digest: str
+    :param is_archive_enabled: Indicates whether archiving is enabled for the
+     pipeline run or not. Default value: True .
+    :type is_archive_enabled: bool
+    """
+
+    _attribute_map = {
+        'pipeline_resource_id': {'key': 'pipelineResourceId', 'type': 'str'},
+        'artifacts': {'key': 'artifacts', 'type': '[str]'},
+        'source': {'key': 'source', 'type': 'PipelineRunSourceProperties'},
+        'target': {'key': 'target', 'type': 'PipelineRunTargetProperties'},
+        'catalog_digest': {'key': 'catalogDigest', 'type': 'str'},
+        'is_archive_enabled': {'key': 'isArchiveEnabled', 'type': 'bool'},
+    }
+
+    def __init__(self, **kwargs):
+        super(PipelineRunRequest, self).__init__(**kwargs)
+        self.pipeline_resource_id = kwargs.get('pipeline_resource_id', None)
+        self.artifacts = kwargs.get('artifacts', None)
+        self.source = kwargs.get('source', None)
+        self.target = kwargs.get('target', None)
+        self.catalog_digest = kwargs.get('catalog_digest', None)
+        self.is_archive_enabled = kwargs.get('is_archive_enabled', True)
+
+
+class PipelineRunResponse(Model):
+    """The response properties returned for a pipeline run.
+
+    :param status: The current status of the pipeline run.
+    :type status: str
+    :param imported_artifacts: The artifacts imported in the pipeline run.
+    :type imported_artifacts: list[str]
+    :param progress: The current progress of the copy operation.
+    :type progress:
+     ~azure.mgmt.containerregistry.v2019_12_01_preview.models.ProgressProperties
+    :param start_time: The time the pipeline run started.
+    :type start_time: datetime
+    :param finish_time: The time the pipeline run finished.
+    :type finish_time: datetime
+    :param source: The source of the pipeline run.
+    :type source:
+     ~azure.mgmt.containerregistry.v2019_12_01_preview.models.ImportPipelineSourceProperties
+    :param target: The target of the pipeline run.
+    :type target:
+     ~azure.mgmt.containerregistry.v2019_12_01_preview.models.ExportPipelineTargetProperties
+    :param catalog_digest: The digest of the tar used to transfer the
+     artifacts.
+    :type catalog_digest: str
+    :param trigger: The trigger that caused the pipeline run.
+    :type trigger:
+     ~azure.mgmt.containerregistry.v2019_12_01_preview.models.PipelineTriggerDescriptor
+    :param pipeline_run_error_message: The detailed error message for the
+     pipeline run in the case of failure.
+    :type pipeline_run_error_message: str
+    :param is_archive_enabled: Indicates whether archiving is enabled for the
+     pipeline run or not.
+    :type is_archive_enabled: bool
+    """
+
+    _attribute_map = {
+        'status': {'key': 'status', 'type': 'str'},
+        'imported_artifacts': {'key': 'importedArtifacts', 'type': '[str]'},
+        'progress': {'key': 'progress', 'type': 'ProgressProperties'},
+        'start_time': {'key': 'startTime', 'type': 'iso-8601'},
+        'finish_time': {'key': 'finishTime', 'type': 'iso-8601'},
+        'source': {'key': 'source', 'type': 'ImportPipelineSourceProperties'},
+        'target': {'key': 'target', 'type': 'ExportPipelineTargetProperties'},
+        'catalog_digest': {'key': 'catalogDigest', 'type': 'str'},
+        'trigger': {'key': 'trigger', 'type': 'PipelineTriggerDescriptor'},
+        'pipeline_run_error_message': {'key': 'pipelineRunErrorMessage', 'type': 'str'},
+        'is_archive_enabled': {'key': 'isArchiveEnabled', 'type': 'bool'},
+    }
+
+    def __init__(self, **kwargs):
+        super(PipelineRunResponse, self).__init__(**kwargs)
+        self.status = kwargs.get('status', None)
+        self.imported_artifacts = kwargs.get('imported_artifacts', None)
+        self.progress = kwargs.get('progress', None)
+        self.start_time = kwargs.get('start_time', None)
+        self.finish_time = kwargs.get('finish_time', None)
+        self.source = kwargs.get('source', None)
+        self.target = kwargs.get('target', None)
+        self.catalog_digest = kwargs.get('catalog_digest', None)
+        self.trigger = kwargs.get('trigger', None)
+        self.pipeline_run_error_message = kwargs.get('pipeline_run_error_message', None)
+        self.is_archive_enabled = kwargs.get('is_archive_enabled', None)
+
+
+class PipelineRunSourceProperties(Model):
+    """PipelineRunSourceProperties.
+
+    :param type: The type of the source. Possible values include:
+     'AzureStorageBlob'. Default value: "AzureStorageBlob" .
+    :type type: str or
+     ~azure.mgmt.containerregistry.v2019_12_01_preview.models.PipelineRunSourceType
+    :param name: The name of the source.
+    :type name: str
+    """
+
+    _attribute_map = {
+        'type': {'key': 'type', 'type': 'str'},
+        'name': {'key': 'name', 'type': 'str'},
+    }
+
+    def __init__(self, **kwargs):
+        super(PipelineRunSourceProperties, self).__init__(**kwargs)
+        self.type = kwargs.get('type', "AzureStorageBlob")
+        self.name = kwargs.get('name', None)
+
+
+class PipelineRunTargetProperties(Model):
+    """PipelineRunTargetProperties.
+
+    :param type: The type of the target. Possible values include:
+     'AzureStorageBlob'. Default value: "AzureStorageBlob" .
+    :type type: str or
+     ~azure.mgmt.containerregistry.v2019_12_01_preview.models.PipelineRunTargetType
+    :param name: The name of the target.
+    :type name: str
+    """
+
+    _attribute_map = {
+        'type': {'key': 'type', 'type': 'str'},
+        'name': {'key': 'name', 'type': 'str'},
+    }
+
+    def __init__(self, **kwargs):
+        super(PipelineRunTargetProperties, self).__init__(**kwargs)
+        self.type = kwargs.get('type', "AzureStorageBlob")
+        self.name = kwargs.get('name', None)
+
+
+class PipelineSourceTriggerDescriptor(Model):
+    """PipelineSourceTriggerDescriptor.
+
+    :param timestamp: The timestamp when the source update happened.
+    :type timestamp: datetime
+    """
+
+    _attribute_map = {
+        'timestamp': {'key': 'timestamp', 'type': 'iso-8601'},
+    }
+
+    def __init__(self, **kwargs):
+        super(PipelineSourceTriggerDescriptor, self).__init__(**kwargs)
+        self.timestamp = kwargs.get('timestamp', None)
+
+
+class PipelineSourceTriggerProperties(Model):
+    """PipelineSourceTriggerProperties.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param status: Required. The current status of the source trigger.
+     Possible values include: 'Enabled', 'Disabled'. Default value: "Enabled" .
+    :type status: str or
+     ~azure.mgmt.containerregistry.v2019_12_01_preview.models.TriggerStatus
+    """
+
+    _validation = {
+        'status': {'required': True},
+    }
+
+    _attribute_map = {
+        'status': {'key': 'status', 'type': 'str'},
+    }
+
+    def __init__(self, **kwargs):
+        super(PipelineSourceTriggerProperties, self).__init__(**kwargs)
+        self.status = kwargs.get('status', "Enabled")
+
+
+class PipelineTriggerDescriptor(Model):
+    """PipelineTriggerDescriptor.
+
+    :param source_trigger: The source trigger that caused the pipeline run.
+    :type source_trigger:
+     ~azure.mgmt.containerregistry.v2019_12_01_preview.models.PipelineSourceTriggerDescriptor
+    """
+
+    _attribute_map = {
+        'source_trigger': {'key': 'sourceTrigger', 'type': 'PipelineSourceTriggerDescriptor'},
+    }
+
+    def __init__(self, **kwargs):
+        super(PipelineTriggerDescriptor, self).__init__(**kwargs)
+        self.source_trigger = kwargs.get('source_trigger', None)
+
+
+class PipelineTriggerProperties(Model):
+    """PipelineTriggerProperties.
+
+    :param source_trigger: The source trigger properties of the pipeline.
+    :type source_trigger:
+     ~azure.mgmt.containerregistry.v2019_12_01_preview.models.PipelineSourceTriggerProperties
+    """
+
+    _attribute_map = {
+        'source_trigger': {'key': 'sourceTrigger', 'type': 'PipelineSourceTriggerProperties'},
+    }
+
+    def __init__(self, **kwargs):
+        super(PipelineTriggerProperties, self).__init__(**kwargs)
+        self.source_trigger = kwargs.get('source_trigger', None)
+
+
 class PlatformProperties(Model):
     """The platform properties against which the run has to happen.
 
@@ -2228,38 +2734,20 @@ class PrivateLinkServiceConnectionState(Model):
         self.actions_required = kwargs.get('actions_required', None)
 
 
-class ProxyResource(Model):
-    """The resource model definition for a ARM proxy resource. It will have
-    everything other than required location and tags.
+class ProgressProperties(Model):
+    """ProgressProperties.
 
-    Variables are only populated by the server, and will be ignored when
-    sending a request.
-
-    :ivar id: The resource ID.
-    :vartype id: str
-    :ivar name: The name of the resource.
-    :vartype name: str
-    :ivar type: The type of the resource.
-    :vartype type: str
+    :param percentage: The percentage complete of the copy operation.
+    :type percentage: str
     """
 
-    _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-    }
-
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
+        'percentage': {'key': 'percentage', 'type': 'str'},
     }
 
     def __init__(self, **kwargs):
-        super(ProxyResource, self).__init__(**kwargs)
-        self.id = None
-        self.name = None
-        self.type = None
+        super(ProgressProperties, self).__init__(**kwargs)
+        self.percentage = kwargs.get('percentage', None)
 
 
 class QuarantinePolicy(Model):
@@ -3274,7 +3762,7 @@ class SourceTrigger(Model):
     :type source_trigger_events: list[str or
      ~azure.mgmt.containerregistry.v2019_12_01_preview.models.SourceTriggerEvent]
     :param status: The current status of trigger. Possible values include:
-     'Disabled', 'Enabled'. Default value: "Enabled" .
+     'Enabled', 'Disabled'. Default value: "Enabled" .
     :type status: str or
      ~azure.mgmt.containerregistry.v2019_12_01_preview.models.TriggerStatus
     :param name: Required. The name of the trigger.
@@ -3356,7 +3844,7 @@ class SourceTriggerUpdateParameters(Model):
     :type source_trigger_events: list[str or
      ~azure.mgmt.containerregistry.v2019_12_01_preview.models.SourceTriggerEvent]
     :param status: The current status of trigger. Possible values include:
-     'Disabled', 'Enabled'. Default value: "Enabled" .
+     'Enabled', 'Disabled'. Default value: "Enabled" .
     :type status: str or
      ~azure.mgmt.containerregistry.v2019_12_01_preview.models.TriggerStatus
     :param name: Required. The name of the trigger.
@@ -3858,7 +4346,7 @@ class TimerTrigger(Model):
     :param schedule: Required. The CRON expression for the task schedule
     :type schedule: str
     :param status: The current status of trigger. Possible values include:
-     'Disabled', 'Enabled'. Default value: "Enabled" .
+     'Enabled', 'Disabled'. Default value: "Enabled" .
     :type status: str or
      ~azure.mgmt.containerregistry.v2019_12_01_preview.models.TriggerStatus
     :param name: Required. The name of the trigger.
@@ -3911,7 +4399,7 @@ class TimerTriggerUpdateParameters(Model):
     :param schedule: The CRON expression for the task schedule
     :type schedule: str
     :param status: The current status of trigger. Possible values include:
-     'Disabled', 'Enabled'. Default value: "Enabled" .
+     'Enabled', 'Disabled'. Default value: "Enabled" .
     :type status: str or
      ~azure.mgmt.containerregistry.v2019_12_01_preview.models.TriggerStatus
     :param name: Required. The name of the trigger.
