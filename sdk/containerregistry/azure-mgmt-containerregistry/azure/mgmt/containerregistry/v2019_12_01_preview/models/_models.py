@@ -2654,6 +2654,11 @@ class Replication(Resource):
      called.
     :vartype status:
      ~azure.mgmt.containerregistry.v2019_12_01_preview.models.Status
+    :param region_endpoint_enabled: Specifies whether the replication
+     (regional) endpoint is enabled. Requests will not be routed to a
+     replication whose regional endpoint is disabled, however its data will
+     continue to be synced with other replications. Default value: True .
+    :type region_endpoint_enabled: bool
     """
 
     _validation = {
@@ -2673,12 +2678,14 @@ class Replication(Resource):
         'tags': {'key': 'tags', 'type': '{str}'},
         'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
         'status': {'key': 'properties.status', 'type': 'Status'},
+        'region_endpoint_enabled': {'key': 'properties.regionEndpointEnabled', 'type': 'bool'},
     }
 
     def __init__(self, **kwargs):
         super(Replication, self).__init__(**kwargs)
         self.provisioning_state = None
         self.status = None
+        self.region_endpoint_enabled = kwargs.get('region_endpoint_enabled', True)
 
 
 class ReplicationUpdateParameters(Model):
@@ -2686,15 +2693,22 @@ class ReplicationUpdateParameters(Model):
 
     :param tags: The tags for the replication.
     :type tags: dict[str, str]
+    :param region_endpoint_enabled: Specifies whether the replication (region)
+     endpoint is enabled. Requests will not be routed to a replication whose
+     region endpoint is disabled, however its data will continue to be synced
+     with other replications.
+    :type region_endpoint_enabled: bool
     """
 
     _attribute_map = {
         'tags': {'key': 'tags', 'type': '{str}'},
+        'region_endpoint_enabled': {'key': 'properties.regionEndpointEnabled', 'type': 'bool'},
     }
 
     def __init__(self, **kwargs):
         super(ReplicationUpdateParameters, self).__init__(**kwargs)
         self.tags = kwargs.get('tags', None)
+        self.region_endpoint_enabled = kwargs.get('region_endpoint_enabled', None)
 
 
 class Request(Model):
