@@ -26,18 +26,16 @@ class PricingTier(str, Enum):
     standard = "Standard"  #: Get the standard Azure security center experience with advanced security features
 
 
-class ReportedSeverity(str, Enum):
-
-    informational = "Informational"
-    low = "Low"
-    medium = "Medium"
-    high = "High"
-
-
 class SettingKind(str, Enum):
 
     data_export_setting = "DataExportSetting"
     alert_suppression_setting = "AlertSuppressionSetting"
+
+
+class ValueType(str, Enum):
+
+    ip_cidr = "IpCidr"  #: An IP range in CIDR format (e.g. '192.168.0.1/8').
+    string = "String"  #: Any string value.
 
 
 class SecuritySolutionStatus(str, Enum):
@@ -82,6 +80,20 @@ class RecommendationConfigStatus(str, Enum):
     enabled = "Enabled"
 
 
+class UnmaskedIpLoggingStatus(str, Enum):
+
+    disabled = "Disabled"  #: Unmasked IP logging is disabled
+    enabled = "Enabled"  #: Unmasked IP logging is enabled
+
+
+class ReportedSeverity(str, Enum):
+
+    informational = "Informational"
+    low = "Low"
+    medium = "Medium"
+    high = "High"
+
+
 class SecurityFamily(str, Enum):
 
     waf = "Waf"
@@ -104,30 +116,19 @@ class ExternalSecuritySolutionKind(str, Enum):
     aad = "AAD"
 
 
-class Protocol(str, Enum):
-
-    tcp = "TCP"
-    udp = "UDP"
-    all = "*"
-
-
-class Status(str, Enum):
-
-    revoked = "Revoked"
-    initiated = "Initiated"
-
-
-class StatusReason(str, Enum):
-
-    expired = "Expired"
-    user_requested = "UserRequested"
-    newer_request_initiated = "NewerRequestInitiated"
-
-
 class AutoProvision(str, Enum):
 
     on = "On"  #: Install missing security agent on VMs automatically
     off = "Off"  #: Do not install security agent on the VMs automatically
+
+
+class Rank(str, Enum):
+
+    none = "None"
+    low = "Low"
+    medium = "Medium"
+    high = "High"
+    critical = "Critical"
 
 
 class AlertNotifications(str, Enum):
@@ -148,6 +149,170 @@ class State(str, Enum):
     failed = "Failed"  #: At least one supported regulatory compliance control in the given standard has a state of failed
     skipped = "Skipped"  #: All supported regulatory compliance controls in the given standard have a state of skipped
     unsupported = "Unsupported"  #: No supported regulatory compliance data for the given standard
+
+
+class SubAssessmentStatusCode(str, Enum):
+
+    healthy = "Healthy"  #: The resource is healthy
+    unhealthy = "Unhealthy"  #: The resource has a security issue that needs to be addressed
+    not_applicable = "NotApplicable"  #: Assessment for this resource did not happen
+
+
+class Severity(str, Enum):
+
+    low = "Low"
+    medium = "Medium"
+    high = "High"
+
+
+class EventSource(str, Enum):
+
+    assessments = "Assessments"
+    alerts = "Alerts"
+
+
+class PropertyType(str, Enum):
+
+    string = "String"
+    integer = "Integer"
+    number = "Number"
+    boolean = "Boolean"
+
+
+class Operator(str, Enum):
+
+    equals = "Equals"
+    greater_than = "GreaterThan"
+    greater_than_or_equal_to = "GreaterThanOrEqualTo"
+    lesser_than = "LesserThan"
+    lesser_than_or_equal_to = "LesserThanOrEqualTo"
+    not_equals = "NotEquals"
+    contains = "Contains"
+    starts_with = "StartsWith"
+    ends_with = "EndsWith"
+
+
+class Category(str, Enum):
+
+    compute = "Compute"
+    networking = "Networking"
+    data = "Data"
+    identity_and_access = "IdentityAndAccess"
+    io_t = "IoT"
+
+
+class UserImpact(str, Enum):
+
+    low = "Low"
+    moderate = "Moderate"
+    high = "High"
+
+
+class ImplementationEffort(str, Enum):
+
+    low = "Low"
+    moderate = "Moderate"
+    high = "High"
+
+
+class Threats(str, Enum):
+
+    account_breach = "accountBreach"
+    data_exfiltration = "dataExfiltration"
+    data_spillage = "dataSpillage"
+    malicious_insider = "maliciousInsider"
+    elevation_of_privilege = "elevationOfPrivilege"
+    threat_resistance = "threatResistance"
+    missing_coverage = "missingCoverage"
+    denial_of_service = "denialOfService"
+
+
+class AssessmentType(str, Enum):
+
+    built_in = "BuiltIn"  #: Azure Security Center managed assessments
+    custom_policy = "CustomPolicy"  #: User defined policies that are automatically ingested from Azure Policy to Azure Security Center
+    customer_managed = "CustomerManaged"  #: User assessments pushed directly by the user or other third party to Azure Security Center
+    verified_partner = "VerifiedPartner"  #: An assessment that was created by a verified 3rd party if the user connected it to ASC
+
+
+class AssessmentStatusCode(str, Enum):
+
+    healthy = "Healthy"  #: The resource is healthy
+    unhealthy = "Unhealthy"  #: The resource has a security issue that needs to be addressed
+    not_applicable = "NotApplicable"  #: Assessment for this resource did not happen
+
+
+class AlertSeverity(str, Enum):
+
+    informational = "Informational"  #: Informational
+    low = "Low"  #: Low
+    medium = "Medium"  #: Medium
+    high = "High"  #: High
+
+
+class Intent(str, Enum):
+
+    unknown = "Unknown"  #: Unknown
+    pre_attack = "PreAttack"  #: PreAttack could be either an attempt to access a certain resource regardless of a malicious intent, or a failed attempt to gain access to a target system to gather information prior to exploitation. This step is usually detected as an attempt, originating from outside the network, to scan the target system and find a way in.  Further details on the PreAttack stage can be read in [MITRE Pre-Att&ck matrix](https://attack.mitre.org/matrices/pre/).
+    initial_access = "InitialAccess"  #: InitialAccess is the stage where an attacker manages to get foothold on the attacked resource.
+    persistence = "Persistence"  #: Persistence is any access, action, or configuration change to a system that gives a threat actor a persistent presence on that system.
+    privilege_escalation = "PrivilegeEscalation"  #: Privilege escalation is the result of actions that allow an adversary to obtain a higher level of permissions on a system or network.
+    defense_evasion = "DefenseEvasion"  #: Defense evasion consists of techniques an adversary may use to evade detection or avoid other defenses.
+    credential_access = "CredentialAccess"  #: Credential access represents techniques resulting in access to or control over system, domain, or service credentials that are used within an enterprise environment.
+    discovery = "Discovery"  #: Discovery consists of techniques that allow the adversary to gain knowledge about the system and internal network.
+    lateral_movement = "LateralMovement"  #: Lateral movement consists of techniques that enable an adversary to access and control remote systems on a network and could, but does not necessarily, include execution of tools on remote systems.
+    execution = "Execution"  #: The execution tactic represents techniques that result in execution of adversary-controlled code on a local or remote system.
+    collection = "Collection"  #: Collection consists of techniques used to identify and gather information, such as sensitive files, from a target network prior to exfiltration.
+    exfiltration = "Exfiltration"  #: Exfiltration refers to techniques and attributes that result or aid in the adversary removing files and information from a target network.
+    command_and_control = "CommandAndControl"  #: The command and control tactic represents how adversaries communicate with systems under their control within a target network.
+    impact = "Impact"  #: Impact events primarily try to directly reduce the availability or integrity of a system, service, or network; including manipulation of data to impact a business or operational process.
+    probing = "Probing"  #: Probing could be either an attempt to access a certain resource regardless of a malicious intent, or a failed attempt to gain access to a target system to gather information prior to exploitation.
+    exploitation = "Exploitation"  #: Exploitation is the stage where an attacker manages to get a foothold on the attacked resource. This stage is relevant for compute hosts and resources such as user accounts, certificates etc.
+
+
+class AlertStatus(str, Enum):
+
+    active = "Active"  #: An alert which doesn't specify a value is assigned the status 'Active'
+    resolved = "Resolved"  #: Alert closed after handling
+    dismissed = "Dismissed"  #: Alert dismissed as false positive
+
+
+class Direction(str, Enum):
+
+    inbound = "Inbound"
+    outbound = "Outbound"
+
+
+class TransportProtocol(str, Enum):
+
+    tcp = "TCP"
+    udp = "UDP"
+
+
+class Protocol(str, Enum):
+
+    tcp = "TCP"
+    udp = "UDP"
+    all = "*"
+
+
+class Status(str, Enum):
+
+    revoked = "Revoked"
+    initiated = "Initiated"
+
+
+class StatusReason(str, Enum):
+
+    expired = "Expired"
+    user_requested = "UserRequested"
+    newer_request_initiated = "NewerRequestInitiated"
+
+
+class ExpandEnum(str, Enum):
+
+    links = "links"  #: All links associated with an assessment
+    metadata = "metadata"  #: Assessment metadata
 
 
 class ConnectionType(str, Enum):
