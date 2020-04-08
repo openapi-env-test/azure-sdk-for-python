@@ -18,8 +18,8 @@ from msrestazure.polling.arm_polling import ARMPolling
 from .. import models
 
 
-class ExtendedServerBlobAuditingPoliciesOperations(object):
-    """ExtendedServerBlobAuditingPoliciesOperations operations.
+class ManagedInstanceLongTermRetentionPoliciesOperations(object):
+    """ManagedInstanceLongTermRetentionPoliciesOperations operations.
 
     You should not instantiate directly this class, but create a Client instance that will create it for you and attach it as attribute.
 
@@ -27,8 +27,8 @@ class ExtendedServerBlobAuditingPoliciesOperations(object):
     :param config: Configuration of service client.
     :param serializer: An object model serializer.
     :param deserializer: An object model deserializer.
-    :ivar blob_auditing_policy_name: The name of the blob auditing policy. Constant value: "default".
-    :ivar api_version: The API version to use for the request. Constant value: "2017-03-01-preview".
+    :ivar policy_name: The policy name. Should always be Default. Constant value: "default".
+    :ivar api_version: The API version to use for the request. Constant value: "2018-06-01-preview".
     """
 
     models = models
@@ -38,38 +38,41 @@ class ExtendedServerBlobAuditingPoliciesOperations(object):
         self._client = client
         self._serialize = serializer
         self._deserialize = deserializer
-        self.blob_auditing_policy_name = "default"
-        self.api_version = "2017-03-01-preview"
+        self.policy_name = "default"
+        self.api_version = "2018-06-01-preview"
 
         self.config = config
 
     def get(
-            self, resource_group_name, server_name, custom_headers=None, raw=False, **operation_config):
-        """Gets an extended server's blob auditing policy.
+            self, resource_group_name, managed_instance_name, database_name, custom_headers=None, raw=False, **operation_config):
+        """Gets a managed database's long term retention policy.
 
         :param resource_group_name: The name of the resource group that
          contains the resource. You can obtain this value from the Azure
          Resource Manager API or the portal.
         :type resource_group_name: str
-        :param server_name: The name of the server.
-        :type server_name: str
+        :param managed_instance_name: The name of the managed instance.
+        :type managed_instance_name: str
+        :param database_name: The name of the database.
+        :type database_name: str
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :return: ExtendedServerBlobAuditingPolicy or ClientRawResponse if
-         raw=true
-        :rtype: ~azure.mgmt.sql.models.ExtendedServerBlobAuditingPolicy or
-         ~msrest.pipeline.ClientRawResponse
+        :return: ManagedInstanceLongTermRetentionPolicy or ClientRawResponse
+         if raw=true
+        :rtype: ~azure.mgmt.sql.models.ManagedInstanceLongTermRetentionPolicy
+         or ~msrest.pipeline.ClientRawResponse
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
         # Construct URL
         url = self.get.metadata['url']
         path_format_arguments = {
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
-            'serverName': self._serialize.url("server_name", server_name, 'str'),
-            'blobAuditingPolicyName': self._serialize.url("self.blob_auditing_policy_name", self.blob_auditing_policy_name, 'str'),
+            'managedInstanceName': self._serialize.url("managed_instance_name", managed_instance_name, 'str'),
+            'databaseName': self._serialize.url("database_name", database_name, 'str'),
+            'policyName': self._serialize.url("self.policy_name", self.policy_name, 'str'),
             'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str')
         }
         url = self._client.format_url(url, **path_format_arguments)
@@ -99,24 +102,25 @@ class ExtendedServerBlobAuditingPoliciesOperations(object):
 
         deserialized = None
         if response.status_code == 200:
-            deserialized = self._deserialize('ExtendedServerBlobAuditingPolicy', response)
+            deserialized = self._deserialize('ManagedInstanceLongTermRetentionPolicy', response)
 
         if raw:
             client_raw_response = ClientRawResponse(deserialized, response)
             return client_raw_response
 
         return deserialized
-    get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/extendedAuditingSettings/{blobAuditingPolicyName}'}
+    get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupLongTermRetentionPolicies/{policyName}'}
 
 
     def _create_or_update_initial(
-            self, resource_group_name, server_name, parameters, custom_headers=None, raw=False, **operation_config):
+            self, resource_group_name, managed_instance_name, database_name, parameters, custom_headers=None, raw=False, **operation_config):
         # Construct URL
         url = self.create_or_update.metadata['url']
         path_format_arguments = {
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
-            'serverName': self._serialize.url("server_name", server_name, 'str'),
-            'blobAuditingPolicyName': self._serialize.url("self.blob_auditing_policy_name", self.blob_auditing_policy_name, 'str'),
+            'managedInstanceName': self._serialize.url("managed_instance_name", managed_instance_name, 'str'),
+            'databaseName': self._serialize.url("database_name", database_name, 'str'),
+            'policyName': self._serialize.url("self.policy_name", self.policy_name, 'str'),
             'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str')
         }
         url = self._client.format_url(url, **path_format_arguments)
@@ -137,7 +141,7 @@ class ExtendedServerBlobAuditingPoliciesOperations(object):
             header_parameters['accept-language'] = self._serialize.header("self.config.accept_language", self.config.accept_language, 'str')
 
         # Construct body
-        body_content = self._serialize.body(parameters, 'ExtendedServerBlobAuditingPolicy')
+        body_content = self._serialize.body(parameters, 'ManagedInstanceLongTermRetentionPolicy')
 
         # Construct and send request
         request = self._client.put(url, query_parameters, header_parameters, body_content)
@@ -151,7 +155,7 @@ class ExtendedServerBlobAuditingPoliciesOperations(object):
         deserialized = None
 
         if response.status_code == 200:
-            deserialized = self._deserialize('ExtendedServerBlobAuditingPolicy', response)
+            deserialized = self._deserialize('ManagedInstanceLongTermRetentionPolicy', response)
 
         if raw:
             client_raw_response = ClientRawResponse(deserialized, response)
@@ -160,35 +164,38 @@ class ExtendedServerBlobAuditingPoliciesOperations(object):
         return deserialized
 
     def create_or_update(
-            self, resource_group_name, server_name, parameters, custom_headers=None, raw=False, polling=True, **operation_config):
-        """Creates or updates an extended server's blob auditing policy.
+            self, resource_group_name, managed_instance_name, database_name, parameters, custom_headers=None, raw=False, polling=True, **operation_config):
+        """Sets a managed database's long term retention policy.
 
         :param resource_group_name: The name of the resource group that
          contains the resource. You can obtain this value from the Azure
          Resource Manager API or the portal.
         :type resource_group_name: str
-        :param server_name: The name of the server.
-        :type server_name: str
-        :param parameters: Properties of extended blob auditing policy
+        :param managed_instance_name: The name of the managed instance.
+        :type managed_instance_name: str
+        :param database_name: The name of the database.
+        :type database_name: str
+        :param parameters: The long term retention policy info.
         :type parameters:
-         ~azure.mgmt.sql.models.ExtendedServerBlobAuditingPolicy
+         ~azure.mgmt.sql.models.ManagedInstanceLongTermRetentionPolicy
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: The poller return type is ClientRawResponse, the
          direct response alongside the deserialized response
         :param polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :return: An instance of LROPoller that returns
-         ExtendedServerBlobAuditingPolicy or
-         ClientRawResponse<ExtendedServerBlobAuditingPolicy> if raw==True
+         ManagedInstanceLongTermRetentionPolicy or
+         ClientRawResponse<ManagedInstanceLongTermRetentionPolicy> if raw==True
         :rtype:
-         ~msrestazure.azure_operation.AzureOperationPoller[~azure.mgmt.sql.models.ExtendedServerBlobAuditingPolicy]
+         ~msrestazure.azure_operation.AzureOperationPoller[~azure.mgmt.sql.models.ManagedInstanceLongTermRetentionPolicy]
          or
-         ~msrestazure.azure_operation.AzureOperationPoller[~msrest.pipeline.ClientRawResponse[~azure.mgmt.sql.models.ExtendedServerBlobAuditingPolicy]]
+         ~msrestazure.azure_operation.AzureOperationPoller[~msrest.pipeline.ClientRawResponse[~azure.mgmt.sql.models.ManagedInstanceLongTermRetentionPolicy]]
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
         raw_result = self._create_or_update_initial(
             resource_group_name=resource_group_name,
-            server_name=server_name,
+            managed_instance_name=managed_instance_name,
+            database_name=database_name,
             parameters=parameters,
             custom_headers=custom_headers,
             raw=True,
@@ -196,7 +203,7 @@ class ExtendedServerBlobAuditingPoliciesOperations(object):
         )
 
         def get_long_running_output(response):
-            deserialized = self._deserialize('ExtendedServerBlobAuditingPolicy', response)
+            deserialized = self._deserialize('ManagedInstanceLongTermRetentionPolicy', response)
 
             if raw:
                 client_raw_response = ClientRawResponse(deserialized, response)
@@ -211,35 +218,39 @@ class ExtendedServerBlobAuditingPoliciesOperations(object):
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
         return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
-    create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/extendedAuditingSettings/{blobAuditingPolicyName}'}
+    create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupLongTermRetentionPolicies/{policyName}'}
 
-    def list_by_server(
-            self, resource_group_name, server_name, custom_headers=None, raw=False, **operation_config):
-        """Lists extended auditing settings of a server.
+    def list_by_database(
+            self, resource_group_name, managed_instance_name, database_name, custom_headers=None, raw=False, **operation_config):
+        """Gets a database's long term retention policy.
 
         :param resource_group_name: The name of the resource group that
          contains the resource. You can obtain this value from the Azure
          Resource Manager API or the portal.
         :type resource_group_name: str
-        :param server_name: The name of the server.
-        :type server_name: str
+        :param managed_instance_name: The name of the managed instance.
+        :type managed_instance_name: str
+        :param database_name: The name of the database.
+        :type database_name: str
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :return: An iterator like instance of ExtendedServerBlobAuditingPolicy
+        :return: An iterator like instance of
+         ManagedInstanceLongTermRetentionPolicy
         :rtype:
-         ~azure.mgmt.sql.models.ExtendedServerBlobAuditingPolicyPaged[~azure.mgmt.sql.models.ExtendedServerBlobAuditingPolicy]
+         ~azure.mgmt.sql.models.ManagedInstanceLongTermRetentionPolicyPaged[~azure.mgmt.sql.models.ManagedInstanceLongTermRetentionPolicy]
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
         def prepare_request(next_link=None):
             if not next_link:
                 # Construct URL
-                url = self.list_by_server.metadata['url']
+                url = self.list_by_database.metadata['url']
                 path_format_arguments = {
                     'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
-                    'serverName': self._serialize.url("server_name", server_name, 'str'),
+                    'managedInstanceName': self._serialize.url("managed_instance_name", managed_instance_name, 'str'),
+                    'databaseName': self._serialize.url("database_name", database_name, 'str'),
                     'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str')
                 }
                 url = self._client.format_url(url, **path_format_arguments)
@@ -282,7 +293,7 @@ class ExtendedServerBlobAuditingPoliciesOperations(object):
         header_dict = None
         if raw:
             header_dict = {}
-        deserialized = models.ExtendedServerBlobAuditingPolicyPaged(internal_paging, self._deserialize.dependencies, header_dict)
+        deserialized = models.ManagedInstanceLongTermRetentionPolicyPaged(internal_paging, self._deserialize.dependencies, header_dict)
 
         return deserialized
-    list_by_server.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/extendedAuditingSettings'}
+    list_by_database.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupLongTermRetentionPolicies'}
