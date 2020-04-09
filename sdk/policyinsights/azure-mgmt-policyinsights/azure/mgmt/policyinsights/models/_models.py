@@ -41,6 +41,89 @@ class ComplianceDetail(Model):
         self.count = kwargs.get('count', None)
 
 
+class ComponentEventDetails(Model):
+    """Component event details.
+
+    :param additional_properties: Unmatched properties from the message are
+     deserialized this collection
+    :type additional_properties: dict[str, object]
+    :param id: Component Id.
+    :type id: str
+    :param type: Component type.
+    :type type: str
+    :param name: Component name.
+    :type name: str
+    :param timestamp: Timestamp for component policy event record.
+    :type timestamp: datetime
+    :param tenant_id: Tenant ID for the policy event record.
+    :type tenant_id: str
+    :param principal_oid: Principal object ID for the user who initiated the
+     resource component operation that triggered the policy event.
+    :type principal_oid: str
+    :param policy_definition_action: Policy definition action, i.e. effect.
+    :type policy_definition_action: str
+    """
+
+    _attribute_map = {
+        'additional_properties': {'key': '', 'type': '{object}'},
+        'id': {'key': 'id', 'type': 'str'},
+        'type': {'key': 'type', 'type': 'str'},
+        'name': {'key': 'name', 'type': 'str'},
+        'timestamp': {'key': 'timestamp', 'type': 'iso-8601'},
+        'tenant_id': {'key': 'tenantId', 'type': 'str'},
+        'principal_oid': {'key': 'principalOid', 'type': 'str'},
+        'policy_definition_action': {'key': 'policyDefinitionAction', 'type': 'str'},
+    }
+
+    def __init__(self, **kwargs):
+        super(ComponentEventDetails, self).__init__(**kwargs)
+        self.additional_properties = kwargs.get('additional_properties', None)
+        self.id = kwargs.get('id', None)
+        self.type = kwargs.get('type', None)
+        self.name = kwargs.get('name', None)
+        self.timestamp = kwargs.get('timestamp', None)
+        self.tenant_id = kwargs.get('tenant_id', None)
+        self.principal_oid = kwargs.get('principal_oid', None)
+        self.policy_definition_action = kwargs.get('policy_definition_action', None)
+
+
+class ComponentStateDetails(Model):
+    """Component state details.
+
+    :param additional_properties: Unmatched properties from the message are
+     deserialized this collection
+    :type additional_properties: dict[str, object]
+    :param id: Component Id.
+    :type id: str
+    :param type: Component type.
+    :type type: str
+    :param name: Component name.
+    :type name: str
+    :param timestamp: Component compliance evaluation timestamp.
+    :type timestamp: datetime
+    :param compliance_state: Component compliance state.
+    :type compliance_state: str
+    """
+
+    _attribute_map = {
+        'additional_properties': {'key': '', 'type': '{object}'},
+        'id': {'key': 'id', 'type': 'str'},
+        'type': {'key': 'type', 'type': 'str'},
+        'name': {'key': 'name', 'type': 'str'},
+        'timestamp': {'key': 'timestamp', 'type': 'iso-8601'},
+        'compliance_state': {'key': 'complianceState', 'type': 'str'},
+    }
+
+    def __init__(self, **kwargs):
+        super(ComponentStateDetails, self).__init__(**kwargs)
+        self.additional_properties = kwargs.get('additional_properties', None)
+        self.id = kwargs.get('id', None)
+        self.type = kwargs.get('type', None)
+        self.name = kwargs.get('name', None)
+        self.timestamp = kwargs.get('timestamp', None)
+        self.compliance_state = kwargs.get('compliance_state', None)
+
+
 class ErrorDefinition(Model):
     """Error definition.
 
@@ -459,11 +542,17 @@ class PolicyEvent(Model):
      definition inside the policy set, if the policy assignment is for a policy
      set.
     :type policy_definition_reference_id: str
+    :param compliance_state: Compliance state of the resource.
+    :type compliance_state: str
     :param tenant_id: Tenant ID for the policy event record.
     :type tenant_id: str
     :param principal_oid: Principal object ID for the user who initiated the
      resource operation that triggered the policy event.
     :type principal_oid: str
+    :param components: Components events records populated only when URL
+     contains $expand=components clause.
+    :type components:
+     list[~azure.mgmt.policyinsights.models.ComponentEventDetails]
     """
 
     _attribute_map = {
@@ -495,8 +584,10 @@ class PolicyEvent(Model):
         'policy_set_definition_parameters': {'key': 'policySetDefinitionParameters', 'type': 'str'},
         'management_group_ids': {'key': 'managementGroupIds', 'type': 'str'},
         'policy_definition_reference_id': {'key': 'policyDefinitionReferenceId', 'type': 'str'},
+        'compliance_state': {'key': 'complianceState', 'type': 'str'},
         'tenant_id': {'key': 'tenantId', 'type': 'str'},
         'principal_oid': {'key': 'principalOid', 'type': 'str'},
+        'components': {'key': 'components', 'type': '[ComponentEventDetails]'},
     }
 
     def __init__(self, **kwargs):
@@ -529,8 +620,10 @@ class PolicyEvent(Model):
         self.policy_set_definition_parameters = kwargs.get('policy_set_definition_parameters', None)
         self.management_group_ids = kwargs.get('management_group_ids', None)
         self.policy_definition_reference_id = kwargs.get('policy_definition_reference_id', None)
+        self.compliance_state = kwargs.get('compliance_state', None)
         self.tenant_id = kwargs.get('tenant_id', None)
         self.principal_oid = kwargs.get('principal_oid', None)
+        self.components = kwargs.get('components', None)
 
 
 class PolicyEventsQueryResults(Model):
@@ -542,6 +635,9 @@ class PolicyEventsQueryResults(Model):
     :param odatacount: OData entity count; represents the number of policy
      event records returned.
     :type odatacount: int
+    :param odatanext_link: Odata next link; URL to get the next set of
+     results.
+    :type odatanext_link: str
     :param value: Query results.
     :type value: list[~azure.mgmt.policyinsights.models.PolicyEvent]
     """
@@ -553,6 +649,7 @@ class PolicyEventsQueryResults(Model):
     _attribute_map = {
         'odatacontext': {'key': '@odata\\.context', 'type': 'str'},
         'odatacount': {'key': '@odata\\.count', 'type': 'int'},
+        'odatanext_link': {'key': '@odata\\.nextLink', 'type': 'str'},
         'value': {'key': 'value', 'type': '[PolicyEvent]'},
     }
 
@@ -560,6 +657,7 @@ class PolicyEventsQueryResults(Model):
         super(PolicyEventsQueryResults, self).__init__(**kwargs)
         self.odatacontext = kwargs.get('odatacontext', None)
         self.odatacount = kwargs.get('odatacount', None)
+        self.odatanext_link = kwargs.get('odatanext_link', None)
         self.value = kwargs.get('value', None)
 
 
@@ -660,6 +758,9 @@ class PolicyMetadata(Model):
 class PolicyState(Model):
     """Policy state record.
 
+    Variables are only populated by the server, and will be ignored when
+    sending a request.
+
     :param additional_properties: Unmatched properties from the message are
      deserialized this collection
     :type additional_properties: dict[str, object]
@@ -738,7 +839,24 @@ class PolicyState(Model):
      ~azure.mgmt.policyinsights.models.PolicyEvaluationDetails
     :param policy_definition_group_names: Policy definition group names.
     :type policy_definition_group_names: list[str]
+    :param components: Components state compliance records populated only when
+     URL contains $expand=components clause.
+    :type components:
+     list[~azure.mgmt.policyinsights.models.ComponentStateDetails]
+    :ivar policy_definition_version: Evaluated policy definition version.
+    :vartype policy_definition_version: str
+    :ivar policy_set_definition_version: Evaluated policy set definition
+     version.
+    :vartype policy_set_definition_version: str
+    :ivar policy_assignment_version: Evaluated policy assignment version.
+    :vartype policy_assignment_version: str
     """
+
+    _validation = {
+        'policy_definition_version': {'readonly': True},
+        'policy_set_definition_version': {'readonly': True},
+        'policy_assignment_version': {'readonly': True},
+    }
 
     _attribute_map = {
         'additional_properties': {'key': '', 'type': '{object}'},
@@ -772,6 +890,10 @@ class PolicyState(Model):
         'compliance_state': {'key': 'complianceState', 'type': 'str'},
         'policy_evaluation_details': {'key': 'policyEvaluationDetails', 'type': 'PolicyEvaluationDetails'},
         'policy_definition_group_names': {'key': 'policyDefinitionGroupNames', 'type': '[str]'},
+        'components': {'key': 'components', 'type': '[ComponentStateDetails]'},
+        'policy_definition_version': {'key': 'policyDefinitionVersion', 'type': 'str'},
+        'policy_set_definition_version': {'key': 'policySetDefinitionVersion', 'type': 'str'},
+        'policy_assignment_version': {'key': 'policyAssignmentVersion', 'type': 'str'},
     }
 
     def __init__(self, **kwargs):
@@ -807,36 +929,10 @@ class PolicyState(Model):
         self.compliance_state = kwargs.get('compliance_state', None)
         self.policy_evaluation_details = kwargs.get('policy_evaluation_details', None)
         self.policy_definition_group_names = kwargs.get('policy_definition_group_names', None)
-
-
-class PolicyStatesQueryResults(Model):
-    """Query results.
-
-    :param odatacontext: OData context string; used by OData clients to
-     resolve type information based on metadata.
-    :type odatacontext: str
-    :param odatacount: OData entity count; represents the number of policy
-     state records returned.
-    :type odatacount: int
-    :param value: Query results.
-    :type value: list[~azure.mgmt.policyinsights.models.PolicyState]
-    """
-
-    _validation = {
-        'odatacount': {'minimum': 0},
-    }
-
-    _attribute_map = {
-        'odatacontext': {'key': '@odata\\.context', 'type': 'str'},
-        'odatacount': {'key': '@odata\\.count', 'type': 'int'},
-        'value': {'key': 'value', 'type': '[PolicyState]'},
-    }
-
-    def __init__(self, **kwargs):
-        super(PolicyStatesQueryResults, self).__init__(**kwargs)
-        self.odatacontext = kwargs.get('odatacontext', None)
-        self.odatacount = kwargs.get('odatacount', None)
-        self.value = kwargs.get('value', None)
+        self.components = kwargs.get('components', None)
+        self.policy_definition_version = None
+        self.policy_set_definition_version = None
+        self.policy_assignment_version = None
 
 
 class PolicyTrackedResource(Model):
@@ -969,8 +1065,11 @@ class QueryOptions(Model):
     :type to: datetime
     :param apply: OData apply expression for aggregations.
     :type apply: str
+    :param skip_token: Skiptoken is only provided if a previous response
+     returned a partial result as a part of nextLink element.
+    :type skip_token: str
     :param expand: The $expand query parameter. For example, to expand
-     policyEvaluationDetails, use $expand=policyEvaluationDetails
+     components use $expand=components
     :type expand: str
     """
 
@@ -982,6 +1081,7 @@ class QueryOptions(Model):
         'from_property': {'key': '', 'type': 'iso-8601'},
         'to': {'key': '', 'type': 'iso-8601'},
         'apply': {'key': '', 'type': 'str'},
+        'skip_token': {'key': '', 'type': 'str'},
         'expand': {'key': '', 'type': 'str'},
     }
 
@@ -994,6 +1094,7 @@ class QueryOptions(Model):
         self.from_property = kwargs.get('from_property', None)
         self.to = kwargs.get('to', None)
         self.apply = kwargs.get('apply', None)
+        self.skip_token = kwargs.get('skip_token', None)
         self.expand = kwargs.get('expand', None)
 
 

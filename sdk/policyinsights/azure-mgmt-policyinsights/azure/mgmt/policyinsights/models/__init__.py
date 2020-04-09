@@ -11,6 +11,8 @@
 
 try:
     from ._models_py3 import ComplianceDetail
+    from ._models_py3 import ComponentEventDetails
+    from ._models_py3 import ComponentStateDetails
     from ._models_py3 import ErrorDefinition
     from ._models_py3 import ErrorResponse, ErrorResponseException
     from ._models_py3 import ExpressionEvaluationDetails
@@ -27,7 +29,6 @@ try:
     from ._models_py3 import PolicyGroupSummary
     from ._models_py3 import PolicyMetadata
     from ._models_py3 import PolicyState
-    from ._models_py3 import PolicyStatesQueryResults
     from ._models_py3 import PolicyTrackedResource
     from ._models_py3 import QueryFailure, QueryFailureException
     from ._models_py3 import QueryFailureError
@@ -44,6 +45,8 @@ try:
     from ._models_py3 import TypedErrorInfo
 except (SyntaxError, ImportError):
     from ._models import ComplianceDetail
+    from ._models import ComponentEventDetails
+    from ._models import ComponentStateDetails
     from ._models import ErrorDefinition
     from ._models import ErrorResponse, ErrorResponseException
     from ._models import ExpressionEvaluationDetails
@@ -60,7 +63,6 @@ except (SyntaxError, ImportError):
     from ._models import PolicyGroupSummary
     from ._models import PolicyMetadata
     from ._models import PolicyState
-    from ._models import PolicyStatesQueryResults
     from ._models import PolicyTrackedResource
     from ._models import QueryFailure, QueryFailureException
     from ._models import QueryFailureError
@@ -75,6 +77,7 @@ except (SyntaxError, ImportError):
     from ._models import SummaryResults
     from ._models import TrackedResourceModificationDetails
     from ._models import TypedErrorInfo
+from ._paged_models import PolicyStatePaged
 from ._paged_models import PolicyTrackedResourcePaged
 from ._paged_models import RemediationDeploymentPaged
 from ._paged_models import RemediationPaged
@@ -86,6 +89,8 @@ from ._policy_insights_client_enums import (
 
 __all__ = [
     'ComplianceDetail',
+    'ComponentEventDetails',
+    'ComponentStateDetails',
     'ErrorDefinition',
     'ErrorResponse', 'ErrorResponseException',
     'ExpressionEvaluationDetails',
@@ -102,7 +107,6 @@ __all__ = [
     'PolicyGroupSummary',
     'PolicyMetadata',
     'PolicyState',
-    'PolicyStatesQueryResults',
     'PolicyTrackedResource',
     'QueryFailure', 'QueryFailureException',
     'QueryFailureError',
@@ -120,6 +124,7 @@ __all__ = [
     'PolicyTrackedResourcePaged',
     'RemediationDeploymentPaged',
     'RemediationPaged',
+    'PolicyStatePaged',
     'SlimPolicyMetadataPaged',
     'ResourceDiscoveryMode',
     'PolicyStatesResource',
