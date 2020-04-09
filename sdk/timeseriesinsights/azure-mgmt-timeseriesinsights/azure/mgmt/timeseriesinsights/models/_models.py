@@ -709,6 +709,13 @@ class EventSourceCreateOrUpdateParameters(CreateOrUpdateTrackedResourcePropertie
     :type location: str
     :param tags: Key-value pairs of additional properties for the resource.
     :type tags: dict[str, str]
+    :param local_timestamp: An object that represents the local timestamp
+     property. It contains the format of local timestamp that needs to be used
+     and the corresponding timezone offset information. If a value isn't
+     specified for localTimestamp, or if null, then the local timestamp will
+     not be ingressed with the events.
+    :type local_timestamp:
+     ~azure.mgmt.timeseriesinsights.models.LocalTimestamp
     :param kind: Required. Constant filled by server.
     :type kind: str
     """
@@ -721,6 +728,7 @@ class EventSourceCreateOrUpdateParameters(CreateOrUpdateTrackedResourcePropertie
     _attribute_map = {
         'location': {'key': 'location', 'type': 'str'},
         'tags': {'key': 'tags', 'type': '{str}'},
+        'local_timestamp': {'key': 'localTimestamp', 'type': 'LocalTimestamp'},
         'kind': {'key': 'kind', 'type': 'str'},
     }
 
@@ -730,6 +738,7 @@ class EventSourceCreateOrUpdateParameters(CreateOrUpdateTrackedResourcePropertie
 
     def __init__(self, **kwargs):
         super(EventSourceCreateOrUpdateParameters, self).__init__(**kwargs)
+        self.local_timestamp = kwargs.get('local_timestamp', None)
         self.kind = None
         self.kind = 'EventSourceCreateOrUpdateParameters'
 
@@ -747,6 +756,13 @@ class EventHubEventSourceCreateOrUpdateParameters(EventSourceCreateOrUpdateParam
     :type location: str
     :param tags: Key-value pairs of additional properties for the resource.
     :type tags: dict[str, str]
+    :param local_timestamp: An object that represents the local timestamp
+     property. It contains the format of local timestamp that needs to be used
+     and the corresponding timezone offset information. If a value isn't
+     specified for localTimestamp, or if null, then the local timestamp will
+     not be ingressed with the events.
+    :type local_timestamp:
+     ~azure.mgmt.timeseriesinsights.models.LocalTimestamp
     :param kind: Required. Constant filled by server.
     :type kind: str
     :param provisioning_state: Provisioning state of the resource. Possible
@@ -797,6 +813,7 @@ class EventHubEventSourceCreateOrUpdateParameters(EventSourceCreateOrUpdateParam
     _attribute_map = {
         'location': {'key': 'location', 'type': 'str'},
         'tags': {'key': 'tags', 'type': '{str}'},
+        'local_timestamp': {'key': 'localTimestamp', 'type': 'LocalTimestamp'},
         'kind': {'key': 'kind', 'type': 'str'},
         'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
         'creation_time': {'key': 'properties.creationTime', 'type': 'iso-8601'},
@@ -868,7 +885,7 @@ class EventSourceResource(TrackedResource):
     }
 
     _subtype_map = {
-        'kind': {'Microsoft.EventHub': 'EventHubEventSourceResource', 'Microsoft.IotHub': 'IoTHubEventSourceResource'}
+        'kind': {'Microsoft.EventHub': 'EventHubEventSourceResource', 'Microsoft.IoTHub': 'IoTHubEventSourceResource'}
     }
 
     def __init__(self, **kwargs):
@@ -1169,6 +1186,13 @@ class IoTHubEventSourceCreateOrUpdateParameters(EventSourceCreateOrUpdateParamet
     :type location: str
     :param tags: Key-value pairs of additional properties for the resource.
     :type tags: dict[str, str]
+    :param local_timestamp: An object that represents the local timestamp
+     property. It contains the format of local timestamp that needs to be used
+     and the corresponding timezone offset information. If a value isn't
+     specified for localTimestamp, or if null, then the local timestamp will
+     not be ingressed with the events.
+    :type local_timestamp:
+     ~azure.mgmt.timeseriesinsights.models.LocalTimestamp
     :param kind: Required. Constant filled by server.
     :type kind: str
     :param provisioning_state: Provisioning state of the resource. Possible
@@ -1215,6 +1239,7 @@ class IoTHubEventSourceCreateOrUpdateParameters(EventSourceCreateOrUpdateParamet
     _attribute_map = {
         'location': {'key': 'location', 'type': 'str'},
         'tags': {'key': 'tags', 'type': '{str}'},
+        'local_timestamp': {'key': 'localTimestamp', 'type': 'LocalTimestamp'},
         'kind': {'key': 'kind', 'type': 'str'},
         'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
         'creation_time': {'key': 'properties.creationTime', 'type': 'iso-8601'},
@@ -1323,7 +1348,7 @@ class IoTHubEventSourceResource(EventSourceResource):
         self.iot_hub_name = kwargs.get('iot_hub_name', None)
         self.consumer_group_name = kwargs.get('consumer_group_name', None)
         self.key_name = kwargs.get('key_name', None)
-        self.kind = 'Microsoft.IotHub'
+        self.kind = 'Microsoft.IoTHub'
 
 
 class IoTHubEventSourceUpdateParameters(EventSourceUpdateParameters):
