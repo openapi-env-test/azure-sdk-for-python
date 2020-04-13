@@ -29,6 +29,7 @@ try:
     from ._models_py3 import ManagedClusterAPIServerAccessProfile
     from ._models_py3 import ManagedClusterAccessProfile
     from ._models_py3 import ManagedClusterAddonProfile
+    from ._models_py3 import ManagedClusterAddonProfileIdentity
     from ._models_py3 import ManagedClusterAgentPoolProfile
     from ._models_py3 import ManagedClusterAgentPoolProfileProperties
     from ._models_py3 import ManagedClusterIdentity
@@ -38,6 +39,9 @@ try:
     from ._models_py3 import ManagedClusterLoadBalancerProfileOutboundIPs
     from ._models_py3 import ManagedClusterPoolUpgradeProfile
     from ._models_py3 import ManagedClusterPoolUpgradeProfileUpgradesItem
+    from ._models_py3 import ManagedClusterPropertiesAutoScalerProfile
+    from ._models_py3 import ManagedClusterPropertiesIdentityProfileValue
+    from ._models_py3 import ManagedClusterSKU
     from ._models_py3 import ManagedClusterServicePrincipalProfile
     from ._models_py3 import ManagedClusterUpgradeProfile
     from ._models_py3 import ManagedClusterWindowsProfile
@@ -46,6 +50,7 @@ try:
     from ._models_py3 import ResourceReference
     from ._models_py3 import SubResource
     from ._models_py3 import TagsObject
+    from ._models_py3 import UserAssignedIdentity
 except (SyntaxError, ImportError):
     from ._models import AgentPool
     from ._models import AgentPoolAvailableVersions
@@ -66,6 +71,7 @@ except (SyntaxError, ImportError):
     from ._models import ManagedClusterAPIServerAccessProfile
     from ._models import ManagedClusterAccessProfile
     from ._models import ManagedClusterAddonProfile
+    from ._models import ManagedClusterAddonProfileIdentity
     from ._models import ManagedClusterAgentPoolProfile
     from ._models import ManagedClusterAgentPoolProfileProperties
     from ._models import ManagedClusterIdentity
@@ -75,6 +81,9 @@ except (SyntaxError, ImportError):
     from ._models import ManagedClusterLoadBalancerProfileOutboundIPs
     from ._models import ManagedClusterPoolUpgradeProfile
     from ._models import ManagedClusterPoolUpgradeProfileUpgradesItem
+    from ._models import ManagedClusterPropertiesAutoScalerProfile
+    from ._models import ManagedClusterPropertiesIdentityProfileValue
+    from ._models import ManagedClusterSKU
     from ._models import ManagedClusterServicePrincipalProfile
     from ._models import ManagedClusterUpgradeProfile
     from ._models import ManagedClusterWindowsProfile
@@ -83,6 +92,7 @@ except (SyntaxError, ImportError):
     from ._models import ResourceReference
     from ._models import SubResource
     from ._models import TagsObject
+    from ._models import UserAssignedIdentity
 from ._paged_models import AgentPoolPaged
 from ._paged_models import ManagedClusterPaged
 from ._paged_models import OperationValuePaged
@@ -91,12 +101,17 @@ from ._container_service_client_enums import (
     ContainerServiceVMSizeTypes,
     OSType,
     AgentPoolType,
+    AgentPoolMode,
     ScaleSetPriority,
     ScaleSetEvictionPolicy,
     NetworkPlugin,
     NetworkPolicy,
+    NetworkMode,
+    OutboundType,
     LoadBalancerSku,
     ResourceIdentityType,
+    ManagedClusterSKUName,
+    ManagedClusterSKUTier,
 )
 
 __all__ = [
@@ -119,6 +134,7 @@ __all__ = [
     'ManagedClusterAPIServerAccessProfile',
     'ManagedClusterAccessProfile',
     'ManagedClusterAddonProfile',
+    'ManagedClusterAddonProfileIdentity',
     'ManagedClusterAgentPoolProfile',
     'ManagedClusterAgentPoolProfileProperties',
     'ManagedClusterIdentity',
@@ -128,6 +144,9 @@ __all__ = [
     'ManagedClusterLoadBalancerProfileOutboundIPs',
     'ManagedClusterPoolUpgradeProfile',
     'ManagedClusterPoolUpgradeProfileUpgradesItem',
+    'ManagedClusterPropertiesAutoScalerProfile',
+    'ManagedClusterPropertiesIdentityProfileValue',
+    'ManagedClusterSKU',
     'ManagedClusterServicePrincipalProfile',
     'ManagedClusterUpgradeProfile',
     'ManagedClusterWindowsProfile',
@@ -136,6 +155,7 @@ __all__ = [
     'ResourceReference',
     'SubResource',
     'TagsObject',
+    'UserAssignedIdentity',
     'OperationValuePaged',
     'ManagedClusterPaged',
     'AgentPoolPaged',
@@ -143,10 +163,15 @@ __all__ = [
     'ContainerServiceVMSizeTypes',
     'OSType',
     'AgentPoolType',
+    'AgentPoolMode',
     'ScaleSetPriority',
     'ScaleSetEvictionPolicy',
     'NetworkPlugin',
     'NetworkPolicy',
+    'NetworkMode',
+    'OutboundType',
     'LoadBalancerSku',
     'ResourceIdentityType',
+    'ManagedClusterSKUName',
+    'ManagedClusterSKUTier',
 ]

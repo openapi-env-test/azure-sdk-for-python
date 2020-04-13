@@ -26,12 +26,12 @@ try:
     from ._models_py3 import CredentialResults
     from ._models_py3 import ManagedCluster
     from ._models_py3 import ManagedClusterAADProfile
+    from ._models_py3 import ManagedClusterAPIServerAccessProfile
     from ._models_py3 import ManagedClusterAccessProfile
     from ._models_py3 import ManagedClusterAddonProfile
     from ._models_py3 import ManagedClusterAddonProfileIdentity
     from ._models_py3 import ManagedClusterAgentPoolProfile
     from ._models_py3 import ManagedClusterAgentPoolProfileProperties
-    from ._models_py3 import ManagedClusterAPIServerAccessProfile
     from ._models_py3 import ManagedClusterIdentity
     from ._models_py3 import ManagedClusterLoadBalancerProfile
     from ._models_py3 import ManagedClusterLoadBalancerProfileManagedOutboundIPs
@@ -66,12 +66,12 @@ except (SyntaxError, ImportError):
     from ._models import CredentialResults
     from ._models import ManagedCluster
     from ._models import ManagedClusterAADProfile
+    from ._models import ManagedClusterAPIServerAccessProfile
     from ._models import ManagedClusterAccessProfile
     from ._models import ManagedClusterAddonProfile
     from ._models import ManagedClusterAddonProfileIdentity
     from ._models import ManagedClusterAgentPoolProfile
     from ._models import ManagedClusterAgentPoolProfileProperties
-    from ._models import ManagedClusterAPIServerAccessProfile
     from ._models import ManagedClusterIdentity
     from ._models import ManagedClusterLoadBalancerProfile
     from ._models import ManagedClusterLoadBalancerProfileManagedOutboundIPs
@@ -123,12 +123,12 @@ __all__ = [
     'CredentialResults',
     'ManagedCluster',
     'ManagedClusterAADProfile',
+    'ManagedClusterAPIServerAccessProfile',
     'ManagedClusterAccessProfile',
     'ManagedClusterAddonProfile',
     'ManagedClusterAddonProfileIdentity',
     'ManagedClusterAgentPoolProfile',
     'ManagedClusterAgentPoolProfileProperties',
-    'ManagedClusterAPIServerAccessProfile',
     'ManagedClusterIdentity',
     'ManagedClusterLoadBalancerProfile',
     'ManagedClusterLoadBalancerProfileManagedOutboundIPs',
