@@ -383,9 +383,11 @@ class BlobRestoreRange(Model):
 
     All required parameters must be populated in order to send to Azure.
 
-    :param start_range: Required. Blob start range. Empty means account start.
+    :param start_range: Required. Blob start range. This is inclusive. Empty
+     means account start.
     :type start_range: str
-    :param end_range: Required. Blob end range. Empty means account end.
+    :param end_range: Required. Blob end range. This is exclusive. Empty means
+     account end.
     :type end_range: str
     """
 
@@ -845,6 +847,10 @@ class Encryption(Model):
      Possible values include: 'Microsoft.Storage', 'Microsoft.Keyvault'.
      Default value: "Microsoft.Storage" .
     :type key_source: str or ~azure.mgmt.storage.v2019_06_01.models.KeySource
+    :param require_infrastructure_encryption: A boolean indicating whether or
+     not the service applies a secondary layer of encryption with platform
+     managed keys for data at rest.
+    :type require_infrastructure_encryption: bool
     :param key_vault_properties: Properties provided by key vault.
     :type key_vault_properties:
      ~azure.mgmt.storage.v2019_06_01.models.KeyVaultProperties
@@ -857,6 +863,7 @@ class Encryption(Model):
     _attribute_map = {
         'services': {'key': 'services', 'type': 'EncryptionServices'},
         'key_source': {'key': 'keySource', 'type': 'str'},
+        'require_infrastructure_encryption': {'key': 'requireInfrastructureEncryption', 'type': 'bool'},
         'key_vault_properties': {'key': 'keyvaultproperties', 'type': 'KeyVaultProperties'},
     }
 
@@ -864,6 +871,7 @@ class Encryption(Model):
         super(Encryption, self).__init__(**kwargs)
         self.services = kwargs.get('services', None)
         self.key_source = kwargs.get('key_source', "Microsoft.Storage")
+        self.require_infrastructure_encryption = kwargs.get('require_infrastructure_encryption', None)
         self.key_vault_properties = kwargs.get('key_vault_properties', None)
 
 
@@ -2191,6 +2199,130 @@ class NetworkRuleSet(Model):
         self.default_action = kwargs.get('default_action', "Allow")
 
 
+class ObjectReplicationPolicy(Resource):
+    """The replication policy between two storage accounts. Multiple rules can be
+    defined in one policy.
+
+    Variables are only populated by the server, and will be ignored when
+    sending a request.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :ivar id: Fully qualified resource Id for the resource. Ex -
+     /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+    :vartype id: str
+    :ivar name: The name of the resource
+    :vartype name: str
+    :ivar type: The type of the resource. Ex-
+     Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
+    :vartype type: str
+    :ivar policy_id: A unique id for object replication policy.
+    :vartype policy_id: str
+    :ivar enabled_time: Indicates when the policy is enabled on the source
+     account.
+    :vartype enabled_time: datetime
+    :param source_account: Required. Required. Source account name.
+    :type source_account: str
+    :param destination_account: Required. Required. Destination account name.
+    :type destination_account: str
+    :param rules: The storage account object replication rules.
+    :type rules:
+     list[~azure.mgmt.storage.v2019_06_01.models.ObjectReplicationPolicyRule]
+    """
+
+    _validation = {
+        'id': {'readonly': True},
+        'name': {'readonly': True},
+        'type': {'readonly': True},
+        'policy_id': {'readonly': True},
+        'enabled_time': {'readonly': True},
+        'source_account': {'required': True},
+        'destination_account': {'required': True},
+    }
+
+    _attribute_map = {
+        'id': {'key': 'id', 'type': 'str'},
+        'name': {'key': 'name', 'type': 'str'},
+        'type': {'key': 'type', 'type': 'str'},
+        'policy_id': {'key': 'properties.policyId', 'type': 'str'},
+        'enabled_time': {'key': 'properties.enabledTime', 'type': 'iso-8601'},
+        'source_account': {'key': 'properties.sourceAccount', 'type': 'str'},
+        'destination_account': {'key': 'properties.destinationAccount', 'type': 'str'},
+        'rules': {'key': 'properties.rules', 'type': '[ObjectReplicationPolicyRule]'},
+    }
+
+    def __init__(self, **kwargs):
+        super(ObjectReplicationPolicy, self).__init__(**kwargs)
+        self.policy_id = None
+        self.enabled_time = None
+        self.source_account = kwargs.get('source_account', None)
+        self.destination_account = kwargs.get('destination_account', None)
+        self.rules = kwargs.get('rules', None)
+
+
+class ObjectReplicationPolicyFilter(Model):
+    """Filters limit replication to a subset of blobs within the storage account.
+    A logical OR is performed on values in the filter. If multiple filters are
+    defined, a logical AND is performed on all filters.
+
+    :param prefix_match: Optional. Filters the results to replicate only blobs
+     whose names begin with the specified prefix.
+    :type prefix_match: list[str]
+    :param min_creation_time: Blobs created after the time will be replicated
+     to the destination. It must be in datetime format 'yyyy-MM-ddTHH:mm:ssZ'.
+     Example: 2020-02-19T16:05:00Z
+    :type min_creation_time: str
+    """
+
+    _attribute_map = {
+        'prefix_match': {'key': 'prefixMatch', 'type': '[str]'},
+        'min_creation_time': {'key': 'minCreationTime', 'type': 'str'},
+    }
+
+    def __init__(self, **kwargs):
+        super(ObjectReplicationPolicyFilter, self).__init__(**kwargs)
+        self.prefix_match = kwargs.get('prefix_match', None)
+        self.min_creation_time = kwargs.get('min_creation_time', None)
+
+
+class ObjectReplicationPolicyRule(Model):
+    """The replication policy rule between two containers.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param rule_id: Rule Id is auto-generated for each new rule on destination
+     account. It is required for put policy on source account.
+    :type rule_id: str
+    :param source_container: Required. Required. Source container name.
+    :type source_container: str
+    :param destination_container: Required. Required. Destination container
+     name.
+    :type destination_container: str
+    :param filters: Optional. An object that defines the filter set.
+    :type filters:
+     ~azure.mgmt.storage.v2019_06_01.models.ObjectReplicationPolicyFilter
+    """
+
+    _validation = {
+        'source_container': {'required': True},
+        'destination_container': {'required': True},
+    }
+
+    _attribute_map = {
+        'rule_id': {'key': 'ruleId', 'type': 'str'},
+        'source_container': {'key': 'sourceContainer', 'type': 'str'},
+        'destination_container': {'key': 'destinationContainer', 'type': 'str'},
+        'filters': {'key': 'filters', 'type': 'ObjectReplicationPolicyFilter'},
+    }
+
+    def __init__(self, **kwargs):
+        super(ObjectReplicationPolicyRule, self).__init__(**kwargs)
+        self.rule_id = kwargs.get('rule_id', None)
+        self.source_container = kwargs.get('source_container', None)
+        self.destination_container = kwargs.get('destination_container', None)
+        self.filters = kwargs.get('filters', None)
+
+
 class Operation(Model):
     """Storage REST API operation definition.
 
@@ -2455,6 +2587,9 @@ class ProxyResource(Resource):
 class RestorePolicyProperties(Model):
     """The blob service properties for blob restore policy.
 
+    Variables are only populated by the server, and will be ignored when
+    sending a request.
+
     All required parameters must be populated in order to send to Azure.
 
     :param enabled: Required. Blob restore is enabled if set to true.
@@ -2462,22 +2597,28 @@ class RestorePolicyProperties(Model):
     :param days: how long this blob can be restored. It should be great than
      zero and less than DeleteRetentionPolicy.days.
     :type days: int
+    :ivar last_enabled_time: Returns the date and time the restore policy was
+     last enabled.
+    :vartype last_enabled_time: datetime
     """
 
     _validation = {
         'enabled': {'required': True},
         'days': {'maximum': 365, 'minimum': 1},
+        'last_enabled_time': {'readonly': True},
     }
 
     _attribute_map = {
         'enabled': {'key': 'enabled', 'type': 'bool'},
         'days': {'key': 'days', 'type': 'int'},
+        'last_enabled_time': {'key': 'lastEnabledTime', 'type': 'iso-8601'},
     }
 
     def __init__(self, **kwargs):
         super(RestorePolicyProperties, self).__init__(**kwargs)
         self.enabled = kwargs.get('enabled', None)
         self.days = kwargs.get('days', None)
+        self.last_enabled_time = None
 
 
 class Restriction(Model):
