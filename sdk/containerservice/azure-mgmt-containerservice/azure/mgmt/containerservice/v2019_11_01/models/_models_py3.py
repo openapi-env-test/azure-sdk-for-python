@@ -1025,6 +1025,28 @@ class ManagedClusterAADProfile(Model):
         self.tenant_id = tenant_id
 
 
+class ManagedClusterAPIServerAccessProfile(Model):
+    """Access profile for managed cluster API server.
+
+    :param authorized_ip_ranges: Authorized IP Ranges to kubernetes API
+     server.
+    :type authorized_ip_ranges: list[str]
+    :param enable_private_cluster: Whether to create the cluster as a private
+     cluster or not.
+    :type enable_private_cluster: bool
+    """
+
+    _attribute_map = {
+        'authorized_ip_ranges': {'key': 'authorizedIPRanges', 'type': '[str]'},
+        'enable_private_cluster': {'key': 'enablePrivateCluster', 'type': 'bool'},
+    }
+
+    def __init__(self, *, authorized_ip_ranges=None, enable_private_cluster: bool=None, **kwargs) -> None:
+        super(ManagedClusterAPIServerAccessProfile, self).__init__(**kwargs)
+        self.authorized_ip_ranges = authorized_ip_ranges
+        self.enable_private_cluster = enable_private_cluster
+
+
 class ManagedClusterAccessProfile(Resource):
     """Managed cluster Access Profile.
 
@@ -1479,28 +1501,6 @@ class ManagedClusterAgentPoolProfile(ManagedClusterAgentPoolProfileProperties):
     def __init__(self, *, vm_size, name: str, count: int=1, os_disk_size_gb: int=None, vnet_subnet_id: str=None, max_pods: int=None, os_type="Linux", max_count: int=None, min_count: int=None, enable_auto_scaling: bool=None, type=None, orchestrator_version: str=None, availability_zones=None, enable_node_public_ip: bool=None, scale_set_priority="Regular", scale_set_eviction_policy="Delete", tags=None, node_labels=None, node_taints=None, **kwargs) -> None:
         super(ManagedClusterAgentPoolProfile, self).__init__(count=count, vm_size=vm_size, os_disk_size_gb=os_disk_size_gb, vnet_subnet_id=vnet_subnet_id, max_pods=max_pods, os_type=os_type, max_count=max_count, min_count=min_count, enable_auto_scaling=enable_auto_scaling, type=type, orchestrator_version=orchestrator_version, availability_zones=availability_zones, enable_node_public_ip=enable_node_public_ip, scale_set_priority=scale_set_priority, scale_set_eviction_policy=scale_set_eviction_policy, tags=tags, node_labels=node_labels, node_taints=node_taints, **kwargs)
         self.name = name
-
-
-class ManagedClusterAPIServerAccessProfile(Model):
-    """Access profile for managed cluster API server.
-
-    :param authorized_ip_ranges: Authorized IP Ranges to kubernetes API
-     server.
-    :type authorized_ip_ranges: list[str]
-    :param enable_private_cluster: Whether to create the cluster as a private
-     cluster or not.
-    :type enable_private_cluster: bool
-    """
-
-    _attribute_map = {
-        'authorized_ip_ranges': {'key': 'authorizedIPRanges', 'type': '[str]'},
-        'enable_private_cluster': {'key': 'enablePrivateCluster', 'type': 'bool'},
-    }
-
-    def __init__(self, *, authorized_ip_ranges=None, enable_private_cluster: bool=None, **kwargs) -> None:
-        super(ManagedClusterAPIServerAccessProfile, self).__init__(**kwargs)
-        self.authorized_ip_ranges = authorized_ip_ranges
-        self.enable_private_cluster = enable_private_cluster
 
 
 class ManagedClusterIdentity(Model):

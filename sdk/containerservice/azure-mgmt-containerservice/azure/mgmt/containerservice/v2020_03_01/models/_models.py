@@ -1062,6 +1062,28 @@ class ManagedClusterAADProfile(Model):
         self.tenant_id = kwargs.get('tenant_id', None)
 
 
+class ManagedClusterAPIServerAccessProfile(Model):
+    """Access profile for managed cluster API server.
+
+    :param authorized_ip_ranges: Authorized IP Ranges to kubernetes API
+     server.
+    :type authorized_ip_ranges: list[str]
+    :param enable_private_cluster: Whether to create the cluster as a private
+     cluster or not.
+    :type enable_private_cluster: bool
+    """
+
+    _attribute_map = {
+        'authorized_ip_ranges': {'key': 'authorizedIPRanges', 'type': '[str]'},
+        'enable_private_cluster': {'key': 'enablePrivateCluster', 'type': 'bool'},
+    }
+
+    def __init__(self, **kwargs):
+        super(ManagedClusterAPIServerAccessProfile, self).__init__(**kwargs)
+        self.authorized_ip_ranges = kwargs.get('authorized_ip_ranges', None)
+        self.enable_private_cluster = kwargs.get('enable_private_cluster', None)
+
+
 class ManagedClusterAccessProfile(Resource):
     """Managed cluster Access Profile.
 
@@ -1542,28 +1564,6 @@ class ManagedClusterAgentPoolProfile(ManagedClusterAgentPoolProfileProperties):
         self.name = kwargs.get('name', None)
 
 
-class ManagedClusterAPIServerAccessProfile(Model):
-    """Access profile for managed cluster API server.
-
-    :param authorized_ip_ranges: Authorized IP Ranges to kubernetes API
-     server.
-    :type authorized_ip_ranges: list[str]
-    :param enable_private_cluster: Whether to create the cluster as a private
-     cluster or not.
-    :type enable_private_cluster: bool
-    """
-
-    _attribute_map = {
-        'authorized_ip_ranges': {'key': 'authorizedIPRanges', 'type': '[str]'},
-        'enable_private_cluster': {'key': 'enablePrivateCluster', 'type': 'bool'},
-    }
-
-    def __init__(self, **kwargs):
-        super(ManagedClusterAPIServerAccessProfile, self).__init__(**kwargs)
-        self.authorized_ip_ranges = kwargs.get('authorized_ip_ranges', None)
-        self.enable_private_cluster = kwargs.get('enable_private_cluster', None)
-
-
 class ManagedClusterIdentity(Model):
     """Identity for the managed cluster.
 
@@ -1844,6 +1844,30 @@ class ManagedClusterPropertiesIdentityProfileValue(UserAssignedIdentity):
         super(ManagedClusterPropertiesIdentityProfileValue, self).__init__(**kwargs)
 
 
+class ManagedClusterSKU(Model):
+    """ManagedClusterSKU.
+
+    :param name: Name of a managed cluster SKU. Possible values include:
+     'Basic'
+    :type name: str or
+     ~azure.mgmt.containerservice.v2020_03_01.models.ManagedClusterSKUName
+    :param tier: Tier of a managed cluster SKU. Possible values include:
+     'Paid', 'Free'
+    :type tier: str or
+     ~azure.mgmt.containerservice.v2020_03_01.models.ManagedClusterSKUTier
+    """
+
+    _attribute_map = {
+        'name': {'key': 'name', 'type': 'str'},
+        'tier': {'key': 'tier', 'type': 'str'},
+    }
+
+    def __init__(self, **kwargs):
+        super(ManagedClusterSKU, self).__init__(**kwargs)
+        self.name = kwargs.get('name', None)
+        self.tier = kwargs.get('tier', None)
+
+
 class ManagedClusterServicePrincipalProfile(Model):
     """Information about a service principal identity for the cluster to use for
     manipulating Azure APIs.
@@ -1870,30 +1894,6 @@ class ManagedClusterServicePrincipalProfile(Model):
         super(ManagedClusterServicePrincipalProfile, self).__init__(**kwargs)
         self.client_id = kwargs.get('client_id', None)
         self.secret = kwargs.get('secret', None)
-
-
-class ManagedClusterSKU(Model):
-    """ManagedClusterSKU.
-
-    :param name: Name of a managed cluster SKU. Possible values include:
-     'Basic'
-    :type name: str or
-     ~azure.mgmt.containerservice.v2020_03_01.models.ManagedClusterSKUName
-    :param tier: Tier of a managed cluster SKU. Possible values include:
-     'Paid', 'Free'
-    :type tier: str or
-     ~azure.mgmt.containerservice.v2020_03_01.models.ManagedClusterSKUTier
-    """
-
-    _attribute_map = {
-        'name': {'key': 'name', 'type': 'str'},
-        'tier': {'key': 'tier', 'type': 'str'},
-    }
-
-    def __init__(self, **kwargs):
-        super(ManagedClusterSKU, self).__init__(**kwargs)
-        self.name = kwargs.get('name', None)
-        self.tier = kwargs.get('tier', None)
 
 
 class ManagedClusterUpgradeProfile(Model):
