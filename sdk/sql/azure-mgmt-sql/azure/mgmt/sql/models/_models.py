@@ -597,8 +597,10 @@ class Database(TrackedResource):
      which means the replicas of this database will be spread across multiple
      availability zones.
     :type zone_redundant: bool
-    :param license_type: The license type to apply for this database. Possible
-     values include: 'LicenseIncluded', 'BasePrice'
+    :param license_type: The license type to apply for this database.
+     `LicenseIncluded` if you need a license, or `BasePrice` if you have a
+     license and are eligible for the Azure Hybrid Benefit. Possible values
+     include: 'LicenseIncluded', 'BasePrice'
     :type license_type: str or ~azure.mgmt.sql.models.DatabaseLicenseType
     :ivar max_log_size_bytes: The max log size for this database.
     :vartype max_log_size_bytes: long
@@ -1233,8 +1235,10 @@ class DatabaseUpdate(Model):
      which means the replicas of this database will be spread across multiple
      availability zones.
     :type zone_redundant: bool
-    :param license_type: The license type to apply for this database. Possible
-     values include: 'LicenseIncluded', 'BasePrice'
+    :param license_type: The license type to apply for this database.
+     `LicenseIncluded` if you need a license, or `BasePrice` if you have a
+     license and are eligible for the Azure Hybrid Benefit. Possible values
+     include: 'LicenseIncluded', 'BasePrice'
     :type license_type: str or ~azure.mgmt.sql.models.DatabaseLicenseType
     :ivar max_log_size_bytes: The max log size for this database.
     :vartype max_log_size_bytes: long
@@ -9607,6 +9611,23 @@ class TransparentDataEncryptionActivity(ProxyResource):
         self.location = None
         self.status = None
         self.percent_complete = None
+
+
+class UnlinkParameters(Model):
+    """Represents the parameters for Unlink Replication Link request.
+
+    :param forced_termination: Determines whether link will be terminated in a
+     forced or a friendly way.
+    :type forced_termination: bool
+    """
+
+    _attribute_map = {
+        'forced_termination': {'key': 'forcedTermination', 'type': 'bool'},
+    }
+
+    def __init__(self, **kwargs):
+        super(UnlinkParameters, self).__init__(**kwargs)
+        self.forced_termination = kwargs.get('forced_termination', None)
 
 
 class Usage(Model):
