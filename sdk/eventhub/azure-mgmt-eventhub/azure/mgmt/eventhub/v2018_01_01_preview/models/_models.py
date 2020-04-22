@@ -56,16 +56,16 @@ class CloudError(Model):
 
 
 class Resource(Model):
-    """The Resource definition.
+    """The resource definition.
 
     Variables are only populated by the server, and will be ignored when
     sending a request.
 
-    :ivar id: Resource Id
+    :ivar id: Resource ID.
     :vartype id: str
-    :ivar name: Resource name
+    :ivar name: Resource name.
     :vartype name: str
-    :ivar type: Resource type
+    :ivar type: Resource type.
     :vartype type: str
     """
 
@@ -89,20 +89,20 @@ class Resource(Model):
 
 
 class TrackedResource(Resource):
-    """Definition of an Azure resource.
+    """Definition of resource.
 
     Variables are only populated by the server, and will be ignored when
     sending a request.
 
-    :ivar id: Resource Id
+    :ivar id: Resource ID.
     :vartype id: str
-    :ivar name: Resource name
+    :ivar name: Resource name.
     :vartype name: str
-    :ivar type: Resource type
+    :ivar type: Resource type.
     :vartype type: str
-    :param location: Resource location
+    :param location: Resource location.
     :type location: str
-    :param tags: Resource tags
+    :param tags: Resource tags.
     :type tags: dict[str, str]
     """
 
@@ -132,15 +132,15 @@ class Cluster(TrackedResource):
     Variables are only populated by the server, and will be ignored when
     sending a request.
 
-    :ivar id: Resource Id
+    :ivar id: Resource ID.
     :vartype id: str
-    :ivar name: Resource name
+    :ivar name: Resource name.
     :vartype name: str
-    :ivar type: Resource type
+    :ivar type: Resource type.
     :vartype type: str
-    :param location: Resource location
+    :param location: Resource location.
     :type location: str
-    :param tags: Resource tags
+    :param tags: Resource tags.
     :type tags: dict[str, str]
     :param sku: Properties of the cluster SKU.
     :type sku: ~azure.mgmt.eventhub.v2018_01_01_preview.models.ClusterSku
@@ -243,18 +243,20 @@ class EHNamespace(TrackedResource):
     Variables are only populated by the server, and will be ignored when
     sending a request.
 
-    :ivar id: Resource Id
+    :ivar id: Resource ID.
     :vartype id: str
-    :ivar name: Resource name
+    :ivar name: Resource name.
     :vartype name: str
-    :ivar type: Resource type
+    :ivar type: Resource type.
     :vartype type: str
-    :param location: Resource location
+    :param location: Resource location.
     :type location: str
-    :param tags: Resource tags
+    :param tags: Resource tags.
     :type tags: dict[str, str]
     :param sku: Properties of sku resource
     :type sku: ~azure.mgmt.eventhub.v2018_01_01_preview.models.Sku
+    :param identity: Properties of BYOK Identity description
+    :type identity: ~azure.mgmt.eventhub.v2018_01_01_preview.models.Identity
     :ivar provisioning_state: Provisioning state of the Namespace.
     :vartype provisioning_state: str
     :ivar created_at: The time the Namespace was created.
@@ -264,6 +266,8 @@ class EHNamespace(TrackedResource):
     :ivar service_bus_endpoint: Endpoint you can use to perform Service Bus
      operations.
     :vartype service_bus_endpoint: str
+    :param cluster_arm_id: Cluster ARM ID of the Namespace.
+    :type cluster_arm_id: str
     :ivar metric_id: Identifier for Azure Insights metrics.
     :vartype metric_id: str
     :param is_auto_inflate_enabled: Value that indicates whether AutoInflate
@@ -279,6 +283,9 @@ class EHNamespace(TrackedResource):
     :param zone_redundant: Enabling this property creates a Standard Event
      Hubs Namespace in regions supported availability zones.
     :type zone_redundant: bool
+    :param encryption: Properties of BYOK Encryption description
+    :type encryption:
+     ~azure.mgmt.eventhub.v2018_01_01_preview.models.Encryption
     """
 
     _validation = {
@@ -300,29 +307,35 @@ class EHNamespace(TrackedResource):
         'location': {'key': 'location', 'type': 'str'},
         'tags': {'key': 'tags', 'type': '{str}'},
         'sku': {'key': 'sku', 'type': 'Sku'},
+        'identity': {'key': 'identity', 'type': 'Identity'},
         'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
         'created_at': {'key': 'properties.createdAt', 'type': 'iso-8601'},
         'updated_at': {'key': 'properties.updatedAt', 'type': 'iso-8601'},
         'service_bus_endpoint': {'key': 'properties.serviceBusEndpoint', 'type': 'str'},
+        'cluster_arm_id': {'key': 'properties.clusterArmId', 'type': 'str'},
         'metric_id': {'key': 'properties.metricId', 'type': 'str'},
         'is_auto_inflate_enabled': {'key': 'properties.isAutoInflateEnabled', 'type': 'bool'},
         'maximum_throughput_units': {'key': 'properties.maximumThroughputUnits', 'type': 'int'},
         'kafka_enabled': {'key': 'properties.kafkaEnabled', 'type': 'bool'},
         'zone_redundant': {'key': 'properties.zoneRedundant', 'type': 'bool'},
+        'encryption': {'key': 'properties.encryption', 'type': 'Encryption'},
     }
 
     def __init__(self, **kwargs):
         super(EHNamespace, self).__init__(**kwargs)
         self.sku = kwargs.get('sku', None)
+        self.identity = kwargs.get('identity', None)
         self.provisioning_state = None
         self.created_at = None
         self.updated_at = None
         self.service_bus_endpoint = None
+        self.cluster_arm_id = kwargs.get('cluster_arm_id', None)
         self.metric_id = None
         self.is_auto_inflate_enabled = kwargs.get('is_auto_inflate_enabled', None)
         self.maximum_throughput_units = kwargs.get('maximum_throughput_units', None)
         self.kafka_enabled = kwargs.get('kafka_enabled', None)
         self.zone_redundant = kwargs.get('zone_redundant', None)
+        self.encryption = kwargs.get('encryption', None)
 
 
 class EHNamespaceIdContainer(Model):
@@ -358,8 +371,32 @@ class EHNamespaceIdListResult(Model):
         self.value = kwargs.get('value', None)
 
 
+class Encryption(Model):
+    """Properties to configure Encryption.
+
+    :param key_vault_properties: Properties of KeyVault
+    :type key_vault_properties:
+     ~azure.mgmt.eventhub.v2018_01_01_preview.models.KeyVaultProperties
+    :param key_source: Enumerates the possible value of keySource for
+     Encryption. Possible values include: 'Microsoft.KeyVault'. Default value:
+     "Microsoft.KeyVault" .
+    :type key_source: str or
+     ~azure.mgmt.eventhub.v2018_01_01_preview.models.KeySource
+    """
+
+    _attribute_map = {
+        'key_vault_properties': {'key': 'keyVaultProperties', 'type': 'KeyVaultProperties'},
+        'key_source': {'key': 'keySource', 'type': 'KeySource'},
+    }
+
+    def __init__(self, **kwargs):
+        super(Encryption, self).__init__(**kwargs)
+        self.key_vault_properties = kwargs.get('key_vault_properties', None)
+        self.key_source = kwargs.get('key_source', "Microsoft.KeyVault")
+
+
 class ErrorResponse(Model):
-    """Error response that indicates the service is not able to process the
+    """Error response indicates Event Hub service is not able to process the
     incoming request. The reason is provided in the error message.
 
     :param code: Error code.
@@ -391,17 +428,44 @@ class ErrorResponseException(HttpOperationError):
         super(ErrorResponseException, self).__init__(deserialize, response, 'ErrorResponse', *args)
 
 
+class Identity(Model):
+    """Properties to configure Identity for Bring your Own Keys.
+
+    :param principal_id: ObjectId from the KeyVault
+    :type principal_id: str
+    :param tenant_id: TenantId from the KeyVault
+    :type tenant_id: str
+    :param type: Enumerates the possible value Identity type, which currently
+     supports only 'SystemAssigned'. Possible values include: 'SystemAssigned'.
+     Default value: "SystemAssigned" .
+    :type type: str or
+     ~azure.mgmt.eventhub.v2018_01_01_preview.models.IdentityType
+    """
+
+    _attribute_map = {
+        'principal_id': {'key': 'principalId', 'type': 'str'},
+        'tenant_id': {'key': 'tenantId', 'type': 'str'},
+        'type': {'key': 'type', 'type': 'IdentityType'},
+    }
+
+    def __init__(self, **kwargs):
+        super(Identity, self).__init__(**kwargs)
+        self.principal_id = kwargs.get('principal_id', None)
+        self.tenant_id = kwargs.get('tenant_id', None)
+        self.type = kwargs.get('type', "SystemAssigned")
+
+
 class IpFilterRule(Resource):
     """Single item in a List or Get IpFilterRules operation.
 
     Variables are only populated by the server, and will be ignored when
     sending a request.
 
-    :ivar id: Resource Id
+    :ivar id: Resource ID.
     :vartype id: str
-    :ivar name: Resource name
+    :ivar name: Resource name.
     :vartype name: str
-    :ivar type: Resource type
+    :ivar type: Resource type.
     :vartype type: str
     :param ip_mask: IP Mask
     :type ip_mask: str
@@ -435,17 +499,37 @@ class IpFilterRule(Resource):
         self.filter_name = kwargs.get('filter_name', None)
 
 
+class KeyVaultProperties(Model):
+    """Properties to configure keyVault Properties.
+
+    :param key_name: Name of the Key from KeyVault
+    :type key_name: str
+    :param key_vault_uri: Uri of KeyVault
+    :type key_vault_uri: str
+    """
+
+    _attribute_map = {
+        'key_name': {'key': 'keyName', 'type': 'str'},
+        'key_vault_uri': {'key': 'keyVaultUri', 'type': 'str'},
+    }
+
+    def __init__(self, **kwargs):
+        super(KeyVaultProperties, self).__init__(**kwargs)
+        self.key_name = kwargs.get('key_name', None)
+        self.key_vault_uri = kwargs.get('key_vault_uri', None)
+
+
 class NetworkRuleSet(Resource):
     """Description of topic resource.
 
     Variables are only populated by the server, and will be ignored when
     sending a request.
 
-    :ivar id: Resource Id
+    :ivar id: Resource ID.
     :vartype id: str
-    :ivar name: Resource name
+    :ivar name: Resource name.
     :vartype name: str
-    :ivar type: Resource type
+    :ivar type: Resource type.
     :vartype type: str
     :param default_action: Default Action for Network Rule Set. Possible
      values include: 'Allow', 'Deny'
@@ -641,11 +725,11 @@ class VirtualNetworkRule(Resource):
     Variables are only populated by the server, and will be ignored when
     sending a request.
 
-    :ivar id: Resource Id
+    :ivar id: Resource ID.
     :vartype id: str
-    :ivar name: Resource name
+    :ivar name: Resource name.
     :vartype name: str
-    :ivar type: Resource type
+    :ivar type: Resource type.
     :vartype type: str
     :param virtual_network_subnet_id: ARM ID of Virtual Network Subnet
     :type virtual_network_subnet_id: str
