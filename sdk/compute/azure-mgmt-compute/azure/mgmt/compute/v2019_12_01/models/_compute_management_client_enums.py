@@ -247,6 +247,12 @@ class DiffDiskOptions(str, Enum):
     local = "Local"
 
 
+class DiffDiskPlacement(str, Enum):
+
+    cache_disk = "CacheDisk"
+    resource_disk = "ResourceDisk"
+
+
 class PassNames(str, Enum):
 
     oobe_system = "OobeSystem"
@@ -333,6 +339,7 @@ class IPVersion(str, Enum):
 class OrchestrationServiceNames(str, Enum):
 
     automatic_repairs = "AutomaticRepairs"
+    
 
 
 class OrchestrationServiceState(str, Enum):
@@ -391,6 +398,17 @@ class OrchestrationServiceStateAction(str, Enum):
     suspend = "Suspend"
 
 
+class ExecutionState(str, Enum):
+
+    unknown = "Unknown"
+    pending = "Pending"
+    running = "Running"
+    failed = "Failed"
+    succeeded = "Succeeded"
+    timed_out = "TimedOut"
+    canceled = "Canceled"
+
+
 class AggregatedReplicationState(str, Enum):
 
     unknown = "Unknown"
@@ -417,6 +435,7 @@ class StorageAccountType(str, Enum):
 
     standard_lrs = "Standard_LRS"
     standard_zrs = "Standard_ZRS"
+    premium_lrs = "Premium_LRS"
 
 
 class HostCaching(str, Enum):
