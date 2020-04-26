@@ -9,37 +9,17 @@
 # regenerated.
 # --------------------------------------------------------------------------
 
-import uuid
 from msrest.pipeline import ClientRawResponse
 from msrestazure.azure_exceptions import CloudError
-
+from msrest.polling import LROPoller, NoPolling
+from msrestazure.polling.arm_polling import ARMPolling
 from .. import models
+import uuid
 
 
-class OperationStatusesOperations(object):
-    """OperationStatusesOperations operations.
+class OperationalInsightsManagementClientOperationsMixin(object):
 
-    You should not instantiate directly this class, but create a Client instance that will create it for you and attach it as attribute.
-
-    :param client: Client for service requests.
-    :param config: Configuration of service client.
-    :param serializer: An object model serializer.
-    :param deserializer: An object model deserializer.
-    :ivar api_version: The API version to use for this operation. Constant value: "2020-03-01-preview".
-    """
-
-    models = models
-
-    def __init__(self, client, config, serializer, deserializer):
-
-        self._client = client
-        self._serialize = serializer
-        self._deserialize = deserializer
-        self.api_version = "2020-03-01-preview"
-
-        self.config = config
-
-    def get(
+    def get_async_operations_status(
             self, location, async_operation_id, custom_headers=None, raw=False, **operation_config):
         """Get the status of a long running azure asynchronous operation.
 
@@ -58,7 +38,7 @@ class OperationStatusesOperations(object):
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
         # Construct URL
-        url = self.get.metadata['url']
+        url = self.get_async_operations_status.metadata['url']
         path_format_arguments = {
             'location': self._serialize.url("location", location, 'str'),
             'asyncOperationId': self._serialize.url("async_operation_id", async_operation_id, 'str'),
@@ -98,4 +78,4 @@ class OperationStatusesOperations(object):
             return client_raw_response
 
         return deserialized
-    get.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.OperationalInsights/locations/{location}/operationStatuses/{asyncOperationId}'}
+    get_async_operations_status.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.OperationalInsights/locations/{location}/operationStatuses/{asyncOperationId}'}

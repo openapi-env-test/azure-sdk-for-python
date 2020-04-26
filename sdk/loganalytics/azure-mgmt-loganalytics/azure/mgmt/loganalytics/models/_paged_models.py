@@ -38,32 +38,6 @@ class DataSourcePaged(Paged):
     def __init__(self, *args, **kwargs):
 
         super(DataSourcePaged, self).__init__(*args, **kwargs)
-class LinkedServicePaged(Paged):
-    """
-    A paging container for iterating over a list of :class:`LinkedService <azure.mgmt.loganalytics.models.LinkedService>` object
-    """
-
-    _attribute_map = {
-        'next_link': {'key': 'nextLink', 'type': 'str'},
-        'current_page': {'key': 'value', 'type': '[LinkedService]'}
-    }
-
-    def __init__(self, *args, **kwargs):
-
-        super(LinkedServicePaged, self).__init__(*args, **kwargs)
-class LinkedStorageAccountsResourcePaged(Paged):
-    """
-    A paging container for iterating over a list of :class:`LinkedStorageAccountsResource <azure.mgmt.loganalytics.models.LinkedStorageAccountsResource>` object
-    """
-
-    _attribute_map = {
-        'next_link': {'key': 'nextLink', 'type': 'str'},
-        'current_page': {'key': 'value', 'type': '[LinkedStorageAccountsResource]'}
-    }
-
-    def __init__(self, *args, **kwargs):
-
-        super(LinkedStorageAccountsResourcePaged, self).__init__(*args, **kwargs)
 class ManagementGroupPaged(Paged):
     """
     A paging container for iterating over a list of :class:`ManagementGroup <azure.mgmt.loganalytics.models.ManagementGroup>` object
@@ -77,19 +51,6 @@ class ManagementGroupPaged(Paged):
     def __init__(self, *args, **kwargs):
 
         super(ManagementGroupPaged, self).__init__(*args, **kwargs)
-class OperationPaged(Paged):
-    """
-    A paging container for iterating over a list of :class:`Operation <azure.mgmt.loganalytics.models.Operation>` object
-    """
-
-    _attribute_map = {
-        'next_link': {'key': 'nextLink', 'type': 'str'},
-        'current_page': {'key': 'value', 'type': '[Operation]'}
-    }
-
-    def __init__(self, *args, **kwargs):
-
-        super(OperationPaged, self).__init__(*args, **kwargs)
 class UsageMetricPaged(Paged):
     """
     A paging container for iterating over a list of :class:`UsageMetric <azure.mgmt.loganalytics.models.UsageMetric>` object
@@ -116,6 +77,45 @@ class WorkspacePaged(Paged):
     def __init__(self, *args, **kwargs):
 
         super(WorkspacePaged, self).__init__(*args, **kwargs)
+class LinkedServicePaged(Paged):
+    """
+    A paging container for iterating over a list of :class:`LinkedService <azure.mgmt.loganalytics.models.LinkedService>` object
+    """
+
+    _attribute_map = {
+        'next_link': {'key': 'nextLink', 'type': 'str'},
+        'current_page': {'key': 'value', 'type': '[LinkedService]'}
+    }
+
+    def __init__(self, *args, **kwargs):
+
+        super(LinkedServicePaged, self).__init__(*args, **kwargs)
+class LinkedStorageAccountsResourcePaged(Paged):
+    """
+    A paging container for iterating over a list of :class:`LinkedStorageAccountsResource <azure.mgmt.loganalytics.models.LinkedStorageAccountsResource>` object
+    """
+
+    _attribute_map = {
+        'next_link': {'key': 'nextLink', 'type': 'str'},
+        'current_page': {'key': 'value', 'type': '[LinkedStorageAccountsResource]'}
+    }
+
+    def __init__(self, *args, **kwargs):
+
+        super(LinkedStorageAccountsResourcePaged, self).__init__(*args, **kwargs)
+class OperationPaged(Paged):
+    """
+    A paging container for iterating over a list of :class:`Operation <azure.mgmt.loganalytics.models.Operation>` object
+    """
+
+    _attribute_map = {
+        'next_link': {'key': 'nextLink', 'type': 'str'},
+        'current_page': {'key': 'value', 'type': '[Operation]'}
+    }
+
+    def __init__(self, *args, **kwargs):
+
+        super(OperationPaged, self).__init__(*args, **kwargs)
 class ClusterPaged(Paged):
     """
     A paging container for iterating over a list of :class:`Cluster <azure.mgmt.loganalytics.models.Cluster>` object

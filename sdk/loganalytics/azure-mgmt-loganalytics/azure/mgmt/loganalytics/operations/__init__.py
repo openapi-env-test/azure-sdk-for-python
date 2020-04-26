@@ -11,38 +11,24 @@
 
 from ._data_exports_operations import DataExportsOperations
 from ._data_sources_operations import DataSourcesOperations
-from ._intelligence_packs_operations import IntelligencePacksOperations
+from ._workspaces_operations import WorkspacesOperations
 from ._linked_services_operations import LinkedServicesOperations
 from ._linked_storage_accounts_operations import LinkedStorageAccountsOperations
-from ._management_groups_operations import ManagementGroupsOperations
 from ._operations import Operations
-from ._operation_statuses_operations import OperationStatusesOperations
-from ._shared_keys_operations import SharedKeysOperations
-from ._usages_operations import UsagesOperations
-from ._workspaces_operations import WorkspacesOperations
 from ._clusters_operations import ClustersOperations
-from ._storage_insight_configs_operations import StorageInsightConfigsOperations
+from ._storage_insights_operations import StorageInsightsOperations
 from ._saved_searches_operations import SavedSearchesOperations
-from ._gateways_operations import GatewaysOperations
-from ._schema_operations import SchemaOperations
-from ._workspace_purge_operations import WorkspacePurgeOperations
+from ._operational_insights_management_client_operations import OperationalInsightsManagementClientOperationsMixin
 
 __all__ = [
     'DataExportsOperations',
     'DataSourcesOperations',
-    'IntelligencePacksOperations',
+    'WorkspacesOperations',
     'LinkedServicesOperations',
     'LinkedStorageAccountsOperations',
-    'ManagementGroupsOperations',
     'Operations',
-    'OperationStatusesOperations',
-    'SharedKeysOperations',
-    'UsagesOperations',
-    'WorkspacesOperations',
     'ClustersOperations',
-    'StorageInsightConfigsOperations',
+    'StorageInsightsOperations',
     'SavedSearchesOperations',
-    'GatewaysOperations',
-    'SchemaOperations',
-    'WorkspacePurgeOperations',
+    'OperationalInsightsManagementClientOperationsMixin',
 ]

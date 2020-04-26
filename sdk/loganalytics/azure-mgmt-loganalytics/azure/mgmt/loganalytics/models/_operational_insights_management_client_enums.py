@@ -55,14 +55,6 @@ class DataSourceKind(str, Enum):
     sql_data_classification = "SqlDataClassification"
 
 
-class LinkedServiceEntityStatus(str, Enum):
-
-    succeeded = "Succeeded"
-    deleting = "Deleting"
-    provisioning_account = "ProvisioningAccount"
-    updating = "Updating"
-
-
 class DataSourceType(str, Enum):
 
     custom_logs = "CustomLogs"
@@ -80,7 +72,7 @@ class WorkspaceSkuNameEnum(str, Enum):
     capacity_reservation = "CapacityReservation"
 
 
-class WorkspaceEntityStatus(str, Enum):
+class EntityStatus(str, Enum):
 
     creating = "Creating"
     succeeded = "Succeeded"
@@ -88,24 +80,12 @@ class WorkspaceEntityStatus(str, Enum):
     canceled = "Canceled"
     deleting = "Deleting"
     provisioning_account = "ProvisioningAccount"
-    updating = "Updating"
 
 
 class PublicNetworkAccessType(str, Enum):
 
     enabled = "Enabled"  #: Enables connectivity to Log Analytics through public DNS.
     disabled = "Disabled"  #: Disables public connectivity to Log Analytics through public DNS.
-
-
-class ClusterEntityStatus(str, Enum):
-
-    creating = "Creating"
-    succeeded = "Succeeded"
-    failed = "Failed"
-    canceled = "Canceled"
-    deleting = "Deleting"
-    provisioning_account = "ProvisioningAccount"
-    updating = "Updating"
 
 
 class ClusterSkuNameEnum(str, Enum):
@@ -123,26 +103,3 @@ class StorageInsightState(str, Enum):
 
     ok = "OK"
     error = "ERROR"
-
-
-class SkuNameEnum(str, Enum):
-
-    free = "Free"
-    standard = "Standard"
-    premium = "Premium"
-    per_node = "PerNode"
-    per_gb2018 = "PerGB2018"
-    standalone = "Standalone"
-    capacity_reservation = "CapacityReservation"
-
-
-class SearchSortEnum(str, Enum):
-
-    asc = "asc"
-    desc = "desc"
-
-
-class PurgeState(str, Enum):
-
-    pending = "pending"
-    completed = "completed"
