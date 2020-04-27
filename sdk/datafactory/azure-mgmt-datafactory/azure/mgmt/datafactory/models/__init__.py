@@ -514,6 +514,7 @@ try:
     from ._models_py3 import SqlDWSource
     from ._models_py3 import SqlMISink
     from ._models_py3 import SqlMISource
+    from ._models_py3 import SqlPartitionSettings
     from ._models_py3 import SqlServerLinkedService
     from ._models_py3 import SqlServerSink
     from ._models_py3 import SqlServerSource
@@ -1104,6 +1105,7 @@ except (SyntaxError, ImportError):
     from ._models import SqlDWSource
     from ._models import SqlMISink
     from ._models import SqlMISource
+    from ._models import SqlPartitionSettings
     from ._models import SqlServerLinkedService
     from ._models import SqlServerSink
     from ._models import SqlServerSource
@@ -1255,6 +1257,7 @@ from ._data_factory_management_client_enums import (
     NetezzaPartitionOption,
     CassandraSourceReadConsistencyLevels,
     TeradataPartitionOption,
+    SqlPartitionOption,
     StoredProcedureParameterType,
     SapTablePartitionOption,
     SapHanaPartitionOption,
@@ -1784,6 +1787,7 @@ __all__ = [
     'SqlDWSource',
     'SqlMISink',
     'SqlMISource',
+    'SqlPartitionSettings',
     'SqlServerLinkedService',
     'SqlServerSink',
     'SqlServerSource',
@@ -1934,6 +1938,7 @@ __all__ = [
     'NetezzaPartitionOption',
     'CassandraSourceReadConsistencyLevels',
     'TeradataPartitionOption',
+    'SqlPartitionOption',
     'StoredProcedureParameterType',
     'SapTablePartitionOption',
     'SapHanaPartitionOption',

@@ -6047,6 +6047,15 @@ class AzureSqlSource(TabularSource):
      ~azure.mgmt.datafactory.models.StoredProcedureParameter]
     :param produce_additional_types: Which additional types to produce.
     :type produce_additional_types: object
+    :param partition_option: The partition mechanism that will be used for Sql
+     read in parallel. Possible values include: 'None',
+     'PhysicalPartitionsOfTable', 'DynamicRange'
+    :type partition_option: str or
+     ~azure.mgmt.datafactory.models.SqlPartitionOption
+    :param partition_settings: The settings that will be leveraged for Sql
+     source partitioning.
+    :type partition_settings:
+     ~azure.mgmt.datafactory.models.SqlPartitionSettings
     """
 
     _validation = {
@@ -6065,14 +6074,18 @@ class AzureSqlSource(TabularSource):
         'sql_reader_stored_procedure_name': {'key': 'sqlReaderStoredProcedureName', 'type': 'object'},
         'stored_procedure_parameters': {'key': 'storedProcedureParameters', 'type': '{StoredProcedureParameter}'},
         'produce_additional_types': {'key': 'produceAdditionalTypes', 'type': 'object'},
+        'partition_option': {'key': 'partitionOption', 'type': 'str'},
+        'partition_settings': {'key': 'partitionSettings', 'type': 'SqlPartitionSettings'},
     }
 
-    def __init__(self, *, additional_properties=None, source_retry_count=None, source_retry_wait=None, max_concurrent_connections=None, query_timeout=None, additional_columns=None, sql_reader_query=None, sql_reader_stored_procedure_name=None, stored_procedure_parameters=None, produce_additional_types=None, **kwargs) -> None:
+    def __init__(self, *, additional_properties=None, source_retry_count=None, source_retry_wait=None, max_concurrent_connections=None, query_timeout=None, additional_columns=None, sql_reader_query=None, sql_reader_stored_procedure_name=None, stored_procedure_parameters=None, produce_additional_types=None, partition_option=None, partition_settings=None, **kwargs) -> None:
         super(AzureSqlSource, self).__init__(additional_properties=additional_properties, source_retry_count=source_retry_count, source_retry_wait=source_retry_wait, max_concurrent_connections=max_concurrent_connections, query_timeout=query_timeout, additional_columns=additional_columns, **kwargs)
         self.sql_reader_query = sql_reader_query
         self.sql_reader_stored_procedure_name = sql_reader_stored_procedure_name
         self.stored_procedure_parameters = stored_procedure_parameters
         self.produce_additional_types = produce_additional_types
+        self.partition_option = partition_option
+        self.partition_settings = partition_settings
         self.type = 'AzureSqlSource'
 
 
@@ -29289,6 +29302,15 @@ class SqlDWSource(TabularSource):
      Type: object (or Expression with resultType object), itemType:
      StoredProcedureParameter.
     :type stored_procedure_parameters: object
+    :param partition_option: The partition mechanism that will be used for Sql
+     read in parallel. Possible values include: 'None',
+     'PhysicalPartitionsOfTable', 'DynamicRange'
+    :type partition_option: str or
+     ~azure.mgmt.datafactory.models.SqlPartitionOption
+    :param partition_settings: The settings that will be leveraged for Sql
+     source partitioning.
+    :type partition_settings:
+     ~azure.mgmt.datafactory.models.SqlPartitionSettings
     """
 
     _validation = {
@@ -29306,13 +29328,17 @@ class SqlDWSource(TabularSource):
         'sql_reader_query': {'key': 'sqlReaderQuery', 'type': 'object'},
         'sql_reader_stored_procedure_name': {'key': 'sqlReaderStoredProcedureName', 'type': 'object'},
         'stored_procedure_parameters': {'key': 'storedProcedureParameters', 'type': 'object'},
+        'partition_option': {'key': 'partitionOption', 'type': 'str'},
+        'partition_settings': {'key': 'partitionSettings', 'type': 'SqlPartitionSettings'},
     }
 
-    def __init__(self, *, additional_properties=None, source_retry_count=None, source_retry_wait=None, max_concurrent_connections=None, query_timeout=None, additional_columns=None, sql_reader_query=None, sql_reader_stored_procedure_name=None, stored_procedure_parameters=None, **kwargs) -> None:
+    def __init__(self, *, additional_properties=None, source_retry_count=None, source_retry_wait=None, max_concurrent_connections=None, query_timeout=None, additional_columns=None, sql_reader_query=None, sql_reader_stored_procedure_name=None, stored_procedure_parameters=None, partition_option=None, partition_settings=None, **kwargs) -> None:
         super(SqlDWSource, self).__init__(additional_properties=additional_properties, source_retry_count=source_retry_count, source_retry_wait=source_retry_wait, max_concurrent_connections=max_concurrent_connections, query_timeout=query_timeout, additional_columns=additional_columns, **kwargs)
         self.sql_reader_query = sql_reader_query
         self.sql_reader_stored_procedure_name = sql_reader_stored_procedure_name
         self.stored_procedure_parameters = stored_procedure_parameters
+        self.partition_option = partition_option
+        self.partition_settings = partition_settings
         self.type = 'SqlDWSource'
 
 
@@ -29440,6 +29466,15 @@ class SqlMISource(TabularSource):
      ~azure.mgmt.datafactory.models.StoredProcedureParameter]
     :param produce_additional_types: Which additional types to produce.
     :type produce_additional_types: object
+    :param partition_option: The partition mechanism that will be used for Sql
+     read in parallel. Possible values include: 'None',
+     'PhysicalPartitionsOfTable', 'DynamicRange'
+    :type partition_option: str or
+     ~azure.mgmt.datafactory.models.SqlPartitionOption
+    :param partition_settings: The settings that will be leveraged for Sql
+     source partitioning.
+    :type partition_settings:
+     ~azure.mgmt.datafactory.models.SqlPartitionSettings
     """
 
     _validation = {
@@ -29458,15 +29493,50 @@ class SqlMISource(TabularSource):
         'sql_reader_stored_procedure_name': {'key': 'sqlReaderStoredProcedureName', 'type': 'object'},
         'stored_procedure_parameters': {'key': 'storedProcedureParameters', 'type': '{StoredProcedureParameter}'},
         'produce_additional_types': {'key': 'produceAdditionalTypes', 'type': 'object'},
+        'partition_option': {'key': 'partitionOption', 'type': 'str'},
+        'partition_settings': {'key': 'partitionSettings', 'type': 'SqlPartitionSettings'},
     }
 
-    def __init__(self, *, additional_properties=None, source_retry_count=None, source_retry_wait=None, max_concurrent_connections=None, query_timeout=None, additional_columns=None, sql_reader_query=None, sql_reader_stored_procedure_name=None, stored_procedure_parameters=None, produce_additional_types=None, **kwargs) -> None:
+    def __init__(self, *, additional_properties=None, source_retry_count=None, source_retry_wait=None, max_concurrent_connections=None, query_timeout=None, additional_columns=None, sql_reader_query=None, sql_reader_stored_procedure_name=None, stored_procedure_parameters=None, produce_additional_types=None, partition_option=None, partition_settings=None, **kwargs) -> None:
         super(SqlMISource, self).__init__(additional_properties=additional_properties, source_retry_count=source_retry_count, source_retry_wait=source_retry_wait, max_concurrent_connections=max_concurrent_connections, query_timeout=query_timeout, additional_columns=additional_columns, **kwargs)
         self.sql_reader_query = sql_reader_query
         self.sql_reader_stored_procedure_name = sql_reader_stored_procedure_name
         self.stored_procedure_parameters = stored_procedure_parameters
         self.produce_additional_types = produce_additional_types
+        self.partition_option = partition_option
+        self.partition_settings = partition_settings
         self.type = 'SqlMISource'
+
+
+class SqlPartitionSettings(Model):
+    """The settings that will be leveraged for Sql source partitioning.
+
+    :param partition_column_name: The name of the column in integer or
+     datetime type that will be used for proceeding partitioning. If not
+     specified, the primary key of the table is auto-detected and used as the
+     partition column. Type: string (or Expression with resultType string).
+    :type partition_column_name: object
+    :param partition_upper_bound: The maximum value of column specified in
+     partitionColumnName that will be used for proceeding range partitioning.
+     Type: string (or Expression with resultType string).
+    :type partition_upper_bound: object
+    :param partition_lower_bound: The minimum value of column specified in
+     partitionColumnName that will be used for proceeding range partitioning.
+     Type: string (or Expression with resultType string).
+    :type partition_lower_bound: object
+    """
+
+    _attribute_map = {
+        'partition_column_name': {'key': 'partitionColumnName', 'type': 'object'},
+        'partition_upper_bound': {'key': 'partitionUpperBound', 'type': 'object'},
+        'partition_lower_bound': {'key': 'partitionLowerBound', 'type': 'object'},
+    }
+
+    def __init__(self, *, partition_column_name=None, partition_upper_bound=None, partition_lower_bound=None, **kwargs) -> None:
+        super(SqlPartitionSettings, self).__init__(**kwargs)
+        self.partition_column_name = partition_column_name
+        self.partition_upper_bound = partition_upper_bound
+        self.partition_lower_bound = partition_lower_bound
 
 
 class SqlServerLinkedService(LinkedService):
@@ -29655,6 +29725,15 @@ class SqlServerSource(TabularSource):
      ~azure.mgmt.datafactory.models.StoredProcedureParameter]
     :param produce_additional_types: Which additional types to produce.
     :type produce_additional_types: object
+    :param partition_option: The partition mechanism that will be used for Sql
+     read in parallel. Possible values include: 'None',
+     'PhysicalPartitionsOfTable', 'DynamicRange'
+    :type partition_option: str or
+     ~azure.mgmt.datafactory.models.SqlPartitionOption
+    :param partition_settings: The settings that will be leveraged for Sql
+     source partitioning.
+    :type partition_settings:
+     ~azure.mgmt.datafactory.models.SqlPartitionSettings
     """
 
     _validation = {
@@ -29673,14 +29752,18 @@ class SqlServerSource(TabularSource):
         'sql_reader_stored_procedure_name': {'key': 'sqlReaderStoredProcedureName', 'type': 'object'},
         'stored_procedure_parameters': {'key': 'storedProcedureParameters', 'type': '{StoredProcedureParameter}'},
         'produce_additional_types': {'key': 'produceAdditionalTypes', 'type': 'object'},
+        'partition_option': {'key': 'partitionOption', 'type': 'str'},
+        'partition_settings': {'key': 'partitionSettings', 'type': 'SqlPartitionSettings'},
     }
 
-    def __init__(self, *, additional_properties=None, source_retry_count=None, source_retry_wait=None, max_concurrent_connections=None, query_timeout=None, additional_columns=None, sql_reader_query=None, sql_reader_stored_procedure_name=None, stored_procedure_parameters=None, produce_additional_types=None, **kwargs) -> None:
+    def __init__(self, *, additional_properties=None, source_retry_count=None, source_retry_wait=None, max_concurrent_connections=None, query_timeout=None, additional_columns=None, sql_reader_query=None, sql_reader_stored_procedure_name=None, stored_procedure_parameters=None, produce_additional_types=None, partition_option=None, partition_settings=None, **kwargs) -> None:
         super(SqlServerSource, self).__init__(additional_properties=additional_properties, source_retry_count=source_retry_count, source_retry_wait=source_retry_wait, max_concurrent_connections=max_concurrent_connections, query_timeout=query_timeout, additional_columns=additional_columns, **kwargs)
         self.sql_reader_query = sql_reader_query
         self.sql_reader_stored_procedure_name = sql_reader_stored_procedure_name
         self.stored_procedure_parameters = stored_procedure_parameters
         self.produce_additional_types = produce_additional_types
+        self.partition_option = partition_option
+        self.partition_settings = partition_settings
         self.type = 'SqlServerSource'
 
 
@@ -29940,6 +30023,15 @@ class SqlSource(TabularSource):
      default value is ReadCommitted. Type: string (or Expression with
      resultType string).
     :type isolation_level: object
+    :param partition_option: The partition mechanism that will be used for Sql
+     read in parallel. Possible values include: 'None',
+     'PhysicalPartitionsOfTable', 'DynamicRange'
+    :type partition_option: str or
+     ~azure.mgmt.datafactory.models.SqlPartitionOption
+    :param partition_settings: The settings that will be leveraged for Sql
+     source partitioning.
+    :type partition_settings:
+     ~azure.mgmt.datafactory.models.SqlPartitionSettings
     """
 
     _validation = {
@@ -29958,14 +30050,18 @@ class SqlSource(TabularSource):
         'sql_reader_stored_procedure_name': {'key': 'sqlReaderStoredProcedureName', 'type': 'object'},
         'stored_procedure_parameters': {'key': 'storedProcedureParameters', 'type': '{StoredProcedureParameter}'},
         'isolation_level': {'key': 'isolationLevel', 'type': 'object'},
+        'partition_option': {'key': 'partitionOption', 'type': 'str'},
+        'partition_settings': {'key': 'partitionSettings', 'type': 'SqlPartitionSettings'},
     }
 
-    def __init__(self, *, additional_properties=None, source_retry_count=None, source_retry_wait=None, max_concurrent_connections=None, query_timeout=None, additional_columns=None, sql_reader_query=None, sql_reader_stored_procedure_name=None, stored_procedure_parameters=None, isolation_level=None, **kwargs) -> None:
+    def __init__(self, *, additional_properties=None, source_retry_count=None, source_retry_wait=None, max_concurrent_connections=None, query_timeout=None, additional_columns=None, sql_reader_query=None, sql_reader_stored_procedure_name=None, stored_procedure_parameters=None, isolation_level=None, partition_option=None, partition_settings=None, **kwargs) -> None:
         super(SqlSource, self).__init__(additional_properties=additional_properties, source_retry_count=source_retry_count, source_retry_wait=source_retry_wait, max_concurrent_connections=max_concurrent_connections, query_timeout=query_timeout, additional_columns=additional_columns, **kwargs)
         self.sql_reader_query = sql_reader_query
         self.sql_reader_stored_procedure_name = sql_reader_stored_procedure_name
         self.stored_procedure_parameters = stored_procedure_parameters
         self.isolation_level = isolation_level
+        self.partition_option = partition_option
+        self.partition_settings = partition_settings
         self.type = 'SqlSource'
 
 
