@@ -137,6 +137,13 @@ class GoogleAdWordsAuthenticationType(str, Enum):
     user_authentication = "UserAuthentication"
 
 
+class HdiNodeTypes(str, Enum):
+
+    headnode = "Headnode"
+    workernode = "Workernode"
+    zookeeper = "Zookeeper"
+
+
 class SparkServerType(str, Enum):
 
     shark_server = "SharkServer"
@@ -305,6 +312,12 @@ class DynamicsAuthenticationType(str, Enum):
     aad_service_principal = "AADServicePrincipal"
 
 
+class DatasetCompressionLevel(str, Enum):
+
+    optimal = "Optimal"
+    fastest = "Fastest"
+
+
 class OrcCompressionCodec(str, Enum):
 
     none = "none"
@@ -466,6 +479,7 @@ class SsisPackageLocationType(str, Enum):
     ssisdb = "SSISDB"
     file = "File"
     inline_package = "InlinePackage"
+    package_store = "PackageStore"
 
 
 class HDInsightActivityDebugInfoOption(str, Enum):
