@@ -13,12 +13,9 @@ from msrest.service_client import SDKClient
 from msrest import Serializer, Deserializer
 
 from ._configuration import SubscriptionClientConfiguration
-from .operations import SubscriptionsOperations
-from .operations import SubscriptionOperationOperations
-from .operations import SubscriptionFactoryOperations
 from .operations import SubscriptionOperations
+from .operations import SubscriptionOperationOperations
 from .operations import Operations
-from .operations import TenantsOperations
 from . import models
 
 
@@ -28,44 +25,36 @@ class SubscriptionClient(SDKClient):
     :ivar config: Configuration for client.
     :vartype config: SubscriptionClientConfiguration
 
-    :ivar subscriptions: Subscriptions operations
-    :vartype subscriptions: azure.mgmt.subscription.operations.SubscriptionsOperations
+    :ivar subscription: Subscription operations
+    :vartype subscription: azure.mgmt.subscription.operations.SubscriptionOperations
     :ivar subscription_operation: SubscriptionOperation operations
     :vartype subscription_operation: azure.mgmt.subscription.operations.SubscriptionOperationOperations
-    :ivar subscription_factory: SubscriptionFactory operations
-    :vartype subscription_factory: azure.mgmt.subscription.operations.SubscriptionFactoryOperations
-    :ivar subscription_operations: SubscriptionOperations operations
-    :vartype subscription_operations: azure.mgmt.subscription.operations.SubscriptionOperations
     :ivar operations: Operations operations
     :vartype operations: azure.mgmt.subscription.operations.Operations
-    :ivar tenants: Tenants operations
-    :vartype tenants: azure.mgmt.subscription.operations.TenantsOperations
 
     :param credentials: Credentials needed for the client to connect to Azure.
     :type credentials: :mod:`A msrestazure Credentials
      object<msrestazure.azure_active_directory>`
+    :param ignore_resource_check: Ignore existing resources in the
+     subscription to be cancelled.
+    :type ignore_resource_check: bool
     :param str base_url: Service URL
     """
 
     def __init__(
-            self, credentials, base_url=None):
+            self, credentials, ignore_resource_check=None, base_url=None):
 
-        self.config = SubscriptionClientConfiguration(credentials, base_url)
+        self.config = SubscriptionClientConfiguration(credentials, ignore_resource_check, base_url)
         super(SubscriptionClient, self).__init__(self.config.credentials, self.config)
 
         client_models = {k: v for k, v in models.__dict__.items() if isinstance(v, type)}
+        self.api_version = '2019-10-01-preview'
         self._serialize = Serializer(client_models)
         self._deserialize = Deserializer(client_models)
 
-        self.subscriptions = SubscriptionsOperations(
+        self.subscription = SubscriptionOperations(
             self._client, self.config, self._serialize, self._deserialize)
         self.subscription_operation = SubscriptionOperationOperations(
             self._client, self.config, self._serialize, self._deserialize)
-        self.subscription_factory = SubscriptionFactoryOperations(
-            self._client, self.config, self._serialize, self._deserialize)
-        self.subscription_operations = SubscriptionOperations(
-            self._client, self.config, self._serialize, self._deserialize)
         self.operations = Operations(
-            self._client, self.config, self._serialize, self._deserialize)
-        self.tenants = TenantsOperations(
             self._client, self.config, self._serialize, self._deserialize)
