@@ -802,8 +802,17 @@ class DatabaseBlobAuditingPolicy(ProxyResource):
      storageEndpoint or isAzureMonitorTargetEnabled is required.
     :type storage_endpoint: str
     :param storage_account_access_key: Specifies the identifier key of the
-     auditing storage account. If state is Enabled and storageEndpoint is
-     specified, storageAccountAccessKey is required.
+     auditing storage account.
+     If state is Enabled and storageEndpoint is specified, not specifying the
+     storageAccountAccessKey will use SQL server system-assigned managed
+     identity to access the storage.
+     Prerequisites for using managed identity authentication:
+     1. Assign SQL Server a system-assigned managed identity in Azure Active
+     Directory (AAD).
+     2. Grant SQL Server identity access to the storage account by adding
+     'Storage Blob Data Contributor' RBAC role to the server identity.
+     For more information, see [Auditing to storage using Managed Identity
+     authentication](https://go.microsoft.com/fwlink/?linkid=2114355)
     :type storage_account_access_key: str
     :param retention_days: Specifies the number of days to keep in the audit
      logs in the storage account.
@@ -2671,8 +2680,17 @@ class ExtendedDatabaseBlobAuditingPolicy(ProxyResource):
      storageEndpoint or isAzureMonitorTargetEnabled is required.
     :type storage_endpoint: str
     :param storage_account_access_key: Specifies the identifier key of the
-     auditing storage account. If state is Enabled and storageEndpoint is
-     specified, storageAccountAccessKey is required.
+     auditing storage account.
+     If state is Enabled and storageEndpoint is specified, not specifying the
+     storageAccountAccessKey will use SQL server system-assigned managed
+     identity to access the storage.
+     Prerequisites for using managed identity authentication:
+     1. Assign SQL Server a system-assigned managed identity in Azure Active
+     Directory (AAD).
+     2. Grant SQL Server identity access to the storage account by adding
+     'Storage Blob Data Contributor' RBAC role to the server identity.
+     For more information, see [Auditing to storage using Managed Identity
+     authentication](https://go.microsoft.com/fwlink/?linkid=2114355)
     :type storage_account_access_key: str
     :param retention_days: Specifies the number of days to keep in the audit
      logs in the storage account.
@@ -2831,8 +2849,17 @@ class ExtendedServerBlobAuditingPolicy(ProxyResource):
      storageEndpoint or isAzureMonitorTargetEnabled is required.
     :type storage_endpoint: str
     :param storage_account_access_key: Specifies the identifier key of the
-     auditing storage account. If state is Enabled and storageEndpoint is
-     specified, storageAccountAccessKey is required.
+     auditing storage account.
+     If state is Enabled and storageEndpoint is specified, not specifying the
+     storageAccountAccessKey will use SQL server system-assigned managed
+     identity to access the storage.
+     Prerequisites for using managed identity authentication:
+     1. Assign SQL Server a system-assigned managed identity in Azure Active
+     Directory (AAD).
+     2. Grant SQL Server identity access to the storage account by adding
+     'Storage Blob Data Contributor' RBAC role to the server identity.
+     For more information, see [Auditing to storage using Managed Identity
+     authentication](https://go.microsoft.com/fwlink/?linkid=2114355)
     :type storage_account_access_key: str
     :param retention_days: Specifies the number of days to keep in the audit
      logs in the storage account.
@@ -7778,8 +7805,17 @@ class ServerBlobAuditingPolicy(ProxyResource):
      storageEndpoint or isAzureMonitorTargetEnabled is required.
     :type storage_endpoint: str
     :param storage_account_access_key: Specifies the identifier key of the
-     auditing storage account. If state is Enabled and storageEndpoint is
-     specified, storageAccountAccessKey is required.
+     auditing storage account.
+     If state is Enabled and storageEndpoint is specified, not specifying the
+     storageAccountAccessKey will use SQL server system-assigned managed
+     identity to access the storage.
+     Prerequisites for using managed identity authentication:
+     1. Assign SQL Server a system-assigned managed identity in Azure Active
+     Directory (AAD).
+     2. Grant SQL Server identity access to the storage account by adding
+     'Storage Blob Data Contributor' RBAC role to the server identity.
+     For more information, see [Auditing to storage using Managed Identity
+     authentication](https://go.microsoft.com/fwlink/?linkid=2114355)
     :type storage_account_access_key: str
     :param retention_days: Specifies the number of days to keep in the audit
      logs in the storage account.
@@ -8836,6 +8872,41 @@ class SloUsageMetric(Model):
         self.in_range_time_ratio = None
 
 
+class SqlAgent(ProxyResource):
+    """A management instance sql agent resource.
+
+    Variables are only populated by the server, and will be ignored when
+    sending a request.
+
+    :ivar id: Resource ID.
+    :vartype id: str
+    :ivar name: Resource name.
+    :vartype name: str
+    :ivar type: Resource type.
+    :vartype type: str
+    :param state: The state of Sql Agent. Possible values include: 'Enabled',
+     'Disabled'
+    :type state: str or ~azure.mgmt.sql.models.SqlAgentState
+    """
+
+    _validation = {
+        'id': {'readonly': True},
+        'name': {'readonly': True},
+        'type': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'id': {'key': 'id', 'type': 'str'},
+        'name': {'key': 'name', 'type': 'str'},
+        'type': {'key': 'type', 'type': 'str'},
+        'state': {'key': 'properties.state', 'type': 'str'},
+    }
+
+    def __init__(self, **kwargs):
+        super(SqlAgent, self).__init__(**kwargs)
+        self.state = kwargs.get('state', None)
+
+
 class StorageCapability(Model):
     """The storage account type capability.
 
@@ -9607,6 +9678,23 @@ class TransparentDataEncryptionActivity(ProxyResource):
         self.location = None
         self.status = None
         self.percent_complete = None
+
+
+class UnlinkParameters(Model):
+    """Represents the parameters for Unlink Replication Link request.
+
+    :param forced_termination: Determines whether link will be terminated in a
+     forced or a friendly way.
+    :type forced_termination: bool
+    """
+
+    _attribute_map = {
+        'forced_termination': {'key': 'forcedTermination', 'type': 'bool'},
+    }
+
+    def __init__(self, **kwargs):
+        super(UnlinkParameters, self).__init__(**kwargs)
+        self.forced_termination = kwargs.get('forced_termination', None)
 
 
 class Usage(Model):
