@@ -215,6 +215,8 @@ try:
     from ._models_py3 import EloquaSource
     from ._models_py3 import EntityReference
     from ._models_py3 import EnvironmentVariableSetup
+    from ._models_py3 import ExcelDataset
+    from ._models_py3 import ExcelSource
     from ._models_py3 import ExecuteDataFlowActivity
     from ._models_py3 import ExecuteDataFlowActivityTypePropertiesCompute
     from ._models_py3 import ExecutePipelineActivity
@@ -514,6 +516,7 @@ try:
     from ._models_py3 import SqlDWSource
     from ._models_py3 import SqlMISink
     from ._models_py3 import SqlMISource
+    from ._models_py3 import SqlPartitionSettings
     from ._models_py3 import SqlServerLinkedService
     from ._models_py3 import SqlServerSink
     from ._models_py3 import SqlServerSource
@@ -805,6 +808,8 @@ except (SyntaxError, ImportError):
     from ._models import EloquaSource
     from ._models import EntityReference
     from ._models import EnvironmentVariableSetup
+    from ._models import ExcelDataset
+    from ._models import ExcelSource
     from ._models import ExecuteDataFlowActivity
     from ._models import ExecuteDataFlowActivityTypePropertiesCompute
     from ._models import ExecutePipelineActivity
@@ -1104,6 +1109,7 @@ except (SyntaxError, ImportError):
     from ._models import SqlDWSource
     from ._models import SqlMISink
     from ._models import SqlMISource
+    from ._models import SqlPartitionSettings
     from ._models import SqlServerLinkedService
     from ._models import SqlServerSink
     from ._models import SqlServerSource
@@ -1255,6 +1261,7 @@ from ._data_factory_management_client_enums import (
     NetezzaPartitionOption,
     CassandraSourceReadConsistencyLevels,
     TeradataPartitionOption,
+    SqlPartitionOption,
     StoredProcedureParameterType,
     SapTablePartitionOption,
     SapHanaPartitionOption,
@@ -1485,6 +1492,8 @@ __all__ = [
     'EloquaSource',
     'EntityReference',
     'EnvironmentVariableSetup',
+    'ExcelDataset',
+    'ExcelSource',
     'ExecuteDataFlowActivity',
     'ExecuteDataFlowActivityTypePropertiesCompute',
     'ExecutePipelineActivity',
@@ -1784,6 +1793,7 @@ __all__ = [
     'SqlDWSource',
     'SqlMISink',
     'SqlMISource',
+    'SqlPartitionSettings',
     'SqlServerLinkedService',
     'SqlServerSink',
     'SqlServerSource',
@@ -1934,6 +1944,7 @@ __all__ = [
     'NetezzaPartitionOption',
     'CassandraSourceReadConsistencyLevels',
     'TeradataPartitionOption',
+    'SqlPartitionOption',
     'StoredProcedureParameterType',
     'SapTablePartitionOption',
     'SapHanaPartitionOption',
