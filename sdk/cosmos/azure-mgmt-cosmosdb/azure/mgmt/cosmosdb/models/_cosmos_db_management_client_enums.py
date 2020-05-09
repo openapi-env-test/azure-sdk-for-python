@@ -38,12 +38,6 @@ class ConnectorOffer(str, Enum):
     small = "Small"
 
 
-class PublicNetworkAccess(str, Enum):
-
-    enabled = "Enabled"
-    disabled = "Disabled"
-
-
 class IndexingMode(str, Enum):
 
     consistent = "Consistent"

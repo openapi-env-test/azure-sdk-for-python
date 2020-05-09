@@ -27,7 +27,7 @@ class DatabaseAccountsOperations(object):
     :param config: Configuration of service client.
     :param serializer: An object model serializer.
     :param deserializer: An object model deserializer.
-    :ivar api_version: The API version to use for this operation. Constant value: "2020-03-01".
+    :ivar api_version: Version of the API to be used with the client request. The current version is 2019-08-01. Constant value: "2019-12-12".
     """
 
     models = models
@@ -37,7 +37,7 @@ class DatabaseAccountsOperations(object):
         self._client = client
         self._serialize = serializer
         self._deserialize = deserializer
-        self.api_version = "2020-03-01"
+        self.api_version = "2019-12-12"
 
         self.config = config
 
@@ -46,8 +46,7 @@ class DatabaseAccountsOperations(object):
         """Retrieves the properties of an existing Azure Cosmos DB database
         account.
 
-        :param resource_group_name: The name of the resource group. The name
-         is case insensitive.
+        :param resource_group_name: Name of an Azure resource group.
         :type resource_group_name: str
         :param account_name: Cosmos DB database account name.
         :type account_name: str
@@ -64,7 +63,7 @@ class DatabaseAccountsOperations(object):
         # Construct URL
         url = self.get.metadata['url']
         path_format_arguments = {
-            'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str', min_length=1),
+            'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str'),
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
             'accountName': self._serialize.url("account_name", account_name, 'str', max_length=50, min_length=3, pattern=r'^[a-z0-9]+(-[a-z0-9]+)*')
         }
@@ -72,7 +71,7 @@ class DatabaseAccountsOperations(object):
 
         # Construct parameters
         query_parameters = {}
-        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str', min_length=1)
+        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
 
         # Construct headers
         header_parameters = {}
@@ -88,7 +87,7 @@ class DatabaseAccountsOperations(object):
         request = self._client.get(url, query_parameters, header_parameters)
         response = self._client.send(request, stream=False, **operation_config)
 
-        if response.status_code not in [200, 404]:
+        if response.status_code not in [200]:
             exp = CloudError(response)
             exp.request_id = response.headers.get('x-ms-request-id')
             raise exp
@@ -110,7 +109,7 @@ class DatabaseAccountsOperations(object):
         # Construct URL
         url = self.update.metadata['url']
         path_format_arguments = {
-            'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str', min_length=1),
+            'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str'),
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
             'accountName': self._serialize.url("account_name", account_name, 'str', max_length=50, min_length=3, pattern=r'^[a-z0-9]+(-[a-z0-9]+)*')
         }
@@ -118,7 +117,7 @@ class DatabaseAccountsOperations(object):
 
         # Construct parameters
         query_parameters = {}
-        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str', min_length=1)
+        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
 
         # Construct headers
         header_parameters = {}
@@ -158,8 +157,7 @@ class DatabaseAccountsOperations(object):
             self, resource_group_name, account_name, update_parameters, custom_headers=None, raw=False, polling=True, **operation_config):
         """Updates the properties of an existing Azure Cosmos DB database account.
 
-        :param resource_group_name: The name of the resource group. The name
-         is case insensitive.
+        :param resource_group_name: Name of an Azure resource group.
         :type resource_group_name: str
         :param account_name: Cosmos DB database account name.
         :type account_name: str
@@ -214,7 +212,7 @@ class DatabaseAccountsOperations(object):
         # Construct URL
         url = self.create_or_update.metadata['url']
         path_format_arguments = {
-            'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str', min_length=1),
+            'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str'),
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
             'accountName': self._serialize.url("account_name", account_name, 'str', max_length=50, min_length=3, pattern=r'^[a-z0-9]+(-[a-z0-9]+)*')
         }
@@ -222,7 +220,7 @@ class DatabaseAccountsOperations(object):
 
         # Construct parameters
         query_parameters = {}
-        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str', min_length=1)
+        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
 
         # Construct headers
         header_parameters = {}
@@ -263,8 +261,7 @@ class DatabaseAccountsOperations(object):
         """Creates or updates an Azure Cosmos DB database account. The "Update"
         method is preferred when performing updates on an account.
 
-        :param resource_group_name: The name of the resource group. The name
-         is case insensitive.
+        :param resource_group_name: Name of an Azure resource group.
         :type resource_group_name: str
         :param account_name: Cosmos DB database account name.
         :type account_name: str
@@ -319,7 +316,7 @@ class DatabaseAccountsOperations(object):
         # Construct URL
         url = self.delete.metadata['url']
         path_format_arguments = {
-            'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str', min_length=1),
+            'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str'),
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
             'accountName': self._serialize.url("account_name", account_name, 'str', max_length=50, min_length=3, pattern=r'^[a-z0-9]+(-[a-z0-9]+)*')
         }
@@ -327,7 +324,7 @@ class DatabaseAccountsOperations(object):
 
         # Construct parameters
         query_parameters = {}
-        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str', min_length=1)
+        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
 
         # Construct headers
         header_parameters = {}
@@ -355,8 +352,7 @@ class DatabaseAccountsOperations(object):
             self, resource_group_name, account_name, custom_headers=None, raw=False, polling=True, **operation_config):
         """Deletes an existing Azure Cosmos DB database account.
 
-        :param resource_group_name: The name of the resource group. The name
-         is case insensitive.
+        :param resource_group_name: Name of an Azure resource group.
         :type resource_group_name: str
         :param account_name: Cosmos DB database account name.
         :type account_name: str
@@ -401,7 +397,7 @@ class DatabaseAccountsOperations(object):
         # Construct URL
         url = self.failover_priority_change.metadata['url']
         path_format_arguments = {
-            'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str', min_length=1),
+            'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str'),
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
             'accountName': self._serialize.url("account_name", account_name, 'str', max_length=50, min_length=3, pattern=r'^[a-z0-9]+(-[a-z0-9]+)*')
         }
@@ -409,7 +405,7 @@ class DatabaseAccountsOperations(object):
 
         # Construct parameters
         query_parameters = {}
-        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str', min_length=1)
+        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
 
         # Construct headers
         header_parameters = {}
@@ -445,8 +441,7 @@ class DatabaseAccountsOperations(object):
         priority values must be unique for each of the regions in which the
         database account exists.
 
-        :param resource_group_name: The name of the resource group. The name
-         is case insensitive.
+        :param resource_group_name: Name of an Azure resource group.
         :type resource_group_name: str
         :param account_name: Cosmos DB database account name.
         :type account_name: str
@@ -507,13 +502,13 @@ class DatabaseAccountsOperations(object):
                 # Construct URL
                 url = self.list.metadata['url']
                 path_format_arguments = {
-                    'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str', min_length=1)
+                    'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str')
                 }
                 url = self._client.format_url(url, **path_format_arguments)
 
                 # Construct parameters
                 query_parameters = {}
-                query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str', min_length=1)
+                query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
 
             else:
                 url = next_link
@@ -559,8 +554,7 @@ class DatabaseAccountsOperations(object):
         """Lists all the Azure Cosmos DB database accounts available under the
         given resource group.
 
-        :param resource_group_name: The name of the resource group. The name
-         is case insensitive.
+        :param resource_group_name: Name of an Azure resource group.
         :type resource_group_name: str
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
@@ -578,13 +572,13 @@ class DatabaseAccountsOperations(object):
                 url = self.list_by_resource_group.metadata['url']
                 path_format_arguments = {
                     'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
-                    'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str', min_length=1)
+                    'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str')
                 }
                 url = self._client.format_url(url, **path_format_arguments)
 
                 # Construct parameters
                 query_parameters = {}
-                query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str', min_length=1)
+                query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
 
             else:
                 url = next_link
@@ -630,8 +624,7 @@ class DatabaseAccountsOperations(object):
         """Lists the access keys for the specified Azure Cosmos DB database
         account.
 
-        :param resource_group_name: The name of the resource group. The name
-         is case insensitive.
+        :param resource_group_name: Name of an Azure resource group.
         :type resource_group_name: str
         :param account_name: Cosmos DB database account name.
         :type account_name: str
@@ -649,7 +642,7 @@ class DatabaseAccountsOperations(object):
         # Construct URL
         url = self.list_keys.metadata['url']
         path_format_arguments = {
-            'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str', min_length=1),
+            'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str'),
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
             'accountName': self._serialize.url("account_name", account_name, 'str', max_length=50, min_length=3, pattern=r'^[a-z0-9]+(-[a-z0-9]+)*')
         }
@@ -657,7 +650,7 @@ class DatabaseAccountsOperations(object):
 
         # Construct parameters
         query_parameters = {}
-        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str', min_length=1)
+        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
 
         # Construct headers
         header_parameters = {}
@@ -694,8 +687,7 @@ class DatabaseAccountsOperations(object):
         """Lists the connection strings for the specified Azure Cosmos DB database
         account.
 
-        :param resource_group_name: The name of the resource group. The name
-         is case insensitive.
+        :param resource_group_name: Name of an Azure resource group.
         :type resource_group_name: str
         :param account_name: Cosmos DB database account name.
         :type account_name: str
@@ -714,7 +706,7 @@ class DatabaseAccountsOperations(object):
         # Construct URL
         url = self.list_connection_strings.metadata['url']
         path_format_arguments = {
-            'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str', min_length=1),
+            'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str'),
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
             'accountName': self._serialize.url("account_name", account_name, 'str', max_length=50, min_length=3, pattern=r'^[a-z0-9]+(-[a-z0-9]+)*')
         }
@@ -722,7 +714,7 @@ class DatabaseAccountsOperations(object):
 
         # Construct parameters
         query_parameters = {}
-        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str', min_length=1)
+        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
 
         # Construct headers
         header_parameters = {}
@@ -762,7 +754,7 @@ class DatabaseAccountsOperations(object):
         # Construct URL
         url = self.offline_region.metadata['url']
         path_format_arguments = {
-            'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str', min_length=1),
+            'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str'),
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
             'accountName': self._serialize.url("account_name", account_name, 'str', max_length=50, min_length=3, pattern=r'^[a-z0-9]+(-[a-z0-9]+)*')
         }
@@ -770,7 +762,7 @@ class DatabaseAccountsOperations(object):
 
         # Construct parameters
         query_parameters = {}
-        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str', min_length=1)
+        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
 
         # Construct headers
         header_parameters = {}
@@ -801,8 +793,7 @@ class DatabaseAccountsOperations(object):
         """Offline the specified region for the specified Azure Cosmos DB database
         account.
 
-        :param resource_group_name: The name of the resource group. The name
-         is case insensitive.
+        :param resource_group_name: Name of an Azure resource group.
         :type resource_group_name: str
         :param account_name: Cosmos DB database account name.
         :type account_name: str
@@ -852,7 +843,7 @@ class DatabaseAccountsOperations(object):
         # Construct URL
         url = self.online_region.metadata['url']
         path_format_arguments = {
-            'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str', min_length=1),
+            'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str'),
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
             'accountName': self._serialize.url("account_name", account_name, 'str', max_length=50, min_length=3, pattern=r'^[a-z0-9]+(-[a-z0-9]+)*')
         }
@@ -860,7 +851,7 @@ class DatabaseAccountsOperations(object):
 
         # Construct parameters
         query_parameters = {}
-        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str', min_length=1)
+        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
 
         # Construct headers
         header_parameters = {}
@@ -891,8 +882,7 @@ class DatabaseAccountsOperations(object):
         """Online the specified region for the specified Azure Cosmos DB database
         account.
 
-        :param resource_group_name: The name of the resource group. The name
-         is case insensitive.
+        :param resource_group_name: Name of an Azure resource group.
         :type resource_group_name: str
         :param account_name: Cosmos DB database account name.
         :type account_name: str
@@ -939,8 +929,7 @@ class DatabaseAccountsOperations(object):
         """Lists the read-only access keys for the specified Azure Cosmos DB
         database account.
 
-        :param resource_group_name: The name of the resource group. The name
-         is case insensitive.
+        :param resource_group_name: Name of an Azure resource group.
         :type resource_group_name: str
         :param account_name: Cosmos DB database account name.
         :type account_name: str
@@ -959,7 +948,7 @@ class DatabaseAccountsOperations(object):
         # Construct URL
         url = self.get_read_only_keys.metadata['url']
         path_format_arguments = {
-            'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str', min_length=1),
+            'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str'),
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
             'accountName': self._serialize.url("account_name", account_name, 'str', max_length=50, min_length=3, pattern=r'^[a-z0-9]+(-[a-z0-9]+)*')
         }
@@ -967,7 +956,7 @@ class DatabaseAccountsOperations(object):
 
         # Construct parameters
         query_parameters = {}
-        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str', min_length=1)
+        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
 
         # Construct headers
         header_parameters = {}
@@ -1004,8 +993,7 @@ class DatabaseAccountsOperations(object):
         """Lists the read-only access keys for the specified Azure Cosmos DB
         database account.
 
-        :param resource_group_name: The name of the resource group. The name
-         is case insensitive.
+        :param resource_group_name: Name of an Azure resource group.
         :type resource_group_name: str
         :param account_name: Cosmos DB database account name.
         :type account_name: str
@@ -1024,7 +1012,7 @@ class DatabaseAccountsOperations(object):
         # Construct URL
         url = self.list_read_only_keys.metadata['url']
         path_format_arguments = {
-            'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str', min_length=1),
+            'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str'),
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
             'accountName': self._serialize.url("account_name", account_name, 'str', max_length=50, min_length=3, pattern=r'^[a-z0-9]+(-[a-z0-9]+)*')
         }
@@ -1032,7 +1020,7 @@ class DatabaseAccountsOperations(object):
 
         # Construct parameters
         query_parameters = {}
-        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str', min_length=1)
+        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
 
         # Construct headers
         header_parameters = {}
@@ -1072,7 +1060,7 @@ class DatabaseAccountsOperations(object):
         # Construct URL
         url = self.regenerate_key.metadata['url']
         path_format_arguments = {
-            'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str', min_length=1),
+            'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str'),
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
             'accountName': self._serialize.url("account_name", account_name, 'str', max_length=50, min_length=3, pattern=r'^[a-z0-9]+(-[a-z0-9]+)*')
         }
@@ -1080,7 +1068,7 @@ class DatabaseAccountsOperations(object):
 
         # Construct parameters
         query_parameters = {}
-        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str', min_length=1)
+        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
 
         # Construct headers
         header_parameters = {}
@@ -1113,8 +1101,7 @@ class DatabaseAccountsOperations(object):
         """Regenerates an access key for the specified Azure Cosmos DB database
         account.
 
-        :param resource_group_name: The name of the resource group. The name
-         is case insensitive.
+        :param resource_group_name: Name of an Azure resource group.
         :type resource_group_name: str
         :param account_name: Cosmos DB database account name.
         :type account_name: str
@@ -1182,7 +1169,7 @@ class DatabaseAccountsOperations(object):
 
         # Construct parameters
         query_parameters = {}
-        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str', min_length=1)
+        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
 
         # Construct headers
         header_parameters = {}
@@ -1214,8 +1201,7 @@ class DatabaseAccountsOperations(object):
         """Retrieves the metrics determined by the given filter for the given
         database account.
 
-        :param resource_group_name: The name of the resource group. The name
-         is case insensitive.
+        :param resource_group_name: Name of an Azure resource group.
         :type resource_group_name: str
         :param account_name: Cosmos DB database account name.
         :type account_name: str
@@ -1239,7 +1225,7 @@ class DatabaseAccountsOperations(object):
                 # Construct URL
                 url = self.list_metrics.metadata['url']
                 path_format_arguments = {
-                    'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str', min_length=1),
+                    'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str'),
                     'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
                     'accountName': self._serialize.url("account_name", account_name, 'str', max_length=50, min_length=3, pattern=r'^[a-z0-9]+(-[a-z0-9]+)*')
                 }
@@ -1247,7 +1233,7 @@ class DatabaseAccountsOperations(object):
 
                 # Construct parameters
                 query_parameters = {}
-                query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str', min_length=1)
+                query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
                 query_parameters['$filter'] = self._serialize.query("filter", filter, 'str')
 
             else:
@@ -1293,8 +1279,7 @@ class DatabaseAccountsOperations(object):
             self, resource_group_name, account_name, filter=None, custom_headers=None, raw=False, **operation_config):
         """Retrieves the usages (most recent data) for the given database account.
 
-        :param resource_group_name: The name of the resource group. The name
-         is case insensitive.
+        :param resource_group_name: Name of an Azure resource group.
         :type resource_group_name: str
         :param account_name: Cosmos DB database account name.
         :type account_name: str
@@ -1317,7 +1302,7 @@ class DatabaseAccountsOperations(object):
                 # Construct URL
                 url = self.list_usages.metadata['url']
                 path_format_arguments = {
-                    'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str', min_length=1),
+                    'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str'),
                     'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
                     'accountName': self._serialize.url("account_name", account_name, 'str', max_length=50, min_length=3, pattern=r'^[a-z0-9]+(-[a-z0-9]+)*')
                 }
@@ -1325,7 +1310,7 @@ class DatabaseAccountsOperations(object):
 
                 # Construct parameters
                 query_parameters = {}
-                query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str', min_length=1)
+                query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
                 if filter is not None:
                     query_parameters['$filter'] = self._serialize.query("filter", filter, 'str')
 
@@ -1372,8 +1357,7 @@ class DatabaseAccountsOperations(object):
             self, resource_group_name, account_name, custom_headers=None, raw=False, **operation_config):
         """Retrieves metric definitions for the given database account.
 
-        :param resource_group_name: The name of the resource group. The name
-         is case insensitive.
+        :param resource_group_name: Name of an Azure resource group.
         :type resource_group_name: str
         :param account_name: Cosmos DB database account name.
         :type account_name: str
@@ -1392,7 +1376,7 @@ class DatabaseAccountsOperations(object):
                 # Construct URL
                 url = self.list_metric_definitions.metadata['url']
                 path_format_arguments = {
-                    'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str', min_length=1),
+                    'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str'),
                     'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
                     'accountName': self._serialize.url("account_name", account_name, 'str', max_length=50, min_length=3, pattern=r'^[a-z0-9]+(-[a-z0-9]+)*')
                 }
@@ -1400,7 +1384,7 @@ class DatabaseAccountsOperations(object):
 
                 # Construct parameters
                 query_parameters = {}
-                query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str', min_length=1)
+                query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
 
             else:
                 url = next_link
