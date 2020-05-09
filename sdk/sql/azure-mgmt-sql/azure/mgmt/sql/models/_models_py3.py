@@ -597,8 +597,10 @@ class Database(TrackedResource):
      which means the replicas of this database will be spread across multiple
      availability zones.
     :type zone_redundant: bool
-    :param license_type: The license type to apply for this database. Possible
-     values include: 'LicenseIncluded', 'BasePrice'
+    :param license_type: The license type to apply for this database.
+     `LicenseIncluded` if you need a license, or `BasePrice` if you have a
+     license and are eligible for the Azure Hybrid Benefit. Possible values
+     include: 'LicenseIncluded', 'BasePrice'
     :type license_type: str or ~azure.mgmt.sql.models.DatabaseLicenseType
     :ivar max_log_size_bytes: The max log size for this database.
     :vartype max_log_size_bytes: long
@@ -629,6 +631,9 @@ class Database(TrackedResource):
     :ivar resumed_date: The date when database was resumed by user action or
      database login (ISO8601 format). Null if the database is paused.
     :vartype resumed_date: datetime
+    :param maintenance_configuration_id: Maintenance configuration id assigned
+     to the database
+    :type maintenance_configuration_id: str
     """
 
     _validation = {
@@ -692,9 +697,10 @@ class Database(TrackedResource):
         'min_capacity': {'key': 'properties.minCapacity', 'type': 'float'},
         'paused_date': {'key': 'properties.pausedDate', 'type': 'iso-8601'},
         'resumed_date': {'key': 'properties.resumedDate', 'type': 'iso-8601'},
+        'maintenance_configuration_id': {'key': 'properties.maintenanceConfigurationId', 'type': 'str'},
     }
 
-    def __init__(self, *, location: str, tags=None, sku=None, create_mode=None, collation: str=None, max_size_bytes: int=None, sample_name=None, elastic_pool_id: str=None, source_database_id: str=None, restore_point_in_time=None, source_database_deletion_date=None, recovery_services_recovery_point_id: str=None, long_term_retention_backup_resource_id: str=None, recoverable_database_id: str=None, restorable_dropped_database_id: str=None, catalog_collation=None, zone_redundant: bool=None, license_type=None, read_scale=None, read_replica_count: int=None, auto_pause_delay: int=None, min_capacity: float=None, **kwargs) -> None:
+    def __init__(self, *, location: str, tags=None, sku=None, create_mode=None, collation: str=None, max_size_bytes: int=None, sample_name=None, elastic_pool_id: str=None, source_database_id: str=None, restore_point_in_time=None, source_database_deletion_date=None, recovery_services_recovery_point_id: str=None, long_term_retention_backup_resource_id: str=None, recoverable_database_id: str=None, restorable_dropped_database_id: str=None, catalog_collation=None, zone_redundant: bool=None, license_type=None, read_scale=None, read_replica_count: int=None, auto_pause_delay: int=None, min_capacity: float=None, maintenance_configuration_id: str=None, **kwargs) -> None:
         super(Database, self).__init__(location=location, tags=tags, **kwargs)
         self.sku = sku
         self.kind = None
@@ -730,6 +736,7 @@ class Database(TrackedResource):
         self.min_capacity = min_capacity
         self.paused_date = None
         self.resumed_date = None
+        self.maintenance_configuration_id = maintenance_configuration_id
 
 
 class DatabaseAutomaticTuning(ProxyResource):
@@ -802,8 +809,17 @@ class DatabaseBlobAuditingPolicy(ProxyResource):
      storageEndpoint or isAzureMonitorTargetEnabled is required.
     :type storage_endpoint: str
     :param storage_account_access_key: Specifies the identifier key of the
-     auditing storage account. If state is Enabled and storageEndpoint is
-     specified, storageAccountAccessKey is required.
+     auditing storage account.
+     If state is Enabled and storageEndpoint is specified, not specifying the
+     storageAccountAccessKey will use SQL server system-assigned managed
+     identity to access the storage.
+     Prerequisites for using managed identity authentication:
+     1. Assign SQL Server a system-assigned managed identity in Azure Active
+     Directory (AAD).
+     2. Grant SQL Server identity access to the storage account by adding
+     'Storage Blob Data Contributor' RBAC role to the server identity.
+     For more information, see [Auditing to storage using Managed Identity
+     authentication](https://go.microsoft.com/fwlink/?linkid=2114355)
     :type storage_account_access_key: str
     :param retention_days: Specifies the number of days to keep in the audit
      logs in the storage account.
@@ -1233,8 +1249,10 @@ class DatabaseUpdate(Model):
      which means the replicas of this database will be spread across multiple
      availability zones.
     :type zone_redundant: bool
-    :param license_type: The license type to apply for this database. Possible
-     values include: 'LicenseIncluded', 'BasePrice'
+    :param license_type: The license type to apply for this database.
+     `LicenseIncluded` if you need a license, or `BasePrice` if you have a
+     license and are eligible for the Azure Hybrid Benefit. Possible values
+     include: 'LicenseIncluded', 'BasePrice'
     :type license_type: str or ~azure.mgmt.sql.models.DatabaseLicenseType
     :ivar max_log_size_bytes: The max log size for this database.
     :vartype max_log_size_bytes: long
@@ -1265,6 +1283,9 @@ class DatabaseUpdate(Model):
     :ivar resumed_date: The date when database was resumed by user action or
      database login (ISO8601 format). Null if the database is paused.
     :vartype resumed_date: datetime
+    :param maintenance_configuration_id: Maintenance configuration id assigned
+     to the database
+    :type maintenance_configuration_id: str
     :param tags: Resource tags.
     :type tags: dict[str, str]
     """
@@ -1317,10 +1338,11 @@ class DatabaseUpdate(Model):
         'min_capacity': {'key': 'properties.minCapacity', 'type': 'float'},
         'paused_date': {'key': 'properties.pausedDate', 'type': 'iso-8601'},
         'resumed_date': {'key': 'properties.resumedDate', 'type': 'iso-8601'},
+        'maintenance_configuration_id': {'key': 'properties.maintenanceConfigurationId', 'type': 'str'},
         'tags': {'key': 'tags', 'type': '{str}'},
     }
 
-    def __init__(self, *, sku=None, create_mode=None, collation: str=None, max_size_bytes: int=None, sample_name=None, elastic_pool_id: str=None, source_database_id: str=None, restore_point_in_time=None, source_database_deletion_date=None, recovery_services_recovery_point_id: str=None, long_term_retention_backup_resource_id: str=None, recoverable_database_id: str=None, restorable_dropped_database_id: str=None, catalog_collation=None, zone_redundant: bool=None, license_type=None, read_scale=None, read_replica_count: int=None, auto_pause_delay: int=None, min_capacity: float=None, tags=None, **kwargs) -> None:
+    def __init__(self, *, sku=None, create_mode=None, collation: str=None, max_size_bytes: int=None, sample_name=None, elastic_pool_id: str=None, source_database_id: str=None, restore_point_in_time=None, source_database_deletion_date=None, recovery_services_recovery_point_id: str=None, long_term_retention_backup_resource_id: str=None, recoverable_database_id: str=None, restorable_dropped_database_id: str=None, catalog_collation=None, zone_redundant: bool=None, license_type=None, read_scale=None, read_replica_count: int=None, auto_pause_delay: int=None, min_capacity: float=None, maintenance_configuration_id: str=None, tags=None, **kwargs) -> None:
         super(DatabaseUpdate, self).__init__(**kwargs)
         self.sku = sku
         self.create_mode = create_mode
@@ -1354,6 +1376,7 @@ class DatabaseUpdate(Model):
         self.min_capacity = min_capacity
         self.paused_date = None
         self.resumed_date = None
+        self.maintenance_configuration_id = maintenance_configuration_id
         self.tags = tags
 
 
@@ -1856,6 +1879,9 @@ class ElasticPool(TrackedResource):
     :param license_type: The license type to apply for this elastic pool.
      Possible values include: 'LicenseIncluded', 'BasePrice'
     :type license_type: str or ~azure.mgmt.sql.models.ElasticPoolLicenseType
+    :param maintenance_configuration_id: Maintenance configuration id assigned
+     to the elastic pool.
+    :type maintenance_configuration_id: str
     """
 
     _validation = {
@@ -1882,9 +1908,10 @@ class ElasticPool(TrackedResource):
         'per_database_settings': {'key': 'properties.perDatabaseSettings', 'type': 'ElasticPoolPerDatabaseSettings'},
         'zone_redundant': {'key': 'properties.zoneRedundant', 'type': 'bool'},
         'license_type': {'key': 'properties.licenseType', 'type': 'str'},
+        'maintenance_configuration_id': {'key': 'properties.maintenanceConfigurationId', 'type': 'str'},
     }
 
-    def __init__(self, *, location: str, tags=None, sku=None, max_size_bytes: int=None, per_database_settings=None, zone_redundant: bool=None, license_type=None, **kwargs) -> None:
+    def __init__(self, *, location: str, tags=None, sku=None, max_size_bytes: int=None, per_database_settings=None, zone_redundant: bool=None, license_type=None, maintenance_configuration_id: str=None, **kwargs) -> None:
         super(ElasticPool, self).__init__(location=location, tags=tags, **kwargs)
         self.sku = sku
         self.kind = None
@@ -1894,6 +1921,7 @@ class ElasticPool(TrackedResource):
         self.per_database_settings = per_database_settings
         self.zone_redundant = zone_redundant
         self.license_type = license_type
+        self.maintenance_configuration_id = maintenance_configuration_id
 
 
 class ElasticPoolActivity(ProxyResource):
@@ -2502,6 +2530,9 @@ class ElasticPoolUpdate(Model):
     :param license_type: The license type to apply for this elastic pool.
      Possible values include: 'LicenseIncluded', 'BasePrice'
     :type license_type: str or ~azure.mgmt.sql.models.ElasticPoolLicenseType
+    :param maintenance_configuration_id: Maintenance configuration id assigned
+     to the elastic pool.
+    :type maintenance_configuration_id: str
     :param tags: Resource tags.
     :type tags: dict[str, str]
     """
@@ -2512,16 +2543,18 @@ class ElasticPoolUpdate(Model):
         'per_database_settings': {'key': 'properties.perDatabaseSettings', 'type': 'ElasticPoolPerDatabaseSettings'},
         'zone_redundant': {'key': 'properties.zoneRedundant', 'type': 'bool'},
         'license_type': {'key': 'properties.licenseType', 'type': 'str'},
+        'maintenance_configuration_id': {'key': 'properties.maintenanceConfigurationId', 'type': 'str'},
         'tags': {'key': 'tags', 'type': '{str}'},
     }
 
-    def __init__(self, *, sku=None, max_size_bytes: int=None, per_database_settings=None, zone_redundant: bool=None, license_type=None, tags=None, **kwargs) -> None:
+    def __init__(self, *, sku=None, max_size_bytes: int=None, per_database_settings=None, zone_redundant: bool=None, license_type=None, maintenance_configuration_id: str=None, tags=None, **kwargs) -> None:
         super(ElasticPoolUpdate, self).__init__(**kwargs)
         self.sku = sku
         self.max_size_bytes = max_size_bytes
         self.per_database_settings = per_database_settings
         self.zone_redundant = zone_redundant
         self.license_type = license_type
+        self.maintenance_configuration_id = maintenance_configuration_id
         self.tags = tags
 
 
@@ -2671,8 +2704,17 @@ class ExtendedDatabaseBlobAuditingPolicy(ProxyResource):
      storageEndpoint or isAzureMonitorTargetEnabled is required.
     :type storage_endpoint: str
     :param storage_account_access_key: Specifies the identifier key of the
-     auditing storage account. If state is Enabled and storageEndpoint is
-     specified, storageAccountAccessKey is required.
+     auditing storage account.
+     If state is Enabled and storageEndpoint is specified, not specifying the
+     storageAccountAccessKey will use SQL server system-assigned managed
+     identity to access the storage.
+     Prerequisites for using managed identity authentication:
+     1. Assign SQL Server a system-assigned managed identity in Azure Active
+     Directory (AAD).
+     2. Grant SQL Server identity access to the storage account by adding
+     'Storage Blob Data Contributor' RBAC role to the server identity.
+     For more information, see [Auditing to storage using Managed Identity
+     authentication](https://go.microsoft.com/fwlink/?linkid=2114355)
     :type storage_account_access_key: str
     :param retention_days: Specifies the number of days to keep in the audit
      logs in the storage account.
@@ -2831,8 +2873,17 @@ class ExtendedServerBlobAuditingPolicy(ProxyResource):
      storageEndpoint or isAzureMonitorTargetEnabled is required.
     :type storage_endpoint: str
     :param storage_account_access_key: Specifies the identifier key of the
-     auditing storage account. If state is Enabled and storageEndpoint is
-     specified, storageAccountAccessKey is required.
+     auditing storage account.
+     If state is Enabled and storageEndpoint is specified, not specifying the
+     storageAccountAccessKey will use SQL server system-assigned managed
+     identity to access the storage.
+     Prerequisites for using managed identity authentication:
+     1. Assign SQL Server a system-assigned managed identity in Azure Active
+     Directory (AAD).
+     2. Grant SQL Server identity access to the storage account by adding
+     'Storage Blob Data Contributor' RBAC role to the server identity.
+     For more information, see [Auditing to storage using Managed Identity
+     authentication](https://go.microsoft.com/fwlink/?linkid=2114355)
     :type storage_account_access_key: str
     :param retention_days: Specifies the number of days to keep in the audit
      logs in the storage account.
@@ -7778,8 +7829,17 @@ class ServerBlobAuditingPolicy(ProxyResource):
      storageEndpoint or isAzureMonitorTargetEnabled is required.
     :type storage_endpoint: str
     :param storage_account_access_key: Specifies the identifier key of the
-     auditing storage account. If state is Enabled and storageEndpoint is
-     specified, storageAccountAccessKey is required.
+     auditing storage account.
+     If state is Enabled and storageEndpoint is specified, not specifying the
+     storageAccountAccessKey will use SQL server system-assigned managed
+     identity to access the storage.
+     Prerequisites for using managed identity authentication:
+     1. Assign SQL Server a system-assigned managed identity in Azure Active
+     Directory (AAD).
+     2. Grant SQL Server identity access to the storage account by adding
+     'Storage Blob Data Contributor' RBAC role to the server identity.
+     For more information, see [Auditing to storage using Managed Identity
+     authentication](https://go.microsoft.com/fwlink/?linkid=2114355)
     :type storage_account_access_key: str
     :param retention_days: Specifies the number of days to keep in the audit
      logs in the storage account.
@@ -9607,6 +9667,23 @@ class TransparentDataEncryptionActivity(ProxyResource):
         self.location = None
         self.status = None
         self.percent_complete = None
+
+
+class UnlinkParameters(Model):
+    """Represents the parameters for Unlink Replication Link request.
+
+    :param forced_termination: Determines whether link will be terminated in a
+     forced or a friendly way.
+    :type forced_termination: bool
+    """
+
+    _attribute_map = {
+        'forced_termination': {'key': 'forcedTermination', 'type': 'bool'},
+    }
+
+    def __init__(self, *, forced_termination: bool=None, **kwargs) -> None:
+        super(UnlinkParameters, self).__init__(**kwargs)
+        self.forced_termination = forced_termination
 
 
 class Usage(Model):
