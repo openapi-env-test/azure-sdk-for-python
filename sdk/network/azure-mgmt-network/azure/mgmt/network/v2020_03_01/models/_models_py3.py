@@ -6924,10 +6924,10 @@ class ExpressRouteCrossConnection(Resource):
     :type location: str
     :param tags: Resource tags.
     :type tags: dict[str, str]
-    :ivar primary_azure_port: The name of the primary port.
-    :vartype primary_azure_port: str
-    :ivar secondary_azure_port: The name of the secondary port.
-    :vartype secondary_azure_port: str
+    :param primary_azure_port: The name of the primary port.
+    :type primary_azure_port: str
+    :param secondary_azure_port: The name of the secondary port.
+    :type secondary_azure_port: str
     :ivar s_tag: The identifier of the circuit traffic.
     :vartype s_tag: int
     :param peering_location: The peering location of the ExpressRoute circuit.
@@ -6961,8 +6961,6 @@ class ExpressRouteCrossConnection(Resource):
     _validation = {
         'name': {'readonly': True},
         'type': {'readonly': True},
-        'primary_azure_port': {'readonly': True},
-        'secondary_azure_port': {'readonly': True},
         's_tag': {'readonly': True},
         'provisioning_state': {'readonly': True},
         'etag': {'readonly': True},
@@ -6987,10 +6985,10 @@ class ExpressRouteCrossConnection(Resource):
         'etag': {'key': 'etag', 'type': 'str'},
     }
 
-    def __init__(self, *, id: str=None, location: str=None, tags=None, peering_location: str=None, bandwidth_in_mbps: int=None, express_route_circuit=None, service_provider_provisioning_state=None, service_provider_notes: str=None, peerings=None, **kwargs) -> None:
+    def __init__(self, *, id: str=None, location: str=None, tags=None, primary_azure_port: str=None, secondary_azure_port: str=None, peering_location: str=None, bandwidth_in_mbps: int=None, express_route_circuit=None, service_provider_provisioning_state=None, service_provider_notes: str=None, peerings=None, **kwargs) -> None:
         super(ExpressRouteCrossConnection, self).__init__(id=id, location=location, tags=tags, **kwargs)
-        self.primary_azure_port = None
-        self.secondary_azure_port = None
+        self.primary_azure_port = primary_azure_port
+        self.secondary_azure_port = secondary_azure_port
         self.s_tag = None
         self.peering_location = peering_location
         self.bandwidth_in_mbps = bandwidth_in_mbps
