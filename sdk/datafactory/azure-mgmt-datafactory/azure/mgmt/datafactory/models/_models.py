@@ -6047,6 +6047,15 @@ class AzureSqlSource(TabularSource):
      ~azure.mgmt.datafactory.models.StoredProcedureParameter]
     :param produce_additional_types: Which additional types to produce.
     :type produce_additional_types: object
+    :param partition_option: The partition mechanism that will be used for Sql
+     read in parallel. Possible values include: 'None',
+     'PhysicalPartitionsOfTable', 'DynamicRange'
+    :type partition_option: str or
+     ~azure.mgmt.datafactory.models.SqlPartitionOption
+    :param partition_settings: The settings that will be leveraged for Sql
+     source partitioning.
+    :type partition_settings:
+     ~azure.mgmt.datafactory.models.SqlPartitionSettings
     """
 
     _validation = {
@@ -6065,6 +6074,8 @@ class AzureSqlSource(TabularSource):
         'sql_reader_stored_procedure_name': {'key': 'sqlReaderStoredProcedureName', 'type': 'object'},
         'stored_procedure_parameters': {'key': 'storedProcedureParameters', 'type': '{StoredProcedureParameter}'},
         'produce_additional_types': {'key': 'produceAdditionalTypes', 'type': 'object'},
+        'partition_option': {'key': 'partitionOption', 'type': 'str'},
+        'partition_settings': {'key': 'partitionSettings', 'type': 'SqlPartitionSettings'},
     }
 
     def __init__(self, **kwargs):
@@ -6073,6 +6084,8 @@ class AzureSqlSource(TabularSource):
         self.sql_reader_stored_procedure_name = kwargs.get('sql_reader_stored_procedure_name', None)
         self.stored_procedure_parameters = kwargs.get('stored_procedure_parameters', None)
         self.produce_additional_types = kwargs.get('produce_additional_types', None)
+        self.partition_option = kwargs.get('partition_option', None)
+        self.partition_settings = kwargs.get('partition_settings', None)
         self.type = 'AzureSqlSource'
 
 
@@ -6549,8 +6562,8 @@ class FormatReadSettings(Model):
     """Format read settings.
 
     You probably want to use the sub-classes and not this class directly. Known
-    sub-classes are: JsonReadSettings, DelimitedTextReadSettings,
-    BinaryReadSettings
+    sub-classes are: BinaryReadSettings, JsonReadSettings,
+    DelimitedTextReadSettings
 
     All required parameters must be populated in order to send to Azure.
 
@@ -6571,7 +6584,7 @@ class FormatReadSettings(Model):
     }
 
     _subtype_map = {
-        'type': {'JsonReadSettings': 'JsonReadSettings', 'DelimitedTextReadSettings': 'DelimitedTextReadSettings', 'BinaryReadSettings': 'BinaryReadSettings'}
+        'type': {'BinaryReadSettings': 'BinaryReadSettings', 'JsonReadSettings': 'JsonReadSettings', 'DelimitedTextReadSettings': 'DelimitedTextReadSettings'}
     }
 
     def __init__(self, **kwargs):
@@ -10516,6 +10529,8 @@ class DeleteActivity(ExecutionActivity):
      ~azure.mgmt.datafactory.models.LogStorageSettings
     :param dataset: Required. Delete activity dataset reference.
     :type dataset: ~azure.mgmt.datafactory.models.DatasetReference
+    :param store_settings: Delete activity store settings.
+    :type store_settings: ~azure.mgmt.datafactory.models.StoreReadSettings
     """
 
     _validation = {
@@ -10539,6 +10554,7 @@ class DeleteActivity(ExecutionActivity):
         'enable_logging': {'key': 'typeProperties.enableLogging', 'type': 'object'},
         'log_storage_settings': {'key': 'typeProperties.logStorageSettings', 'type': 'LogStorageSettings'},
         'dataset': {'key': 'typeProperties.dataset', 'type': 'DatasetReference'},
+        'store_settings': {'key': 'typeProperties.storeSettings', 'type': 'StoreReadSettings'},
     }
 
     def __init__(self, **kwargs):
@@ -10548,6 +10564,7 @@ class DeleteActivity(ExecutionActivity):
         self.enable_logging = kwargs.get('enable_logging', None)
         self.log_storage_settings = kwargs.get('log_storage_settings', None)
         self.dataset = kwargs.get('dataset', None)
+        self.store_settings = kwargs.get('store_settings', None)
         self.type = 'Delete'
 
 
@@ -13881,6 +13898,10 @@ class GetMetadataActivity(ExecutionActivity):
     :type dataset: ~azure.mgmt.datafactory.models.DatasetReference
     :param field_list: Fields of metadata to get from dataset.
     :type field_list: list[object]
+    :param store_settings: GetMetadata activity store settings.
+    :type store_settings: ~azure.mgmt.datafactory.models.StoreReadSettings
+    :param format_settings: GetMetadata activity format settings.
+    :type format_settings: ~azure.mgmt.datafactory.models.FormatReadSettings
     """
 
     _validation = {
@@ -13900,12 +13921,16 @@ class GetMetadataActivity(ExecutionActivity):
         'policy': {'key': 'policy', 'type': 'ActivityPolicy'},
         'dataset': {'key': 'typeProperties.dataset', 'type': 'DatasetReference'},
         'field_list': {'key': 'typeProperties.fieldList', 'type': '[object]'},
+        'store_settings': {'key': 'typeProperties.storeSettings', 'type': 'StoreReadSettings'},
+        'format_settings': {'key': 'typeProperties.formatSettings', 'type': 'FormatReadSettings'},
     }
 
     def __init__(self, **kwargs):
         super(GetMetadataActivity, self).__init__(**kwargs)
         self.dataset = kwargs.get('dataset', None)
         self.field_list = kwargs.get('field_list', None)
+        self.store_settings = kwargs.get('store_settings', None)
+        self.format_settings = kwargs.get('format_settings', None)
         self.type = 'GetMetadata'
 
 
@@ -29289,6 +29314,15 @@ class SqlDWSource(TabularSource):
      Type: object (or Expression with resultType object), itemType:
      StoredProcedureParameter.
     :type stored_procedure_parameters: object
+    :param partition_option: The partition mechanism that will be used for Sql
+     read in parallel. Possible values include: 'None',
+     'PhysicalPartitionsOfTable', 'DynamicRange'
+    :type partition_option: str or
+     ~azure.mgmt.datafactory.models.SqlPartitionOption
+    :param partition_settings: The settings that will be leveraged for Sql
+     source partitioning.
+    :type partition_settings:
+     ~azure.mgmt.datafactory.models.SqlPartitionSettings
     """
 
     _validation = {
@@ -29306,6 +29340,8 @@ class SqlDWSource(TabularSource):
         'sql_reader_query': {'key': 'sqlReaderQuery', 'type': 'object'},
         'sql_reader_stored_procedure_name': {'key': 'sqlReaderStoredProcedureName', 'type': 'object'},
         'stored_procedure_parameters': {'key': 'storedProcedureParameters', 'type': 'object'},
+        'partition_option': {'key': 'partitionOption', 'type': 'str'},
+        'partition_settings': {'key': 'partitionSettings', 'type': 'SqlPartitionSettings'},
     }
 
     def __init__(self, **kwargs):
@@ -29313,6 +29349,8 @@ class SqlDWSource(TabularSource):
         self.sql_reader_query = kwargs.get('sql_reader_query', None)
         self.sql_reader_stored_procedure_name = kwargs.get('sql_reader_stored_procedure_name', None)
         self.stored_procedure_parameters = kwargs.get('stored_procedure_parameters', None)
+        self.partition_option = kwargs.get('partition_option', None)
+        self.partition_settings = kwargs.get('partition_settings', None)
         self.type = 'SqlDWSource'
 
 
@@ -29440,6 +29478,15 @@ class SqlMISource(TabularSource):
      ~azure.mgmt.datafactory.models.StoredProcedureParameter]
     :param produce_additional_types: Which additional types to produce.
     :type produce_additional_types: object
+    :param partition_option: The partition mechanism that will be used for Sql
+     read in parallel. Possible values include: 'None',
+     'PhysicalPartitionsOfTable', 'DynamicRange'
+    :type partition_option: str or
+     ~azure.mgmt.datafactory.models.SqlPartitionOption
+    :param partition_settings: The settings that will be leveraged for Sql
+     source partitioning.
+    :type partition_settings:
+     ~azure.mgmt.datafactory.models.SqlPartitionSettings
     """
 
     _validation = {
@@ -29458,6 +29505,8 @@ class SqlMISource(TabularSource):
         'sql_reader_stored_procedure_name': {'key': 'sqlReaderStoredProcedureName', 'type': 'object'},
         'stored_procedure_parameters': {'key': 'storedProcedureParameters', 'type': '{StoredProcedureParameter}'},
         'produce_additional_types': {'key': 'produceAdditionalTypes', 'type': 'object'},
+        'partition_option': {'key': 'partitionOption', 'type': 'str'},
+        'partition_settings': {'key': 'partitionSettings', 'type': 'SqlPartitionSettings'},
     }
 
     def __init__(self, **kwargs):
@@ -29466,7 +29515,40 @@ class SqlMISource(TabularSource):
         self.sql_reader_stored_procedure_name = kwargs.get('sql_reader_stored_procedure_name', None)
         self.stored_procedure_parameters = kwargs.get('stored_procedure_parameters', None)
         self.produce_additional_types = kwargs.get('produce_additional_types', None)
+        self.partition_option = kwargs.get('partition_option', None)
+        self.partition_settings = kwargs.get('partition_settings', None)
         self.type = 'SqlMISource'
+
+
+class SqlPartitionSettings(Model):
+    """The settings that will be leveraged for Sql source partitioning.
+
+    :param partition_column_name: The name of the column in integer or
+     datetime type that will be used for proceeding partitioning. If not
+     specified, the primary key of the table is auto-detected and used as the
+     partition column. Type: string (or Expression with resultType string).
+    :type partition_column_name: object
+    :param partition_upper_bound: The maximum value of column specified in
+     partitionColumnName that will be used for proceeding range partitioning.
+     Type: string (or Expression with resultType string).
+    :type partition_upper_bound: object
+    :param partition_lower_bound: The minimum value of column specified in
+     partitionColumnName that will be used for proceeding range partitioning.
+     Type: string (or Expression with resultType string).
+    :type partition_lower_bound: object
+    """
+
+    _attribute_map = {
+        'partition_column_name': {'key': 'partitionColumnName', 'type': 'object'},
+        'partition_upper_bound': {'key': 'partitionUpperBound', 'type': 'object'},
+        'partition_lower_bound': {'key': 'partitionLowerBound', 'type': 'object'},
+    }
+
+    def __init__(self, **kwargs):
+        super(SqlPartitionSettings, self).__init__(**kwargs)
+        self.partition_column_name = kwargs.get('partition_column_name', None)
+        self.partition_upper_bound = kwargs.get('partition_upper_bound', None)
+        self.partition_lower_bound = kwargs.get('partition_lower_bound', None)
 
 
 class SqlServerLinkedService(LinkedService):
@@ -29655,6 +29737,15 @@ class SqlServerSource(TabularSource):
      ~azure.mgmt.datafactory.models.StoredProcedureParameter]
     :param produce_additional_types: Which additional types to produce.
     :type produce_additional_types: object
+    :param partition_option: The partition mechanism that will be used for Sql
+     read in parallel. Possible values include: 'None',
+     'PhysicalPartitionsOfTable', 'DynamicRange'
+    :type partition_option: str or
+     ~azure.mgmt.datafactory.models.SqlPartitionOption
+    :param partition_settings: The settings that will be leveraged for Sql
+     source partitioning.
+    :type partition_settings:
+     ~azure.mgmt.datafactory.models.SqlPartitionSettings
     """
 
     _validation = {
@@ -29673,6 +29764,8 @@ class SqlServerSource(TabularSource):
         'sql_reader_stored_procedure_name': {'key': 'sqlReaderStoredProcedureName', 'type': 'object'},
         'stored_procedure_parameters': {'key': 'storedProcedureParameters', 'type': '{StoredProcedureParameter}'},
         'produce_additional_types': {'key': 'produceAdditionalTypes', 'type': 'object'},
+        'partition_option': {'key': 'partitionOption', 'type': 'str'},
+        'partition_settings': {'key': 'partitionSettings', 'type': 'SqlPartitionSettings'},
     }
 
     def __init__(self, **kwargs):
@@ -29681,6 +29774,8 @@ class SqlServerSource(TabularSource):
         self.sql_reader_stored_procedure_name = kwargs.get('sql_reader_stored_procedure_name', None)
         self.stored_procedure_parameters = kwargs.get('stored_procedure_parameters', None)
         self.produce_additional_types = kwargs.get('produce_additional_types', None)
+        self.partition_option = kwargs.get('partition_option', None)
+        self.partition_settings = kwargs.get('partition_settings', None)
         self.type = 'SqlServerSource'
 
 
@@ -29940,6 +30035,15 @@ class SqlSource(TabularSource):
      default value is ReadCommitted. Type: string (or Expression with
      resultType string).
     :type isolation_level: object
+    :param partition_option: The partition mechanism that will be used for Sql
+     read in parallel. Possible values include: 'None',
+     'PhysicalPartitionsOfTable', 'DynamicRange'
+    :type partition_option: str or
+     ~azure.mgmt.datafactory.models.SqlPartitionOption
+    :param partition_settings: The settings that will be leveraged for Sql
+     source partitioning.
+    :type partition_settings:
+     ~azure.mgmt.datafactory.models.SqlPartitionSettings
     """
 
     _validation = {
@@ -29958,6 +30062,8 @@ class SqlSource(TabularSource):
         'sql_reader_stored_procedure_name': {'key': 'sqlReaderStoredProcedureName', 'type': 'object'},
         'stored_procedure_parameters': {'key': 'storedProcedureParameters', 'type': '{StoredProcedureParameter}'},
         'isolation_level': {'key': 'isolationLevel', 'type': 'object'},
+        'partition_option': {'key': 'partitionOption', 'type': 'str'},
+        'partition_settings': {'key': 'partitionSettings', 'type': 'SqlPartitionSettings'},
     }
 
     def __init__(self, **kwargs):
@@ -29966,6 +30072,8 @@ class SqlSource(TabularSource):
         self.sql_reader_stored_procedure_name = kwargs.get('sql_reader_stored_procedure_name', None)
         self.stored_procedure_parameters = kwargs.get('stored_procedure_parameters', None)
         self.isolation_level = kwargs.get('isolation_level', None)
+        self.partition_option = kwargs.get('partition_option', None)
+        self.partition_settings = kwargs.get('partition_settings', None)
         self.type = 'SqlSource'
 
 
@@ -32394,8 +32502,9 @@ class WaitActivity(ControlActivity):
     :type user_properties: list[~azure.mgmt.datafactory.models.UserProperty]
     :param type: Required. Constant filled by server.
     :type type: str
-    :param wait_time_in_seconds: Required. Duration in seconds.
-    :type wait_time_in_seconds: int
+    :param wait_time_in_seconds: Required. Duration in seconds. Type: integer
+     (or Expression with resultType integer)
+    :type wait_time_in_seconds: object
     """
 
     _validation = {
@@ -32411,7 +32520,7 @@ class WaitActivity(ControlActivity):
         'depends_on': {'key': 'dependsOn', 'type': '[ActivityDependency]'},
         'user_properties': {'key': 'userProperties', 'type': '[UserProperty]'},
         'type': {'key': 'type', 'type': 'str'},
-        'wait_time_in_seconds': {'key': 'typeProperties.waitTimeInSeconds', 'type': 'int'},
+        'wait_time_in_seconds': {'key': 'typeProperties.waitTimeInSeconds', 'type': 'object'},
     }
 
     def __init__(self, **kwargs):
