@@ -6,14 +6,5 @@
 # Changes may cause incorrect behavior and will be lost if the code is regenerated.
 # --------------------------------------------------------------------------
 
-from ._data_factory_management_client import DataFactoryManagementClient
-from ._version import VERSION
-
-__version__ = VERSION
+from ._data_factory_management_client_async import DataFactoryManagementClient
 __all__ = ['DataFactoryManagementClient']
-
-try:
-    from ._patch import patch_sdk
-    patch_sdk()
-except ImportError:
-    pass
