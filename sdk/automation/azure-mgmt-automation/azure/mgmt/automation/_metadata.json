@@ -1,0 +1,93 @@
+{
+    "chosen_version": "",
+    "total_api_version_list": ["2015-10-31", "2017-05-15-preview", "2018-01-15", "2018-06-30"],
+    "client": {
+        "name": "AutomationClient",
+        "filename": "_automation_client",
+        "description": "Automation Client."
+    },
+    "global_parameters": {
+        "sync_method": {
+            "credential": {
+                "method_signature": "credential,  # type: \"TokenCredential\"",
+                "description": "Credential needed for the client to connect to Azure.",
+                "docstring_type": "~azure.core.credentials.TokenCredential",
+                "required": true
+            },
+            "subscription_id": {
+                "method_signature": "subscription_id,  # type: str",
+                "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+                "docstring_type": "str",
+                "required": true
+            }
+        },
+        "async_method": {
+            "credential": {
+                "method_signature": "credential,  # type: \"AsyncTokenCredential\"",
+                "description": "Credential needed for the client to connect to Azure.",
+                "docstring_type": "~azure.core.credentials_async.AsyncTokenCredential",
+                "required": true
+            },
+            "subscription_id": {
+                "method_signature": "subscription_id,  # type: str",
+                "description": "Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.",
+                "docstring_type": "str",
+                "required": true
+            }
+        },
+        "constant": {
+        },
+        "call": "credential, subscription_id"
+    },
+    "config": {
+        "credential": true,
+        "credential_scopes": ["https://management.azure.com/.default"]
+    },
+    "operation_groups": {
+        "automation_account": "AutomationAccountOperations",
+        "operations": "Operations",
+        "statistics": "StatisticsOperations",
+        "usages": "UsagesOperations",
+        "keys": "KeysOperations",
+        "certificate": "CertificateOperations",
+        "connection": "ConnectionOperations",
+        "connection_type": "ConnectionTypeOperations",
+        "credential": "CredentialOperations",
+        "dsc_configuration": "DscConfigurationOperations",
+        "hybrid_runbook_worker_group": "HybridRunbookWorkerGroupOperations",
+        "job_schedule": "JobScheduleOperations",
+        "linked_workspace": "LinkedWorkspaceOperations",
+        "activity": "ActivityOperations",
+        "module": "ModuleOperations",
+        "object_data_types": "ObjectDataTypesOperations",
+        "fields": "FieldsOperations",
+        "schedule": "ScheduleOperations",
+        "variable": "VariableOperations",
+        "webhook": "WebhookOperations",
+        "watcher": "WatcherOperations",
+        "software_update_configurations": "SoftwareUpdateConfigurationsOperations",
+        "software_update_configuration_runs": "SoftwareUpdateConfigurationRunsOperations",
+        "software_update_configuration_machine_runs": "SoftwareUpdateConfigurationMachineRunsOperations",
+        "source_control": "SourceControlOperations",
+        "source_control_sync_job": "SourceControlSyncJobOperations",
+        "source_control_sync_job_streams": "SourceControlSyncJobStreamsOperations",
+        "job": "JobOperations",
+        "job_stream": "JobStreamOperations",
+        "agent_registration_information": "AgentRegistrationInformationOperations",
+        "dsc_node": "DscNodeOperations",
+        "node_reports": "NodeReportsOperations",
+        "dsc_compilation_job": "DscCompilationJobOperations",
+        "dsc_compilation_job_stream": "DscCompilationJobStreamOperations",
+        "dsc_node_configuration": "DscNodeConfigurationOperations",
+        "node_count_information": "NodeCountInformationOperations",
+        "runbook_draft": "RunbookDraftOperations",
+        "runbook": "RunbookOperations",
+        "test_job_streams": "TestJobStreamsOperations",
+        "test_job": "TestJobOperations",
+        "python2_package": "Python2PackageOperations"
+    },
+    "operation_mixins": {
+    },
+    "sync_imports": "None",
+    "async_imports": "None"
+}
