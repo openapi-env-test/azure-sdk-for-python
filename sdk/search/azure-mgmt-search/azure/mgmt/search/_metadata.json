@@ -1,0 +1,59 @@
+{
+    "chosen_version": "2020-03-13",
+    "total_api_version_list": ["2020-03-13"],
+    "client": {
+        "name": "SearchManagementClient",
+        "filename": "_search_management_client",
+        "description": "Client that can be used to manage Azure Cognitive Search services and API keys."
+    },
+    "global_parameters": {
+        "sync_method": {
+            "credential": {
+                "method_signature": "credential,  # type: \"TokenCredential\"",
+                "description": "Credential needed for the client to connect to Azure.",
+                "docstring_type": "~azure.core.credentials.TokenCredential",
+                "required": true
+            },
+            "subscription_id": {
+                "method_signature": "subscription_id,  # type: str",
+                "description": "The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal.",
+                "docstring_type": "str",
+                "required": true
+            }
+        },
+        "async_method": {
+            "credential": {
+                "method_signature": "credential,  # type: \"AsyncTokenCredential\"",
+                "description": "Credential needed for the client to connect to Azure.",
+                "docstring_type": "~azure.core.credentials_async.AsyncTokenCredential",
+                "required": true
+            },
+            "subscription_id": {
+                "method_signature": "subscription_id,  # type: str",
+                "description": "The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal.",
+                "docstring_type": "str",
+                "required": true
+            }
+        },
+        "constant": {
+        },
+        "call": "credential, subscription_id"
+    },
+    "config": {
+        "credential": true,
+        "credential_scopes": ["https://management.azure.com/.default"]
+    },
+    "operation_groups": {
+        "operations": "Operations",
+        "admin_keys": "AdminKeysOperations",
+        "query_keys": "QueryKeysOperations",
+        "services": "ServicesOperations",
+        "private_link_resources": "PrivateLinkResourcesOperations",
+        "private_endpoint_connections": "PrivateEndpointConnectionsOperations",
+        "shared_private_link_resources": "SharedPrivateLinkResourcesOperations"
+    },
+    "operation_mixins": {
+    },
+    "sync_imports": "None",
+    "async_imports": "None"
+}

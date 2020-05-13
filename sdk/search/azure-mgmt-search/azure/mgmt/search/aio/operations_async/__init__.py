@@ -6,13 +6,13 @@
 # Changes may cause incorrect behavior and will be lost if the code is regenerated.
 # --------------------------------------------------------------------------
 
-from ._operations import Operations
-from ._admin_keys_operations import AdminKeysOperations
-from ._query_keys_operations import QueryKeysOperations
-from ._services_operations import ServicesOperations
-from ._private_link_resources_operations import PrivateLinkResourcesOperations
-from ._private_endpoint_connections_operations import PrivateEndpointConnectionsOperations
-from ._shared_private_link_resources_operations import SharedPrivateLinkResourcesOperations
+from ._operations_async import Operations
+from ._admin_keys_operations_async import AdminKeysOperations
+from ._query_keys_operations_async import QueryKeysOperations
+from ._services_operations_async import ServicesOperations
+from ._private_link_resources_operations_async import PrivateLinkResourcesOperations
+from ._private_endpoint_connections_operations_async import PrivateEndpointConnectionsOperations
+from ._shared_private_link_resources_operations_async import SharedPrivateLinkResourcesOperations
 
 __all__ = [
     'Operations',
