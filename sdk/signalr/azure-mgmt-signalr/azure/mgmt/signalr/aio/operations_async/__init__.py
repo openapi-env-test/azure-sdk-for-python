@@ -6,9 +6,9 @@
 # Changes may cause incorrect behavior and will be lost if the code is regenerated.
 # --------------------------------------------------------------------------
 
-from ._operations import Operations
-from ._signal_r_operations import SignalROperations
-from ._usages_operations import UsagesOperations
+from ._operations_async import Operations
+from ._signal_r_operations_async import SignalROperations
+from ._usages_operations_async import UsagesOperations
 
 __all__ = [
     'Operations',

@@ -6,12 +6,5 @@
 # Changes may cause incorrect behavior and will be lost if the code is regenerated.
 # --------------------------------------------------------------------------
 
-from ._operations import Operations
-from ._signal_r_operations import SignalROperations
-from ._usages_operations import UsagesOperations
-
-__all__ = [
-    'Operations',
-    'SignalROperations',
-    'UsagesOperations',
-]
+from ._signal_rmanagement_client_async import SignalRManagementClient
+__all__ = ['SignalRManagementClient']
