@@ -6,12 +6,12 @@
 # Changes may cause incorrect behavior and will be lost if the code is regenerated.
 # --------------------------------------------------------------------------
 
-from ._operations import Operations
-from ._net_app_resource_operations import NetAppResourceOperations
-from ._accounts_operations import AccountsOperations
-from ._pools_operations import PoolsOperations
-from ._volumes_operations import VolumesOperations
-from ._snapshots_operations import SnapshotsOperations
+from ._operations_async import Operations
+from ._net_app_resource_operations_async import NetAppResourceOperations
+from ._accounts_operations_async import AccountsOperations
+from ._pools_operations_async import PoolsOperations
+from ._volumes_operations_async import VolumesOperations
+from ._snapshots_operations_async import SnapshotsOperations
 
 __all__ = [
     'Operations',
