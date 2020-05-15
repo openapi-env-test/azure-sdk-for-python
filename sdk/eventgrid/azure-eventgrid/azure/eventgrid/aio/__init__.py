@@ -6,14 +6,5 @@
 # Changes may cause incorrect behavior and will be lost if the code is regenerated.
 # --------------------------------------------------------------------------
 
-from ._event_grid_client import EventGridClient
-from ._version import VERSION
-
-__version__ = VERSION
+from ._event_grid_client_async import EventGridClient
 __all__ = ['EventGridClient']
-
-try:
-    from ._patch import patch_sdk
-    patch_sdk()
-except ImportError:
-    pass

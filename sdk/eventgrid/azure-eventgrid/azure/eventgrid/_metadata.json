@@ -1,0 +1,53 @@
+{
+    "chosen_version": "2018-01-01",
+    "total_api_version_list": ["2018-01-01"],
+    "client": {
+        "name": "EventGridClient",
+        "filename": "_event_grid_client",
+        "description": "EventGrid Client."
+    },
+    "global_parameters": {
+        "sync_method": {
+            "credential": {
+                "method_signature": "credential,  # type: \"TokenCredential\"",
+                "description": "Credential needed for the client to connect to Azure.",
+                "docstring_type": "~azure.core.credentials.TokenCredential",
+                "required": true
+            }
+        },
+        "async_method": {
+            "credential": {
+                "method_signature": "credential,  # type: \"AsyncTokenCredential\"",
+                "description": "Credential needed for the client to connect to Azure.",
+                "docstring_type": "~azure.core.credentials_async.AsyncTokenCredential",
+                "required": true
+            }
+        },
+        "constant": {
+        },
+        "call": "credential"
+    },
+    "config": {
+        "credential": true,
+        "credential_scopes": []
+    },
+    "operation_groups": {
+    },
+    "operation_mixins": {
+        "publish_events" : {
+            "sync": {
+                "operation_name": "publish_events",
+                "signature": "def publish_events(\n    self,\n    topic_hostname,  # type: str\n    events,  # type: List[\"models.EventGridEvent\"]\n    **kwargs  # type: Any\n):\n"
+            },
+            "async": {
+                "operation_name": "publish_events",
+                "signature": "async def publish_events(\n    self,\n    topic_hostname: str,\n    events: List[\"models.EventGridEvent\"],\n    **kwargs\n) -\u003e None:\n",
+                "coroutine": true
+            },
+            "doc": "    \"\"\"Publishes a batch of events to an Azure Event Grid topic.\n\n:param topic_hostname: The host name of the topic, e.g. topic1.westus2-1.eventgrid.azure.net.\n:type topic_hostname: str\n:param events: An array of events to be published to Event Grid.\n:type events: list[~azure.eventgrid.models.EventGridEvent]\n:keyword callable cls: A custom type or function that will be passed the direct response\n:return: None or the result of cls(response)\n:rtype: None\n:raises: ~azure.core.exceptions.HttpResponseError\n\"\"\"",
+            "call": "topic_hostname, events"
+        }
+    },
+    "sync_imports": "from typing import TYPE_CHECKING\nimport warnings\n\nfrom azure.core.exceptions import HttpResponseError, ResourceExistsError, ResourceNotFoundError, map_error\nfrom azure.core.pipeline import PipelineResponse\nfrom azure.core.pipeline.transport import HttpRequest, HttpResponse\n\nif TYPE_CHECKING:\n    # pylint: disable=unused-import,ungrouped-imports\n    from typing import Any, Callable, Dict, Generic, List, Optional, TypeVar",
+    "async_imports": "from typing import Any, Callable, Dict, Generic, List, Optional, TypeVar\nimport warnings\n\nfrom azure.core.exceptions import HttpResponseError, ResourceExistsError, ResourceNotFoundError, map_error\nfrom azure.core.pipeline import PipelineResponse\nfrom azure.core.pipeline.transport import AsyncHttpResponse, HttpRequest"
+}

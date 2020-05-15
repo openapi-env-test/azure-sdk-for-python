@@ -6,14 +6,8 @@
 # Changes may cause incorrect behavior and will be lost if the code is regenerated.
 # --------------------------------------------------------------------------
 
-from ._event_grid_client import EventGridClient
-from ._version import VERSION
+from ._event_grid_client_operations import EventGridClientOperationsMixin
 
-__version__ = VERSION
-__all__ = ['EventGridClient']
-
-try:
-    from ._patch import patch_sdk
-    patch_sdk()
-except ImportError:
-    pass
+__all__ = [
+    'EventGridClientOperationsMixin',
+]
