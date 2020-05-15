@@ -6,16 +6,16 @@
 # Changes may cause incorrect behavior and will be lost if the code is regenerated.
 # --------------------------------------------------------------------------
 
-from ._operations import Operations
-from ._workspaces_operations import WorkspacesOperations
-from ._workspace_features_operations import WorkspaceFeaturesOperations
-from ._usages_operations import UsagesOperations
-from ._virtual_machine_sizes_operations import VirtualMachineSizesOperations
-from ._quotas_operations import QuotasOperations
-from ._machine_learning_compute_operations import MachineLearningComputeOperations
-from ._azure_machine_learning_workspaces_operations import AzureMachineLearningWorkspacesOperationsMixin
-from ._private_endpoint_connections_operations import PrivateEndpointConnectionsOperations
-from ._private_link_resources_operations import PrivateLinkResourcesOperations
+from ._operations_async import Operations
+from ._workspaces_operations_async import WorkspacesOperations
+from ._workspace_features_operations_async import WorkspaceFeaturesOperations
+from ._usages_operations_async import UsagesOperations
+from ._virtual_machine_sizes_operations_async import VirtualMachineSizesOperations
+from ._quotas_operations_async import QuotasOperations
+from ._machine_learning_compute_operations_async import MachineLearningComputeOperations
+from ._azure_machine_learning_workspaces_operations_async import AzureMachineLearningWorkspacesOperationsMixin
+from ._private_endpoint_connections_operations_async import PrivateEndpointConnectionsOperations
+from ._private_link_resources_operations_async import PrivateLinkResourcesOperations
 
 __all__ = [
     'Operations',

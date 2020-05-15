@@ -6,14 +6,5 @@
 # Changes may cause incorrect behavior and will be lost if the code is regenerated.
 # --------------------------------------------------------------------------
 
-from ._azure_machine_learning_workspaces import AzureMachineLearningWorkspaces
-from ._version import VERSION
-
-__version__ = VERSION
+from ._azure_machine_learning_workspaces_async import AzureMachineLearningWorkspaces
 __all__ = ['AzureMachineLearningWorkspaces']
-
-try:
-    from ._patch import patch_sdk
-    patch_sdk()
-except ImportError:
-    pass
