@@ -23,8 +23,8 @@ if TYPE_CHECKING:
     T = TypeVar('T')
     ClsType = Optional[Callable[[PipelineResponse[HttpRequest, HttpResponse], T, Dict[str, Any]], Any]]
 
-class BindingsOperations(object):
-    """BindingsOperations operations.
+class CertificatesOperations(object):
+    """CertificatesOperations operations.
 
     You should not instantiate this class directly. Instead, you should create a Client instance that
     instantiates it for you and attaches it as an attribute.
@@ -49,28 +49,25 @@ class BindingsOperations(object):
         self,
         resource_group_name,  # type: str
         service_name,  # type: str
-        app_name,  # type: str
-        binding_name,  # type: str
+        certificate_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> "models.BindingResource"
-        """Get a Binding and its properties.
+        # type: (...) -> "models.CertificateResource"
+        """Get the certificate resource.
 
         :param resource_group_name: The name of the resource group that contains the resource. You can
          obtain this value from the Azure Resource Manager API or the portal.
         :type resource_group_name: str
         :param service_name: The name of the Service resource.
         :type service_name: str
-        :param app_name: The name of the App resource.
-        :type app_name: str
-        :param binding_name: The name of the Binding resource.
-        :type binding_name: str
+        :param certificate_name: The name of the certificate resource.
+        :type certificate_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: BindingResource or the result of cls(response)
-        :rtype: ~azure.mgmt.appplatform.models.BindingResource
+        :return: CertificateResource or the result of cls(response)
+        :rtype: ~azure.mgmt.appplatform.models.CertificateResource
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.BindingResource"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["models.CertificateResource"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
         api_version = "2019-05-01-preview"
@@ -81,8 +78,7 @@ class BindingsOperations(object):
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
             'serviceName': self._serialize.url("service_name", service_name, 'str'),
-            'appName': self._serialize.url("app_name", app_name, 'str'),
-            'bindingName': self._serialize.url("binding_name", binding_name, 'str'),
+            'certificateName': self._serialize.url("certificate_name", certificate_name, 'str'),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
@@ -103,47 +99,44 @@ class BindingsOperations(object):
             map_error(status_code=response.status_code, response=response, error_map=error_map)
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize('BindingResource', pipeline_response)
+        deserialized = self._deserialize('CertificateResource', pipeline_response)
 
         if cls:
           return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/bindings/{bindingName}'}  # type: ignore
+    get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/certificates/{certificateName}'}  # type: ignore
 
     def create_or_update(
         self,
         resource_group_name,  # type: str
         service_name,  # type: str
-        app_name,  # type: str
-        binding_name,  # type: str
-        properties=None,  # type: Optional["models.BindingResourceProperties"]
+        certificate_name,  # type: str
+        properties=None,  # type: Optional["models.CertificateProperties"]
         **kwargs  # type: Any
     ):
-        # type: (...) -> "models.BindingResource"
-        """Create a new Binding or update an exiting Binding.
+        # type: (...) -> "models.CertificateResource"
+        """Create or update certificate resource.
 
         :param resource_group_name: The name of the resource group that contains the resource. You can
          obtain this value from the Azure Resource Manager API or the portal.
         :type resource_group_name: str
         :param service_name: The name of the Service resource.
         :type service_name: str
-        :param app_name: The name of the App resource.
-        :type app_name: str
-        :param binding_name: The name of the Binding resource.
-        :type binding_name: str
-        :param properties: Properties of the Binding resource.
-        :type properties: ~azure.mgmt.appplatform.models.BindingResourceProperties
+        :param certificate_name: The name of the certificate resource.
+        :type certificate_name: str
+        :param properties: Properties of the certificate resource payload.
+        :type properties: ~azure.mgmt.appplatform.models.CertificateProperties
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: BindingResource or the result of cls(response)
-        :rtype: ~azure.mgmt.appplatform.models.BindingResource
+        :return: CertificateResource or the result of cls(response)
+        :rtype: ~azure.mgmt.appplatform.models.CertificateResource
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.BindingResource"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["models.CertificateResource"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
 
-        _binding_resource = models.BindingResource(properties=properties)
+        _certificate_resource = models.CertificateResource(properties=properties)
         api_version = "2019-05-01-preview"
         content_type = kwargs.pop("content_type", "application/json")
 
@@ -153,8 +146,7 @@ class BindingsOperations(object):
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
             'serviceName': self._serialize.url("service_name", service_name, 'str'),
-            'appName': self._serialize.url("app_name", app_name, 'str'),
-            'bindingName': self._serialize.url("binding_name", binding_name, 'str'),
+            'certificateName': self._serialize.url("certificate_name", certificate_name, 'str'),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
@@ -169,7 +161,7 @@ class BindingsOperations(object):
 
         # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(_binding_resource, 'BindingResource')
+        body_content = self._serialize.body(_certificate_resource, 'CertificateResource')
         body_content_kwargs['content'] = body_content
         request = self._client.put(url, query_parameters, header_parameters, **body_content_kwargs)
 
@@ -180,34 +172,31 @@ class BindingsOperations(object):
             map_error(status_code=response.status_code, response=response, error_map=error_map)
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize('BindingResource', pipeline_response)
+        deserialized = self._deserialize('CertificateResource', pipeline_response)
 
         if cls:
           return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/bindings/{bindingName}'}  # type: ignore
+    create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/certificates/{certificateName}'}  # type: ignore
 
     def delete(
         self,
         resource_group_name,  # type: str
         service_name,  # type: str
-        app_name,  # type: str
-        binding_name,  # type: str
+        certificate_name,  # type: str
         **kwargs  # type: Any
     ):
         # type: (...) -> None
-        """Operation to delete a Binding.
+        """Delete the certificate resource.
 
         :param resource_group_name: The name of the resource group that contains the resource. You can
          obtain this value from the Azure Resource Manager API or the portal.
         :type resource_group_name: str
         :param service_name: The name of the Service resource.
         :type service_name: str
-        :param app_name: The name of the App resource.
-        :type app_name: str
-        :param binding_name: The name of the Binding resource.
-        :type binding_name: str
+        :param certificate_name: The name of the certificate resource.
+        :type certificate_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: None or the result of cls(response)
         :rtype: None
@@ -224,8 +213,7 @@ class BindingsOperations(object):
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
             'serviceName': self._serialize.url("service_name", service_name, 'str'),
-            'appName': self._serialize.url("app_name", app_name, 'str'),
-            'bindingName': self._serialize.url("binding_name", binding_name, 'str'),
+            'certificateName': self._serialize.url("certificate_name", certificate_name, 'str'),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
@@ -248,108 +236,28 @@ class BindingsOperations(object):
         if cls:
           return cls(pipeline_response, None, {})
 
-    delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/bindings/{bindingName}'}  # type: ignore
-
-    def update(
-        self,
-        resource_group_name,  # type: str
-        service_name,  # type: str
-        app_name,  # type: str
-        binding_name,  # type: str
-        properties=None,  # type: Optional["models.BindingResourceProperties"]
-        **kwargs  # type: Any
-    ):
-        # type: (...) -> "models.BindingResource"
-        """Operation to update an exiting Binding.
-
-        :param resource_group_name: The name of the resource group that contains the resource. You can
-         obtain this value from the Azure Resource Manager API or the portal.
-        :type resource_group_name: str
-        :param service_name: The name of the Service resource.
-        :type service_name: str
-        :param app_name: The name of the App resource.
-        :type app_name: str
-        :param binding_name: The name of the Binding resource.
-        :type binding_name: str
-        :param properties: Properties of the Binding resource.
-        :type properties: ~azure.mgmt.appplatform.models.BindingResourceProperties
-        :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: BindingResource or the result of cls(response)
-        :rtype: ~azure.mgmt.appplatform.models.BindingResource
-        :raises: ~azure.core.exceptions.HttpResponseError
-        """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.BindingResource"]
-        error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
-        error_map.update(kwargs.pop('error_map', {}))
-
-        _binding_resource = models.BindingResource(properties=properties)
-        api_version = "2019-05-01-preview"
-        content_type = kwargs.pop("content_type", "application/json")
-
-        # Construct URL
-        url = self.update.metadata['url']  # type: ignore
-        path_format_arguments = {
-            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
-            'serviceName': self._serialize.url("service_name", service_name, 'str'),
-            'appName': self._serialize.url("app_name", app_name, 'str'),
-            'bindingName': self._serialize.url("binding_name", binding_name, 'str'),
-        }
-        url = self._client.format_url(url, **path_format_arguments)
-
-        # Construct parameters
-        query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
-
-        # Construct headers
-        header_parameters = {}  # type: Dict[str, Any]
-        header_parameters['Content-Type'] = self._serialize.header("content_type", content_type, 'str')
-        header_parameters['Accept'] = 'application/json'
-
-        # Construct and send request
-        body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(_binding_resource, 'BindingResource')
-        body_content_kwargs['content'] = body_content
-        request = self._client.patch(url, query_parameters, header_parameters, **body_content_kwargs)
-
-        pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
-        response = pipeline_response.http_response
-
-        if response.status_code not in [200]:
-            map_error(status_code=response.status_code, response=response, error_map=error_map)
-            raise HttpResponseError(response=response, error_format=ARMErrorFormat)
-
-        deserialized = self._deserialize('BindingResource', pipeline_response)
-
-        if cls:
-          return cls(pipeline_response, deserialized, {})
-
-        return deserialized
-    update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/bindings/{bindingName}'}  # type: ignore
+    delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/certificates/{certificateName}'}  # type: ignore
 
     def list(
         self,
         resource_group_name,  # type: str
         service_name,  # type: str
-        app_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> Iterable["models.BindingResourceCollection"]
-        """Handles requests to list all resources in an App.
+        # type: (...) -> Iterable["models.CertificateResourceCollection"]
+        """List all the certificates of one user.
 
         :param resource_group_name: The name of the resource group that contains the resource. You can
      obtain this value from the Azure Resource Manager API or the portal.
         :type resource_group_name: str
         :param service_name: The name of the Service resource.
         :type service_name: str
-        :param app_name: The name of the App resource.
-        :type app_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of BindingResourceCollection or the result of cls(response)
-        :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.appplatform.models.BindingResourceCollection]
+        :return: An iterator like instance of CertificateResourceCollection or the result of cls(response)
+        :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.appplatform.models.CertificateResourceCollection]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.BindingResourceCollection"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["models.CertificateResourceCollection"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
         api_version = "2019-05-01-preview"
@@ -362,7 +270,6 @@ class BindingsOperations(object):
                     'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
                     'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
                     'serviceName': self._serialize.url("service_name", service_name, 'str'),
-                    'appName': self._serialize.url("app_name", app_name, 'str'),
                 }
                 url = self._client.format_url(url, **path_format_arguments)
                 # Construct parameters
@@ -381,7 +288,7 @@ class BindingsOperations(object):
             return request
 
         def extract_data(pipeline_response):
-            deserialized = self._deserialize('BindingResourceCollection', pipeline_response)
+            deserialized = self._deserialize('CertificateResourceCollection', pipeline_response)
             list_of_elem = deserialized.value
             if cls:
                 list_of_elem = cls(list_of_elem)
@@ -402,4 +309,4 @@ class BindingsOperations(object):
         return ItemPaged(
             get_next, extract_data
         )
-    list.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/bindings'}  # type: ignore
+    list.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/certificates'}  # type: ignore

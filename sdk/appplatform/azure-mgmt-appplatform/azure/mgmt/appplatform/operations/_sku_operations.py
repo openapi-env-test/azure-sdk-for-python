@@ -23,8 +23,8 @@ if TYPE_CHECKING:
     T = TypeVar('T')
     ClsType = Optional[Callable[[PipelineResponse[HttpRequest, HttpResponse], T, Dict[str, Any]], Any]]
 
-class Operations(object):
-    """Operations operations.
+class SkuOperations(object):
+    """SkuOperations operations.
 
     You should not instantiate this class directly. Instead, you should create a Client instance that
     instantiates it for you and attaches it as an attribute.
@@ -49,15 +49,15 @@ class Operations(object):
         self,
         **kwargs  # type: Any
     ):
-        # type: (...) -> Iterable["models.AvailableOperations"]
-        """Lists all of the available REST API operations of the Microsoft.AppPlatform provider.
+        # type: (...) -> Iterable["models.ResourceSkuCollection"]
+        """list.
 
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of AvailableOperations or the result of cls(response)
-        :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.appplatform.models.AvailableOperations]
+        :return: An iterator like instance of ResourceSkuCollection or the result of cls(response)
+        :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.appplatform.models.ResourceSkuCollection]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.AvailableOperations"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["models.ResourceSkuCollection"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
         api_version = "2019-05-01-preview"
@@ -66,6 +66,10 @@ class Operations(object):
             if not next_link:
                 # Construct URL
                 url = self.list.metadata['url']  # type: ignore
+                path_format_arguments = {
+                    'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
+                }
+                url = self._client.format_url(url, **path_format_arguments)
                 # Construct parameters
                 query_parameters = {}  # type: Dict[str, Any]
                 query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
@@ -82,7 +86,7 @@ class Operations(object):
             return request
 
         def extract_data(pipeline_response):
-            deserialized = self._deserialize('AvailableOperations', pipeline_response)
+            deserialized = self._deserialize('ResourceSkuCollection', pipeline_response)
             list_of_elem = deserialized.value
             if cls:
                 list_of_elem = cls(list_of_elem)
@@ -103,4 +107,4 @@ class Operations(object):
         return ItemPaged(
             get_next, extract_data
         )
-    list.metadata = {'url': '/providers/Microsoft.AppPlatform/operations'}  # type: ignore
+    list.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.AppPlatform/skus'}  # type: ignore

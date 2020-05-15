@@ -6,14 +6,14 @@
 # Changes may cause incorrect behavior and will be lost if the code is regenerated.
 # --------------------------------------------------------------------------
 
-from ._services_operations import ServicesOperations
-from ._apps_operations import AppsOperations
-from ._bindings_operations import BindingsOperations
-from ._certificates_operations import CertificatesOperations
-from ._custom_domains_operations import CustomDomainsOperations
-from ._deployments_operations import DeploymentsOperations
-from ._operations import Operations
-from ._sku_operations import SkuOperations
+from ._services_operations_async import ServicesOperations
+from ._apps_operations_async import AppsOperations
+from ._bindings_operations_async import BindingsOperations
+from ._certificates_operations_async import CertificatesOperations
+from ._custom_domains_operations_async import CustomDomainsOperations
+from ._deployments_operations_async import DeploymentsOperations
+from ._operations_async import Operations
+from ._sku_operations_async import SkuOperations
 
 __all__ = [
     'ServicesOperations',
