@@ -1,0 +1,53 @@
+{
+    "chosen_version": "3.0",
+    "total_api_version_list": ["3.0"],
+    "client": {
+        "name": "TranslatorTextClient",
+        "filename": "_translator_text_client",
+        "description": "Introduction\n============\n\nThe Microsoft Translator Text API provides a JSON-based Web API. It provides:\n\n\n* Translation between any supported languages to any other supported language.\n* Translation to multiple languages in one request.\n* Transliteration to convert text from one script to another script of the same language.\n* Language detection, translation, and transliteration in one request.\n* Dictionary to lookup alternative translations of a term, to find back-translations and examples showing terms used in context.\n* Rich language detection.\n  # Base URLs\n\nThe Translator Text API is available in the following clouds:\n\n.. list-table::\n   :header-rows: 1\n\n   * - Description\n     - Region\n     - Base URL\n   * - Azure\n     - Global\n     - api.cognitive.microsofttranslator.com\n   * - Azure\n     - Europe\n     - api-eur.cognitive.microsofttranslator.com\n\n\nAuthentication\n==============\n\nSubscribe to the Translator Text API, part of Azure Cognitive Services, and use your subscription key from the Azure portal to authenticate. You can follow the steps in https://docs.microsoft.com/en-us/azure/cognitive-services/translator/translator-text-how-to-signup.\n\nThe simplest way is to pass your Azure secret key to the Translator service using the http request header ``Ocp-Apim-Subscription-Key``.\n\nIf you prefer using a short-lived authentication, you may use your secret key to obtain an authorization token from the token service. In that case you pass the authorization token to the Translator service using the ``Authorization`` request header. To obtain an authorization token, make a ``POST`` request to the following URL:\n\n.. list-table::\n   :header-rows: 1\n\n   * - Environment\n     - Authentication service URL\n   * - Azure\n     - ``https://api.cognitive.microsoft.com/sts/v1.0/issueToken``\n\n\nHere are example requests to obtain a token with a lifetime of 10 minutes, given a secret key:\n\n.. code-block:: python\n\n   // Pass secret key using header\n   curl --header \u0027Ocp-Apim-Subscription-Key: \u003cyour-key\u003e\u0027 --data \"\" \u0027https://api.cognitive.microsoft.com/sts/v1.0/issueToken\u0027\n   // Pass secret key using query string parameter\n   curl --data \"\" \u0027https://api.cognitive.microsoft.com/sts/v1.0/issueToken?Subscription-Key=\u003cyour-key\u003e\u0027\n\nA successful request returns the encoded access token as plain text in the response body. The valid token is passed to the Translator service as a bearer token in the Authorization. \n\n.. code-block::\n\n   Authorization: Bearer \u003cBase64-access_token\u003e\n\nAn authentication token is valid for 10 minutes. The token should be re-used when making multiple calls to the Translator APIs. If you make requests to the Translator API over an extended period of time,  you  must request a new access token at regular intervals before the token expires, for instance every 9 minutes.\n\nTo summarize, a client request to the Translator API will include one authorization header taken from the following table:\n\n.. list-table::\n   :header-rows: 1\n\n   * - Headers\n     - Description\n   * - Ocp-Apim-Subscription-key\n     - Use with Cognitive Services subscription if you are passing your secret key.                               The value is the Azure secret key for your subscription to Translator Text API.\n   * - Authorization\n     - Use with Cognitive Services subscription if you are passing an authentication token. The value is the Bearer token: ``Bearer \u003ctoken\u003e``.\n\n\nAll-in-one subscription\n-----------------------\n\nThe last authentication option is to use a Cognitive Service\u2019s all-in-one subscription. This allows you to use a single secret key to authenticate requests for multiple services.\nWhen you use an all-in-one secret key, you must include two authentication headers with your request. The first passes the secret key, the second specifies the region associated with your subscription.\n``Ocp-Api-Subscription-Key`` ``Ocp-Apim-Subscription-Region``\nIf you pass the secret key in the query string with the parameter ``Subscription-Key``\\ , then you must specify the region with query parameter ``Subscription-Region``.\nIf you use a bearer token, you must obtain the token from the region endpoint:\n``https://\u003cyour-region\u003e.api.cognitive.microsoft.com/sts/v1.0/issueToken``.\n\nAvailable regions are: ``australiaeast``\\ , ``brazilsouth``\\ , ``canadacentral``\\ , ``centralindia``\\ , ``centraluseuap``\\ , ``eastasia``\\ , ``eastus``\\ , ``eastus2``\\ , ``japaneast``\\ , ``northeurope``\\ , ``southcentralus``\\ , ``southeastasia``\\ , ``uksouth``\\ , ``westcentralus``\\ , ``westeurope``\\ , ``westus``\\ , and ``westus2``.\n\nRegion is required for the all-in-one Text API subscription.\n\nErrors\n======\n\nA standard error response is a JSON object with name/value pair named ``error``. The value is also a JSON object with properties:\n\n\n* ``code``\\ : A server-defined error code.\n* ``message``\\ : A string giving a human-readable representation of the error.\n\nFor example, a customer with a free trial subscription receives the following error once the free quota is exhausted:\n\n.. code-block:: json\n\n   {\n     \"error\": {\n     \"code\":403000,\n     \"message\":\"The subscription has exceeded its free quota.\"\n     }\n   }\n\nEnter your subscription keys to try out Microsoft Translator.\n=============================================================\n\nSelect the ``Authorize`` button and enter your Microsoft Translator subscription key, OR your ``all in one Cognitive Services`` subscription key. If you are using the all in one Cognitive Services key you will need to also enter your subscription region.\n\nAvailable regions are:\n----------------------\n\n  ``australiaeast``\\ , ``brazilsouth``\\ , ``canadacentral``\\ , ``centralindia``\\ , ``centraluseuap``\\ , ``eastasia``\\ , ``eastus``\\ , ``eastus2``\\ , ``japaneast``\\ , ``northeurope``\\ , ``southcentralus``\\ , ``southeastasia``\\ , ``uksouth``\\ , ``westcentralus``\\ , ``westeurope``\\ , ``westus``\\ , ``westus2``."
+    },
+    "global_parameters": {
+        "sync_method": {
+            "credential": {
+                "method_signature": "credential,  # type: \"TokenCredential\"",
+                "description": "Credential needed for the client to connect to Azure.",
+                "docstring_type": "~azure.core.credentials.TokenCredential",
+                "required": true
+            },
+            "endpoint": {
+                "method_signature": "endpoint,  # type: str",
+                "description": "Supported Cognitive Services endpoints.",
+                "docstring_type": "str",
+                "required": true
+            }
+        },
+        "async_method": {
+            "credential": {
+                "method_signature": "credential,  # type: \"AsyncTokenCredential\"",
+                "description": "Credential needed for the client to connect to Azure.",
+                "docstring_type": "~azure.core.credentials_async.AsyncTokenCredential",
+                "required": true
+            },
+            "endpoint": {
+                "method_signature": "endpoint,  # type: str",
+                "description": "Supported Cognitive Services endpoints.",
+                "docstring_type": "str",
+                "required": true
+            }
+        },
+        "constant": {
+        },
+        "call": "credential, endpoint"
+    },
+    "config": {
+        "credential": true,
+        "credential_scopes": []
+    },
+    "operation_groups": {
+        "translator": "TranslatorOperations"
+    },
+    "operation_mixins": {
+    },
+    "sync_imports": "None",
+    "async_imports": "None"
+}
