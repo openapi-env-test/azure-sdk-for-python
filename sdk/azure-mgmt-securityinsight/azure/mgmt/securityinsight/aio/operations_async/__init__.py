@@ -6,14 +6,14 @@
 # Changes may cause incorrect behavior and will be lost if the code is regenerated.
 # --------------------------------------------------------------------------
 
-from ._operations import Operations
-from ._alert_rules_operations import AlertRulesOperations
-from ._actions_operations import ActionsOperations
-from ._alert_rule_templates_operations import AlertRuleTemplatesOperations
-from ._bookmarks_operations import BookmarksOperations
-from ._data_connectors_operations import DataConnectorsOperations
-from ._incidents_operations import IncidentsOperations
-from ._incident_comments_operations import IncidentCommentsOperations
+from ._operations_async import Operations
+from ._alert_rules_operations_async import AlertRulesOperations
+from ._actions_operations_async import ActionsOperations
+from ._alert_rule_templates_operations_async import AlertRuleTemplatesOperations
+from ._bookmarks_operations_async import BookmarksOperations
+from ._data_connectors_operations_async import DataConnectorsOperations
+from ._incidents_operations_async import IncidentsOperations
+from ._incident_comments_operations_async import IncidentCommentsOperations
 
 __all__ = [
     'Operations',

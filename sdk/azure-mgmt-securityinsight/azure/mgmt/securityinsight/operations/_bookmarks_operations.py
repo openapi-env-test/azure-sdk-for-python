@@ -23,8 +23,8 @@ if TYPE_CHECKING:
     T = TypeVar('T')
     ClsType = Optional[Callable[[PipelineResponse[HttpRequest, HttpResponse], T, Dict[str, Any]], Any]]
 
-class DataConnectorsOperations(object):
-    """DataConnectorsOperations operations.
+class BookmarksOperations(object):
+    """BookmarksOperations operations.
 
     You should not instantiate this class directly. Instead, you should create a Client instance that
     instantiates it for you and attaches it as an attribute.
@@ -51,8 +51,8 @@ class DataConnectorsOperations(object):
         workspace_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> Iterable["models.DataConnectorList"]
-        """Gets all data connectors.
+        # type: (...) -> Iterable["models.BookmarkList"]
+        """Gets all bookmarks.
 
         :param resource_group_name: The name of the resource group within the user's subscription. The
      name is case insensitive.
@@ -60,11 +60,11 @@ class DataConnectorsOperations(object):
         :param workspace_name: The name of the workspace.
         :type workspace_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of DataConnectorList or the result of cls(response)
-        :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.securityinsight.models.DataConnectorList]
+        :return: An iterator like instance of BookmarkList or the result of cls(response)
+        :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.securityinsight.models.BookmarkList]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.DataConnectorList"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["models.BookmarkList"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
         api_version = "2020-01-01"
@@ -95,7 +95,7 @@ class DataConnectorsOperations(object):
             return request
 
         def extract_data(pipeline_response):
-            deserialized = self._deserialize('DataConnectorList', pipeline_response)
+            deserialized = self._deserialize('BookmarkList', pipeline_response)
             list_of_elem = deserialized.value
             if cls:
                 list_of_elem = cls(list_of_elem)
@@ -116,31 +116,31 @@ class DataConnectorsOperations(object):
         return ItemPaged(
             get_next, extract_data
         )
-    list.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/dataConnectors'}  # type: ignore
+    list.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/bookmarks'}  # type: ignore
 
     def get(
         self,
         resource_group_name,  # type: str
         workspace_name,  # type: str
-        data_connector_id,  # type: str
+        bookmark_id,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> "models.DataConnector"
-        """Gets a data connector.
+        # type: (...) -> "models.Bookmark"
+        """Gets a bookmark.
 
         :param resource_group_name: The name of the resource group within the user's subscription. The
          name is case insensitive.
         :type resource_group_name: str
         :param workspace_name: The name of the workspace.
         :type workspace_name: str
-        :param data_connector_id: Connector ID.
-        :type data_connector_id: str
+        :param bookmark_id: Bookmark ID.
+        :type bookmark_id: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: DataConnector or the result of cls(response)
-        :rtype: ~azure.mgmt.securityinsight.models.DataConnector
+        :return: Bookmark or the result of cls(response)
+        :rtype: ~azure.mgmt.securityinsight.models.Bookmark
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.DataConnector"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["models.Bookmark"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
         api_version = "2020-01-01"
@@ -151,7 +151,7 @@ class DataConnectorsOperations(object):
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', pattern=r'^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$'),
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
             'workspaceName': self._serialize.url("workspace_name", workspace_name, 'str', max_length=90, min_length=1),
-            'dataConnectorId': self._serialize.url("data_connector_id", data_connector_id, 'str'),
+            'bookmarkId': self._serialize.url("bookmark_id", bookmark_id, 'str'),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
@@ -172,47 +172,42 @@ class DataConnectorsOperations(object):
             map_error(status_code=response.status_code, response=response, error_map=error_map)
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize('DataConnector', pipeline_response)
+        deserialized = self._deserialize('Bookmark', pipeline_response)
 
         if cls:
           return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/dataConnectors/{dataConnectorId}'}  # type: ignore
+    get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/bookmarks/{bookmarkId}'}  # type: ignore
 
     def create_or_update(
         self,
         resource_group_name,  # type: str
         workspace_name,  # type: str
-        data_connector_id,  # type: str
-        etag=None,  # type: Optional[str]
-        kind=None,  # type: Optional[Union[str, "models.DataConnectorKindEnum"]]
+        bookmark_id,  # type: str
+        bookmark,  # type: "models.Bookmark"
         **kwargs  # type: Any
     ):
-        # type: (...) -> "models.DataConnector"
-        """Creates or updates the data connector.
+        # type: (...) -> "models.Bookmark"
+        """Creates or updates the bookmark.
 
         :param resource_group_name: The name of the resource group within the user's subscription. The
          name is case insensitive.
         :type resource_group_name: str
         :param workspace_name: The name of the workspace.
         :type workspace_name: str
-        :param data_connector_id: Connector ID.
-        :type data_connector_id: str
-        :param etag: Etag of the azure resource.
-        :type etag: str
-        :param kind: The kind of the data connector.
-        :type kind: str or ~azure.mgmt.securityinsight.models.DataConnectorKindEnum
+        :param bookmark_id: Bookmark ID.
+        :type bookmark_id: str
+        :param bookmark: The bookmark.
+        :type bookmark: ~azure.mgmt.securityinsight.models.Bookmark
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: DataConnector or the result of cls(response)
-        :rtype: ~azure.mgmt.securityinsight.models.DataConnector
+        :return: Bookmark or the result of cls(response)
+        :rtype: ~azure.mgmt.securityinsight.models.Bookmark
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.DataConnector"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["models.Bookmark"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
-
-        _data_connector = models.DataConnector(etag=etag, kind=kind)
         api_version = "2020-01-01"
         content_type = kwargs.pop("content_type", "application/json")
 
@@ -222,7 +217,7 @@ class DataConnectorsOperations(object):
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', pattern=r'^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$'),
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
             'workspaceName': self._serialize.url("workspace_name", workspace_name, 'str', max_length=90, min_length=1),
-            'dataConnectorId': self._serialize.url("data_connector_id", data_connector_id, 'str'),
+            'bookmarkId': self._serialize.url("bookmark_id", bookmark_id, 'str'),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
@@ -237,7 +232,7 @@ class DataConnectorsOperations(object):
 
         # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(_data_connector, 'DataConnector')
+        body_content = self._serialize.body(bookmark, 'Bookmark')
         body_content_kwargs['content'] = body_content
         request = self._client.put(url, query_parameters, header_parameters, **body_content_kwargs)
 
@@ -250,34 +245,34 @@ class DataConnectorsOperations(object):
 
         deserialized = None
         if response.status_code == 200:
-            deserialized = self._deserialize('DataConnector', pipeline_response)
+            deserialized = self._deserialize('Bookmark', pipeline_response)
 
         if response.status_code == 201:
-            deserialized = self._deserialize('DataConnector', pipeline_response)
+            deserialized = self._deserialize('Bookmark', pipeline_response)
 
         if cls:
           return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/dataConnectors/{dataConnectorId}'}  # type: ignore
+    create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/bookmarks/{bookmarkId}'}  # type: ignore
 
     def delete(
         self,
         resource_group_name,  # type: str
         workspace_name,  # type: str
-        data_connector_id,  # type: str
+        bookmark_id,  # type: str
         **kwargs  # type: Any
     ):
         # type: (...) -> None
-        """Delete the data connector.
+        """Delete the bookmark.
 
         :param resource_group_name: The name of the resource group within the user's subscription. The
          name is case insensitive.
         :type resource_group_name: str
         :param workspace_name: The name of the workspace.
         :type workspace_name: str
-        :param data_connector_id: Connector ID.
-        :type data_connector_id: str
+        :param bookmark_id: Bookmark ID.
+        :type bookmark_id: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: None or the result of cls(response)
         :rtype: None
@@ -294,7 +289,7 @@ class DataConnectorsOperations(object):
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', pattern=r'^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$'),
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
             'workspaceName': self._serialize.url("workspace_name", workspace_name, 'str', max_length=90, min_length=1),
-            'dataConnectorId': self._serialize.url("data_connector_id", data_connector_id, 'str'),
+            'bookmarkId': self._serialize.url("bookmark_id", bookmark_id, 'str'),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
@@ -317,4 +312,4 @@ class DataConnectorsOperations(object):
         if cls:
           return cls(pipeline_response, None, {})
 
-    delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/dataConnectors/{dataConnectorId}'}  # type: ignore
+    delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/bookmarks/{bookmarkId}'}  # type: ignore
