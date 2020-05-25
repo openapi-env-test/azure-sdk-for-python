@@ -6,69 +6,65 @@
 # Changes may cause incorrect behavior and will be lost if the code is regenerated.
 # --------------------------------------------------------------------------
 
-from typing import TYPE_CHECKING
+from typing import Any, Optional
 
-from azure.mgmt.core import ARMPipelineClient
+from azure.mgmt.core import AsyncARMPipelineClient
 from msrest import Deserializer, Serializer
 
-if TYPE_CHECKING:
-    # pylint: disable=unused-import,ungrouped-imports
-    from typing import Any, Optional
-
-from ._configuration import DataFactoryManagementClientConfiguration
-from .operations import Operations
-from .operations import FactoriesOperations
-from .operations import ExposureControlOperations
-from .operations import IntegrationRuntimesOperations
-from .operations import IntegrationRuntimeObjectMetadataOperations
-from .operations import IntegrationRuntimeNodesOperations
-from .operations import LinkedServicesOperations
-from .operations import DatasetsOperations
-from .operations import PipelinesOperations
-from .operations import PipelineRunsOperations
-from .operations import ActivityRunsOperations
-from .operations import TriggersOperations
-from .operations import TriggerRunsOperations
-from .operations import DataFlowsOperations
-from .operations import DataFlowDebugSessionOperations
-from . import models
+from ._configuration_async import DataFactoryManagementClientConfiguration
+from .operations_async import Operations
+from .operations_async import FactoriesOperations
+from .operations_async import ExposureControlOperations
+from .operations_async import IntegrationRuntimesOperations
+from .operations_async import IntegrationRuntimeObjectMetadataOperations
+from .operations_async import IntegrationRuntimeNodesOperations
+from .operations_async import LinkedServicesOperations
+from .operations_async import DatasetsOperations
+from .operations_async import PipelinesOperations
+from .operations_async import PipelineRunsOperations
+from .operations_async import ActivityRunsOperations
+from .operations_async import TriggersOperations
+from .operations_async import TriggerRunsOperations
+from .operations_async import DataFlowsOperations
+from .operations_async import DataFlowDebugSessionOperations
+from .. import models
 
 
 class DataFactoryManagementClient(object):
     """The Azure Data Factory V2 management API provides a RESTful set of web services that interact with Azure Data Factory V2 services.
 
     :ivar operations: Operations operations
-    :vartype operations: azure.mgmt.datafactory.operations.Operations
+    :vartype operations: azure.mgmt.datafactory.aio.operations_async.Operations
     :ivar factories: FactoriesOperations operations
-    :vartype factories: azure.mgmt.datafactory.operations.FactoriesOperations
+    :vartype factories: azure.mgmt.datafactory.aio.operations_async.FactoriesOperations
     :ivar exposure_control: ExposureControlOperations operations
-    :vartype exposure_control: azure.mgmt.datafactory.operations.ExposureControlOperations
+    :vartype exposure_control: azure.mgmt.datafactory.aio.operations_async.ExposureControlOperations
     :ivar integration_runtimes: IntegrationRuntimesOperations operations
-    :vartype integration_runtimes: azure.mgmt.datafactory.operations.IntegrationRuntimesOperations
+    :vartype integration_runtimes: azure.mgmt.datafactory.aio.operations_async.IntegrationRuntimesOperations
     :ivar integration_runtime_object_metadata: IntegrationRuntimeObjectMetadataOperations operations
-    :vartype integration_runtime_object_metadata: azure.mgmt.datafactory.operations.IntegrationRuntimeObjectMetadataOperations
+    :vartype integration_runtime_object_metadata: azure.mgmt.datafactory.aio.operations_async.IntegrationRuntimeObjectMetadataOperations
     :ivar integration_runtime_nodes: IntegrationRuntimeNodesOperations operations
-    :vartype integration_runtime_nodes: azure.mgmt.datafactory.operations.IntegrationRuntimeNodesOperations
+    :vartype integration_runtime_nodes: azure.mgmt.datafactory.aio.operations_async.IntegrationRuntimeNodesOperations
     :ivar linked_services: LinkedServicesOperations operations
-    :vartype linked_services: azure.mgmt.datafactory.operations.LinkedServicesOperations
+    :vartype linked_services: azure.mgmt.datafactory.aio.operations_async.LinkedServicesOperations
     :ivar datasets: DatasetsOperations operations
-    :vartype datasets: azure.mgmt.datafactory.operations.DatasetsOperations
+    :vartype datasets: azure.mgmt.datafactory.aio.operations_async.DatasetsOperations
     :ivar pipelines: PipelinesOperations operations
-    :vartype pipelines: azure.mgmt.datafactory.operations.PipelinesOperations
+    :vartype pipelines: azure.mgmt.datafactory.aio.operations_async.PipelinesOperations
     :ivar pipeline_runs: PipelineRunsOperations operations
-    :vartype pipeline_runs: azure.mgmt.datafactory.operations.PipelineRunsOperations
+    :vartype pipeline_runs: azure.mgmt.datafactory.aio.operations_async.PipelineRunsOperations
     :ivar activity_runs: ActivityRunsOperations operations
-    :vartype activity_runs: azure.mgmt.datafactory.operations.ActivityRunsOperations
+    :vartype activity_runs: azure.mgmt.datafactory.aio.operations_async.ActivityRunsOperations
     :ivar triggers: TriggersOperations operations
-    :vartype triggers: azure.mgmt.datafactory.operations.TriggersOperations
+    :vartype triggers: azure.mgmt.datafactory.aio.operations_async.TriggersOperations
     :ivar trigger_runs: TriggerRunsOperations operations
-    :vartype trigger_runs: azure.mgmt.datafactory.operations.TriggerRunsOperations
+    :vartype trigger_runs: azure.mgmt.datafactory.aio.operations_async.TriggerRunsOperations
     :ivar data_flows: DataFlowsOperations operations
-    :vartype data_flows: azure.mgmt.datafactory.operations.DataFlowsOperations
+    :vartype data_flows: azure.mgmt.datafactory.aio.operations_async.DataFlowsOperations
     :ivar data_flow_debug_session: DataFlowDebugSessionOperations operations
-    :vartype data_flow_debug_session: azure.mgmt.datafactory.operations.DataFlowDebugSessionOperations
+    :vartype data_flow_debug_session: azure.mgmt.datafactory.aio.operations_async.DataFlowDebugSessionOperations
     :param credential: Credential needed for the client to connect to Azure.
-    :type credential: ~azure.core.credentials.TokenCredential
+    :type credential: ~azure.core.credentials_async.AsyncTokenCredential
     :param subscription_id: The subscription identifier.
     :type subscription_id: str
     :param str base_url: Service URL
@@ -77,16 +73,15 @@ class DataFactoryManagementClient(object):
 
     def __init__(
         self,
-        credential,  # type: "TokenCredential"
-        subscription_id,  # type: str
-        base_url=None,  # type: Optional[str]
-        **kwargs  # type: Any
-    ):
-        # type: (...) -> None
+        credential: "AsyncTokenCredential",
+        subscription_id: str,
+        base_url: Optional[str] = None,
+        **kwargs: Any
+    ) -> None:
         if not base_url:
             base_url = 'https://management.azure.com'
         self._config = DataFactoryManagementClientConfiguration(credential, subscription_id, **kwargs)
-        self._client = ARMPipelineClient(base_url=base_url, config=self._config, **kwargs)
+        self._client = AsyncARMPipelineClient(base_url=base_url, config=self._config, **kwargs)
 
         client_models = {k: v for k, v in models.__dict__.items() if isinstance(v, type)}
         self._serialize = Serializer(client_models)
@@ -123,15 +118,12 @@ class DataFactoryManagementClient(object):
         self.data_flow_debug_session = DataFlowDebugSessionOperations(
             self._client, self._config, self._serialize, self._deserialize)
 
-    def close(self):
-        # type: () -> None
-        self._client.close()
+    async def close(self) -> None:
+        await self._client.close()
 
-    def __enter__(self):
-        # type: () -> DataFactoryManagementClient
-        self._client.__enter__()
+    async def __aenter__(self) -> "DataFactoryManagementClient":
+        await self._client.__aenter__()
         return self
 
-    def __exit__(self, *exc_details):
-        # type: (Any) -> None
-        self._client.__exit__(*exc_details)
+    async def __aexit__(self, *exc_details) -> None:
+        await self._client.__aexit__(*exc_details)
