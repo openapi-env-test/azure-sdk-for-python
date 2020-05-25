@@ -109,6 +109,73 @@ class FactoriesOperations(object):
         )
     list.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.DataFactory/factories'}  # type: ignore
 
+    def configure_factory_repo_for_demo(
+        self,
+        location_id,  # type: str
+        factory_resource_id=None,  # type: Optional[str]
+        repo_configuration=None,  # type: Optional["models.FactoryRepoConfiguration"]
+        **kwargs  # type: Any
+    ):
+        # type: (...) -> "models.Factory"
+        """Updates a factory's repo information.
+
+        :param location_id: The location identifier.
+        :type location_id: str
+        :param factory_resource_id: The factory resource id.
+        :type factory_resource_id: str
+        :param repo_configuration: Git repo information of the factory.
+        :type repo_configuration: ~azure.mgmt.datafactory.models.FactoryRepoConfiguration
+        :keyword callable cls: A custom type or function that will be passed the direct response
+        :return: Factory or the result of cls(response)
+        :rtype: ~azure.mgmt.datafactory.models.Factory
+        :raises: ~azure.core.exceptions.HttpResponseError
+        """
+        cls = kwargs.pop('cls', None)  # type: ClsType["models.Factory"]
+        error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop('error_map', {}))
+
+        _factory_repo_update = models.FactoryRepoUpdate(factory_resource_id=factory_resource_id, repo_configuration=repo_configuration)
+        api_version = "2018-06-01"
+        content_type = kwargs.pop("content_type", "application/json")
+
+        # Construct URL
+        url = self.configure_factory_repo_for_demo.metadata['url']  # type: ignore
+        path_format_arguments = {
+            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
+            'locationId': self._serialize.url("location_id", location_id, 'str'),
+        }
+        url = self._client.format_url(url, **path_format_arguments)
+
+        # Construct parameters
+        query_parameters = {}  # type: Dict[str, Any]
+        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+
+        # Construct headers
+        header_parameters = {}  # type: Dict[str, Any]
+        header_parameters['Content-Type'] = self._serialize.header("content_type", content_type, 'str')
+        header_parameters['Accept'] = 'application/json'
+
+        # Construct and send request
+        body_content_kwargs = {}  # type: Dict[str, Any]
+        body_content = self._serialize.body(_factory_repo_update, 'FactoryRepoUpdate')
+        body_content_kwargs['content'] = body_content
+        request = self._client.post(url, query_parameters, header_parameters, **body_content_kwargs)
+
+        pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
+        response = pipeline_response.http_response
+
+        if response.status_code not in [200]:
+            map_error(status_code=response.status_code, response=response, error_map=error_map)
+            raise HttpResponseError(response=response, error_format=ARMErrorFormat)
+
+        deserialized = self._deserialize('Factory', pipeline_response)
+
+        if cls:
+          return cls(pipeline_response, deserialized, {})
+
+        return deserialized
+    configure_factory_repo_for_demo.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.DataFactory/locations/{locationId}/configureFactoryRepoForDemo'}  # type: ignore
+
     def configure_factory_repo(
         self,
         location_id,  # type: str
