@@ -1,6 +1,6 @@
 {
-    "chosen_version": "2019-06-01",
-    "total_api_version_list": ["2019-06-01"],
+    "chosen_version": "2019-06-02",
+    "total_api_version_list": ["2019-06-02"],
     "client": {
         "name": "DeviceServices",
         "filename": "_device_services",
