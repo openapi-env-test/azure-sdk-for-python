@@ -47,7 +47,7 @@ class DeviceServicesConfiguration(Configuration):
 
         self.credential = credential
         self.subscription_id = subscription_id
-        self.api_version = "2019-06-01"
+        self.api_version = "2019-06-02"
         self.credential_scopes = ['https://management.azure.com/.default']
         self.credential_scopes.extend(kwargs.pop('credential_scopes', []))
         kwargs.setdefault('sdk_moniker', 'mgmt-windowsiot/{}'.format(VERSION))
