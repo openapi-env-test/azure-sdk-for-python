@@ -1,0 +1,100 @@
+{
+    "chosen_version": "2019-06-15",
+    "total_api_version_list": ["2019-06-15"],
+    "client": {
+        "name": "CdnManagementClient",
+        "filename": "_cdn_management_client",
+        "description": "Cdn Management Client."
+    },
+    "global_parameters": {
+        "sync_method": {
+            "credential": {
+                "method_signature": "credential,  # type: \"TokenCredential\"",
+                "description": "Credential needed for the client to connect to Azure.",
+                "docstring_type": "~azure.core.credentials.TokenCredential",
+                "required": true
+            },
+            "subscription_id": {
+                "method_signature": "subscription_id,  # type: str",
+                "description": "Azure Subscription ID.",
+                "docstring_type": "str",
+                "required": true
+            }
+        },
+        "async_method": {
+            "credential": {
+                "method_signature": "credential,  # type: \"AsyncTokenCredential\"",
+                "description": "Credential needed for the client to connect to Azure.",
+                "docstring_type": "~azure.core.credentials_async.AsyncTokenCredential",
+                "required": true
+            },
+            "subscription_id": {
+                "method_signature": "subscription_id,  # type: str",
+                "description": "Azure Subscription ID.",
+                "docstring_type": "str",
+                "required": true
+            }
+        },
+        "constant": {
+        },
+        "call": "credential, subscription_id"
+    },
+    "config": {
+        "credential": true,
+        "credential_scopes": ["https://management.azure.com/.default"]
+    },
+    "operation_groups": {
+        "profiles": "ProfilesOperations",
+        "endpoints": "EndpointsOperations",
+        "origins": "OriginsOperations",
+        "custom_domains": "CustomDomainsOperations",
+        "resource_usage": "ResourceUsageOperations",
+        "operations": "Operations",
+        "edge_nodes": "EdgeNodesOperations",
+        "policies": "PoliciesOperations",
+        "managed_rule_sets": "ManagedRuleSetsOperations"
+    },
+    "operation_mixins": {
+        "check_name_availability" : {
+            "sync": {
+                "operation_name": "check_name_availability",
+                "signature": "def check_name_availability(\n    self,\n    name,  # type: str\n    **kwargs  # type: Any\n):\n"
+            },
+            "async": {
+                "operation_name": "check_name_availability",
+                "signature": "async def check_name_availability(\n    self,\n    name: str,\n    **kwargs\n) -\u003e \"models.CheckNameAvailabilityOutput\":\n",
+                "coroutine": true
+            },
+            "doc": "    \"\"\"Check the availability of a resource name. This is needed for resources where name is globally unique, such as a CDN endpoint.\n\n:param name: The resource name to validate.\n:type name: str\n:keyword callable cls: A custom type or function that will be passed the direct response\n:return: CheckNameAvailabilityOutput or the result of cls(response)\n:rtype: ~azure.mgmt.cdn.models.CheckNameAvailabilityOutput\n:raises: ~azure.core.exceptions.HttpResponseError\n\"\"\"",
+            "call": "name"
+        },
+        "check_name_availability_with_subscription" : {
+            "sync": {
+                "operation_name": "check_name_availability_with_subscription",
+                "signature": "def check_name_availability_with_subscription(\n    self,\n    name,  # type: str\n    **kwargs  # type: Any\n):\n"
+            },
+            "async": {
+                "operation_name": "check_name_availability_with_subscription",
+                "signature": "async def check_name_availability_with_subscription(\n    self,\n    name: str,\n    **kwargs\n) -\u003e \"models.CheckNameAvailabilityOutput\":\n",
+                "coroutine": true
+            },
+            "doc": "    \"\"\"Check the availability of a resource name. This is needed for resources where name is globally unique, such as a CDN endpoint.\n\n:param name: The resource name to validate.\n:type name: str\n:keyword callable cls: A custom type or function that will be passed the direct response\n:return: CheckNameAvailabilityOutput or the result of cls(response)\n:rtype: ~azure.mgmt.cdn.models.CheckNameAvailabilityOutput\n:raises: ~azure.core.exceptions.HttpResponseError\n\"\"\"",
+            "call": "name"
+        },
+        "validate_probe" : {
+            "sync": {
+                "operation_name": "validate_probe",
+                "signature": "def validate_probe(\n    self,\n    probe_url,  # type: str\n    **kwargs  # type: Any\n):\n"
+            },
+            "async": {
+                "operation_name": "validate_probe",
+                "signature": "async def validate_probe(\n    self,\n    probe_url: str,\n    **kwargs\n) -\u003e \"models.ValidateProbeOutput\":\n",
+                "coroutine": true
+            },
+            "doc": "    \"\"\"Check if the probe path is a valid path and the file can be accessed. Probe path is the path to a file hosted on the origin server to help accelerate the delivery of dynamic content via the CDN endpoint. This path is relative to the origin path specified in the endpoint configuration.\n\n:param probe_url: The probe URL to validate.\n:type probe_url: str\n:keyword callable cls: A custom type or function that will be passed the direct response\n:return: ValidateProbeOutput or the result of cls(response)\n:rtype: ~azure.mgmt.cdn.models.ValidateProbeOutput\n:raises: ~azure.core.exceptions.HttpResponseError\n\"\"\"",
+            "call": "probe_url"
+        }
+    },
+    "sync_imports": "from typing import TYPE_CHECKING\nimport warnings\n\nfrom azure.core.exceptions import HttpResponseError, ResourceExistsError, ResourceNotFoundError, map_error\nfrom azure.core.pipeline import PipelineResponse\nfrom azure.core.pipeline.transport import HttpRequest, HttpResponse\nfrom azure.mgmt.core.exceptions import ARMErrorFormat\n\nif TYPE_CHECKING:\n    # pylint: disable=unused-import,ungrouped-imports\n    from typing import Any, Callable, Dict, Generic, Optional, TypeVar",
+    "async_imports": "from typing import Any, Callable, Dict, Generic, Optional, TypeVar\nimport warnings\n\nfrom azure.core.exceptions import HttpResponseError, ResourceExistsError, ResourceNotFoundError, map_error\nfrom azure.core.pipeline import PipelineResponse\nfrom azure.core.pipeline.transport import AsyncHttpResponse, HttpRequest\nfrom azure.mgmt.core.exceptions import ARMErrorFormat"
+}
