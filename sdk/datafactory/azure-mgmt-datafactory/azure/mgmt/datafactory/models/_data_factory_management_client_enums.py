@@ -114,6 +114,17 @@ class FtpAuthenticationType(str, Enum):
     basic = "Basic"
     anonymous = "Anonymous"
 
+class GlobalParameterType(str, Enum):
+    """Global Parameter type.
+    """
+
+    object = "Object"
+    string = "String"
+    int = "Int"
+    float = "Float"
+    bool = "Bool"
+    array = "Array"
+
 class GoogleAdWordsAuthenticationType(str, Enum):
     """The OAuth 2.0 authentication mechanism used for authentication. ServiceAuthentication can only
     be used on self-hosted IR.
