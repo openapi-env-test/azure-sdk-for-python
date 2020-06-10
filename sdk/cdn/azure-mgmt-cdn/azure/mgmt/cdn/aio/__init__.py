@@ -6,14 +6,5 @@
 # Changes may cause incorrect behavior and will be lost if the code is regenerated.
 # --------------------------------------------------------------------------
 
-from ._cdn_management_client import CdnManagementClient
-from ._version import VERSION
-
-__version__ = VERSION
+from ._cdn_management_client_async import CdnManagementClient
 __all__ = ['CdnManagementClient']
-
-try:
-    from ._patch import patch_sdk
-    patch_sdk()
-except ImportError:
-    pass
