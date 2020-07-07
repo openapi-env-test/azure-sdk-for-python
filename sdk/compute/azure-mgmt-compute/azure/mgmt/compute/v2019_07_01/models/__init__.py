@@ -41,8 +41,8 @@ try:
     from ._models_py3 import Disk
     from ._models_py3 import DiskEncryptionSet
     from ._models_py3 import DiskEncryptionSetParameters
-    from ._models_py3 import DiskEncryptionSettings
     from ._models_py3 import DiskEncryptionSetUpdate
+    from ._models_py3 import DiskEncryptionSettings
     from ._models_py3 import DiskInstanceView
     from ._models_py3 import DiskSku
     from ._models_py3 import DiskUpdate
@@ -146,6 +146,7 @@ try:
     from ._models_py3 import Usage
     from ._models_py3 import UsageName
     from ._models_py3 import UserArtifactSource
+    from ._models_py3 import VMScaleSetConvertToSinglePlacementGroupInput
     from ._models_py3 import VaultCertificate
     from ._models_py3 import VaultSecretGroup
     from ._models_py3 import VirtualHardDisk
@@ -157,8 +158,8 @@ try:
     from ._models_py3 import VirtualMachineExtensionHandlerInstanceView
     from ._models_py3 import VirtualMachineExtensionImage
     from ._models_py3 import VirtualMachineExtensionInstanceView
-    from ._models_py3 import VirtualMachineExtensionsListResult
     from ._models_py3 import VirtualMachineExtensionUpdate
+    from ._models_py3 import VirtualMachineExtensionsListResult
     from ._models_py3 import VirtualMachineHealthStatus
     from ._models_py3 import VirtualMachineIdentity
     from ._models_py3 import VirtualMachineIdentityUserAssignedIdentitiesValue
@@ -171,11 +172,11 @@ try:
     from ._models_py3 import VirtualMachineScaleSetExtension
     from ._models_py3 import VirtualMachineScaleSetExtensionProfile
     from ._models_py3 import VirtualMachineScaleSetExtensionUpdate
+    from ._models_py3 import VirtualMachineScaleSetIPConfiguration
     from ._models_py3 import VirtualMachineScaleSetIdentity
     from ._models_py3 import VirtualMachineScaleSetIdentityUserAssignedIdentitiesValue
     from ._models_py3 import VirtualMachineScaleSetInstanceView
     from ._models_py3 import VirtualMachineScaleSetInstanceViewStatusesSummary
-    from ._models_py3 import VirtualMachineScaleSetIPConfiguration
     from ._models_py3 import VirtualMachineScaleSetIpTag
     from ._models_py3 import VirtualMachineScaleSetManagedDiskParameters
     from ._models_py3 import VirtualMachineScaleSetNetworkConfiguration
@@ -210,10 +211,9 @@ try:
     from ._models_py3 import VirtualMachineSize
     from ._models_py3 import VirtualMachineStatusCodeCount
     from ._models_py3 import VirtualMachineUpdate
-    from ._models_py3 import VMScaleSetConvertToSinglePlacementGroupInput
-    from ._models_py3 import WindowsConfiguration
     from ._models_py3 import WinRMConfiguration
     from ._models_py3 import WinRMListener
+    from ._models_py3 import WindowsConfiguration
 except (SyntaxError, ImportError):
     from ._models import AccessUri
     from ._models import AdditionalCapabilities
@@ -246,8 +246,8 @@ except (SyntaxError, ImportError):
     from ._models import Disk
     from ._models import DiskEncryptionSet
     from ._models import DiskEncryptionSetParameters
-    from ._models import DiskEncryptionSettings
     from ._models import DiskEncryptionSetUpdate
+    from ._models import DiskEncryptionSettings
     from ._models import DiskInstanceView
     from ._models import DiskSku
     from ._models import DiskUpdate
@@ -351,6 +351,7 @@ except (SyntaxError, ImportError):
     from ._models import Usage
     from ._models import UsageName
     from ._models import UserArtifactSource
+    from ._models import VMScaleSetConvertToSinglePlacementGroupInput
     from ._models import VaultCertificate
     from ._models import VaultSecretGroup
     from ._models import VirtualHardDisk
@@ -362,8 +363,8 @@ except (SyntaxError, ImportError):
     from ._models import VirtualMachineExtensionHandlerInstanceView
     from ._models import VirtualMachineExtensionImage
     from ._models import VirtualMachineExtensionInstanceView
-    from ._models import VirtualMachineExtensionsListResult
     from ._models import VirtualMachineExtensionUpdate
+    from ._models import VirtualMachineExtensionsListResult
     from ._models import VirtualMachineHealthStatus
     from ._models import VirtualMachineIdentity
     from ._models import VirtualMachineIdentityUserAssignedIdentitiesValue
@@ -376,11 +377,11 @@ except (SyntaxError, ImportError):
     from ._models import VirtualMachineScaleSetExtension
     from ._models import VirtualMachineScaleSetExtensionProfile
     from ._models import VirtualMachineScaleSetExtensionUpdate
+    from ._models import VirtualMachineScaleSetIPConfiguration
     from ._models import VirtualMachineScaleSetIdentity
     from ._models import VirtualMachineScaleSetIdentityUserAssignedIdentitiesValue
     from ._models import VirtualMachineScaleSetInstanceView
     from ._models import VirtualMachineScaleSetInstanceViewStatusesSummary
-    from ._models import VirtualMachineScaleSetIPConfiguration
     from ._models import VirtualMachineScaleSetIpTag
     from ._models import VirtualMachineScaleSetManagedDiskParameters
     from ._models import VirtualMachineScaleSetNetworkConfiguration
@@ -415,10 +416,9 @@ except (SyntaxError, ImportError):
     from ._models import VirtualMachineSize
     from ._models import VirtualMachineStatusCodeCount
     from ._models import VirtualMachineUpdate
-    from ._models import VMScaleSetConvertToSinglePlacementGroupInput
-    from ._models import WindowsConfiguration
     from ._models import WinRMConfiguration
     from ._models import WinRMListener
+    from ._models import WindowsConfiguration
 from ._paged_models import AvailabilitySetPaged
 from ._paged_models import ComputeOperationValuePaged
 from ._paged_models import DedicatedHostGroupPaged
@@ -521,8 +521,8 @@ __all__ = [
     'Disk',
     'DiskEncryptionSet',
     'DiskEncryptionSetParameters',
-    'DiskEncryptionSettings',
     'DiskEncryptionSetUpdate',
+    'DiskEncryptionSettings',
     'DiskInstanceView',
     'DiskSku',
     'DiskUpdate',
@@ -626,6 +626,7 @@ __all__ = [
     'Usage',
     'UsageName',
     'UserArtifactSource',
+    'VMScaleSetConvertToSinglePlacementGroupInput',
     'VaultCertificate',
     'VaultSecretGroup',
     'VirtualHardDisk',
@@ -637,8 +638,8 @@ __all__ = [
     'VirtualMachineExtensionHandlerInstanceView',
     'VirtualMachineExtensionImage',
     'VirtualMachineExtensionInstanceView',
-    'VirtualMachineExtensionsListResult',
     'VirtualMachineExtensionUpdate',
+    'VirtualMachineExtensionsListResult',
     'VirtualMachineHealthStatus',
     'VirtualMachineIdentity',
     'VirtualMachineIdentityUserAssignedIdentitiesValue',
@@ -651,11 +652,11 @@ __all__ = [
     'VirtualMachineScaleSetExtension',
     'VirtualMachineScaleSetExtensionProfile',
     'VirtualMachineScaleSetExtensionUpdate',
+    'VirtualMachineScaleSetIPConfiguration',
     'VirtualMachineScaleSetIdentity',
     'VirtualMachineScaleSetIdentityUserAssignedIdentitiesValue',
     'VirtualMachineScaleSetInstanceView',
     'VirtualMachineScaleSetInstanceViewStatusesSummary',
-    'VirtualMachineScaleSetIPConfiguration',
     'VirtualMachineScaleSetIpTag',
     'VirtualMachineScaleSetManagedDiskParameters',
     'VirtualMachineScaleSetNetworkConfiguration',
@@ -690,10 +691,9 @@ __all__ = [
     'VirtualMachineSize',
     'VirtualMachineStatusCodeCount',
     'VirtualMachineUpdate',
-    'VMScaleSetConvertToSinglePlacementGroupInput',
-    'WindowsConfiguration',
     'WinRMConfiguration',
     'WinRMListener',
+    'WindowsConfiguration',
     'ComputeOperationValuePaged',
     'AvailabilitySetPaged',
     'VirtualMachineSizePaged',

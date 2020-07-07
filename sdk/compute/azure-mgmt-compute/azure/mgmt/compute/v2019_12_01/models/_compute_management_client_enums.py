@@ -247,6 +247,12 @@ class DiffDiskOptions(str, Enum):
     local = "Local"
 
 
+class DiffDiskPlacement(str, Enum):
+
+    cache_disk = "CacheDisk"
+    resource_disk = "ResourceDisk"
+
+
 class PassNames(str, Enum):
 
     oobe_system = "OobeSystem"
@@ -417,6 +423,7 @@ class StorageAccountType(str, Enum):
 
     standard_lrs = "Standard_LRS"
     standard_zrs = "Standard_ZRS"
+    premium_lrs = "Premium_LRS"
 
 
 class HostCaching(str, Enum):

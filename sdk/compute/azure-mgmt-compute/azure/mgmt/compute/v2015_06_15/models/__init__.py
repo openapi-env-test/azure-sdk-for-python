@@ -32,10 +32,10 @@ try:
     from ._models_py3 import LinuxConfiguration
     from ._models_py3 import NetworkInterfaceReference
     from ._models_py3 import NetworkProfile
-    from ._models_py3 import OperationStatusResponse
     from ._models_py3 import OSDisk
     from ._models_py3 import OSDiskImage
     from ._models_py3 import OSProfile
+    from ._models_py3 import OperationStatusResponse
     from ._models_py3 import Plan
     from ._models_py3 import PurchasePlan
     from ._models_py3 import Resource
@@ -66,9 +66,9 @@ try:
     from ._models_py3 import VirtualMachineScaleSet
     from ._models_py3 import VirtualMachineScaleSetExtension
     from ._models_py3 import VirtualMachineScaleSetExtensionProfile
+    from ._models_py3 import VirtualMachineScaleSetIPConfiguration
     from ._models_py3 import VirtualMachineScaleSetInstanceView
     from ._models_py3 import VirtualMachineScaleSetInstanceViewStatusesSummary
-    from ._models_py3 import VirtualMachineScaleSetIPConfiguration
     from ._models_py3 import VirtualMachineScaleSetNetworkConfiguration
     from ._models_py3 import VirtualMachineScaleSetNetworkProfile
     from ._models_py3 import VirtualMachineScaleSetOSDisk
@@ -84,9 +84,9 @@ try:
     from ._models_py3 import VirtualMachineScaleSetVMProfile
     from ._models_py3 import VirtualMachineSize
     from ._models_py3 import VirtualMachineStatusCodeCount
-    from ._models_py3 import WindowsConfiguration
     from ._models_py3 import WinRMConfiguration
     from ._models_py3 import WinRMListener
+    from ._models_py3 import WindowsConfiguration
 except (SyntaxError, ImportError):
     from ._models import AdditionalUnattendContent
     from ._models import ApiEntityReference
@@ -110,10 +110,10 @@ except (SyntaxError, ImportError):
     from ._models import LinuxConfiguration
     from ._models import NetworkInterfaceReference
     from ._models import NetworkProfile
-    from ._models import OperationStatusResponse
     from ._models import OSDisk
     from ._models import OSDiskImage
     from ._models import OSProfile
+    from ._models import OperationStatusResponse
     from ._models import Plan
     from ._models import PurchasePlan
     from ._models import Resource
@@ -144,9 +144,9 @@ except (SyntaxError, ImportError):
     from ._models import VirtualMachineScaleSet
     from ._models import VirtualMachineScaleSetExtension
     from ._models import VirtualMachineScaleSetExtensionProfile
+    from ._models import VirtualMachineScaleSetIPConfiguration
     from ._models import VirtualMachineScaleSetInstanceView
     from ._models import VirtualMachineScaleSetInstanceViewStatusesSummary
-    from ._models import VirtualMachineScaleSetIPConfiguration
     from ._models import VirtualMachineScaleSetNetworkConfiguration
     from ._models import VirtualMachineScaleSetNetworkProfile
     from ._models import VirtualMachineScaleSetOSDisk
@@ -162,9 +162,9 @@ except (SyntaxError, ImportError):
     from ._models import VirtualMachineScaleSetVMProfile
     from ._models import VirtualMachineSize
     from ._models import VirtualMachineStatusCodeCount
-    from ._models import WindowsConfiguration
     from ._models import WinRMConfiguration
     from ._models import WinRMListener
+    from ._models import WindowsConfiguration
 from ._paged_models import AvailabilitySetPaged
 from ._paged_models import UsagePaged
 from ._paged_models import VirtualMachinePaged
@@ -210,10 +210,10 @@ __all__ = [
     'LinuxConfiguration',
     'NetworkInterfaceReference',
     'NetworkProfile',
-    'OperationStatusResponse',
     'OSDisk',
     'OSDiskImage',
     'OSProfile',
+    'OperationStatusResponse',
     'Plan',
     'PurchasePlan',
     'Resource',
@@ -244,9 +244,9 @@ __all__ = [
     'VirtualMachineScaleSet',
     'VirtualMachineScaleSetExtension',
     'VirtualMachineScaleSetExtensionProfile',
+    'VirtualMachineScaleSetIPConfiguration',
     'VirtualMachineScaleSetInstanceView',
     'VirtualMachineScaleSetInstanceViewStatusesSummary',
-    'VirtualMachineScaleSetIPConfiguration',
     'VirtualMachineScaleSetNetworkConfiguration',
     'VirtualMachineScaleSetNetworkProfile',
     'VirtualMachineScaleSetOSDisk',
@@ -262,9 +262,9 @@ __all__ = [
     'VirtualMachineScaleSetVMProfile',
     'VirtualMachineSize',
     'VirtualMachineStatusCodeCount',
-    'WindowsConfiguration',
     'WinRMConfiguration',
     'WinRMListener',
+    'WindowsConfiguration',
     'AvailabilitySetPaged',
     'VirtualMachineSizePaged',
     'UsagePaged',

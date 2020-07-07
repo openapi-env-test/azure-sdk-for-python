@@ -231,7 +231,7 @@ class AutomaticRepairsPolicy(Model):
      state change has completed. This helps avoid premature or accidental
      repairs. The time duration should be specified in ISO 8601 format. The
      minimum allowed grace period is 30 minutes (PT30M), which is also the
-     default value.
+     default value. The maximum allowed grace period is 90 minutes (PT90M).
     :type grace_period: str
     """
 
@@ -2628,7 +2628,8 @@ class ImageReference(SubResource):
     about platform images, marketplace images, or virtual machine images. This
     element is required when you want to use a platform image, marketplace
     image, or virtual machine image, but is not used in other creation
-    operations.
+    operations. NOTE: Image reference publisher and offer can only be set when
+    you create the scale set.
 
     :param id: Resource Id
     :type id: str
@@ -4220,7 +4221,9 @@ class ScheduledEventsProfile(Model):
 
 
 class Sku(Model):
-    """Describes a virtual machine scale set sku.
+    """Describes a virtual machine scale set sku. NOTE: If the new VM SKU is not
+    supported on the hardware the scale set is currently on, you need to
+    deallocate the VMs in the scale set before you modify the SKU name.
 
     :param name: The sku name.
     :type name: str
@@ -4889,6 +4892,26 @@ class UserArtifactSource(Model):
         self.media_link = media_link
 
 
+class VMScaleSetConvertToSinglePlacementGroupInput(Model):
+    """VMScaleSetConvertToSinglePlacementGroupInput.
+
+    :param active_placement_group_id: Id of the placement group in which you
+     want future virtual machine instances to be placed. To query placement
+     group Id, please use Virtual Machine Scale Set VMs - Get API. If not
+     provided, the platform will choose one with maximum number of virtual
+     machine instances.
+    :type active_placement_group_id: str
+    """
+
+    _attribute_map = {
+        'active_placement_group_id': {'key': 'activePlacementGroupId', 'type': 'str'},
+    }
+
+    def __init__(self, *, active_placement_group_id: str=None, **kwargs) -> None:
+        super(VMScaleSetConvertToSinglePlacementGroupInput, self).__init__(**kwargs)
+        self.active_placement_group_id = active_placement_group_id
+
+
 class VaultCertificate(Model):
     """Describes a single certificate reference in a Key Vault, and where the
     certificate should reside on the VM.
@@ -5469,23 +5492,6 @@ class VirtualMachineExtensionInstanceView(Model):
         self.statuses = statuses
 
 
-class VirtualMachineExtensionsListResult(Model):
-    """The List Extension operation response.
-
-    :param value: The list of extensions
-    :type value:
-     list[~azure.mgmt.compute.v2019_03_01.models.VirtualMachineExtension]
-    """
-
-    _attribute_map = {
-        'value': {'key': 'value', 'type': '[VirtualMachineExtension]'},
-    }
-
-    def __init__(self, *, value=None, **kwargs) -> None:
-        super(VirtualMachineExtensionsListResult, self).__init__(**kwargs)
-        self.value = value
-
-
 class VirtualMachineExtensionUpdate(UpdateResource):
     """Describes a Virtual Machine Extension.
 
@@ -5534,6 +5540,23 @@ class VirtualMachineExtensionUpdate(UpdateResource):
         self.auto_upgrade_minor_version = auto_upgrade_minor_version
         self.settings = settings
         self.protected_settings = protected_settings
+
+
+class VirtualMachineExtensionsListResult(Model):
+    """The List Extension operation response.
+
+    :param value: The list of extensions
+    :type value:
+     list[~azure.mgmt.compute.v2019_03_01.models.VirtualMachineExtension]
+    """
+
+    _attribute_map = {
+        'value': {'key': 'value', 'type': '[VirtualMachineExtension]'},
+    }
+
+    def __init__(self, *, value=None, **kwargs) -> None:
+        super(VirtualMachineExtensionsListResult, self).__init__(**kwargs)
+        self.value = value
 
 
 class VirtualMachineHealthStatus(Model):
@@ -5904,7 +5927,8 @@ class VirtualMachineScaleSet(Resource):
      configured.
     :type identity:
      ~azure.mgmt.compute.v2019_03_01.models.VirtualMachineScaleSetIdentity
-    :param zones: The virtual machine scale set zones.
+    :param zones: The virtual machine scale set zones. NOTE: Availability
+     zones can only be set when you create the scale set.
     :type zones: list[str]
     """
 
@@ -6112,6 +6136,83 @@ class VirtualMachineScaleSetExtensionProfile(Model):
         self.extensions = extensions
 
 
+class VirtualMachineScaleSetIPConfiguration(SubResource):
+    """Describes a virtual machine scale set network profile's IP configuration.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param id: Resource Id
+    :type id: str
+    :param name: Required. The IP configuration name.
+    :type name: str
+    :param subnet: Specifies the identifier of the subnet.
+    :type subnet: ~azure.mgmt.compute.v2019_03_01.models.ApiEntityReference
+    :param primary: Specifies the primary network interface in case the
+     virtual machine has more than 1 network interface.
+    :type primary: bool
+    :param public_ip_address_configuration: The publicIPAddressConfiguration.
+    :type public_ip_address_configuration:
+     ~azure.mgmt.compute.v2019_03_01.models.VirtualMachineScaleSetPublicIPAddressConfiguration
+    :param private_ip_address_version: Available from Api-Version 2017-03-30
+     onwards, it represents whether the specific ipconfiguration is IPv4 or
+     IPv6. Default is taken as IPv4.  Possible values are: 'IPv4' and 'IPv6'.
+     Possible values include: 'IPv4', 'IPv6'
+    :type private_ip_address_version: str or
+     ~azure.mgmt.compute.v2019_03_01.models.IPVersion
+    :param application_gateway_backend_address_pools: Specifies an array of
+     references to backend address pools of application gateways. A scale set
+     can reference backend address pools of multiple application gateways.
+     Multiple scale sets cannot use the same application gateway.
+    :type application_gateway_backend_address_pools:
+     list[~azure.mgmt.compute.v2019_03_01.models.SubResource]
+    :param application_security_groups: Specifies an array of references to
+     application security group.
+    :type application_security_groups:
+     list[~azure.mgmt.compute.v2019_03_01.models.SubResource]
+    :param load_balancer_backend_address_pools: Specifies an array of
+     references to backend address pools of load balancers. A scale set can
+     reference backend address pools of one public and one internal load
+     balancer. Multiple scale sets cannot use the same load balancer.
+    :type load_balancer_backend_address_pools:
+     list[~azure.mgmt.compute.v2019_03_01.models.SubResource]
+    :param load_balancer_inbound_nat_pools: Specifies an array of references
+     to inbound Nat pools of the load balancers. A scale set can reference
+     inbound nat pools of one public and one internal load balancer. Multiple
+     scale sets cannot use the same load balancer
+    :type load_balancer_inbound_nat_pools:
+     list[~azure.mgmt.compute.v2019_03_01.models.SubResource]
+    """
+
+    _validation = {
+        'name': {'required': True},
+    }
+
+    _attribute_map = {
+        'id': {'key': 'id', 'type': 'str'},
+        'name': {'key': 'name', 'type': 'str'},
+        'subnet': {'key': 'properties.subnet', 'type': 'ApiEntityReference'},
+        'primary': {'key': 'properties.primary', 'type': 'bool'},
+        'public_ip_address_configuration': {'key': 'properties.publicIPAddressConfiguration', 'type': 'VirtualMachineScaleSetPublicIPAddressConfiguration'},
+        'private_ip_address_version': {'key': 'properties.privateIPAddressVersion', 'type': 'str'},
+        'application_gateway_backend_address_pools': {'key': 'properties.applicationGatewayBackendAddressPools', 'type': '[SubResource]'},
+        'application_security_groups': {'key': 'properties.applicationSecurityGroups', 'type': '[SubResource]'},
+        'load_balancer_backend_address_pools': {'key': 'properties.loadBalancerBackendAddressPools', 'type': '[SubResource]'},
+        'load_balancer_inbound_nat_pools': {'key': 'properties.loadBalancerInboundNatPools', 'type': '[SubResource]'},
+    }
+
+    def __init__(self, *, name: str, id: str=None, subnet=None, primary: bool=None, public_ip_address_configuration=None, private_ip_address_version=None, application_gateway_backend_address_pools=None, application_security_groups=None, load_balancer_backend_address_pools=None, load_balancer_inbound_nat_pools=None, **kwargs) -> None:
+        super(VirtualMachineScaleSetIPConfiguration, self).__init__(id=id, **kwargs)
+        self.name = name
+        self.subnet = subnet
+        self.primary = primary
+        self.public_ip_address_configuration = public_ip_address_configuration
+        self.private_ip_address_version = private_ip_address_version
+        self.application_gateway_backend_address_pools = application_gateway_backend_address_pools
+        self.application_security_groups = application_security_groups
+        self.load_balancer_backend_address_pools = load_balancer_backend_address_pools
+        self.load_balancer_inbound_nat_pools = load_balancer_inbound_nat_pools
+
+
 class VirtualMachineScaleSetIdentity(Model):
     """Identity for the virtual machine scale set.
 
@@ -6248,83 +6349,6 @@ class VirtualMachineScaleSetInstanceViewStatusesSummary(Model):
     def __init__(self, **kwargs) -> None:
         super(VirtualMachineScaleSetInstanceViewStatusesSummary, self).__init__(**kwargs)
         self.statuses_summary = None
-
-
-class VirtualMachineScaleSetIPConfiguration(SubResource):
-    """Describes a virtual machine scale set network profile's IP configuration.
-
-    All required parameters must be populated in order to send to Azure.
-
-    :param id: Resource Id
-    :type id: str
-    :param name: Required. The IP configuration name.
-    :type name: str
-    :param subnet: Specifies the identifier of the subnet.
-    :type subnet: ~azure.mgmt.compute.v2019_03_01.models.ApiEntityReference
-    :param primary: Specifies the primary network interface in case the
-     virtual machine has more than 1 network interface.
-    :type primary: bool
-    :param public_ip_address_configuration: The publicIPAddressConfiguration.
-    :type public_ip_address_configuration:
-     ~azure.mgmt.compute.v2019_03_01.models.VirtualMachineScaleSetPublicIPAddressConfiguration
-    :param private_ip_address_version: Available from Api-Version 2017-03-30
-     onwards, it represents whether the specific ipconfiguration is IPv4 or
-     IPv6. Default is taken as IPv4.  Possible values are: 'IPv4' and 'IPv6'.
-     Possible values include: 'IPv4', 'IPv6'
-    :type private_ip_address_version: str or
-     ~azure.mgmt.compute.v2019_03_01.models.IPVersion
-    :param application_gateway_backend_address_pools: Specifies an array of
-     references to backend address pools of application gateways. A scale set
-     can reference backend address pools of multiple application gateways.
-     Multiple scale sets cannot use the same application gateway.
-    :type application_gateway_backend_address_pools:
-     list[~azure.mgmt.compute.v2019_03_01.models.SubResource]
-    :param application_security_groups: Specifies an array of references to
-     application security group.
-    :type application_security_groups:
-     list[~azure.mgmt.compute.v2019_03_01.models.SubResource]
-    :param load_balancer_backend_address_pools: Specifies an array of
-     references to backend address pools of load balancers. A scale set can
-     reference backend address pools of one public and one internal load
-     balancer. Multiple scale sets cannot use the same load balancer.
-    :type load_balancer_backend_address_pools:
-     list[~azure.mgmt.compute.v2019_03_01.models.SubResource]
-    :param load_balancer_inbound_nat_pools: Specifies an array of references
-     to inbound Nat pools of the load balancers. A scale set can reference
-     inbound nat pools of one public and one internal load balancer. Multiple
-     scale sets cannot use the same load balancer
-    :type load_balancer_inbound_nat_pools:
-     list[~azure.mgmt.compute.v2019_03_01.models.SubResource]
-    """
-
-    _validation = {
-        'name': {'required': True},
-    }
-
-    _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'subnet': {'key': 'properties.subnet', 'type': 'ApiEntityReference'},
-        'primary': {'key': 'properties.primary', 'type': 'bool'},
-        'public_ip_address_configuration': {'key': 'properties.publicIPAddressConfiguration', 'type': 'VirtualMachineScaleSetPublicIPAddressConfiguration'},
-        'private_ip_address_version': {'key': 'properties.privateIPAddressVersion', 'type': 'str'},
-        'application_gateway_backend_address_pools': {'key': 'properties.applicationGatewayBackendAddressPools', 'type': '[SubResource]'},
-        'application_security_groups': {'key': 'properties.applicationSecurityGroups', 'type': '[SubResource]'},
-        'load_balancer_backend_address_pools': {'key': 'properties.loadBalancerBackendAddressPools', 'type': '[SubResource]'},
-        'load_balancer_inbound_nat_pools': {'key': 'properties.loadBalancerInboundNatPools', 'type': '[SubResource]'},
-    }
-
-    def __init__(self, *, name: str, id: str=None, subnet=None, primary: bool=None, public_ip_address_configuration=None, private_ip_address_version=None, application_gateway_backend_address_pools=None, application_security_groups=None, load_balancer_backend_address_pools=None, load_balancer_inbound_nat_pools=None, **kwargs) -> None:
-        super(VirtualMachineScaleSetIPConfiguration, self).__init__(id=id, **kwargs)
-        self.name = name
-        self.subnet = subnet
-        self.primary = primary
-        self.public_ip_address_configuration = public_ip_address_configuration
-        self.private_ip_address_version = private_ip_address_version
-        self.application_gateway_backend_address_pools = application_gateway_backend_address_pools
-        self.application_security_groups = application_security_groups
-        self.load_balancer_backend_address_pools = load_balancer_backend_address_pools
-        self.load_balancer_inbound_nat_pools = load_balancer_inbound_nat_pools
 
 
 class VirtualMachineScaleSetIpTag(Model):
@@ -6880,7 +6904,9 @@ class VirtualMachineScaleSetUpdate(UpdateResource):
      not run on the extra overprovisioned VMs.
     :type do_not_run_extensions_on_overprovisioned_vms: bool
     :param single_placement_group: When true this limits the scale set to a
-     single placement group, of max size 100 virtual machines.
+     single placement group, of max size 100 virtual machines. NOTE: If
+     singlePlacementGroup is true, it may be modified to false. However, if
+     singlePlacementGroup is false, it may not be modified to true.
     :type single_placement_group: bool
     :param additional_capabilities: Specifies additional capabilities enabled
      or disabled on the Virtual Machines in the Virtual Machine Scale Set. For
@@ -7935,70 +7961,6 @@ class VirtualMachineUpdate(UpdateResource):
         self.zones = zones
 
 
-class VMScaleSetConvertToSinglePlacementGroupInput(Model):
-    """VMScaleSetConvertToSinglePlacementGroupInput.
-
-    :param active_placement_group_id: Id of the placement group in which you
-     want future virtual machine instances to be placed. To query placement
-     group Id, please use Virtual Machine Scale Set VMs - Get API. If not
-     provided, the platform will choose one with maximum number of virtual
-     machine instances.
-    :type active_placement_group_id: str
-    """
-
-    _attribute_map = {
-        'active_placement_group_id': {'key': 'activePlacementGroupId', 'type': 'str'},
-    }
-
-    def __init__(self, *, active_placement_group_id: str=None, **kwargs) -> None:
-        super(VMScaleSetConvertToSinglePlacementGroupInput, self).__init__(**kwargs)
-        self.active_placement_group_id = active_placement_group_id
-
-
-class WindowsConfiguration(Model):
-    """Specifies Windows operating system settings on the virtual machine.
-
-    :param provision_vm_agent: Indicates whether virtual machine agent should
-     be provisioned on the virtual machine. <br><br> When this property is not
-     specified in the request body, default behavior is to set it to true.
-     This will ensure that VM Agent is installed on the VM so that extensions
-     can be added to the VM later.
-    :type provision_vm_agent: bool
-    :param enable_automatic_updates: Indicates whether Automatic Updates is
-     enabled for the Windows virtual machine. Default value is true. <br><br>
-     For virtual machine scale sets, this property can be updated and updates
-     will take effect on OS reprovisioning.
-    :type enable_automatic_updates: bool
-    :param time_zone: Specifies the time zone of the virtual machine. e.g.
-     "Pacific Standard Time"
-    :type time_zone: str
-    :param additional_unattend_content: Specifies additional base-64 encoded
-     XML formatted information that can be included in the Unattend.xml file,
-     which is used by Windows Setup.
-    :type additional_unattend_content:
-     list[~azure.mgmt.compute.v2019_03_01.models.AdditionalUnattendContent]
-    :param win_rm: Specifies the Windows Remote Management listeners. This
-     enables remote Windows PowerShell.
-    :type win_rm: ~azure.mgmt.compute.v2019_03_01.models.WinRMConfiguration
-    """
-
-    _attribute_map = {
-        'provision_vm_agent': {'key': 'provisionVMAgent', 'type': 'bool'},
-        'enable_automatic_updates': {'key': 'enableAutomaticUpdates', 'type': 'bool'},
-        'time_zone': {'key': 'timeZone', 'type': 'str'},
-        'additional_unattend_content': {'key': 'additionalUnattendContent', 'type': '[AdditionalUnattendContent]'},
-        'win_rm': {'key': 'winRM', 'type': 'WinRMConfiguration'},
-    }
-
-    def __init__(self, *, provision_vm_agent: bool=None, enable_automatic_updates: bool=None, time_zone: str=None, additional_unattend_content=None, win_rm=None, **kwargs) -> None:
-        super(WindowsConfiguration, self).__init__(**kwargs)
-        self.provision_vm_agent = provision_vm_agent
-        self.enable_automatic_updates = enable_automatic_updates
-        self.time_zone = time_zone
-        self.additional_unattend_content = additional_unattend_content
-        self.win_rm = win_rm
-
-
 class WinRMConfiguration(Model):
     """Describes Windows Remote Management configuration of the VM.
 
@@ -8044,3 +8006,47 @@ class WinRMListener(Model):
         super(WinRMListener, self).__init__(**kwargs)
         self.protocol = protocol
         self.certificate_url = certificate_url
+
+
+class WindowsConfiguration(Model):
+    """Specifies Windows operating system settings on the virtual machine.
+
+    :param provision_vm_agent: Indicates whether virtual machine agent should
+     be provisioned on the virtual machine. <br><br> When this property is not
+     specified in the request body, default behavior is to set it to true.
+     This will ensure that VM Agent is installed on the VM so that extensions
+     can be added to the VM later.
+    :type provision_vm_agent: bool
+    :param enable_automatic_updates: Indicates whether Automatic Updates is
+     enabled for the Windows virtual machine. Default value is true. <br><br>
+     For virtual machine scale sets, this property can be updated and updates
+     will take effect on OS reprovisioning.
+    :type enable_automatic_updates: bool
+    :param time_zone: Specifies the time zone of the virtual machine. e.g.
+     "Pacific Standard Time"
+    :type time_zone: str
+    :param additional_unattend_content: Specifies additional base-64 encoded
+     XML formatted information that can be included in the Unattend.xml file,
+     which is used by Windows Setup.
+    :type additional_unattend_content:
+     list[~azure.mgmt.compute.v2019_03_01.models.AdditionalUnattendContent]
+    :param win_rm: Specifies the Windows Remote Management listeners. This
+     enables remote Windows PowerShell.
+    :type win_rm: ~azure.mgmt.compute.v2019_03_01.models.WinRMConfiguration
+    """
+
+    _attribute_map = {
+        'provision_vm_agent': {'key': 'provisionVMAgent', 'type': 'bool'},
+        'enable_automatic_updates': {'key': 'enableAutomaticUpdates', 'type': 'bool'},
+        'time_zone': {'key': 'timeZone', 'type': 'str'},
+        'additional_unattend_content': {'key': 'additionalUnattendContent', 'type': '[AdditionalUnattendContent]'},
+        'win_rm': {'key': 'winRM', 'type': 'WinRMConfiguration'},
+    }
+
+    def __init__(self, *, provision_vm_agent: bool=None, enable_automatic_updates: bool=None, time_zone: str=None, additional_unattend_content=None, win_rm=None, **kwargs) -> None:
+        super(WindowsConfiguration, self).__init__(**kwargs)
+        self.provision_vm_agent = provision_vm_agent
+        self.enable_automatic_updates = enable_automatic_updates
+        self.time_zone = time_zone
+        self.additional_unattend_content = additional_unattend_content
+        self.win_rm = win_rm

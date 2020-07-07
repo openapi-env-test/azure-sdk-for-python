@@ -1368,49 +1368,6 @@ class NetworkProfile(Model):
         self.network_interfaces = network_interfaces
 
 
-class OperationStatusResponse(Model):
-    """Operation status response.
-
-    Variables are only populated by the server, and will be ignored when
-    sending a request.
-
-    :ivar name: Operation ID
-    :vartype name: str
-    :ivar status: Operation status
-    :vartype status: str
-    :ivar start_time: Start time of the operation
-    :vartype start_time: datetime
-    :ivar end_time: End time of the operation
-    :vartype end_time: datetime
-    :ivar error: Api error
-    :vartype error: ~azure.mgmt.compute.v2016_04_30_preview.models.ApiError
-    """
-
-    _validation = {
-        'name': {'readonly': True},
-        'status': {'readonly': True},
-        'start_time': {'readonly': True},
-        'end_time': {'readonly': True},
-        'error': {'readonly': True},
-    }
-
-    _attribute_map = {
-        'name': {'key': 'name', 'type': 'str'},
-        'status': {'key': 'status', 'type': 'str'},
-        'start_time': {'key': 'startTime', 'type': 'iso-8601'},
-        'end_time': {'key': 'endTime', 'type': 'iso-8601'},
-        'error': {'key': 'error', 'type': 'ApiError'},
-    }
-
-    def __init__(self, **kwargs) -> None:
-        super(OperationStatusResponse, self).__init__(**kwargs)
-        self.name = None
-        self.status = None
-        self.start_time = None
-        self.end_time = None
-        self.error = None
-
-
 class OSDisk(Model):
     """Specifies information about the operating system disk used by the virtual
     machine. <br><br> For more information about disks, see [About disks and
@@ -1603,6 +1560,49 @@ class OSProfile(Model):
         self.windows_configuration = windows_configuration
         self.linux_configuration = linux_configuration
         self.secrets = secrets
+
+
+class OperationStatusResponse(Model):
+    """Operation status response.
+
+    Variables are only populated by the server, and will be ignored when
+    sending a request.
+
+    :ivar name: Operation ID
+    :vartype name: str
+    :ivar status: Operation status
+    :vartype status: str
+    :ivar start_time: Start time of the operation
+    :vartype start_time: datetime
+    :ivar end_time: End time of the operation
+    :vartype end_time: datetime
+    :ivar error: Api error
+    :vartype error: ~azure.mgmt.compute.v2016_04_30_preview.models.ApiError
+    """
+
+    _validation = {
+        'name': {'readonly': True},
+        'status': {'readonly': True},
+        'start_time': {'readonly': True},
+        'end_time': {'readonly': True},
+        'error': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'name': {'key': 'name', 'type': 'str'},
+        'status': {'key': 'status', 'type': 'str'},
+        'start_time': {'key': 'startTime', 'type': 'iso-8601'},
+        'end_time': {'key': 'endTime', 'type': 'iso-8601'},
+        'error': {'key': 'error', 'type': 'ApiError'},
+    }
+
+    def __init__(self, **kwargs) -> None:
+        super(OperationStatusResponse, self).__init__(**kwargs)
+        self.name = None
+        self.status = None
+        self.start_time = None
+        self.end_time = None
+        self.error = None
 
 
 class Plan(Model):
@@ -2558,23 +2558,6 @@ class VirtualMachineExtensionInstanceView(Model):
         self.statuses = statuses
 
 
-class VirtualMachineExtensionsListResult(Model):
-    """The List Extension operation response.
-
-    :param value: The list of extensions
-    :type value:
-     list[~azure.mgmt.compute.v2016_04_30_preview.models.VirtualMachineExtension]
-    """
-
-    _attribute_map = {
-        'value': {'key': 'value', 'type': '[VirtualMachineExtension]'},
-    }
-
-    def __init__(self, *, value=None, **kwargs) -> None:
-        super(VirtualMachineExtensionsListResult, self).__init__(**kwargs)
-        self.value = value
-
-
 class VirtualMachineExtensionUpdate(UpdateResource):
     """Describes a Virtual Machine Extension.
 
@@ -2623,6 +2606,23 @@ class VirtualMachineExtensionUpdate(UpdateResource):
         self.auto_upgrade_minor_version = auto_upgrade_minor_version
         self.settings = settings
         self.protected_settings = protected_settings
+
+
+class VirtualMachineExtensionsListResult(Model):
+    """The List Extension operation response.
+
+    :param value: The list of extensions
+    :type value:
+     list[~azure.mgmt.compute.v2016_04_30_preview.models.VirtualMachineExtension]
+    """
+
+    _attribute_map = {
+        'value': {'key': 'value', 'type': '[VirtualMachineExtension]'},
+    }
+
+    def __init__(self, *, value=None, **kwargs) -> None:
+        super(VirtualMachineExtensionsListResult, self).__init__(**kwargs)
+        self.value = value
 
 
 class VirtualMachineIdentity(Model):
@@ -3018,6 +3018,55 @@ class VirtualMachineScaleSetExtensionProfile(Model):
         self.extensions = extensions
 
 
+class VirtualMachineScaleSetIPConfiguration(SubResource):
+    """Describes a virtual machine scale set network profile's IP configuration.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param id: Resource Id
+    :type id: str
+    :param name: Required. The IP configuration name.
+    :type name: str
+    :param subnet: Required. The subnet.
+    :type subnet:
+     ~azure.mgmt.compute.v2016_04_30_preview.models.ApiEntityReference
+    :param application_gateway_backend_address_pools: The application gateway
+     backend address pools.
+    :type application_gateway_backend_address_pools:
+     list[~azure.mgmt.compute.v2016_04_30_preview.models.SubResource]
+    :param load_balancer_backend_address_pools: The load balancer backend
+     address pools.
+    :type load_balancer_backend_address_pools:
+     list[~azure.mgmt.compute.v2016_04_30_preview.models.SubResource]
+    :param load_balancer_inbound_nat_pools: The load balancer inbound nat
+     pools.
+    :type load_balancer_inbound_nat_pools:
+     list[~azure.mgmt.compute.v2016_04_30_preview.models.SubResource]
+    """
+
+    _validation = {
+        'name': {'required': True},
+        'subnet': {'required': True},
+    }
+
+    _attribute_map = {
+        'id': {'key': 'id', 'type': 'str'},
+        'name': {'key': 'name', 'type': 'str'},
+        'subnet': {'key': 'properties.subnet', 'type': 'ApiEntityReference'},
+        'application_gateway_backend_address_pools': {'key': 'properties.applicationGatewayBackendAddressPools', 'type': '[SubResource]'},
+        'load_balancer_backend_address_pools': {'key': 'properties.loadBalancerBackendAddressPools', 'type': '[SubResource]'},
+        'load_balancer_inbound_nat_pools': {'key': 'properties.loadBalancerInboundNatPools', 'type': '[SubResource]'},
+    }
+
+    def __init__(self, *, name: str, subnet, id: str=None, application_gateway_backend_address_pools=None, load_balancer_backend_address_pools=None, load_balancer_inbound_nat_pools=None, **kwargs) -> None:
+        super(VirtualMachineScaleSetIPConfiguration, self).__init__(id=id, **kwargs)
+        self.name = name
+        self.subnet = subnet
+        self.application_gateway_backend_address_pools = application_gateway_backend_address_pools
+        self.load_balancer_backend_address_pools = load_balancer_backend_address_pools
+        self.load_balancer_inbound_nat_pools = load_balancer_inbound_nat_pools
+
+
 class VirtualMachineScaleSetIdentity(Model):
     """Identity for the virtual machine scale set.
 
@@ -3114,55 +3163,6 @@ class VirtualMachineScaleSetInstanceViewStatusesSummary(Model):
     def __init__(self, **kwargs) -> None:
         super(VirtualMachineScaleSetInstanceViewStatusesSummary, self).__init__(**kwargs)
         self.statuses_summary = None
-
-
-class VirtualMachineScaleSetIPConfiguration(SubResource):
-    """Describes a virtual machine scale set network profile's IP configuration.
-
-    All required parameters must be populated in order to send to Azure.
-
-    :param id: Resource Id
-    :type id: str
-    :param name: Required. The IP configuration name.
-    :type name: str
-    :param subnet: Required. The subnet.
-    :type subnet:
-     ~azure.mgmt.compute.v2016_04_30_preview.models.ApiEntityReference
-    :param application_gateway_backend_address_pools: The application gateway
-     backend address pools.
-    :type application_gateway_backend_address_pools:
-     list[~azure.mgmt.compute.v2016_04_30_preview.models.SubResource]
-    :param load_balancer_backend_address_pools: The load balancer backend
-     address pools.
-    :type load_balancer_backend_address_pools:
-     list[~azure.mgmt.compute.v2016_04_30_preview.models.SubResource]
-    :param load_balancer_inbound_nat_pools: The load balancer inbound nat
-     pools.
-    :type load_balancer_inbound_nat_pools:
-     list[~azure.mgmt.compute.v2016_04_30_preview.models.SubResource]
-    """
-
-    _validation = {
-        'name': {'required': True},
-        'subnet': {'required': True},
-    }
-
-    _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'subnet': {'key': 'properties.subnet', 'type': 'ApiEntityReference'},
-        'application_gateway_backend_address_pools': {'key': 'properties.applicationGatewayBackendAddressPools', 'type': '[SubResource]'},
-        'load_balancer_backend_address_pools': {'key': 'properties.loadBalancerBackendAddressPools', 'type': '[SubResource]'},
-        'load_balancer_inbound_nat_pools': {'key': 'properties.loadBalancerInboundNatPools', 'type': '[SubResource]'},
-    }
-
-    def __init__(self, *, name: str, subnet, id: str=None, application_gateway_backend_address_pools=None, load_balancer_backend_address_pools=None, load_balancer_inbound_nat_pools=None, **kwargs) -> None:
-        super(VirtualMachineScaleSetIPConfiguration, self).__init__(id=id, **kwargs)
-        self.name = name
-        self.subnet = subnet
-        self.application_gateway_backend_address_pools = application_gateway_backend_address_pools
-        self.load_balancer_backend_address_pools = load_balancer_backend_address_pools
-        self.load_balancer_inbound_nat_pools = load_balancer_inbound_nat_pools
 
 
 class VirtualMachineScaleSetManagedDiskParameters(Model):
@@ -3849,49 +3849,6 @@ class VirtualMachineStatusCodeCount(Model):
         self.count = None
 
 
-class WindowsConfiguration(Model):
-    """Specifies Windows operating system settings on the virtual machine.
-
-    :param provision_vm_agent: Indicates whether virtual machine agent should
-     be provisioned on the virtual machine. <br><br> When this property is not
-     specified in the request body, default behavior is to set it to true.
-     This will ensure that VM Agent is installed on the VM so that extensions
-     can be added to the VM later.
-    :type provision_vm_agent: bool
-    :param enable_automatic_updates: Indicates whether virtual machine is
-     enabled for automatic updates.
-    :type enable_automatic_updates: bool
-    :param time_zone: Specifies the time zone of the virtual machine. e.g.
-     "Pacific Standard Time"
-    :type time_zone: str
-    :param additional_unattend_content: Specifies additional base-64 encoded
-     XML formatted information that can be included in the Unattend.xml file,
-     which is used by Windows Setup.
-    :type additional_unattend_content:
-     list[~azure.mgmt.compute.v2016_04_30_preview.models.AdditionalUnattendContent]
-    :param win_rm: Specifies the Windows Remote Management listeners. This
-     enables remote Windows PowerShell.
-    :type win_rm:
-     ~azure.mgmt.compute.v2016_04_30_preview.models.WinRMConfiguration
-    """
-
-    _attribute_map = {
-        'provision_vm_agent': {'key': 'provisionVMAgent', 'type': 'bool'},
-        'enable_automatic_updates': {'key': 'enableAutomaticUpdates', 'type': 'bool'},
-        'time_zone': {'key': 'timeZone', 'type': 'str'},
-        'additional_unattend_content': {'key': 'additionalUnattendContent', 'type': '[AdditionalUnattendContent]'},
-        'win_rm': {'key': 'winRM', 'type': 'WinRMConfiguration'},
-    }
-
-    def __init__(self, *, provision_vm_agent: bool=None, enable_automatic_updates: bool=None, time_zone: str=None, additional_unattend_content=None, win_rm=None, **kwargs) -> None:
-        super(WindowsConfiguration, self).__init__(**kwargs)
-        self.provision_vm_agent = provision_vm_agent
-        self.enable_automatic_updates = enable_automatic_updates
-        self.time_zone = time_zone
-        self.additional_unattend_content = additional_unattend_content
-        self.win_rm = win_rm
-
-
 class WinRMConfiguration(Model):
     """Describes Windows Remote Management configuration of the VM.
 
@@ -3937,3 +3894,46 @@ class WinRMListener(Model):
         super(WinRMListener, self).__init__(**kwargs)
         self.protocol = protocol
         self.certificate_url = certificate_url
+
+
+class WindowsConfiguration(Model):
+    """Specifies Windows operating system settings on the virtual machine.
+
+    :param provision_vm_agent: Indicates whether virtual machine agent should
+     be provisioned on the virtual machine. <br><br> When this property is not
+     specified in the request body, default behavior is to set it to true.
+     This will ensure that VM Agent is installed on the VM so that extensions
+     can be added to the VM later.
+    :type provision_vm_agent: bool
+    :param enable_automatic_updates: Indicates whether virtual machine is
+     enabled for automatic updates.
+    :type enable_automatic_updates: bool
+    :param time_zone: Specifies the time zone of the virtual machine. e.g.
+     "Pacific Standard Time"
+    :type time_zone: str
+    :param additional_unattend_content: Specifies additional base-64 encoded
+     XML formatted information that can be included in the Unattend.xml file,
+     which is used by Windows Setup.
+    :type additional_unattend_content:
+     list[~azure.mgmt.compute.v2016_04_30_preview.models.AdditionalUnattendContent]
+    :param win_rm: Specifies the Windows Remote Management listeners. This
+     enables remote Windows PowerShell.
+    :type win_rm:
+     ~azure.mgmt.compute.v2016_04_30_preview.models.WinRMConfiguration
+    """
+
+    _attribute_map = {
+        'provision_vm_agent': {'key': 'provisionVMAgent', 'type': 'bool'},
+        'enable_automatic_updates': {'key': 'enableAutomaticUpdates', 'type': 'bool'},
+        'time_zone': {'key': 'timeZone', 'type': 'str'},
+        'additional_unattend_content': {'key': 'additionalUnattendContent', 'type': '[AdditionalUnattendContent]'},
+        'win_rm': {'key': 'winRM', 'type': 'WinRMConfiguration'},
+    }
+
+    def __init__(self, *, provision_vm_agent: bool=None, enable_automatic_updates: bool=None, time_zone: str=None, additional_unattend_content=None, win_rm=None, **kwargs) -> None:
+        super(WindowsConfiguration, self).__init__(**kwargs)
+        self.provision_vm_agent = provision_vm_agent
+        self.enable_automatic_updates = enable_automatic_updates
+        self.time_zone = time_zone
+        self.additional_unattend_content = additional_unattend_content
+        self.win_rm = win_rm

@@ -45,10 +45,10 @@ try:
     from ._models_py3 import ManagedDiskParameters
     from ._models_py3 import NetworkInterfaceReference
     from ._models_py3 import NetworkProfile
-    from ._models_py3 import OperationStatusResponse
     from ._models_py3 import OSDisk
     from ._models_py3 import OSDiskImage
     from ._models_py3 import OSProfile
+    from ._models_py3 import OperationStatusResponse
     from ._models_py3 import Plan
     from ._models_py3 import PurchasePlan
     from ._models_py3 import RecoveryWalkResponse
@@ -90,8 +90,8 @@ try:
     from ._models_py3 import VirtualMachineExtensionHandlerInstanceView
     from ._models_py3 import VirtualMachineExtensionImage
     from ._models_py3 import VirtualMachineExtensionInstanceView
-    from ._models_py3 import VirtualMachineExtensionsListResult
     from ._models_py3 import VirtualMachineExtensionUpdate
+    from ._models_py3 import VirtualMachineExtensionsListResult
     from ._models_py3 import VirtualMachineHealthStatus
     from ._models_py3 import VirtualMachineIdentity
     from ._models_py3 import VirtualMachineImage
@@ -101,10 +101,10 @@ try:
     from ._models_py3 import VirtualMachineScaleSetDataDisk
     from ._models_py3 import VirtualMachineScaleSetExtension
     from ._models_py3 import VirtualMachineScaleSetExtensionProfile
+    from ._models_py3 import VirtualMachineScaleSetIPConfiguration
     from ._models_py3 import VirtualMachineScaleSetIdentity
     from ._models_py3 import VirtualMachineScaleSetInstanceView
     from ._models_py3 import VirtualMachineScaleSetInstanceViewStatusesSummary
-    from ._models_py3 import VirtualMachineScaleSetIPConfiguration
     from ._models_py3 import VirtualMachineScaleSetManagedDiskParameters
     from ._models_py3 import VirtualMachineScaleSetNetworkConfiguration
     from ._models_py3 import VirtualMachineScaleSetNetworkConfigurationDnsSettings
@@ -134,9 +134,9 @@ try:
     from ._models_py3 import VirtualMachineSize
     from ._models_py3 import VirtualMachineStatusCodeCount
     from ._models_py3 import VirtualMachineUpdate
-    from ._models_py3 import WindowsConfiguration
     from ._models_py3 import WinRMConfiguration
     from ._models_py3 import WinRMListener
+    from ._models_py3 import WindowsConfiguration
 except (SyntaxError, ImportError):
     from ._models import AdditionalUnattendContent
     from ._models import ApiEntityReference
@@ -173,10 +173,10 @@ except (SyntaxError, ImportError):
     from ._models import ManagedDiskParameters
     from ._models import NetworkInterfaceReference
     from ._models import NetworkProfile
-    from ._models import OperationStatusResponse
     from ._models import OSDisk
     from ._models import OSDiskImage
     from ._models import OSProfile
+    from ._models import OperationStatusResponse
     from ._models import Plan
     from ._models import PurchasePlan
     from ._models import RecoveryWalkResponse
@@ -218,8 +218,8 @@ except (SyntaxError, ImportError):
     from ._models import VirtualMachineExtensionHandlerInstanceView
     from ._models import VirtualMachineExtensionImage
     from ._models import VirtualMachineExtensionInstanceView
-    from ._models import VirtualMachineExtensionsListResult
     from ._models import VirtualMachineExtensionUpdate
+    from ._models import VirtualMachineExtensionsListResult
     from ._models import VirtualMachineHealthStatus
     from ._models import VirtualMachineIdentity
     from ._models import VirtualMachineImage
@@ -229,10 +229,10 @@ except (SyntaxError, ImportError):
     from ._models import VirtualMachineScaleSetDataDisk
     from ._models import VirtualMachineScaleSetExtension
     from ._models import VirtualMachineScaleSetExtensionProfile
+    from ._models import VirtualMachineScaleSetIPConfiguration
     from ._models import VirtualMachineScaleSetIdentity
     from ._models import VirtualMachineScaleSetInstanceView
     from ._models import VirtualMachineScaleSetInstanceViewStatusesSummary
-    from ._models import VirtualMachineScaleSetIPConfiguration
     from ._models import VirtualMachineScaleSetManagedDiskParameters
     from ._models import VirtualMachineScaleSetNetworkConfiguration
     from ._models import VirtualMachineScaleSetNetworkConfigurationDnsSettings
@@ -262,9 +262,9 @@ except (SyntaxError, ImportError):
     from ._models import VirtualMachineSize
     from ._models import VirtualMachineStatusCodeCount
     from ._models import VirtualMachineUpdate
-    from ._models import WindowsConfiguration
     from ._models import WinRMConfiguration
     from ._models import WinRMListener
+    from ._models import WindowsConfiguration
 from ._paged_models import AvailabilitySetPaged
 from ._paged_models import ComputeOperationValuePaged
 from ._paged_models import ImagePaged
@@ -340,10 +340,10 @@ __all__ = [
     'ManagedDiskParameters',
     'NetworkInterfaceReference',
     'NetworkProfile',
-    'OperationStatusResponse',
     'OSDisk',
     'OSDiskImage',
     'OSProfile',
+    'OperationStatusResponse',
     'Plan',
     'PurchasePlan',
     'RecoveryWalkResponse',
@@ -385,8 +385,8 @@ __all__ = [
     'VirtualMachineExtensionHandlerInstanceView',
     'VirtualMachineExtensionImage',
     'VirtualMachineExtensionInstanceView',
-    'VirtualMachineExtensionsListResult',
     'VirtualMachineExtensionUpdate',
+    'VirtualMachineExtensionsListResult',
     'VirtualMachineHealthStatus',
     'VirtualMachineIdentity',
     'VirtualMachineImage',
@@ -396,10 +396,10 @@ __all__ = [
     'VirtualMachineScaleSetDataDisk',
     'VirtualMachineScaleSetExtension',
     'VirtualMachineScaleSetExtensionProfile',
+    'VirtualMachineScaleSetIPConfiguration',
     'VirtualMachineScaleSetIdentity',
     'VirtualMachineScaleSetInstanceView',
     'VirtualMachineScaleSetInstanceViewStatusesSummary',
-    'VirtualMachineScaleSetIPConfiguration',
     'VirtualMachineScaleSetManagedDiskParameters',
     'VirtualMachineScaleSetNetworkConfiguration',
     'VirtualMachineScaleSetNetworkConfigurationDnsSettings',
@@ -429,9 +429,9 @@ __all__ = [
     'VirtualMachineSize',
     'VirtualMachineStatusCodeCount',
     'VirtualMachineUpdate',
-    'WindowsConfiguration',
     'WinRMConfiguration',
     'WinRMListener',
+    'WindowsConfiguration',
     'ComputeOperationValuePaged',
     'AvailabilitySetPaged',
     'VirtualMachineSizePaged',
