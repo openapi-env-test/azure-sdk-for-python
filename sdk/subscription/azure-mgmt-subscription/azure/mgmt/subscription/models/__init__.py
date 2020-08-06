@@ -25,6 +25,8 @@ try:
     from ._models_py3 import SubscriptionCreationParameters
     from ._models_py3 import SubscriptionCreationResult
     from ._models_py3 import SubscriptionName
+    from ._models_py3 import SubscriptionOperation
+    from ._models_py3 import SubscriptionOperationListResult
     from ._models_py3 import SubscriptionPolicies
     from ._models_py3 import TenantIdDescription
 except (SyntaxError, ImportError):
@@ -43,15 +45,17 @@ except (SyntaxError, ImportError):
     from ._models import SubscriptionCreationParameters
     from ._models import SubscriptionCreationResult
     from ._models import SubscriptionName
+    from ._models import SubscriptionOperation
+    from ._models import SubscriptionOperationListResult
     from ._models import SubscriptionPolicies
     from ._models import TenantIdDescription
 from ._paged_models import LocationPaged
 from ._paged_models import SubscriptionPaged
 from ._paged_models import TenantIdDescriptionPaged
 from ._subscription_client_enums import (
+    OfferType,
     SubscriptionState,
     SpendingLimit,
-    OfferType,
 )
 
 __all__ = [
@@ -70,12 +74,14 @@ __all__ = [
     'SubscriptionCreationParameters',
     'SubscriptionCreationResult',
     'SubscriptionName',
+    'SubscriptionOperation',
+    'SubscriptionOperationListResult',
     'SubscriptionPolicies',
     'TenantIdDescription',
     'LocationPaged',
     'SubscriptionPaged',
     'TenantIdDescriptionPaged',
+    'OfferType',
     'SubscriptionState',
     'SpendingLimit',
-    'OfferType',
 ]
