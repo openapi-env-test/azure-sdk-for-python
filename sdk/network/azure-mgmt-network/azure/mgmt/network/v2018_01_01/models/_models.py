@@ -5609,18 +5609,18 @@ class NetworkWatcher(Resource):
 
     Variables are only populated by the server, and will be ignored when sending a request.
 
-    :param id: Resource ID.
-    :type id: str
-    :ivar name: Resource name.
-    :vartype name: str
-    :ivar type: Resource type.
-    :vartype type: str
     :param location: Resource location.
     :type location: str
     :param tags: A set of tags. Resource tags.
     :type tags: dict[str, str]
+    :ivar name: Name of the network watcher.
+    :vartype name: str
+    :ivar id: ID of the network watcher.
+    :vartype id: str
     :param etag:
     :type etag: str
+    :ivar type: Network watcher type.
+    :vartype type: str
     :ivar provisioning_state: The provisioning state of the resource. Possible values include:
      "Succeeded", "Updating", "Deleting", "Failed".
     :vartype provisioning_state: str or ~azure.mgmt.network.v2018_01_01.models.ProvisioningState
@@ -5628,17 +5628,18 @@ class NetworkWatcher(Resource):
 
     _validation = {
         'name': {'readonly': True},
+        'id': {'readonly': True},
         'type': {'readonly': True},
         'provisioning_state': {'readonly': True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
         'location': {'key': 'location', 'type': 'str'},
         'tags': {'key': 'tags', 'type': '{str}'},
+        'name': {'key': 'name', 'type': 'str'},
+        'id': {'key': 'id', 'type': 'str'},
         'etag': {'key': 'etag', 'type': 'str'},
+        'type': {'key': 'type', 'type': 'str'},
         'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
     }
 
@@ -5647,7 +5648,10 @@ class NetworkWatcher(Resource):
         **kwargs
     ):
         super(NetworkWatcher, self).__init__(**kwargs)
+        self.name = None
+        self.id = None
         self.etag = kwargs.get('etag', "A unique read-only string that changes whenever the resource is updated.")
+        self.type = None
         self.provisioning_state = None
 
 

@@ -53,7 +53,7 @@ class BgpServiceCommunitiesOperations(object):
         """Gets all the available bgp service communities.
 
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either BgpServiceCommunityListResult or the result of cls(response)
+        :return: An iterator like instance of BgpServiceCommunityListResult or the result of cls(response)
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.network.v2017_11_01.models.BgpServiceCommunityListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """

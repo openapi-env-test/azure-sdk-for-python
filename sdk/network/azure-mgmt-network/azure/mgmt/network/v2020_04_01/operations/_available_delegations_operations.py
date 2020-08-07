@@ -56,7 +56,7 @@ class AvailableDelegationsOperations(object):
         :param location: The location of the subnet.
         :type location: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either AvailableDelegationsResult or the result of cls(response)
+        :return: An iterator like instance of AvailableDelegationsResult or the result of cls(response)
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.network.v2020_04_01.models.AvailableDelegationsResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """

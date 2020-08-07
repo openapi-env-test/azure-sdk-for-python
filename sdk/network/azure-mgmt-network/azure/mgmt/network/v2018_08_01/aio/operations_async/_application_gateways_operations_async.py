@@ -12,7 +12,7 @@ from azure.core.async_paging import AsyncItemPaged, AsyncList
 from azure.core.exceptions import HttpResponseError, ResourceExistsError, ResourceNotFoundError, map_error
 from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import AsyncHttpResponse, HttpRequest
-from azure.core.polling import AsyncLROPoller, AsyncNoPolling, AsyncPollingMethod
+from azure.core.polling import AsyncNoPolling, AsyncPollingMethod, async_poller
 from azure.mgmt.core.exceptions import ARMErrorFormat
 from azure.mgmt.core.polling.async_arm_polling import AsyncARMPolling
 
@@ -80,11 +80,11 @@ class ApplicationGatewaysOperations:
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
         if cls:
-            return cls(pipeline_response, None, {})
+          return cls(pipeline_response, None, {})
 
     _delete_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}'}  # type: ignore
 
-    async def begin_delete(
+    async def delete(
         self,
         resource_group_name: str,
         application_gateway_name: str,
@@ -97,12 +97,11 @@ class ApplicationGatewaysOperations:
         :param application_gateway_name: The name of the application gateway.
         :type application_gateway_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: None, or the result of cls(response)
+        :return: None
         :rtype: None
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -112,17 +111,12 @@ class ApplicationGatewaysOperations:
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = await self._delete_initial(
-                resource_group_name=resource_group_name,
-                application_gateway_name=application_gateway_name,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = await self._delete_initial(
+            resource_group_name=resource_group_name,
+            application_gateway_name=application_gateway_name,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             if cls:
@@ -131,16 +125,8 @@ class ApplicationGatewaysOperations:
         if polling is True: polling_method = AsyncARMPolling(lro_delay,  **kwargs)
         elif polling is False: polling_method = AsyncNoPolling()
         else: polling_method = polling
-        if cont_token:
-            return AsyncLROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return AsyncLROPoller(self._client, raw_result, get_long_running_output, polling_method)
-    begin_delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}'}  # type: ignore
+        return await async_poller(self._client, raw_result, get_long_running_output, polling_method)
+    delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}'}  # type: ignore
 
     async def get(
         self,
@@ -155,7 +141,7 @@ class ApplicationGatewaysOperations:
         :param application_gateway_name: The name of the application gateway.
         :type application_gateway_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ApplicationGateway, or the result of cls(response)
+        :return: ApplicationGateway or the result of cls(response)
         :rtype: ~azure.mgmt.network.v2018_08_01.models.ApplicationGateway
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -193,7 +179,7 @@ class ApplicationGatewaysOperations:
         deserialized = self._deserialize('ApplicationGateway', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}'}  # type: ignore
@@ -250,12 +236,12 @@ class ApplicationGatewaysOperations:
             deserialized = self._deserialize('ApplicationGateway', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _create_or_update_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}'}  # type: ignore
 
-    async def begin_create_or_update(
+    async def create_or_update(
         self,
         resource_group_name: str,
         application_gateway_name: str,
@@ -271,12 +257,11 @@ class ApplicationGatewaysOperations:
         :param parameters: Parameters supplied to the create or update application gateway operation.
         :type parameters: ~azure.mgmt.network.v2018_08_01.models.ApplicationGateway
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: ApplicationGateway, or the result of cls(response)
+        :return: ApplicationGateway
         :rtype: ~azure.mgmt.network.v2018_08_01.models.ApplicationGateway
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -286,18 +271,13 @@ class ApplicationGatewaysOperations:
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = await self._create_or_update_initial(
-                resource_group_name=resource_group_name,
-                application_gateway_name=application_gateway_name,
-                parameters=parameters,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = await self._create_or_update_initial(
+            resource_group_name=resource_group_name,
+            application_gateway_name=application_gateway_name,
+            parameters=parameters,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('ApplicationGateway', pipeline_response)
@@ -309,27 +289,21 @@ class ApplicationGatewaysOperations:
         if polling is True: polling_method = AsyncARMPolling(lro_delay,  **kwargs)
         elif polling is False: polling_method = AsyncNoPolling()
         else: polling_method = polling
-        if cont_token:
-            return AsyncLROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return AsyncLROPoller(self._client, raw_result, get_long_running_output, polling_method)
-    begin_create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}'}  # type: ignore
+        return await async_poller(self._client, raw_result, get_long_running_output, polling_method)
+    create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}'}  # type: ignore
 
     async def _update_tags_initial(
         self,
         resource_group_name: str,
         application_gateway_name: str,
-        parameters: "models.TagsObject",
+        tags: Optional[Dict[str, str]] = None,
         **kwargs
     ) -> "models.ApplicationGateway":
         cls = kwargs.pop('cls', None)  # type: ClsType["models.ApplicationGateway"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
+
+        _parameters = models.TagsObject(tags=tags)
         api_version = "2018-08-01"
         content_type = kwargs.pop("content_type", "application/json")
 
@@ -353,7 +327,7 @@ class ApplicationGatewaysOperations:
 
         # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(parameters, 'TagsObject')
+        body_content = self._serialize.body(_parameters, 'TagsObject')
         body_content_kwargs['content'] = body_content
         request = self._client.patch(url, query_parameters, header_parameters, **body_content_kwargs)
 
@@ -367,16 +341,16 @@ class ApplicationGatewaysOperations:
         deserialized = self._deserialize('ApplicationGateway', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _update_tags_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}'}  # type: ignore
 
-    async def begin_update_tags(
+    async def update_tags(
         self,
         resource_group_name: str,
         application_gateway_name: str,
-        parameters: "models.TagsObject",
+        tags: Optional[Dict[str, str]] = None,
         **kwargs
     ) -> "models.ApplicationGateway":
         """Updates the specified application gateway tags.
@@ -385,15 +359,14 @@ class ApplicationGatewaysOperations:
         :type resource_group_name: str
         :param application_gateway_name: The name of the application gateway.
         :type application_gateway_name: str
-        :param parameters: Parameters supplied to update application gateway tags.
-        :type parameters: ~azure.mgmt.network.v2018_08_01.models.TagsObject
+        :param tags: Resource tags.
+        :type tags: dict[str, str]
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: ApplicationGateway, or the result of cls(response)
+        :return: ApplicationGateway
         :rtype: ~azure.mgmt.network.v2018_08_01.models.ApplicationGateway
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -403,18 +376,13 @@ class ApplicationGatewaysOperations:
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = await self._update_tags_initial(
-                resource_group_name=resource_group_name,
-                application_gateway_name=application_gateway_name,
-                parameters=parameters,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = await self._update_tags_initial(
+            resource_group_name=resource_group_name,
+            application_gateway_name=application_gateway_name,
+            tags=tags,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('ApplicationGateway', pipeline_response)
@@ -426,16 +394,8 @@ class ApplicationGatewaysOperations:
         if polling is True: polling_method = AsyncARMPolling(lro_delay,  **kwargs)
         elif polling is False: polling_method = AsyncNoPolling()
         else: polling_method = polling
-        if cont_token:
-            return AsyncLROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return AsyncLROPoller(self._client, raw_result, get_long_running_output, polling_method)
-    begin_update_tags.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}'}  # type: ignore
+        return await async_poller(self._client, raw_result, get_long_running_output, polling_method)
+    update_tags.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}'}  # type: ignore
 
     def list(
         self,
@@ -447,7 +407,7 @@ class ApplicationGatewaysOperations:
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either ApplicationGatewayListResult or the result of cls(response)
+        :return: An iterator like instance of ApplicationGatewayListResult or the result of cls(response)
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.network.v2018_08_01.models.ApplicationGatewayListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -511,7 +471,7 @@ class ApplicationGatewaysOperations:
         """Gets all the application gateways in a subscription.
 
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either ApplicationGatewayListResult or the result of cls(response)
+        :return: An iterator like instance of ApplicationGatewayListResult or the result of cls(response)
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.network.v2018_08_01.models.ApplicationGatewayListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -604,11 +564,11 @@ class ApplicationGatewaysOperations:
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
         if cls:
-            return cls(pipeline_response, None, {})
+          return cls(pipeline_response, None, {})
 
     _start_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}/start'}  # type: ignore
 
-    async def begin_start(
+    async def start(
         self,
         resource_group_name: str,
         application_gateway_name: str,
@@ -621,12 +581,11 @@ class ApplicationGatewaysOperations:
         :param application_gateway_name: The name of the application gateway.
         :type application_gateway_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: None, or the result of cls(response)
+        :return: None
         :rtype: None
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -636,17 +595,12 @@ class ApplicationGatewaysOperations:
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = await self._start_initial(
-                resource_group_name=resource_group_name,
-                application_gateway_name=application_gateway_name,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = await self._start_initial(
+            resource_group_name=resource_group_name,
+            application_gateway_name=application_gateway_name,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             if cls:
@@ -655,16 +609,8 @@ class ApplicationGatewaysOperations:
         if polling is True: polling_method = AsyncARMPolling(lro_delay,  **kwargs)
         elif polling is False: polling_method = AsyncNoPolling()
         else: polling_method = polling
-        if cont_token:
-            return AsyncLROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return AsyncLROPoller(self._client, raw_result, get_long_running_output, polling_method)
-    begin_start.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}/start'}  # type: ignore
+        return await async_poller(self._client, raw_result, get_long_running_output, polling_method)
+    start.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}/start'}  # type: ignore
 
     async def _stop_initial(
         self,
@@ -703,11 +649,11 @@ class ApplicationGatewaysOperations:
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
         if cls:
-            return cls(pipeline_response, None, {})
+          return cls(pipeline_response, None, {})
 
     _stop_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}/stop'}  # type: ignore
 
-    async def begin_stop(
+    async def stop(
         self,
         resource_group_name: str,
         application_gateway_name: str,
@@ -720,12 +666,11 @@ class ApplicationGatewaysOperations:
         :param application_gateway_name: The name of the application gateway.
         :type application_gateway_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: None, or the result of cls(response)
+        :return: None
         :rtype: None
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -735,17 +680,12 @@ class ApplicationGatewaysOperations:
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = await self._stop_initial(
-                resource_group_name=resource_group_name,
-                application_gateway_name=application_gateway_name,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = await self._stop_initial(
+            resource_group_name=resource_group_name,
+            application_gateway_name=application_gateway_name,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             if cls:
@@ -754,16 +694,8 @@ class ApplicationGatewaysOperations:
         if polling is True: polling_method = AsyncARMPolling(lro_delay,  **kwargs)
         elif polling is False: polling_method = AsyncNoPolling()
         else: polling_method = polling
-        if cont_token:
-            return AsyncLROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return AsyncLROPoller(self._client, raw_result, get_long_running_output, polling_method)
-    begin_stop.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}/stop'}  # type: ignore
+        return await async_poller(self._client, raw_result, get_long_running_output, polling_method)
+    stop.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}/stop'}  # type: ignore
 
     async def _backend_health_initial(
         self,
@@ -810,12 +742,12 @@ class ApplicationGatewaysOperations:
             deserialized = self._deserialize('ApplicationGatewayBackendHealth', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _backend_health_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}/backendhealth'}  # type: ignore
 
-    async def begin_backend_health(
+    async def backend_health(
         self,
         resource_group_name: str,
         application_gateway_name: str,
@@ -831,12 +763,11 @@ class ApplicationGatewaysOperations:
         :param expand: Expands BackendAddressPool and BackendHttpSettings referenced in backend health.
         :type expand: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: ApplicationGatewayBackendHealth, or the result of cls(response)
+        :return: ApplicationGatewayBackendHealth
         :rtype: ~azure.mgmt.network.v2018_08_01.models.ApplicationGatewayBackendHealth
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -846,18 +777,13 @@ class ApplicationGatewaysOperations:
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = await self._backend_health_initial(
-                resource_group_name=resource_group_name,
-                application_gateway_name=application_gateway_name,
-                expand=expand,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = await self._backend_health_initial(
+            resource_group_name=resource_group_name,
+            application_gateway_name=application_gateway_name,
+            expand=expand,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('ApplicationGatewayBackendHealth', pipeline_response)
@@ -869,16 +795,8 @@ class ApplicationGatewaysOperations:
         if polling is True: polling_method = AsyncARMPolling(lro_delay,  **kwargs)
         elif polling is False: polling_method = AsyncNoPolling()
         else: polling_method = polling
-        if cont_token:
-            return AsyncLROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return AsyncLROPoller(self._client, raw_result, get_long_running_output, polling_method)
-    begin_backend_health.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}/backendhealth'}  # type: ignore
+        return await async_poller(self._client, raw_result, get_long_running_output, polling_method)
+    backend_health.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}/backendhealth'}  # type: ignore
 
     async def list_available_waf_rule_sets(
         self,
@@ -887,7 +805,7 @@ class ApplicationGatewaysOperations:
         """Lists all available web application firewall rule sets.
 
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ApplicationGatewayAvailableWafRuleSetsResult, or the result of cls(response)
+        :return: ApplicationGatewayAvailableWafRuleSetsResult or the result of cls(response)
         :rtype: ~azure.mgmt.network.v2018_08_01.models.ApplicationGatewayAvailableWafRuleSetsResult
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -923,7 +841,7 @@ class ApplicationGatewaysOperations:
         deserialized = self._deserialize('ApplicationGatewayAvailableWafRuleSetsResult', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     list_available_waf_rule_sets.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableWafRuleSets'}  # type: ignore
@@ -935,7 +853,7 @@ class ApplicationGatewaysOperations:
         """Lists available Ssl options for configuring Ssl policy.
 
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ApplicationGatewayAvailableSslOptions, or the result of cls(response)
+        :return: ApplicationGatewayAvailableSslOptions or the result of cls(response)
         :rtype: ~azure.mgmt.network.v2018_08_01.models.ApplicationGatewayAvailableSslOptions
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -971,7 +889,7 @@ class ApplicationGatewaysOperations:
         deserialized = self._deserialize('ApplicationGatewayAvailableSslOptions', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     list_available_ssl_options.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default'}  # type: ignore
@@ -983,7 +901,7 @@ class ApplicationGatewaysOperations:
         """Lists all SSL predefined policies for configuring Ssl policy.
 
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either ApplicationGatewayAvailableSslPredefinedPolicies or the result of cls(response)
+        :return: An iterator like instance of ApplicationGatewayAvailableSslPredefinedPolicies or the result of cls(response)
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.network.v2018_08_01.models.ApplicationGatewayAvailableSslPredefinedPolicies]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -1049,7 +967,7 @@ class ApplicationGatewaysOperations:
         :param predefined_policy_name: Name of Ssl predefined policy.
         :type predefined_policy_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ApplicationGatewaySslPredefinedPolicy, or the result of cls(response)
+        :return: ApplicationGatewaySslPredefinedPolicy or the result of cls(response)
         :rtype: ~azure.mgmt.network.v2018_08_01.models.ApplicationGatewaySslPredefinedPolicy
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -1086,7 +1004,7 @@ class ApplicationGatewaysOperations:
         deserialized = self._deserialize('ApplicationGatewaySslPredefinedPolicy', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get_ssl_predefined_policy.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies/{predefinedPolicyName}'}  # type: ignore

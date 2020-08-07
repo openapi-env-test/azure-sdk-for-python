@@ -39,7 +39,7 @@ class NetworkManagementClientOperationsMixin(object):
          regular expression: ^[a-z][a-z0-9-]{1,61}[a-z0-9]$.
         :type domain_name_label: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: DnsNameAvailabilityResult, or the result of cls(response)
+        :return: DnsNameAvailabilityResult or the result of cls(response)
         :rtype: ~azure.mgmt.network.v2017_08_01.models.DnsNameAvailabilityResult
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -77,7 +77,7 @@ class NetworkManagementClientOperationsMixin(object):
         deserialized = self._deserialize('DnsNameAvailabilityResult', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     check_dns_name_availability.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/CheckDnsNameAvailability'}  # type: ignore

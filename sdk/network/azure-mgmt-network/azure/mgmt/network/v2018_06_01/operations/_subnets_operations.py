@@ -87,7 +87,7 @@ class SubnetsOperations(object):
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
         if cls:
-            return cls(pipeline_response, None, {})
+          return cls(pipeline_response, None, {})
 
     _delete_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}'}  # type: ignore
 
@@ -108,12 +108,11 @@ class SubnetsOperations(object):
         :param subnet_name: The name of the subnet.
         :type subnet_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either None or the result of cls(response)
+        :return: An instance of LROPoller that returns None
         :rtype: ~azure.core.polling.LROPoller[None]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -123,18 +122,13 @@ class SubnetsOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._delete_initial(
-                resource_group_name=resource_group_name,
-                virtual_network_name=virtual_network_name,
-                subnet_name=subnet_name,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._delete_initial(
+            resource_group_name=resource_group_name,
+            virtual_network_name=virtual_network_name,
+            subnet_name=subnet_name,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             if cls:
@@ -143,15 +137,7 @@ class SubnetsOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay,  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}'}  # type: ignore
 
     def get(
@@ -174,7 +160,7 @@ class SubnetsOperations(object):
         :param expand: Expands referenced resources.
         :type expand: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: Subnet, or the result of cls(response)
+        :return: Subnet or the result of cls(response)
         :rtype: ~azure.mgmt.network.v2018_06_01.models.Subnet
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -215,7 +201,7 @@ class SubnetsOperations(object):
         deserialized = self._deserialize('Subnet', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}'}  # type: ignore
@@ -275,7 +261,7 @@ class SubnetsOperations(object):
             deserialized = self._deserialize('Subnet', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _create_or_update_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}'}  # type: ignore
@@ -300,12 +286,11 @@ class SubnetsOperations(object):
         :param subnet_parameters: Parameters supplied to the create or update subnet operation.
         :type subnet_parameters: ~azure.mgmt.network.v2018_06_01.models.Subnet
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either Subnet or the result of cls(response)
+        :return: An instance of LROPoller that returns Subnet
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.network.v2018_06_01.models.Subnet]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -315,19 +300,14 @@ class SubnetsOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._create_or_update_initial(
-                resource_group_name=resource_group_name,
-                virtual_network_name=virtual_network_name,
-                subnet_name=subnet_name,
-                subnet_parameters=subnet_parameters,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._create_or_update_initial(
+            resource_group_name=resource_group_name,
+            virtual_network_name=virtual_network_name,
+            subnet_name=subnet_name,
+            subnet_parameters=subnet_parameters,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('Subnet', pipeline_response)
@@ -339,15 +319,7 @@ class SubnetsOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay,  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}'}  # type: ignore
 
     def list(
@@ -364,7 +336,7 @@ class SubnetsOperations(object):
         :param virtual_network_name: The name of the virtual network.
         :type virtual_network_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either SubnetListResult or the result of cls(response)
+        :return: An iterator like instance of SubnetListResult or the result of cls(response)
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.network.v2018_06_01.models.SubnetListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """

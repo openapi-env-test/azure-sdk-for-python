@@ -55,7 +55,7 @@ class ExpressRouteCrossConnectionsOperations(object):
         """Retrieves all the ExpressRouteCrossConnections in a subscription.
 
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either ExpressRouteCrossConnectionListResult or the result of cls(response)
+        :return: An iterator like instance of ExpressRouteCrossConnectionListResult or the result of cls(response)
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.network.v2018_07_01.models.ExpressRouteCrossConnectionListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -122,7 +122,7 @@ class ExpressRouteCrossConnectionsOperations(object):
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either ExpressRouteCrossConnectionListResult or the result of cls(response)
+        :return: An iterator like instance of ExpressRouteCrossConnectionListResult or the result of cls(response)
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.network.v2018_07_01.models.ExpressRouteCrossConnectionListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -194,7 +194,7 @@ class ExpressRouteCrossConnectionsOperations(object):
          circuit).
         :type cross_connection_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ExpressRouteCrossConnection, or the result of cls(response)
+        :return: ExpressRouteCrossConnection or the result of cls(response)
         :rtype: ~azure.mgmt.network.v2018_07_01.models.ExpressRouteCrossConnection
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -232,7 +232,7 @@ class ExpressRouteCrossConnectionsOperations(object):
         deserialized = self._deserialize('ExpressRouteCrossConnection', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}'}  # type: ignore
@@ -285,7 +285,7 @@ class ExpressRouteCrossConnectionsOperations(object):
         deserialized = self._deserialize('ExpressRouteCrossConnection', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _create_or_update_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}'}  # type: ignore
@@ -307,12 +307,11 @@ class ExpressRouteCrossConnectionsOperations(object):
         :param parameters: Parameters supplied to the update express route crossConnection operation.
         :type parameters: ~azure.mgmt.network.v2018_07_01.models.ExpressRouteCrossConnection
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either ExpressRouteCrossConnection or the result of cls(response)
+        :return: An instance of LROPoller that returns ExpressRouteCrossConnection
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.network.v2018_07_01.models.ExpressRouteCrossConnection]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -322,18 +321,13 @@ class ExpressRouteCrossConnectionsOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._create_or_update_initial(
-                resource_group_name=resource_group_name,
-                cross_connection_name=cross_connection_name,
-                parameters=parameters,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._create_or_update_initial(
+            resource_group_name=resource_group_name,
+            cross_connection_name=cross_connection_name,
+            parameters=parameters,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('ExpressRouteCrossConnection', pipeline_response)
@@ -345,28 +339,22 @@ class ExpressRouteCrossConnectionsOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay,  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}'}  # type: ignore
 
     def _update_tags_initial(
         self,
         resource_group_name,  # type: str
         cross_connection_name,  # type: str
-        cross_connection_parameters,  # type: "models.TagsObject"
+        tags=None,  # type: Optional[Dict[str, str]]
         **kwargs  # type: Any
     ):
         # type: (...) -> "models.ExpressRouteCrossConnection"
         cls = kwargs.pop('cls', None)  # type: ClsType["models.ExpressRouteCrossConnection"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
+
+        _cross_connection_parameters = models.TagsObject(tags=tags)
         api_version = "2018-07-01"
         content_type = kwargs.pop("content_type", "application/json")
 
@@ -390,7 +378,7 @@ class ExpressRouteCrossConnectionsOperations(object):
 
         # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(cross_connection_parameters, 'TagsObject')
+        body_content = self._serialize.body(_cross_connection_parameters, 'TagsObject')
         body_content_kwargs['content'] = body_content
         request = self._client.patch(url, query_parameters, header_parameters, **body_content_kwargs)
 
@@ -404,7 +392,7 @@ class ExpressRouteCrossConnectionsOperations(object):
         deserialized = self._deserialize('ExpressRouteCrossConnection', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _update_tags_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}'}  # type: ignore
@@ -413,7 +401,7 @@ class ExpressRouteCrossConnectionsOperations(object):
         self,
         resource_group_name,  # type: str
         cross_connection_name,  # type: str
-        cross_connection_parameters,  # type: "models.TagsObject"
+        tags=None,  # type: Optional[Dict[str, str]]
         **kwargs  # type: Any
     ):
         # type: (...) -> LROPoller
@@ -423,16 +411,14 @@ class ExpressRouteCrossConnectionsOperations(object):
         :type resource_group_name: str
         :param cross_connection_name: The name of the cross connection.
         :type cross_connection_name: str
-        :param cross_connection_parameters: Parameters supplied to update express route cross
-     connection tags.
-        :type cross_connection_parameters: ~azure.mgmt.network.v2018_07_01.models.TagsObject
+        :param tags: Resource tags.
+        :type tags: dict[str, str]
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either ExpressRouteCrossConnection or the result of cls(response)
+        :return: An instance of LROPoller that returns ExpressRouteCrossConnection
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.network.v2018_07_01.models.ExpressRouteCrossConnection]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -442,18 +428,13 @@ class ExpressRouteCrossConnectionsOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._update_tags_initial(
-                resource_group_name=resource_group_name,
-                cross_connection_name=cross_connection_name,
-                cross_connection_parameters=cross_connection_parameters,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._update_tags_initial(
+            resource_group_name=resource_group_name,
+            cross_connection_name=cross_connection_name,
+            tags=tags,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('ExpressRouteCrossConnection', pipeline_response)
@@ -465,15 +446,7 @@ class ExpressRouteCrossConnectionsOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay,  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_update_tags.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}'}  # type: ignore
 
     def _list_arp_table_initial(
@@ -523,7 +496,7 @@ class ExpressRouteCrossConnectionsOperations(object):
             deserialized = self._deserialize('ExpressRouteCircuitsArpTableListResult', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _list_arp_table_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}/peerings/{peeringName}/arpTables/{devicePath}'}  # type: ignore
@@ -537,8 +510,7 @@ class ExpressRouteCrossConnectionsOperations(object):
         **kwargs  # type: Any
     ):
         # type: (...) -> LROPoller
-        """Gets the currently advertised ARP table associated with the express route cross connection in a
-    resource group.
+        """Gets the currently advertised ARP table associated with the express route cross connection in a resource group.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
@@ -549,12 +521,11 @@ class ExpressRouteCrossConnectionsOperations(object):
         :param device_path: The path of the device.
         :type device_path: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either ExpressRouteCircuitsArpTableListResult or the result of cls(response)
+        :return: An instance of LROPoller that returns ExpressRouteCircuitsArpTableListResult
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.network.v2018_07_01.models.ExpressRouteCircuitsArpTableListResult]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -564,19 +535,14 @@ class ExpressRouteCrossConnectionsOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._list_arp_table_initial(
-                resource_group_name=resource_group_name,
-                cross_connection_name=cross_connection_name,
-                peering_name=peering_name,
-                device_path=device_path,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._list_arp_table_initial(
+            resource_group_name=resource_group_name,
+            cross_connection_name=cross_connection_name,
+            peering_name=peering_name,
+            device_path=device_path,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('ExpressRouteCircuitsArpTableListResult', pipeline_response)
@@ -588,15 +554,7 @@ class ExpressRouteCrossConnectionsOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay,  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_list_arp_table.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}/peerings/{peeringName}/arpTables/{devicePath}'}  # type: ignore
 
     def _list_routes_table_summary_initial(
@@ -646,7 +604,7 @@ class ExpressRouteCrossConnectionsOperations(object):
             deserialized = self._deserialize('ExpressRouteCrossConnectionsRoutesTableSummaryListResult', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _list_routes_table_summary_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}/peerings/{peeringName}/routeTablesSummary/{devicePath}'}  # type: ignore
@@ -660,8 +618,7 @@ class ExpressRouteCrossConnectionsOperations(object):
         **kwargs  # type: Any
     ):
         # type: (...) -> LROPoller
-        """Gets the route table summary associated with the express route cross connection in a resource
-    group.
+        """Gets the route table summary associated with the express route cross connection in a resource group.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
@@ -672,12 +629,11 @@ class ExpressRouteCrossConnectionsOperations(object):
         :param device_path: The path of the device.
         :type device_path: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either ExpressRouteCrossConnectionsRoutesTableSummaryListResult or the result of cls(response)
+        :return: An instance of LROPoller that returns ExpressRouteCrossConnectionsRoutesTableSummaryListResult
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.network.v2018_07_01.models.ExpressRouteCrossConnectionsRoutesTableSummaryListResult]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -687,19 +643,14 @@ class ExpressRouteCrossConnectionsOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._list_routes_table_summary_initial(
-                resource_group_name=resource_group_name,
-                cross_connection_name=cross_connection_name,
-                peering_name=peering_name,
-                device_path=device_path,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._list_routes_table_summary_initial(
+            resource_group_name=resource_group_name,
+            cross_connection_name=cross_connection_name,
+            peering_name=peering_name,
+            device_path=device_path,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('ExpressRouteCrossConnectionsRoutesTableSummaryListResult', pipeline_response)
@@ -711,15 +662,7 @@ class ExpressRouteCrossConnectionsOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay,  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_list_routes_table_summary.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}/peerings/{peeringName}/routeTablesSummary/{devicePath}'}  # type: ignore
 
     def _list_routes_table_initial(
@@ -769,7 +712,7 @@ class ExpressRouteCrossConnectionsOperations(object):
             deserialized = self._deserialize('ExpressRouteCircuitsRoutesTableListResult', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _list_routes_table_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}/peerings/{peeringName}/routeTables/{devicePath}'}  # type: ignore
@@ -783,8 +726,7 @@ class ExpressRouteCrossConnectionsOperations(object):
         **kwargs  # type: Any
     ):
         # type: (...) -> LROPoller
-        """Gets the currently advertised routes table associated with the express route cross connection
-    in a resource group.
+        """Gets the currently advertised routes table associated with the express route cross connection in a resource group.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
@@ -795,12 +737,11 @@ class ExpressRouteCrossConnectionsOperations(object):
         :param device_path: The path of the device.
         :type device_path: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either ExpressRouteCircuitsRoutesTableListResult or the result of cls(response)
+        :return: An instance of LROPoller that returns ExpressRouteCircuitsRoutesTableListResult
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.network.v2018_07_01.models.ExpressRouteCircuitsRoutesTableListResult]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -810,19 +751,14 @@ class ExpressRouteCrossConnectionsOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._list_routes_table_initial(
-                resource_group_name=resource_group_name,
-                cross_connection_name=cross_connection_name,
-                peering_name=peering_name,
-                device_path=device_path,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._list_routes_table_initial(
+            resource_group_name=resource_group_name,
+            cross_connection_name=cross_connection_name,
+            peering_name=peering_name,
+            device_path=device_path,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('ExpressRouteCircuitsRoutesTableListResult', pipeline_response)
@@ -834,13 +770,5 @@ class ExpressRouteCrossConnectionsOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay,  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_list_routes_table.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}/peerings/{peeringName}/routeTables/{devicePath}'}  # type: ignore

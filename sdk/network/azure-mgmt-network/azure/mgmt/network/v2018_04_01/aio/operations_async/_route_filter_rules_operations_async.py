@@ -12,7 +12,7 @@ from azure.core.async_paging import AsyncItemPaged, AsyncList
 from azure.core.exceptions import HttpResponseError, ResourceExistsError, ResourceNotFoundError, map_error
 from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import AsyncHttpResponse, HttpRequest
-from azure.core.polling import AsyncLROPoller, AsyncNoPolling, AsyncPollingMethod
+from azure.core.polling import AsyncNoPolling, AsyncPollingMethod, async_poller
 from azure.mgmt.core.exceptions import ARMErrorFormat
 from azure.mgmt.core.polling.async_arm_polling import AsyncARMPolling
 
@@ -82,11 +82,11 @@ class RouteFilterRulesOperations:
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
         if cls:
-            return cls(pipeline_response, None, {})
+          return cls(pipeline_response, None, {})
 
     _delete_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}/routeFilterRules/{ruleName}'}  # type: ignore
 
-    async def begin_delete(
+    async def delete(
         self,
         resource_group_name: str,
         route_filter_name: str,
@@ -102,12 +102,11 @@ class RouteFilterRulesOperations:
         :param rule_name: The name of the rule.
         :type rule_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: None, or the result of cls(response)
+        :return: None
         :rtype: None
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -117,18 +116,13 @@ class RouteFilterRulesOperations:
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = await self._delete_initial(
-                resource_group_name=resource_group_name,
-                route_filter_name=route_filter_name,
-                rule_name=rule_name,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = await self._delete_initial(
+            resource_group_name=resource_group_name,
+            route_filter_name=route_filter_name,
+            rule_name=rule_name,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             if cls:
@@ -137,16 +131,8 @@ class RouteFilterRulesOperations:
         if polling is True: polling_method = AsyncARMPolling(lro_delay,  **kwargs)
         elif polling is False: polling_method = AsyncNoPolling()
         else: polling_method = polling
-        if cont_token:
-            return AsyncLROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return AsyncLROPoller(self._client, raw_result, get_long_running_output, polling_method)
-    begin_delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}/routeFilterRules/{ruleName}'}  # type: ignore
+        return await async_poller(self._client, raw_result, get_long_running_output, polling_method)
+    delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}/routeFilterRules/{ruleName}'}  # type: ignore
 
     async def get(
         self,
@@ -164,7 +150,7 @@ class RouteFilterRulesOperations:
         :param rule_name: The name of the rule.
         :type rule_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: RouteFilterRule, or the result of cls(response)
+        :return: RouteFilterRule or the result of cls(response)
         :rtype: ~azure.mgmt.network.v2018_04_01.models.RouteFilterRule
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -203,7 +189,7 @@ class RouteFilterRulesOperations:
         deserialized = self._deserialize('RouteFilterRule', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}/routeFilterRules/{ruleName}'}  # type: ignore
@@ -262,12 +248,12 @@ class RouteFilterRulesOperations:
             deserialized = self._deserialize('RouteFilterRule', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _create_or_update_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}/routeFilterRules/{ruleName}'}  # type: ignore
 
-    async def begin_create_or_update(
+    async def create_or_update(
         self,
         resource_group_name: str,
         route_filter_name: str,
@@ -287,12 +273,11 @@ class RouteFilterRulesOperations:
      rule operation.
         :type route_filter_rule_parameters: ~azure.mgmt.network.v2018_04_01.models.RouteFilterRule
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: RouteFilterRule, or the result of cls(response)
+        :return: RouteFilterRule
         :rtype: ~azure.mgmt.network.v2018_04_01.models.RouteFilterRule
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -302,19 +287,14 @@ class RouteFilterRulesOperations:
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = await self._create_or_update_initial(
-                resource_group_name=resource_group_name,
-                route_filter_name=route_filter_name,
-                rule_name=rule_name,
-                route_filter_rule_parameters=route_filter_rule_parameters,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = await self._create_or_update_initial(
+            resource_group_name=resource_group_name,
+            route_filter_name=route_filter_name,
+            rule_name=rule_name,
+            route_filter_rule_parameters=route_filter_rule_parameters,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('RouteFilterRule', pipeline_response)
@@ -326,16 +306,8 @@ class RouteFilterRulesOperations:
         if polling is True: polling_method = AsyncARMPolling(lro_delay,  **kwargs)
         elif polling is False: polling_method = AsyncNoPolling()
         else: polling_method = polling
-        if cont_token:
-            return AsyncLROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return AsyncLROPoller(self._client, raw_result, get_long_running_output, polling_method)
-    begin_create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}/routeFilterRules/{ruleName}'}  # type: ignore
+        return await async_poller(self._client, raw_result, get_long_running_output, polling_method)
+    create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}/routeFilterRules/{ruleName}'}  # type: ignore
 
     async def _update_initial(
         self,
@@ -386,12 +358,12 @@ class RouteFilterRulesOperations:
         deserialized = self._deserialize('RouteFilterRule', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _update_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}/routeFilterRules/{ruleName}'}  # type: ignore
 
-    async def begin_update(
+    async def update(
         self,
         resource_group_name: str,
         route_filter_name: str,
@@ -411,12 +383,11 @@ class RouteFilterRulesOperations:
      operation.
         :type route_filter_rule_parameters: ~azure.mgmt.network.v2018_04_01.models.PatchRouteFilterRule
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: RouteFilterRule, or the result of cls(response)
+        :return: RouteFilterRule
         :rtype: ~azure.mgmt.network.v2018_04_01.models.RouteFilterRule
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -426,19 +397,14 @@ class RouteFilterRulesOperations:
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = await self._update_initial(
-                resource_group_name=resource_group_name,
-                route_filter_name=route_filter_name,
-                rule_name=rule_name,
-                route_filter_rule_parameters=route_filter_rule_parameters,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = await self._update_initial(
+            resource_group_name=resource_group_name,
+            route_filter_name=route_filter_name,
+            rule_name=rule_name,
+            route_filter_rule_parameters=route_filter_rule_parameters,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('RouteFilterRule', pipeline_response)
@@ -450,16 +416,8 @@ class RouteFilterRulesOperations:
         if polling is True: polling_method = AsyncARMPolling(lro_delay,  **kwargs)
         elif polling is False: polling_method = AsyncNoPolling()
         else: polling_method = polling
-        if cont_token:
-            return AsyncLROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return AsyncLROPoller(self._client, raw_result, get_long_running_output, polling_method)
-    begin_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}/routeFilterRules/{ruleName}'}  # type: ignore
+        return await async_poller(self._client, raw_result, get_long_running_output, polling_method)
+    update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}/routeFilterRules/{ruleName}'}  # type: ignore
 
     def list_by_route_filter(
         self,
@@ -474,7 +432,7 @@ class RouteFilterRulesOperations:
         :param route_filter_name: The name of the route filter.
         :type route_filter_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either RouteFilterRuleListResult or the result of cls(response)
+        :return: An iterator like instance of RouteFilterRuleListResult or the result of cls(response)
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.network.v2018_04_01.models.RouteFilterRuleListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """

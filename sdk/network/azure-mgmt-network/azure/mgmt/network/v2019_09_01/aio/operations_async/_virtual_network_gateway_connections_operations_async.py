@@ -12,7 +12,7 @@ from azure.core.async_paging import AsyncItemPaged, AsyncList
 from azure.core.exceptions import HttpResponseError, ResourceExistsError, ResourceNotFoundError, map_error
 from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import AsyncHttpResponse, HttpRequest
-from azure.core.polling import AsyncLROPoller, AsyncNoPolling, AsyncPollingMethod
+from azure.core.polling import AsyncNoPolling, AsyncPollingMethod, async_poller
 from azure.mgmt.core.exceptions import ARMErrorFormat
 from azure.mgmt.core.polling.async_arm_polling import AsyncARMPolling
 
@@ -95,12 +95,12 @@ class VirtualNetworkGatewayConnectionsOperations:
             deserialized = self._deserialize('VirtualNetworkGatewayConnection', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _create_or_update_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}'}  # type: ignore
 
-    async def begin_create_or_update(
+    async def create_or_update(
         self,
         resource_group_name: str,
         virtual_network_gateway_connection_name: str,
@@ -118,12 +118,11 @@ class VirtualNetworkGatewayConnectionsOperations:
      connection operation.
         :type parameters: ~azure.mgmt.network.v2019_09_01.models.VirtualNetworkGatewayConnection
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: VirtualNetworkGatewayConnection, or the result of cls(response)
+        :return: VirtualNetworkGatewayConnection
         :rtype: ~azure.mgmt.network.v2019_09_01.models.VirtualNetworkGatewayConnection
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -133,18 +132,13 @@ class VirtualNetworkGatewayConnectionsOperations:
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = await self._create_or_update_initial(
-                resource_group_name=resource_group_name,
-                virtual_network_gateway_connection_name=virtual_network_gateway_connection_name,
-                parameters=parameters,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = await self._create_or_update_initial(
+            resource_group_name=resource_group_name,
+            virtual_network_gateway_connection_name=virtual_network_gateway_connection_name,
+            parameters=parameters,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('VirtualNetworkGatewayConnection', pipeline_response)
@@ -156,16 +150,8 @@ class VirtualNetworkGatewayConnectionsOperations:
         if polling is True: polling_method = AsyncARMPolling(lro_delay, lro_options={'final-state-via': 'azure-async-operation'},  **kwargs)
         elif polling is False: polling_method = AsyncNoPolling()
         else: polling_method = polling
-        if cont_token:
-            return AsyncLROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return AsyncLROPoller(self._client, raw_result, get_long_running_output, polling_method)
-    begin_create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}'}  # type: ignore
+        return await async_poller(self._client, raw_result, get_long_running_output, polling_method)
+    create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}'}  # type: ignore
 
     async def get(
         self,
@@ -181,7 +167,7 @@ class VirtualNetworkGatewayConnectionsOperations:
          connection.
         :type virtual_network_gateway_connection_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: VirtualNetworkGatewayConnection, or the result of cls(response)
+        :return: VirtualNetworkGatewayConnection or the result of cls(response)
         :rtype: ~azure.mgmt.network.v2019_09_01.models.VirtualNetworkGatewayConnection
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -219,7 +205,7 @@ class VirtualNetworkGatewayConnectionsOperations:
         deserialized = self._deserialize('VirtualNetworkGatewayConnection', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}'}  # type: ignore
@@ -261,11 +247,11 @@ class VirtualNetworkGatewayConnectionsOperations:
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
         if cls:
-            return cls(pipeline_response, None, {})
+          return cls(pipeline_response, None, {})
 
     _delete_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}'}  # type: ignore
 
-    async def begin_delete(
+    async def delete(
         self,
         resource_group_name: str,
         virtual_network_gateway_connection_name: str,
@@ -279,12 +265,11 @@ class VirtualNetworkGatewayConnectionsOperations:
      connection.
         :type virtual_network_gateway_connection_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: None, or the result of cls(response)
+        :return: None
         :rtype: None
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -294,17 +279,12 @@ class VirtualNetworkGatewayConnectionsOperations:
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = await self._delete_initial(
-                resource_group_name=resource_group_name,
-                virtual_network_gateway_connection_name=virtual_network_gateway_connection_name,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = await self._delete_initial(
+            resource_group_name=resource_group_name,
+            virtual_network_gateway_connection_name=virtual_network_gateway_connection_name,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             if cls:
@@ -313,27 +293,21 @@ class VirtualNetworkGatewayConnectionsOperations:
         if polling is True: polling_method = AsyncARMPolling(lro_delay, lro_options={'final-state-via': 'location'},  **kwargs)
         elif polling is False: polling_method = AsyncNoPolling()
         else: polling_method = polling
-        if cont_token:
-            return AsyncLROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return AsyncLROPoller(self._client, raw_result, get_long_running_output, polling_method)
-    begin_delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}'}  # type: ignore
+        return await async_poller(self._client, raw_result, get_long_running_output, polling_method)
+    delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}'}  # type: ignore
 
     async def _update_tags_initial(
         self,
         resource_group_name: str,
         virtual_network_gateway_connection_name: str,
-        parameters: "models.TagsObject",
+        tags: Optional[Dict[str, str]] = None,
         **kwargs
     ) -> "models.VirtualNetworkGatewayConnection":
         cls = kwargs.pop('cls', None)  # type: ClsType["models.VirtualNetworkGatewayConnection"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
+
+        _parameters = models.TagsObject(tags=tags)
         api_version = "2019-09-01"
         content_type = kwargs.pop("content_type", "application/json")
 
@@ -357,7 +331,7 @@ class VirtualNetworkGatewayConnectionsOperations:
 
         # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(parameters, 'TagsObject')
+        body_content = self._serialize.body(_parameters, 'TagsObject')
         body_content_kwargs['content'] = body_content
         request = self._client.patch(url, query_parameters, header_parameters, **body_content_kwargs)
 
@@ -373,16 +347,16 @@ class VirtualNetworkGatewayConnectionsOperations:
             deserialized = self._deserialize('VirtualNetworkGatewayConnection', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _update_tags_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}'}  # type: ignore
 
-    async def begin_update_tags(
+    async def update_tags(
         self,
         resource_group_name: str,
         virtual_network_gateway_connection_name: str,
-        parameters: "models.TagsObject",
+        tags: Optional[Dict[str, str]] = None,
         **kwargs
     ) -> "models.VirtualNetworkGatewayConnection":
         """Updates a virtual network gateway connection tags.
@@ -392,15 +366,14 @@ class VirtualNetworkGatewayConnectionsOperations:
         :param virtual_network_gateway_connection_name: The name of the virtual network gateway
      connection.
         :type virtual_network_gateway_connection_name: str
-        :param parameters: Parameters supplied to update virtual network gateway connection tags.
-        :type parameters: ~azure.mgmt.network.v2019_09_01.models.TagsObject
+        :param tags: Resource tags.
+        :type tags: dict[str, str]
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: VirtualNetworkGatewayConnection, or the result of cls(response)
+        :return: VirtualNetworkGatewayConnection
         :rtype: ~azure.mgmt.network.v2019_09_01.models.VirtualNetworkGatewayConnection
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -410,18 +383,13 @@ class VirtualNetworkGatewayConnectionsOperations:
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = await self._update_tags_initial(
-                resource_group_name=resource_group_name,
-                virtual_network_gateway_connection_name=virtual_network_gateway_connection_name,
-                parameters=parameters,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = await self._update_tags_initial(
+            resource_group_name=resource_group_name,
+            virtual_network_gateway_connection_name=virtual_network_gateway_connection_name,
+            tags=tags,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('VirtualNetworkGatewayConnection', pipeline_response)
@@ -433,27 +401,22 @@ class VirtualNetworkGatewayConnectionsOperations:
         if polling is True: polling_method = AsyncARMPolling(lro_delay, lro_options={'final-state-via': 'azure-async-operation'},  **kwargs)
         elif polling is False: polling_method = AsyncNoPolling()
         else: polling_method = polling
-        if cont_token:
-            return AsyncLROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return AsyncLROPoller(self._client, raw_result, get_long_running_output, polling_method)
-    begin_update_tags.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}'}  # type: ignore
+        return await async_poller(self._client, raw_result, get_long_running_output, polling_method)
+    update_tags.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}'}  # type: ignore
 
     async def _set_shared_key_initial(
         self,
         resource_group_name: str,
         virtual_network_gateway_connection_name: str,
-        parameters: "models.ConnectionSharedKey",
+        value: str,
+        id: Optional[str] = None,
         **kwargs
     ) -> "models.ConnectionSharedKey":
         cls = kwargs.pop('cls', None)  # type: ClsType["models.ConnectionSharedKey"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
+
+        _parameters = models.ConnectionSharedKey(id=id, value=value)
         api_version = "2019-09-01"
         content_type = kwargs.pop("content_type", "application/json")
 
@@ -477,7 +440,7 @@ class VirtualNetworkGatewayConnectionsOperations:
 
         # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(parameters, 'ConnectionSharedKey')
+        body_content = self._serialize.body(_parameters, 'ConnectionSharedKey')
         body_content_kwargs['content'] = body_content
         request = self._client.put(url, query_parameters, header_parameters, **body_content_kwargs)
 
@@ -496,36 +459,35 @@ class VirtualNetworkGatewayConnectionsOperations:
             deserialized = self._deserialize('ConnectionSharedKey', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _set_shared_key_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}/sharedkey'}  # type: ignore
 
-    async def begin_set_shared_key(
+    async def set_shared_key(
         self,
         resource_group_name: str,
         virtual_network_gateway_connection_name: str,
-        parameters: "models.ConnectionSharedKey",
+        value: str,
+        id: Optional[str] = None,
         **kwargs
     ) -> "models.ConnectionSharedKey":
-        """The Put VirtualNetworkGatewayConnectionSharedKey operation sets the virtual network gateway
-    connection shared key for passed virtual network gateway connection in the specified resource
-    group through Network resource provider.
+        """The Put VirtualNetworkGatewayConnectionSharedKey operation sets the virtual network gateway connection shared key for passed virtual network gateway connection in the specified resource group through Network resource provider.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
         :param virtual_network_gateway_connection_name: The virtual network gateway connection name.
         :type virtual_network_gateway_connection_name: str
-        :param parameters: Parameters supplied to the Begin Set Virtual Network Gateway connection
-     Shared key operation throughNetwork resource provider.
-        :type parameters: ~azure.mgmt.network.v2019_09_01.models.ConnectionSharedKey
+        :param value: The virtual network connection shared key value.
+        :type value: str
+        :param id: Resource ID.
+        :type id: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: ConnectionSharedKey, or the result of cls(response)
+        :return: ConnectionSharedKey
         :rtype: ~azure.mgmt.network.v2019_09_01.models.ConnectionSharedKey
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -535,18 +497,14 @@ class VirtualNetworkGatewayConnectionsOperations:
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = await self._set_shared_key_initial(
-                resource_group_name=resource_group_name,
-                virtual_network_gateway_connection_name=virtual_network_gateway_connection_name,
-                parameters=parameters,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = await self._set_shared_key_initial(
+            resource_group_name=resource_group_name,
+            virtual_network_gateway_connection_name=virtual_network_gateway_connection_name,
+            value=value,
+            id=id,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('ConnectionSharedKey', pipeline_response)
@@ -558,16 +516,8 @@ class VirtualNetworkGatewayConnectionsOperations:
         if polling is True: polling_method = AsyncARMPolling(lro_delay, lro_options={'final-state-via': 'azure-async-operation'},  **kwargs)
         elif polling is False: polling_method = AsyncNoPolling()
         else: polling_method = polling
-        if cont_token:
-            return AsyncLROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return AsyncLROPoller(self._client, raw_result, get_long_running_output, polling_method)
-    begin_set_shared_key.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}/sharedkey'}  # type: ignore
+        return await async_poller(self._client, raw_result, get_long_running_output, polling_method)
+    set_shared_key.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}/sharedkey'}  # type: ignore
 
     async def get_shared_key(
         self,
@@ -575,8 +525,7 @@ class VirtualNetworkGatewayConnectionsOperations:
         virtual_network_gateway_connection_name: str,
         **kwargs
     ) -> "models.ConnectionSharedKey":
-        """The Get VirtualNetworkGatewayConnectionSharedKey operation retrieves information about the
-        specified virtual network gateway connection shared key through Network resource provider.
+        """The Get VirtualNetworkGatewayConnectionSharedKey operation retrieves information about the specified virtual network gateway connection shared key through Network resource provider.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
@@ -584,7 +533,7 @@ class VirtualNetworkGatewayConnectionsOperations:
          key name.
         :type virtual_network_gateway_connection_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ConnectionSharedKey, or the result of cls(response)
+        :return: ConnectionSharedKey or the result of cls(response)
         :rtype: ~azure.mgmt.network.v2019_09_01.models.ConnectionSharedKey
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -622,7 +571,7 @@ class VirtualNetworkGatewayConnectionsOperations:
         deserialized = self._deserialize('ConnectionSharedKey', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get_shared_key.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}/sharedkey'}  # type: ignore
@@ -632,13 +581,12 @@ class VirtualNetworkGatewayConnectionsOperations:
         resource_group_name: str,
         **kwargs
     ) -> AsyncIterable["models.VirtualNetworkGatewayConnectionListResult"]:
-        """The List VirtualNetworkGatewayConnections operation retrieves all the virtual network gateways
-    connections created.
+        """The List VirtualNetworkGatewayConnections operation retrieves all the virtual network gateways connections created.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either VirtualNetworkGatewayConnectionListResult or the result of cls(response)
+        :return: An iterator like instance of VirtualNetworkGatewayConnectionListResult or the result of cls(response)
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.network.v2019_09_01.models.VirtualNetworkGatewayConnectionListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -699,12 +647,14 @@ class VirtualNetworkGatewayConnectionsOperations:
         self,
         resource_group_name: str,
         virtual_network_gateway_connection_name: str,
-        parameters: "models.ConnectionResetSharedKey",
+        key_length: int,
         **kwargs
     ) -> "models.ConnectionResetSharedKey":
         cls = kwargs.pop('cls', None)  # type: ClsType["models.ConnectionResetSharedKey"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
+
+        _parameters = models.ConnectionResetSharedKey(key_length=key_length)
         api_version = "2019-09-01"
         content_type = kwargs.pop("content_type", "application/json")
 
@@ -728,7 +678,7 @@ class VirtualNetworkGatewayConnectionsOperations:
 
         # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(parameters, 'ConnectionResetSharedKey')
+        body_content = self._serialize.body(_parameters, 'ConnectionResetSharedKey')
         body_content_kwargs['content'] = body_content
         request = self._client.post(url, query_parameters, header_parameters, **body_content_kwargs)
 
@@ -744,37 +694,34 @@ class VirtualNetworkGatewayConnectionsOperations:
             deserialized = self._deserialize('ConnectionResetSharedKey', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _reset_shared_key_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}/sharedkey/reset'}  # type: ignore
 
-    async def begin_reset_shared_key(
+    async def reset_shared_key(
         self,
         resource_group_name: str,
         virtual_network_gateway_connection_name: str,
-        parameters: "models.ConnectionResetSharedKey",
+        key_length: int,
         **kwargs
     ) -> "models.ConnectionResetSharedKey":
-        """The VirtualNetworkGatewayConnectionResetSharedKey operation resets the virtual network gateway
-    connection shared key for passed virtual network gateway connection in the specified resource
-    group through Network resource provider.
+        """The VirtualNetworkGatewayConnectionResetSharedKey operation resets the virtual network gateway connection shared key for passed virtual network gateway connection in the specified resource group through Network resource provider.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
         :param virtual_network_gateway_connection_name: The virtual network gateway connection reset
      shared key Name.
         :type virtual_network_gateway_connection_name: str
-        :param parameters: Parameters supplied to the begin reset virtual network gateway connection
-     shared key operation through network resource provider.
-        :type parameters: ~azure.mgmt.network.v2019_09_01.models.ConnectionResetSharedKey
+        :param key_length: The virtual network connection reset shared key length, should between 1 and
+     128.
+        :type key_length: int
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: ConnectionResetSharedKey, or the result of cls(response)
+        :return: ConnectionResetSharedKey
         :rtype: ~azure.mgmt.network.v2019_09_01.models.ConnectionResetSharedKey
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -784,18 +731,13 @@ class VirtualNetworkGatewayConnectionsOperations:
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = await self._reset_shared_key_initial(
-                resource_group_name=resource_group_name,
-                virtual_network_gateway_connection_name=virtual_network_gateway_connection_name,
-                parameters=parameters,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = await self._reset_shared_key_initial(
+            resource_group_name=resource_group_name,
+            virtual_network_gateway_connection_name=virtual_network_gateway_connection_name,
+            key_length=key_length,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('ConnectionResetSharedKey', pipeline_response)
@@ -807,27 +749,21 @@ class VirtualNetworkGatewayConnectionsOperations:
         if polling is True: polling_method = AsyncARMPolling(lro_delay, lro_options={'final-state-via': 'location'},  **kwargs)
         elif polling is False: polling_method = AsyncNoPolling()
         else: polling_method = polling
-        if cont_token:
-            return AsyncLROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return AsyncLROPoller(self._client, raw_result, get_long_running_output, polling_method)
-    begin_reset_shared_key.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}/sharedkey/reset'}  # type: ignore
+        return await async_poller(self._client, raw_result, get_long_running_output, polling_method)
+    reset_shared_key.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}/sharedkey/reset'}  # type: ignore
 
     async def _start_packet_capture_initial(
         self,
         resource_group_name: str,
         virtual_network_gateway_connection_name: str,
-        parameters: Optional["models.VpnPacketCaptureStartParameters"] = None,
+        filter_data: Optional[str] = None,
         **kwargs
     ) -> str:
         cls = kwargs.pop('cls', None)  # type: ClsType[str]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
+
+        _parameters = models.VpnPacketCaptureStartParameters(filter_data=filter_data)
         api_version = "2019-09-01"
         content_type = kwargs.pop("content_type", "application/json")
 
@@ -851,8 +787,8 @@ class VirtualNetworkGatewayConnectionsOperations:
 
         # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]
-        if parameters is not None:
-            body_content = self._serialize.body(parameters, 'VpnPacketCaptureStartParameters')
+        if _parameters is not None:
+            body_content = self._serialize.body(_parameters, 'VpnPacketCaptureStartParameters')
         else:
             body_content = None
         body_content_kwargs['content'] = body_content
@@ -871,16 +807,16 @@ class VirtualNetworkGatewayConnectionsOperations:
             deserialized = self._deserialize('str', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _start_packet_capture_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}/startPacketCapture'}  # type: ignore
 
-    async def begin_start_packet_capture(
+    async def start_packet_capture(
         self,
         resource_group_name: str,
         virtual_network_gateway_connection_name: str,
-        parameters: Optional["models.VpnPacketCaptureStartParameters"] = None,
+        filter_data: Optional[str] = None,
         **kwargs
     ) -> str:
         """Starts packet capture on virtual network gateway connection in the specified resource group.
@@ -890,16 +826,14 @@ class VirtualNetworkGatewayConnectionsOperations:
         :param virtual_network_gateway_connection_name: The name of the virtual network gateway
      connection.
         :type virtual_network_gateway_connection_name: str
-        :param parameters: Virtual network gateway packet capture parameters supplied to start packet
-     capture on gateway connection.
-        :type parameters: ~azure.mgmt.network.v2019_09_01.models.VpnPacketCaptureStartParameters
+        :param filter_data: Start Packet capture parameters.
+        :type filter_data: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: str, or the result of cls(response)
+        :return: 
         :rtype: str
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -909,18 +843,13 @@ class VirtualNetworkGatewayConnectionsOperations:
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = await self._start_packet_capture_initial(
-                resource_group_name=resource_group_name,
-                virtual_network_gateway_connection_name=virtual_network_gateway_connection_name,
-                parameters=parameters,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = await self._start_packet_capture_initial(
+            resource_group_name=resource_group_name,
+            virtual_network_gateway_connection_name=virtual_network_gateway_connection_name,
+            filter_data=filter_data,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('str', pipeline_response)
@@ -932,27 +861,21 @@ class VirtualNetworkGatewayConnectionsOperations:
         if polling is True: polling_method = AsyncARMPolling(lro_delay, lro_options={'final-state-via': 'location'},  **kwargs)
         elif polling is False: polling_method = AsyncNoPolling()
         else: polling_method = polling
-        if cont_token:
-            return AsyncLROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return AsyncLROPoller(self._client, raw_result, get_long_running_output, polling_method)
-    begin_start_packet_capture.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}/startPacketCapture'}  # type: ignore
+        return await async_poller(self._client, raw_result, get_long_running_output, polling_method)
+    start_packet_capture.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}/startPacketCapture'}  # type: ignore
 
     async def _stop_packet_capture_initial(
         self,
         resource_group_name: str,
         virtual_network_gateway_connection_name: str,
-        parameters: "models.VpnPacketCaptureStopParameters",
+        sas_url: Optional[str] = None,
         **kwargs
     ) -> str:
         cls = kwargs.pop('cls', None)  # type: ClsType[str]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
+
+        _parameters = models.VpnPacketCaptureStopParameters(sas_url=sas_url)
         api_version = "2019-09-01"
         content_type = kwargs.pop("content_type", "application/json")
 
@@ -976,7 +899,7 @@ class VirtualNetworkGatewayConnectionsOperations:
 
         # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(parameters, 'VpnPacketCaptureStopParameters')
+        body_content = self._serialize.body(_parameters, 'VpnPacketCaptureStopParameters')
         body_content_kwargs['content'] = body_content
         request = self._client.post(url, query_parameters, header_parameters, **body_content_kwargs)
 
@@ -993,16 +916,16 @@ class VirtualNetworkGatewayConnectionsOperations:
             deserialized = self._deserialize('str', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _stop_packet_capture_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}/stopPacketCapture'}  # type: ignore
 
-    async def begin_stop_packet_capture(
+    async def stop_packet_capture(
         self,
         resource_group_name: str,
         virtual_network_gateway_connection_name: str,
-        parameters: "models.VpnPacketCaptureStopParameters",
+        sas_url: Optional[str] = None,
         **kwargs
     ) -> str:
         """Stops packet capture on virtual network gateway connection in the specified resource group.
@@ -1012,16 +935,14 @@ class VirtualNetworkGatewayConnectionsOperations:
         :param virtual_network_gateway_connection_name: The name of the virtual network gateway
      Connection.
         :type virtual_network_gateway_connection_name: str
-        :param parameters: Virtual network gateway packet capture parameters supplied to stop packet
-     capture on gateway connection.
-        :type parameters: ~azure.mgmt.network.v2019_09_01.models.VpnPacketCaptureStopParameters
+        :param sas_url: SAS url for packet capture on virtual network gateway.
+        :type sas_url: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: str, or the result of cls(response)
+        :return: 
         :rtype: str
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -1031,18 +952,13 @@ class VirtualNetworkGatewayConnectionsOperations:
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = await self._stop_packet_capture_initial(
-                resource_group_name=resource_group_name,
-                virtual_network_gateway_connection_name=virtual_network_gateway_connection_name,
-                parameters=parameters,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = await self._stop_packet_capture_initial(
+            resource_group_name=resource_group_name,
+            virtual_network_gateway_connection_name=virtual_network_gateway_connection_name,
+            sas_url=sas_url,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('str', pipeline_response)
@@ -1054,13 +970,5 @@ class VirtualNetworkGatewayConnectionsOperations:
         if polling is True: polling_method = AsyncARMPolling(lro_delay, lro_options={'final-state-via': 'location'},  **kwargs)
         elif polling is False: polling_method = AsyncNoPolling()
         else: polling_method = polling
-        if cont_token:
-            return AsyncLROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return AsyncLROPoller(self._client, raw_result, get_long_running_output, polling_method)
-    begin_stop_packet_capture.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}/stopPacketCapture'}  # type: ignore
+        return await async_poller(self._client, raw_result, get_long_running_output, polling_method)
+    stop_packet_capture.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}/stopPacketCapture'}  # type: ignore

@@ -59,7 +59,7 @@ class LoadBalancerNetworkInterfacesOperations(object):
         :param load_balancer_name: The name of the load balancer.
         :type load_balancer_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either NetworkInterfaceListResult or the result of cls(response)
+        :return: An iterator like instance of NetworkInterfaceListResult or the result of cls(response)
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.network.v2018_07_01.models.NetworkInterfaceListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """

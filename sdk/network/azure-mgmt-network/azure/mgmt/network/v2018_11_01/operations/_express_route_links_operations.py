@@ -62,7 +62,7 @@ class ExpressRouteLinksOperations(object):
         :param link_name: The name of the ExpressRouteLink resource.
         :type link_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ExpressRouteLink, or the result of cls(response)
+        :return: ExpressRouteLink or the result of cls(response)
         :rtype: ~azure.mgmt.network.v2018_11_01.models.ExpressRouteLink
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -101,7 +101,7 @@ class ExpressRouteLinksOperations(object):
         deserialized = self._deserialize('ExpressRouteLink', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}/links/{linkName}'}  # type: ignore
@@ -120,7 +120,7 @@ class ExpressRouteLinksOperations(object):
         :param express_route_port_name: The name of the ExpressRoutePort resource.
         :type express_route_port_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either ExpressRouteLinkListResult or the result of cls(response)
+        :return: An iterator like instance of ExpressRouteLinkListResult or the result of cls(response)
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.network.v2018_11_01.models.ExpressRouteLinkListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """

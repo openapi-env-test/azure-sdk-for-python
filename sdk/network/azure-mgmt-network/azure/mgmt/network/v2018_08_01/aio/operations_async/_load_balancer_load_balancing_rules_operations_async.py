@@ -54,7 +54,7 @@ class LoadBalancerLoadBalancingRulesOperations:
         :param load_balancer_name: The name of the load balancer.
         :type load_balancer_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either LoadBalancerLoadBalancingRuleListResult or the result of cls(response)
+        :return: An iterator like instance of LoadBalancerLoadBalancingRuleListResult or the result of cls(response)
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.network.v2018_08_01.models.LoadBalancerLoadBalancingRuleListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -128,7 +128,7 @@ class LoadBalancerLoadBalancingRulesOperations:
         :param load_balancing_rule_name: The name of the load balancing rule.
         :type load_balancing_rule_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: LoadBalancingRule, or the result of cls(response)
+        :return: LoadBalancingRule or the result of cls(response)
         :rtype: ~azure.mgmt.network.v2018_08_01.models.LoadBalancingRule
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -167,7 +167,7 @@ class LoadBalancerLoadBalancingRulesOperations:
         deserialized = self._deserialize('LoadBalancingRule', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/loadBalancingRules/{loadBalancingRuleName}'}  # type: ignore

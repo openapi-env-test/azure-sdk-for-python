@@ -46,13 +46,12 @@ class AvailablePrivateEndpointTypesOperations:
         location: str,
         **kwargs
     ) -> AsyncIterable["models.AvailablePrivateEndpointTypesResult"]:
-        """Returns all of the resource types that can be linked to a Private Endpoint in this subscription
-    in this region.
+        """Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region.
 
         :param location: The location of the domain name.
         :type location: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either AvailablePrivateEndpointTypesResult or the result of cls(response)
+        :return: An iterator like instance of AvailablePrivateEndpointTypesResult or the result of cls(response)
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.network.v2019_06_01.models.AvailablePrivateEndpointTypesResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -115,15 +114,14 @@ class AvailablePrivateEndpointTypesOperations:
         resource_group_name: str,
         **kwargs
     ) -> AsyncIterable["models.AvailablePrivateEndpointTypesResult"]:
-        """Returns all of the resource types that can be linked to a Private Endpoint in this subscription
-    in this region.
+        """Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region.
 
         :param location: The location of the domain name.
         :type location: str
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either AvailablePrivateEndpointTypesResult or the result of cls(response)
+        :return: An iterator like instance of AvailablePrivateEndpointTypesResult or the result of cls(response)
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.network.v2019_06_01.models.AvailablePrivateEndpointTypesResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
