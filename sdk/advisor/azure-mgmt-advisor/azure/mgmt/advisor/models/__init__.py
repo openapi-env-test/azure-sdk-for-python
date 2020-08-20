@@ -10,8 +10,8 @@
 # --------------------------------------------------------------------------
 
 try:
-    from ._models_py3 import ArmErrorResponse, ArmErrorResponseException
     from ._models_py3 import ARMErrorResponseBody
+    from ._models_py3 import ArmErrorResponse, ArmErrorResponseException
     from ._models_py3 import ConfigData
     from ._models_py3 import DigestConfig
     from ._models_py3 import MetadataEntity
@@ -24,8 +24,8 @@ try:
     from ._models_py3 import ShortDescription
     from ._models_py3 import SuppressionContract
 except (SyntaxError, ImportError):
-    from ._models import ArmErrorResponse, ArmErrorResponseException
     from ._models import ARMErrorResponseBody
+    from ._models import ArmErrorResponse, ArmErrorResponseException
     from ._models import ConfigData
     from ._models import DigestConfig
     from ._models import MetadataEntity
@@ -52,8 +52,8 @@ from ._advisor_management_client_enums import (
 )
 
 __all__ = [
-    'ArmErrorResponse', 'ArmErrorResponseException',
     'ARMErrorResponseBody',
+    'ArmErrorResponse', 'ArmErrorResponseException',
     'ConfigData',
     'DigestConfig',
     'MetadataEntity',
