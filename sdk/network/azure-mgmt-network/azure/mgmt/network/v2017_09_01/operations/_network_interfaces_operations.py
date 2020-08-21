@@ -85,7 +85,7 @@ class NetworkInterfacesOperations(object):
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
         if cls:
-            return cls(pipeline_response, None, {})
+          return cls(pipeline_response, None, {})
 
     _delete_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}'}  # type: ignore
 
@@ -103,12 +103,11 @@ class NetworkInterfacesOperations(object):
         :param network_interface_name: The name of the network interface.
         :type network_interface_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either None or the result of cls(response)
+        :return: An instance of LROPoller that returns None
         :rtype: ~azure.core.polling.LROPoller[None]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -118,17 +117,12 @@ class NetworkInterfacesOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._delete_initial(
-                resource_group_name=resource_group_name,
-                network_interface_name=network_interface_name,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._delete_initial(
+            resource_group_name=resource_group_name,
+            network_interface_name=network_interface_name,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             if cls:
@@ -137,15 +131,7 @@ class NetworkInterfacesOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay,  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}'}  # type: ignore
 
     def get(
@@ -165,7 +151,7 @@ class NetworkInterfacesOperations(object):
         :param expand: Expands referenced resources.
         :type expand: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: NetworkInterface, or the result of cls(response)
+        :return: NetworkInterface or the result of cls(response)
         :rtype: ~azure.mgmt.network.v2017_09_01.models.NetworkInterface
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -205,7 +191,7 @@ class NetworkInterfacesOperations(object):
         deserialized = self._deserialize('NetworkInterface', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}'}  # type: ignore
@@ -263,7 +249,7 @@ class NetworkInterfacesOperations(object):
             deserialized = self._deserialize('NetworkInterface', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _create_or_update_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}'}  # type: ignore
@@ -285,12 +271,11 @@ class NetworkInterfacesOperations(object):
         :param parameters: Parameters supplied to the create or update network interface operation.
         :type parameters: ~azure.mgmt.network.v2017_09_01.models.NetworkInterface
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either NetworkInterface or the result of cls(response)
+        :return: An instance of LROPoller that returns NetworkInterface
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.network.v2017_09_01.models.NetworkInterface]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -300,18 +285,13 @@ class NetworkInterfacesOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._create_or_update_initial(
-                resource_group_name=resource_group_name,
-                network_interface_name=network_interface_name,
-                parameters=parameters,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._create_or_update_initial(
+            resource_group_name=resource_group_name,
+            network_interface_name=network_interface_name,
+            parameters=parameters,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('NetworkInterface', pipeline_response)
@@ -323,28 +303,22 @@ class NetworkInterfacesOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay,  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}'}  # type: ignore
 
     def _update_tags_initial(
         self,
         resource_group_name,  # type: str
         network_interface_name,  # type: str
-        parameters,  # type: "models.TagsObject"
+        tags=None,  # type: Optional[Dict[str, str]]
         **kwargs  # type: Any
     ):
         # type: (...) -> "models.NetworkInterface"
         cls = kwargs.pop('cls', None)  # type: ClsType["models.NetworkInterface"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
+
+        _parameters = models.TagsObject(tags=tags)
         api_version = "2017-09-01"
         content_type = kwargs.pop("content_type", "application/json")
 
@@ -368,7 +342,7 @@ class NetworkInterfacesOperations(object):
 
         # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(parameters, 'TagsObject')
+        body_content = self._serialize.body(_parameters, 'TagsObject')
         body_content_kwargs['content'] = body_content
         request = self._client.patch(url, query_parameters, header_parameters, **body_content_kwargs)
 
@@ -382,7 +356,7 @@ class NetworkInterfacesOperations(object):
         deserialized = self._deserialize('NetworkInterface', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _update_tags_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}'}  # type: ignore
@@ -391,7 +365,7 @@ class NetworkInterfacesOperations(object):
         self,
         resource_group_name,  # type: str
         network_interface_name,  # type: str
-        parameters,  # type: "models.TagsObject"
+        tags=None,  # type: Optional[Dict[str, str]]
         **kwargs  # type: Any
     ):
         # type: (...) -> LROPoller
@@ -401,15 +375,14 @@ class NetworkInterfacesOperations(object):
         :type resource_group_name: str
         :param network_interface_name: The name of the network interface.
         :type network_interface_name: str
-        :param parameters: Parameters supplied to update network interface tags.
-        :type parameters: ~azure.mgmt.network.v2017_09_01.models.TagsObject
+        :param tags: Resource tags.
+        :type tags: dict[str, str]
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either NetworkInterface or the result of cls(response)
+        :return: An instance of LROPoller that returns NetworkInterface
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.network.v2017_09_01.models.NetworkInterface]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -419,18 +392,13 @@ class NetworkInterfacesOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._update_tags_initial(
-                resource_group_name=resource_group_name,
-                network_interface_name=network_interface_name,
-                parameters=parameters,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._update_tags_initial(
+            resource_group_name=resource_group_name,
+            network_interface_name=network_interface_name,
+            tags=tags,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('NetworkInterface', pipeline_response)
@@ -442,15 +410,7 @@ class NetworkInterfacesOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay,  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_update_tags.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}'}  # type: ignore
 
     def list_all(
@@ -461,7 +421,7 @@ class NetworkInterfacesOperations(object):
         """Gets all network interfaces in a subscription.
 
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either NetworkInterfaceListResult or the result of cls(response)
+        :return: An iterator like instance of NetworkInterfaceListResult or the result of cls(response)
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.network.v2017_09_01.models.NetworkInterfaceListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -528,7 +488,7 @@ class NetworkInterfacesOperations(object):
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either NetworkInterfaceListResult or the result of cls(response)
+        :return: An iterator like instance of NetworkInterfaceListResult or the result of cls(response)
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.network.v2017_09_01.models.NetworkInterfaceListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -628,7 +588,7 @@ class NetworkInterfacesOperations(object):
             deserialized = self._deserialize('EffectiveRouteListResult', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _get_effective_route_table_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/effectiveRouteTable'}  # type: ignore
@@ -647,12 +607,11 @@ class NetworkInterfacesOperations(object):
         :param network_interface_name: The name of the network interface.
         :type network_interface_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either EffectiveRouteListResult or the result of cls(response)
+        :return: An instance of LROPoller that returns EffectiveRouteListResult
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.network.v2017_09_01.models.EffectiveRouteListResult]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -662,17 +621,12 @@ class NetworkInterfacesOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._get_effective_route_table_initial(
-                resource_group_name=resource_group_name,
-                network_interface_name=network_interface_name,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._get_effective_route_table_initial(
+            resource_group_name=resource_group_name,
+            network_interface_name=network_interface_name,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('EffectiveRouteListResult', pipeline_response)
@@ -684,15 +638,7 @@ class NetworkInterfacesOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay,  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_get_effective_route_table.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/effectiveRouteTable'}  # type: ignore
 
     def _list_effective_network_security_groups_initial(
@@ -738,7 +684,7 @@ class NetworkInterfacesOperations(object):
             deserialized = self._deserialize('EffectiveNetworkSecurityGroupListResult', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _list_effective_network_security_groups_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/effectiveNetworkSecurityGroups'}  # type: ignore
@@ -757,12 +703,11 @@ class NetworkInterfacesOperations(object):
         :param network_interface_name: The name of the network interface.
         :type network_interface_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either EffectiveNetworkSecurityGroupListResult or the result of cls(response)
+        :return: An instance of LROPoller that returns EffectiveNetworkSecurityGroupListResult
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.network.v2017_09_01.models.EffectiveNetworkSecurityGroupListResult]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -772,17 +717,12 @@ class NetworkInterfacesOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._list_effective_network_security_groups_initial(
-                resource_group_name=resource_group_name,
-                network_interface_name=network_interface_name,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._list_effective_network_security_groups_initial(
+            resource_group_name=resource_group_name,
+            network_interface_name=network_interface_name,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('EffectiveNetworkSecurityGroupListResult', pipeline_response)
@@ -794,15 +734,7 @@ class NetworkInterfacesOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay,  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_list_effective_network_security_groups.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/effectiveNetworkSecurityGroups'}  # type: ignore
 
     def list_virtual_machine_scale_set_vm_network_interfaces(
@@ -813,8 +745,7 @@ class NetworkInterfacesOperations(object):
         **kwargs  # type: Any
     ):
         # type: (...) -> Iterable["models.NetworkInterfaceListResult"]
-        """Gets information about all network interfaces in a virtual machine in a virtual machine scale
-    set.
+        """Gets information about all network interfaces in a virtual machine in a virtual machine scale set.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
@@ -823,7 +754,7 @@ class NetworkInterfacesOperations(object):
         :param virtualmachine_index: The virtual machine index.
         :type virtualmachine_index: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either NetworkInterfaceListResult or the result of cls(response)
+        :return: An iterator like instance of NetworkInterfaceListResult or the result of cls(response)
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.network.v2017_09_01.models.NetworkInterfaceListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -896,7 +827,7 @@ class NetworkInterfacesOperations(object):
         :param virtual_machine_scale_set_name: The name of the virtual machine scale set.
         :type virtual_machine_scale_set_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either NetworkInterfaceListResult or the result of cls(response)
+        :return: An iterator like instance of NetworkInterfaceListResult or the result of cls(response)
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.network.v2017_09_01.models.NetworkInterfaceListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -977,7 +908,7 @@ class NetworkInterfacesOperations(object):
         :param expand: Expands referenced resources.
         :type expand: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: NetworkInterface, or the result of cls(response)
+        :return: NetworkInterface or the result of cls(response)
         :rtype: ~azure.mgmt.network.v2017_09_01.models.NetworkInterface
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -1019,7 +950,7 @@ class NetworkInterfacesOperations(object):
         deserialized = self._deserialize('NetworkInterface', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get_virtual_machine_scale_set_network_interface.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines/{virtualmachineIndex}/networkInterfaces/{networkInterfaceName}'}  # type: ignore
@@ -1047,7 +978,7 @@ class NetworkInterfacesOperations(object):
         :param expand: Expands referenced resources.
         :type expand: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either NetworkInterfaceIPConfigurationListResult or the result of cls(response)
+        :return: An iterator like instance of NetworkInterfaceIPConfigurationListResult or the result of cls(response)
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.network.v2017_09_01.models.NetworkInterfaceIPConfigurationListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -1135,7 +1066,7 @@ class NetworkInterfacesOperations(object):
         :param expand: Expands referenced resources.
         :type expand: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: NetworkInterfaceIPConfiguration, or the result of cls(response)
+        :return: NetworkInterfaceIPConfiguration or the result of cls(response)
         :rtype: ~azure.mgmt.network.v2017_09_01.models.NetworkInterfaceIPConfiguration
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -1178,7 +1109,7 @@ class NetworkInterfacesOperations(object):
         deserialized = self._deserialize('NetworkInterfaceIPConfiguration', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get_virtual_machine_scale_set_ip_configuration.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines/{virtualmachineIndex}/networkInterfaces/{networkInterfaceName}/ipConfigurations/{ipConfigurationName}'}  # type: ignore

@@ -100,7 +100,7 @@ class VirtualNetworkGatewaysOperations(object):
             deserialized = self._deserialize('VirtualNetworkGateway', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _create_or_update_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}'}  # type: ignore
@@ -122,12 +122,11 @@ class VirtualNetworkGatewaysOperations(object):
         :param parameters: Parameters supplied to create or update virtual network gateway operation.
         :type parameters: ~azure.mgmt.network.v2018_12_01.models.VirtualNetworkGateway
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either VirtualNetworkGateway or the result of cls(response)
+        :return: An instance of LROPoller that returns VirtualNetworkGateway
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.network.v2018_12_01.models.VirtualNetworkGateway]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -137,18 +136,13 @@ class VirtualNetworkGatewaysOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._create_or_update_initial(
-                resource_group_name=resource_group_name,
-                virtual_network_gateway_name=virtual_network_gateway_name,
-                parameters=parameters,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._create_or_update_initial(
+            resource_group_name=resource_group_name,
+            virtual_network_gateway_name=virtual_network_gateway_name,
+            parameters=parameters,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('VirtualNetworkGateway', pipeline_response)
@@ -160,15 +154,7 @@ class VirtualNetworkGatewaysOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay, lro_options={'final-state-via': 'azure-async-operation'},  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}'}  # type: ignore
 
     def get(
@@ -185,7 +171,7 @@ class VirtualNetworkGatewaysOperations(object):
         :param virtual_network_gateway_name: The name of the virtual network gateway.
         :type virtual_network_gateway_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: VirtualNetworkGateway, or the result of cls(response)
+        :return: VirtualNetworkGateway or the result of cls(response)
         :rtype: ~azure.mgmt.network.v2018_12_01.models.VirtualNetworkGateway
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -223,7 +209,7 @@ class VirtualNetworkGatewaysOperations(object):
         deserialized = self._deserialize('VirtualNetworkGateway', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}'}  # type: ignore
@@ -266,7 +252,7 @@ class VirtualNetworkGatewaysOperations(object):
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
         if cls:
-            return cls(pipeline_response, None, {})
+          return cls(pipeline_response, None, {})
 
     _delete_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}'}  # type: ignore
 
@@ -284,12 +270,11 @@ class VirtualNetworkGatewaysOperations(object):
         :param virtual_network_gateway_name: The name of the virtual network gateway.
         :type virtual_network_gateway_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either None or the result of cls(response)
+        :return: An instance of LROPoller that returns None
         :rtype: ~azure.core.polling.LROPoller[None]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -299,17 +284,12 @@ class VirtualNetworkGatewaysOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._delete_initial(
-                resource_group_name=resource_group_name,
-                virtual_network_gateway_name=virtual_network_gateway_name,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._delete_initial(
+            resource_group_name=resource_group_name,
+            virtual_network_gateway_name=virtual_network_gateway_name,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             if cls:
@@ -318,28 +298,22 @@ class VirtualNetworkGatewaysOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay, lro_options={'final-state-via': 'location'},  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}'}  # type: ignore
 
     def _update_tags_initial(
         self,
         resource_group_name,  # type: str
         virtual_network_gateway_name,  # type: str
-        parameters,  # type: "models.TagsObject"
+        tags=None,  # type: Optional[Dict[str, str]]
         **kwargs  # type: Any
     ):
         # type: (...) -> "models.VirtualNetworkGateway"
         cls = kwargs.pop('cls', None)  # type: ClsType["models.VirtualNetworkGateway"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
+
+        _parameters = models.TagsObject(tags=tags)
         api_version = "2018-12-01"
         content_type = kwargs.pop("content_type", "application/json")
 
@@ -363,7 +337,7 @@ class VirtualNetworkGatewaysOperations(object):
 
         # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(parameters, 'TagsObject')
+        body_content = self._serialize.body(_parameters, 'TagsObject')
         body_content_kwargs['content'] = body_content
         request = self._client.patch(url, query_parameters, header_parameters, **body_content_kwargs)
 
@@ -377,7 +351,7 @@ class VirtualNetworkGatewaysOperations(object):
         deserialized = self._deserialize('VirtualNetworkGateway', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _update_tags_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}'}  # type: ignore
@@ -386,7 +360,7 @@ class VirtualNetworkGatewaysOperations(object):
         self,
         resource_group_name,  # type: str
         virtual_network_gateway_name,  # type: str
-        parameters,  # type: "models.TagsObject"
+        tags=None,  # type: Optional[Dict[str, str]]
         **kwargs  # type: Any
     ):
         # type: (...) -> LROPoller
@@ -396,15 +370,14 @@ class VirtualNetworkGatewaysOperations(object):
         :type resource_group_name: str
         :param virtual_network_gateway_name: The name of the virtual network gateway.
         :type virtual_network_gateway_name: str
-        :param parameters: Parameters supplied to update virtual network gateway tags.
-        :type parameters: ~azure.mgmt.network.v2018_12_01.models.TagsObject
+        :param tags: Resource tags.
+        :type tags: dict[str, str]
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either VirtualNetworkGateway or the result of cls(response)
+        :return: An instance of LROPoller that returns VirtualNetworkGateway
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.network.v2018_12_01.models.VirtualNetworkGateway]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -414,18 +387,13 @@ class VirtualNetworkGatewaysOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._update_tags_initial(
-                resource_group_name=resource_group_name,
-                virtual_network_gateway_name=virtual_network_gateway_name,
-                parameters=parameters,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._update_tags_initial(
+            resource_group_name=resource_group_name,
+            virtual_network_gateway_name=virtual_network_gateway_name,
+            tags=tags,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('VirtualNetworkGateway', pipeline_response)
@@ -437,15 +405,7 @@ class VirtualNetworkGatewaysOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay,  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_update_tags.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}'}  # type: ignore
 
     def list(
@@ -459,7 +419,7 @@ class VirtualNetworkGatewaysOperations(object):
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either VirtualNetworkGatewayListResult or the result of cls(response)
+        :return: An iterator like instance of VirtualNetworkGatewayListResult or the result of cls(response)
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.network.v2018_12_01.models.VirtualNetworkGatewayListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -530,7 +490,7 @@ class VirtualNetworkGatewaysOperations(object):
         :param virtual_network_gateway_name: The name of the virtual network gateway.
         :type virtual_network_gateway_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either VirtualNetworkGatewayListConnectionsResult or the result of cls(response)
+        :return: An iterator like instance of VirtualNetworkGatewayListConnectionsResult or the result of cls(response)
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.network.v2018_12_01.models.VirtualNetworkGatewayListConnectionsResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -634,7 +594,7 @@ class VirtualNetworkGatewaysOperations(object):
             deserialized = self._deserialize('VirtualNetworkGateway', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _reset_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/reset'}  # type: ignore
@@ -657,12 +617,11 @@ class VirtualNetworkGatewaysOperations(object):
      active-active feature enabled gateway.
         :type gateway_vip: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either VirtualNetworkGateway or the result of cls(response)
+        :return: An instance of LROPoller that returns VirtualNetworkGateway
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.network.v2018_12_01.models.VirtualNetworkGateway]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -672,18 +631,13 @@ class VirtualNetworkGatewaysOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._reset_initial(
-                resource_group_name=resource_group_name,
-                virtual_network_gateway_name=virtual_network_gateway_name,
-                gateway_vip=gateway_vip,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._reset_initial(
+            resource_group_name=resource_group_name,
+            virtual_network_gateway_name=virtual_network_gateway_name,
+            gateway_vip=gateway_vip,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('VirtualNetworkGateway', pipeline_response)
@@ -695,15 +649,7 @@ class VirtualNetworkGatewaysOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay, lro_options={'final-state-via': 'location'},  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_reset.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/reset'}  # type: ignore
 
     def _reset_vpn_client_shared_key_initial(
@@ -744,7 +690,7 @@ class VirtualNetworkGatewaysOperations(object):
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
         if cls:
-            return cls(pipeline_response, None, {})
+          return cls(pipeline_response, None, {})
 
     _reset_vpn_client_shared_key_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/resetvpnclientsharedkey'}  # type: ignore
 
@@ -755,20 +701,18 @@ class VirtualNetworkGatewaysOperations(object):
         **kwargs  # type: Any
     ):
         # type: (...) -> LROPoller
-        """Resets the VPN client shared key of the virtual network gateway in the specified resource
-    group.
+        """Resets the VPN client shared key of the virtual network gateway in the specified resource group.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
         :param virtual_network_gateway_name: The name of the virtual network gateway.
         :type virtual_network_gateway_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either None or the result of cls(response)
+        :return: An instance of LROPoller that returns None
         :rtype: ~azure.core.polling.LROPoller[None]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -778,17 +722,12 @@ class VirtualNetworkGatewaysOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._reset_vpn_client_shared_key_initial(
-                resource_group_name=resource_group_name,
-                virtual_network_gateway_name=virtual_network_gateway_name,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._reset_vpn_client_shared_key_initial(
+            resource_group_name=resource_group_name,
+            virtual_network_gateway_name=virtual_network_gateway_name,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             if cls:
@@ -797,15 +736,7 @@ class VirtualNetworkGatewaysOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay, lro_options={'final-state-via': 'location'},  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_reset_vpn_client_shared_key.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/resetvpnclientsharedkey'}  # type: ignore
 
     def _generatevpnclientpackage_initial(
@@ -858,7 +789,7 @@ class VirtualNetworkGatewaysOperations(object):
             deserialized = self._deserialize('str', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _generatevpnclientpackage_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/generatevpnclientpackage'}  # type: ignore
@@ -871,8 +802,7 @@ class VirtualNetworkGatewaysOperations(object):
         **kwargs  # type: Any
     ):
         # type: (...) -> LROPoller
-        """Generates VPN client package for P2S client of the virtual network gateway in the specified
-    resource group.
+        """Generates VPN client package for P2S client of the virtual network gateway in the specified resource group.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
@@ -882,12 +812,11 @@ class VirtualNetworkGatewaysOperations(object):
      package operation.
         :type parameters: ~azure.mgmt.network.v2018_12_01.models.VpnClientParameters
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either str or the result of cls(response)
+        :return: An instance of LROPoller that returns 
         :rtype: ~azure.core.polling.LROPoller[str]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -897,18 +826,13 @@ class VirtualNetworkGatewaysOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._generatevpnclientpackage_initial(
-                resource_group_name=resource_group_name,
-                virtual_network_gateway_name=virtual_network_gateway_name,
-                parameters=parameters,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._generatevpnclientpackage_initial(
+            resource_group_name=resource_group_name,
+            virtual_network_gateway_name=virtual_network_gateway_name,
+            parameters=parameters,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('str', pipeline_response)
@@ -920,15 +844,7 @@ class VirtualNetworkGatewaysOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay, lro_options={'final-state-via': 'location'},  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_generatevpnclientpackage.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/generatevpnclientpackage'}  # type: ignore
 
     def _generate_vpn_profile_initial(
@@ -981,7 +897,7 @@ class VirtualNetworkGatewaysOperations(object):
             deserialized = self._deserialize('str', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _generate_vpn_profile_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/generatevpnprofile'}  # type: ignore
@@ -994,8 +910,7 @@ class VirtualNetworkGatewaysOperations(object):
         **kwargs  # type: Any
     ):
         # type: (...) -> LROPoller
-        """Generates VPN profile for P2S client of the virtual network gateway in the specified resource
-    group. Used for IKEV2 and radius based authentication.
+        """Generates VPN profile for P2S client of the virtual network gateway in the specified resource group. Used for IKEV2 and radius based authentication.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
@@ -1005,12 +920,11 @@ class VirtualNetworkGatewaysOperations(object):
      package operation.
         :type parameters: ~azure.mgmt.network.v2018_12_01.models.VpnClientParameters
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either str or the result of cls(response)
+        :return: An instance of LROPoller that returns 
         :rtype: ~azure.core.polling.LROPoller[str]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -1020,18 +934,13 @@ class VirtualNetworkGatewaysOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._generate_vpn_profile_initial(
-                resource_group_name=resource_group_name,
-                virtual_network_gateway_name=virtual_network_gateway_name,
-                parameters=parameters,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._generate_vpn_profile_initial(
+            resource_group_name=resource_group_name,
+            virtual_network_gateway_name=virtual_network_gateway_name,
+            parameters=parameters,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('str', pipeline_response)
@@ -1043,15 +952,7 @@ class VirtualNetworkGatewaysOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay, lro_options={'final-state-via': 'location'},  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_generate_vpn_profile.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/generatevpnprofile'}  # type: ignore
 
     def _get_vpn_profile_package_url_initial(
@@ -1097,7 +998,7 @@ class VirtualNetworkGatewaysOperations(object):
             deserialized = self._deserialize('str', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _get_vpn_profile_package_url_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/getvpnprofilepackageurl'}  # type: ignore
@@ -1109,20 +1010,18 @@ class VirtualNetworkGatewaysOperations(object):
         **kwargs  # type: Any
     ):
         # type: (...) -> LROPoller
-        """Gets pre-generated VPN profile for P2S client of the virtual network gateway in the specified
-    resource group. The profile needs to be generated first using generateVpnProfile.
+        """Gets pre-generated VPN profile for P2S client of the virtual network gateway in the specified resource group. The profile needs to be generated first using generateVpnProfile.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
         :param virtual_network_gateway_name: The name of the virtual network gateway.
         :type virtual_network_gateway_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either str or the result of cls(response)
+        :return: An instance of LROPoller that returns 
         :rtype: ~azure.core.polling.LROPoller[str]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -1132,17 +1031,12 @@ class VirtualNetworkGatewaysOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._get_vpn_profile_package_url_initial(
-                resource_group_name=resource_group_name,
-                virtual_network_gateway_name=virtual_network_gateway_name,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._get_vpn_profile_package_url_initial(
+            resource_group_name=resource_group_name,
+            virtual_network_gateway_name=virtual_network_gateway_name,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('str', pipeline_response)
@@ -1154,15 +1048,7 @@ class VirtualNetworkGatewaysOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay, lro_options={'final-state-via': 'location'},  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_get_vpn_profile_package_url.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/getvpnprofilepackageurl'}  # type: ignore
 
     def _get_bgp_peer_status_initial(
@@ -1211,7 +1097,7 @@ class VirtualNetworkGatewaysOperations(object):
             deserialized = self._deserialize('BgpPeerStatusListResult', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _get_bgp_peer_status_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/getBgpPeerStatus'}  # type: ignore
@@ -1233,12 +1119,11 @@ class VirtualNetworkGatewaysOperations(object):
         :param peer: The IP address of the peer to retrieve the status of.
         :type peer: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either BgpPeerStatusListResult or the result of cls(response)
+        :return: An instance of LROPoller that returns BgpPeerStatusListResult
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.network.v2018_12_01.models.BgpPeerStatusListResult]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -1248,18 +1133,13 @@ class VirtualNetworkGatewaysOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._get_bgp_peer_status_initial(
-                resource_group_name=resource_group_name,
-                virtual_network_gateway_name=virtual_network_gateway_name,
-                peer=peer,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._get_bgp_peer_status_initial(
+            resource_group_name=resource_group_name,
+            virtual_network_gateway_name=virtual_network_gateway_name,
+            peer=peer,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('BgpPeerStatusListResult', pipeline_response)
@@ -1271,15 +1151,7 @@ class VirtualNetworkGatewaysOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay, lro_options={'final-state-via': 'location'},  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_get_bgp_peer_status.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/getBgpPeerStatus'}  # type: ignore
 
     def supported_vpn_devices(
@@ -1296,7 +1168,7 @@ class VirtualNetworkGatewaysOperations(object):
         :param virtual_network_gateway_name: The name of the virtual network gateway.
         :type virtual_network_gateway_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: str, or the result of cls(response)
+        :return: str or the result of cls(response)
         :rtype: str
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -1334,7 +1206,7 @@ class VirtualNetworkGatewaysOperations(object):
         deserialized = self._deserialize('str', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     supported_vpn_devices.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/supportedvpndevices'}  # type: ignore
@@ -1382,7 +1254,7 @@ class VirtualNetworkGatewaysOperations(object):
             deserialized = self._deserialize('GatewayRouteListResult', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _get_learned_routes_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/getLearnedRoutes'}  # type: ignore
@@ -1394,20 +1266,18 @@ class VirtualNetworkGatewaysOperations(object):
         **kwargs  # type: Any
     ):
         # type: (...) -> LROPoller
-        """This operation retrieves a list of routes the virtual network gateway has learned, including
-    routes learned from BGP peers.
+        """This operation retrieves a list of routes the virtual network gateway has learned, including routes learned from BGP peers.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
         :param virtual_network_gateway_name: The name of the virtual network gateway.
         :type virtual_network_gateway_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either GatewayRouteListResult or the result of cls(response)
+        :return: An instance of LROPoller that returns GatewayRouteListResult
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.network.v2018_12_01.models.GatewayRouteListResult]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -1417,17 +1287,12 @@ class VirtualNetworkGatewaysOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._get_learned_routes_initial(
-                resource_group_name=resource_group_name,
-                virtual_network_gateway_name=virtual_network_gateway_name,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._get_learned_routes_initial(
+            resource_group_name=resource_group_name,
+            virtual_network_gateway_name=virtual_network_gateway_name,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('GatewayRouteListResult', pipeline_response)
@@ -1439,15 +1304,7 @@ class VirtualNetworkGatewaysOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay, lro_options={'final-state-via': 'location'},  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_get_learned_routes.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/getLearnedRoutes'}  # type: ignore
 
     def _get_advertised_routes_initial(
@@ -1495,7 +1352,7 @@ class VirtualNetworkGatewaysOperations(object):
             deserialized = self._deserialize('GatewayRouteListResult', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _get_advertised_routes_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/getAdvertisedRoutes'}  # type: ignore
@@ -1508,8 +1365,7 @@ class VirtualNetworkGatewaysOperations(object):
         **kwargs  # type: Any
     ):
         # type: (...) -> LROPoller
-        """This operation retrieves a list of routes the virtual network gateway is advertising to the
-    specified peer.
+        """This operation retrieves a list of routes the virtual network gateway is advertising to the specified peer.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
@@ -1518,12 +1374,11 @@ class VirtualNetworkGatewaysOperations(object):
         :param peer: The IP address of the peer.
         :type peer: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either GatewayRouteListResult or the result of cls(response)
+        :return: An instance of LROPoller that returns GatewayRouteListResult
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.network.v2018_12_01.models.GatewayRouteListResult]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -1533,18 +1388,13 @@ class VirtualNetworkGatewaysOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._get_advertised_routes_initial(
-                resource_group_name=resource_group_name,
-                virtual_network_gateway_name=virtual_network_gateway_name,
-                peer=peer,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._get_advertised_routes_initial(
+            resource_group_name=resource_group_name,
+            virtual_network_gateway_name=virtual_network_gateway_name,
+            peer=peer,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('GatewayRouteListResult', pipeline_response)
@@ -1556,15 +1406,7 @@ class VirtualNetworkGatewaysOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay, lro_options={'final-state-via': 'location'},  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_get_advertised_routes.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/getAdvertisedRoutes'}  # type: ignore
 
     def _set_vpnclient_ipsec_parameters_initial(
@@ -1617,7 +1459,7 @@ class VirtualNetworkGatewaysOperations(object):
             deserialized = self._deserialize('VpnClientIPsecParameters', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _set_vpnclient_ipsec_parameters_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/setvpnclientipsecparameters'}  # type: ignore
@@ -1630,8 +1472,7 @@ class VirtualNetworkGatewaysOperations(object):
         **kwargs  # type: Any
     ):
         # type: (...) -> LROPoller
-        """The Set VpnclientIpsecParameters operation sets the vpnclient ipsec policy for P2S client of
-    virtual network gateway in the specified resource group through Network resource provider.
+        """The Set VpnclientIpsecParameters operation sets the vpnclient ipsec policy for P2S client of virtual network gateway in the specified resource group through Network resource provider.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
@@ -1641,12 +1482,11 @@ class VirtualNetworkGatewaysOperations(object):
      of Virtual Network Gateway P2S client operation through Network resource provider.
         :type vpnclient_ipsec_params: ~azure.mgmt.network.v2018_12_01.models.VpnClientIPsecParameters
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either VpnClientIPsecParameters or the result of cls(response)
+        :return: An instance of LROPoller that returns VpnClientIPsecParameters
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.network.v2018_12_01.models.VpnClientIPsecParameters]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -1656,18 +1496,13 @@ class VirtualNetworkGatewaysOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._set_vpnclient_ipsec_parameters_initial(
-                resource_group_name=resource_group_name,
-                virtual_network_gateway_name=virtual_network_gateway_name,
-                vpnclient_ipsec_params=vpnclient_ipsec_params,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._set_vpnclient_ipsec_parameters_initial(
+            resource_group_name=resource_group_name,
+            virtual_network_gateway_name=virtual_network_gateway_name,
+            vpnclient_ipsec_params=vpnclient_ipsec_params,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('VpnClientIPsecParameters', pipeline_response)
@@ -1679,15 +1514,7 @@ class VirtualNetworkGatewaysOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay, lro_options={'final-state-via': 'location'},  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_set_vpnclient_ipsec_parameters.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/setvpnclientipsecparameters'}  # type: ignore
 
     def _get_vpnclient_ipsec_parameters_initial(
@@ -1731,7 +1558,7 @@ class VirtualNetworkGatewaysOperations(object):
         deserialized = self._deserialize('VpnClientIPsecParameters', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _get_vpnclient_ipsec_parameters_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/getvpnclientipsecparameters'}  # type: ignore
@@ -1743,21 +1570,18 @@ class VirtualNetworkGatewaysOperations(object):
         **kwargs  # type: Any
     ):
         # type: (...) -> LROPoller
-        """The Get VpnclientIpsecParameters operation retrieves information about the vpnclient ipsec
-    policy for P2S client of virtual network gateway in the specified resource group through
-    Network resource provider.
+        """The Get VpnclientIpsecParameters operation retrieves information about the vpnclient ipsec policy for P2S client of virtual network gateway in the specified resource group through Network resource provider.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
         :param virtual_network_gateway_name: The virtual network gateway name.
         :type virtual_network_gateway_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either VpnClientIPsecParameters or the result of cls(response)
+        :return: An instance of LROPoller that returns VpnClientIPsecParameters
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.network.v2018_12_01.models.VpnClientIPsecParameters]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -1767,17 +1591,12 @@ class VirtualNetworkGatewaysOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._get_vpnclient_ipsec_parameters_initial(
-                resource_group_name=resource_group_name,
-                virtual_network_gateway_name=virtual_network_gateway_name,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._get_vpnclient_ipsec_parameters_initial(
+            resource_group_name=resource_group_name,
+            virtual_network_gateway_name=virtual_network_gateway_name,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('VpnClientIPsecParameters', pipeline_response)
@@ -1789,15 +1608,7 @@ class VirtualNetworkGatewaysOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay, lro_options={'final-state-via': 'location'},  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_get_vpnclient_ipsec_parameters.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/getvpnclientipsecparameters'}  # type: ignore
 
     def vpn_device_configuration_script(
@@ -1818,7 +1629,7 @@ class VirtualNetworkGatewaysOperations(object):
         :param parameters: Parameters supplied to the generate vpn device script operation.
         :type parameters: ~azure.mgmt.network.v2018_12_01.models.VpnDeviceScriptParameters
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: str, or the result of cls(response)
+        :return: str or the result of cls(response)
         :rtype: str
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -1862,7 +1673,7 @@ class VirtualNetworkGatewaysOperations(object):
         deserialized = self._deserialize('str', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     vpn_device_configuration_script.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}/vpndeviceconfigurationscript'}  # type: ignore

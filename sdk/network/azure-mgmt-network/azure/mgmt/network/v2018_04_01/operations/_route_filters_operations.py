@@ -85,7 +85,7 @@ class RouteFiltersOperations(object):
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
         if cls:
-            return cls(pipeline_response, None, {})
+          return cls(pipeline_response, None, {})
 
     _delete_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}'}  # type: ignore
 
@@ -103,12 +103,11 @@ class RouteFiltersOperations(object):
         :param route_filter_name: The name of the route filter.
         :type route_filter_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either None or the result of cls(response)
+        :return: An instance of LROPoller that returns None
         :rtype: ~azure.core.polling.LROPoller[None]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -118,17 +117,12 @@ class RouteFiltersOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._delete_initial(
-                resource_group_name=resource_group_name,
-                route_filter_name=route_filter_name,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._delete_initial(
+            resource_group_name=resource_group_name,
+            route_filter_name=route_filter_name,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             if cls:
@@ -137,15 +131,7 @@ class RouteFiltersOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay,  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}'}  # type: ignore
 
     def get(
@@ -165,7 +151,7 @@ class RouteFiltersOperations(object):
         :param expand: Expands referenced express route bgp peering resources.
         :type expand: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: RouteFilter, or the result of cls(response)
+        :return: RouteFilter or the result of cls(response)
         :rtype: ~azure.mgmt.network.v2018_04_01.models.RouteFilter
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -205,7 +191,7 @@ class RouteFiltersOperations(object):
         deserialized = self._deserialize('RouteFilter', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}'}  # type: ignore
@@ -263,7 +249,7 @@ class RouteFiltersOperations(object):
             deserialized = self._deserialize('RouteFilter', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _create_or_update_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}'}  # type: ignore
@@ -286,12 +272,11 @@ class RouteFiltersOperations(object):
      operation.
         :type route_filter_parameters: ~azure.mgmt.network.v2018_04_01.models.RouteFilter
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either RouteFilter or the result of cls(response)
+        :return: An instance of LROPoller that returns RouteFilter
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.network.v2018_04_01.models.RouteFilter]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -301,18 +286,13 @@ class RouteFiltersOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._create_or_update_initial(
-                resource_group_name=resource_group_name,
-                route_filter_name=route_filter_name,
-                route_filter_parameters=route_filter_parameters,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._create_or_update_initial(
+            resource_group_name=resource_group_name,
+            route_filter_name=route_filter_name,
+            route_filter_parameters=route_filter_parameters,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('RouteFilter', pipeline_response)
@@ -324,15 +304,7 @@ class RouteFiltersOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay,  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}'}  # type: ignore
 
     def _update_initial(
@@ -383,7 +355,7 @@ class RouteFiltersOperations(object):
         deserialized = self._deserialize('RouteFilter', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _update_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}'}  # type: ignore
@@ -405,12 +377,11 @@ class RouteFiltersOperations(object):
         :param route_filter_parameters: Parameters supplied to the update route filter operation.
         :type route_filter_parameters: ~azure.mgmt.network.v2018_04_01.models.PatchRouteFilter
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either RouteFilter or the result of cls(response)
+        :return: An instance of LROPoller that returns RouteFilter
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.network.v2018_04_01.models.RouteFilter]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -420,18 +391,13 @@ class RouteFiltersOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._update_initial(
-                resource_group_name=resource_group_name,
-                route_filter_name=route_filter_name,
-                route_filter_parameters=route_filter_parameters,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._update_initial(
+            resource_group_name=resource_group_name,
+            route_filter_name=route_filter_name,
+            route_filter_parameters=route_filter_parameters,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('RouteFilter', pipeline_response)
@@ -443,15 +409,7 @@ class RouteFiltersOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay,  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}'}  # type: ignore
 
     def list_by_resource_group(
@@ -465,7 +423,7 @@ class RouteFiltersOperations(object):
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either RouteFilterListResult or the result of cls(response)
+        :return: An iterator like instance of RouteFilterListResult or the result of cls(response)
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.network.v2018_04_01.models.RouteFilterListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -530,7 +488,7 @@ class RouteFiltersOperations(object):
         """Gets all route filters in a subscription.
 
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either RouteFilterListResult or the result of cls(response)
+        :return: An iterator like instance of RouteFilterListResult or the result of cls(response)
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.network.v2018_04_01.models.RouteFilterListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """

@@ -59,7 +59,7 @@ class LoadBalancerProbesOperations(object):
         :param load_balancer_name: The name of the load balancer.
         :type load_balancer_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either LoadBalancerProbeListResult or the result of cls(response)
+        :return: An iterator like instance of LoadBalancerProbeListResult or the result of cls(response)
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.network.v2019_04_01.models.LoadBalancerProbeListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -134,7 +134,7 @@ class LoadBalancerProbesOperations(object):
         :param probe_name: The name of the probe.
         :type probe_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: Probe, or the result of cls(response)
+        :return: Probe or the result of cls(response)
         :rtype: ~azure.mgmt.network.v2019_04_01.models.Probe
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -173,7 +173,7 @@ class LoadBalancerProbesOperations(object):
         deserialized = self._deserialize('Probe', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/probes/{probeName}'}  # type: ignore

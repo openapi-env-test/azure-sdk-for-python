@@ -54,7 +54,7 @@ class NetworkInterfaceLoadBalancersOperations:
         :param network_interface_name: The name of the network interface.
         :type network_interface_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either NetworkInterfaceLoadBalancerListResult or the result of cls(response)
+        :return: An iterator like instance of NetworkInterfaceLoadBalancerListResult or the result of cls(response)
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.network.v2017_09_01.models.NetworkInterfaceLoadBalancerListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """

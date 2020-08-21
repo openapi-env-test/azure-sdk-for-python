@@ -89,7 +89,7 @@ class ExpressRouteCircuitConnectionsOperations(object):
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
         if cls:
-            return cls(pipeline_response, None, {})
+          return cls(pipeline_response, None, {})
 
     _delete_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/peerings/{peeringName}/connections/{connectionName}'}  # type: ignore
 
@@ -102,8 +102,7 @@ class ExpressRouteCircuitConnectionsOperations(object):
         **kwargs  # type: Any
     ):
         # type: (...) -> LROPoller
-        """Deletes the specified Express Route Circuit Connection from the specified express route
-    circuit.
+        """Deletes the specified Express Route Circuit Connection from the specified express route circuit.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
@@ -114,12 +113,11 @@ class ExpressRouteCircuitConnectionsOperations(object):
         :param connection_name: The name of the express route circuit connection.
         :type connection_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either None or the result of cls(response)
+        :return: An instance of LROPoller that returns None
         :rtype: ~azure.core.polling.LROPoller[None]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -129,19 +127,14 @@ class ExpressRouteCircuitConnectionsOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._delete_initial(
-                resource_group_name=resource_group_name,
-                circuit_name=circuit_name,
-                peering_name=peering_name,
-                connection_name=connection_name,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._delete_initial(
+            resource_group_name=resource_group_name,
+            circuit_name=circuit_name,
+            peering_name=peering_name,
+            connection_name=connection_name,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             if cls:
@@ -150,15 +143,7 @@ class ExpressRouteCircuitConnectionsOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay, lro_options={'final-state-via': 'location'},  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/peerings/{peeringName}/connections/{connectionName}'}  # type: ignore
 
     def get(
@@ -181,7 +166,7 @@ class ExpressRouteCircuitConnectionsOperations(object):
         :param connection_name: The name of the express route circuit connection.
         :type connection_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ExpressRouteCircuitConnection, or the result of cls(response)
+        :return: ExpressRouteCircuitConnection or the result of cls(response)
         :rtype: ~azure.mgmt.network.v2019_02_01.models.ExpressRouteCircuitConnection
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -221,7 +206,7 @@ class ExpressRouteCircuitConnectionsOperations(object):
         deserialized = self._deserialize('ExpressRouteCircuitConnection', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/peerings/{peeringName}/connections/{connectionName}'}  # type: ignore
@@ -283,7 +268,7 @@ class ExpressRouteCircuitConnectionsOperations(object):
             deserialized = self._deserialize('ExpressRouteCircuitConnection', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _create_or_update_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/peerings/{peeringName}/connections/{connectionName}'}  # type: ignore
@@ -312,12 +297,11 @@ class ExpressRouteCircuitConnectionsOperations(object):
      express route circuit connection operation.
         :type express_route_circuit_connection_parameters: ~azure.mgmt.network.v2019_02_01.models.ExpressRouteCircuitConnection
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either ExpressRouteCircuitConnection or the result of cls(response)
+        :return: An instance of LROPoller that returns ExpressRouteCircuitConnection
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.network.v2019_02_01.models.ExpressRouteCircuitConnection]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -327,20 +311,15 @@ class ExpressRouteCircuitConnectionsOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._create_or_update_initial(
-                resource_group_name=resource_group_name,
-                circuit_name=circuit_name,
-                peering_name=peering_name,
-                connection_name=connection_name,
-                express_route_circuit_connection_parameters=express_route_circuit_connection_parameters,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._create_or_update_initial(
+            resource_group_name=resource_group_name,
+            circuit_name=circuit_name,
+            peering_name=peering_name,
+            connection_name=connection_name,
+            express_route_circuit_connection_parameters=express_route_circuit_connection_parameters,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('ExpressRouteCircuitConnection', pipeline_response)
@@ -352,15 +331,7 @@ class ExpressRouteCircuitConnectionsOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay, lro_options={'final-state-via': 'azure-async-operation'},  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/peerings/{peeringName}/connections/{connectionName}'}  # type: ignore
 
     def list(
@@ -371,8 +342,7 @@ class ExpressRouteCircuitConnectionsOperations(object):
         **kwargs  # type: Any
     ):
         # type: (...) -> Iterable["models.ExpressRouteCircuitConnectionListResult"]
-        """Gets all global reach connections associated with a private peering in an express route
-    circuit.
+        """Gets all global reach connections associated with a private peering in an express route circuit.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
@@ -381,7 +351,7 @@ class ExpressRouteCircuitConnectionsOperations(object):
         :param peering_name: The name of the peering.
         :type peering_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either ExpressRouteCircuitConnectionListResult or the result of cls(response)
+        :return: An iterator like instance of ExpressRouteCircuitConnectionListResult or the result of cls(response)
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.network.v2019_02_01.models.ExpressRouteCircuitConnectionListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """

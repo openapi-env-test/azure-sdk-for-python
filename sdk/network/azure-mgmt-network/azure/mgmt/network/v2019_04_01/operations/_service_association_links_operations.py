@@ -61,7 +61,7 @@ class ServiceAssociationLinksOperations(object):
         :param subnet_name: The name of the subnet.
         :type subnet_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ServiceAssociationLinksListResult, or the result of cls(response)
+        :return: ServiceAssociationLinksListResult or the result of cls(response)
         :rtype: ~azure.mgmt.network.v2019_04_01.models.ServiceAssociationLinksListResult
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -100,7 +100,7 @@ class ServiceAssociationLinksOperations(object):
         deserialized = self._deserialize('ServiceAssociationLinksListResult', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     list.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}/ServiceAssociationLinks'}  # type: ignore

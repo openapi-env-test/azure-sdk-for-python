@@ -59,7 +59,7 @@ class DefaultSecurityRulesOperations(object):
         :param network_security_group_name: The name of the network security group.
         :type network_security_group_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either SecurityRuleListResult or the result of cls(response)
+        :return: An iterator like instance of SecurityRuleListResult or the result of cls(response)
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.network.v2018_08_01.models.SecurityRuleListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -134,7 +134,7 @@ class DefaultSecurityRulesOperations(object):
         :param default_security_rule_name: The name of the default security rule.
         :type default_security_rule_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: SecurityRule, or the result of cls(response)
+        :return: SecurityRule or the result of cls(response)
         :rtype: ~azure.mgmt.network.v2018_08_01.models.SecurityRule
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -173,7 +173,7 @@ class DefaultSecurityRulesOperations(object):
         deserialized = self._deserialize('SecurityRule', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/defaultSecurityRules/{defaultSecurityRuleName}'}  # type: ignore

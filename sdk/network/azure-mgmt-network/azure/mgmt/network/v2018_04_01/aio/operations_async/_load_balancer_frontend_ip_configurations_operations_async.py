@@ -54,7 +54,7 @@ class LoadBalancerFrontendIPConfigurationsOperations:
         :param load_balancer_name: The name of the load balancer.
         :type load_balancer_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either LoadBalancerFrontendIPConfigurationListResult or the result of cls(response)
+        :return: An iterator like instance of LoadBalancerFrontendIPConfigurationListResult or the result of cls(response)
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.network.v2018_04_01.models.LoadBalancerFrontendIPConfigurationListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -128,7 +128,7 @@ class LoadBalancerFrontendIPConfigurationsOperations:
         :param frontend_ip_configuration_name: The name of the frontend IP configuration.
         :type frontend_ip_configuration_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: FrontendIPConfiguration, or the result of cls(response)
+        :return: FrontendIPConfiguration or the result of cls(response)
         :rtype: ~azure.mgmt.network.v2018_04_01.models.FrontendIPConfiguration
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -167,7 +167,7 @@ class LoadBalancerFrontendIPConfigurationsOperations:
         deserialized = self._deserialize('FrontendIPConfiguration', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/frontendIPConfigurations/{frontendIPConfigurationName}'}  # type: ignore

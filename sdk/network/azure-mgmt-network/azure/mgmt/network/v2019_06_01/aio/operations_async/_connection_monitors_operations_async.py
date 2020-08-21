@@ -12,7 +12,7 @@ from azure.core.async_paging import AsyncItemPaged, AsyncList
 from azure.core.exceptions import HttpResponseError, ResourceExistsError, ResourceNotFoundError, map_error
 from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import AsyncHttpResponse, HttpRequest
-from azure.core.polling import AsyncLROPoller, AsyncNoPolling, AsyncPollingMethod
+from azure.core.polling import AsyncNoPolling, AsyncPollingMethod, async_poller
 from azure.mgmt.core.exceptions import ARMErrorFormat
 from azure.mgmt.core.polling.async_arm_polling import AsyncARMPolling
 
@@ -98,12 +98,12 @@ class ConnectionMonitorsOperations:
             deserialized = self._deserialize('ConnectionMonitorResult', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _create_or_update_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}'}  # type: ignore
 
-    async def begin_create_or_update(
+    async def create_or_update(
         self,
         resource_group_name: str,
         network_watcher_name: str,
@@ -122,12 +122,11 @@ class ConnectionMonitorsOperations:
         :param parameters: Parameters that define the operation to create a connection monitor.
         :type parameters: ~azure.mgmt.network.v2019_06_01.models.ConnectionMonitor
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: ConnectionMonitorResult, or the result of cls(response)
+        :return: ConnectionMonitorResult
         :rtype: ~azure.mgmt.network.v2019_06_01.models.ConnectionMonitorResult
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -137,19 +136,14 @@ class ConnectionMonitorsOperations:
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = await self._create_or_update_initial(
-                resource_group_name=resource_group_name,
-                network_watcher_name=network_watcher_name,
-                connection_monitor_name=connection_monitor_name,
-                parameters=parameters,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = await self._create_or_update_initial(
+            resource_group_name=resource_group_name,
+            network_watcher_name=network_watcher_name,
+            connection_monitor_name=connection_monitor_name,
+            parameters=parameters,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('ConnectionMonitorResult', pipeline_response)
@@ -161,16 +155,8 @@ class ConnectionMonitorsOperations:
         if polling is True: polling_method = AsyncARMPolling(lro_delay, lro_options={'final-state-via': 'azure-async-operation'},  **kwargs)
         elif polling is False: polling_method = AsyncNoPolling()
         else: polling_method = polling
-        if cont_token:
-            return AsyncLROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return AsyncLROPoller(self._client, raw_result, get_long_running_output, polling_method)
-    begin_create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}'}  # type: ignore
+        return await async_poller(self._client, raw_result, get_long_running_output, polling_method)
+    create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}'}  # type: ignore
 
     async def get(
         self,
@@ -188,7 +174,7 @@ class ConnectionMonitorsOperations:
         :param connection_monitor_name: The name of the connection monitor.
         :type connection_monitor_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ConnectionMonitorResult, or the result of cls(response)
+        :return: ConnectionMonitorResult or the result of cls(response)
         :rtype: ~azure.mgmt.network.v2019_06_01.models.ConnectionMonitorResult
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -228,7 +214,7 @@ class ConnectionMonitorsOperations:
         deserialized = self._deserialize('ConnectionMonitorResult', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}'}  # type: ignore
@@ -273,11 +259,11 @@ class ConnectionMonitorsOperations:
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         if cls:
-            return cls(pipeline_response, None, {})
+          return cls(pipeline_response, None, {})
 
     _delete_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}'}  # type: ignore
 
-    async def begin_delete(
+    async def delete(
         self,
         resource_group_name: str,
         network_watcher_name: str,
@@ -293,12 +279,11 @@ class ConnectionMonitorsOperations:
         :param connection_monitor_name: The name of the connection monitor.
         :type connection_monitor_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: None, or the result of cls(response)
+        :return: None
         :rtype: None
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -308,18 +293,13 @@ class ConnectionMonitorsOperations:
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = await self._delete_initial(
-                resource_group_name=resource_group_name,
-                network_watcher_name=network_watcher_name,
-                connection_monitor_name=connection_monitor_name,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = await self._delete_initial(
+            resource_group_name=resource_group_name,
+            network_watcher_name=network_watcher_name,
+            connection_monitor_name=connection_monitor_name,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             if cls:
@@ -328,23 +308,15 @@ class ConnectionMonitorsOperations:
         if polling is True: polling_method = AsyncARMPolling(lro_delay, lro_options={'final-state-via': 'location'},  **kwargs)
         elif polling is False: polling_method = AsyncNoPolling()
         else: polling_method = polling
-        if cont_token:
-            return AsyncLROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return AsyncLROPoller(self._client, raw_result, get_long_running_output, polling_method)
-    begin_delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}'}  # type: ignore
+        return await async_poller(self._client, raw_result, get_long_running_output, polling_method)
+    delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}'}  # type: ignore
 
     async def update_tags(
         self,
         resource_group_name: str,
         network_watcher_name: str,
         connection_monitor_name: str,
-        parameters: "models.TagsObject",
+        tags: Optional[Dict[str, str]] = None,
         **kwargs
     ) -> "models.ConnectionMonitorResult":
         """Update tags of the specified connection monitor.
@@ -355,16 +327,18 @@ class ConnectionMonitorsOperations:
         :type network_watcher_name: str
         :param connection_monitor_name: The name of the connection monitor.
         :type connection_monitor_name: str
-        :param parameters: Parameters supplied to update connection monitor tags.
-        :type parameters: ~azure.mgmt.network.v2019_06_01.models.TagsObject
+        :param tags: Resource tags.
+        :type tags: dict[str, str]
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ConnectionMonitorResult, or the result of cls(response)
+        :return: ConnectionMonitorResult or the result of cls(response)
         :rtype: ~azure.mgmt.network.v2019_06_01.models.ConnectionMonitorResult
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.ConnectionMonitorResult"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
+
+        _parameters = models.TagsObject(tags=tags)
         api_version = "2019-06-01"
         content_type = kwargs.pop("content_type", "application/json")
 
@@ -389,7 +363,7 @@ class ConnectionMonitorsOperations:
 
         # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(parameters, 'TagsObject')
+        body_content = self._serialize.body(_parameters, 'TagsObject')
         body_content_kwargs['content'] = body_content
         request = self._client.patch(url, query_parameters, header_parameters, **body_content_kwargs)
 
@@ -404,7 +378,7 @@ class ConnectionMonitorsOperations:
         deserialized = self._deserialize('ConnectionMonitorResult', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     update_tags.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}'}  # type: ignore
@@ -449,11 +423,11 @@ class ConnectionMonitorsOperations:
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         if cls:
-            return cls(pipeline_response, None, {})
+          return cls(pipeline_response, None, {})
 
     _stop_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}/stop'}  # type: ignore
 
-    async def begin_stop(
+    async def stop(
         self,
         resource_group_name: str,
         network_watcher_name: str,
@@ -469,12 +443,11 @@ class ConnectionMonitorsOperations:
         :param connection_monitor_name: The name of the connection monitor.
         :type connection_monitor_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: None, or the result of cls(response)
+        :return: None
         :rtype: None
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -484,18 +457,13 @@ class ConnectionMonitorsOperations:
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = await self._stop_initial(
-                resource_group_name=resource_group_name,
-                network_watcher_name=network_watcher_name,
-                connection_monitor_name=connection_monitor_name,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = await self._stop_initial(
+            resource_group_name=resource_group_name,
+            network_watcher_name=network_watcher_name,
+            connection_monitor_name=connection_monitor_name,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             if cls:
@@ -504,16 +472,8 @@ class ConnectionMonitorsOperations:
         if polling is True: polling_method = AsyncARMPolling(lro_delay, lro_options={'final-state-via': 'location'},  **kwargs)
         elif polling is False: polling_method = AsyncNoPolling()
         else: polling_method = polling
-        if cont_token:
-            return AsyncLROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return AsyncLROPoller(self._client, raw_result, get_long_running_output, polling_method)
-    begin_stop.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}/stop'}  # type: ignore
+        return await async_poller(self._client, raw_result, get_long_running_output, polling_method)
+    stop.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}/stop'}  # type: ignore
 
     async def _start_initial(
         self,
@@ -555,11 +515,11 @@ class ConnectionMonitorsOperations:
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         if cls:
-            return cls(pipeline_response, None, {})
+          return cls(pipeline_response, None, {})
 
     _start_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}/start'}  # type: ignore
 
-    async def begin_start(
+    async def start(
         self,
         resource_group_name: str,
         network_watcher_name: str,
@@ -575,12 +535,11 @@ class ConnectionMonitorsOperations:
         :param connection_monitor_name: The name of the connection monitor.
         :type connection_monitor_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: None, or the result of cls(response)
+        :return: None
         :rtype: None
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -590,18 +549,13 @@ class ConnectionMonitorsOperations:
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = await self._start_initial(
-                resource_group_name=resource_group_name,
-                network_watcher_name=network_watcher_name,
-                connection_monitor_name=connection_monitor_name,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = await self._start_initial(
+            resource_group_name=resource_group_name,
+            network_watcher_name=network_watcher_name,
+            connection_monitor_name=connection_monitor_name,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             if cls:
@@ -610,16 +564,8 @@ class ConnectionMonitorsOperations:
         if polling is True: polling_method = AsyncARMPolling(lro_delay, lro_options={'final-state-via': 'location'},  **kwargs)
         elif polling is False: polling_method = AsyncNoPolling()
         else: polling_method = polling
-        if cont_token:
-            return AsyncLROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return AsyncLROPoller(self._client, raw_result, get_long_running_output, polling_method)
-    begin_start.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}/start'}  # type: ignore
+        return await async_poller(self._client, raw_result, get_long_running_output, polling_method)
+    start.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}/start'}  # type: ignore
 
     async def _query_initial(
         self,
@@ -669,12 +615,12 @@ class ConnectionMonitorsOperations:
             deserialized = self._deserialize('ConnectionMonitorQueryResult', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _query_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}/query'}  # type: ignore
 
-    async def begin_query(
+    async def query(
         self,
         resource_group_name: str,
         network_watcher_name: str,
@@ -690,12 +636,11 @@ class ConnectionMonitorsOperations:
         :param connection_monitor_name: The name given to the connection monitor.
         :type connection_monitor_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: ConnectionMonitorQueryResult, or the result of cls(response)
+        :return: ConnectionMonitorQueryResult
         :rtype: ~azure.mgmt.network.v2019_06_01.models.ConnectionMonitorQueryResult
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -705,18 +650,13 @@ class ConnectionMonitorsOperations:
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = await self._query_initial(
-                resource_group_name=resource_group_name,
-                network_watcher_name=network_watcher_name,
-                connection_monitor_name=connection_monitor_name,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = await self._query_initial(
+            resource_group_name=resource_group_name,
+            network_watcher_name=network_watcher_name,
+            connection_monitor_name=connection_monitor_name,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('ConnectionMonitorQueryResult', pipeline_response)
@@ -728,16 +668,8 @@ class ConnectionMonitorsOperations:
         if polling is True: polling_method = AsyncARMPolling(lro_delay, lro_options={'final-state-via': 'location'},  **kwargs)
         elif polling is False: polling_method = AsyncNoPolling()
         else: polling_method = polling
-        if cont_token:
-            return AsyncLROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return AsyncLROPoller(self._client, raw_result, get_long_running_output, polling_method)
-    begin_query.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}/query'}  # type: ignore
+        return await async_poller(self._client, raw_result, get_long_running_output, polling_method)
+    query.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}/query'}  # type: ignore
 
     def list(
         self,
@@ -752,7 +684,7 @@ class ConnectionMonitorsOperations:
         :param network_watcher_name: The name of the Network Watcher resource.
         :type network_watcher_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either ConnectionMonitorListResult or the result of cls(response)
+        :return: An iterator like instance of ConnectionMonitorListResult or the result of cls(response)
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.network.v2019_06_01.models.ConnectionMonitorListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """

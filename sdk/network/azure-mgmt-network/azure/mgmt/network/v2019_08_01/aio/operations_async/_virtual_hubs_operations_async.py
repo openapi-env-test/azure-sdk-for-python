@@ -12,7 +12,7 @@ from azure.core.async_paging import AsyncItemPaged, AsyncList
 from azure.core.exceptions import HttpResponseError, ResourceExistsError, ResourceNotFoundError, map_error
 from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import AsyncHttpResponse, HttpRequest
-from azure.core.polling import AsyncLROPoller, AsyncNoPolling, AsyncPollingMethod
+from azure.core.polling import AsyncNoPolling, AsyncPollingMethod, async_poller
 from azure.mgmt.core.exceptions import ARMErrorFormat
 from azure.mgmt.core.polling.async_arm_polling import AsyncARMPolling
 
@@ -56,7 +56,7 @@ class VirtualHubsOperations:
         :param virtual_hub_name: The name of the VirtualHub.
         :type virtual_hub_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: VirtualHub, or the result of cls(response)
+        :return: VirtualHub or the result of cls(response)
         :rtype: ~azure.mgmt.network.v2019_08_01.models.VirtualHub
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -94,7 +94,7 @@ class VirtualHubsOperations:
         deserialized = self._deserialize('VirtualHub', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}'}  # type: ignore
@@ -151,12 +151,12 @@ class VirtualHubsOperations:
             deserialized = self._deserialize('VirtualHub', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _create_or_update_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}'}  # type: ignore
 
-    async def begin_create_or_update(
+    async def create_or_update(
         self,
         resource_group_name: str,
         virtual_hub_name: str,
@@ -172,12 +172,11 @@ class VirtualHubsOperations:
         :param virtual_hub_parameters: Parameters supplied to create or update VirtualHub.
         :type virtual_hub_parameters: ~azure.mgmt.network.v2019_08_01.models.VirtualHub
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: VirtualHub, or the result of cls(response)
+        :return: VirtualHub
         :rtype: ~azure.mgmt.network.v2019_08_01.models.VirtualHub
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -187,18 +186,13 @@ class VirtualHubsOperations:
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = await self._create_or_update_initial(
-                resource_group_name=resource_group_name,
-                virtual_hub_name=virtual_hub_name,
-                virtual_hub_parameters=virtual_hub_parameters,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = await self._create_or_update_initial(
+            resource_group_name=resource_group_name,
+            virtual_hub_name=virtual_hub_name,
+            virtual_hub_parameters=virtual_hub_parameters,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('VirtualHub', pipeline_response)
@@ -210,27 +204,21 @@ class VirtualHubsOperations:
         if polling is True: polling_method = AsyncARMPolling(lro_delay, lro_options={'final-state-via': 'azure-async-operation'},  **kwargs)
         elif polling is False: polling_method = AsyncNoPolling()
         else: polling_method = polling
-        if cont_token:
-            return AsyncLROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return AsyncLROPoller(self._client, raw_result, get_long_running_output, polling_method)
-    begin_create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}'}  # type: ignore
+        return await async_poller(self._client, raw_result, get_long_running_output, polling_method)
+    create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}'}  # type: ignore
 
     async def _update_tags_initial(
         self,
         resource_group_name: str,
         virtual_hub_name: str,
-        virtual_hub_parameters: "models.TagsObject",
+        tags: Optional[Dict[str, str]] = None,
         **kwargs
     ) -> "models.VirtualHub":
         cls = kwargs.pop('cls', None)  # type: ClsType["models.VirtualHub"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
+
+        _virtual_hub_parameters = models.TagsObject(tags=tags)
         api_version = "2019-08-01"
         content_type = kwargs.pop("content_type", "application/json")
 
@@ -254,7 +242,7 @@ class VirtualHubsOperations:
 
         # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(virtual_hub_parameters, 'TagsObject')
+        body_content = self._serialize.body(_virtual_hub_parameters, 'TagsObject')
         body_content_kwargs['content'] = body_content
         request = self._client.patch(url, query_parameters, header_parameters, **body_content_kwargs)
 
@@ -273,16 +261,16 @@ class VirtualHubsOperations:
             deserialized = self._deserialize('VirtualHub', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _update_tags_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}'}  # type: ignore
 
-    async def begin_update_tags(
+    async def update_tags(
         self,
         resource_group_name: str,
         virtual_hub_name: str,
-        virtual_hub_parameters: "models.TagsObject",
+        tags: Optional[Dict[str, str]] = None,
         **kwargs
     ) -> "models.VirtualHub":
         """Updates VirtualHub tags.
@@ -291,15 +279,14 @@ class VirtualHubsOperations:
         :type resource_group_name: str
         :param virtual_hub_name: The name of the VirtualHub.
         :type virtual_hub_name: str
-        :param virtual_hub_parameters: Parameters supplied to update VirtualHub tags.
-        :type virtual_hub_parameters: ~azure.mgmt.network.v2019_08_01.models.TagsObject
+        :param tags: Resource tags.
+        :type tags: dict[str, str]
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: VirtualHub, or the result of cls(response)
+        :return: VirtualHub
         :rtype: ~azure.mgmt.network.v2019_08_01.models.VirtualHub
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -309,18 +296,13 @@ class VirtualHubsOperations:
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = await self._update_tags_initial(
-                resource_group_name=resource_group_name,
-                virtual_hub_name=virtual_hub_name,
-                virtual_hub_parameters=virtual_hub_parameters,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = await self._update_tags_initial(
+            resource_group_name=resource_group_name,
+            virtual_hub_name=virtual_hub_name,
+            tags=tags,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('VirtualHub', pipeline_response)
@@ -332,16 +314,8 @@ class VirtualHubsOperations:
         if polling is True: polling_method = AsyncARMPolling(lro_delay,  **kwargs)
         elif polling is False: polling_method = AsyncNoPolling()
         else: polling_method = polling
-        if cont_token:
-            return AsyncLROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return AsyncLROPoller(self._client, raw_result, get_long_running_output, polling_method)
-    begin_update_tags.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}'}  # type: ignore
+        return await async_poller(self._client, raw_result, get_long_running_output, polling_method)
+    update_tags.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}'}  # type: ignore
 
     async def _delete_initial(
         self,
@@ -380,11 +354,11 @@ class VirtualHubsOperations:
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
         if cls:
-            return cls(pipeline_response, None, {})
+          return cls(pipeline_response, None, {})
 
     _delete_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}'}  # type: ignore
 
-    async def begin_delete(
+    async def delete(
         self,
         resource_group_name: str,
         virtual_hub_name: str,
@@ -397,12 +371,11 @@ class VirtualHubsOperations:
         :param virtual_hub_name: The name of the VirtualHub.
         :type virtual_hub_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: None, or the result of cls(response)
+        :return: None
         :rtype: None
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -412,17 +385,12 @@ class VirtualHubsOperations:
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = await self._delete_initial(
-                resource_group_name=resource_group_name,
-                virtual_hub_name=virtual_hub_name,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = await self._delete_initial(
+            resource_group_name=resource_group_name,
+            virtual_hub_name=virtual_hub_name,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             if cls:
@@ -431,16 +399,8 @@ class VirtualHubsOperations:
         if polling is True: polling_method = AsyncARMPolling(lro_delay, lro_options={'final-state-via': 'location'},  **kwargs)
         elif polling is False: polling_method = AsyncNoPolling()
         else: polling_method = polling
-        if cont_token:
-            return AsyncLROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return AsyncLROPoller(self._client, raw_result, get_long_running_output, polling_method)
-    begin_delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}'}  # type: ignore
+        return await async_poller(self._client, raw_result, get_long_running_output, polling_method)
+    delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}'}  # type: ignore
 
     def list_by_resource_group(
         self,
@@ -452,7 +412,7 @@ class VirtualHubsOperations:
         :param resource_group_name: The resource group name of the VirtualHub.
         :type resource_group_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either ListVirtualHubsResult or the result of cls(response)
+        :return: An iterator like instance of ListVirtualHubsResult or the result of cls(response)
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.network.v2019_08_01.models.ListVirtualHubsResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -516,7 +476,7 @@ class VirtualHubsOperations:
         """Lists all the VirtualHubs in a subscription.
 
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either ListVirtualHubsResult or the result of cls(response)
+        :return: An iterator like instance of ListVirtualHubsResult or the result of cls(response)
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.network.v2019_08_01.models.ListVirtualHubsResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """

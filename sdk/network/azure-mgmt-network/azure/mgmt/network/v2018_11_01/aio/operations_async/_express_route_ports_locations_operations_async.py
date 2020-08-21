@@ -45,12 +45,10 @@ class ExpressRoutePortsLocationsOperations:
         self,
         **kwargs
     ) -> AsyncIterable["models.ExpressRoutePortsLocationListResult"]:
-        """Retrieves all ExpressRoutePort peering locations. Does not return available bandwidths for each
-    location. Available bandwidths can only be obtained when retrieving a specific peering
-    location.
+        """Retrieves all ExpressRoutePort peering locations. Does not return available bandwidths for each location. Available bandwidths can only be obtained when retrieving a specific peering location.
 
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either ExpressRoutePortsLocationListResult or the result of cls(response)
+        :return: An iterator like instance of ExpressRoutePortsLocationListResult or the result of cls(response)
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.network.v2018_11_01.models.ExpressRoutePortsLocationListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -111,13 +109,12 @@ class ExpressRoutePortsLocationsOperations:
         location_name: str,
         **kwargs
     ) -> "models.ExpressRoutePortsLocation":
-        """Retrieves a single ExpressRoutePort peering location, including the list of available
-        bandwidths available at said peering location.
+        """Retrieves a single ExpressRoutePort peering location, including the list of available bandwidths available at said peering location.
 
         :param location_name: Name of the requested ExpressRoutePort peering location.
         :type location_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ExpressRoutePortsLocation, or the result of cls(response)
+        :return: ExpressRoutePortsLocation or the result of cls(response)
         :rtype: ~azure.mgmt.network.v2018_11_01.models.ExpressRoutePortsLocation
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -154,7 +151,7 @@ class ExpressRoutePortsLocationsOperations:
         deserialized = self._deserialize('ExpressRoutePortsLocation', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Network/ExpressRoutePortsLocations/{locationName}'}  # type: ignore

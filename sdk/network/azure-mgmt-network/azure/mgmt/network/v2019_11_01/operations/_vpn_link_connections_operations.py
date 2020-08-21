@@ -53,8 +53,7 @@ class VpnLinkConnectionsOperations(object):
         **kwargs  # type: Any
     ):
         # type: (...) -> Iterable["models.ListVpnSiteLinkConnectionsResult"]
-        """Retrieves all vpn site link connections for a particular virtual wan vpn gateway vpn
-    connection.
+        """Retrieves all vpn site link connections for a particular virtual wan vpn gateway vpn connection.
 
         :param resource_group_name: The resource group name of the VpnGateway.
         :type resource_group_name: str
@@ -63,7 +62,7 @@ class VpnLinkConnectionsOperations(object):
         :param connection_name: The name of the vpn connection.
         :type connection_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either ListVpnSiteLinkConnectionsResult or the result of cls(response)
+        :return: An iterator like instance of ListVpnSiteLinkConnectionsResult or the result of cls(response)
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.network.v2019_11_01.models.ListVpnSiteLinkConnectionsResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """

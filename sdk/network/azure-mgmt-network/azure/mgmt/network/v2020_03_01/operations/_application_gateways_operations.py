@@ -85,7 +85,7 @@ class ApplicationGatewaysOperations(object):
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
         if cls:
-            return cls(pipeline_response, None, {})
+          return cls(pipeline_response, None, {})
 
     _delete_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}'}  # type: ignore
 
@@ -103,12 +103,11 @@ class ApplicationGatewaysOperations(object):
         :param application_gateway_name: The name of the application gateway.
         :type application_gateway_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either None or the result of cls(response)
+        :return: An instance of LROPoller that returns None
         :rtype: ~azure.core.polling.LROPoller[None]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -118,17 +117,12 @@ class ApplicationGatewaysOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._delete_initial(
-                resource_group_name=resource_group_name,
-                application_gateway_name=application_gateway_name,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._delete_initial(
+            resource_group_name=resource_group_name,
+            application_gateway_name=application_gateway_name,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             if cls:
@@ -137,15 +131,7 @@ class ApplicationGatewaysOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay, lro_options={'final-state-via': 'location'},  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}'}  # type: ignore
 
     def get(
@@ -162,7 +148,7 @@ class ApplicationGatewaysOperations(object):
         :param application_gateway_name: The name of the application gateway.
         :type application_gateway_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ApplicationGateway, or the result of cls(response)
+        :return: ApplicationGateway or the result of cls(response)
         :rtype: ~azure.mgmt.network.v2020_03_01.models.ApplicationGateway
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -200,7 +186,7 @@ class ApplicationGatewaysOperations(object):
         deserialized = self._deserialize('ApplicationGateway', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}'}  # type: ignore
@@ -258,7 +244,7 @@ class ApplicationGatewaysOperations(object):
             deserialized = self._deserialize('ApplicationGateway', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _create_or_update_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}'}  # type: ignore
@@ -280,12 +266,11 @@ class ApplicationGatewaysOperations(object):
         :param parameters: Parameters supplied to the create or update application gateway operation.
         :type parameters: ~azure.mgmt.network.v2020_03_01.models.ApplicationGateway
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either ApplicationGateway or the result of cls(response)
+        :return: An instance of LROPoller that returns ApplicationGateway
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.network.v2020_03_01.models.ApplicationGateway]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -295,18 +280,13 @@ class ApplicationGatewaysOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._create_or_update_initial(
-                resource_group_name=resource_group_name,
-                application_gateway_name=application_gateway_name,
-                parameters=parameters,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._create_or_update_initial(
+            resource_group_name=resource_group_name,
+            application_gateway_name=application_gateway_name,
+            parameters=parameters,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('ApplicationGateway', pipeline_response)
@@ -318,22 +298,14 @@ class ApplicationGatewaysOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay, lro_options={'final-state-via': 'azure-async-operation'},  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}'}  # type: ignore
 
     def update_tags(
         self,
         resource_group_name,  # type: str
         application_gateway_name,  # type: str
-        parameters,  # type: "models.TagsObject"
+        tags=None,  # type: Optional[Dict[str, str]]
         **kwargs  # type: Any
     ):
         # type: (...) -> "models.ApplicationGateway"
@@ -343,16 +315,18 @@ class ApplicationGatewaysOperations(object):
         :type resource_group_name: str
         :param application_gateway_name: The name of the application gateway.
         :type application_gateway_name: str
-        :param parameters: Parameters supplied to update application gateway tags.
-        :type parameters: ~azure.mgmt.network.v2020_03_01.models.TagsObject
+        :param tags: Resource tags.
+        :type tags: dict[str, str]
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ApplicationGateway, or the result of cls(response)
+        :return: ApplicationGateway or the result of cls(response)
         :rtype: ~azure.mgmt.network.v2020_03_01.models.ApplicationGateway
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.ApplicationGateway"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
+
+        _parameters = models.TagsObject(tags=tags)
         api_version = "2020-03-01"
         content_type = kwargs.pop("content_type", "application/json")
 
@@ -376,7 +350,7 @@ class ApplicationGatewaysOperations(object):
 
         # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(parameters, 'TagsObject')
+        body_content = self._serialize.body(_parameters, 'TagsObject')
         body_content_kwargs['content'] = body_content
         request = self._client.patch(url, query_parameters, header_parameters, **body_content_kwargs)
 
@@ -390,7 +364,7 @@ class ApplicationGatewaysOperations(object):
         deserialized = self._deserialize('ApplicationGateway', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     update_tags.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}'}  # type: ignore
@@ -406,7 +380,7 @@ class ApplicationGatewaysOperations(object):
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either ApplicationGatewayListResult or the result of cls(response)
+        :return: An iterator like instance of ApplicationGatewayListResult or the result of cls(response)
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.network.v2020_03_01.models.ApplicationGatewayListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -471,7 +445,7 @@ class ApplicationGatewaysOperations(object):
         """Gets all the application gateways in a subscription.
 
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either ApplicationGatewayListResult or the result of cls(response)
+        :return: An iterator like instance of ApplicationGatewayListResult or the result of cls(response)
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.network.v2020_03_01.models.ApplicationGatewayListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -565,7 +539,7 @@ class ApplicationGatewaysOperations(object):
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
         if cls:
-            return cls(pipeline_response, None, {})
+          return cls(pipeline_response, None, {})
 
     _start_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}/start'}  # type: ignore
 
@@ -583,12 +557,11 @@ class ApplicationGatewaysOperations(object):
         :param application_gateway_name: The name of the application gateway.
         :type application_gateway_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either None or the result of cls(response)
+        :return: An instance of LROPoller that returns None
         :rtype: ~azure.core.polling.LROPoller[None]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -598,17 +571,12 @@ class ApplicationGatewaysOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._start_initial(
-                resource_group_name=resource_group_name,
-                application_gateway_name=application_gateway_name,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._start_initial(
+            resource_group_name=resource_group_name,
+            application_gateway_name=application_gateway_name,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             if cls:
@@ -617,15 +585,7 @@ class ApplicationGatewaysOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay, lro_options={'final-state-via': 'location'},  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_start.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}/start'}  # type: ignore
 
     def _stop_initial(
@@ -666,7 +626,7 @@ class ApplicationGatewaysOperations(object):
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
         if cls:
-            return cls(pipeline_response, None, {})
+          return cls(pipeline_response, None, {})
 
     _stop_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}/stop'}  # type: ignore
 
@@ -684,12 +644,11 @@ class ApplicationGatewaysOperations(object):
         :param application_gateway_name: The name of the application gateway.
         :type application_gateway_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either None or the result of cls(response)
+        :return: An instance of LROPoller that returns None
         :rtype: ~azure.core.polling.LROPoller[None]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -699,17 +658,12 @@ class ApplicationGatewaysOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._stop_initial(
-                resource_group_name=resource_group_name,
-                application_gateway_name=application_gateway_name,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._stop_initial(
+            resource_group_name=resource_group_name,
+            application_gateway_name=application_gateway_name,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             if cls:
@@ -718,15 +672,7 @@ class ApplicationGatewaysOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay, lro_options={'final-state-via': 'location'},  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_stop.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}/stop'}  # type: ignore
 
     def _backend_health_initial(
@@ -775,7 +721,7 @@ class ApplicationGatewaysOperations(object):
             deserialized = self._deserialize('ApplicationGatewayBackendHealth', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _backend_health_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}/backendhealth'}  # type: ignore
@@ -797,12 +743,11 @@ class ApplicationGatewaysOperations(object):
         :param expand: Expands BackendAddressPool and BackendHttpSettings referenced in backend health.
         :type expand: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either ApplicationGatewayBackendHealth or the result of cls(response)
+        :return: An instance of LROPoller that returns ApplicationGatewayBackendHealth
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.network.v2020_03_01.models.ApplicationGatewayBackendHealth]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -812,18 +757,13 @@ class ApplicationGatewaysOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._backend_health_initial(
-                resource_group_name=resource_group_name,
-                application_gateway_name=application_gateway_name,
-                expand=expand,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._backend_health_initial(
+            resource_group_name=resource_group_name,
+            application_gateway_name=application_gateway_name,
+            expand=expand,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('ApplicationGatewayBackendHealth', pipeline_response)
@@ -835,15 +775,7 @@ class ApplicationGatewaysOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay, lro_options={'final-state-via': 'location'},  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_backend_health.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}/backendhealth'}  # type: ignore
 
     def _backend_health_on_demand_initial(
@@ -899,7 +831,7 @@ class ApplicationGatewaysOperations(object):
             deserialized = self._deserialize('ApplicationGatewayBackendHealthOnDemand', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _backend_health_on_demand_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}/getBackendHealthOnDemand'}  # type: ignore
@@ -913,8 +845,7 @@ class ApplicationGatewaysOperations(object):
         **kwargs  # type: Any
     ):
         # type: (...) -> LROPoller
-        """Gets the backend health for given combination of backend pool and http setting of the specified
-    application gateway in a resource group.
+        """Gets the backend health for given combination of backend pool and http setting of the specified application gateway in a resource group.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
@@ -925,12 +856,11 @@ class ApplicationGatewaysOperations(object):
         :param expand: Expands BackendAddressPool and BackendHttpSettings referenced in backend health.
         :type expand: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either ApplicationGatewayBackendHealthOnDemand or the result of cls(response)
+        :return: An instance of LROPoller that returns ApplicationGatewayBackendHealthOnDemand
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.network.v2020_03_01.models.ApplicationGatewayBackendHealthOnDemand]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -940,19 +870,14 @@ class ApplicationGatewaysOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._backend_health_on_demand_initial(
-                resource_group_name=resource_group_name,
-                application_gateway_name=application_gateway_name,
-                probe_request=probe_request,
-                expand=expand,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._backend_health_on_demand_initial(
+            resource_group_name=resource_group_name,
+            application_gateway_name=application_gateway_name,
+            probe_request=probe_request,
+            expand=expand,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('ApplicationGatewayBackendHealthOnDemand', pipeline_response)
@@ -964,15 +889,7 @@ class ApplicationGatewaysOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay, lro_options={'final-state-via': 'location'},  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_backend_health_on_demand.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}/getBackendHealthOnDemand'}  # type: ignore
 
     def list_available_server_variables(
@@ -983,7 +900,7 @@ class ApplicationGatewaysOperations(object):
         """Lists all available server variables.
 
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: list of str, or the result of cls(response)
+        :return: list or the result of cls(response)
         :rtype: list[str]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -1020,7 +937,7 @@ class ApplicationGatewaysOperations(object):
         deserialized = self._deserialize('[str]', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     list_available_server_variables.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableServerVariables'}  # type: ignore
@@ -1033,7 +950,7 @@ class ApplicationGatewaysOperations(object):
         """Lists all available request headers.
 
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: list of str, or the result of cls(response)
+        :return: list or the result of cls(response)
         :rtype: list[str]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -1070,7 +987,7 @@ class ApplicationGatewaysOperations(object):
         deserialized = self._deserialize('[str]', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     list_available_request_headers.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableRequestHeaders'}  # type: ignore
@@ -1083,7 +1000,7 @@ class ApplicationGatewaysOperations(object):
         """Lists all available response headers.
 
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: list of str, or the result of cls(response)
+        :return: list or the result of cls(response)
         :rtype: list[str]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -1120,7 +1037,7 @@ class ApplicationGatewaysOperations(object):
         deserialized = self._deserialize('[str]', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     list_available_response_headers.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableResponseHeaders'}  # type: ignore
@@ -1133,7 +1050,7 @@ class ApplicationGatewaysOperations(object):
         """Lists all available web application firewall rule sets.
 
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ApplicationGatewayAvailableWafRuleSetsResult, or the result of cls(response)
+        :return: ApplicationGatewayAvailableWafRuleSetsResult or the result of cls(response)
         :rtype: ~azure.mgmt.network.v2020_03_01.models.ApplicationGatewayAvailableWafRuleSetsResult
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -1169,7 +1086,7 @@ class ApplicationGatewaysOperations(object):
         deserialized = self._deserialize('ApplicationGatewayAvailableWafRuleSetsResult', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     list_available_waf_rule_sets.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableWafRuleSets'}  # type: ignore
@@ -1182,7 +1099,7 @@ class ApplicationGatewaysOperations(object):
         """Lists available Ssl options for configuring Ssl policy.
 
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ApplicationGatewayAvailableSslOptions, or the result of cls(response)
+        :return: ApplicationGatewayAvailableSslOptions or the result of cls(response)
         :rtype: ~azure.mgmt.network.v2020_03_01.models.ApplicationGatewayAvailableSslOptions
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -1218,7 +1135,7 @@ class ApplicationGatewaysOperations(object):
         deserialized = self._deserialize('ApplicationGatewayAvailableSslOptions', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     list_available_ssl_options.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default'}  # type: ignore
@@ -1231,7 +1148,7 @@ class ApplicationGatewaysOperations(object):
         """Lists all SSL predefined policies for configuring Ssl policy.
 
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either ApplicationGatewayAvailableSslPredefinedPolicies or the result of cls(response)
+        :return: An iterator like instance of ApplicationGatewayAvailableSslPredefinedPolicies or the result of cls(response)
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.network.v2020_03_01.models.ApplicationGatewayAvailableSslPredefinedPolicies]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -1298,7 +1215,7 @@ class ApplicationGatewaysOperations(object):
         :param predefined_policy_name: Name of Ssl predefined policy.
         :type predefined_policy_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ApplicationGatewaySslPredefinedPolicy, or the result of cls(response)
+        :return: ApplicationGatewaySslPredefinedPolicy or the result of cls(response)
         :rtype: ~azure.mgmt.network.v2020_03_01.models.ApplicationGatewaySslPredefinedPolicy
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -1335,7 +1252,7 @@ class ApplicationGatewaysOperations(object):
         deserialized = self._deserialize('ApplicationGatewaySslPredefinedPolicy', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get_ssl_predefined_policy.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies/{predefinedPolicyName}'}  # type: ignore

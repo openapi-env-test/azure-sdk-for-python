@@ -56,7 +56,7 @@ class ResourceNavigationLinksOperations:
         :param subnet_name: The name of the subnet.
         :type subnet_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ResourceNavigationLinksListResult, or the result of cls(response)
+        :return: ResourceNavigationLinksListResult or the result of cls(response)
         :rtype: ~azure.mgmt.network.v2020_04_01.models.ResourceNavigationLinksListResult
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -95,7 +95,7 @@ class ResourceNavigationLinksOperations:
         deserialized = self._deserialize('ResourceNavigationLinksListResult', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     list.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}/ResourceNavigationLinks'}  # type: ignore

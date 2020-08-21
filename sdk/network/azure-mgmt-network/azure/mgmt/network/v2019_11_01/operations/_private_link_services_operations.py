@@ -86,7 +86,7 @@ class PrivateLinkServicesOperations(object):
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         if cls:
-            return cls(pipeline_response, None, {})
+          return cls(pipeline_response, None, {})
 
     _delete_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateLinkServices/{serviceName}'}  # type: ignore
 
@@ -104,12 +104,11 @@ class PrivateLinkServicesOperations(object):
         :param service_name: The name of the private link service.
         :type service_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either None or the result of cls(response)
+        :return: An instance of LROPoller that returns None
         :rtype: ~azure.core.polling.LROPoller[None]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -119,17 +118,12 @@ class PrivateLinkServicesOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._delete_initial(
-                resource_group_name=resource_group_name,
-                service_name=service_name,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._delete_initial(
+            resource_group_name=resource_group_name,
+            service_name=service_name,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             if cls:
@@ -138,15 +132,7 @@ class PrivateLinkServicesOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay, lro_options={'final-state-via': 'location'},  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateLinkServices/{serviceName}'}  # type: ignore
 
     def get(
@@ -166,7 +152,7 @@ class PrivateLinkServicesOperations(object):
         :param expand: Expands referenced resources.
         :type expand: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: PrivateLinkService, or the result of cls(response)
+        :return: PrivateLinkService or the result of cls(response)
         :rtype: ~azure.mgmt.network.v2019_11_01.models.PrivateLinkService
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -207,7 +193,7 @@ class PrivateLinkServicesOperations(object):
         deserialized = self._deserialize('PrivateLinkService', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateLinkServices/{serviceName}'}  # type: ignore
@@ -266,7 +252,7 @@ class PrivateLinkServicesOperations(object):
             deserialized = self._deserialize('PrivateLinkService', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _create_or_update_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateLinkServices/{serviceName}'}  # type: ignore
@@ -288,12 +274,11 @@ class PrivateLinkServicesOperations(object):
         :param parameters: Parameters supplied to the create or update private link service operation.
         :type parameters: ~azure.mgmt.network.v2019_11_01.models.PrivateLinkService
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either PrivateLinkService or the result of cls(response)
+        :return: An instance of LROPoller that returns PrivateLinkService
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.network.v2019_11_01.models.PrivateLinkService]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -303,18 +288,13 @@ class PrivateLinkServicesOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._create_or_update_initial(
-                resource_group_name=resource_group_name,
-                service_name=service_name,
-                parameters=parameters,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._create_or_update_initial(
+            resource_group_name=resource_group_name,
+            service_name=service_name,
+            parameters=parameters,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('PrivateLinkService', pipeline_response)
@@ -326,15 +306,7 @@ class PrivateLinkServicesOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay, lro_options={'final-state-via': 'azure-async-operation'},  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateLinkServices/{serviceName}'}  # type: ignore
 
     def list(
@@ -348,7 +320,7 @@ class PrivateLinkServicesOperations(object):
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either PrivateLinkServiceListResult or the result of cls(response)
+        :return: An iterator like instance of PrivateLinkServiceListResult or the result of cls(response)
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.network.v2019_11_01.models.PrivateLinkServiceListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -414,7 +386,7 @@ class PrivateLinkServicesOperations(object):
         """Gets all private link service in a subscription.
 
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either PrivateLinkServiceListResult or the result of cls(response)
+        :return: An iterator like instance of PrivateLinkServiceListResult or the result of cls(response)
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.network.v2019_11_01.models.PrivateLinkServiceListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -480,8 +452,7 @@ class PrivateLinkServicesOperations(object):
         **kwargs  # type: Any
     ):
         # type: (...) -> "models.PrivateEndpointConnection"
-        """Get the specific private end point connection by specific private link service in the resource
-        group.
+        """Get the specific private end point connection by specific private link service in the resource group.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
@@ -492,7 +463,7 @@ class PrivateLinkServicesOperations(object):
         :param expand: Expands referenced resources.
         :type expand: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: PrivateEndpointConnection, or the result of cls(response)
+        :return: PrivateEndpointConnection or the result of cls(response)
         :rtype: ~azure.mgmt.network.v2019_11_01.models.PrivateEndpointConnection
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -534,7 +505,7 @@ class PrivateLinkServicesOperations(object):
         deserialized = self._deserialize('PrivateEndpointConnection', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get_private_endpoint_connection.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateLinkServices/{serviceName}/privateEndpointConnections/{peConnectionName}'}  # type: ignore
@@ -559,7 +530,7 @@ class PrivateLinkServicesOperations(object):
         :param parameters: Parameters supplied to approve or reject the private end point connection.
         :type parameters: ~azure.mgmt.network.v2019_11_01.models.PrivateEndpointConnection
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: PrivateEndpointConnection, or the result of cls(response)
+        :return: PrivateEndpointConnection or the result of cls(response)
         :rtype: ~azure.mgmt.network.v2019_11_01.models.PrivateEndpointConnection
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -605,7 +576,7 @@ class PrivateLinkServicesOperations(object):
         deserialized = self._deserialize('PrivateEndpointConnection', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     update_private_endpoint_connection.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateLinkServices/{serviceName}/privateEndpointConnections/{peConnectionName}'}  # type: ignore
@@ -651,7 +622,7 @@ class PrivateLinkServicesOperations(object):
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         if cls:
-            return cls(pipeline_response, None, {})
+          return cls(pipeline_response, None, {})
 
     _delete_private_endpoint_connection_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateLinkServices/{serviceName}/privateEndpointConnections/{peConnectionName}'}  # type: ignore
 
@@ -672,12 +643,11 @@ class PrivateLinkServicesOperations(object):
         :param pe_connection_name: The name of the private end point connection.
         :type pe_connection_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either None or the result of cls(response)
+        :return: An instance of LROPoller that returns None
         :rtype: ~azure.core.polling.LROPoller[None]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -687,18 +657,13 @@ class PrivateLinkServicesOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._delete_private_endpoint_connection_initial(
-                resource_group_name=resource_group_name,
-                service_name=service_name,
-                pe_connection_name=pe_connection_name,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._delete_private_endpoint_connection_initial(
+            resource_group_name=resource_group_name,
+            service_name=service_name,
+            pe_connection_name=pe_connection_name,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             if cls:
@@ -707,15 +672,7 @@ class PrivateLinkServicesOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay, lro_options={'final-state-via': 'location'},  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_delete_private_endpoint_connection.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateLinkServices/{serviceName}/privateEndpointConnections/{peConnectionName}'}  # type: ignore
 
     def list_private_endpoint_connections(
@@ -732,7 +689,7 @@ class PrivateLinkServicesOperations(object):
         :param service_name: The name of the private link service.
         :type service_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either PrivateEndpointConnectionListResult or the result of cls(response)
+        :return: An iterator like instance of PrivateEndpointConnectionListResult or the result of cls(response)
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.network.v2019_11_01.models.PrivateEndpointConnectionListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -791,32 +748,23 @@ class PrivateLinkServicesOperations(object):
         )
     list_private_endpoint_connections.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateLinkServices/{serviceName}/privateEndpointConnections'}  # type: ignore
 
-    def check_private_link_service_visibility(
+    def _check_private_link_service_visibility_initial(
         self,
         location,  # type: str
-        parameters,  # type: "models.CheckPrivateLinkServiceVisibilityRequest"
+        private_link_service_alias=None,  # type: Optional[str]
         **kwargs  # type: Any
     ):
         # type: (...) -> "models.PrivateLinkServiceVisibility"
-        """Checks whether the subscription is visible to private link service.
-
-        :param location: The location of the domain name.
-        :type location: str
-        :param parameters: The request body of CheckPrivateLinkService API call.
-        :type parameters: ~azure.mgmt.network.v2019_11_01.models.CheckPrivateLinkServiceVisibilityRequest
-        :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: PrivateLinkServiceVisibility, or the result of cls(response)
-        :rtype: ~azure.mgmt.network.v2019_11_01.models.PrivateLinkServiceVisibility
-        :raises: ~azure.core.exceptions.HttpResponseError
-        """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.PrivateLinkServiceVisibility"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
+
+        _parameters = models.CheckPrivateLinkServiceVisibilityRequest(private_link_service_alias=private_link_service_alias)
         api_version = "2019-11-01"
         content_type = kwargs.pop("content_type", "application/json")
 
         # Construct URL
-        url = self.check_private_link_service_visibility.metadata['url']  # type: ignore
+        url = self._check_private_link_service_visibility_initial.metadata['url']  # type: ignore
         path_format_arguments = {
             'location': self._serialize.url("location", location, 'str'),
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
@@ -834,55 +782,93 @@ class PrivateLinkServicesOperations(object):
 
         # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(parameters, 'CheckPrivateLinkServiceVisibilityRequest')
+        body_content = self._serialize.body(_parameters, 'CheckPrivateLinkServiceVisibilityRequest')
         body_content_kwargs['content'] = body_content
         request = self._client.post(url, query_parameters, header_parameters, **body_content_kwargs)
 
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
-        if response.status_code not in [200]:
+        if response.status_code not in [200, 202]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize('PrivateLinkServiceVisibility', pipeline_response)
+        deserialized = None
+        if response.status_code == 200:
+            deserialized = self._deserialize('PrivateLinkServiceVisibility', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    check_private_link_service_visibility.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/checkPrivateLinkServiceVisibility'}  # type: ignore
+    _check_private_link_service_visibility_initial.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/checkPrivateLinkServiceVisibility'}  # type: ignore
 
-    def check_private_link_service_visibility_by_resource_group(
+    def begin_check_private_link_service_visibility(
         self,
         location,  # type: str
-        resource_group_name,  # type: str
-        parameters,  # type: "models.CheckPrivateLinkServiceVisibilityRequest"
+        private_link_service_alias=None,  # type: Optional[str]
         **kwargs  # type: Any
     ):
-        # type: (...) -> "models.PrivateLinkServiceVisibility"
-        """Checks whether the subscription is visible to private link service in the specified resource
-        group.
+        # type: (...) -> LROPoller
+        """Checks whether the subscription is visible to private link service.
 
         :param location: The location of the domain name.
         :type location: str
-        :param resource_group_name: The name of the resource group.
-        :type resource_group_name: str
-        :param parameters: The request body of CheckPrivateLinkService API call.
-        :type parameters: ~azure.mgmt.network.v2019_11_01.models.CheckPrivateLinkServiceVisibilityRequest
+        :param private_link_service_alias: The alias of the private link service.
+        :type private_link_service_alias: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: PrivateLinkServiceVisibility, or the result of cls(response)
-        :rtype: ~azure.mgmt.network.v2019_11_01.models.PrivateLinkServiceVisibility
-        :raises: ~azure.core.exceptions.HttpResponseError
+        :keyword polling: True for ARMPolling, False for no polling, or a
+         polling object for personal polling strategy
+        :paramtype polling: bool or ~azure.core.polling.PollingMethod
+        :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
+        :return: An instance of LROPoller that returns PrivateLinkServiceVisibility
+        :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.network.v2019_11_01.models.PrivateLinkServiceVisibility]
+        :raises ~azure.core.exceptions.HttpResponseError:
         """
+        polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
+        cls = kwargs.pop('cls', None)  # type: ClsType["models.PrivateLinkServiceVisibility"]
+        lro_delay = kwargs.pop(
+            'polling_interval',
+            self._config.polling_interval
+        )
+        raw_result = self._check_private_link_service_visibility_initial(
+            location=location,
+            private_link_service_alias=private_link_service_alias,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
+
+        def get_long_running_output(pipeline_response):
+            deserialized = self._deserialize('PrivateLinkServiceVisibility', pipeline_response)
+
+            if cls:
+                return cls(pipeline_response, deserialized, {})
+            return deserialized
+
+        if polling is True: polling_method = ARMPolling(lro_delay, lro_options={'final-state-via': 'location'},  **kwargs)
+        elif polling is False: polling_method = NoPolling()
+        else: polling_method = polling
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+    begin_check_private_link_service_visibility.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/checkPrivateLinkServiceVisibility'}  # type: ignore
+
+    def _check_private_link_service_visibility_by_resource_group_initial(
+        self,
+        location,  # type: str
+        resource_group_name,  # type: str
+        private_link_service_alias=None,  # type: Optional[str]
+        **kwargs  # type: Any
+    ):
+        # type: (...) -> "models.PrivateLinkServiceVisibility"
         cls = kwargs.pop('cls', None)  # type: ClsType["models.PrivateLinkServiceVisibility"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
+
+        _parameters = models.CheckPrivateLinkServiceVisibilityRequest(private_link_service_alias=private_link_service_alias)
         api_version = "2019-11-01"
         content_type = kwargs.pop("content_type", "application/json")
 
         # Construct URL
-        url = self.check_private_link_service_visibility_by_resource_group.metadata['url']  # type: ignore
+        url = self._check_private_link_service_visibility_by_resource_group_initial.metadata['url']  # type: ignore
         path_format_arguments = {
             'location': self._serialize.url("location", location, 'str'),
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
@@ -901,24 +887,78 @@ class PrivateLinkServicesOperations(object):
 
         # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(parameters, 'CheckPrivateLinkServiceVisibilityRequest')
+        body_content = self._serialize.body(_parameters, 'CheckPrivateLinkServiceVisibilityRequest')
         body_content_kwargs['content'] = body_content
         request = self._client.post(url, query_parameters, header_parameters, **body_content_kwargs)
 
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
-        if response.status_code not in [200]:
+        if response.status_code not in [200, 202]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize('PrivateLinkServiceVisibility', pipeline_response)
+        deserialized = None
+        if response.status_code == 200:
+            deserialized = self._deserialize('PrivateLinkServiceVisibility', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    check_private_link_service_visibility_by_resource_group.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/checkPrivateLinkServiceVisibility'}  # type: ignore
+    _check_private_link_service_visibility_by_resource_group_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/checkPrivateLinkServiceVisibility'}  # type: ignore
+
+    def begin_check_private_link_service_visibility_by_resource_group(
+        self,
+        location,  # type: str
+        resource_group_name,  # type: str
+        private_link_service_alias=None,  # type: Optional[str]
+        **kwargs  # type: Any
+    ):
+        # type: (...) -> LROPoller
+        """Checks whether the subscription is visible to private link service in the specified resource group.
+
+        :param location: The location of the domain name.
+        :type location: str
+        :param resource_group_name: The name of the resource group.
+        :type resource_group_name: str
+        :param private_link_service_alias: The alias of the private link service.
+        :type private_link_service_alias: str
+        :keyword callable cls: A custom type or function that will be passed the direct response
+        :keyword polling: True for ARMPolling, False for no polling, or a
+         polling object for personal polling strategy
+        :paramtype polling: bool or ~azure.core.polling.PollingMethod
+        :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
+        :return: An instance of LROPoller that returns PrivateLinkServiceVisibility
+        :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.network.v2019_11_01.models.PrivateLinkServiceVisibility]
+        :raises ~azure.core.exceptions.HttpResponseError:
+        """
+        polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
+        cls = kwargs.pop('cls', None)  # type: ClsType["models.PrivateLinkServiceVisibility"]
+        lro_delay = kwargs.pop(
+            'polling_interval',
+            self._config.polling_interval
+        )
+        raw_result = self._check_private_link_service_visibility_by_resource_group_initial(
+            location=location,
+            resource_group_name=resource_group_name,
+            private_link_service_alias=private_link_service_alias,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
+
+        def get_long_running_output(pipeline_response):
+            deserialized = self._deserialize('PrivateLinkServiceVisibility', pipeline_response)
+
+            if cls:
+                return cls(pipeline_response, deserialized, {})
+            return deserialized
+
+        if polling is True: polling_method = ARMPolling(lro_delay, lro_options={'final-state-via': 'location'},  **kwargs)
+        elif polling is False: polling_method = NoPolling()
+        else: polling_method = polling
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+    begin_check_private_link_service_visibility_by_resource_group.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/checkPrivateLinkServiceVisibility'}  # type: ignore
 
     def list_auto_approved_private_link_services(
         self,
@@ -926,13 +966,12 @@ class PrivateLinkServicesOperations(object):
         **kwargs  # type: Any
     ):
         # type: (...) -> Iterable["models.AutoApprovedPrivateLinkServicesResult"]
-        """Returns all of the private link service ids that can be linked to a Private Endpoint with auto
-    approved in this subscription in this region.
+        """Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this subscription in this region.
 
         :param location: The location of the domain name.
         :type location: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either AutoApprovedPrivateLinkServicesResult or the result of cls(response)
+        :return: An iterator like instance of AutoApprovedPrivateLinkServicesResult or the result of cls(response)
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.network.v2019_11_01.models.AutoApprovedPrivateLinkServicesResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -996,15 +1035,14 @@ class PrivateLinkServicesOperations(object):
         **kwargs  # type: Any
     ):
         # type: (...) -> Iterable["models.AutoApprovedPrivateLinkServicesResult"]
-        """Returns all of the private link service ids that can be linked to a Private Endpoint with auto
-    approved in this subscription in this region.
+        """Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this subscription in this region.
 
         :param location: The location of the domain name.
         :type location: str
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either AutoApprovedPrivateLinkServicesResult or the result of cls(response)
+        :return: An iterator like instance of AutoApprovedPrivateLinkServicesResult or the result of cls(response)
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.network.v2019_11_01.models.AutoApprovedPrivateLinkServicesResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """

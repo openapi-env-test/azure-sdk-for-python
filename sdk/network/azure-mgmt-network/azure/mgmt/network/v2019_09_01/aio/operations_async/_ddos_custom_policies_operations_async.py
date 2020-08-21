@@ -11,7 +11,7 @@ import warnings
 from azure.core.exceptions import HttpResponseError, ResourceExistsError, ResourceNotFoundError, map_error
 from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import AsyncHttpResponse, HttpRequest
-from azure.core.polling import AsyncLROPoller, AsyncNoPolling, AsyncPollingMethod
+from azure.core.polling import AsyncNoPolling, AsyncPollingMethod, async_poller
 from azure.mgmt.core.exceptions import ARMErrorFormat
 from azure.mgmt.core.polling.async_arm_polling import AsyncARMPolling
 
@@ -79,11 +79,11 @@ class DdosCustomPoliciesOperations:
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
         if cls:
-            return cls(pipeline_response, None, {})
+          return cls(pipeline_response, None, {})
 
     _delete_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosCustomPolicies/{ddosCustomPolicyName}'}  # type: ignore
 
-    async def begin_delete(
+    async def delete(
         self,
         resource_group_name: str,
         ddos_custom_policy_name: str,
@@ -96,12 +96,11 @@ class DdosCustomPoliciesOperations:
         :param ddos_custom_policy_name: The name of the DDoS custom policy.
         :type ddos_custom_policy_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: None, or the result of cls(response)
+        :return: None
         :rtype: None
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -111,17 +110,12 @@ class DdosCustomPoliciesOperations:
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = await self._delete_initial(
-                resource_group_name=resource_group_name,
-                ddos_custom_policy_name=ddos_custom_policy_name,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = await self._delete_initial(
+            resource_group_name=resource_group_name,
+            ddos_custom_policy_name=ddos_custom_policy_name,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             if cls:
@@ -130,16 +124,8 @@ class DdosCustomPoliciesOperations:
         if polling is True: polling_method = AsyncARMPolling(lro_delay, lro_options={'final-state-via': 'location'},  **kwargs)
         elif polling is False: polling_method = AsyncNoPolling()
         else: polling_method = polling
-        if cont_token:
-            return AsyncLROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return AsyncLROPoller(self._client, raw_result, get_long_running_output, polling_method)
-    begin_delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosCustomPolicies/{ddosCustomPolicyName}'}  # type: ignore
+        return await async_poller(self._client, raw_result, get_long_running_output, polling_method)
+    delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosCustomPolicies/{ddosCustomPolicyName}'}  # type: ignore
 
     async def get(
         self,
@@ -154,7 +140,7 @@ class DdosCustomPoliciesOperations:
         :param ddos_custom_policy_name: The name of the DDoS custom policy.
         :type ddos_custom_policy_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: DdosCustomPolicy, or the result of cls(response)
+        :return: DdosCustomPolicy or the result of cls(response)
         :rtype: ~azure.mgmt.network.v2019_09_01.models.DdosCustomPolicy
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -192,7 +178,7 @@ class DdosCustomPoliciesOperations:
         deserialized = self._deserialize('DdosCustomPolicy', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosCustomPolicies/{ddosCustomPolicyName}'}  # type: ignore
@@ -249,12 +235,12 @@ class DdosCustomPoliciesOperations:
             deserialized = self._deserialize('DdosCustomPolicy', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _create_or_update_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosCustomPolicies/{ddosCustomPolicyName}'}  # type: ignore
 
-    async def begin_create_or_update(
+    async def create_or_update(
         self,
         resource_group_name: str,
         ddos_custom_policy_name: str,
@@ -270,12 +256,11 @@ class DdosCustomPoliciesOperations:
         :param parameters: Parameters supplied to the create or update operation.
         :type parameters: ~azure.mgmt.network.v2019_09_01.models.DdosCustomPolicy
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: DdosCustomPolicy, or the result of cls(response)
+        :return: DdosCustomPolicy
         :rtype: ~azure.mgmt.network.v2019_09_01.models.DdosCustomPolicy
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -285,18 +270,13 @@ class DdosCustomPoliciesOperations:
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = await self._create_or_update_initial(
-                resource_group_name=resource_group_name,
-                ddos_custom_policy_name=ddos_custom_policy_name,
-                parameters=parameters,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = await self._create_or_update_initial(
+            resource_group_name=resource_group_name,
+            ddos_custom_policy_name=ddos_custom_policy_name,
+            parameters=parameters,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('DdosCustomPolicy', pipeline_response)
@@ -308,22 +288,14 @@ class DdosCustomPoliciesOperations:
         if polling is True: polling_method = AsyncARMPolling(lro_delay, lro_options={'final-state-via': 'azure-async-operation'},  **kwargs)
         elif polling is False: polling_method = AsyncNoPolling()
         else: polling_method = polling
-        if cont_token:
-            return AsyncLROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return AsyncLROPoller(self._client, raw_result, get_long_running_output, polling_method)
-    begin_create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosCustomPolicies/{ddosCustomPolicyName}'}  # type: ignore
+        return await async_poller(self._client, raw_result, get_long_running_output, polling_method)
+    create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosCustomPolicies/{ddosCustomPolicyName}'}  # type: ignore
 
     async def update_tags(
         self,
         resource_group_name: str,
         ddos_custom_policy_name: str,
-        parameters: "models.TagsObject",
+        tags: Optional[Dict[str, str]] = None,
         **kwargs
     ) -> "models.DdosCustomPolicy":
         """Update a DDoS custom policy tags.
@@ -332,16 +304,18 @@ class DdosCustomPoliciesOperations:
         :type resource_group_name: str
         :param ddos_custom_policy_name: The name of the DDoS custom policy.
         :type ddos_custom_policy_name: str
-        :param parameters: Parameters supplied to update DDoS custom policy resource tags.
-        :type parameters: ~azure.mgmt.network.v2019_09_01.models.TagsObject
+        :param tags: Resource tags.
+        :type tags: dict[str, str]
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: DdosCustomPolicy, or the result of cls(response)
+        :return: DdosCustomPolicy or the result of cls(response)
         :rtype: ~azure.mgmt.network.v2019_09_01.models.DdosCustomPolicy
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.DdosCustomPolicy"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
+
+        _parameters = models.TagsObject(tags=tags)
         api_version = "2019-09-01"
         content_type = kwargs.pop("content_type", "application/json")
 
@@ -365,7 +339,7 @@ class DdosCustomPoliciesOperations:
 
         # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(parameters, 'TagsObject')
+        body_content = self._serialize.body(_parameters, 'TagsObject')
         body_content_kwargs['content'] = body_content
         request = self._client.patch(url, query_parameters, header_parameters, **body_content_kwargs)
 
@@ -379,7 +353,7 @@ class DdosCustomPoliciesOperations:
         deserialized = self._deserialize('DdosCustomPolicy', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     update_tags.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosCustomPolicies/{ddosCustomPolicyName}'}  # type: ignore

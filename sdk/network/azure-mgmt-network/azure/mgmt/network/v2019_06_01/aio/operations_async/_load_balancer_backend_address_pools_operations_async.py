@@ -54,7 +54,7 @@ class LoadBalancerBackendAddressPoolsOperations:
         :param load_balancer_name: The name of the load balancer.
         :type load_balancer_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either LoadBalancerBackendAddressPoolListResult or the result of cls(response)
+        :return: An iterator like instance of LoadBalancerBackendAddressPoolListResult or the result of cls(response)
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.network.v2019_06_01.models.LoadBalancerBackendAddressPoolListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -128,7 +128,7 @@ class LoadBalancerBackendAddressPoolsOperations:
         :param backend_address_pool_name: The name of the backend address pool.
         :type backend_address_pool_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: BackendAddressPool, or the result of cls(response)
+        :return: BackendAddressPool or the result of cls(response)
         :rtype: ~azure.mgmt.network.v2019_06_01.models.BackendAddressPool
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -167,7 +167,7 @@ class LoadBalancerBackendAddressPoolsOperations:
         deserialized = self._deserialize('BackendAddressPool', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/backendAddressPools/{backendAddressPoolName}'}  # type: ignore

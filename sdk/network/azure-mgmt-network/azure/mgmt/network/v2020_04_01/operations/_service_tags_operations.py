@@ -57,7 +57,7 @@ class ServiceTagsOperations(object):
          but limited to the cloud that your subscription belongs to).
         :type location: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ServiceTagsListResult, or the result of cls(response)
+        :return: ServiceTagsListResult or the result of cls(response)
         :rtype: ~azure.mgmt.network.v2020_04_01.models.ServiceTagsListResult
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -94,7 +94,7 @@ class ServiceTagsOperations(object):
         deserialized = self._deserialize('ServiceTagsListResult', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     list.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/serviceTags'}  # type: ignore

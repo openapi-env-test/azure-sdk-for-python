@@ -19,7 +19,7 @@ from .. import models
 
 if TYPE_CHECKING:
     # pylint: disable=unused-import,ungrouped-imports
-    from typing import Any, Callable, Dict, Generic, Optional, TypeVar, Union
+    from typing import Any, Callable, Dict, Generic, List, Optional, TypeVar, Union
 
     T = TypeVar('T')
     ClsType = Optional[Callable[[PipelineResponse[HttpRequest, HttpResponse], T, Dict[str, Any]], Any]]
@@ -50,13 +50,16 @@ class VpnSitesConfigurationOperations(object):
         self,
         resource_group_name,  # type: str
         virtual_wan_name,  # type: str
-        request,  # type: "models.GetVpnSitesConfigurationRequest"
+        output_blob_sas_url,  # type: str
+        vpn_sites=None,  # type: Optional[List[str]]
         **kwargs  # type: Any
     ):
         # type: (...) -> None
         cls = kwargs.pop('cls', None)  # type: ClsType[None]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
+
+        _request = models.GetVpnSitesConfigurationRequest(vpn_sites=vpn_sites, output_blob_sas_url=output_blob_sas_url)
         api_version = "2019-09-01"
         content_type = kwargs.pop("content_type", "application/json")
 
@@ -79,7 +82,7 @@ class VpnSitesConfigurationOperations(object):
 
         # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(request, 'GetVpnSitesConfigurationRequest')
+        body_content = self._serialize.body(_request, 'GetVpnSitesConfigurationRequest')
         body_content_kwargs['content'] = body_content
         request = self._client.post(url, query_parameters, header_parameters, **body_content_kwargs)
 
@@ -91,7 +94,7 @@ class VpnSitesConfigurationOperations(object):
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
         if cls:
-            return cls(pipeline_response, None, {})
+          return cls(pipeline_response, None, {})
 
     _download_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/vpnConfiguration'}  # type: ignore
 
@@ -99,7 +102,8 @@ class VpnSitesConfigurationOperations(object):
         self,
         resource_group_name,  # type: str
         virtual_wan_name,  # type: str
-        request,  # type: "models.GetVpnSitesConfigurationRequest"
+        output_blob_sas_url,  # type: str
+        vpn_sites=None,  # type: Optional[List[str]]
         **kwargs  # type: Any
     ):
         # type: (...) -> LROPoller
@@ -110,15 +114,16 @@ class VpnSitesConfigurationOperations(object):
         :param virtual_wan_name: The name of the VirtualWAN for which configuration of all vpn-sites is
      needed.
         :type virtual_wan_name: str
-        :param request: Parameters supplied to download vpn-sites configuration.
-        :type request: ~azure.mgmt.network.v2019_09_01.models.GetVpnSitesConfigurationRequest
+        :param output_blob_sas_url: The sas-url to download the configurations for vpn-sites.
+        :type output_blob_sas_url: str
+        :param vpn_sites: List of resource-ids of the vpn-sites for which config is to be downloaded.
+        :type vpn_sites: list[str]
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either None or the result of cls(response)
+        :return: An instance of LROPoller that returns None
         :rtype: ~azure.core.polling.LROPoller[None]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -128,18 +133,14 @@ class VpnSitesConfigurationOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._download_initial(
-                resource_group_name=resource_group_name,
-                virtual_wan_name=virtual_wan_name,
-                request=request,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._download_initial(
+            resource_group_name=resource_group_name,
+            virtual_wan_name=virtual_wan_name,
+            output_blob_sas_url=output_blob_sas_url,
+            vpn_sites=vpn_sites,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             if cls:
@@ -148,13 +149,5 @@ class VpnSitesConfigurationOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay, lro_options={'final-state-via': 'location'},  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_download.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/vpnConfiguration'}  # type: ignore
