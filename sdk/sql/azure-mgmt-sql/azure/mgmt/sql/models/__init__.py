@@ -89,6 +89,7 @@ try:
     from ._models_py3 import ManagedDatabaseUpdate
     from ._models_py3 import ManagedInstance
     from ._models_py3 import ManagedInstanceAdministrator
+    from ._models_py3 import ManagedInstanceAzureADOnlyAuthentication
     from ._models_py3 import ManagedInstanceEditionCapability
     from ._models_py3 import ManagedInstanceEncryptionProtector
     from ._models_py3 import ManagedInstanceFamilyCapability
@@ -99,6 +100,7 @@ try:
     from ._models_py3 import ManagedInstanceOperationParametersPair
     from ._models_py3 import ManagedInstanceOperationSteps
     from ._models_py3 import ManagedInstancePairInfo
+    from ._models_py3 import ManagedInstancePrivateLinkServiceConnectionStateProperty
     from ._models_py3 import ManagedInstanceUpdate
     from ._models_py3 import ManagedInstanceVcoresCapability
     from ._models_py3 import ManagedInstanceVersionCapability
@@ -143,6 +145,7 @@ try:
     from ._models_py3 import Server
     from ._models_py3 import ServerAutomaticTuning
     from ._models_py3 import ServerAzureADAdministrator
+    from ._models_py3 import ServerAzureADOnlyAuthentication
     from ._models_py3 import ServerBlobAuditingPolicy
     from ._models_py3 import ServerCommunicationLink
     from ._models_py3 import ServerConnectionPolicy
@@ -271,6 +274,7 @@ except (SyntaxError, ImportError):
     from ._models import ManagedDatabaseUpdate
     from ._models import ManagedInstance
     from ._models import ManagedInstanceAdministrator
+    from ._models import ManagedInstanceAzureADOnlyAuthentication
     from ._models import ManagedInstanceEditionCapability
     from ._models import ManagedInstanceEncryptionProtector
     from ._models import ManagedInstanceFamilyCapability
@@ -281,6 +285,7 @@ except (SyntaxError, ImportError):
     from ._models import ManagedInstanceOperationParametersPair
     from ._models import ManagedInstanceOperationSteps
     from ._models import ManagedInstancePairInfo
+    from ._models import ManagedInstancePrivateLinkServiceConnectionStateProperty
     from ._models import ManagedInstanceUpdate
     from ._models import ManagedInstanceVcoresCapability
     from ._models import ManagedInstanceVersionCapability
@@ -325,6 +330,7 @@ except (SyntaxError, ImportError):
     from ._models import Server
     from ._models import ServerAutomaticTuning
     from ._models import ServerAzureADAdministrator
+    from ._models import ServerAzureADOnlyAuthentication
     from ._models import ServerBlobAuditingPolicy
     from ._models import ServerCommunicationLink
     from ._models import ServerConnectionPolicy
@@ -404,6 +410,7 @@ from ._paged_models import ManagedBackupShortTermRetentionPolicyPaged
 from ._paged_models import ManagedDatabasePaged
 from ._paged_models import ManagedDatabaseSecurityAlertPolicyPaged
 from ._paged_models import ManagedInstanceAdministratorPaged
+from ._paged_models import ManagedInstanceAzureADOnlyAuthenticationPaged
 from ._paged_models import ManagedInstanceEncryptionProtectorPaged
 from ._paged_models import ManagedInstanceKeyPaged
 from ._paged_models import ManagedInstanceLongTermRetentionBackupPaged
@@ -427,6 +434,7 @@ from ._paged_models import RestorableDroppedManagedDatabasePaged
 from ._paged_models import RestorePointPaged
 from ._paged_models import SensitivityLabelPaged
 from ._paged_models import ServerAzureADAdministratorPaged
+from ._paged_models import ServerAzureADOnlyAuthenticationPaged
 from ._paged_models import ServerBlobAuditingPolicyPaged
 from ._paged_models import ServerCommunicationLinkPaged
 from ._paged_models import ServerDnsAliasPaged
@@ -515,13 +523,10 @@ from ._sql_management_client_enums import (
     VulnerabilityAssessmentScanState,
     InstanceFailoverGroupReplicationRole,
     InstancePoolLicenseType,
-    IdentityType,
-    ManagedServerCreateMode,
-    ManagedInstanceLicenseType,
-    ManagedInstanceProxyOverride,
     PrivateLinkServiceConnectionStateStatus,
     PrivateLinkServiceConnectionStateActionsRequire,
     PrivateEndpointProvisioningState,
+    IdentityType,
     ServerPublicNetworkAccess,
     CheckNameAvailabilityReason,
     MaxSizeUnit,
@@ -536,6 +541,10 @@ from ._sql_management_client_enums import (
     SyncMemberState,
     ManagedDatabaseStatus,
     ManagedDatabaseCreateMode,
+    ManagedServerCreateMode,
+    ManagedInstanceLicenseType,
+    ManagedInstanceProxyOverride,
+    StorageAccountType,
     LongTermRetentionDatabaseState,
     VulnerabilityAssessmentPolicyBaselineName,
     SensitivityLabelSource,
@@ -629,6 +638,7 @@ __all__ = [
     'ManagedDatabaseUpdate',
     'ManagedInstance',
     'ManagedInstanceAdministrator',
+    'ManagedInstanceAzureADOnlyAuthentication',
     'ManagedInstanceEditionCapability',
     'ManagedInstanceEncryptionProtector',
     'ManagedInstanceFamilyCapability',
@@ -639,6 +649,7 @@ __all__ = [
     'ManagedInstanceOperationParametersPair',
     'ManagedInstanceOperationSteps',
     'ManagedInstancePairInfo',
+    'ManagedInstancePrivateLinkServiceConnectionStateProperty',
     'ManagedInstanceUpdate',
     'ManagedInstanceVcoresCapability',
     'ManagedInstanceVersionCapability',
@@ -683,6 +694,7 @@ __all__ = [
     'Server',
     'ServerAutomaticTuning',
     'ServerAzureADAdministrator',
+    'ServerAzureADOnlyAuthentication',
     'ServerBlobAuditingPolicy',
     'ServerCommunicationLink',
     'ServerConnectionPolicy',
@@ -786,7 +798,6 @@ __all__ = [
     'ElasticPoolOperationPaged',
     'VulnerabilityAssessmentScanRecordPaged',
     'InstanceFailoverGroupPaged',
-    'BackupShortTermRetentionPolicyPaged',
     'ManagedInstanceKeyPaged',
     'ManagedInstanceEncryptionProtectorPaged',
     'RecoverableManagedDatabasePaged',
@@ -794,7 +805,6 @@ __all__ = [
     'ServerVulnerabilityAssessmentPaged',
     'InstancePoolPaged',
     'UsagePaged',
-    'ManagedInstancePaged',
     'PrivateEndpointConnectionPaged',
     'PrivateLinkResourcePaged',
     'ServerPaged',
@@ -802,14 +812,18 @@ __all__ = [
     'ManagedInstanceLongTermRetentionPolicyPaged',
     'WorkloadGroupPaged',
     'WorkloadClassifierPaged',
-    'ServerAzureADAdministratorPaged',
     'ManagedInstanceOperationPaged',
+    'ServerAzureADAdministratorPaged',
     'SyncDatabaseIdPropertiesPaged',
     'SyncFullSchemaPropertiesPaged',
     'SyncGroupLogPropertiesPaged',
     'SyncGroupPaged',
     'SyncMemberPaged',
+    'ManagedInstancePaged',
+    'BackupShortTermRetentionPolicyPaged',
     'ManagedDatabasePaged',
+    'ServerAzureADOnlyAuthenticationPaged',
+    'ManagedInstanceAzureADOnlyAuthenticationPaged',
     'ServerConnectionType',
     'SecurityAlertPolicyState',
     'SecurityAlertPolicyEmailAccountAdmins',
@@ -872,13 +886,10 @@ __all__ = [
     'VulnerabilityAssessmentScanState',
     'InstanceFailoverGroupReplicationRole',
     'InstancePoolLicenseType',
-    'IdentityType',
-    'ManagedServerCreateMode',
-    'ManagedInstanceLicenseType',
-    'ManagedInstanceProxyOverride',
     'PrivateLinkServiceConnectionStateStatus',
     'PrivateLinkServiceConnectionStateActionsRequire',
     'PrivateEndpointProvisioningState',
+    'IdentityType',
     'ServerPublicNetworkAccess',
     'CheckNameAvailabilityReason',
     'MaxSizeUnit',
@@ -893,6 +904,10 @@ __all__ = [
     'SyncMemberState',
     'ManagedDatabaseStatus',
     'ManagedDatabaseCreateMode',
+    'ManagedServerCreateMode',
+    'ManagedInstanceLicenseType',
+    'ManagedInstanceProxyOverride',
+    'StorageAccountType',
     'LongTermRetentionDatabaseState',
     'VulnerabilityAssessmentPolicyBaselineName',
     'SensitivityLabelSource',
