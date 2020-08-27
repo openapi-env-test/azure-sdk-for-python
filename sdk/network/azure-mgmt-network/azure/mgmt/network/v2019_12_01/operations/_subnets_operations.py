@@ -20,7 +20,7 @@ from .. import models
 
 if TYPE_CHECKING:
     # pylint: disable=unused-import,ungrouped-imports
-    from typing import Any, Callable, Dict, Generic, Iterable, Optional, TypeVar, Union
+    from typing import Any, Callable, Dict, Generic, Iterable, List, Optional, TypeVar, Union
 
     T = TypeVar('T')
     ClsType = Optional[Callable[[PipelineResponse[HttpRequest, HttpResponse], T, Dict[str, Any]], Any]]
@@ -87,7 +87,7 @@ class SubnetsOperations(object):
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
         if cls:
-            return cls(pipeline_response, None, {})
+          return cls(pipeline_response, None, {})
 
     _delete_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}'}  # type: ignore
 
@@ -108,12 +108,11 @@ class SubnetsOperations(object):
         :param subnet_name: The name of the subnet.
         :type subnet_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either None or the result of cls(response)
+        :return: An instance of LROPoller that returns None
         :rtype: ~azure.core.polling.LROPoller[None]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -123,18 +122,13 @@ class SubnetsOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._delete_initial(
-                resource_group_name=resource_group_name,
-                virtual_network_name=virtual_network_name,
-                subnet_name=subnet_name,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._delete_initial(
+            resource_group_name=resource_group_name,
+            virtual_network_name=virtual_network_name,
+            subnet_name=subnet_name,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             if cls:
@@ -143,15 +137,7 @@ class SubnetsOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay, lro_options={'final-state-via': 'location'},  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}'}  # type: ignore
 
     def get(
@@ -174,7 +160,7 @@ class SubnetsOperations(object):
         :param expand: Expands referenced resources.
         :type expand: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: Subnet, or the result of cls(response)
+        :return: Subnet or the result of cls(response)
         :rtype: ~azure.mgmt.network.v2019_12_01.models.Subnet
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -215,7 +201,7 @@ class SubnetsOperations(object):
         deserialized = self._deserialize('Subnet', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}'}  # type: ignore
@@ -275,7 +261,7 @@ class SubnetsOperations(object):
             deserialized = self._deserialize('Subnet', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _create_or_update_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}'}  # type: ignore
@@ -300,12 +286,11 @@ class SubnetsOperations(object):
         :param subnet_parameters: Parameters supplied to the create or update subnet operation.
         :type subnet_parameters: ~azure.mgmt.network.v2019_12_01.models.Subnet
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either Subnet or the result of cls(response)
+        :return: An instance of LROPoller that returns Subnet
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.network.v2019_12_01.models.Subnet]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -315,19 +300,14 @@ class SubnetsOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._create_or_update_initial(
-                resource_group_name=resource_group_name,
-                virtual_network_name=virtual_network_name,
-                subnet_name=subnet_name,
-                subnet_parameters=subnet_parameters,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._create_or_update_initial(
+            resource_group_name=resource_group_name,
+            virtual_network_name=virtual_network_name,
+            subnet_name=subnet_name,
+            subnet_parameters=subnet_parameters,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('Subnet', pipeline_response)
@@ -339,15 +319,7 @@ class SubnetsOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay, lro_options={'final-state-via': 'azure-async-operation'},  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}'}  # type: ignore
 
     def _prepare_network_policies_initial(
@@ -355,13 +327,16 @@ class SubnetsOperations(object):
         resource_group_name,  # type: str
         virtual_network_name,  # type: str
         subnet_name,  # type: str
-        prepare_network_policies_request_parameters,  # type: "models.PrepareNetworkPoliciesRequest"
+        service_name=None,  # type: Optional[str]
+        network_intent_policy_configurations=None,  # type: Optional[List["models.NetworkIntentPolicyConfiguration"]]
         **kwargs  # type: Any
     ):
         # type: (...) -> None
         cls = kwargs.pop('cls', None)  # type: ClsType[None]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
+
+        _prepare_network_policies_request_parameters = models.PrepareNetworkPoliciesRequest(service_name=service_name, network_intent_policy_configurations=network_intent_policy_configurations)
         api_version = "2019-12-01"
         content_type = kwargs.pop("content_type", "application/json")
 
@@ -385,7 +360,7 @@ class SubnetsOperations(object):
 
         # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(prepare_network_policies_request_parameters, 'PrepareNetworkPoliciesRequest')
+        body_content = self._serialize.body(_prepare_network_policies_request_parameters, 'PrepareNetworkPoliciesRequest')
         body_content_kwargs['content'] = body_content
         request = self._client.post(url, query_parameters, header_parameters, **body_content_kwargs)
 
@@ -397,7 +372,7 @@ class SubnetsOperations(object):
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
         if cls:
-            return cls(pipeline_response, None, {})
+          return cls(pipeline_response, None, {})
 
     _prepare_network_policies_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}/PrepareNetworkPolicies'}  # type: ignore
 
@@ -406,7 +381,8 @@ class SubnetsOperations(object):
         resource_group_name,  # type: str
         virtual_network_name,  # type: str
         subnet_name,  # type: str
-        prepare_network_policies_request_parameters,  # type: "models.PrepareNetworkPoliciesRequest"
+        service_name=None,  # type: Optional[str]
+        network_intent_policy_configurations=None,  # type: Optional[List["models.NetworkIntentPolicyConfiguration"]]
         **kwargs  # type: Any
     ):
         # type: (...) -> LROPoller
@@ -418,16 +394,16 @@ class SubnetsOperations(object):
         :type virtual_network_name: str
         :param subnet_name: The name of the subnet.
         :type subnet_name: str
-        :param prepare_network_policies_request_parameters: Parameters supplied to prepare subnet by
-     applying network intent policies.
-        :type prepare_network_policies_request_parameters: ~azure.mgmt.network.v2019_12_01.models.PrepareNetworkPoliciesRequest
+        :param service_name: The name of the service for which subnet is being prepared for.
+        :type service_name: str
+        :param network_intent_policy_configurations: A list of NetworkIntentPolicyConfiguration.
+        :type network_intent_policy_configurations: list[~azure.mgmt.network.v2019_12_01.models.NetworkIntentPolicyConfiguration]
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either None or the result of cls(response)
+        :return: An instance of LROPoller that returns None
         :rtype: ~azure.core.polling.LROPoller[None]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -437,19 +413,15 @@ class SubnetsOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._prepare_network_policies_initial(
-                resource_group_name=resource_group_name,
-                virtual_network_name=virtual_network_name,
-                subnet_name=subnet_name,
-                prepare_network_policies_request_parameters=prepare_network_policies_request_parameters,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._prepare_network_policies_initial(
+            resource_group_name=resource_group_name,
+            virtual_network_name=virtual_network_name,
+            subnet_name=subnet_name,
+            service_name=service_name,
+            network_intent_policy_configurations=network_intent_policy_configurations,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             if cls:
@@ -458,15 +430,7 @@ class SubnetsOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay, lro_options={'final-state-via': 'location'},  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_prepare_network_policies.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}/PrepareNetworkPolicies'}  # type: ignore
 
     def _unprepare_network_policies_initial(
@@ -474,13 +438,15 @@ class SubnetsOperations(object):
         resource_group_name,  # type: str
         virtual_network_name,  # type: str
         subnet_name,  # type: str
-        unprepare_network_policies_request_parameters,  # type: "models.UnprepareNetworkPoliciesRequest"
+        service_name=None,  # type: Optional[str]
         **kwargs  # type: Any
     ):
         # type: (...) -> None
         cls = kwargs.pop('cls', None)  # type: ClsType[None]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
+
+        _unprepare_network_policies_request_parameters = models.UnprepareNetworkPoliciesRequest(service_name=service_name)
         api_version = "2019-12-01"
         content_type = kwargs.pop("content_type", "application/json")
 
@@ -504,7 +470,7 @@ class SubnetsOperations(object):
 
         # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(unprepare_network_policies_request_parameters, 'UnprepareNetworkPoliciesRequest')
+        body_content = self._serialize.body(_unprepare_network_policies_request_parameters, 'UnprepareNetworkPoliciesRequest')
         body_content_kwargs['content'] = body_content
         request = self._client.post(url, query_parameters, header_parameters, **body_content_kwargs)
 
@@ -516,7 +482,7 @@ class SubnetsOperations(object):
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
         if cls:
-            return cls(pipeline_response, None, {})
+          return cls(pipeline_response, None, {})
 
     _unprepare_network_policies_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}/UnprepareNetworkPolicies'}  # type: ignore
 
@@ -525,7 +491,7 @@ class SubnetsOperations(object):
         resource_group_name,  # type: str
         virtual_network_name,  # type: str
         subnet_name,  # type: str
-        unprepare_network_policies_request_parameters,  # type: "models.UnprepareNetworkPoliciesRequest"
+        service_name=None,  # type: Optional[str]
         **kwargs  # type: Any
     ):
         # type: (...) -> LROPoller
@@ -537,16 +503,14 @@ class SubnetsOperations(object):
         :type virtual_network_name: str
         :param subnet_name: The name of the subnet.
         :type subnet_name: str
-        :param unprepare_network_policies_request_parameters: Parameters supplied to unprepare subnet
-     to remove network intent policies.
-        :type unprepare_network_policies_request_parameters: ~azure.mgmt.network.v2019_12_01.models.UnprepareNetworkPoliciesRequest
+        :param service_name: The name of the service for which subnet is being unprepared for.
+        :type service_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either None or the result of cls(response)
+        :return: An instance of LROPoller that returns None
         :rtype: ~azure.core.polling.LROPoller[None]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -556,19 +520,14 @@ class SubnetsOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._unprepare_network_policies_initial(
-                resource_group_name=resource_group_name,
-                virtual_network_name=virtual_network_name,
-                subnet_name=subnet_name,
-                unprepare_network_policies_request_parameters=unprepare_network_policies_request_parameters,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._unprepare_network_policies_initial(
+            resource_group_name=resource_group_name,
+            virtual_network_name=virtual_network_name,
+            subnet_name=subnet_name,
+            service_name=service_name,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             if cls:
@@ -577,15 +536,7 @@ class SubnetsOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay, lro_options={'final-state-via': 'location'},  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_unprepare_network_policies.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}/UnprepareNetworkPolicies'}  # type: ignore
 
     def list(
@@ -602,7 +553,7 @@ class SubnetsOperations(object):
         :param virtual_network_name: The name of the virtual network.
         :type virtual_network_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either SubnetListResult or the result of cls(response)
+        :return: An iterator like instance of SubnetListResult or the result of cls(response)
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.network.v2019_12_01.models.SubnetListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """

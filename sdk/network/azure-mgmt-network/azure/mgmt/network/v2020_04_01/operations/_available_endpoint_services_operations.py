@@ -56,7 +56,7 @@ class AvailableEndpointServicesOperations(object):
         :param location: The location to check available endpoint services.
         :type location: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either EndpointServicesListResult or the result of cls(response)
+        :return: An iterator like instance of EndpointServicesListResult or the result of cls(response)
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.network.v2020_04_01.models.EndpointServicesListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """

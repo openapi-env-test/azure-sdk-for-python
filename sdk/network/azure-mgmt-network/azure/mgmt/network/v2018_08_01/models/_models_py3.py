@@ -4329,7 +4329,7 @@ class ContainerNetworkInterface(SubResource):
      ~azure.mgmt.network.v2018_08_01.models.ContainerNetworkInterfaceConfiguration
     :param container: Reference to the container to which this container network interface is
      attached.
-    :type container: ~azure.mgmt.network.v2018_08_01.models.SubResource
+    :type container: ~azure.mgmt.network.v2018_08_01.models.Container
     :param ip_configurations: Reference to the ip configuration on this container nic.
     :type ip_configurations:
      list[~azure.mgmt.network.v2018_08_01.models.ContainerNetworkInterfaceIpConfiguration]
@@ -4348,7 +4348,7 @@ class ContainerNetworkInterface(SubResource):
         'type': {'key': 'type', 'type': 'str'},
         'etag': {'key': 'etag', 'type': 'str'},
         'container_network_interface_configuration': {'key': 'properties.containerNetworkInterfaceConfiguration', 'type': 'ContainerNetworkInterfaceConfiguration'},
-        'container': {'key': 'properties.container', 'type': 'SubResource'},
+        'container': {'key': 'properties.container', 'type': 'Container'},
         'ip_configurations': {'key': 'properties.ipConfigurations', 'type': '[ContainerNetworkInterfaceIpConfiguration]'},
         'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
     }
@@ -4360,7 +4360,7 @@ class ContainerNetworkInterface(SubResource):
         name: Optional[str] = None,
         etag: Optional[str] = None,
         container_network_interface_configuration: Optional["ContainerNetworkInterfaceConfiguration"] = None,
-        container: Optional["SubResource"] = None,
+        container: Optional["Container"] = None,
         ip_configurations: Optional[List["ContainerNetworkInterfaceIpConfiguration"]] = None,
         **kwargs
     ):

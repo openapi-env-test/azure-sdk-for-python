@@ -49,8 +49,7 @@ class PeerExpressRouteCircuitConnectionsOperations:
         connection_name: str,
         **kwargs
     ) -> "models.PeerExpressRouteCircuitConnection":
-        """Gets the specified Peer Express Route Circuit Connection from the specified express route
-        circuit.
+        """Gets the specified Peer Express Route Circuit Connection from the specified express route circuit.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
@@ -61,7 +60,7 @@ class PeerExpressRouteCircuitConnectionsOperations:
         :param connection_name: The name of the peer express route circuit connection.
         :type connection_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: PeerExpressRouteCircuitConnection, or the result of cls(response)
+        :return: PeerExpressRouteCircuitConnection or the result of cls(response)
         :rtype: ~azure.mgmt.network.v2019_06_01.models.PeerExpressRouteCircuitConnection
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -101,7 +100,7 @@ class PeerExpressRouteCircuitConnectionsOperations:
         deserialized = self._deserialize('PeerExpressRouteCircuitConnection', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/peerings/{peeringName}/peerConnections/{connectionName}'}  # type: ignore
@@ -113,8 +112,7 @@ class PeerExpressRouteCircuitConnectionsOperations:
         peering_name: str,
         **kwargs
     ) -> AsyncIterable["models.PeerExpressRouteCircuitConnectionListResult"]:
-        """Gets all global reach peer connections associated with a private peering in an express route
-    circuit.
+        """Gets all global reach peer connections associated with a private peering in an express route circuit.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
@@ -123,7 +121,7 @@ class PeerExpressRouteCircuitConnectionsOperations:
         :param peering_name: The name of the peering.
         :type peering_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either PeerExpressRouteCircuitConnectionListResult or the result of cls(response)
+        :return: An iterator like instance of PeerExpressRouteCircuitConnectionListResult or the result of cls(response)
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.network.v2019_06_01.models.PeerExpressRouteCircuitConnectionListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """

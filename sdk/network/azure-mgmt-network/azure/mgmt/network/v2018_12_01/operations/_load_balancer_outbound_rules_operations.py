@@ -59,7 +59,7 @@ class LoadBalancerOutboundRulesOperations(object):
         :param load_balancer_name: The name of the load balancer.
         :type load_balancer_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either LoadBalancerOutboundRuleListResult or the result of cls(response)
+        :return: An iterator like instance of LoadBalancerOutboundRuleListResult or the result of cls(response)
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.network.v2018_12_01.models.LoadBalancerOutboundRuleListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -134,7 +134,7 @@ class LoadBalancerOutboundRulesOperations(object):
         :param outbound_rule_name: The name of the outbound rule.
         :type outbound_rule_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: OutboundRule, or the result of cls(response)
+        :return: OutboundRule or the result of cls(response)
         :rtype: ~azure.mgmt.network.v2018_12_01.models.OutboundRule
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -173,7 +173,7 @@ class LoadBalancerOutboundRulesOperations(object):
         deserialized = self._deserialize('OutboundRule', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/outboundRules/{outboundRuleName}'}  # type: ignore

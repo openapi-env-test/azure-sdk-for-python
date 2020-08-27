@@ -143,7 +143,7 @@ class ApplicationGatewaySslProtocol(str, Enum):
     """
 
     tl_sv1_0 = "TLSv1_0"
-    tl_sv1_1 = "TLSv1_1"
+    tl_sv1 = "TLSv1_1"
     tl_sv1_2 = "TLSv1_2"
 
 class ApplicationGatewayTier(str, Enum):
@@ -455,13 +455,6 @@ class FirewallPolicyFilterRuleActionType(str, Enum):
 
     allow = "Allow"
     deny = "Deny"
-
-class FirewallPolicyIntrusionSystemMode(str, Enum):
-    """The operation mode for Intrusion system mode.
-    """
-
-    enabled = "Enabled"
-    disabled = "Disabled"
 
 class FirewallPolicyRuleConditionApplicationProtocolType(str, Enum):
     """The application protocol type of a Rule condition.

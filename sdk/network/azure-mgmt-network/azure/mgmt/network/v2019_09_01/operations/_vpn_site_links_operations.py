@@ -62,7 +62,7 @@ class VpnSiteLinksOperations(object):
         :param vpn_site_link_name: The name of the VpnSiteLink being retrieved.
         :type vpn_site_link_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: VpnSiteLink, or the result of cls(response)
+        :return: VpnSiteLink or the result of cls(response)
         :rtype: ~azure.mgmt.network.v2019_09_01.models.VpnSiteLink
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -101,7 +101,7 @@ class VpnSiteLinksOperations(object):
         deserialized = self._deserialize('VpnSiteLink', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnSites/{vpnSiteName}/vpnSiteLinks/{vpnSiteLinkName}'}  # type: ignore
@@ -120,7 +120,7 @@ class VpnSiteLinksOperations(object):
         :param vpn_site_name: The name of the VpnSite.
         :type vpn_site_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either ListVpnSiteLinksResult or the result of cls(response)
+        :return: An iterator like instance of ListVpnSiteLinksResult or the result of cls(response)
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.network.v2019_09_01.models.ListVpnSiteLinksResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """

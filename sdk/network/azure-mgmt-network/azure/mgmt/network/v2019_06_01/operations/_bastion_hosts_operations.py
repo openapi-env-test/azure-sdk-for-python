@@ -85,7 +85,7 @@ class BastionHostsOperations(object):
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
         if cls:
-            return cls(pipeline_response, None, {})
+          return cls(pipeline_response, None, {})
 
     _delete_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/bastionHosts/{bastionHostName}'}  # type: ignore
 
@@ -103,12 +103,11 @@ class BastionHostsOperations(object):
         :param bastion_host_name: The name of the Bastion Host.
         :type bastion_host_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either None or the result of cls(response)
+        :return: An instance of LROPoller that returns None
         :rtype: ~azure.core.polling.LROPoller[None]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -118,17 +117,12 @@ class BastionHostsOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._delete_initial(
-                resource_group_name=resource_group_name,
-                bastion_host_name=bastion_host_name,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._delete_initial(
+            resource_group_name=resource_group_name,
+            bastion_host_name=bastion_host_name,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             if cls:
@@ -137,15 +131,7 @@ class BastionHostsOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay, lro_options={'final-state-via': 'location'},  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/bastionHosts/{bastionHostName}'}  # type: ignore
 
     def get(
@@ -162,7 +148,7 @@ class BastionHostsOperations(object):
         :param bastion_host_name: The name of the Bastion Host.
         :type bastion_host_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: BastionHost, or the result of cls(response)
+        :return: BastionHost or the result of cls(response)
         :rtype: ~azure.mgmt.network.v2019_06_01.models.BastionHost
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -200,7 +186,7 @@ class BastionHostsOperations(object):
         deserialized = self._deserialize('BastionHost', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/bastionHosts/{bastionHostName}'}  # type: ignore
@@ -258,7 +244,7 @@ class BastionHostsOperations(object):
             deserialized = self._deserialize('BastionHost', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _create_or_update_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/bastionHosts/{bastionHostName}'}  # type: ignore
@@ -280,12 +266,11 @@ class BastionHostsOperations(object):
         :param parameters: Parameters supplied to the create or update Bastion Host operation.
         :type parameters: ~azure.mgmt.network.v2019_06_01.models.BastionHost
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either BastionHost or the result of cls(response)
+        :return: An instance of LROPoller that returns BastionHost
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.network.v2019_06_01.models.BastionHost]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -295,18 +280,13 @@ class BastionHostsOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._create_or_update_initial(
-                resource_group_name=resource_group_name,
-                bastion_host_name=bastion_host_name,
-                parameters=parameters,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._create_or_update_initial(
+            resource_group_name=resource_group_name,
+            bastion_host_name=bastion_host_name,
+            parameters=parameters,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('BastionHost', pipeline_response)
@@ -318,28 +298,22 @@ class BastionHostsOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay, lro_options={'final-state-via': 'azure-async-operation'},  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/bastionHosts/{bastionHostName}'}  # type: ignore
 
     def _update_tags_initial(
         self,
         resource_group_name,  # type: str
         bastion_host_name,  # type: str
-        bastion_host_parameters,  # type: "models.TagsObject"
+        tags=None,  # type: Optional[Dict[str, str]]
         **kwargs  # type: Any
     ):
         # type: (...) -> "models.BastionHost"
         cls = kwargs.pop('cls', None)  # type: ClsType["models.BastionHost"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
+
+        _bastion_host_parameters = models.TagsObject(tags=tags)
         api_version = "2019-06-01"
         content_type = kwargs.pop("content_type", "application/json")
 
@@ -363,7 +337,7 @@ class BastionHostsOperations(object):
 
         # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(bastion_host_parameters, 'TagsObject')
+        body_content = self._serialize.body(_bastion_host_parameters, 'TagsObject')
         body_content_kwargs['content'] = body_content
         request = self._client.patch(url, query_parameters, header_parameters, **body_content_kwargs)
 
@@ -383,7 +357,7 @@ class BastionHostsOperations(object):
             deserialized = self._deserialize('BastionHost', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _update_tags_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/bastionHosts/{bastionHostName}'}  # type: ignore
@@ -392,7 +366,7 @@ class BastionHostsOperations(object):
         self,
         resource_group_name,  # type: str
         bastion_host_name,  # type: str
-        bastion_host_parameters,  # type: "models.TagsObject"
+        tags=None,  # type: Optional[Dict[str, str]]
         **kwargs  # type: Any
     ):
         # type: (...) -> LROPoller
@@ -402,15 +376,14 @@ class BastionHostsOperations(object):
         :type resource_group_name: str
         :param bastion_host_name: The name of the bastionHost.
         :type bastion_host_name: str
-        :param bastion_host_parameters: Parameters supplied to update a bastion host tags.
-        :type bastion_host_parameters: ~azure.mgmt.network.v2019_06_01.models.TagsObject
+        :param tags: Resource tags.
+        :type tags: dict[str, str]
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either BastionHost or the result of cls(response)
+        :return: An instance of LROPoller that returns BastionHost
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.network.v2019_06_01.models.BastionHost]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -420,18 +393,13 @@ class BastionHostsOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._update_tags_initial(
-                resource_group_name=resource_group_name,
-                bastion_host_name=bastion_host_name,
-                bastion_host_parameters=bastion_host_parameters,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._update_tags_initial(
+            resource_group_name=resource_group_name,
+            bastion_host_name=bastion_host_name,
+            tags=tags,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('BastionHost', pipeline_response)
@@ -443,15 +411,7 @@ class BastionHostsOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay,  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_update_tags.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/bastionHosts/{bastionHostName}'}  # type: ignore
 
     def list(
@@ -462,7 +422,7 @@ class BastionHostsOperations(object):
         """Lists all Bastion Hosts in a subscription.
 
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either BastionHostListResult or the result of cls(response)
+        :return: An iterator like instance of BastionHostListResult or the result of cls(response)
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.network.v2019_06_01.models.BastionHostListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -529,7 +489,7 @@ class BastionHostsOperations(object):
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either BastionHostListResult or the result of cls(response)
+        :return: An iterator like instance of BastionHostListResult or the result of cls(response)
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.network.v2019_06_01.models.BastionHostListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """

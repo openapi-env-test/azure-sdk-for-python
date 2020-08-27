@@ -64,7 +64,7 @@ class VpnSiteLinkConnectionsOperations(object):
         :param link_connection_name: The name of the vpn connection.
         :type link_connection_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: VpnSiteLinkConnection, or the result of cls(response)
+        :return: VpnSiteLinkConnection or the result of cls(response)
         :rtype: ~azure.mgmt.network.v2019_08_01.models.VpnSiteLinkConnection
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -104,7 +104,7 @@ class VpnSiteLinkConnectionsOperations(object):
         deserialized = self._deserialize('VpnSiteLinkConnection', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections/{connectionName}/vpnLinkConnections/{linkConnectionName}'}  # type: ignore

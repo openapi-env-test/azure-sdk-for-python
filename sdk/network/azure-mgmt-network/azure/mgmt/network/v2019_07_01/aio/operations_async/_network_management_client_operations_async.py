@@ -34,7 +34,7 @@ class NetworkManagementClientOperationsMixin:
          regular expression: ^[a-z][a-z0-9-]{1,61}[a-z0-9]$.
         :type domain_name_label: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: DnsNameAvailabilityResult, or the result of cls(response)
+        :return: DnsNameAvailabilityResult or the result of cls(response)
         :rtype: ~azure.mgmt.network.v2019_07_01.models.DnsNameAvailabilityResult
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -72,7 +72,7 @@ class NetworkManagementClientOperationsMixin:
         deserialized = self._deserialize('DnsNameAvailabilityResult', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     check_dns_name_availability.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/CheckDnsNameAvailability'}  # type: ignore
@@ -91,7 +91,7 @@ class NetworkManagementClientOperationsMixin:
          needed.
         :type virtual_wan_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: VirtualWanSecurityProviders, or the result of cls(response)
+        :return: VirtualWanSecurityProviders or the result of cls(response)
         :rtype: ~azure.mgmt.network.v2019_07_01.models.VirtualWanSecurityProviders
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -130,7 +130,7 @@ class NetworkManagementClientOperationsMixin:
         deserialized = self._deserialize('VirtualWanSecurityProviders', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     supported_security_providers.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWANName}/supportedSecurityProviders'}  # type: ignore

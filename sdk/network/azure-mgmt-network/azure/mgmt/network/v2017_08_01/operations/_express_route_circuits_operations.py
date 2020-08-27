@@ -85,7 +85,7 @@ class ExpressRouteCircuitsOperations(object):
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
         if cls:
-            return cls(pipeline_response, None, {})
+          return cls(pipeline_response, None, {})
 
     _delete_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}'}  # type: ignore
 
@@ -103,12 +103,11 @@ class ExpressRouteCircuitsOperations(object):
         :param circuit_name: The name of the express route circuit.
         :type circuit_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either None or the result of cls(response)
+        :return: An instance of LROPoller that returns None
         :rtype: ~azure.core.polling.LROPoller[None]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -118,17 +117,12 @@ class ExpressRouteCircuitsOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._delete_initial(
-                resource_group_name=resource_group_name,
-                circuit_name=circuit_name,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._delete_initial(
+            resource_group_name=resource_group_name,
+            circuit_name=circuit_name,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             if cls:
@@ -137,15 +131,7 @@ class ExpressRouteCircuitsOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay,  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}'}  # type: ignore
 
     def get(
@@ -162,7 +148,7 @@ class ExpressRouteCircuitsOperations(object):
         :param circuit_name: The name of express route circuit.
         :type circuit_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ExpressRouteCircuit, or the result of cls(response)
+        :return: ExpressRouteCircuit or the result of cls(response)
         :rtype: ~azure.mgmt.network.v2017_08_01.models.ExpressRouteCircuit
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -200,7 +186,7 @@ class ExpressRouteCircuitsOperations(object):
         deserialized = self._deserialize('ExpressRouteCircuit', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}'}  # type: ignore
@@ -258,7 +244,7 @@ class ExpressRouteCircuitsOperations(object):
             deserialized = self._deserialize('ExpressRouteCircuit', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _create_or_update_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}'}  # type: ignore
@@ -280,12 +266,11 @@ class ExpressRouteCircuitsOperations(object):
         :param parameters: Parameters supplied to the create or update express route circuit operation.
         :type parameters: ~azure.mgmt.network.v2017_08_01.models.ExpressRouteCircuit
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either ExpressRouteCircuit or the result of cls(response)
+        :return: An instance of LROPoller that returns ExpressRouteCircuit
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.network.v2017_08_01.models.ExpressRouteCircuit]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -295,18 +280,13 @@ class ExpressRouteCircuitsOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._create_or_update_initial(
-                resource_group_name=resource_group_name,
-                circuit_name=circuit_name,
-                parameters=parameters,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._create_or_update_initial(
+            resource_group_name=resource_group_name,
+            circuit_name=circuit_name,
+            parameters=parameters,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('ExpressRouteCircuit', pipeline_response)
@@ -318,15 +298,7 @@ class ExpressRouteCircuitsOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay,  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}'}  # type: ignore
 
     def _list_arp_table_initial(
@@ -376,7 +348,7 @@ class ExpressRouteCircuitsOperations(object):
             deserialized = self._deserialize('ExpressRouteCircuitsArpTableListResult', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _list_arp_table_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/peerings/{peeringName}/arpTables/{devicePath}'}  # type: ignore
@@ -390,8 +362,7 @@ class ExpressRouteCircuitsOperations(object):
         **kwargs  # type: Any
     ):
         # type: (...) -> LROPoller
-        """Gets the currently advertised ARP table associated with the express route circuit in a resource
-    group.
+        """Gets the currently advertised ARP table associated with the express route circuit in a resource group.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
@@ -402,12 +373,11 @@ class ExpressRouteCircuitsOperations(object):
         :param device_path: The path of the device.
         :type device_path: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either ExpressRouteCircuitsArpTableListResult or the result of cls(response)
+        :return: An instance of LROPoller that returns ExpressRouteCircuitsArpTableListResult
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.network.v2017_08_01.models.ExpressRouteCircuitsArpTableListResult]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -417,19 +387,14 @@ class ExpressRouteCircuitsOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._list_arp_table_initial(
-                resource_group_name=resource_group_name,
-                circuit_name=circuit_name,
-                peering_name=peering_name,
-                device_path=device_path,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._list_arp_table_initial(
+            resource_group_name=resource_group_name,
+            circuit_name=circuit_name,
+            peering_name=peering_name,
+            device_path=device_path,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('ExpressRouteCircuitsArpTableListResult', pipeline_response)
@@ -441,15 +406,7 @@ class ExpressRouteCircuitsOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay,  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_list_arp_table.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/peerings/{peeringName}/arpTables/{devicePath}'}  # type: ignore
 
     def _list_routes_table_initial(
@@ -499,7 +456,7 @@ class ExpressRouteCircuitsOperations(object):
             deserialized = self._deserialize('ExpressRouteCircuitsRoutesTableListResult', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _list_routes_table_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/peerings/{peeringName}/routeTables/{devicePath}'}  # type: ignore
@@ -513,8 +470,7 @@ class ExpressRouteCircuitsOperations(object):
         **kwargs  # type: Any
     ):
         # type: (...) -> LROPoller
-        """Gets the currently advertised routes table associated with the express route circuit in a
-    resource group.
+        """Gets the currently advertised routes table associated with the express route circuit in a resource group.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
@@ -525,12 +481,11 @@ class ExpressRouteCircuitsOperations(object):
         :param device_path: The path of the device.
         :type device_path: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either ExpressRouteCircuitsRoutesTableListResult or the result of cls(response)
+        :return: An instance of LROPoller that returns ExpressRouteCircuitsRoutesTableListResult
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.network.v2017_08_01.models.ExpressRouteCircuitsRoutesTableListResult]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -540,19 +495,14 @@ class ExpressRouteCircuitsOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._list_routes_table_initial(
-                resource_group_name=resource_group_name,
-                circuit_name=circuit_name,
-                peering_name=peering_name,
-                device_path=device_path,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._list_routes_table_initial(
+            resource_group_name=resource_group_name,
+            circuit_name=circuit_name,
+            peering_name=peering_name,
+            device_path=device_path,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('ExpressRouteCircuitsRoutesTableListResult', pipeline_response)
@@ -564,15 +514,7 @@ class ExpressRouteCircuitsOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay,  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_list_routes_table.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/peerings/{peeringName}/routeTables/{devicePath}'}  # type: ignore
 
     def _list_routes_table_summary_initial(
@@ -622,7 +564,7 @@ class ExpressRouteCircuitsOperations(object):
             deserialized = self._deserialize('ExpressRouteCircuitsRoutesTableSummaryListResult', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _list_routes_table_summary_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/peerings/{peeringName}/routeTablesSummary/{devicePath}'}  # type: ignore
@@ -636,8 +578,7 @@ class ExpressRouteCircuitsOperations(object):
         **kwargs  # type: Any
     ):
         # type: (...) -> LROPoller
-        """Gets the currently advertised routes table summary associated with the express route circuit in
-    a resource group.
+        """Gets the currently advertised routes table summary associated with the express route circuit in a resource group.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
@@ -648,12 +589,11 @@ class ExpressRouteCircuitsOperations(object):
         :param device_path: The path of the device.
         :type device_path: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either ExpressRouteCircuitsRoutesTableSummaryListResult or the result of cls(response)
+        :return: An instance of LROPoller that returns ExpressRouteCircuitsRoutesTableSummaryListResult
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.network.v2017_08_01.models.ExpressRouteCircuitsRoutesTableSummaryListResult]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -663,19 +603,14 @@ class ExpressRouteCircuitsOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._list_routes_table_summary_initial(
-                resource_group_name=resource_group_name,
-                circuit_name=circuit_name,
-                peering_name=peering_name,
-                device_path=device_path,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._list_routes_table_summary_initial(
+            resource_group_name=resource_group_name,
+            circuit_name=circuit_name,
+            peering_name=peering_name,
+            device_path=device_path,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('ExpressRouteCircuitsRoutesTableSummaryListResult', pipeline_response)
@@ -687,15 +622,7 @@ class ExpressRouteCircuitsOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay,  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_list_routes_table_summary.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/peerings/{peeringName}/routeTablesSummary/{devicePath}'}  # type: ignore
 
     def get_stats(
@@ -712,7 +639,7 @@ class ExpressRouteCircuitsOperations(object):
         :param circuit_name: The name of the express route circuit.
         :type circuit_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ExpressRouteCircuitStats, or the result of cls(response)
+        :return: ExpressRouteCircuitStats or the result of cls(response)
         :rtype: ~azure.mgmt.network.v2017_08_01.models.ExpressRouteCircuitStats
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -750,7 +677,7 @@ class ExpressRouteCircuitsOperations(object):
         deserialized = self._deserialize('ExpressRouteCircuitStats', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get_stats.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/stats'}  # type: ignore
@@ -772,7 +699,7 @@ class ExpressRouteCircuitsOperations(object):
         :param peering_name: The name of the peering.
         :type peering_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ExpressRouteCircuitStats, or the result of cls(response)
+        :return: ExpressRouteCircuitStats or the result of cls(response)
         :rtype: ~azure.mgmt.network.v2017_08_01.models.ExpressRouteCircuitStats
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -811,7 +738,7 @@ class ExpressRouteCircuitsOperations(object):
         deserialized = self._deserialize('ExpressRouteCircuitStats', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get_peering_stats.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/peerings/{peeringName}/stats'}  # type: ignore
@@ -827,7 +754,7 @@ class ExpressRouteCircuitsOperations(object):
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either ExpressRouteCircuitListResult or the result of cls(response)
+        :return: An iterator like instance of ExpressRouteCircuitListResult or the result of cls(response)
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.network.v2017_08_01.models.ExpressRouteCircuitListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -892,7 +819,7 @@ class ExpressRouteCircuitsOperations(object):
         """Gets all the express route circuits in a subscription.
 
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either ExpressRouteCircuitListResult or the result of cls(response)
+        :return: An iterator like instance of ExpressRouteCircuitListResult or the result of cls(response)
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.network.v2017_08_01.models.ExpressRouteCircuitListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """

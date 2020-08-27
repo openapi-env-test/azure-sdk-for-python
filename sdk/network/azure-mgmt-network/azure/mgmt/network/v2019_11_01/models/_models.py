@@ -4124,7 +4124,7 @@ class BastionShareableLink(msrest.serialization.Model):
     All required parameters must be populated in order to send to Azure.
 
     :param vm: Required. Reference of the virtual machine resource.
-    :type vm: ~azure.mgmt.network.v2019_11_01.models.Resource
+    :type vm: ~azure.mgmt.network.v2019_11_01.models.VM
     :ivar bsl: The unique Bastion Shareable Link to the virtual machine.
     :vartype bsl: str
     :ivar created_at: The time when the link was created.
@@ -4142,7 +4142,7 @@ class BastionShareableLink(msrest.serialization.Model):
     }
 
     _attribute_map = {
-        'vm': {'key': 'vm', 'type': 'Resource'},
+        'vm': {'key': 'vm', 'type': 'VM'},
         'bsl': {'key': 'bsl', 'type': 'str'},
         'created_at': {'key': 'createdAt', 'type': 'str'},
         'message': {'key': 'message', 'type': 'str'},
@@ -5660,7 +5660,7 @@ class ContainerNetworkInterface(SubResource):
      ~azure.mgmt.network.v2019_11_01.models.ContainerNetworkInterfaceConfiguration
     :param container: Reference to the container to which this container network interface is
      attached.
-    :type container: ~azure.mgmt.network.v2019_11_01.models.SubResource
+    :type container: ~azure.mgmt.network.v2019_11_01.models.Container
     :ivar ip_configurations: Reference to the ip configuration on this container nic.
     :vartype ip_configurations:
      list[~azure.mgmt.network.v2019_11_01.models.ContainerNetworkInterfaceIpConfiguration]
@@ -5683,7 +5683,7 @@ class ContainerNetworkInterface(SubResource):
         'type': {'key': 'type', 'type': 'str'},
         'etag': {'key': 'etag', 'type': 'str'},
         'container_network_interface_configuration': {'key': 'properties.containerNetworkInterfaceConfiguration', 'type': 'ContainerNetworkInterfaceConfiguration'},
-        'container': {'key': 'properties.container', 'type': 'SubResource'},
+        'container': {'key': 'properties.container', 'type': 'Container'},
         'ip_configurations': {'key': 'properties.ipConfigurations', 'type': '[ContainerNetworkInterfaceIpConfiguration]'},
         'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
     }
@@ -13437,9 +13437,10 @@ class PrivateLinkService(Resource):
     :vartype private_endpoint_connections:
      list[~azure.mgmt.network.v2019_11_01.models.PrivateEndpointConnection]
     :param visibility: The visibility list of the private link service.
-    :type visibility: ~azure.mgmt.network.v2019_11_01.models.ResourceSet
+    :type visibility: ~azure.mgmt.network.v2019_11_01.models.PrivateLinkServicePropertiesVisibility
     :param auto_approval: The auto-approval list of the private link service.
-    :type auto_approval: ~azure.mgmt.network.v2019_11_01.models.ResourceSet
+    :type auto_approval:
+     ~azure.mgmt.network.v2019_11_01.models.PrivateLinkServicePropertiesAutoApproval
     :param fqdns: The list of Fqdn.
     :type fqdns: list[str]
     :ivar alias: The alias of the private link service.
@@ -13471,8 +13472,8 @@ class PrivateLinkService(Resource):
         'network_interfaces': {'key': 'properties.networkInterfaces', 'type': '[NetworkInterface]'},
         'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
         'private_endpoint_connections': {'key': 'properties.privateEndpointConnections', 'type': '[PrivateEndpointConnection]'},
-        'visibility': {'key': 'properties.visibility', 'type': 'ResourceSet'},
-        'auto_approval': {'key': 'properties.autoApproval', 'type': 'ResourceSet'},
+        'visibility': {'key': 'properties.visibility', 'type': 'PrivateLinkServicePropertiesVisibility'},
+        'auto_approval': {'key': 'properties.autoApproval', 'type': 'PrivateLinkServicePropertiesAutoApproval'},
         'fqdns': {'key': 'properties.fqdns', 'type': '[str]'},
         'alias': {'key': 'properties.alias', 'type': 'str'},
         'enable_proxy_protocol': {'key': 'properties.enableProxyProtocol', 'type': 'bool'},
@@ -14262,11 +14263,11 @@ class ResourceNavigationLink(SubResource):
 
     Variables are only populated by the server, and will be ignored when sending a request.
 
-    :param id: Resource ID.
-    :type id: str
     :param name: Name of the resource that is unique within a resource group. This name can be used
      to access the resource.
     :type name: str
+    :ivar id: Resource navigation link identifier.
+    :vartype id: str
     :ivar etag: A unique read-only string that changes whenever the resource is updated.
     :vartype etag: str
     :ivar type: Resource type.
@@ -14281,14 +14282,15 @@ class ResourceNavigationLink(SubResource):
     """
 
     _validation = {
+        'id': {'readonly': True},
         'etag': {'readonly': True},
         'type': {'readonly': True},
         'provisioning_state': {'readonly': True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
         'name': {'key': 'name', 'type': 'str'},
+        'id': {'key': 'id', 'type': 'str'},
         'etag': {'key': 'etag', 'type': 'str'},
         'type': {'key': 'type', 'type': 'str'},
         'linked_resource_type': {'key': 'properties.linkedResourceType', 'type': 'str'},
@@ -14302,6 +14304,7 @@ class ResourceNavigationLink(SubResource):
     ):
         super(ResourceNavigationLink, self).__init__(**kwargs)
         self.name = kwargs.get('name', None)
+        self.id = None
         self.etag = None
         self.type = None
         self.linked_resource_type = kwargs.get('linked_resource_type', None)
@@ -18570,14 +18573,15 @@ class VpnServerConfiguration(Resource):
 
     :param id: Resource ID.
     :type id: str
-    :ivar name: Resource name.
-    :vartype name: str
     :ivar type: Resource type.
     :vartype type: str
     :param location: Resource location.
     :type location: str
     :param tags: A set of tags. Resource tags.
     :type tags: dict[str, str]
+    :param name: The name of the resource that is unique within a resource group. This name can be
+     used to access the resource.
+    :type name: str
     :ivar etag: A unique read-only string that changes whenever the resource is updated.
     :vartype etag: str
     :param name_properties_name: The name of the VpnServerConfiguration that is unique within a
@@ -18626,7 +18630,6 @@ class VpnServerConfiguration(Resource):
     """
 
     _validation = {
-        'name': {'readonly': True},
         'type': {'readonly': True},
         'etag': {'readonly': True},
         'provisioning_state': {'readonly': True},
@@ -18636,10 +18639,10 @@ class VpnServerConfiguration(Resource):
 
     _attribute_map = {
         'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
         'type': {'key': 'type', 'type': 'str'},
         'location': {'key': 'location', 'type': 'str'},
         'tags': {'key': 'tags', 'type': '{str}'},
+        'name': {'key': 'name', 'type': 'str'},
         'etag': {'key': 'etag', 'type': 'str'},
         'name_properties_name': {'key': 'properties.name', 'type': 'str'},
         'vpn_protocols': {'key': 'properties.vpnProtocols', 'type': '[str]'},
@@ -18662,6 +18665,7 @@ class VpnServerConfiguration(Resource):
         **kwargs
     ):
         super(VpnServerConfiguration, self).__init__(**kwargs)
+        self.name = kwargs.get('name', None)
         self.etag = None
         self.name_properties_name = kwargs.get('name_properties_name', None)
         self.vpn_protocols = kwargs.get('vpn_protocols', None)

@@ -62,7 +62,7 @@ class HubVirtualNetworkConnectionsOperations(object):
         :param connection_name: The name of the vpn connection.
         :type connection_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: HubVirtualNetworkConnection, or the result of cls(response)
+        :return: HubVirtualNetworkConnection or the result of cls(response)
         :rtype: ~azure.mgmt.network.v2019_02_01.models.HubVirtualNetworkConnection
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -102,7 +102,7 @@ class HubVirtualNetworkConnectionsOperations(object):
         deserialized = self._deserialize('HubVirtualNetworkConnection', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/hubVirtualNetworkConnections/{connectionName}'}  # type: ignore
@@ -121,7 +121,7 @@ class HubVirtualNetworkConnectionsOperations(object):
         :param virtual_hub_name: The name of the VirtualHub.
         :type virtual_hub_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either ListHubVirtualNetworkConnectionsResult or the result of cls(response)
+        :return: An iterator like instance of ListHubVirtualNetworkConnectionsResult or the result of cls(response)
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.network.v2019_02_01.models.ListHubVirtualNetworkConnectionsResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
