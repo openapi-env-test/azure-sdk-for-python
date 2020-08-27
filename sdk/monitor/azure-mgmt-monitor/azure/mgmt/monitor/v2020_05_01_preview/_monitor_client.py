@@ -16,27 +16,15 @@ if TYPE_CHECKING:
     from typing import Any, Optional
 
 from ._configuration import MonitorClientConfiguration
-from .operations import PrivateLinkScopesOperations
-from .operations import PrivateLinkScopeOperationStatusOperations
-from .operations import PrivateLinkResourcesOperations
-from .operations import PrivateEndpointConnectionsOperations
-from .operations import PrivateLinkScopedResourcesOperations
+from .operations import ScheduledQueryRulesOperations
 from . import models
 
 
 class MonitorClient(object):
     """Monitor Management Client.
 
-    :ivar private_link_scopes: PrivateLinkScopesOperations operations
-    :vartype private_link_scopes: azure.mgmt.monitor.v2019_10_17.operations.PrivateLinkScopesOperations
-    :ivar private_link_scope_operation_status: PrivateLinkScopeOperationStatusOperations operations
-    :vartype private_link_scope_operation_status: azure.mgmt.monitor.v2019_10_17.operations.PrivateLinkScopeOperationStatusOperations
-    :ivar private_link_resources: PrivateLinkResourcesOperations operations
-    :vartype private_link_resources: azure.mgmt.monitor.v2019_10_17.operations.PrivateLinkResourcesOperations
-    :ivar private_endpoint_connections: PrivateEndpointConnectionsOperations operations
-    :vartype private_endpoint_connections: azure.mgmt.monitor.v2019_10_17.operations.PrivateEndpointConnectionsOperations
-    :ivar private_link_scoped_resources: PrivateLinkScopedResourcesOperations operations
-    :vartype private_link_scoped_resources: azure.mgmt.monitor.v2019_10_17.operations.PrivateLinkScopedResourcesOperations
+    :ivar scheduled_query_rules: ScheduledQueryRulesOperations operations
+    :vartype scheduled_query_rules: azure.mgmt.monitor.v2020_05_01_preview.operations.ScheduledQueryRulesOperations
     :param credential: Credential needed for the client to connect to Azure.
     :type credential: ~azure.core.credentials.TokenCredential
     :param subscription_id: The Azure subscription Id.
@@ -62,15 +50,7 @@ class MonitorClient(object):
         self._serialize = Serializer(client_models)
         self._deserialize = Deserializer(client_models)
 
-        self.private_link_scopes = PrivateLinkScopesOperations(
-            self._client, self._config, self._serialize, self._deserialize)
-        self.private_link_scope_operation_status = PrivateLinkScopeOperationStatusOperations(
-            self._client, self._config, self._serialize, self._deserialize)
-        self.private_link_resources = PrivateLinkResourcesOperations(
-            self._client, self._config, self._serialize, self._deserialize)
-        self.private_endpoint_connections = PrivateEndpointConnectionsOperations(
-            self._client, self._config, self._serialize, self._deserialize)
-        self.private_link_scoped_resources = PrivateLinkScopedResourcesOperations(
+        self.scheduled_query_rules = ScheduledQueryRulesOperations(
             self._client, self._config, self._serialize, self._deserialize)
 
     def close(self):

@@ -16,19 +16,17 @@ if TYPE_CHECKING:
     from typing import Any, Optional
 
 from ._configuration import MonitorClientConfiguration
-from .operations import ActionGroupsOperations
+from .operations import ManagementGroupDiagnosticSettingsOperations
 from . import models
 
 
 class MonitorClient(object):
     """Monitor Management Client.
 
-    :ivar action_groups: ActionGroupsOperations operations
-    :vartype action_groups: azure.mgmt.monitor.v2019_06_01.operations.ActionGroupsOperations
+    :ivar management_group_diagnostic_settings: ManagementGroupDiagnosticSettingsOperations operations
+    :vartype management_group_diagnostic_settings: azure.mgmt.monitor.v2020_01_01_preview.operations.ManagementGroupDiagnosticSettingsOperations
     :param credential: Credential needed for the client to connect to Azure.
     :type credential: ~azure.core.credentials.TokenCredential
-    :param subscription_id: The Azure subscription Id.
-    :type subscription_id: str
     :param str base_url: Service URL
     :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
     """
@@ -36,21 +34,20 @@ class MonitorClient(object):
     def __init__(
         self,
         credential,  # type: "TokenCredential"
-        subscription_id,  # type: str
         base_url=None,  # type: Optional[str]
         **kwargs  # type: Any
     ):
         # type: (...) -> None
         if not base_url:
             base_url = 'https://management.azure.com'
-        self._config = MonitorClientConfiguration(credential, subscription_id, **kwargs)
+        self._config = MonitorClientConfiguration(credential, **kwargs)
         self._client = ARMPipelineClient(base_url=base_url, config=self._config, **kwargs)
 
         client_models = {k: v for k, v in models.__dict__.items() if isinstance(v, type)}
         self._serialize = Serializer(client_models)
         self._deserialize = Deserializer(client_models)
 
-        self.action_groups = ActionGroupsOperations(
+        self.management_group_diagnostic_settings = ManagementGroupDiagnosticSettingsOperations(
             self._client, self._config, self._serialize, self._deserialize)
 
     def close(self):

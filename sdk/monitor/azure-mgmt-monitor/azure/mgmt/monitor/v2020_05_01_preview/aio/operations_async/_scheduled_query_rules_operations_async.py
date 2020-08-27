@@ -12,23 +12,21 @@ from azure.core.async_paging import AsyncItemPaged, AsyncList
 from azure.core.exceptions import HttpResponseError, ResourceExistsError, ResourceNotFoundError, map_error
 from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import AsyncHttpResponse, HttpRequest
-from azure.core.polling import AsyncNoPolling, AsyncPollingMethod, async_poller
 from azure.mgmt.core.exceptions import ARMErrorFormat
-from azure.mgmt.core.polling.async_arm_polling import AsyncARMPolling
 
 from ... import models
 
 T = TypeVar('T')
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
 
-class PrivateLinkScopesOperations:
-    """PrivateLinkScopesOperations async operations.
+class ScheduledQueryRulesOperations:
+    """ScheduledQueryRulesOperations async operations.
 
     You should not instantiate this class directly. Instead, you should create a Client instance that
     instantiates it for you and attaches it as an attribute.
 
     :ivar models: Alias to model classes used in this operation group.
-    :type models: ~azure.mgmt.monitor.v2019_10_17.models
+    :type models: ~azure.mgmt.monitor.v2020_05_01_preview.models
     :param client: Client for service requests.
     :param config: Configuration of service client.
     :param serializer: An object model serializer.
@@ -43,26 +41,26 @@ class PrivateLinkScopesOperations:
         self._deserialize = deserializer
         self._config = config
 
-    def list(
+    def list_by_subscription(
         self,
         **kwargs
-    ) -> AsyncIterable["models.AzureMonitorPrivateLinkScopeListResult"]:
-        """Gets a list of all Azure Monitor PrivateLinkScopes within a subscription.
+    ) -> AsyncIterable["models.ScheduledQueryRuleResourceCollection"]:
+        """Retrieve a scheduled query rule definitions in a subscription.
 
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of AzureMonitorPrivateLinkScopeListResult or the result of cls(response)
-        :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.monitor.v2019_10_17.models.AzureMonitorPrivateLinkScopeListResult]
+        :return: An iterator like instance of ScheduledQueryRuleResourceCollection or the result of cls(response)
+        :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.monitor.v2020_05_01_preview.models.ScheduledQueryRuleResourceCollection]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.AzureMonitorPrivateLinkScopeListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["models.ScheduledQueryRuleResourceCollection"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2019-10-17-preview"
+        api_version = "2020-05-01-preview"
 
         def prepare_request(next_link=None):
             if not next_link:
                 # Construct URL
-                url = self.list.metadata['url']  # type: ignore
+                url = self.list_by_subscription.metadata['url']  # type: ignore
                 path_format_arguments = {
                     'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
                 }
@@ -83,11 +81,11 @@ class PrivateLinkScopesOperations:
             return request
 
         async def extract_data(pipeline_response):
-            deserialized = self._deserialize('AzureMonitorPrivateLinkScopeListResult', pipeline_response)
+            deserialized = self._deserialize('ScheduledQueryRuleResourceCollection', pipeline_response)
             list_of_elem = deserialized.value
             if cls:
                 list_of_elem = cls(list_of_elem)
-            return deserialized.next_link or None, AsyncList(list_of_elem)
+            return None, AsyncList(list_of_elem)
 
         async def get_next(next_link=None):
             request = prepare_request(next_link)
@@ -96,42 +94,43 @@ class PrivateLinkScopesOperations:
             response = pipeline_response.http_response
 
             if response.status_code not in [200]:
+                error = self._deserialize(models.ErrorContract, response)
                 map_error(status_code=response.status_code, response=response, error_map=error_map)
-                raise HttpResponseError(response=response, error_format=ARMErrorFormat)
+                raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
             return pipeline_response
 
         return AsyncItemPaged(
             get_next, extract_data
         )
-    list.metadata = {'url': '/subscriptions/{subscriptionId}/providers/microsoft.insights/privateLinkScopes'}  # type: ignore
+    list_by_subscription.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Insights/scheduledQueryRules'}  # type: ignore
 
     def list_by_resource_group(
         self,
         resource_group_name: str,
         **kwargs
-    ) -> AsyncIterable["models.AzureMonitorPrivateLinkScopeListResult"]:
-        """Gets a list of Azure Monitor PrivateLinkScopes within a resource group.
+    ) -> AsyncIterable["models.ScheduledQueryRuleResourceCollection"]:
+        """Retrieve scheduled query rule definitions in a resource group.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of AzureMonitorPrivateLinkScopeListResult or the result of cls(response)
-        :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.monitor.v2019_10_17.models.AzureMonitorPrivateLinkScopeListResult]
+        :return: An iterator like instance of ScheduledQueryRuleResourceCollection or the result of cls(response)
+        :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.monitor.v2020_05_01_preview.models.ScheduledQueryRuleResourceCollection]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.AzureMonitorPrivateLinkScopeListResult"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["models.ScheduledQueryRuleResourceCollection"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2019-10-17-preview"
+        api_version = "2020-05-01-preview"
 
         def prepare_request(next_link=None):
             if not next_link:
                 # Construct URL
                 url = self.list_by_resource_group.metadata['url']  # type: ignore
                 path_format_arguments = {
-                    'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
                     'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
+                    'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
                 }
                 url = self._client.format_url(url, **path_format_arguments)
                 # Construct parameters
@@ -150,11 +149,11 @@ class PrivateLinkScopesOperations:
             return request
 
         async def extract_data(pipeline_response):
-            deserialized = self._deserialize('AzureMonitorPrivateLinkScopeListResult', pipeline_response)
+            deserialized = self._deserialize('ScheduledQueryRuleResourceCollection', pipeline_response)
             list_of_elem = deserialized.value
             if cls:
                 list_of_elem = cls(list_of_elem)
-            return deserialized.next_link or None, AsyncList(list_of_elem)
+            return None, AsyncList(list_of_elem)
 
         async def get_next(next_link=None):
             request = prepare_request(next_link)
@@ -163,129 +162,45 @@ class PrivateLinkScopesOperations:
             response = pipeline_response.http_response
 
             if response.status_code not in [200]:
+                error = self._deserialize(models.ErrorContract, response)
                 map_error(status_code=response.status_code, response=response, error_map=error_map)
-                raise HttpResponseError(response=response, error_format=ARMErrorFormat)
+                raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
             return pipeline_response
 
         return AsyncItemPaged(
             get_next, extract_data
         )
-    list_by_resource_group.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes'}  # type: ignore
-
-    async def _delete_initial(
-        self,
-        resource_group_name: str,
-        scope_name: str,
-        **kwargs
-    ) -> None:
-        cls = kwargs.pop('cls', None)  # type: ClsType[None]
-        error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
-        error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2019-10-17-preview"
-
-        # Construct URL
-        url = self._delete_initial.metadata['url']  # type: ignore
-        path_format_arguments = {
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
-            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
-            'scopeName': self._serialize.url("scope_name", scope_name, 'str'),
-        }
-        url = self._client.format_url(url, **path_format_arguments)
-
-        # Construct parameters
-        query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
-
-        # Construct headers
-        header_parameters = {}  # type: Dict[str, Any]
-
-        # Construct and send request
-        request = self._client.delete(url, query_parameters, header_parameters)
-        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
-        response = pipeline_response.http_response
-
-        if response.status_code not in [200, 202, 204]:
-            map_error(status_code=response.status_code, response=response, error_map=error_map)
-            raise HttpResponseError(response=response, error_format=ARMErrorFormat)
-
-        if cls:
-          return cls(pipeline_response, None, {})
-
-    _delete_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}'}  # type: ignore
-
-    async def delete(
-        self,
-        resource_group_name: str,
-        scope_name: str,
-        **kwargs
-    ) -> None:
-        """Deletes a Azure Monitor PrivateLinkScope.
-
-        :param resource_group_name: The name of the resource group.
-        :type resource_group_name: str
-        :param scope_name: The name of the Azure Monitor PrivateLinkScope resource.
-        :type scope_name: str
-        :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
-        :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
-        :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: None
-        :rtype: None
-        :raises ~azure.core.exceptions.HttpResponseError:
-        """
-        polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType[None]
-        lro_delay = kwargs.pop(
-            'polling_interval',
-            self._config.polling_interval
-        )
-        raw_result = await self._delete_initial(
-            resource_group_name=resource_group_name,
-            scope_name=scope_name,
-            cls=lambda x,y,z: x,
-            **kwargs
-        )
-
-        def get_long_running_output(pipeline_response):
-            if cls:
-                return cls(pipeline_response, None, {})
-
-        if polling is True: polling_method = AsyncARMPolling(lro_delay,  **kwargs)
-        elif polling is False: polling_method = AsyncNoPolling()
-        else: polling_method = polling
-        return await async_poller(self._client, raw_result, get_long_running_output, polling_method)
-    delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}'}  # type: ignore
+    list_by_resource_group.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/scheduledQueryRules'}  # type: ignore
 
     async def get(
         self,
         resource_group_name: str,
-        scope_name: str,
+        rule_name: str,
         **kwargs
-    ) -> "models.AzureMonitorPrivateLinkScope":
-        """Returns a Azure Monitor PrivateLinkScope.
+    ) -> "models.ScheduledQueryRuleResource":
+        """Retrieve an scheduled query rule definition.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
-        :param scope_name: The name of the Azure Monitor PrivateLinkScope resource.
-        :type scope_name: str
+        :param rule_name: The name of the rule.
+        :type rule_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: AzureMonitorPrivateLinkScope or the result of cls(response)
-        :rtype: ~azure.mgmt.monitor.v2019_10_17.models.AzureMonitorPrivateLinkScope
+        :return: ScheduledQueryRuleResource or the result of cls(response)
+        :rtype: ~azure.mgmt.monitor.v2020_05_01_preview.models.ScheduledQueryRuleResource
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.AzureMonitorPrivateLinkScope"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["models.ScheduledQueryRuleResource"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2019-10-17-preview"
+        api_version = "2020-05-01-preview"
 
         # Construct URL
         url = self.get.metadata['url']  # type: ignore
         path_format_arguments = {
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
-            'scopeName': self._serialize.url("scope_name", scope_name, 'str'),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
+            'ruleName': self._serialize.url("rule_name", rule_name, 'str'),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
@@ -304,53 +219,49 @@ class PrivateLinkScopesOperations:
 
         if response.status_code not in [200]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            raise HttpResponseError(response=response, error_format=ARMErrorFormat)
+            error = self._deserialize(models.ErrorContract, response)
+            raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize('AzureMonitorPrivateLinkScope', pipeline_response)
+        deserialized = self._deserialize('ScheduledQueryRuleResource', pipeline_response)
 
         if cls:
           return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}'}  # type: ignore
+    get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/scheduledQueryRules/{ruleName}'}  # type: ignore
 
     async def create_or_update(
         self,
         resource_group_name: str,
-        scope_name: str,
-        location: str,
-        tags: Optional[Dict[str, str]] = None,
+        rule_name: str,
+        parameters: "models.ScheduledQueryRuleResource",
         **kwargs
-    ) -> "models.AzureMonitorPrivateLinkScope":
-        """Creates (or updates) a Azure Monitor PrivateLinkScope. Note: You cannot specify a different value for InstrumentationKey nor AppId in the Put operation.
+    ) -> "models.ScheduledQueryRuleResource":
+        """Creates or updates a scheduled query rule.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
-        :param scope_name: The name of the Azure Monitor PrivateLinkScope resource.
-        :type scope_name: str
-        :param location: Resource location.
-        :type location: str
-        :param tags: Resource tags.
-        :type tags: dict[str, str]
+        :param rule_name: The name of the rule.
+        :type rule_name: str
+        :param parameters: The parameters of the rule to create or update.
+        :type parameters: ~azure.mgmt.monitor.v2020_05_01_preview.models.ScheduledQueryRuleResource
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: AzureMonitorPrivateLinkScope or the result of cls(response)
-        :rtype: ~azure.mgmt.monitor.v2019_10_17.models.AzureMonitorPrivateLinkScope
+        :return: ScheduledQueryRuleResource or the result of cls(response)
+        :rtype: ~azure.mgmt.monitor.v2020_05_01_preview.models.ScheduledQueryRuleResource
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.AzureMonitorPrivateLinkScope"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["models.ScheduledQueryRuleResource"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
-
-        _azure_monitor_private_link_scope_payload = models.AzureMonitorPrivateLinkScope(location=location, tags=tags)
-        api_version = "2019-10-17-preview"
+        api_version = "2020-05-01-preview"
         content_type = kwargs.pop("content_type", "application/json")
 
         # Construct URL
         url = self.create_or_update.metadata['url']  # type: ignore
         path_format_arguments = {
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
-            'scopeName': self._serialize.url("scope_name", scope_name, 'str'),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
+            'ruleName': self._serialize.url("rule_name", rule_name, 'str'),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
@@ -365,7 +276,7 @@ class PrivateLinkScopesOperations:
 
         # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(_azure_monitor_private_link_scope_payload, 'AzureMonitorPrivateLinkScope')
+        body_content = self._serialize.body(parameters, 'ScheduledQueryRuleResource')
         body_content_kwargs['content'] = body_content
         request = self._client.put(url, query_parameters, header_parameters, **body_content_kwargs)
 
@@ -374,55 +285,54 @@ class PrivateLinkScopesOperations:
 
         if response.status_code not in [200, 201]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            raise HttpResponseError(response=response, error_format=ARMErrorFormat)
+            error = self._deserialize(models.ErrorContract, response)
+            raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         deserialized = None
         if response.status_code == 200:
-            deserialized = self._deserialize('AzureMonitorPrivateLinkScope', pipeline_response)
+            deserialized = self._deserialize('ScheduledQueryRuleResource', pipeline_response)
 
         if response.status_code == 201:
-            deserialized = self._deserialize('AzureMonitorPrivateLinkScope', pipeline_response)
+            deserialized = self._deserialize('ScheduledQueryRuleResource', pipeline_response)
 
         if cls:
           return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}'}  # type: ignore
+    create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/scheduledQueryRules/{ruleName}'}  # type: ignore
 
-    async def update_tags(
+    async def update(
         self,
         resource_group_name: str,
-        scope_name: str,
-        tags: Optional[Dict[str, str]] = None,
+        rule_name: str,
+        parameters: "models.ScheduledQueryRuleResourcePatch",
         **kwargs
-    ) -> "models.AzureMonitorPrivateLinkScope":
-        """Updates an existing PrivateLinkScope's tags. To update other fields use the CreateOrUpdate method.
+    ) -> "models.ScheduledQueryRuleResource":
+        """Update a scheduled query rule.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
-        :param scope_name: The name of the Azure Monitor PrivateLinkScope resource.
-        :type scope_name: str
-        :param tags: Resource tags.
-        :type tags: dict[str, str]
+        :param rule_name: The name of the rule.
+        :type rule_name: str
+        :param parameters: The parameters of the rule to update.
+        :type parameters: ~azure.mgmt.monitor.v2020_05_01_preview.models.ScheduledQueryRuleResourcePatch
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: AzureMonitorPrivateLinkScope or the result of cls(response)
-        :rtype: ~azure.mgmt.monitor.v2019_10_17.models.AzureMonitorPrivateLinkScope
+        :return: ScheduledQueryRuleResource or the result of cls(response)
+        :rtype: ~azure.mgmt.monitor.v2020_05_01_preview.models.ScheduledQueryRuleResource
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.AzureMonitorPrivateLinkScope"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["models.ScheduledQueryRuleResource"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
-
-        _private_link_scope_tags = models.TagsResource(tags=tags)
-        api_version = "2019-10-17-preview"
+        api_version = "2020-05-01-preview"
         content_type = kwargs.pop("content_type", "application/json")
 
         # Construct URL
-        url = self.update_tags.metadata['url']  # type: ignore
+        url = self.update.metadata['url']  # type: ignore
         path_format_arguments = {
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
-            'scopeName': self._serialize.url("scope_name", scope_name, 'str'),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
+            'ruleName': self._serialize.url("rule_name", rule_name, 'str'),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
@@ -437,7 +347,7 @@ class PrivateLinkScopesOperations:
 
         # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(_private_link_scope_tags, 'TagsResource')
+        body_content = self._serialize.body(parameters, 'ScheduledQueryRuleResourcePatch')
         body_content_kwargs['content'] = body_content
         request = self._client.patch(url, query_parameters, header_parameters, **body_content_kwargs)
 
@@ -446,12 +356,66 @@ class PrivateLinkScopesOperations:
 
         if response.status_code not in [200]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            raise HttpResponseError(response=response, error_format=ARMErrorFormat)
+            error = self._deserialize(models.ErrorContract, response)
+            raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize('AzureMonitorPrivateLinkScope', pipeline_response)
+        deserialized = self._deserialize('ScheduledQueryRuleResource', pipeline_response)
 
         if cls:
           return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    update_tags.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}'}  # type: ignore
+    update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/scheduledQueryRules/{ruleName}'}  # type: ignore
+
+    async def delete(
+        self,
+        resource_group_name: str,
+        rule_name: str,
+        **kwargs
+    ) -> None:
+        """Deletes a scheduled query rule.
+
+        :param resource_group_name: The name of the resource group.
+        :type resource_group_name: str
+        :param rule_name: The name of the rule.
+        :type rule_name: str
+        :keyword callable cls: A custom type or function that will be passed the direct response
+        :return: None or the result of cls(response)
+        :rtype: None
+        :raises: ~azure.core.exceptions.HttpResponseError
+        """
+        cls = kwargs.pop('cls', None)  # type: ClsType[None]
+        error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop('error_map', {}))
+        api_version = "2020-05-01-preview"
+
+        # Construct URL
+        url = self.delete.metadata['url']  # type: ignore
+        path_format_arguments = {
+            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
+            'ruleName': self._serialize.url("rule_name", rule_name, 'str'),
+        }
+        url = self._client.format_url(url, **path_format_arguments)
+
+        # Construct parameters
+        query_parameters = {}  # type: Dict[str, Any]
+        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+
+        # Construct headers
+        header_parameters = {}  # type: Dict[str, Any]
+
+        # Construct and send request
+        request = self._client.delete(url, query_parameters, header_parameters)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
+        response = pipeline_response.http_response
+
+        if response.status_code not in [200, 204]:
+            map_error(status_code=response.status_code, response=response, error_map=error_map)
+            error = self._deserialize(models.ErrorContract, response)
+            raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
+
+        if cls:
+          return cls(pipeline_response, None, {})
+
+    delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/scheduledQueryRules/{ruleName}'}  # type: ignore

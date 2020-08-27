@@ -29,7 +29,7 @@ class PrivateLinkScopeOperationStatusOperations(object):
     instantiates it for you and attaches it as an attribute.
 
     :ivar models: Alias to model classes used in this operation group.
-    :type models: ~$(python-base-namespace).v2019_10_17.models
+    :type models: ~azure.mgmt.monitor.v2019_10_17.models
     :param client: Client for service requests.
     :param config: Configuration of service client.
     :param serializer: An object model serializer.
@@ -51,16 +51,15 @@ class PrivateLinkScopeOperationStatusOperations(object):
         **kwargs  # type: Any
     ):
         # type: (...) -> "models.OperationStatus"
-        """Get the status of an azure asynchronous operation associated with a private link scope
-        operation.
+        """Get the status of an azure asynchronous operation associated with a private link scope operation.
 
         :param async_operation_id: The operation Id.
         :type async_operation_id: str
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: OperationStatus, or the result of cls(response)
-        :rtype: ~$(python-base-namespace).v2019_10_17.models.OperationStatus
+        :return: OperationStatus or the result of cls(response)
+        :rtype: ~azure.mgmt.monitor.v2019_10_17.models.OperationStatus
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.OperationStatus"]
@@ -97,7 +96,7 @@ class PrivateLinkScopeOperationStatusOperations(object):
         deserialized = self._deserialize('OperationStatus', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopeOperationStatuses/{asyncOperationId}'}  # type: ignore

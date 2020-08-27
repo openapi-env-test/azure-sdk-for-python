@@ -26,7 +26,7 @@ class ActionGroupsOperations:
     instantiates it for you and attaches it as an attribute.
 
     :ivar models: Alias to model classes used in this operation group.
-    :type models: ~$(python-base-namespace).v2019_06_01.models
+    :type models: ~azure.mgmt.monitor.v2019_06_01.models
     :param client: Client for service requests.
     :param config: Configuration of service client.
     :param serializer: An object model serializer.
@@ -55,10 +55,10 @@ class ActionGroupsOperations:
         :param action_group_name: The name of the action group.
         :type action_group_name: str
         :param action_group: The action group to create or use for the update.
-        :type action_group: ~$(python-base-namespace).v2019_06_01.models.ActionGroupResource
+        :type action_group: ~azure.mgmt.monitor.v2019_06_01.models.ActionGroupResource
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ActionGroupResource, or the result of cls(response)
-        :rtype: ~$(python-base-namespace).v2019_06_01.models.ActionGroupResource
+        :return: ActionGroupResource or the result of cls(response)
+        :rtype: ~azure.mgmt.monitor.v2019_06_01.models.ActionGroupResource
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.ActionGroupResource"]
@@ -107,7 +107,7 @@ class ActionGroupsOperations:
             deserialized = self._deserialize('ActionGroupResource', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/actionGroups/{actionGroupName}'}  # type: ignore
@@ -125,8 +125,8 @@ class ActionGroupsOperations:
         :param action_group_name: The name of the action group.
         :type action_group_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ActionGroupResource, or the result of cls(response)
-        :rtype: ~$(python-base-namespace).v2019_06_01.models.ActionGroupResource
+        :return: ActionGroupResource or the result of cls(response)
+        :rtype: ~azure.mgmt.monitor.v2019_06_01.models.ActionGroupResource
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.ActionGroupResource"]
@@ -164,7 +164,7 @@ class ActionGroupsOperations:
         deserialized = self._deserialize('ActionGroupResource', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/actionGroups/{actionGroupName}'}  # type: ignore
@@ -182,7 +182,7 @@ class ActionGroupsOperations:
         :param action_group_name: The name of the action group.
         :type action_group_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: None, or the result of cls(response)
+        :return: None or the result of cls(response)
         :rtype: None
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -218,7 +218,7 @@ class ActionGroupsOperations:
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         if cls:
-            return cls(pipeline_response, None, {})
+          return cls(pipeline_response, None, {})
 
     delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/actionGroups/{actionGroupName}'}  # type: ignore
 
@@ -226,7 +226,8 @@ class ActionGroupsOperations:
         self,
         resource_group_name: str,
         action_group_name: str,
-        action_group_patch: "models.ActionGroupPatchBody",
+        tags: Optional[Dict[str, str]] = None,
+        enabled: Optional[bool] = True,
         **kwargs
     ) -> "models.ActionGroupResource":
         """Updates an existing action group's tags. To update other fields use the CreateOrUpdate method.
@@ -235,16 +236,21 @@ class ActionGroupsOperations:
         :type resource_group_name: str
         :param action_group_name: The name of the action group.
         :type action_group_name: str
-        :param action_group_patch: Parameters supplied to the operation.
-        :type action_group_patch: ~$(python-base-namespace).v2019_06_01.models.ActionGroupPatchBody
+        :param tags: Resource tags.
+        :type tags: dict[str, str]
+        :param enabled: Indicates whether this action group is enabled. If an action group is not
+         enabled, then none of its actions will be activated.
+        :type enabled: bool
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ActionGroupResource, or the result of cls(response)
-        :rtype: ~$(python-base-namespace).v2019_06_01.models.ActionGroupResource
+        :return: ActionGroupResource or the result of cls(response)
+        :rtype: ~azure.mgmt.monitor.v2019_06_01.models.ActionGroupResource
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.ActionGroupResource"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
+
+        _action_group_patch = models.ActionGroupPatchBody(tags=tags, enabled=enabled)
         api_version = "2019-06-01"
         content_type = kwargs.pop("content_type", "application/json")
 
@@ -268,7 +274,7 @@ class ActionGroupsOperations:
 
         # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(action_group_patch, 'ActionGroupPatchBody')
+        body_content = self._serialize.body(_action_group_patch, 'ActionGroupPatchBody')
         body_content_kwargs['content'] = body_content
         request = self._client.patch(url, query_parameters, header_parameters, **body_content_kwargs)
 
@@ -283,7 +289,7 @@ class ActionGroupsOperations:
         deserialized = self._deserialize('ActionGroupResource', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/actionGroups/{actionGroupName}'}  # type: ignore
@@ -295,8 +301,8 @@ class ActionGroupsOperations:
         """Get a list of all action groups in a subscription.
 
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either ActionGroupList or the result of cls(response)
-        :rtype: ~azure.core.async_paging.AsyncItemPaged[~$(python-base-namespace).v2019_06_01.models.ActionGroupList]
+        :return: An iterator like instance of ActionGroupList or the result of cls(response)
+        :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.monitor.v2019_06_01.models.ActionGroupList]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.ActionGroupList"]
@@ -362,8 +368,8 @@ class ActionGroupsOperations:
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either ActionGroupList or the result of cls(response)
-        :rtype: ~azure.core.async_paging.AsyncItemPaged[~$(python-base-namespace).v2019_06_01.models.ActionGroupList]
+        :return: An iterator like instance of ActionGroupList or the result of cls(response)
+        :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.monitor.v2019_06_01.models.ActionGroupList]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.ActionGroupList"]
@@ -424,26 +430,27 @@ class ActionGroupsOperations:
         self,
         resource_group_name: str,
         action_group_name: str,
-        enable_request: "models.EnableRequest",
+        receiver_name: str,
         **kwargs
     ) -> None:
-        """Enable a receiver in an action group. This changes the receiver's status from Disabled to
-        Enabled. This operation is only supported for Email or SMS receivers.
+        """Enable a receiver in an action group. This changes the receiver's status from Disabled to Enabled. This operation is only supported for Email or SMS receivers.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
         :param action_group_name: The name of the action group.
         :type action_group_name: str
-        :param enable_request: The receiver to re-enable.
-        :type enable_request: ~$(python-base-namespace).v2019_06_01.models.EnableRequest
+        :param receiver_name: The name of the receiver to resubscribe.
+        :type receiver_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: None, or the result of cls(response)
+        :return: None or the result of cls(response)
         :rtype: None
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType[None]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
+
+        _enable_request = models.EnableRequest(receiver_name=receiver_name)
         api_version = "2019-06-01"
         content_type = kwargs.pop("content_type", "application/json")
 
@@ -466,7 +473,7 @@ class ActionGroupsOperations:
 
         # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(enable_request, 'EnableRequest')
+        body_content = self._serialize.body(_enable_request, 'EnableRequest')
         body_content_kwargs['content'] = body_content
         request = self._client.post(url, query_parameters, header_parameters, **body_content_kwargs)
 
@@ -479,6 +486,6 @@ class ActionGroupsOperations:
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         if cls:
-            return cls(pipeline_response, None, {})
+          return cls(pipeline_response, None, {})
 
     enable_receiver.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/actionGroups/{actionGroupName}/subscribe'}  # type: ignore

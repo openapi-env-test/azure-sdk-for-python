@@ -32,7 +32,7 @@ class PrivateLinkScopedResourcesOperations(object):
     instantiates it for you and attaches it as an attribute.
 
     :ivar models: Alias to model classes used in this operation group.
-    :type models: ~$(python-base-namespace).v2019_10_17.models
+    :type models: ~azure.mgmt.monitor.v2019_10_17.models
     :param client: Client for service requests.
     :param config: Configuration of service client.
     :param serializer: An object model serializer.
@@ -64,8 +64,8 @@ class PrivateLinkScopedResourcesOperations(object):
         :param name: The name of the scoped resource object.
         :type name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ScopedResource, or the result of cls(response)
-        :rtype: ~$(python-base-namespace).v2019_10_17.models.ScopedResource
+        :return: ScopedResource or the result of cls(response)
+        :rtype: ~azure.mgmt.monitor.v2019_10_17.models.ScopedResource
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.ScopedResource"]
@@ -103,7 +103,7 @@ class PrivateLinkScopedResourcesOperations(object):
         deserialized = self._deserialize('ScopedResource', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/scopedResources/{name}'}  # type: ignore
@@ -113,13 +113,15 @@ class PrivateLinkScopedResourcesOperations(object):
         resource_group_name,  # type: str
         scope_name,  # type: str
         name,  # type: str
-        parameters,  # type: "models.ScopedResource"
+        linked_resource_id=None,  # type: Optional[str]
         **kwargs  # type: Any
     ):
         # type: (...) -> "models.ScopedResource"
         cls = kwargs.pop('cls', None)  # type: ClsType["models.ScopedResource"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
+
+        _parameters = models.ScopedResource(linked_resource_id=linked_resource_id)
         api_version = "2019-10-17-preview"
         content_type = kwargs.pop("content_type", "application/json")
 
@@ -144,7 +146,7 @@ class PrivateLinkScopedResourcesOperations(object):
 
         # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(parameters, 'ScopedResource')
+        body_content = self._serialize.body(_parameters, 'ScopedResource')
         body_content_kwargs['content'] = body_content
         request = self._client.put(url, query_parameters, header_parameters, **body_content_kwargs)
 
@@ -163,7 +165,7 @@ class PrivateLinkScopedResourcesOperations(object):
             deserialized = self._deserialize('ScopedResource', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _create_or_update_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/scopedResources/{name}'}  # type: ignore
@@ -173,7 +175,7 @@ class PrivateLinkScopedResourcesOperations(object):
         resource_group_name,  # type: str
         scope_name,  # type: str
         name,  # type: str
-        parameters,  # type: "models.ScopedResource"
+        linked_resource_id=None,  # type: Optional[str]
         **kwargs  # type: Any
     ):
         # type: (...) -> LROPoller
@@ -185,16 +187,15 @@ class PrivateLinkScopedResourcesOperations(object):
         :type scope_name: str
         :param name: The name of the scoped resource object.
         :type name: str
-        :param parameters:
-        :type parameters: ~$(python-base-namespace).v2019_10_17.models.ScopedResource
+        :param linked_resource_id: The resource id of the scoped Azure monitor resource.
+        :type linked_resource_id: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either ScopedResource or the result of cls(response)
-        :rtype: ~azure.core.polling.LROPoller[~$(python-base-namespace).v2019_10_17.models.ScopedResource]
+        :return: An instance of LROPoller that returns ScopedResource
+        :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.monitor.v2019_10_17.models.ScopedResource]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
@@ -203,19 +204,14 @@ class PrivateLinkScopedResourcesOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._create_or_update_initial(
-                resource_group_name=resource_group_name,
-                scope_name=scope_name,
-                name=name,
-                parameters=parameters,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._create_or_update_initial(
+            resource_group_name=resource_group_name,
+            scope_name=scope_name,
+            name=name,
+            linked_resource_id=linked_resource_id,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('ScopedResource', pipeline_response)
@@ -227,15 +223,7 @@ class PrivateLinkScopedResourcesOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay,  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/scopedResources/{name}'}  # type: ignore
 
     def _delete_initial(
@@ -278,7 +266,7 @@ class PrivateLinkScopedResourcesOperations(object):
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
         if cls:
-            return cls(pipeline_response, None, {})
+          return cls(pipeline_response, None, {})
 
     _delete_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/scopedResources/{name}'}  # type: ignore
 
@@ -299,12 +287,11 @@ class PrivateLinkScopedResourcesOperations(object):
         :param name: The name of the scoped resource object.
         :type name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either None or the result of cls(response)
+        :return: An instance of LROPoller that returns None
         :rtype: ~azure.core.polling.LROPoller[None]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -314,18 +301,13 @@ class PrivateLinkScopedResourcesOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._delete_initial(
-                resource_group_name=resource_group_name,
-                scope_name=scope_name,
-                name=name,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._delete_initial(
+            resource_group_name=resource_group_name,
+            scope_name=scope_name,
+            name=name,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             if cls:
@@ -334,15 +316,7 @@ class PrivateLinkScopedResourcesOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay,  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/scopedResources/{name}'}  # type: ignore
 
     def list_by_private_link_scope(
@@ -359,8 +333,8 @@ class PrivateLinkScopedResourcesOperations(object):
         :param scope_name: The name of the Azure Monitor PrivateLinkScope resource.
         :type scope_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either ScopedResourceListResult or the result of cls(response)
-        :rtype: ~azure.core.paging.ItemPaged[~$(python-base-namespace).v2019_10_17.models.ScopedResourceListResult]
+        :return: An iterator like instance of ScopedResourceListResult or the result of cls(response)
+        :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.monitor.v2019_10_17.models.ScopedResourceListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.ScopedResourceListResult"]

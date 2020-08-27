@@ -6,14 +6,10 @@
 # Changes may cause incorrect behavior and will be lost if the code is regenerated.
 # --------------------------------------------------------------------------
 
-from typing import Any, Optional, TYPE_CHECKING
+from typing import Any, Optional
 
 from azure.mgmt.core import AsyncARMPipelineClient
 from msrest import Deserializer, Serializer
-
-if TYPE_CHECKING:
-    # pylint: disable=unused-import,ungrouped-imports
-    from azure.core.credentials_async import AsyncTokenCredential
 
 from ._configuration_async import MonitorClientConfiguration
 from .operations_async import PrivateLinkScopesOperations
@@ -28,15 +24,15 @@ class MonitorClient(object):
     """Monitor Management Client.
 
     :ivar private_link_scopes: PrivateLinkScopesOperations operations
-    :vartype private_link_scopes: $(python-base-namespace).v2019_10_17.aio.operations_async.PrivateLinkScopesOperations
+    :vartype private_link_scopes: azure.mgmt.monitor.v2019_10_17.aio.operations_async.PrivateLinkScopesOperations
     :ivar private_link_scope_operation_status: PrivateLinkScopeOperationStatusOperations operations
-    :vartype private_link_scope_operation_status: $(python-base-namespace).v2019_10_17.aio.operations_async.PrivateLinkScopeOperationStatusOperations
+    :vartype private_link_scope_operation_status: azure.mgmt.monitor.v2019_10_17.aio.operations_async.PrivateLinkScopeOperationStatusOperations
     :ivar private_link_resources: PrivateLinkResourcesOperations operations
-    :vartype private_link_resources: $(python-base-namespace).v2019_10_17.aio.operations_async.PrivateLinkResourcesOperations
+    :vartype private_link_resources: azure.mgmt.monitor.v2019_10_17.aio.operations_async.PrivateLinkResourcesOperations
     :ivar private_endpoint_connections: PrivateEndpointConnectionsOperations operations
-    :vartype private_endpoint_connections: $(python-base-namespace).v2019_10_17.aio.operations_async.PrivateEndpointConnectionsOperations
+    :vartype private_endpoint_connections: azure.mgmt.monitor.v2019_10_17.aio.operations_async.PrivateEndpointConnectionsOperations
     :ivar private_link_scoped_resources: PrivateLinkScopedResourcesOperations operations
-    :vartype private_link_scoped_resources: $(python-base-namespace).v2019_10_17.aio.operations_async.PrivateLinkScopedResourcesOperations
+    :vartype private_link_scoped_resources: azure.mgmt.monitor.v2019_10_17.aio.operations_async.PrivateLinkScopedResourcesOperations
     :param credential: Credential needed for the client to connect to Azure.
     :type credential: ~azure.core.credentials_async.AsyncTokenCredential
     :param subscription_id: The Azure subscription Id.

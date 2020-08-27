@@ -32,7 +32,7 @@ class PrivateEndpointConnectionsOperations(object):
     instantiates it for you and attaches it as an attribute.
 
     :ivar models: Alias to model classes used in this operation group.
-    :type models: ~$(python-base-namespace).v2019_10_17.models
+    :type models: ~azure.mgmt.monitor.v2019_10_17.models
     :param client: Client for service requests.
     :param config: Configuration of service client.
     :param serializer: An object model serializer.
@@ -64,8 +64,8 @@ class PrivateEndpointConnectionsOperations(object):
         :param private_endpoint_connection_name: The name of the private endpoint connection.
         :type private_endpoint_connection_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: PrivateEndpointConnection, or the result of cls(response)
-        :rtype: ~$(python-base-namespace).v2019_10_17.models.PrivateEndpointConnection
+        :return: PrivateEndpointConnection or the result of cls(response)
+        :rtype: ~azure.mgmt.monitor.v2019_10_17.models.PrivateEndpointConnection
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.PrivateEndpointConnection"]
@@ -103,7 +103,7 @@ class PrivateEndpointConnectionsOperations(object):
         deserialized = self._deserialize('PrivateEndpointConnection', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/privateEndpointConnections/{privateEndpointConnectionName}'}  # type: ignore
@@ -113,13 +113,16 @@ class PrivateEndpointConnectionsOperations(object):
         resource_group_name,  # type: str
         scope_name,  # type: str
         private_endpoint_connection_name,  # type: str
-        parameters,  # type: "models.PrivateEndpointConnection"
+        private_endpoint=None,  # type: Optional["models.PrivateEndpointProperty"]
+        private_link_service_connection_state=None,  # type: Optional["models.PrivateLinkServiceConnectionStateProperty"]
         **kwargs  # type: Any
     ):
         # type: (...) -> "models.PrivateEndpointConnection"
         cls = kwargs.pop('cls', None)  # type: ClsType["models.PrivateEndpointConnection"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
+
+        _parameters = models.PrivateEndpointConnection(private_endpoint=private_endpoint, private_link_service_connection_state=private_link_service_connection_state)
         api_version = "2019-10-17-preview"
         content_type = kwargs.pop("content_type", "application/json")
 
@@ -144,7 +147,7 @@ class PrivateEndpointConnectionsOperations(object):
 
         # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(parameters, 'PrivateEndpointConnection')
+        body_content = self._serialize.body(_parameters, 'PrivateEndpointConnection')
         body_content_kwargs['content'] = body_content
         request = self._client.put(url, query_parameters, header_parameters, **body_content_kwargs)
 
@@ -160,7 +163,7 @@ class PrivateEndpointConnectionsOperations(object):
             deserialized = self._deserialize('PrivateEndpointConnection', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _create_or_update_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/privateEndpointConnections/{privateEndpointConnectionName}'}  # type: ignore
@@ -170,7 +173,8 @@ class PrivateEndpointConnectionsOperations(object):
         resource_group_name,  # type: str
         scope_name,  # type: str
         private_endpoint_connection_name,  # type: str
-        parameters,  # type: "models.PrivateEndpointConnection"
+        private_endpoint=None,  # type: Optional["models.PrivateEndpointProperty"]
+        private_link_service_connection_state=None,  # type: Optional["models.PrivateLinkServiceConnectionStateProperty"]
         **kwargs  # type: Any
     ):
         # type: (...) -> LROPoller
@@ -182,16 +186,18 @@ class PrivateEndpointConnectionsOperations(object):
         :type scope_name: str
         :param private_endpoint_connection_name: The name of the private endpoint connection.
         :type private_endpoint_connection_name: str
-        :param parameters:
-        :type parameters: ~$(python-base-namespace).v2019_10_17.models.PrivateEndpointConnection
+        :param private_endpoint: Private endpoint which the connection belongs to.
+        :type private_endpoint: ~azure.mgmt.monitor.v2019_10_17.models.PrivateEndpointProperty
+        :param private_link_service_connection_state: Connection state of the private endpoint
+     connection.
+        :type private_link_service_connection_state: ~azure.mgmt.monitor.v2019_10_17.models.PrivateLinkServiceConnectionStateProperty
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either PrivateEndpointConnection or the result of cls(response)
-        :rtype: ~azure.core.polling.LROPoller[~$(python-base-namespace).v2019_10_17.models.PrivateEndpointConnection]
+        :return: An instance of LROPoller that returns PrivateEndpointConnection
+        :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.monitor.v2019_10_17.models.PrivateEndpointConnection]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
@@ -200,19 +206,15 @@ class PrivateEndpointConnectionsOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._create_or_update_initial(
-                resource_group_name=resource_group_name,
-                scope_name=scope_name,
-                private_endpoint_connection_name=private_endpoint_connection_name,
-                parameters=parameters,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._create_or_update_initial(
+            resource_group_name=resource_group_name,
+            scope_name=scope_name,
+            private_endpoint_connection_name=private_endpoint_connection_name,
+            private_endpoint=private_endpoint,
+            private_link_service_connection_state=private_link_service_connection_state,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('PrivateEndpointConnection', pipeline_response)
@@ -224,15 +226,7 @@ class PrivateEndpointConnectionsOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay,  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/privateEndpointConnections/{privateEndpointConnectionName}'}  # type: ignore
 
     def _delete_initial(
@@ -275,7 +269,7 @@ class PrivateEndpointConnectionsOperations(object):
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
         if cls:
-            return cls(pipeline_response, None, {})
+          return cls(pipeline_response, None, {})
 
     _delete_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/privateEndpointConnections/{privateEndpointConnectionName}'}  # type: ignore
 
@@ -296,12 +290,11 @@ class PrivateEndpointConnectionsOperations(object):
         :param private_endpoint_connection_name: The name of the private endpoint connection.
         :type private_endpoint_connection_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either None or the result of cls(response)
+        :return: An instance of LROPoller that returns None
         :rtype: ~azure.core.polling.LROPoller[None]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -311,18 +304,13 @@ class PrivateEndpointConnectionsOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._delete_initial(
-                resource_group_name=resource_group_name,
-                scope_name=scope_name,
-                private_endpoint_connection_name=private_endpoint_connection_name,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._delete_initial(
+            resource_group_name=resource_group_name,
+            scope_name=scope_name,
+            private_endpoint_connection_name=private_endpoint_connection_name,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             if cls:
@@ -331,15 +319,7 @@ class PrivateEndpointConnectionsOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay,  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/privateEndpointConnections/{privateEndpointConnectionName}'}  # type: ignore
 
     def list_by_private_link_scope(
@@ -356,8 +336,8 @@ class PrivateEndpointConnectionsOperations(object):
         :param scope_name: The name of the Azure Monitor PrivateLinkScope resource.
         :type scope_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either PrivateEndpointConnectionListResult or the result of cls(response)
-        :rtype: ~azure.core.paging.ItemPaged[~$(python-base-namespace).v2019_10_17.models.PrivateEndpointConnectionListResult]
+        :return: An iterator like instance of PrivateEndpointConnectionListResult or the result of cls(response)
+        :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.monitor.v2019_10_17.models.PrivateEndpointConnectionListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.PrivateEndpointConnectionListResult"]

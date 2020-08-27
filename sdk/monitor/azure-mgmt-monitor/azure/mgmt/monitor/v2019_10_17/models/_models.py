@@ -77,8 +77,8 @@ class AzureMonitorPrivateLinkScope(PrivateLinkScopesResource):
      able to read from it. Values will include Provisioning ,Succeeded, Canceled and Failed.
     :vartype provisioning_state: str
     :ivar private_endpoint_connections: List of private endpoint connections.
-    :vartype private_endpoint_connections: list[~$(python-base-
-     namespace).v2019_10_17.models.PrivateEndpointConnection]
+    :vartype private_endpoint_connections:
+     list[~azure.mgmt.monitor.v2019_10_17.models.PrivateEndpointConnection]
     """
 
     _validation = {
@@ -115,7 +115,7 @@ class AzureMonitorPrivateLinkScopeListResult(msrest.serialization.Model):
     All required parameters must be populated in order to send to Azure.
 
     :param value: Required. List of Azure Monitor PrivateLinkScope definitions.
-    :type value: list[~$(python-base-namespace).v2019_10_17.models.AzureMonitorPrivateLinkScope]
+    :type value: list[~azure.mgmt.monitor.v2019_10_17.models.AzureMonitorPrivateLinkScope]
     :param next_link: The URI to get the next set of Azure Monitor PrivateLinkScope definitions if
      too many PrivateLinkScopes where returned in the result set.
     :type next_link: str
@@ -202,10 +202,9 @@ class ErrorResponseCommon(ErrorResponse):
     :param message: Error message indicating why the operation failed.
     :type message: str
     :ivar details: The error details.
-    :vartype details: list[~$(python-base-namespace).v2019_10_17.models.ErrorResponseCommon]
+    :vartype details: list[~azure.mgmt.monitor.v2019_10_17.models.ErrorResponseCommon]
     :ivar additional_info: The error additional info.
-    :vartype additional_info: list[~$(python-base-
-     namespace).v2019_10_17.models.ErrorAdditionalInfo]
+    :vartype additional_info: list[~azure.mgmt.monitor.v2019_10_17.models.ErrorAdditionalInfo]
     """
 
     _validation = {
@@ -243,7 +242,7 @@ class OperationStatus(msrest.serialization.Model):
     :param status: The status of the operation.
     :type status: str
     :param error: The error detail of the operation if any.
-    :type error: ~$(python-base-namespace).v2019_10_17.models.ErrorResponseCommon
+    :type error: ~azure.mgmt.monitor.v2019_10_17.models.ErrorResponseCommon
     """
 
     _attribute_map = {
@@ -315,11 +314,11 @@ class PrivateEndpointConnection(ProxyResource):
     :ivar type: Azure resource type.
     :vartype type: str
     :param private_endpoint: Private endpoint which the connection belongs to.
-    :type private_endpoint: ~$(python-base-namespace).v2019_10_17.models.PrivateEndpointProperty
+    :type private_endpoint: ~azure.mgmt.monitor.v2019_10_17.models.PrivateEndpointProperty
     :param private_link_service_connection_state: Connection state of the private endpoint
      connection.
-    :type private_link_service_connection_state: ~$(python-base-
-     namespace).v2019_10_17.models.PrivateLinkServiceConnectionStateProperty
+    :type private_link_service_connection_state:
+     ~azure.mgmt.monitor.v2019_10_17.models.PrivateLinkServiceConnectionStateProperty
     :ivar provisioning_state: State of the private endpoint connection.
     :vartype provisioning_state: str
     """
@@ -356,7 +355,7 @@ class PrivateEndpointConnectionListResult(msrest.serialization.Model):
     Variables are only populated by the server, and will be ignored when sending a request.
 
     :ivar value: Array of results.
-    :vartype value: list[~$(python-base-namespace).v2019_10_17.models.PrivateEndpointConnection]
+    :vartype value: list[~azure.mgmt.monitor.v2019_10_17.models.PrivateEndpointConnection]
     :ivar next_link: Link to retrieve next page of results.
     :vartype next_link: str
     """
@@ -447,7 +446,7 @@ class PrivateLinkResourceListResult(msrest.serialization.Model):
     Variables are only populated by the server, and will be ignored when sending a request.
 
     :ivar value: Array of results.
-    :vartype value: list[~$(python-base-namespace).v2019_10_17.models.PrivateLinkResource]
+    :vartype value: list[~azure.mgmt.monitor.v2019_10_17.models.PrivateLinkResource]
     :ivar next_link: Link to retrieve next page of results.
     :vartype next_link: str
     """
@@ -555,7 +554,7 @@ class ScopedResourceListResult(msrest.serialization.Model):
     Variables are only populated by the server, and will be ignored when sending a request.
 
     :ivar value: Array of results.
-    :vartype value: list[~$(python-base-namespace).v2019_10_17.models.ScopedResource]
+    :vartype value: list[~azure.mgmt.monitor.v2019_10_17.models.ScopedResource]
     :ivar next_link: Link to retrieve next page of results.
     :vartype next_link: str
     """
