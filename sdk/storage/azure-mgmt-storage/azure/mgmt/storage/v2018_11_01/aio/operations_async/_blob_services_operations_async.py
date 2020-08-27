@@ -47,8 +47,7 @@ class BlobServicesOperations:
         parameters: "models.BlobServiceProperties",
         **kwargs
     ) -> "models.BlobServiceProperties":
-        """Sets the properties of a storage account’s Blob service, including properties for Storage
-        Analytics and CORS (Cross-Origin Resource Sharing) rules.
+        """Sets the properties of a storage account’s Blob service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules.
 
         :param resource_group_name: The name of the resource group within the user's subscription. The
          name is case insensitive.
@@ -61,7 +60,7 @@ class BlobServicesOperations:
          Storage Analytics and CORS (Cross-Origin Resource Sharing) rules.
         :type parameters: ~azure.mgmt.storage.v2018_11_01.models.BlobServiceProperties
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: BlobServiceProperties, or the result of cls(response)
+        :return: BlobServiceProperties or the result of cls(response)
         :rtype: ~azure.mgmt.storage.v2018_11_01.models.BlobServiceProperties
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -91,6 +90,7 @@ class BlobServicesOperations:
         header_parameters['Content-Type'] = self._serialize.header("content_type", content_type, 'str')
         header_parameters['Accept'] = 'application/json'
 
+        # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]
         body_content = self._serialize.body(parameters, 'BlobServiceProperties')
         body_content_kwargs['content'] = body_content
@@ -106,7 +106,7 @@ class BlobServicesOperations:
         deserialized = self._deserialize('BlobServiceProperties', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     set_service_properties.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/{BlobServicesName}'}  # type: ignore
@@ -117,8 +117,7 @@ class BlobServicesOperations:
         account_name: str,
         **kwargs
     ) -> "models.BlobServiceProperties":
-        """Gets the properties of a storage account’s Blob service, including properties for Storage
-        Analytics and CORS (Cross-Origin Resource Sharing) rules.
+        """Gets the properties of a storage account’s Blob service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules.
 
         :param resource_group_name: The name of the resource group within the user's subscription. The
          name is case insensitive.
@@ -128,7 +127,7 @@ class BlobServicesOperations:
          case letters only.
         :type account_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: BlobServiceProperties, or the result of cls(response)
+        :return: BlobServiceProperties or the result of cls(response)
         :rtype: ~azure.mgmt.storage.v2018_11_01.models.BlobServiceProperties
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -156,6 +155,7 @@ class BlobServicesOperations:
         header_parameters = {}  # type: Dict[str, Any]
         header_parameters['Accept'] = 'application/json'
 
+        # Construct and send request
         request = self._client.get(url, query_parameters, header_parameters)
         pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
@@ -167,7 +167,7 @@ class BlobServicesOperations:
         deserialized = self._deserialize('BlobServiceProperties', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get_service_properties.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/{BlobServicesName}'}  # type: ignore

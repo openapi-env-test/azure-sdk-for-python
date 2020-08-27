@@ -46,7 +46,7 @@ class QueueOperations:
         resource_group_name: str,
         account_name: str,
         queue_name: str,
-        queue: "models.StorageQueue",
+        metadata: Optional[Dict[str, str]] = None,
         **kwargs
     ) -> "models.StorageQueue":
         """Creates a new queue with the specified queue name, under the specified account.
@@ -63,16 +63,18 @@ class QueueOperations:
          it should begin and end with an alphanumeric character and it cannot have two consecutive
          dash(-) characters.
         :type queue_name: str
-        :param queue: Queue properties and metadata to be created with.
-        :type queue: ~azure.mgmt.storage.v2019_06_01.models.StorageQueue
+        :param metadata: A name-value pair that represents queue metadata.
+        :type metadata: dict[str, str]
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: StorageQueue, or the result of cls(response)
+        :return: StorageQueue or the result of cls(response)
         :rtype: ~azure.mgmt.storage.v2019_06_01.models.StorageQueue
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.StorageQueue"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
+
+        _queue = models.StorageQueue(metadata=metadata)
         api_version = "2019-06-01"
         content_type = kwargs.pop("content_type", "application/json")
 
@@ -95,8 +97,9 @@ class QueueOperations:
         header_parameters['Content-Type'] = self._serialize.header("content_type", content_type, 'str')
         header_parameters['Accept'] = 'application/json'
 
+        # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(queue, 'StorageQueue')
+        body_content = self._serialize.body(_queue, 'StorageQueue')
         body_content_kwargs['content'] = body_content
         request = self._client.put(url, query_parameters, header_parameters, **body_content_kwargs)
 
@@ -110,7 +113,7 @@ class QueueOperations:
         deserialized = self._deserialize('StorageQueue', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     create.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues/{queueName}'}  # type: ignore
@@ -120,7 +123,7 @@ class QueueOperations:
         resource_group_name: str,
         account_name: str,
         queue_name: str,
-        queue: "models.StorageQueue",
+        metadata: Optional[Dict[str, str]] = None,
         **kwargs
     ) -> "models.StorageQueue":
         """Creates a new queue with the specified queue name, under the specified account.
@@ -137,16 +140,18 @@ class QueueOperations:
          it should begin and end with an alphanumeric character and it cannot have two consecutive
          dash(-) characters.
         :type queue_name: str
-        :param queue: Queue properties and metadata to be created with.
-        :type queue: ~azure.mgmt.storage.v2019_06_01.models.StorageQueue
+        :param metadata: A name-value pair that represents queue metadata.
+        :type metadata: dict[str, str]
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: StorageQueue, or the result of cls(response)
+        :return: StorageQueue or the result of cls(response)
         :rtype: ~azure.mgmt.storage.v2019_06_01.models.StorageQueue
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.StorageQueue"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
+
+        _queue = models.StorageQueue(metadata=metadata)
         api_version = "2019-06-01"
         content_type = kwargs.pop("content_type", "application/json")
 
@@ -169,8 +174,9 @@ class QueueOperations:
         header_parameters['Content-Type'] = self._serialize.header("content_type", content_type, 'str')
         header_parameters['Accept'] = 'application/json'
 
+        # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(queue, 'StorageQueue')
+        body_content = self._serialize.body(_queue, 'StorageQueue')
         body_content_kwargs['content'] = body_content
         request = self._client.patch(url, query_parameters, header_parameters, **body_content_kwargs)
 
@@ -184,7 +190,7 @@ class QueueOperations:
         deserialized = self._deserialize('StorageQueue', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues/{queueName}'}  # type: ignore
@@ -211,7 +217,7 @@ class QueueOperations:
          dash(-) characters.
         :type queue_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: StorageQueue, or the result of cls(response)
+        :return: StorageQueue or the result of cls(response)
         :rtype: ~azure.mgmt.storage.v2019_06_01.models.StorageQueue
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -238,6 +244,7 @@ class QueueOperations:
         header_parameters = {}  # type: Dict[str, Any]
         header_parameters['Accept'] = 'application/json'
 
+        # Construct and send request
         request = self._client.get(url, query_parameters, header_parameters)
         pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
@@ -249,7 +256,7 @@ class QueueOperations:
         deserialized = self._deserialize('StorageQueue', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues/{queueName}'}  # type: ignore
@@ -276,7 +283,7 @@ class QueueOperations:
          dash(-) characters.
         :type queue_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: None, or the result of cls(response)
+        :return: None or the result of cls(response)
         :rtype: None
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -302,6 +309,7 @@ class QueueOperations:
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
 
+        # Construct and send request
         request = self._client.delete(url, query_parameters, header_parameters)
         pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
@@ -311,7 +319,7 @@ class QueueOperations:
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
         if cls:
-            return cls(pipeline_response, None, {})
+          return cls(pipeline_response, None, {})
 
     delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues/{queueName}'}  # type: ignore
 
@@ -339,7 +347,7 @@ class QueueOperations:
      filter will be listed.
         :type filter: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either ListQueueResource or the result of cls(response)
+        :return: An iterator like instance of ListQueueResource or the result of cls(response)
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.storage.v2019_06_01.models.ListQueueResource]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -349,10 +357,6 @@ class QueueOperations:
         api_version = "2019-06-01"
 
         def prepare_request(next_link=None):
-            # Construct headers
-            header_parameters = {}  # type: Dict[str, Any]
-            header_parameters['Accept'] = 'application/json'
-
             if not next_link:
                 # Construct URL
                 url = self.list.metadata['url']  # type: ignore
@@ -370,11 +374,15 @@ class QueueOperations:
                 if filter is not None:
                     query_parameters['$filter'] = self._serialize.query("filter", filter, 'str')
 
-                request = self._client.get(url, query_parameters, header_parameters)
             else:
                 url = next_link
                 query_parameters = {}  # type: Dict[str, Any]
-                request = self._client.get(url, query_parameters, header_parameters)
+            # Construct headers
+            header_parameters = {}  # type: Dict[str, Any]
+            header_parameters['Accept'] = 'application/json'
+
+            # Construct and send request
+            request = self._client.get(url, query_parameters, header_parameters)
             return request
 
         async def extract_data(pipeline_response):

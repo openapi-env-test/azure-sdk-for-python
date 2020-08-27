@@ -48,7 +48,7 @@ class UsagesOperations:
         """Gets the current usage count and the limit for the resources under the subscription.
 
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either UsageListResult or the result of cls(response)
+        :return: An iterator like instance of UsageListResult or the result of cls(response)
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.storage.v2018_03_01_preview.models.UsageListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -58,10 +58,6 @@ class UsagesOperations:
         api_version = "2018-03-01-preview"
 
         def prepare_request(next_link=None):
-            # Construct headers
-            header_parameters = {}  # type: Dict[str, Any]
-            header_parameters['Accept'] = 'application/json'
-
             if not next_link:
                 # Construct URL
                 url = self.list.metadata['url']  # type: ignore
@@ -73,11 +69,15 @@ class UsagesOperations:
                 query_parameters = {}  # type: Dict[str, Any]
                 query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
 
-                request = self._client.get(url, query_parameters, header_parameters)
             else:
                 url = next_link
                 query_parameters = {}  # type: Dict[str, Any]
-                request = self._client.get(url, query_parameters, header_parameters)
+            # Construct headers
+            header_parameters = {}  # type: Dict[str, Any]
+            header_parameters['Accept'] = 'application/json'
+
+            # Construct and send request
+            request = self._client.get(url, query_parameters, header_parameters)
             return request
 
         async def extract_data(pipeline_response):
@@ -109,13 +109,12 @@ class UsagesOperations:
         location: str,
         **kwargs
     ) -> AsyncIterable["models.UsageListResult"]:
-        """Gets the current usage count and the limit for the resources of the location under the
-    subscription.
+        """Gets the current usage count and the limit for the resources of the location under the subscription.
 
         :param location: The location of the Azure Storage resource.
         :type location: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either UsageListResult or the result of cls(response)
+        :return: An iterator like instance of UsageListResult or the result of cls(response)
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.storage.v2018_03_01_preview.models.UsageListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -125,10 +124,6 @@ class UsagesOperations:
         api_version = "2018-03-01-preview"
 
         def prepare_request(next_link=None):
-            # Construct headers
-            header_parameters = {}  # type: Dict[str, Any]
-            header_parameters['Accept'] = 'application/json'
-
             if not next_link:
                 # Construct URL
                 url = self.list_by_location.metadata['url']  # type: ignore
@@ -141,11 +136,15 @@ class UsagesOperations:
                 query_parameters = {}  # type: Dict[str, Any]
                 query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
 
-                request = self._client.get(url, query_parameters, header_parameters)
             else:
                 url = next_link
                 query_parameters = {}  # type: Dict[str, Any]
-                request = self._client.get(url, query_parameters, header_parameters)
+            # Construct headers
+            header_parameters = {}  # type: Dict[str, Any]
+            header_parameters['Accept'] = 'application/json'
+
+            # Construct and send request
+            request = self._client.get(url, query_parameters, header_parameters)
             return request
 
         async def extract_data(pipeline_response):

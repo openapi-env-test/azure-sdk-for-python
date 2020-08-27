@@ -57,7 +57,7 @@ class PrivateEndpointConnectionsOperations:
      case letters only.
         :type account_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either PrivateEndpointConnectionListResult or the result of cls(response)
+        :return: An iterator like instance of PrivateEndpointConnectionListResult or the result of cls(response)
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.storage.v2019_06_01.models.PrivateEndpointConnectionListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -67,10 +67,6 @@ class PrivateEndpointConnectionsOperations:
         api_version = "2019-06-01"
 
         def prepare_request(next_link=None):
-            # Construct headers
-            header_parameters = {}  # type: Dict[str, Any]
-            header_parameters['Accept'] = 'application/json'
-
             if not next_link:
                 # Construct URL
                 url = self.list.metadata['url']  # type: ignore
@@ -84,11 +80,15 @@ class PrivateEndpointConnectionsOperations:
                 query_parameters = {}  # type: Dict[str, Any]
                 query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
 
-                request = self._client.get(url, query_parameters, header_parameters)
             else:
                 url = next_link
                 query_parameters = {}  # type: Dict[str, Any]
-                request = self._client.get(url, query_parameters, header_parameters)
+            # Construct headers
+            header_parameters = {}  # type: Dict[str, Any]
+            header_parameters['Accept'] = 'application/json'
+
+            # Construct and send request
+            request = self._client.get(url, query_parameters, header_parameters)
             return request
 
         async def extract_data(pipeline_response):
@@ -135,7 +135,7 @@ class PrivateEndpointConnectionsOperations:
          with the Azure resource.
         :type private_endpoint_connection_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: PrivateEndpointConnection, or the result of cls(response)
+        :return: PrivateEndpointConnection or the result of cls(response)
         :rtype: ~azure.mgmt.storage.v2019_06_01.models.PrivateEndpointConnection
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -162,6 +162,7 @@ class PrivateEndpointConnectionsOperations:
         header_parameters = {}  # type: Dict[str, Any]
         header_parameters['Accept'] = 'application/json'
 
+        # Construct and send request
         request = self._client.get(url, query_parameters, header_parameters)
         pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
@@ -174,7 +175,7 @@ class PrivateEndpointConnectionsOperations:
         deserialized = self._deserialize('PrivateEndpointConnection', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}'}  # type: ignore
@@ -184,7 +185,8 @@ class PrivateEndpointConnectionsOperations:
         resource_group_name: str,
         account_name: str,
         private_endpoint_connection_name: str,
-        properties: "models.PrivateEndpointConnection",
+        private_endpoint: Optional["models.PrivateEndpoint"] = None,
+        private_link_service_connection_state: Optional["models.PrivateLinkServiceConnectionState"] = None,
         **kwargs
     ) -> "models.PrivateEndpointConnection":
         """Update the state of specified private endpoint connection associated with the storage account.
@@ -199,16 +201,21 @@ class PrivateEndpointConnectionsOperations:
         :param private_endpoint_connection_name: The name of the private endpoint connection associated
          with the Azure resource.
         :type private_endpoint_connection_name: str
-        :param properties: The private endpoint connection properties.
-        :type properties: ~azure.mgmt.storage.v2019_06_01.models.PrivateEndpointConnection
+        :param private_endpoint: The resource of private end point.
+        :type private_endpoint: ~azure.mgmt.storage.v2019_06_01.models.PrivateEndpoint
+        :param private_link_service_connection_state: A collection of information about the state of
+         the connection between service consumer and provider.
+        :type private_link_service_connection_state: ~azure.mgmt.storage.v2019_06_01.models.PrivateLinkServiceConnectionState
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: PrivateEndpointConnection, or the result of cls(response)
+        :return: PrivateEndpointConnection or the result of cls(response)
         :rtype: ~azure.mgmt.storage.v2019_06_01.models.PrivateEndpointConnection
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.PrivateEndpointConnection"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
+
+        _properties = models.PrivateEndpointConnection(private_endpoint=private_endpoint, private_link_service_connection_state=private_link_service_connection_state)
         api_version = "2019-06-01"
         content_type = kwargs.pop("content_type", "application/json")
 
@@ -231,8 +238,9 @@ class PrivateEndpointConnectionsOperations:
         header_parameters['Content-Type'] = self._serialize.header("content_type", content_type, 'str')
         header_parameters['Accept'] = 'application/json'
 
+        # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(properties, 'PrivateEndpointConnection')
+        body_content = self._serialize.body(_properties, 'PrivateEndpointConnection')
         body_content_kwargs['content'] = body_content
         request = self._client.put(url, query_parameters, header_parameters, **body_content_kwargs)
 
@@ -247,7 +255,7 @@ class PrivateEndpointConnectionsOperations:
         deserialized = self._deserialize('PrivateEndpointConnection', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     put.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}'}  # type: ignore
@@ -272,7 +280,7 @@ class PrivateEndpointConnectionsOperations:
          with the Azure resource.
         :type private_endpoint_connection_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: None, or the result of cls(response)
+        :return: None or the result of cls(response)
         :rtype: None
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -298,6 +306,7 @@ class PrivateEndpointConnectionsOperations:
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
 
+        # Construct and send request
         request = self._client.delete(url, query_parameters, header_parameters)
         pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
@@ -308,6 +317,6 @@ class PrivateEndpointConnectionsOperations:
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         if cls:
-            return cls(pipeline_response, None, {})
+          return cls(pipeline_response, None, {})
 
     delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}'}  # type: ignore

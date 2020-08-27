@@ -67,7 +67,7 @@ class TableOperations(object):
          with a numeric character.
         :type table_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: Table, or the result of cls(response)
+        :return: Table or the result of cls(response)
         :rtype: ~azure.mgmt.storage.v2019_06_01.models.Table
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -94,6 +94,7 @@ class TableOperations(object):
         header_parameters = {}  # type: Dict[str, Any]
         header_parameters['Accept'] = 'application/json'
 
+        # Construct and send request
         request = self._client.put(url, query_parameters, header_parameters)
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
@@ -105,7 +106,7 @@ class TableOperations(object):
         deserialized = self._deserialize('Table', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     create.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/tableServices/default/tables/{tableName}'}  # type: ignore
@@ -132,7 +133,7 @@ class TableOperations(object):
          with a numeric character.
         :type table_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: Table, or the result of cls(response)
+        :return: Table or the result of cls(response)
         :rtype: ~azure.mgmt.storage.v2019_06_01.models.Table
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -159,6 +160,7 @@ class TableOperations(object):
         header_parameters = {}  # type: Dict[str, Any]
         header_parameters['Accept'] = 'application/json'
 
+        # Construct and send request
         request = self._client.patch(url, query_parameters, header_parameters)
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
@@ -170,7 +172,7 @@ class TableOperations(object):
         deserialized = self._deserialize('Table', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/tableServices/default/tables/{tableName}'}  # type: ignore
@@ -197,7 +199,7 @@ class TableOperations(object):
          with a numeric character.
         :type table_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: Table, or the result of cls(response)
+        :return: Table or the result of cls(response)
         :rtype: ~azure.mgmt.storage.v2019_06_01.models.Table
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -224,6 +226,7 @@ class TableOperations(object):
         header_parameters = {}  # type: Dict[str, Any]
         header_parameters['Accept'] = 'application/json'
 
+        # Construct and send request
         request = self._client.get(url, query_parameters, header_parameters)
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
@@ -235,7 +238,7 @@ class TableOperations(object):
         deserialized = self._deserialize('Table', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/tableServices/default/tables/{tableName}'}  # type: ignore
@@ -262,7 +265,7 @@ class TableOperations(object):
          with a numeric character.
         :type table_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: None, or the result of cls(response)
+        :return: None or the result of cls(response)
         :rtype: None
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -288,6 +291,7 @@ class TableOperations(object):
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
 
+        # Construct and send request
         request = self._client.delete(url, query_parameters, header_parameters)
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
@@ -297,7 +301,7 @@ class TableOperations(object):
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
         if cls:
-            return cls(pipeline_response, None, {})
+          return cls(pipeline_response, None, {})
 
     delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/tableServices/default/tables/{tableName}'}  # type: ignore
 
@@ -318,7 +322,7 @@ class TableOperations(object):
      case letters only.
         :type account_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either ListTableResource or the result of cls(response)
+        :return: An iterator like instance of ListTableResource or the result of cls(response)
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.storage.v2019_06_01.models.ListTableResource]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -328,10 +332,6 @@ class TableOperations(object):
         api_version = "2019-06-01"
 
         def prepare_request(next_link=None):
-            # Construct headers
-            header_parameters = {}  # type: Dict[str, Any]
-            header_parameters['Accept'] = 'application/json'
-
             if not next_link:
                 # Construct URL
                 url = self.list.metadata['url']  # type: ignore
@@ -345,11 +345,15 @@ class TableOperations(object):
                 query_parameters = {}  # type: Dict[str, Any]
                 query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
 
-                request = self._client.get(url, query_parameters, header_parameters)
             else:
                 url = next_link
                 query_parameters = {}  # type: Dict[str, Any]
-                request = self._client.get(url, query_parameters, header_parameters)
+            # Construct headers
+            header_parameters = {}  # type: Dict[str, Any]
+            header_parameters['Accept'] = 'application/json'
+
+            # Construct and send request
+            request = self._client.get(url, query_parameters, header_parameters)
             return request
 
         def extract_data(pipeline_response):

@@ -15,8 +15,6 @@ if TYPE_CHECKING:
     # pylint: disable=unused-import,ungrouped-imports
     from typing import Any, Optional
 
-    from azure.core.credentials import TokenCredential
-
 from ._configuration import StorageManagementConfiguration
 from .operations import StorageAccountsOperations
 from .operations import UsageOperations

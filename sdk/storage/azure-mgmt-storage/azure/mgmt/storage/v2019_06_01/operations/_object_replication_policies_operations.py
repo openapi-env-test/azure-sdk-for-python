@@ -62,7 +62,7 @@ class ObjectReplicationPoliciesOperations(object):
      case letters only.
         :type account_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either ObjectReplicationPolicies or the result of cls(response)
+        :return: An iterator like instance of ObjectReplicationPolicies or the result of cls(response)
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.storage.v2019_06_01.models.ObjectReplicationPolicies]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -72,10 +72,6 @@ class ObjectReplicationPoliciesOperations(object):
         api_version = "2019-06-01"
 
         def prepare_request(next_link=None):
-            # Construct headers
-            header_parameters = {}  # type: Dict[str, Any]
-            header_parameters['Accept'] = 'application/json'
-
             if not next_link:
                 # Construct URL
                 url = self.list.metadata['url']  # type: ignore
@@ -89,11 +85,15 @@ class ObjectReplicationPoliciesOperations(object):
                 query_parameters = {}  # type: Dict[str, Any]
                 query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
 
-                request = self._client.get(url, query_parameters, header_parameters)
             else:
                 url = next_link
                 query_parameters = {}  # type: Dict[str, Any]
-                request = self._client.get(url, query_parameters, header_parameters)
+            # Construct headers
+            header_parameters = {}  # type: Dict[str, Any]
+            header_parameters['Accept'] = 'application/json'
+
+            # Construct and send request
+            request = self._client.get(url, query_parameters, header_parameters)
             return request
 
         def extract_data(pipeline_response):
@@ -142,7 +142,7 @@ class ObjectReplicationPoliciesOperations(object):
          policy ID is unknown.
         :type object_replication_policy_id: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ObjectReplicationPolicy, or the result of cls(response)
+        :return: ObjectReplicationPolicy or the result of cls(response)
         :rtype: ~azure.mgmt.storage.v2019_06_01.models.ObjectReplicationPolicy
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -169,6 +169,7 @@ class ObjectReplicationPoliciesOperations(object):
         header_parameters = {}  # type: Dict[str, Any]
         header_parameters['Accept'] = 'application/json'
 
+        # Construct and send request
         request = self._client.get(url, query_parameters, header_parameters)
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
@@ -181,7 +182,7 @@ class ObjectReplicationPoliciesOperations(object):
         deserialized = self._deserialize('ObjectReplicationPolicy', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/objectReplicationPolicies/{objectReplicationPolicyId}'}  # type: ignore
@@ -211,7 +212,7 @@ class ObjectReplicationPoliciesOperations(object):
          will be created if absent.
         :type properties: ~azure.mgmt.storage.v2019_06_01.models.ObjectReplicationPolicy
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ObjectReplicationPolicy, or the result of cls(response)
+        :return: ObjectReplicationPolicy or the result of cls(response)
         :rtype: ~azure.mgmt.storage.v2019_06_01.models.ObjectReplicationPolicy
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -240,6 +241,7 @@ class ObjectReplicationPoliciesOperations(object):
         header_parameters['Content-Type'] = self._serialize.header("content_type", content_type, 'str')
         header_parameters['Accept'] = 'application/json'
 
+        # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]
         body_content = self._serialize.body(properties, 'ObjectReplicationPolicy')
         body_content_kwargs['content'] = body_content
@@ -256,7 +258,7 @@ class ObjectReplicationPoliciesOperations(object):
         deserialized = self._deserialize('ObjectReplicationPolicy', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/objectReplicationPolicies/{objectReplicationPolicyId}'}  # type: ignore
@@ -282,7 +284,7 @@ class ObjectReplicationPoliciesOperations(object):
          policy ID is unknown.
         :type object_replication_policy_id: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: None, or the result of cls(response)
+        :return: None or the result of cls(response)
         :rtype: None
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -308,6 +310,7 @@ class ObjectReplicationPoliciesOperations(object):
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
 
+        # Construct and send request
         request = self._client.delete(url, query_parameters, header_parameters)
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
@@ -318,6 +321,6 @@ class ObjectReplicationPoliciesOperations(object):
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         if cls:
-            return cls(pipeline_response, None, {})
+          return cls(pipeline_response, None, {})
 
     delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/objectReplicationPolicies/{objectReplicationPolicyId}'}  # type: ignore

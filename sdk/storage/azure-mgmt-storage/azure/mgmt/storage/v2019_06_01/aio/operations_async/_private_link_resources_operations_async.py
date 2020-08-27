@@ -56,7 +56,7 @@ class PrivateLinkResourcesOperations:
          case letters only.
         :type account_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: PrivateLinkResourceListResult, or the result of cls(response)
+        :return: PrivateLinkResourceListResult or the result of cls(response)
         :rtype: ~azure.mgmt.storage.v2019_06_01.models.PrivateLinkResourceListResult
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -82,6 +82,7 @@ class PrivateLinkResourcesOperations:
         header_parameters = {}  # type: Dict[str, Any]
         header_parameters['Accept'] = 'application/json'
 
+        # Construct and send request
         request = self._client.get(url, query_parameters, header_parameters)
         pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
@@ -93,7 +94,7 @@ class PrivateLinkResourcesOperations:
         deserialized = self._deserialize('PrivateLinkResourceListResult', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     list_by_storage_account.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/privateLinkResources'}  # type: ignore

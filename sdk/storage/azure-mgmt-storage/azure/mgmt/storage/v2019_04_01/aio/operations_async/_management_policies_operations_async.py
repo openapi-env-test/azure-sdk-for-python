@@ -56,7 +56,7 @@ class ManagementPoliciesOperations:
          case letters only.
         :type account_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ManagementPolicy, or the result of cls(response)
+        :return: ManagementPolicy or the result of cls(response)
         :rtype: ~azure.mgmt.storage.v2019_04_01.models.ManagementPolicy
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -84,6 +84,7 @@ class ManagementPoliciesOperations:
         header_parameters = {}  # type: Dict[str, Any]
         header_parameters['Accept'] = 'application/json'
 
+        # Construct and send request
         request = self._client.get(url, query_parameters, header_parameters)
         pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
@@ -95,7 +96,7 @@ class ManagementPoliciesOperations:
         deserialized = self._deserialize('ManagementPolicy', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/managementPolicies/{managementPolicyName}'}  # type: ignore
@@ -104,7 +105,7 @@ class ManagementPoliciesOperations:
         self,
         resource_group_name: str,
         account_name: str,
-        properties: "models.ManagementPolicy",
+        policy: Optional["models.ManagementPolicySchema"] = None,
         **kwargs
     ) -> "models.ManagementPolicy":
         """Sets the managementpolicy to the specified storage account.
@@ -116,16 +117,19 @@ class ManagementPoliciesOperations:
          Storage account names must be between 3 and 24 characters in length and use numbers and lower-
          case letters only.
         :type account_name: str
-        :param properties: The ManagementPolicy set to a storage account.
-        :type properties: ~azure.mgmt.storage.v2019_04_01.models.ManagementPolicy
+        :param policy: The Storage Account ManagementPolicy, in JSON format. See more details in:
+         https://docs.microsoft.com/en-us/azure/storage/common/storage-lifecycle-managment-concepts.
+        :type policy: ~azure.mgmt.storage.v2019_04_01.models.ManagementPolicySchema
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ManagementPolicy, or the result of cls(response)
+        :return: ManagementPolicy or the result of cls(response)
         :rtype: ~azure.mgmt.storage.v2019_04_01.models.ManagementPolicy
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.ManagementPolicy"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
+
+        _properties = models.ManagementPolicy(policy=policy)
         api_version = "2019-04-01"
         management_policy_name = "default"
         content_type = kwargs.pop("content_type", "application/json")
@@ -149,8 +153,9 @@ class ManagementPoliciesOperations:
         header_parameters['Content-Type'] = self._serialize.header("content_type", content_type, 'str')
         header_parameters['Accept'] = 'application/json'
 
+        # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(properties, 'ManagementPolicy')
+        body_content = self._serialize.body(_properties, 'ManagementPolicy')
         body_content_kwargs['content'] = body_content
         request = self._client.put(url, query_parameters, header_parameters, **body_content_kwargs)
 
@@ -164,7 +169,7 @@ class ManagementPoliciesOperations:
         deserialized = self._deserialize('ManagementPolicy', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/managementPolicies/{managementPolicyName}'}  # type: ignore
@@ -185,7 +190,7 @@ class ManagementPoliciesOperations:
          case letters only.
         :type account_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: None, or the result of cls(response)
+        :return: None or the result of cls(response)
         :rtype: None
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -212,6 +217,7 @@ class ManagementPoliciesOperations:
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
 
+        # Construct and send request
         request = self._client.delete(url, query_parameters, header_parameters)
         pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
@@ -221,6 +227,6 @@ class ManagementPoliciesOperations:
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
         if cls:
-            return cls(pipeline_response, None, {})
+          return cls(pipeline_response, None, {})
 
     delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/managementPolicies/{managementPolicyName}'}  # type: ignore

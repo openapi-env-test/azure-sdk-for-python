@@ -49,9 +49,7 @@ class EncryptionScopesOperations:
         encryption_scope: "models.EncryptionScope",
         **kwargs
     ) -> "models.EncryptionScope":
-        """Synchronously creates or updates an encryption scope under the specified storage account. If an
-        encryption scope is already created and a subsequent request is issued with different
-        properties, the encryption scope properties will be updated per the specified request.
+        """Synchronously creates or updates an encryption scope under the specified storage account. If an encryption scope is already created and a subsequent request is issued with different properties, the encryption scope properties will be updated per the specified request.
 
         :param resource_group_name: The name of the resource group within the user's subscription. The
          name is case insensitive.
@@ -68,7 +66,7 @@ class EncryptionScopesOperations:
         :param encryption_scope: Encryption scope properties to be used for the create or update.
         :type encryption_scope: ~azure.mgmt.storage.v2019_06_01.models.EncryptionScope
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: EncryptionScope, or the result of cls(response)
+        :return: EncryptionScope or the result of cls(response)
         :rtype: ~azure.mgmt.storage.v2019_06_01.models.EncryptionScope
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -97,6 +95,7 @@ class EncryptionScopesOperations:
         header_parameters['Content-Type'] = self._serialize.header("content_type", content_type, 'str')
         header_parameters['Accept'] = 'application/json'
 
+        # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]
         body_content = self._serialize.body(encryption_scope, 'EncryptionScope')
         body_content_kwargs['content'] = body_content
@@ -110,6 +109,7 @@ class EncryptionScopesOperations:
             error = self._deserialize(models.ErrorResponse, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
+        deserialized = None
         if response.status_code == 200:
             deserialized = self._deserialize('EncryptionScope', pipeline_response)
 
@@ -117,7 +117,7 @@ class EncryptionScopesOperations:
             deserialized = self._deserialize('EncryptionScope', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     put.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/encryptionScopes/{encryptionScopeName}'}  # type: ignore
@@ -130,8 +130,7 @@ class EncryptionScopesOperations:
         encryption_scope: "models.EncryptionScope",
         **kwargs
     ) -> "models.EncryptionScope":
-        """Update encryption scope properties as specified in the request body. Update fails if the
-        specified encryption scope does not already exist.
+        """Update encryption scope properties as specified in the request body. Update fails if the specified encryption scope does not already exist.
 
         :param resource_group_name: The name of the resource group within the user's subscription. The
          name is case insensitive.
@@ -148,7 +147,7 @@ class EncryptionScopesOperations:
         :param encryption_scope: Encryption scope properties to be used for the update.
         :type encryption_scope: ~azure.mgmt.storage.v2019_06_01.models.EncryptionScope
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: EncryptionScope, or the result of cls(response)
+        :return: EncryptionScope or the result of cls(response)
         :rtype: ~azure.mgmt.storage.v2019_06_01.models.EncryptionScope
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -177,6 +176,7 @@ class EncryptionScopesOperations:
         header_parameters['Content-Type'] = self._serialize.header("content_type", content_type, 'str')
         header_parameters['Accept'] = 'application/json'
 
+        # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]
         body_content = self._serialize.body(encryption_scope, 'EncryptionScope')
         body_content_kwargs['content'] = body_content
@@ -193,7 +193,7 @@ class EncryptionScopesOperations:
         deserialized = self._deserialize('EncryptionScope', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     patch.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/encryptionScopes/{encryptionScopeName}'}  # type: ignore
@@ -220,7 +220,7 @@ class EncryptionScopesOperations:
          followed by a letter or number.
         :type encryption_scope_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: EncryptionScope, or the result of cls(response)
+        :return: EncryptionScope or the result of cls(response)
         :rtype: ~azure.mgmt.storage.v2019_06_01.models.EncryptionScope
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -247,6 +247,7 @@ class EncryptionScopesOperations:
         header_parameters = {}  # type: Dict[str, Any]
         header_parameters['Accept'] = 'application/json'
 
+        # Construct and send request
         request = self._client.get(url, query_parameters, header_parameters)
         pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
@@ -259,7 +260,7 @@ class EncryptionScopesOperations:
         deserialized = self._deserialize('EncryptionScope', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/encryptionScopes/{encryptionScopeName}'}  # type: ignore
@@ -280,7 +281,7 @@ class EncryptionScopesOperations:
      case letters only.
         :type account_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either EncryptionScopeListResult or the result of cls(response)
+        :return: An iterator like instance of EncryptionScopeListResult or the result of cls(response)
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.storage.v2019_06_01.models.EncryptionScopeListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -290,10 +291,6 @@ class EncryptionScopesOperations:
         api_version = "2019-06-01"
 
         def prepare_request(next_link=None):
-            # Construct headers
-            header_parameters = {}  # type: Dict[str, Any]
-            header_parameters['Accept'] = 'application/json'
-
             if not next_link:
                 # Construct URL
                 url = self.list.metadata['url']  # type: ignore
@@ -307,11 +304,15 @@ class EncryptionScopesOperations:
                 query_parameters = {}  # type: Dict[str, Any]
                 query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
 
-                request = self._client.get(url, query_parameters, header_parameters)
             else:
                 url = next_link
                 query_parameters = {}  # type: Dict[str, Any]
-                request = self._client.get(url, query_parameters, header_parameters)
+            # Construct headers
+            header_parameters = {}  # type: Dict[str, Any]
+            header_parameters['Accept'] = 'application/json'
+
+            # Construct and send request
+            request = self._client.get(url, query_parameters, header_parameters)
             return request
 
         async def extract_data(pipeline_response):

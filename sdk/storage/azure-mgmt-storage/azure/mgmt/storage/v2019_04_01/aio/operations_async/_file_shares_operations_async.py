@@ -68,7 +68,7 @@ class FileSharesOperations:
      listed.
         :type filter: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either FileShareItems or the result of cls(response)
+        :return: An iterator like instance of FileShareItems or the result of cls(response)
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.storage.v2019_04_01.models.FileShareItems]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -78,10 +78,6 @@ class FileSharesOperations:
         api_version = "2019-04-01"
 
         def prepare_request(next_link=None):
-            # Construct headers
-            header_parameters = {}  # type: Dict[str, Any]
-            header_parameters['Accept'] = 'application/json'
-
             if not next_link:
                 # Construct URL
                 url = self.list.metadata['url']  # type: ignore
@@ -101,11 +97,15 @@ class FileSharesOperations:
                 if filter is not None:
                     query_parameters['$filter'] = self._serialize.query("filter", filter, 'str')
 
-                request = self._client.get(url, query_parameters, header_parameters)
             else:
                 url = next_link
                 query_parameters = {}  # type: Dict[str, Any]
-                request = self._client.get(url, query_parameters, header_parameters)
+            # Construct headers
+            header_parameters = {}  # type: Dict[str, Any]
+            header_parameters['Accept'] = 'application/json'
+
+            # Construct and send request
+            request = self._client.get(url, query_parameters, header_parameters)
             return request
 
         async def extract_data(pipeline_response):
@@ -137,12 +137,11 @@ class FileSharesOperations:
         resource_group_name: str,
         account_name: str,
         share_name: str,
-        file_share: "models.FileShare",
+        metadata: Optional[Dict[str, str]] = None,
+        share_quota: Optional[int] = None,
         **kwargs
     ) -> "models.FileShare":
-        """Creates a new share under the specified account as described by request body. The share
-        resource includes metadata and properties for that share. It does not include a list of the
-        files contained by the share.
+        """Creates a new share under the specified account as described by request body. The share resource includes metadata and properties for that share. It does not include a list of the files contained by the share.
 
         :param resource_group_name: The name of the resource group within the user's subscription. The
          name is case insensitive.
@@ -156,16 +155,21 @@ class FileSharesOperations:
          dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter
          or number.
         :type share_name: str
-        :param file_share: Properties of the file share to create.
-        :type file_share: ~azure.mgmt.storage.v2019_04_01.models.FileShare
+        :param metadata: A name-value pair to associate with the share as metadata.
+        :type metadata: dict[str, str]
+        :param share_quota: The maximum size of the share, in gigabytes. Must be greater than 0, and
+         less than or equal to 5TB (5120).
+        :type share_quota: int
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: FileShare, or the result of cls(response)
+        :return: FileShare or the result of cls(response)
         :rtype: ~azure.mgmt.storage.v2019_04_01.models.FileShare
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.FileShare"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
+
+        _file_share = models.FileShare(metadata=metadata, share_quota=share_quota)
         api_version = "2019-04-01"
         content_type = kwargs.pop("content_type", "application/json")
 
@@ -188,8 +192,9 @@ class FileSharesOperations:
         header_parameters['Content-Type'] = self._serialize.header("content_type", content_type, 'str')
         header_parameters['Accept'] = 'application/json'
 
+        # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(file_share, 'FileShare')
+        body_content = self._serialize.body(_file_share, 'FileShare')
         body_content_kwargs['content'] = body_content
         request = self._client.put(url, query_parameters, header_parameters, **body_content_kwargs)
 
@@ -200,6 +205,7 @@ class FileSharesOperations:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
+        deserialized = None
         if response.status_code == 200:
             deserialized = self._deserialize('FileShare', pipeline_response)
 
@@ -207,7 +213,7 @@ class FileSharesOperations:
             deserialized = self._deserialize('FileShare', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     create.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/fileServices/default/shares/{shareName}'}  # type: ignore
@@ -217,11 +223,11 @@ class FileSharesOperations:
         resource_group_name: str,
         account_name: str,
         share_name: str,
-        file_share: "models.FileShare",
+        metadata: Optional[Dict[str, str]] = None,
+        share_quota: Optional[int] = None,
         **kwargs
     ) -> "models.FileShare":
-        """Updates share properties as specified in request body. Properties not mentioned in the request
-        will not be changed. Update fails if the specified share does not already exist.
+        """Updates share properties as specified in request body. Properties not mentioned in the request will not be changed. Update fails if the specified share does not already exist.
 
         :param resource_group_name: The name of the resource group within the user's subscription. The
          name is case insensitive.
@@ -235,16 +241,21 @@ class FileSharesOperations:
          dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter
          or number.
         :type share_name: str
-        :param file_share: Properties to update for the file share.
-        :type file_share: ~azure.mgmt.storage.v2019_04_01.models.FileShare
+        :param metadata: A name-value pair to associate with the share as metadata.
+        :type metadata: dict[str, str]
+        :param share_quota: The maximum size of the share, in gigabytes. Must be greater than 0, and
+         less than or equal to 5TB (5120).
+        :type share_quota: int
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: FileShare, or the result of cls(response)
+        :return: FileShare or the result of cls(response)
         :rtype: ~azure.mgmt.storage.v2019_04_01.models.FileShare
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.FileShare"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
+
+        _file_share = models.FileShare(metadata=metadata, share_quota=share_quota)
         api_version = "2019-04-01"
         content_type = kwargs.pop("content_type", "application/json")
 
@@ -267,8 +278,9 @@ class FileSharesOperations:
         header_parameters['Content-Type'] = self._serialize.header("content_type", content_type, 'str')
         header_parameters['Accept'] = 'application/json'
 
+        # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(file_share, 'FileShare')
+        body_content = self._serialize.body(_file_share, 'FileShare')
         body_content_kwargs['content'] = body_content
         request = self._client.patch(url, query_parameters, header_parameters, **body_content_kwargs)
 
@@ -282,7 +294,7 @@ class FileSharesOperations:
         deserialized = self._deserialize('FileShare', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/fileServices/default/shares/{shareName}'}  # type: ignore
@@ -309,7 +321,7 @@ class FileSharesOperations:
          or number.
         :type share_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: FileShare, or the result of cls(response)
+        :return: FileShare or the result of cls(response)
         :rtype: ~azure.mgmt.storage.v2019_04_01.models.FileShare
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -336,6 +348,7 @@ class FileSharesOperations:
         header_parameters = {}  # type: Dict[str, Any]
         header_parameters['Accept'] = 'application/json'
 
+        # Construct and send request
         request = self._client.get(url, query_parameters, header_parameters)
         pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
@@ -347,7 +360,7 @@ class FileSharesOperations:
         deserialized = self._deserialize('FileShare', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/fileServices/default/shares/{shareName}'}  # type: ignore
@@ -374,7 +387,7 @@ class FileSharesOperations:
          or number.
         :type share_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: None, or the result of cls(response)
+        :return: None or the result of cls(response)
         :rtype: None
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -400,6 +413,7 @@ class FileSharesOperations:
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
 
+        # Construct and send request
         request = self._client.delete(url, query_parameters, header_parameters)
         pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
@@ -409,6 +423,6 @@ class FileSharesOperations:
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
         if cls:
-            return cls(pipeline_response, None, {})
+          return cls(pipeline_response, None, {})
 
     delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/fileServices/default/shares/{shareName}'}  # type: ignore

@@ -61,7 +61,7 @@ class FileServicesOperations(object):
          case letters only.
         :type account_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: FileServiceItems, or the result of cls(response)
+        :return: FileServiceItems or the result of cls(response)
         :rtype: ~azure.mgmt.storage.v2019_06_01.models.FileServiceItems
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -87,6 +87,7 @@ class FileServicesOperations(object):
         header_parameters = {}  # type: Dict[str, Any]
         header_parameters['Accept'] = 'application/json'
 
+        # Construct and send request
         request = self._client.get(url, query_parameters, header_parameters)
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
@@ -98,7 +99,7 @@ class FileServicesOperations(object):
         deserialized = self._deserialize('FileServiceItems', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     list.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/fileServices'}  # type: ignore
@@ -107,12 +108,12 @@ class FileServicesOperations(object):
         self,
         resource_group_name,  # type: str
         account_name,  # type: str
-        parameters,  # type: "models.FileServiceProperties"
+        cors=None,  # type: Optional["models.CorsRules"]
+        share_delete_retention_policy=None,  # type: Optional["models.DeleteRetentionPolicy"]
         **kwargs  # type: Any
     ):
         # type: (...) -> "models.FileServiceProperties"
-        """Sets the properties of file services in storage accounts, including CORS (Cross-Origin Resource
-        Sharing) rules.
+        """Sets the properties of file services in storage accounts, including CORS (Cross-Origin Resource Sharing) rules.
 
         :param resource_group_name: The name of the resource group within the user's subscription. The
          name is case insensitive.
@@ -121,17 +122,22 @@ class FileServicesOperations(object):
          Storage account names must be between 3 and 24 characters in length and use numbers and lower-
          case letters only.
         :type account_name: str
-        :param parameters: The properties of file services in storage accounts, including CORS (Cross-
-         Origin Resource Sharing) rules.
-        :type parameters: ~azure.mgmt.storage.v2019_06_01.models.FileServiceProperties
+        :param cors: Specifies CORS rules for the File service. You can include up to five CorsRule
+         elements in the request. If no CorsRule elements are included in the request body, all CORS
+         rules will be deleted, and CORS will be disabled for the File service.
+        :type cors: ~azure.mgmt.storage.v2019_06_01.models.CorsRules
+        :param share_delete_retention_policy: The file service properties for share soft delete.
+        :type share_delete_retention_policy: ~azure.mgmt.storage.v2019_06_01.models.DeleteRetentionPolicy
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: FileServiceProperties, or the result of cls(response)
+        :return: FileServiceProperties or the result of cls(response)
         :rtype: ~azure.mgmt.storage.v2019_06_01.models.FileServiceProperties
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.FileServiceProperties"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
+
+        _parameters = models.FileServiceProperties(cors=cors, share_delete_retention_policy=share_delete_retention_policy)
         api_version = "2019-06-01"
         file_services_name = "default"
         content_type = kwargs.pop("content_type", "application/json")
@@ -155,8 +161,9 @@ class FileServicesOperations(object):
         header_parameters['Content-Type'] = self._serialize.header("content_type", content_type, 'str')
         header_parameters['Accept'] = 'application/json'
 
+        # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(parameters, 'FileServiceProperties')
+        body_content = self._serialize.body(_parameters, 'FileServiceProperties')
         body_content_kwargs['content'] = body_content
         request = self._client.put(url, query_parameters, header_parameters, **body_content_kwargs)
 
@@ -170,7 +177,7 @@ class FileServicesOperations(object):
         deserialized = self._deserialize('FileServiceProperties', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     set_service_properties.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/fileServices/{FileServicesName}'}  # type: ignore
@@ -182,8 +189,7 @@ class FileServicesOperations(object):
         **kwargs  # type: Any
     ):
         # type: (...) -> "models.FileServiceProperties"
-        """Gets the properties of file services in storage accounts, including CORS (Cross-Origin Resource
-        Sharing) rules.
+        """Gets the properties of file services in storage accounts, including CORS (Cross-Origin Resource Sharing) rules.
 
         :param resource_group_name: The name of the resource group within the user's subscription. The
          name is case insensitive.
@@ -193,7 +199,7 @@ class FileServicesOperations(object):
          case letters only.
         :type account_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: FileServiceProperties, or the result of cls(response)
+        :return: FileServiceProperties or the result of cls(response)
         :rtype: ~azure.mgmt.storage.v2019_06_01.models.FileServiceProperties
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -221,6 +227,7 @@ class FileServicesOperations(object):
         header_parameters = {}  # type: Dict[str, Any]
         header_parameters['Accept'] = 'application/json'
 
+        # Construct and send request
         request = self._client.get(url, query_parameters, header_parameters)
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
@@ -232,7 +239,7 @@ class FileServicesOperations(object):
         deserialized = self._deserialize('FileServiceProperties', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get_service_properties.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/fileServices/{FileServicesName}'}  # type: ignore
