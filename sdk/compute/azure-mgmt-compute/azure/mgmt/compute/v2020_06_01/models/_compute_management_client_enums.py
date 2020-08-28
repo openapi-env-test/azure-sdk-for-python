@@ -348,6 +348,15 @@ class HyperVGenerationType(str, Enum):
     v2 = "V2"
 
 
+class RebootStatus(str, Enum):
+
+    not_needed = "NotNeeded"
+    required = "Required"
+    started = "Started"
+    failed = "Failed"
+    completed = "Completed"
+
+
 class UpgradeMode(str, Enum):
 
     automatic = "Automatic"
@@ -419,6 +428,11 @@ class RollingUpgradeActionType(str, Enum):
 
     start = "Start"
     cancel = "Cancel"
+
+
+class ExtendedLocationTypes(str, Enum):
+
+    edge_zone = "EdgeZone"
 
 
 class IntervalInMins(str, Enum):

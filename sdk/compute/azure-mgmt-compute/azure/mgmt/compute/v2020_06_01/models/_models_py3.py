@@ -419,6 +419,77 @@ class AvailabilitySetUpdate(UpdateResource):
         self.sku = sku
 
 
+class AvailablePatchSummary(Model):
+    """Describes the properties of an virtual machine instance view for available
+    patch summary.
+
+    Variables are only populated by the server, and will be ignored when
+    sending a request.
+
+    :ivar status: The overall success or failure status of the operation. It
+     remains "InProgress" until the operation completes. At that point it will
+     become "Failed", "Succeeded", or "CompletedWithWarnings.". Possible values
+     include: 'InProgress', 'Failed', 'Succeeded', 'CompletedWithWarnings'
+    :vartype status: str or
+     ~azure.mgmt.compute.v2020_06_01.models.PatchOperationStatus
+    :ivar assessment_activity_id: The activity ID of the operation that
+     produced this result. It is used to correlate across CRP and extension
+     logs.
+    :vartype assessment_activity_id: str
+    :ivar reboot_pending: The overall reboot status of the VM. It will be true
+     when partially installed patches require a reboot to complete installation
+     but the reboot has not yet occurred.
+    :vartype reboot_pending: bool
+    :ivar critical_and_security_patch_count: The number of critical or
+     security patches that have been detected as available and not yet
+     installed.
+    :vartype critical_and_security_patch_count: int
+    :ivar other_patch_count: The number of all available patches excluding
+     critical and security.
+    :vartype other_patch_count: int
+    :ivar start_time: The UTC timestamp when the operation began.
+    :vartype start_time: datetime
+    :ivar last_modified_time: The UTC timestamp when the operation began.
+    :vartype last_modified_time: datetime
+    :ivar error: The errors that were encountered during execution of the
+     operation. The details array contains the list of them.
+    :vartype error: ~azure.mgmt.compute.v2020_06_01.models.ApiError
+    """
+
+    _validation = {
+        'status': {'readonly': True},
+        'assessment_activity_id': {'readonly': True},
+        'reboot_pending': {'readonly': True},
+        'critical_and_security_patch_count': {'readonly': True},
+        'other_patch_count': {'readonly': True},
+        'start_time': {'readonly': True},
+        'last_modified_time': {'readonly': True},
+        'error': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'status': {'key': 'status', 'type': 'str'},
+        'assessment_activity_id': {'key': 'assessmentActivityId', 'type': 'str'},
+        'reboot_pending': {'key': 'rebootPending', 'type': 'bool'},
+        'critical_and_security_patch_count': {'key': 'criticalAndSecurityPatchCount', 'type': 'int'},
+        'other_patch_count': {'key': 'otherPatchCount', 'type': 'int'},
+        'start_time': {'key': 'startTime', 'type': 'iso-8601'},
+        'last_modified_time': {'key': 'lastModifiedTime', 'type': 'iso-8601'},
+        'error': {'key': 'error', 'type': 'ApiError'},
+    }
+
+    def __init__(self, **kwargs) -> None:
+        super(AvailablePatchSummary, self).__init__(**kwargs)
+        self.status = None
+        self.assessment_activity_id = None
+        self.reboot_pending = None
+        self.critical_and_security_patch_count = None
+        self.other_patch_count = None
+        self.start_time = None
+        self.last_modified_time = None
+        self.error = None
+
+
 class BillingProfile(Model):
     """Specifies the billing related details of a Azure Spot VM or VMSS.
     <br><br>Minimum api-version: 2019-03-01.
@@ -1320,6 +1391,38 @@ class DiskInstanceView(Model):
         self.statuses = statuses
 
 
+class ExtendedLocation(Model):
+    """ExtendedLocation complex type.
+
+    Variables are only populated by the server, and will be ignored when
+    sending a request.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param name: Required. The name of the extended location.
+    :type name: str
+    :ivar type: Required. The type of the extended location. Default value:
+     "EdgeZone" .
+    :vartype type: str
+    """
+
+    _validation = {
+        'name': {'required': True},
+        'type': {'required': True, 'constant': True},
+    }
+
+    _attribute_map = {
+        'name': {'key': 'name', 'type': 'str'},
+        'type': {'key': 'type', 'type': 'str'},
+    }
+
+    type = "EdgeZone"
+
+    def __init__(self, *, name: str, **kwargs) -> None:
+        super(ExtendedLocation, self).__init__(**kwargs)
+        self.name = name
+
+
 class HardwareProfile(Model):
     """Specifies the hardware settings for the virtual machine.
 
@@ -1427,6 +1530,9 @@ class Image(Resource):
      VirtualMachine created from the image. Possible values include: 'V1', 'V2'
     :type hyper_vgeneration: str or
      ~azure.mgmt.compute.v2020_06_01.models.HyperVGenerationTypes
+    :param extended_location: The extended location of the Image.
+    :type extended_location:
+     ~azure.mgmt.compute.v2020_06_01.models.ExtendedLocation
     """
 
     _validation = {
@@ -1447,14 +1553,16 @@ class Image(Resource):
         'storage_profile': {'key': 'properties.storageProfile', 'type': 'ImageStorageProfile'},
         'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
         'hyper_vgeneration': {'key': 'properties.hyperVGeneration', 'type': 'str'},
+        'extended_location': {'key': 'extendedLocation', 'type': 'ExtendedLocation'},
     }
 
-    def __init__(self, *, location: str, tags=None, source_virtual_machine=None, storage_profile=None, hyper_vgeneration=None, **kwargs) -> None:
+    def __init__(self, *, location: str, tags=None, source_virtual_machine=None, storage_profile=None, hyper_vgeneration=None, extended_location=None, **kwargs) -> None:
         super(Image, self).__init__(location=location, tags=tags, **kwargs)
         self.source_virtual_machine = source_virtual_machine
         self.storage_profile = storage_profile
         self.provisioning_state = None
         self.hyper_vgeneration = hyper_vgeneration
+        self.extended_location = extended_location
 
 
 class ImageDisk(Model):
@@ -1873,6 +1981,110 @@ class KeyVaultSecretReference(Model):
         super(KeyVaultSecretReference, self).__init__(**kwargs)
         self.secret_url = secret_url
         self.source_vault = source_vault
+
+
+class LastPatchInstallationSummary(Model):
+    """Describes the properties of the last installed patch summary.
+
+    Variables are only populated by the server, and will be ignored when
+    sending a request.
+
+    :ivar status: The overall success or failure status of the operation. It
+     remains "InProgress" until the operation completes. At that point it will
+     become "Failed", "Succeeded", or "CompletedWithWarnings.". Possible values
+     include: 'InProgress', 'Failed', 'Succeeded', 'CompletedWithWarnings'
+    :vartype status: str or
+     ~azure.mgmt.compute.v2020_06_01.models.PatchOperationStatus
+    :ivar installation_activity_id: The activity ID of the operation that
+     produced this result. It is used to correlate across CRP and extension
+     logs.
+    :vartype installation_activity_id: str
+    :ivar maintenance_window_exceeded: Describes whether the operation ran out
+     of time before it completed all its intended actions
+    :vartype maintenance_window_exceeded: bool
+    :ivar reboot_status: The reboot status of the machine after the patch
+     operation. It will be in "NotNeeded" status if reboot is not needed after
+     the patch operation. "Required" will be the status once the patch is
+     applied and machine is required to reboot. "Started" will be the reboot
+     status when the machine has started to reboot. "Failed" will be the status
+     if the machine is failed to reboot. "Completed" will be the status once
+     the machine is rebooted successfully. Possible values include:
+     'NotNeeded', 'Required', 'Started', 'Failed', 'Completed'
+    :vartype reboot_status: str or
+     ~azure.mgmt.compute.v2020_06_01.models.RebootStatus
+    :ivar not_selected_patch_count: The number of all available patches but
+     not going to be installed because it didn't match a classification or
+     inclusion list entry.
+    :vartype not_selected_patch_count: int
+    :ivar excluded_patch_count: The number of all available patches but
+     excluded explicitly by a customer-specified exclusion list match.
+    :vartype excluded_patch_count: int
+    :ivar pending_patch_count: The number of all available patches expected to
+     be installed over the course of the patch installation operation.
+    :vartype pending_patch_count: int
+    :ivar installed_patch_count: The count of patches that successfully
+     installed.
+    :vartype installed_patch_count: int
+    :ivar failed_patch_count: The count of patches that failed installation.
+    :vartype failed_patch_count: int
+    :ivar start_time: The UTC timestamp when the operation began.
+    :vartype start_time: datetime
+    :ivar last_modified_time: The UTC timestamp when the operation began.
+    :vartype last_modified_time: datetime
+    :ivar started_by: The person or system account that started the operation
+    :vartype started_by: str
+    :ivar error: The errors that were encountered during execution of the
+     operation. The details array contains the list of them.
+    :vartype error: ~azure.mgmt.compute.v2020_06_01.models.ApiError
+    """
+
+    _validation = {
+        'status': {'readonly': True},
+        'installation_activity_id': {'readonly': True},
+        'maintenance_window_exceeded': {'readonly': True},
+        'reboot_status': {'readonly': True},
+        'not_selected_patch_count': {'readonly': True},
+        'excluded_patch_count': {'readonly': True},
+        'pending_patch_count': {'readonly': True},
+        'installed_patch_count': {'readonly': True},
+        'failed_patch_count': {'readonly': True},
+        'start_time': {'readonly': True},
+        'last_modified_time': {'readonly': True},
+        'started_by': {'readonly': True},
+        'error': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'status': {'key': 'status', 'type': 'str'},
+        'installation_activity_id': {'key': 'installationActivityId', 'type': 'str'},
+        'maintenance_window_exceeded': {'key': 'maintenanceWindowExceeded', 'type': 'bool'},
+        'reboot_status': {'key': 'rebootStatus', 'type': 'str'},
+        'not_selected_patch_count': {'key': 'notSelectedPatchCount', 'type': 'int'},
+        'excluded_patch_count': {'key': 'excludedPatchCount', 'type': 'int'},
+        'pending_patch_count': {'key': 'pendingPatchCount', 'type': 'int'},
+        'installed_patch_count': {'key': 'installedPatchCount', 'type': 'int'},
+        'failed_patch_count': {'key': 'failedPatchCount', 'type': 'int'},
+        'start_time': {'key': 'startTime', 'type': 'iso-8601'},
+        'last_modified_time': {'key': 'lastModifiedTime', 'type': 'iso-8601'},
+        'started_by': {'key': 'startedBy', 'type': 'str'},
+        'error': {'key': 'error', 'type': 'ApiError'},
+    }
+
+    def __init__(self, **kwargs) -> None:
+        super(LastPatchInstallationSummary, self).__init__(**kwargs)
+        self.status = None
+        self.installation_activity_id = None
+        self.maintenance_window_exceeded = None
+        self.reboot_status = None
+        self.not_selected_patch_count = None
+        self.excluded_patch_count = None
+        self.pending_patch_count = None
+        self.installed_patch_count = None
+        self.failed_patch_count = None
+        self.start_time = None
+        self.last_modified_time = None
+        self.started_by = None
+        self.error = None
 
 
 class LinuxConfiguration(Model):
@@ -2419,7 +2631,7 @@ class PatchSettings(Model):
      automatically be updated by the OS. The property
      WindowsConfiguration.enableAutomaticUpdates must be true. <br /><br /> **
      AutomaticByPlatform** - the virtual machine will automatically updated by
-     the OS. The properties provisionVMAgent and
+     the platform. The properties provisionVMAgent and
      WindowsConfiguration.enableAutomaticUpdates must be true. Possible values
      include: 'Manual', 'AutomaticByOS', 'AutomaticByPlatform'
     :type patch_mode: str or
@@ -3974,6 +4186,9 @@ class VirtualMachine(Resource):
      ~azure.mgmt.compute.v2020_06_01.models.VirtualMachineIdentity
     :param zones: The virtual machine zones.
     :type zones: list[str]
+    :param extended_location: The extended location of the Virtual Machine.
+    :type extended_location:
+     ~azure.mgmt.compute.v2020_06_01.models.ExtendedLocation
     """
 
     _validation = {
@@ -4017,9 +4232,10 @@ class VirtualMachine(Resource):
         'resources': {'key': 'resources', 'type': '[VirtualMachineExtension]'},
         'identity': {'key': 'identity', 'type': 'VirtualMachineIdentity'},
         'zones': {'key': 'zones', 'type': '[str]'},
+        'extended_location': {'key': 'extendedLocation', 'type': 'ExtendedLocation'},
     }
 
-    def __init__(self, *, location: str, tags=None, plan=None, hardware_profile=None, storage_profile=None, additional_capabilities=None, os_profile=None, network_profile=None, security_profile=None, diagnostics_profile=None, availability_set=None, virtual_machine_scale_set=None, proximity_placement_group=None, priority=None, eviction_policy=None, billing_profile=None, host=None, host_group=None, license_type: str=None, extensions_time_budget: str=None, identity=None, zones=None, **kwargs) -> None:
+    def __init__(self, *, location: str, tags=None, plan=None, hardware_profile=None, storage_profile=None, additional_capabilities=None, os_profile=None, network_profile=None, security_profile=None, diagnostics_profile=None, availability_set=None, virtual_machine_scale_set=None, proximity_placement_group=None, priority=None, eviction_policy=None, billing_profile=None, host=None, host_group=None, license_type: str=None, extensions_time_budget: str=None, identity=None, zones=None, extended_location=None, **kwargs) -> None:
         super(VirtualMachine, self).__init__(location=location, tags=tags, **kwargs)
         self.plan = plan
         self.hardware_profile = hardware_profile
@@ -4045,6 +4261,7 @@ class VirtualMachine(Resource):
         self.resources = None
         self.identity = identity
         self.zones = zones
+        self.extended_location = extended_location
 
 
 class VirtualMachineAgentInstanceView(Model):
@@ -4254,6 +4471,10 @@ class VirtualMachineExtension(Resource):
      deployed, however, the extension will not upgrade minor versions unless
      redeployed, even with this property set to true.
     :type auto_upgrade_minor_version: bool
+    :param enable_automatic_upgrade: Indicates whether the extension should be
+     automatically upgraded by the platform if there is a newer version of the
+     extension available.
+    :type enable_automatic_upgrade: bool
     :param settings: Json formatted public settings for the extension.
     :type settings: object
     :param protected_settings: The extension can contain either
@@ -4287,19 +4508,21 @@ class VirtualMachineExtension(Resource):
         'virtual_machine_extension_type': {'key': 'properties.type', 'type': 'str'},
         'type_handler_version': {'key': 'properties.typeHandlerVersion', 'type': 'str'},
         'auto_upgrade_minor_version': {'key': 'properties.autoUpgradeMinorVersion', 'type': 'bool'},
+        'enable_automatic_upgrade': {'key': 'properties.enableAutomaticUpgrade', 'type': 'bool'},
         'settings': {'key': 'properties.settings', 'type': 'object'},
         'protected_settings': {'key': 'properties.protectedSettings', 'type': 'object'},
         'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
         'instance_view': {'key': 'properties.instanceView', 'type': 'VirtualMachineExtensionInstanceView'},
     }
 
-    def __init__(self, *, location: str, tags=None, force_update_tag: str=None, publisher: str=None, virtual_machine_extension_type: str=None, type_handler_version: str=None, auto_upgrade_minor_version: bool=None, settings=None, protected_settings=None, instance_view=None, **kwargs) -> None:
+    def __init__(self, *, location: str, tags=None, force_update_tag: str=None, publisher: str=None, virtual_machine_extension_type: str=None, type_handler_version: str=None, auto_upgrade_minor_version: bool=None, enable_automatic_upgrade: bool=None, settings=None, protected_settings=None, instance_view=None, **kwargs) -> None:
         super(VirtualMachineExtension, self).__init__(location=location, tags=tags, **kwargs)
         self.force_update_tag = force_update_tag
         self.publisher = publisher
         self.virtual_machine_extension_type = virtual_machine_extension_type
         self.type_handler_version = type_handler_version
         self.auto_upgrade_minor_version = auto_upgrade_minor_version
+        self.enable_automatic_upgrade = enable_automatic_upgrade
         self.settings = settings
         self.protected_settings = protected_settings
         self.provisioning_state = None
@@ -4472,6 +4695,10 @@ class VirtualMachineExtensionUpdate(UpdateResource):
      deployed, however, the extension will not upgrade minor versions unless
      redeployed, even with this property set to true.
     :type auto_upgrade_minor_version: bool
+    :param enable_automatic_upgrade: Indicates whether the extension should be
+     automatically upgraded by the platform if there is a newer version of the
+     extension available.
+    :type enable_automatic_upgrade: bool
     :param settings: Json formatted public settings for the extension.
     :type settings: object
     :param protected_settings: The extension can contain either
@@ -4487,17 +4714,19 @@ class VirtualMachineExtensionUpdate(UpdateResource):
         'type': {'key': 'properties.type', 'type': 'str'},
         'type_handler_version': {'key': 'properties.typeHandlerVersion', 'type': 'str'},
         'auto_upgrade_minor_version': {'key': 'properties.autoUpgradeMinorVersion', 'type': 'bool'},
+        'enable_automatic_upgrade': {'key': 'properties.enableAutomaticUpgrade', 'type': 'bool'},
         'settings': {'key': 'properties.settings', 'type': 'object'},
         'protected_settings': {'key': 'properties.protectedSettings', 'type': 'object'},
     }
 
-    def __init__(self, *, tags=None, force_update_tag: str=None, publisher: str=None, type: str=None, type_handler_version: str=None, auto_upgrade_minor_version: bool=None, settings=None, protected_settings=None, **kwargs) -> None:
+    def __init__(self, *, tags=None, force_update_tag: str=None, publisher: str=None, type: str=None, type_handler_version: str=None, auto_upgrade_minor_version: bool=None, enable_automatic_upgrade: bool=None, settings=None, protected_settings=None, **kwargs) -> None:
         super(VirtualMachineExtensionUpdate, self).__init__(tags=tags, **kwargs)
         self.force_update_tag = force_update_tag
         self.publisher = publisher
         self.type = type
         self.type_handler_version = type_handler_version
         self.auto_upgrade_minor_version = auto_upgrade_minor_version
+        self.enable_automatic_upgrade = enable_automatic_upgrade
         self.settings = settings
         self.protected_settings = protected_settings
 
@@ -4737,6 +4966,9 @@ class VirtualMachineInstanceView(Model):
     :param extensions: The extensions information.
     :type extensions:
      list[~azure.mgmt.compute.v2020_06_01.models.VirtualMachineExtensionInstanceView]
+    :ivar vm_health: The health status for the VM.
+    :vartype vm_health:
+     ~azure.mgmt.compute.v2020_06_01.models.VirtualMachineHealthStatus
     :param boot_diagnostics: Boot Diagnostics is a debugging feature which
      allows you to view Console Output and Screenshot to diagnose VM status.
      <br><br> You can easily view the output of your console log. <br><br>
@@ -4751,9 +4983,13 @@ class VirtualMachineInstanceView(Model):
     :param statuses: The resource status information.
     :type statuses:
      list[~azure.mgmt.compute.v2020_06_01.models.InstanceViewStatus]
+    :param patch_status: The status of virtual machine patch operations.
+    :type patch_status:
+     ~azure.mgmt.compute.v2020_06_01.models.VirtualMachinePatchStatus
     """
 
     _validation = {
+        'vm_health': {'readonly': True},
         'assigned_host': {'readonly': True},
     }
 
@@ -4769,12 +5005,14 @@ class VirtualMachineInstanceView(Model):
         'maintenance_redeploy_status': {'key': 'maintenanceRedeployStatus', 'type': 'MaintenanceRedeployStatus'},
         'disks': {'key': 'disks', 'type': '[DiskInstanceView]'},
         'extensions': {'key': 'extensions', 'type': '[VirtualMachineExtensionInstanceView]'},
+        'vm_health': {'key': 'vmHealth', 'type': 'VirtualMachineHealthStatus'},
         'boot_diagnostics': {'key': 'bootDiagnostics', 'type': 'BootDiagnosticsInstanceView'},
         'assigned_host': {'key': 'assignedHost', 'type': 'str'},
         'statuses': {'key': 'statuses', 'type': '[InstanceViewStatus]'},
+        'patch_status': {'key': 'patchStatus', 'type': 'VirtualMachinePatchStatus'},
     }
 
-    def __init__(self, *, platform_update_domain: int=None, platform_fault_domain: int=None, computer_name: str=None, os_name: str=None, os_version: str=None, hyper_vgeneration=None, rdp_thumb_print: str=None, vm_agent=None, maintenance_redeploy_status=None, disks=None, extensions=None, boot_diagnostics=None, statuses=None, **kwargs) -> None:
+    def __init__(self, *, platform_update_domain: int=None, platform_fault_domain: int=None, computer_name: str=None, os_name: str=None, os_version: str=None, hyper_vgeneration=None, rdp_thumb_print: str=None, vm_agent=None, maintenance_redeploy_status=None, disks=None, extensions=None, boot_diagnostics=None, statuses=None, patch_status=None, **kwargs) -> None:
         super(VirtualMachineInstanceView, self).__init__(**kwargs)
         self.platform_update_domain = platform_update_domain
         self.platform_fault_domain = platform_fault_domain
@@ -4787,9 +5025,35 @@ class VirtualMachineInstanceView(Model):
         self.maintenance_redeploy_status = maintenance_redeploy_status
         self.disks = disks
         self.extensions = extensions
+        self.vm_health = None
         self.boot_diagnostics = boot_diagnostics
         self.assigned_host = None
         self.statuses = statuses
+        self.patch_status = patch_status
+
+
+class VirtualMachinePatchStatus(Model):
+    """The status of virtual machine patch operations.
+
+    :param available_patch_summary: The available patch summary of the latest
+     assessment operation for the virtual machine.
+    :type available_patch_summary:
+     ~azure.mgmt.compute.v2020_06_01.models.AvailablePatchSummary
+    :param last_patch_installation_summary: The installation summary of the
+     latest installation operation for the virtual machine.
+    :type last_patch_installation_summary:
+     ~azure.mgmt.compute.v2020_06_01.models.LastPatchInstallationSummary
+    """
+
+    _attribute_map = {
+        'available_patch_summary': {'key': 'availablePatchSummary', 'type': 'AvailablePatchSummary'},
+        'last_patch_installation_summary': {'key': 'lastPatchInstallationSummary', 'type': 'LastPatchInstallationSummary'},
+    }
+
+    def __init__(self, *, available_patch_summary=None, last_patch_installation_summary=None, **kwargs) -> None:
+        super(VirtualMachinePatchStatus, self).__init__(**kwargs)
+        self.available_patch_summary = available_patch_summary
+        self.last_patch_installation_summary = last_patch_installation_summary
 
 
 class VirtualMachineReimageParameters(Model):
@@ -4899,6 +5163,10 @@ class VirtualMachineScaleSet(Resource):
     :param zones: The virtual machine scale set zones. NOTE: Availability
      zones can only be set when you create the scale set
     :type zones: list[str]
+    :param extended_location: The extended location of the Virtual Machine
+     Scale Set.
+    :type extended_location:
+     ~azure.mgmt.compute.v2020_06_01.models.ExtendedLocation
     """
 
     _validation = {
@@ -4934,9 +5202,10 @@ class VirtualMachineScaleSet(Resource):
         'scale_in_policy': {'key': 'properties.scaleInPolicy', 'type': 'ScaleInPolicy'},
         'identity': {'key': 'identity', 'type': 'VirtualMachineScaleSetIdentity'},
         'zones': {'key': 'zones', 'type': '[str]'},
+        'extended_location': {'key': 'extendedLocation', 'type': 'ExtendedLocation'},
     }
 
-    def __init__(self, *, location: str, tags=None, sku=None, plan=None, upgrade_policy=None, automatic_repairs_policy=None, virtual_machine_profile=None, overprovision: bool=None, do_not_run_extensions_on_overprovisioned_vms: bool=None, single_placement_group: bool=None, zone_balance: bool=None, platform_fault_domain_count: int=None, proximity_placement_group=None, host_group=None, additional_capabilities=None, scale_in_policy=None, identity=None, zones=None, **kwargs) -> None:
+    def __init__(self, *, location: str, tags=None, sku=None, plan=None, upgrade_policy=None, automatic_repairs_policy=None, virtual_machine_profile=None, overprovision: bool=None, do_not_run_extensions_on_overprovisioned_vms: bool=None, single_placement_group: bool=None, zone_balance: bool=None, platform_fault_domain_count: int=None, proximity_placement_group=None, host_group=None, additional_capabilities=None, scale_in_policy=None, identity=None, zones=None, extended_location=None, **kwargs) -> None:
         super(VirtualMachineScaleSet, self).__init__(location=location, tags=tags, **kwargs)
         self.sku = sku
         self.plan = plan
@@ -4956,6 +5225,7 @@ class VirtualMachineScaleSet(Resource):
         self.scale_in_policy = scale_in_policy
         self.identity = identity
         self.zones = zones
+        self.extended_location = extended_location
 
 
 class VirtualMachineScaleSetDataDisk(Model):
@@ -5057,6 +5327,10 @@ class VirtualMachineScaleSetExtension(SubResourceReadOnly):
      deployed, however, the extension will not upgrade minor versions unless
      redeployed, even with this property set to true.
     :type auto_upgrade_minor_version: bool
+    :param enable_automatic_upgrade: Indicates whether the extension should be
+     automatically upgraded by the platform if there is a newer version of the
+     extension available.
+    :type enable_automatic_upgrade: bool
     :param settings: Json formatted public settings for the extension.
     :type settings: object
     :param protected_settings: The extension can contain either
@@ -5086,13 +5360,14 @@ class VirtualMachineScaleSetExtension(SubResourceReadOnly):
         'type1': {'key': 'properties.type', 'type': 'str'},
         'type_handler_version': {'key': 'properties.typeHandlerVersion', 'type': 'str'},
         'auto_upgrade_minor_version': {'key': 'properties.autoUpgradeMinorVersion', 'type': 'bool'},
+        'enable_automatic_upgrade': {'key': 'properties.enableAutomaticUpgrade', 'type': 'bool'},
         'settings': {'key': 'properties.settings', 'type': 'object'},
         'protected_settings': {'key': 'properties.protectedSettings', 'type': 'object'},
         'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
         'provision_after_extensions': {'key': 'properties.provisionAfterExtensions', 'type': '[str]'},
     }
 
-    def __init__(self, *, name: str=None, force_update_tag: str=None, publisher: str=None, type1: str=None, type_handler_version: str=None, auto_upgrade_minor_version: bool=None, settings=None, protected_settings=None, provision_after_extensions=None, **kwargs) -> None:
+    def __init__(self, *, name: str=None, force_update_tag: str=None, publisher: str=None, type1: str=None, type_handler_version: str=None, auto_upgrade_minor_version: bool=None, enable_automatic_upgrade: bool=None, settings=None, protected_settings=None, provision_after_extensions=None, **kwargs) -> None:
         super(VirtualMachineScaleSetExtension, self).__init__(**kwargs)
         self.name = name
         self.type = None
@@ -5101,6 +5376,7 @@ class VirtualMachineScaleSetExtension(SubResourceReadOnly):
         self.type1 = type1
         self.type_handler_version = type_handler_version
         self.auto_upgrade_minor_version = auto_upgrade_minor_version
+        self.enable_automatic_upgrade = enable_automatic_upgrade
         self.settings = settings
         self.protected_settings = protected_settings
         self.provisioning_state = None
@@ -5161,6 +5437,10 @@ class VirtualMachineScaleSetExtensionUpdate(SubResourceReadOnly):
      deployed, however, the extension will not upgrade minor versions unless
      redeployed, even with this property set to true.
     :type auto_upgrade_minor_version: bool
+    :param enable_automatic_upgrade: Indicates whether the extension should be
+     automatically upgraded by the platform if there is a newer version of the
+     extension available.
+    :type enable_automatic_upgrade: bool
     :param settings: Json formatted public settings for the extension.
     :type settings: object
     :param protected_settings: The extension can contain either
@@ -5191,13 +5471,14 @@ class VirtualMachineScaleSetExtensionUpdate(SubResourceReadOnly):
         'type1': {'key': 'properties.type', 'type': 'str'},
         'type_handler_version': {'key': 'properties.typeHandlerVersion', 'type': 'str'},
         'auto_upgrade_minor_version': {'key': 'properties.autoUpgradeMinorVersion', 'type': 'bool'},
+        'enable_automatic_upgrade': {'key': 'properties.enableAutomaticUpgrade', 'type': 'bool'},
         'settings': {'key': 'properties.settings', 'type': 'object'},
         'protected_settings': {'key': 'properties.protectedSettings', 'type': 'object'},
         'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
         'provision_after_extensions': {'key': 'properties.provisionAfterExtensions', 'type': '[str]'},
     }
 
-    def __init__(self, *, force_update_tag: str=None, publisher: str=None, type1: str=None, type_handler_version: str=None, auto_upgrade_minor_version: bool=None, settings=None, protected_settings=None, provision_after_extensions=None, **kwargs) -> None:
+    def __init__(self, *, force_update_tag: str=None, publisher: str=None, type1: str=None, type_handler_version: str=None, auto_upgrade_minor_version: bool=None, enable_automatic_upgrade: bool=None, settings=None, protected_settings=None, provision_after_extensions=None, **kwargs) -> None:
         super(VirtualMachineScaleSetExtensionUpdate, self).__init__(**kwargs)
         self.name = None
         self.type = None
@@ -5206,6 +5487,7 @@ class VirtualMachineScaleSetExtensionUpdate(SubResourceReadOnly):
         self.type1 = type1
         self.type_handler_version = type_handler_version
         self.auto_upgrade_minor_version = auto_upgrade_minor_version
+        self.enable_automatic_upgrade = enable_automatic_upgrade
         self.settings = settings
         self.protected_settings = protected_settings
         self.provisioning_state = None
