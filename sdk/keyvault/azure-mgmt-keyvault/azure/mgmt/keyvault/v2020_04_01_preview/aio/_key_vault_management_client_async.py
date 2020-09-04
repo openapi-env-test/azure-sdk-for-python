@@ -16,6 +16,7 @@ from .operations_async import VaultsOperations
 from .operations_async import PrivateEndpointConnectionsOperations
 from .operations_async import PrivateLinkResourcesOperations
 from .operations_async import Operations
+from .operations_async import ManagedHsmsOperations
 from .. import models
 
 
@@ -23,13 +24,15 @@ class KeyVaultManagementClient(object):
     """The Azure management API provides a RESTful set of web services that interact with Azure Key Vault.
 
     :ivar vaults: VaultsOperations operations
-    :vartype vaults: azure.mgmt.keyvault.v2019_09_01.aio.operations_async.VaultsOperations
+    :vartype vaults: azure.mgmt.keyvault.v2020_04_01_preview.aio.operations_async.VaultsOperations
     :ivar private_endpoint_connections: PrivateEndpointConnectionsOperations operations
-    :vartype private_endpoint_connections: azure.mgmt.keyvault.v2019_09_01.aio.operations_async.PrivateEndpointConnectionsOperations
+    :vartype private_endpoint_connections: azure.mgmt.keyvault.v2020_04_01_preview.aio.operations_async.PrivateEndpointConnectionsOperations
     :ivar private_link_resources: PrivateLinkResourcesOperations operations
-    :vartype private_link_resources: azure.mgmt.keyvault.v2019_09_01.aio.operations_async.PrivateLinkResourcesOperations
+    :vartype private_link_resources: azure.mgmt.keyvault.v2020_04_01_preview.aio.operations_async.PrivateLinkResourcesOperations
     :ivar operations: Operations operations
-    :vartype operations: azure.mgmt.keyvault.v2019_09_01.aio.operations_async.Operations
+    :vartype operations: azure.mgmt.keyvault.v2020_04_01_preview.aio.operations_async.Operations
+    :ivar managed_hsms: ManagedHsmsOperations operations
+    :vartype managed_hsms: azure.mgmt.keyvault.v2020_04_01_preview.aio.operations_async.ManagedHsmsOperations
     :param credential: Credential needed for the client to connect to Azure.
     :type credential: ~azure.core.credentials_async.AsyncTokenCredential
     :param subscription_id: Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.
@@ -61,6 +64,8 @@ class KeyVaultManagementClient(object):
         self.private_link_resources = PrivateLinkResourcesOperations(
             self._client, self._config, self._serialize, self._deserialize)
         self.operations = Operations(
+            self._client, self._config, self._serialize, self._deserialize)
+        self.managed_hsms = ManagedHsmsOperations(
             self._client, self._config, self._serialize, self._deserialize)
 
     async def close(self) -> None:

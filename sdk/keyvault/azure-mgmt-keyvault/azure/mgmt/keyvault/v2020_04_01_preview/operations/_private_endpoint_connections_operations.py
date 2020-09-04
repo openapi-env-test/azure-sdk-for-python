@@ -31,7 +31,7 @@ class PrivateEndpointConnectionsOperations(object):
     instantiates it for you and attaches it as an attribute.
 
     :ivar models: Alias to model classes used in this operation group.
-    :type models: ~azure.mgmt.keyvault.v2019_09_01.models
+    :type models: ~azure.mgmt.keyvault.v2020_04_01_preview.models
     :param client: Client for service requests.
     :param config: Configuration of service client.
     :param serializer: An object model serializer.
@@ -65,7 +65,7 @@ class PrivateEndpointConnectionsOperations(object):
         :type private_endpoint_connection_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: PrivateEndpointConnection or the result of cls(response)
-        :rtype: ~azure.mgmt.keyvault.v2019_09_01.models.PrivateEndpointConnection
+        :rtype: ~azure.mgmt.keyvault.v2020_04_01_preview.models.PrivateEndpointConnection
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.PrivateEndpointConnection"]
@@ -128,12 +128,12 @@ class PrivateEndpointConnectionsOperations(object):
          with the key vault.
         :type private_endpoint_connection_name: str
         :param private_endpoint: Properties of the private endpoint object.
-        :type private_endpoint: ~azure.mgmt.keyvault.v2019_09_01.models.PrivateEndpoint
+        :type private_endpoint: ~azure.mgmt.keyvault.v2020_04_01_preview.models.PrivateEndpoint
         :param private_link_service_connection_state: Approval state of the private link connection.
-        :type private_link_service_connection_state: ~azure.mgmt.keyvault.v2019_09_01.models.PrivateLinkServiceConnectionState
+        :type private_link_service_connection_state: ~azure.mgmt.keyvault.v2020_04_01_preview.models.PrivateLinkServiceConnectionState
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: PrivateEndpointConnection or the result of cls(response)
-        :rtype: ~azure.mgmt.keyvault.v2019_09_01.models.PrivateEndpointConnection
+        :rtype: ~azure.mgmt.keyvault.v2020_04_01_preview.models.PrivateEndpointConnection
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.PrivateEndpointConnection"]
@@ -265,7 +265,7 @@ class PrivateEndpointConnectionsOperations(object):
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of LROPoller that returns PrivateEndpointConnection
-        :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.keyvault.v2019_09_01.models.PrivateEndpointConnection]
+        :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.keyvault.v2020_04_01_preview.models.PrivateEndpointConnection]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]

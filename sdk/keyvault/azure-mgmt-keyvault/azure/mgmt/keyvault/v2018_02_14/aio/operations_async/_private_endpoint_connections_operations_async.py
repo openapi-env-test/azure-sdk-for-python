@@ -11,7 +11,7 @@ import warnings
 from azure.core.exceptions import HttpResponseError, ResourceExistsError, ResourceNotFoundError, map_error
 from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import AsyncHttpResponse, HttpRequest
-from azure.core.polling import AsyncLROPoller, AsyncNoPolling, AsyncPollingMethod
+from azure.core.polling import AsyncNoPolling, AsyncPollingMethod, async_poller
 from azure.mgmt.core.exceptions import ARMErrorFormat
 from azure.mgmt.core.polling.async_arm_polling import AsyncARMPolling
 
@@ -59,7 +59,7 @@ class PrivateEndpointConnectionsOperations:
          with the key vault.
         :type private_endpoint_connection_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: PrivateEndpointConnection, or the result of cls(response)
+        :return: PrivateEndpointConnection or the result of cls(response)
         :rtype: ~azure.mgmt.keyvault.v2018_02_14.models.PrivateEndpointConnection
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -86,6 +86,7 @@ class PrivateEndpointConnectionsOperations:
         header_parameters = {}  # type: Dict[str, Any]
         header_parameters['Accept'] = 'application/json'
 
+        # Construct and send request
         request = self._client.get(url, query_parameters, header_parameters)
         pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
@@ -97,7 +98,7 @@ class PrivateEndpointConnectionsOperations:
         deserialized = self._deserialize('PrivateEndpointConnection', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/privateEndpointConnections/{privateEndpointConnectionName}'}  # type: ignore
@@ -107,7 +108,8 @@ class PrivateEndpointConnectionsOperations:
         resource_group_name: str,
         vault_name: str,
         private_endpoint_connection_name: str,
-        properties: "models.PrivateEndpointConnection",
+        private_endpoint: Optional["models.PrivateEndpoint"] = None,
+        private_link_service_connection_state: Optional["models.PrivateLinkServiceConnectionState"] = None,
         **kwargs
     ) -> "models.PrivateEndpointConnection":
         """Updates the specified private endpoint connection associated with the key vault.
@@ -119,16 +121,20 @@ class PrivateEndpointConnectionsOperations:
         :param private_endpoint_connection_name: Name of the private endpoint connection associated
          with the key vault.
         :type private_endpoint_connection_name: str
-        :param properties: The intended state of private endpoint connection.
-        :type properties: ~azure.mgmt.keyvault.v2018_02_14.models.PrivateEndpointConnection
+        :param private_endpoint: Properties of the private endpoint object.
+        :type private_endpoint: ~azure.mgmt.keyvault.v2018_02_14.models.PrivateEndpoint
+        :param private_link_service_connection_state: Approval state of the private link connection.
+        :type private_link_service_connection_state: ~azure.mgmt.keyvault.v2018_02_14.models.PrivateLinkServiceConnectionState
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: PrivateEndpointConnection, or the result of cls(response)
+        :return: PrivateEndpointConnection or the result of cls(response)
         :rtype: ~azure.mgmt.keyvault.v2018_02_14.models.PrivateEndpointConnection
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.PrivateEndpointConnection"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
+
+        _properties = models.PrivateEndpointConnection(private_endpoint=private_endpoint, private_link_service_connection_state=private_link_service_connection_state)
         api_version = "2018-02-14"
         content_type = kwargs.pop("content_type", "application/json")
 
@@ -151,8 +157,9 @@ class PrivateEndpointConnectionsOperations:
         header_parameters['Content-Type'] = self._serialize.header("content_type", content_type, 'str')
         header_parameters['Accept'] = 'application/json'
 
+        # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(properties, 'PrivateEndpointConnection')
+        body_content = self._serialize.body(_properties, 'PrivateEndpointConnection')
         body_content_kwargs['content'] = body_content
         request = self._client.put(url, query_parameters, header_parameters, **body_content_kwargs)
 
@@ -169,7 +176,7 @@ class PrivateEndpointConnectionsOperations:
         deserialized = self._deserialize('PrivateEndpointConnection', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, response_headers)
+          return cls(pipeline_response, deserialized, response_headers)
 
         return deserialized
     put.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/privateEndpointConnections/{privateEndpointConnectionName}'}  # type: ignore
@@ -180,8 +187,8 @@ class PrivateEndpointConnectionsOperations:
         vault_name: str,
         private_endpoint_connection_name: str,
         **kwargs
-    ) -> Optional["models.PrivateEndpointConnection"]:
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.PrivateEndpointConnection"]]
+    ) -> "models.PrivateEndpointConnection":
+        cls = kwargs.pop('cls', None)  # type: ClsType["models.PrivateEndpointConnection"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
         api_version = "2018-02-14"
@@ -204,6 +211,7 @@ class PrivateEndpointConnectionsOperations:
         header_parameters = {}  # type: Dict[str, Any]
         header_parameters['Accept'] = 'application/json'
 
+        # Construct and send request
         request = self._client.delete(url, query_parameters, header_parameters)
         pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
@@ -222,18 +230,18 @@ class PrivateEndpointConnectionsOperations:
             response_headers['Location']=self._deserialize('str', response.headers.get('Location'))
 
         if cls:
-            return cls(pipeline_response, deserialized, response_headers)
+          return cls(pipeline_response, deserialized, response_headers)
 
         return deserialized
     _delete_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/privateEndpointConnections/{privateEndpointConnectionName}'}  # type: ignore
 
-    async def begin_delete(
+    async def delete(
         self,
         resource_group_name: str,
         vault_name: str,
         private_endpoint_connection_name: str,
         **kwargs
-    ) -> AsyncLROPoller["models.PrivateEndpointConnection"]:
+    ) -> "models.PrivateEndpointConnection":
         """Deletes the specified private endpoint connection associated with the key vault.
 
         :param resource_group_name: Name of the resource group that contains the key vault.
@@ -244,13 +252,12 @@ class PrivateEndpointConnectionsOperations:
      with the key vault.
         :type private_endpoint_connection_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of AsyncLROPoller that returns either PrivateEndpointConnection or the result of cls(response)
-        :rtype: ~azure.core.polling.AsyncLROPoller[~azure.mgmt.keyvault.v2018_02_14.models.PrivateEndpointConnection]
+        :return: PrivateEndpointConnection
+        :rtype: ~azure.mgmt.keyvault.v2018_02_14.models.PrivateEndpointConnection
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
@@ -259,18 +266,13 @@ class PrivateEndpointConnectionsOperations:
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = await self._delete_initial(
-                resource_group_name=resource_group_name,
-                vault_name=vault_name,
-                private_endpoint_connection_name=private_endpoint_connection_name,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = await self._delete_initial(
+            resource_group_name=resource_group_name,
+            vault_name=vault_name,
+            private_endpoint_connection_name=private_endpoint_connection_name,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('PrivateEndpointConnection', pipeline_response)
@@ -282,13 +284,5 @@ class PrivateEndpointConnectionsOperations:
         if polling is True: polling_method = AsyncARMPolling(lro_delay,  **kwargs)
         elif polling is False: polling_method = AsyncNoPolling()
         else: polling_method = polling
-        if cont_token:
-            return AsyncLROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return AsyncLROPoller(self._client, raw_result, get_long_running_output, polling_method)
-    begin_delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/privateEndpointConnections/{privateEndpointConnectionName}'}  # type: ignore
+        return await async_poller(self._client, raw_result, get_long_running_output, polling_method)
+    delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/privateEndpointConnections/{privateEndpointConnectionName}'}  # type: ignore

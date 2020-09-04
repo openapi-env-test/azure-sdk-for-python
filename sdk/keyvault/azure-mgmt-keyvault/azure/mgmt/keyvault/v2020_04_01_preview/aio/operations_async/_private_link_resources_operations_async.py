@@ -25,7 +25,7 @@ class PrivateLinkResourcesOperations:
     instantiates it for you and attaches it as an attribute.
 
     :ivar models: Alias to model classes used in this operation group.
-    :type models: ~azure.mgmt.keyvault.v2019_09_01.models
+    :type models: ~azure.mgmt.keyvault.v2020_04_01_preview.models
     :param client: Client for service requests.
     :param config: Configuration of service client.
     :param serializer: An object model serializer.
@@ -54,7 +54,7 @@ class PrivateLinkResourcesOperations:
         :type vault_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: PrivateLinkResourceListResult or the result of cls(response)
-        :rtype: ~azure.mgmt.keyvault.v2019_09_01.models.PrivateLinkResourceListResult
+        :rtype: ~azure.mgmt.keyvault.v2020_04_01_preview.models.PrivateLinkResourceListResult
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.PrivateLinkResourceListResult"]

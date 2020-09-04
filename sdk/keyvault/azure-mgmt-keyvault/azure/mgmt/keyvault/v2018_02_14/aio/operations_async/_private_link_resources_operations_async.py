@@ -53,7 +53,7 @@ class PrivateLinkResourcesOperations:
         :param vault_name: The name of the key vault.
         :type vault_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: PrivateLinkResourceListResult, or the result of cls(response)
+        :return: PrivateLinkResourceListResult or the result of cls(response)
         :rtype: ~azure.mgmt.keyvault.v2018_02_14.models.PrivateLinkResourceListResult
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -79,6 +79,7 @@ class PrivateLinkResourcesOperations:
         header_parameters = {}  # type: Dict[str, Any]
         header_parameters['Accept'] = 'application/json'
 
+        # Construct and send request
         request = self._client.get(url, query_parameters, header_parameters)
         pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
@@ -90,7 +91,7 @@ class PrivateLinkResourcesOperations:
         deserialized = self._deserialize('PrivateLinkResourceListResult', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     list_by_vault.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/privateLinkResources'}  # type: ignore

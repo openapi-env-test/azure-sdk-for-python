@@ -64,7 +64,7 @@ class PrivateEndpointConnectionsOperations(object):
          with the key vault.
         :type private_endpoint_connection_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: PrivateEndpointConnection, or the result of cls(response)
+        :return: PrivateEndpointConnection or the result of cls(response)
         :rtype: ~azure.mgmt.keyvault.v2018_02_14.models.PrivateEndpointConnection
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -91,6 +91,7 @@ class PrivateEndpointConnectionsOperations(object):
         header_parameters = {}  # type: Dict[str, Any]
         header_parameters['Accept'] = 'application/json'
 
+        # Construct and send request
         request = self._client.get(url, query_parameters, header_parameters)
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
@@ -102,7 +103,7 @@ class PrivateEndpointConnectionsOperations(object):
         deserialized = self._deserialize('PrivateEndpointConnection', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/privateEndpointConnections/{privateEndpointConnectionName}'}  # type: ignore
@@ -112,7 +113,8 @@ class PrivateEndpointConnectionsOperations(object):
         resource_group_name,  # type: str
         vault_name,  # type: str
         private_endpoint_connection_name,  # type: str
-        properties,  # type: "models.PrivateEndpointConnection"
+        private_endpoint=None,  # type: Optional["models.PrivateEndpoint"]
+        private_link_service_connection_state=None,  # type: Optional["models.PrivateLinkServiceConnectionState"]
         **kwargs  # type: Any
     ):
         # type: (...) -> "models.PrivateEndpointConnection"
@@ -125,16 +127,20 @@ class PrivateEndpointConnectionsOperations(object):
         :param private_endpoint_connection_name: Name of the private endpoint connection associated
          with the key vault.
         :type private_endpoint_connection_name: str
-        :param properties: The intended state of private endpoint connection.
-        :type properties: ~azure.mgmt.keyvault.v2018_02_14.models.PrivateEndpointConnection
+        :param private_endpoint: Properties of the private endpoint object.
+        :type private_endpoint: ~azure.mgmt.keyvault.v2018_02_14.models.PrivateEndpoint
+        :param private_link_service_connection_state: Approval state of the private link connection.
+        :type private_link_service_connection_state: ~azure.mgmt.keyvault.v2018_02_14.models.PrivateLinkServiceConnectionState
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: PrivateEndpointConnection, or the result of cls(response)
+        :return: PrivateEndpointConnection or the result of cls(response)
         :rtype: ~azure.mgmt.keyvault.v2018_02_14.models.PrivateEndpointConnection
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.PrivateEndpointConnection"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
+
+        _properties = models.PrivateEndpointConnection(private_endpoint=private_endpoint, private_link_service_connection_state=private_link_service_connection_state)
         api_version = "2018-02-14"
         content_type = kwargs.pop("content_type", "application/json")
 
@@ -157,8 +163,9 @@ class PrivateEndpointConnectionsOperations(object):
         header_parameters['Content-Type'] = self._serialize.header("content_type", content_type, 'str')
         header_parameters['Accept'] = 'application/json'
 
+        # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(properties, 'PrivateEndpointConnection')
+        body_content = self._serialize.body(_properties, 'PrivateEndpointConnection')
         body_content_kwargs['content'] = body_content
         request = self._client.put(url, query_parameters, header_parameters, **body_content_kwargs)
 
@@ -175,7 +182,7 @@ class PrivateEndpointConnectionsOperations(object):
         deserialized = self._deserialize('PrivateEndpointConnection', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, response_headers)
+          return cls(pipeline_response, deserialized, response_headers)
 
         return deserialized
     put.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/privateEndpointConnections/{privateEndpointConnectionName}'}  # type: ignore
@@ -187,8 +194,8 @@ class PrivateEndpointConnectionsOperations(object):
         private_endpoint_connection_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> Optional["models.PrivateEndpointConnection"]
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["models.PrivateEndpointConnection"]]
+        # type: (...) -> "models.PrivateEndpointConnection"
+        cls = kwargs.pop('cls', None)  # type: ClsType["models.PrivateEndpointConnection"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
         api_version = "2018-02-14"
@@ -211,6 +218,7 @@ class PrivateEndpointConnectionsOperations(object):
         header_parameters = {}  # type: Dict[str, Any]
         header_parameters['Accept'] = 'application/json'
 
+        # Construct and send request
         request = self._client.delete(url, query_parameters, header_parameters)
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
@@ -229,7 +237,7 @@ class PrivateEndpointConnectionsOperations(object):
             response_headers['Location']=self._deserialize('str', response.headers.get('Location'))
 
         if cls:
-            return cls(pipeline_response, deserialized, response_headers)
+          return cls(pipeline_response, deserialized, response_headers)
 
         return deserialized
     _delete_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/privateEndpointConnections/{privateEndpointConnectionName}'}  # type: ignore
@@ -241,7 +249,7 @@ class PrivateEndpointConnectionsOperations(object):
         private_endpoint_connection_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> LROPoller["models.PrivateEndpointConnection"]
+        # type: (...) -> LROPoller
         """Deletes the specified private endpoint connection associated with the key vault.
 
         :param resource_group_name: Name of the resource group that contains the key vault.
@@ -252,12 +260,11 @@ class PrivateEndpointConnectionsOperations(object):
      with the key vault.
         :type private_endpoint_connection_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either PrivateEndpointConnection or the result of cls(response)
+        :return: An instance of LROPoller that returns PrivateEndpointConnection
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.keyvault.v2018_02_14.models.PrivateEndpointConnection]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -267,18 +274,13 @@ class PrivateEndpointConnectionsOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._delete_initial(
-                resource_group_name=resource_group_name,
-                vault_name=vault_name,
-                private_endpoint_connection_name=private_endpoint_connection_name,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._delete_initial(
+            resource_group_name=resource_group_name,
+            vault_name=vault_name,
+            private_endpoint_connection_name=private_endpoint_connection_name,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('PrivateEndpointConnection', pipeline_response)
@@ -290,13 +292,5 @@ class PrivateEndpointConnectionsOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay,  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/privateEndpointConnections/{privateEndpointConnectionName}'}  # type: ignore

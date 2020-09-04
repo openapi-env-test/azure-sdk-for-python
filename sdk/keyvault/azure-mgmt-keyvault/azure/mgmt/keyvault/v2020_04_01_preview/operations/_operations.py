@@ -30,7 +30,7 @@ class Operations(object):
     instantiates it for you and attaches it as an attribute.
 
     :ivar models: Alias to model classes used in this operation group.
-    :type models: ~azure.mgmt.keyvault.v2018_02_14.models
+    :type models: ~azure.mgmt.keyvault.v2020_04_01_preview.models
     :param client: Client for service requests.
     :param config: Configuration of service client.
     :param serializer: An object model serializer.
@@ -54,13 +54,13 @@ class Operations(object):
 
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: An iterator like instance of OperationListResult or the result of cls(response)
-        :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.keyvault.v2018_02_14.models.OperationListResult]
+        :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.keyvault.v2020_04_01_preview.models.OperationListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.OperationListResult"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2018-02-14"
+        api_version = "2019-09-01"
 
         def prepare_request(next_link=None):
             if not next_link:
