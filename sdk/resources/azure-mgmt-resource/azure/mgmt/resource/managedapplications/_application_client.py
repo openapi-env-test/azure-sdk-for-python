@@ -15,8 +15,6 @@ if TYPE_CHECKING:
     # pylint: disable=unused-import,ungrouped-imports
     from typing import Any, Optional
 
-    from azure.core.credentials import TokenCredential
-
 from ._configuration import ApplicationClientConfiguration
 from .operations import ApplicationsOperations
 from .operations import ApplicationDefinitionsOperations

@@ -48,7 +48,7 @@ class FeaturesOperations:
         """Gets all the preview features that are available through AFEC for the subscription.
 
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either FeatureOperationsListResult or the result of cls(response)
+        :return: An iterator like instance of FeatureOperationsListResult or the result of cls(response)
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.resource.features.v2015_12_01.models.FeatureOperationsListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -109,14 +109,13 @@ class FeaturesOperations:
         resource_provider_namespace: str,
         **kwargs
     ) -> AsyncIterable["models.FeatureOperationsListResult"]:
-        """Gets all the preview features in a provider namespace that are available through AFEC for the
-    subscription.
+        """Gets all the preview features in a provider namespace that are available through AFEC for the subscription.
 
         :param resource_provider_namespace: The namespace of the resource provider for getting
      features.
         :type resource_provider_namespace: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either FeatureOperationsListResult or the result of cls(response)
+        :return: An iterator like instance of FeatureOperationsListResult or the result of cls(response)
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.resource.features.v2015_12_01.models.FeatureOperationsListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -186,7 +185,7 @@ class FeaturesOperations:
         :param feature_name: The name of the feature to get.
         :type feature_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: FeatureResult, or the result of cls(response)
+        :return: FeatureResult or the result of cls(response)
         :rtype: ~azure.mgmt.resource.features.v2015_12_01.models.FeatureResult
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -224,7 +223,7 @@ class FeaturesOperations:
         deserialized = self._deserialize('FeatureResult', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}'}  # type: ignore
@@ -242,7 +241,7 @@ class FeaturesOperations:
         :param feature_name: The name of the feature to register.
         :type feature_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: FeatureResult, or the result of cls(response)
+        :return: FeatureResult or the result of cls(response)
         :rtype: ~azure.mgmt.resource.features.v2015_12_01.models.FeatureResult
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -280,7 +279,7 @@ class FeaturesOperations:
         deserialized = self._deserialize('FeatureResult', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     register.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}/register'}  # type: ignore
@@ -298,7 +297,7 @@ class FeaturesOperations:
         :param feature_name: The name of the feature to unregister.
         :type feature_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: FeatureResult, or the result of cls(response)
+        :return: FeatureResult or the result of cls(response)
         :rtype: ~azure.mgmt.resource.features.v2015_12_01.models.FeatureResult
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -336,7 +335,7 @@ class FeaturesOperations:
         deserialized = self._deserialize('FeatureResult', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     unregister.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}/unregister'}  # type: ignore

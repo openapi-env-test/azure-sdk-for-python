@@ -54,7 +54,7 @@ class ResourceLinksOperations:
          /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite/Microsoft.Resources/links/myLink.
         :type link_id: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: None, or the result of cls(response)
+        :return: None or the result of cls(response)
         :rtype: None
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -87,14 +87,14 @@ class ResourceLinksOperations:
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
         if cls:
-            return cls(pipeline_response, None, {})
+          return cls(pipeline_response, None, {})
 
     delete.metadata = {'url': '/{linkId}'}  # type: ignore
 
     async def create_or_update(
         self,
         link_id: str,
-        parameters: "models.ResourceLink",
+        properties: Optional["models.ResourceLinkProperties"] = None,
         **kwargs
     ) -> "models.ResourceLink":
         """Creates or updates a resource link between the specified resources.
@@ -104,16 +104,18 @@ class ResourceLinksOperations:
          namespace}/{resource-type}/{resource-name}/Microsoft.Resources/links/{link-name}. For example,
          /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite/Microsoft.Resources/links/myLink.
         :type link_id: str
-        :param parameters: Parameters for creating or updating a resource link.
-        :type parameters: ~azure.mgmt.resource.links.v2016_09_01.models.ResourceLink
+        :param properties: Properties for resource link.
+        :type properties: ~azure.mgmt.resource.links.v2016_09_01.models.ResourceLinkProperties
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ResourceLink, or the result of cls(response)
+        :return: ResourceLink or the result of cls(response)
         :rtype: ~azure.mgmt.resource.links.v2016_09_01.models.ResourceLink
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.ResourceLink"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
+
+        _parameters = models.ResourceLink(properties=properties)
         api_version = "2016-09-01"
         content_type = kwargs.pop("content_type", "application/json")
 
@@ -135,7 +137,7 @@ class ResourceLinksOperations:
 
         # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(parameters, 'ResourceLink')
+        body_content = self._serialize.body(_parameters, 'ResourceLink')
         body_content_kwargs['content'] = body_content
         request = self._client.put(url, query_parameters, header_parameters, **body_content_kwargs)
 
@@ -154,7 +156,7 @@ class ResourceLinksOperations:
             deserialized = self._deserialize('ResourceLink', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     create_or_update.metadata = {'url': '/{linkId}'}  # type: ignore
@@ -170,7 +172,7 @@ class ResourceLinksOperations:
          /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite/Microsoft.Resources/links/myLink.
         :type link_id: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ResourceLink, or the result of cls(response)
+        :return: ResourceLink or the result of cls(response)
         :rtype: ~azure.mgmt.resource.links.v2016_09_01.models.ResourceLink
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -206,7 +208,7 @@ class ResourceLinksOperations:
         deserialized = self._deserialize('ResourceLink', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/{linkId}'}  # type: ignore
@@ -222,7 +224,7 @@ class ResourceLinksOperations:
      for list resource links is targetId. For example, $filter=targetId eq {value}.
         :type filter: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either ResourceLinkResult or the result of cls(response)
+        :return: An iterator like instance of ResourceLinkResult or the result of cls(response)
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.resource.links.v2016_09_01.models.ResourceLinkResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -296,7 +298,7 @@ class ResourceLinksOperations:
      specified scope (not below the scope), use Filter.atScope().
         :type filter: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either ResourceLinkResult or the result of cls(response)
+        :return: An iterator like instance of ResourceLinkResult or the result of cls(response)
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.resource.links.v2016_09_01.models.ResourceLinkResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """

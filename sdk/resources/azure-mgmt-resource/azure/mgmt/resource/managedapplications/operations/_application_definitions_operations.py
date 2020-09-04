@@ -61,7 +61,7 @@ class ApplicationDefinitionsOperations(object):
         :param application_definition_name: The name of the managed application definition.
         :type application_definition_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ApplicationDefinition, or the result of cls(response)
+        :return: ApplicationDefinition or the result of cls(response)
         :rtype: ~azure.mgmt.resource.managedapplications.models.ApplicationDefinition or None
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -102,7 +102,7 @@ class ApplicationDefinitionsOperations(object):
             deserialized = self._deserialize('ApplicationDefinition', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/applicationDefinitions/{applicationDefinitionName}'}  # type: ignore
@@ -146,7 +146,7 @@ class ApplicationDefinitionsOperations(object):
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         if cls:
-            return cls(pipeline_response, None, {})
+          return cls(pipeline_response, None, {})
 
     _delete_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/applicationDefinitions/{applicationDefinitionName}'}  # type: ignore
 
@@ -164,12 +164,11 @@ class ApplicationDefinitionsOperations(object):
         :param application_definition_name: The name of the managed application definition to delete.
         :type application_definition_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either None or the result of cls(response)
+        :return: An instance of LROPoller that returns None
         :rtype: ~azure.core.polling.LROPoller[None]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -179,17 +178,12 @@ class ApplicationDefinitionsOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._delete_initial(
-                resource_group_name=resource_group_name,
-                application_definition_name=application_definition_name,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._delete_initial(
+            resource_group_name=resource_group_name,
+            application_definition_name=application_definition_name,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             if cls:
@@ -198,15 +192,7 @@ class ApplicationDefinitionsOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay,  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/applicationDefinitions/{applicationDefinitionName}'}  # type: ignore
 
     def _create_or_update_initial(
@@ -263,7 +249,7 @@ class ApplicationDefinitionsOperations(object):
             deserialized = self._deserialize('ApplicationDefinition', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _create_or_update_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/applicationDefinitions/{applicationDefinitionName}'}  # type: ignore
@@ -286,12 +272,11 @@ class ApplicationDefinitionsOperations(object):
      definition.
         :type parameters: ~azure.mgmt.resource.managedapplications.models.ApplicationDefinition
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either ApplicationDefinition or the result of cls(response)
+        :return: An instance of LROPoller that returns ApplicationDefinition
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.resource.managedapplications.models.ApplicationDefinition]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -301,18 +286,13 @@ class ApplicationDefinitionsOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._create_or_update_initial(
-                resource_group_name=resource_group_name,
-                application_definition_name=application_definition_name,
-                parameters=parameters,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._create_or_update_initial(
+            resource_group_name=resource_group_name,
+            application_definition_name=application_definition_name,
+            parameters=parameters,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('ApplicationDefinition', pipeline_response)
@@ -324,15 +304,7 @@ class ApplicationDefinitionsOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay,  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/applicationDefinitions/{applicationDefinitionName}'}  # type: ignore
 
     def list_by_resource_group(
@@ -346,7 +318,7 @@ class ApplicationDefinitionsOperations(object):
         :param resource_group_name: The name of the resource group. The name is case insensitive.
         :type resource_group_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either ApplicationDefinitionListResult or the result of cls(response)
+        :return: An iterator like instance of ApplicationDefinitionListResult or the result of cls(response)
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.resource.managedapplications.models.ApplicationDefinitionListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -418,7 +390,7 @@ class ApplicationDefinitionsOperations(object):
          name}/Microsoft.Solutions/applicationDefinitions/{applicationDefinition-name}.
         :type application_definition_id: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ApplicationDefinition, or the result of cls(response)
+        :return: ApplicationDefinition or the result of cls(response)
         :rtype: ~azure.mgmt.resource.managedapplications.models.ApplicationDefinition or None
         :raises: ~azure.core.exceptions.HttpResponseError
         """
@@ -457,7 +429,7 @@ class ApplicationDefinitionsOperations(object):
             deserialized = self._deserialize('ApplicationDefinition', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get_by_id.metadata = {'url': '/{applicationDefinitionId}'}  # type: ignore
@@ -498,7 +470,7 @@ class ApplicationDefinitionsOperations(object):
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         if cls:
-            return cls(pipeline_response, None, {})
+          return cls(pipeline_response, None, {})
 
     _delete_by_id_initial.metadata = {'url': '/{applicationDefinitionId}'}  # type: ignore
 
@@ -516,12 +488,11 @@ class ApplicationDefinitionsOperations(object):
      name}/Microsoft.Solutions/applicationDefinitions/{applicationDefinition-name}.
         :type application_definition_id: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either None or the result of cls(response)
+        :return: An instance of LROPoller that returns None
         :rtype: ~azure.core.polling.LROPoller[None]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -531,16 +502,11 @@ class ApplicationDefinitionsOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._delete_by_id_initial(
-                application_definition_id=application_definition_id,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._delete_by_id_initial(
+            application_definition_id=application_definition_id,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             if cls:
@@ -549,15 +515,7 @@ class ApplicationDefinitionsOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay,  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_delete_by_id.metadata = {'url': '/{applicationDefinitionId}'}  # type: ignore
 
     def _create_or_update_by_id_initial(
@@ -611,7 +569,7 @@ class ApplicationDefinitionsOperations(object):
             deserialized = self._deserialize('ApplicationDefinition', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     _create_or_update_by_id_initial.metadata = {'url': '/{applicationDefinitionId}'}  # type: ignore
@@ -634,12 +592,11 @@ class ApplicationDefinitionsOperations(object):
      definition.
         :type parameters: ~azure.mgmt.resource.managedapplications.models.ApplicationDefinition
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either ApplicationDefinition or the result of cls(response)
+        :return: An instance of LROPoller that returns ApplicationDefinition
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.resource.managedapplications.models.ApplicationDefinition]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -649,17 +606,12 @@ class ApplicationDefinitionsOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._create_or_update_by_id_initial(
-                application_definition_id=application_definition_id,
-                parameters=parameters,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._create_or_update_by_id_initial(
+            application_definition_id=application_definition_id,
+            parameters=parameters,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             deserialized = self._deserialize('ApplicationDefinition', pipeline_response)
@@ -671,13 +623,5 @@ class ApplicationDefinitionsOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay,  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_create_or_update_by_id.metadata = {'url': '/{applicationDefinitionId}'}  # type: ignore
