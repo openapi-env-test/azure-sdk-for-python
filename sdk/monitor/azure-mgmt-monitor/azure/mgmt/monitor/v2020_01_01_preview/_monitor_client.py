@@ -15,8 +15,6 @@ if TYPE_CHECKING:
     # pylint: disable=unused-import,ungrouped-imports
     from typing import Any, Optional
 
-    from azure.core.credentials import TokenCredential
-
 from ._configuration import MonitorClientConfiguration
 from .operations import ManagementGroupDiagnosticSettingsOperations
 from . import models
@@ -26,10 +24,11 @@ class MonitorClient(object):
     """Monitor Management Client.
 
     :ivar management_group_diagnostic_settings: ManagementGroupDiagnosticSettingsOperations operations
-    :vartype management_group_diagnostic_settings: $(python-base-namespace).v2020_01_01_preview.operations.ManagementGroupDiagnosticSettingsOperations
+    :vartype management_group_diagnostic_settings: azure.mgmt.monitor.v2020_01_01_preview.operations.ManagementGroupDiagnosticSettingsOperations
     :param credential: Credential needed for the client to connect to Azure.
     :type credential: ~azure.core.credentials.TokenCredential
     :param str base_url: Service URL
+    :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
     """
 
     def __init__(
@@ -46,7 +45,6 @@ class MonitorClient(object):
 
         client_models = {k: v for k, v in models.__dict__.items() if isinstance(v, type)}
         self._serialize = Serializer(client_models)
-        self._serialize.client_side_validation = False
         self._deserialize = Deserializer(client_models)
 
         self.management_group_diagnostic_settings = ManagementGroupDiagnosticSettingsOperations(
