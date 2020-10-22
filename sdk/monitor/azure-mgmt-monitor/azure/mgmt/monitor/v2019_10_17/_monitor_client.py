@@ -15,8 +15,6 @@ if TYPE_CHECKING:
     # pylint: disable=unused-import,ungrouped-imports
     from typing import Any, Optional
 
-    from azure.core.credentials import TokenCredential
-
 from ._configuration import MonitorClientConfiguration
 from .operations import PrivateLinkScopesOperations
 from .operations import PrivateLinkScopeOperationStatusOperations
@@ -30,15 +28,15 @@ class MonitorClient(object):
     """Monitor Management Client.
 
     :ivar private_link_scopes: PrivateLinkScopesOperations operations
-    :vartype private_link_scopes: $(python-base-namespace).v2019_10_17.operations.PrivateLinkScopesOperations
+    :vartype private_link_scopes: azure.mgmt.monitor.v2019_10_17.operations.PrivateLinkScopesOperations
     :ivar private_link_scope_operation_status: PrivateLinkScopeOperationStatusOperations operations
-    :vartype private_link_scope_operation_status: $(python-base-namespace).v2019_10_17.operations.PrivateLinkScopeOperationStatusOperations
+    :vartype private_link_scope_operation_status: azure.mgmt.monitor.v2019_10_17.operations.PrivateLinkScopeOperationStatusOperations
     :ivar private_link_resources: PrivateLinkResourcesOperations operations
-    :vartype private_link_resources: $(python-base-namespace).v2019_10_17.operations.PrivateLinkResourcesOperations
+    :vartype private_link_resources: azure.mgmt.monitor.v2019_10_17.operations.PrivateLinkResourcesOperations
     :ivar private_endpoint_connections: PrivateEndpointConnectionsOperations operations
-    :vartype private_endpoint_connections: $(python-base-namespace).v2019_10_17.operations.PrivateEndpointConnectionsOperations
+    :vartype private_endpoint_connections: azure.mgmt.monitor.v2019_10_17.operations.PrivateEndpointConnectionsOperations
     :ivar private_link_scoped_resources: PrivateLinkScopedResourcesOperations operations
-    :vartype private_link_scoped_resources: $(python-base-namespace).v2019_10_17.operations.PrivateLinkScopedResourcesOperations
+    :vartype private_link_scoped_resources: azure.mgmt.monitor.v2019_10_17.operations.PrivateLinkScopedResourcesOperations
     :param credential: Credential needed for the client to connect to Azure.
     :type credential: ~azure.core.credentials.TokenCredential
     :param subscription_id: The Azure subscription Id.
@@ -62,7 +60,6 @@ class MonitorClient(object):
 
         client_models = {k: v for k, v in models.__dict__.items() if isinstance(v, type)}
         self._serialize = Serializer(client_models)
-        self._serialize.client_side_validation = False
         self._deserialize = Deserializer(client_models)
 
         self.private_link_scopes = PrivateLinkScopesOperations(

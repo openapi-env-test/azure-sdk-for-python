@@ -8,7 +8,7 @@
 from typing import TYPE_CHECKING
 import warnings
 
-from azure.core.exceptions import ClientAuthenticationError, HttpResponseError, ResourceExistsError, ResourceNotFoundError, map_error
+from azure.core.exceptions import HttpResponseError, ResourceExistsError, ResourceNotFoundError, map_error
 from azure.core.paging import ItemPaged
 from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import HttpRequest, HttpResponse
@@ -32,7 +32,7 @@ class PrivateLinkScopesOperations(object):
     instantiates it for you and attaches it as an attribute.
 
     :ivar models: Alias to model classes used in this operation group.
-    :type models: ~$(python-base-namespace).v2019_10_17.models
+    :type models: ~azure.mgmt.monitor.v2019_10_17.models
     :param client: Client for service requests.
     :param config: Configuration of service client.
     :param serializer: An object model serializer.
@@ -55,23 +55,16 @@ class PrivateLinkScopesOperations(object):
         """Gets a list of all Azure Monitor PrivateLinkScopes within a subscription.
 
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either AzureMonitorPrivateLinkScopeListResult or the result of cls(response)
-        :rtype: ~azure.core.paging.ItemPaged[~$(python-base-namespace).v2019_10_17.models.AzureMonitorPrivateLinkScopeListResult]
+        :return: An iterator like instance of AzureMonitorPrivateLinkScopeListResult or the result of cls(response)
+        :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.monitor.v2019_10_17.models.AzureMonitorPrivateLinkScopeListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.AzureMonitorPrivateLinkScopeListResult"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
+        error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
         api_version = "2019-10-17-preview"
-        accept = "application/json"
 
         def prepare_request(next_link=None):
-            # Construct headers
-            header_parameters = {}  # type: Dict[str, Any]
-            header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
-
             if not next_link:
                 # Construct URL
                 url = self.list.metadata['url']  # type: ignore
@@ -83,11 +76,15 @@ class PrivateLinkScopesOperations(object):
                 query_parameters = {}  # type: Dict[str, Any]
                 query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
 
-                request = self._client.get(url, query_parameters, header_parameters)
             else:
                 url = next_link
                 query_parameters = {}  # type: Dict[str, Any]
-                request = self._client.get(url, query_parameters, header_parameters)
+            # Construct headers
+            header_parameters = {}  # type: Dict[str, Any]
+            header_parameters['Accept'] = 'application/json'
+
+            # Construct and send request
+            request = self._client.get(url, query_parameters, header_parameters)
             return request
 
         def extract_data(pipeline_response):
@@ -125,23 +122,16 @@ class PrivateLinkScopesOperations(object):
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either AzureMonitorPrivateLinkScopeListResult or the result of cls(response)
-        :rtype: ~azure.core.paging.ItemPaged[~$(python-base-namespace).v2019_10_17.models.AzureMonitorPrivateLinkScopeListResult]
+        :return: An iterator like instance of AzureMonitorPrivateLinkScopeListResult or the result of cls(response)
+        :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.monitor.v2019_10_17.models.AzureMonitorPrivateLinkScopeListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.AzureMonitorPrivateLinkScopeListResult"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
+        error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
         api_version = "2019-10-17-preview"
-        accept = "application/json"
 
         def prepare_request(next_link=None):
-            # Construct headers
-            header_parameters = {}  # type: Dict[str, Any]
-            header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
-
             if not next_link:
                 # Construct URL
                 url = self.list_by_resource_group.metadata['url']  # type: ignore
@@ -154,11 +144,15 @@ class PrivateLinkScopesOperations(object):
                 query_parameters = {}  # type: Dict[str, Any]
                 query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
 
-                request = self._client.get(url, query_parameters, header_parameters)
             else:
                 url = next_link
                 query_parameters = {}  # type: Dict[str, Any]
-                request = self._client.get(url, query_parameters, header_parameters)
+            # Construct headers
+            header_parameters = {}  # type: Dict[str, Any]
+            header_parameters['Accept'] = 'application/json'
+
+            # Construct and send request
+            request = self._client.get(url, query_parameters, header_parameters)
             return request
 
         def extract_data(pipeline_response):
@@ -193,9 +187,7 @@ class PrivateLinkScopesOperations(object):
     ):
         # type: (...) -> None
         cls = kwargs.pop('cls', None)  # type: ClsType[None]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
+        error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
         api_version = "2019-10-17-preview"
 
@@ -215,6 +207,7 @@ class PrivateLinkScopesOperations(object):
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
 
+        # Construct and send request
         request = self._client.delete(url, query_parameters, header_parameters)
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
@@ -224,7 +217,7 @@ class PrivateLinkScopesOperations(object):
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
         if cls:
-            return cls(pipeline_response, None, {})
+          return cls(pipeline_response, None, {})
 
     _delete_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}'}  # type: ignore
 
@@ -234,7 +227,7 @@ class PrivateLinkScopesOperations(object):
         scope_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> LROPoller[None]
+        # type: (...) -> LROPoller
         """Deletes a Azure Monitor PrivateLinkScope.
 
         :param resource_group_name: The name of the resource group.
@@ -242,12 +235,11 @@ class PrivateLinkScopesOperations(object):
         :param scope_name: The name of the Azure Monitor PrivateLinkScope resource.
         :type scope_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either None or the result of cls(response)
+        :return: An instance of LROPoller that returns None
         :rtype: ~azure.core.polling.LROPoller[None]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
@@ -257,17 +249,12 @@ class PrivateLinkScopesOperations(object):
             'polling_interval',
             self._config.polling_interval
         )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._delete_initial(
-                resource_group_name=resource_group_name,
-                scope_name=scope_name,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        raw_result = self._delete_initial(
+            resource_group_name=resource_group_name,
+            scope_name=scope_name,
+            cls=lambda x,y,z: x,
+            **kwargs
+        )
 
         def get_long_running_output(pipeline_response):
             if cls:
@@ -276,15 +263,7 @@ class PrivateLinkScopesOperations(object):
         if polling is True: polling_method = ARMPolling(lro_delay,  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
     begin_delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}'}  # type: ignore
 
     def get(
@@ -301,17 +280,14 @@ class PrivateLinkScopesOperations(object):
         :param scope_name: The name of the Azure Monitor PrivateLinkScope resource.
         :type scope_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: AzureMonitorPrivateLinkScope, or the result of cls(response)
-        :rtype: ~$(python-base-namespace).v2019_10_17.models.AzureMonitorPrivateLinkScope
+        :return: AzureMonitorPrivateLinkScope or the result of cls(response)
+        :rtype: ~azure.mgmt.monitor.v2019_10_17.models.AzureMonitorPrivateLinkScope
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.AzureMonitorPrivateLinkScope"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
+        error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
         api_version = "2019-10-17-preview"
-        accept = "application/json"
 
         # Construct URL
         url = self.get.metadata['url']  # type: ignore
@@ -328,8 +304,9 @@ class PrivateLinkScopesOperations(object):
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
-        header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
+        header_parameters['Accept'] = 'application/json'
 
+        # Construct and send request
         request = self._client.get(url, query_parameters, header_parameters)
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
@@ -341,7 +318,7 @@ class PrivateLinkScopesOperations(object):
         deserialized = self._deserialize('AzureMonitorPrivateLinkScope', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}'}  # type: ignore
@@ -350,33 +327,33 @@ class PrivateLinkScopesOperations(object):
         self,
         resource_group_name,  # type: str
         scope_name,  # type: str
-        azure_monitor_private_link_scope_payload,  # type: "models.AzureMonitorPrivateLinkScope"
+        location,  # type: str
+        tags=None,  # type: Optional[Dict[str, str]]
         **kwargs  # type: Any
     ):
         # type: (...) -> "models.AzureMonitorPrivateLinkScope"
-        """Creates (or updates) a Azure Monitor PrivateLinkScope. Note: You cannot specify a different
-        value for InstrumentationKey nor AppId in the Put operation.
+        """Creates (or updates) a Azure Monitor PrivateLinkScope. Note: You cannot specify a different value for InstrumentationKey nor AppId in the Put operation.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
         :param scope_name: The name of the Azure Monitor PrivateLinkScope resource.
         :type scope_name: str
-        :param azure_monitor_private_link_scope_payload: Properties that need to be specified to create
-         or update a Azure Monitor PrivateLinkScope.
-        :type azure_monitor_private_link_scope_payload: ~$(python-base-namespace).v2019_10_17.models.AzureMonitorPrivateLinkScope
+        :param location: Resource location.
+        :type location: str
+        :param tags: Resource tags.
+        :type tags: dict[str, str]
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: AzureMonitorPrivateLinkScope, or the result of cls(response)
-        :rtype: ~$(python-base-namespace).v2019_10_17.models.AzureMonitorPrivateLinkScope
+        :return: AzureMonitorPrivateLinkScope or the result of cls(response)
+        :rtype: ~azure.mgmt.monitor.v2019_10_17.models.AzureMonitorPrivateLinkScope
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.AzureMonitorPrivateLinkScope"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
+        error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
+
+        _azure_monitor_private_link_scope_payload = models.AzureMonitorPrivateLinkScope(location=location, tags=tags)
         api_version = "2019-10-17-preview"
         content_type = kwargs.pop("content_type", "application/json")
-        accept = "application/json"
 
         # Construct URL
         url = self.create_or_update.metadata['url']  # type: ignore
@@ -394,12 +371,14 @@ class PrivateLinkScopesOperations(object):
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
         header_parameters['Content-Type'] = self._serialize.header("content_type", content_type, 'str')
-        header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
+        header_parameters['Accept'] = 'application/json'
 
+        # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(azure_monitor_private_link_scope_payload, 'AzureMonitorPrivateLinkScope')
+        body_content = self._serialize.body(_azure_monitor_private_link_scope_payload, 'AzureMonitorPrivateLinkScope')
         body_content_kwargs['content'] = body_content
         request = self._client.put(url, query_parameters, header_parameters, **body_content_kwargs)
+
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
@@ -407,6 +386,7 @@ class PrivateLinkScopesOperations(object):
             map_error(status_code=response.status_code, response=response, error_map=error_map)
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
+        deserialized = None
         if response.status_code == 200:
             deserialized = self._deserialize('AzureMonitorPrivateLinkScope', pipeline_response)
 
@@ -414,7 +394,7 @@ class PrivateLinkScopesOperations(object):
             deserialized = self._deserialize('AzureMonitorPrivateLinkScope', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}'}  # type: ignore
@@ -423,33 +403,30 @@ class PrivateLinkScopesOperations(object):
         self,
         resource_group_name,  # type: str
         scope_name,  # type: str
-        private_link_scope_tags,  # type: "models.TagsResource"
+        tags=None,  # type: Optional[Dict[str, str]]
         **kwargs  # type: Any
     ):
         # type: (...) -> "models.AzureMonitorPrivateLinkScope"
-        """Updates an existing PrivateLinkScope's tags. To update other fields use the CreateOrUpdate
-        method.
+        """Updates an existing PrivateLinkScope's tags. To update other fields use the CreateOrUpdate method.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
         :param scope_name: The name of the Azure Monitor PrivateLinkScope resource.
         :type scope_name: str
-        :param private_link_scope_tags: Updated tag information to set into the PrivateLinkScope
-         instance.
-        :type private_link_scope_tags: ~$(python-base-namespace).v2019_10_17.models.TagsResource
+        :param tags: Resource tags.
+        :type tags: dict[str, str]
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: AzureMonitorPrivateLinkScope, or the result of cls(response)
-        :rtype: ~$(python-base-namespace).v2019_10_17.models.AzureMonitorPrivateLinkScope
+        :return: AzureMonitorPrivateLinkScope or the result of cls(response)
+        :rtype: ~azure.mgmt.monitor.v2019_10_17.models.AzureMonitorPrivateLinkScope
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.AzureMonitorPrivateLinkScope"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
+        error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
+
+        _private_link_scope_tags = models.TagsResource(tags=tags)
         api_version = "2019-10-17-preview"
         content_type = kwargs.pop("content_type", "application/json")
-        accept = "application/json"
 
         # Construct URL
         url = self.update_tags.metadata['url']  # type: ignore
@@ -467,12 +444,14 @@ class PrivateLinkScopesOperations(object):
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
         header_parameters['Content-Type'] = self._serialize.header("content_type", content_type, 'str')
-        header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
+        header_parameters['Accept'] = 'application/json'
 
+        # Construct and send request
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(private_link_scope_tags, 'TagsResource')
+        body_content = self._serialize.body(_private_link_scope_tags, 'TagsResource')
         body_content_kwargs['content'] = body_content
         request = self._client.patch(url, query_parameters, header_parameters, **body_content_kwargs)
+
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
@@ -483,7 +462,7 @@ class PrivateLinkScopesOperations(object):
         deserialized = self._deserialize('AzureMonitorPrivateLinkScope', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     update_tags.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}'}  # type: ignore

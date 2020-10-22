@@ -8,7 +8,7 @@
 from typing import TYPE_CHECKING
 import warnings
 
-from azure.core.exceptions import ClientAuthenticationError, HttpResponseError, ResourceExistsError, ResourceNotFoundError, map_error
+from azure.core.exceptions import HttpResponseError, ResourceExistsError, ResourceNotFoundError, map_error
 from azure.core.paging import ItemPaged
 from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import HttpRequest, HttpResponse
@@ -30,7 +30,7 @@ class PrivateLinkResourcesOperations(object):
     instantiates it for you and attaches it as an attribute.
 
     :ivar models: Alias to model classes used in this operation group.
-    :type models: ~$(python-base-namespace).v2019_10_17.models
+    :type models: ~azure.mgmt.monitor.v2019_10_17.models
     :param client: Client for service requests.
     :param config: Configuration of service client.
     :param serializer: An object model serializer.
@@ -59,23 +59,16 @@ class PrivateLinkResourcesOperations(object):
         :param scope_name: The name of the Azure Monitor PrivateLinkScope resource.
         :type scope_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either PrivateLinkResourceListResult or the result of cls(response)
-        :rtype: ~azure.core.paging.ItemPaged[~$(python-base-namespace).v2019_10_17.models.PrivateLinkResourceListResult]
+        :return: An iterator like instance of PrivateLinkResourceListResult or the result of cls(response)
+        :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.monitor.v2019_10_17.models.PrivateLinkResourceListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.PrivateLinkResourceListResult"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
+        error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
         api_version = "2019-10-17-preview"
-        accept = "application/json"
 
         def prepare_request(next_link=None):
-            # Construct headers
-            header_parameters = {}  # type: Dict[str, Any]
-            header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
-
             if not next_link:
                 # Construct URL
                 url = self.list_by_private_link_scope.metadata['url']  # type: ignore
@@ -89,11 +82,15 @@ class PrivateLinkResourcesOperations(object):
                 query_parameters = {}  # type: Dict[str, Any]
                 query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
 
-                request = self._client.get(url, query_parameters, header_parameters)
             else:
                 url = next_link
                 query_parameters = {}  # type: Dict[str, Any]
-                request = self._client.get(url, query_parameters, header_parameters)
+            # Construct headers
+            header_parameters = {}  # type: Dict[str, Any]
+            header_parameters['Accept'] = 'application/json'
+
+            # Construct and send request
+            request = self._client.get(url, query_parameters, header_parameters)
             return request
 
         def extract_data(pipeline_response):
@@ -137,17 +134,14 @@ class PrivateLinkResourcesOperations(object):
         :param group_name: The name of the private link resource.
         :type group_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: PrivateLinkResource, or the result of cls(response)
-        :rtype: ~$(python-base-namespace).v2019_10_17.models.PrivateLinkResource
+        :return: PrivateLinkResource or the result of cls(response)
+        :rtype: ~azure.mgmt.monitor.v2019_10_17.models.PrivateLinkResource
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["models.PrivateLinkResource"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
+        error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop('error_map', {}))
         api_version = "2019-10-17-preview"
-        accept = "application/json"
 
         # Construct URL
         url = self.get.metadata['url']  # type: ignore
@@ -165,8 +159,9 @@ class PrivateLinkResourcesOperations(object):
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
-        header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
+        header_parameters['Accept'] = 'application/json'
 
+        # Construct and send request
         request = self._client.get(url, query_parameters, header_parameters)
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
@@ -178,7 +173,7 @@ class PrivateLinkResourcesOperations(object):
         deserialized = self._deserialize('PrivateLinkResource', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+          return cls(pipeline_response, deserialized, {})
 
         return deserialized
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/privateLinkResources/{groupName}'}  # type: ignore

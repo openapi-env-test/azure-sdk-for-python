@@ -16,7 +16,7 @@ class ActionGroupList(msrest.serialization.Model):
     """A list of action groups.
 
     :param value: The list of action groups.
-    :type value: list[~$(python-base-namespace).v2019_06_01.models.ActionGroupResource]
+    :type value: list[~azure.mgmt.monitor.v2019_06_01.models.ActionGroupResource]
     :param next_link: Provides the link to retrieve the next set of elements.
     :type next_link: str
     """
@@ -137,32 +137,32 @@ class ActionGroupResource(Resource):
      enabled, then none of its receivers will receive communications.
     :type enabled: bool
     :param email_receivers: The list of email receivers that are part of this action group.
-    :type email_receivers: list[~$(python-base-namespace).v2019_06_01.models.EmailReceiver]
+    :type email_receivers: list[~azure.mgmt.monitor.v2019_06_01.models.EmailReceiver]
     :param sms_receivers: The list of SMS receivers that are part of this action group.
-    :type sms_receivers: list[~$(python-base-namespace).v2019_06_01.models.SmsReceiver]
+    :type sms_receivers: list[~azure.mgmt.monitor.v2019_06_01.models.SmsReceiver]
     :param webhook_receivers: The list of webhook receivers that are part of this action group.
-    :type webhook_receivers: list[~$(python-base-namespace).v2019_06_01.models.WebhookReceiver]
+    :type webhook_receivers: list[~azure.mgmt.monitor.v2019_06_01.models.WebhookReceiver]
     :param itsm_receivers: The list of ITSM receivers that are part of this action group.
-    :type itsm_receivers: list[~$(python-base-namespace).v2019_06_01.models.ItsmReceiver]
+    :type itsm_receivers: list[~azure.mgmt.monitor.v2019_06_01.models.ItsmReceiver]
     :param azure_app_push_receivers: The list of AzureAppPush receivers that are part of this
      action group.
-    :type azure_app_push_receivers: list[~$(python-base-
-     namespace).v2019_06_01.models.AzureAppPushReceiver]
+    :type azure_app_push_receivers:
+     list[~azure.mgmt.monitor.v2019_06_01.models.AzureAppPushReceiver]
     :param automation_runbook_receivers: The list of AutomationRunbook receivers that are part of
      this action group.
-    :type automation_runbook_receivers: list[~$(python-base-
-     namespace).v2019_06_01.models.AutomationRunbookReceiver]
+    :type automation_runbook_receivers:
+     list[~azure.mgmt.monitor.v2019_06_01.models.AutomationRunbookReceiver]
     :param voice_receivers: The list of voice receivers that are part of this action group.
-    :type voice_receivers: list[~$(python-base-namespace).v2019_06_01.models.VoiceReceiver]
+    :type voice_receivers: list[~azure.mgmt.monitor.v2019_06_01.models.VoiceReceiver]
     :param logic_app_receivers: The list of logic app receivers that are part of this action group.
-    :type logic_app_receivers: list[~$(python-base-namespace).v2019_06_01.models.LogicAppReceiver]
+    :type logic_app_receivers: list[~azure.mgmt.monitor.v2019_06_01.models.LogicAppReceiver]
     :param azure_function_receivers: The list of azure function receivers that are part of this
      action group.
-    :type azure_function_receivers: list[~$(python-base-
-     namespace).v2019_06_01.models.AzureFunctionReceiver]
+    :type azure_function_receivers:
+     list[~azure.mgmt.monitor.v2019_06_01.models.AzureFunctionReceiver]
     :param arm_role_receivers: The list of ARM role receivers that are part of this action group.
      Roles are Azure RBAC roles and only built-in roles are supported.
-    :type arm_role_receivers: list[~$(python-base-namespace).v2019_06_01.models.ArmRoleReceiver]
+    :type arm_role_receivers: list[~azure.mgmt.monitor.v2019_06_01.models.ArmRoleReceiver]
     """
 
     _validation = {
@@ -431,7 +431,7 @@ class EmailReceiver(msrest.serialization.Model):
     :type use_common_alert_schema: bool
     :ivar status: The receiver status of the e-mail. Possible values include: "NotSpecified",
      "Enabled", "Disabled".
-    :vartype status: str or ~$(python-base-namespace).v2019_06_01.models.ReceiverStatus
+    :vartype status: str or ~azure.mgmt.monitor.v2019_06_01.models.ReceiverStatus
     """
 
     _validation = {
@@ -633,7 +633,7 @@ class SmsReceiver(msrest.serialization.Model):
     :type phone_number: str
     :ivar status: The status of the receiver. Possible values include: "NotSpecified", "Enabled",
      "Disabled".
-    :vartype status: str or ~$(python-base-namespace).v2019_06_01.models.ReceiverStatus
+    :vartype status: str or ~azure.mgmt.monitor.v2019_06_01.models.ReceiverStatus
     """
 
     _validation = {
