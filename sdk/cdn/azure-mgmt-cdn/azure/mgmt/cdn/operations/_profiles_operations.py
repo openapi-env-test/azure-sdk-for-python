@@ -40,7 +40,7 @@ class ProfilesOperations(object):
 
         self.config = config
 
-    def list(
+    def list_xxx(
             self, custom_headers=None, raw=False, **operation_config):
         """Lists all of the CDN profiles within an Azure subscription.
 
@@ -58,7 +58,7 @@ class ProfilesOperations(object):
         def prepare_request(next_link=None):
             if not next_link:
                 # Construct URL
-                url = self.list.metadata['url']
+                url = self.list_xxx.metadata['url']
                 path_format_arguments = {
                     'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str')
                 }
@@ -103,7 +103,7 @@ class ProfilesOperations(object):
         deserialized = models.ProfilePaged(internal_paging, self._deserialize.dependencies, header_dict)
 
         return deserialized
-    list.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Cdn/profiles'}
+    list_xxx.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Cdn/profiles'}
 
     def list_by_resource_group(
             self, resource_group_name, custom_headers=None, raw=False, **operation_config):
