@@ -174,7 +174,7 @@ class ProfilesOperations(object):
         return deserialized
     list_by_resource_group.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles'}
 
-    def get(
+    def get_xxx(
             self, resource_group_name, profile_name, custom_headers=None, raw=False, **operation_config):
         """Gets a CDN profile with the specified profile name under the specified
         subscription and resource group.
@@ -197,7 +197,7 @@ class ProfilesOperations(object):
          :class:`ErrorResponseException<azure.mgmt.cdn.models.ErrorResponseException>`
         """
         # Construct URL
-        url = self.get.metadata['url']
+        url = self.get_xxx.metadata['url']
         path_format_arguments = {
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
             'profileName': self._serialize.url("profile_name", profile_name, 'str'),
@@ -235,7 +235,7 @@ class ProfilesOperations(object):
             return client_raw_response
 
         return deserialized
-    get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}'}
+    get_xxx.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}'}
 
 
     def _create_initial(
