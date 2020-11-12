@@ -100,6 +100,7 @@ from ._sync_members_operations import SyncMembersOperations
 from ._managed_instances_operations import ManagedInstancesOperations
 from ._managed_database_restore_details_operations import ManagedDatabaseRestoreDetailsOperations
 from ._managed_databases_operations import ManagedDatabasesOperations
+from ._sql_breaking_change_managed_databases_operations import SQLBreakingChangeManagedDatabasesOperations
 from ._server_azure_ad_only_authentications_operations import ServerAzureADOnlyAuthenticationsOperations
 from ._import_export_operations import ImportExportOperations
 from ._managed_instance_azure_ad_only_authentications_operations import ManagedInstanceAzureADOnlyAuthenticationsOperations
@@ -197,6 +198,7 @@ __all__ = [
     'ManagedInstancesOperations',
     'ManagedDatabaseRestoreDetailsOperations',
     'ManagedDatabasesOperations',
+    'SQLBreakingChangeManagedDatabasesOperations',
     'ServerAzureADOnlyAuthenticationsOperations',
     'ImportExportOperations',
     'ManagedInstanceAzureADOnlyAuthenticationsOperations',

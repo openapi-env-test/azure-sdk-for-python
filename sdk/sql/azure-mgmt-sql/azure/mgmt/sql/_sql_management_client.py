@@ -104,6 +104,7 @@ from .operations import SyncMembersOperations
 from .operations import ManagedInstancesOperations
 from .operations import ManagedDatabaseRestoreDetailsOperations
 from .operations import ManagedDatabasesOperations
+from .operations import SQLBreakingChangeManagedDatabasesOperations
 from .operations import ServerAzureADOnlyAuthenticationsOperations
 from .operations import ImportExportOperations
 from .operations import ManagedInstanceAzureADOnlyAuthenticationsOperations
@@ -299,6 +300,8 @@ class SqlManagementClient(SDKClient):
     :vartype managed_database_restore_details: azure.mgmt.sql.operations.ManagedDatabaseRestoreDetailsOperations
     :ivar managed_databases: ManagedDatabases operations
     :vartype managed_databases: azure.mgmt.sql.operations.ManagedDatabasesOperations
+    :ivar sql_breaking_change_managed_databases: SQLBreakingChangeManagedDatabases operations
+    :vartype sql_breaking_change_managed_databases: azure.mgmt.sql.operations.SQLBreakingChangeManagedDatabasesOperations
     :ivar server_azure_ad_only_authentications: ServerAzureADOnlyAuthentications operations
     :vartype server_azure_ad_only_authentications: azure.mgmt.sql.operations.ServerAzureADOnlyAuthenticationsOperations
     :ivar import_export: ImportExport operations
@@ -508,6 +511,8 @@ class SqlManagementClient(SDKClient):
         self.managed_database_restore_details = ManagedDatabaseRestoreDetailsOperations(
             self._client, self.config, self._serialize, self._deserialize)
         self.managed_databases = ManagedDatabasesOperations(
+            self._client, self.config, self._serialize, self._deserialize)
+        self.sql_breaking_change_managed_databases = SQLBreakingChangeManagedDatabasesOperations(
             self._client, self.config, self._serialize, self._deserialize)
         self.server_azure_ad_only_authentications = ServerAzureADOnlyAuthenticationsOperations(
             self._client, self.config, self._serialize, self._deserialize)
