@@ -9,6 +9,7 @@ from pathlib import Path
 import subprocess
 import sys
 import types
+import tempfile
 from typing import Dict, Any, Optional
 
 # Because I'm subprocessing myself, I need to do weird thing as import.
@@ -149,62 +150,18 @@ def merge_report(report_paths):
         merged_report["operations"].update(report_json["operations"])
     return merged_report
 
-def filter_track2_versions(package_name, versions):
-    from packaging import version
-    track2_versions = {
-        'azure-mgmt-appconfiguration': '1.0.0b1',
-        'azure-mgmt-compute':'17.0.0b1',
-        'azure-mgmt-eventhub':'8.0.0b1',
-        'azure-mgmt-keyvault':'7.0.0b1',
-        'azure-mgmt-monitor':'1.0.0b1',
-        'azure-mgmt-network':'16.0.0b1',
-        'azure-mgmt-resource':'15.0.0b1',
-        'azure-mgmt-storage':'16.0.0b1',
-        'azure-mgmt-containerservice': '14.0.0b1',
-        'azure-mgmt-web':'1.0.0b1',
-        'azure-mgmt-authorization':'1.0.0b1',
-        'azure-mgmt-servicebus':'6.0.0b1',
-        'azure-mgmt-cosmosdb':'6.0.0b1',
-        'azure-mgmt-sql':'1.0.0b1',
-        'azure-mgmt-redis':'12.0.0b1',
-        'azure-mgmt-containerregistry':'8.0.0b1',
-        'azure-mgmt-containerinstance':'7.0.0b1',
-        'azure-mgmt-resourcegraph':'7.0.0b1',
-        'azure-mgmt-subscription':'1.0.0b1',
-        'azure-mgmt-operationsmanagement':'1.0.0b1',
-        'azure-mgmt-datafactory':'1.0.0b1',
-        'azure-mgmt-rdbms':'8.0.0b1',
-        'azure-mgmt-loganalytics':'7.0.0b1',
-        'azure-mgmt-automation':'1.0.0b1',
-        'azure-mgmt-recoveryservices':'1.0.0b1',
-        'azure-mgmt-iothub':'1.0.0b1',
-        'azure-mgmt-logic':'9.0.0b1',
-        'azure-mgmt-hdinsight':'7.0.0b1',
-        'azure-mgmt-machinelearningservices':'1.0.0b1',
-        'azure-mgmt-datalake-store':'1.0.0b1',
-        'azure-mgmt-cdn':'10.0.0b1',
-        'azure-mgmt-devtestlabs':'9.0.0b1',
-        'azure-mgmt-apimanagement':'1.0.0b1',
-        'azure-mgmt-eventgrid':'8.0.0b1',
-        'azure-mgmt-consumption':'8.0.0b1',
-        'azure-mgmt-marketplaceordering':'1.0.0b1',
-        'azure-mgmt-advisor':'9.0.0b1',
-        'azure-mgmt-cognitiveservices':'11.0.0b1',
-        'azure-mgmt-security':'1.0.0b1',
-        'azure-mgmt-relay':'1.0.0b1',
-        'azure-mgmt-notificationhubs':'7.0.0b1',
-        'azure-mgmt-search':'8.0.0b1',
-        'azure-mgmt-policyinsights':'1.0.0b1',
-        'azure-mgmt-batch':'14.0.0b1',
-        'azure-mgmt-scheduler':'7.0.0b1',
-        'azure-mgmt-commerce':'6.0.0b1'
-    }
-    upbound = track2_versions.get(package_name)
-    if not upbound:
-        return versions
-    return list(filter(lambda x: version.parse(x) < version.parse(upbound), versions))
+def main(
+        input_parameter: str,
+        version: Optional[str] = None,
+        no_venv: bool = False,
+        pypi: bool = False,
+        last_pypi: bool = False,
+        output: Optional[str] = None,
+        metadata_path: Optional[str] = None
+    ):
 
-def main(input_parameter: str, version: Optional[str] = None, no_venv: bool = False, pypi: bool = False, last_pypi: bool = False, output: str = None):
+    output_msg = output if output else "default folder"
+    _LOGGER.info(f"Building code report of {input_parameter} for version {version} in {output_msg} ({no_venv}/{pypi}/{last_pypi})")
     package_name, module_name = parse_input(input_parameter)
     path_to_package = resolve_package_directory(package_name)
 
@@ -219,18 +176,21 @@ def main(input_parameter: str, version: Optional[str] = None, no_venv: bool = Fa
             _LOGGER.info(f"Got {versions}")
             if last_pypi:
                 _LOGGER.info(f"Only keep last PyPI version")
-                versions = filter_track2_versions(package_name, versions)
                 versions = [versions[-1]]
 
+        reports = []
         for version in versions:
             _LOGGER.info(f"Installing version {version} of {package_name} in a venv")
-            with create_venv_with_package([f"{package_name}=={version}"]) as venv:
+            with create_venv_with_package([f"{package_name}=={version}"]) as venv, tempfile.TemporaryDirectory() as temp_dir:
+                metadata_path = str(Path(temp_dir, "metadata.json"))
                 args = [
                     venv.env_exe,
                     __file__,
                     "--no-venv",
                     "--version",
                     version,
+                    "--metadata",
+                    str(Path(temp_dir, "metadata.json")),
                     input_parameter
                 ]
                 if output is not None:
@@ -240,14 +200,17 @@ def main(input_parameter: str, version: Optional[str] = None, no_venv: bool = Fa
                 except subprocess.CalledProcessError:
                     # If it fail, just assume this version is too old to get an Autorest report
                     _LOGGER.warning(f"Version {version} seems to be too old to build a report (probably not Autorest based)")
-        # Files have been written by the subprocess
-        return
+                # Files have been written by the subprocess
+                with open(metadata_path, "r") as metadata_fd:
+                    reports += json.load(metadata_fd)["reports"]
+        return reports
 
     modules = find_autorest_generated_folder(module_name)
     result = []
     version = version or "latest"
     output_folder = Path(path_to_package) / Path("code_reports") / Path(version)
     output_folder.mkdir(parents=True, exist_ok=True)
+    metadata = {"reports": []}  # Prepare metadata
 
     for module_name in modules:
         _LOGGER.info(f"Working on {module_name}")
@@ -267,6 +230,7 @@ def main(input_parameter: str, version: Optional[str] = None, no_venv: bool = Fa
             json.dump(report, fd, indent=2)
             _LOGGER.info(f"Report written to {output_filename}")
         result.append(output_filename)
+        metadata["reports"].append(str(output_filename))
 
     if len(result) > 1:
         merged_report = merge_report(result)
@@ -277,6 +241,12 @@ def main(input_parameter: str, version: Optional[str] = None, no_venv: bool = Fa
         with open(output_filename, "w") as fd:
             json.dump(merged_report, fd, indent=2)
             _LOGGER.info(f"Merged report written to {output_filename}")
+        metadata["reports"].append(str(output_filename))
+
+    if metadata_path:
+        with open(metadata_path, "w") as metadata_fd:
+            _LOGGER.info(f"Writing metadata: {metadata}")
+            json.dump(metadata, metadata_fd)
 
     return result
 
@@ -347,8 +317,11 @@ if __name__ == "__main__":
     parser.add_argument("--output",
                         dest="output",
                         help="Override output path.")
+    parser.add_argument("--metadata-path",
+                        dest="metadata",
+                        help="Write a metadata file about what happen. Mostly used for automation.")
     args = parser.parse_args()
 
     logging.basicConfig(level=logging.DEBUG if args.debug else logging.INFO)
 
-    main(args.package_name, args.version, args.no_venv, args.pypi, args.last_pypi, args.output)
+    main(args.package_name, args.version, args.no_venv, args.pypi, args.last_pypi, args.output, args.metadata)
