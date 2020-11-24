@@ -150,6 +150,61 @@ def merge_report(report_paths):
         merged_report["operations"].update(report_json["operations"])
     return merged_report
 
+def filter_track2_versions(package_name, versions):
+    from packaging import version
+    track2_versions = {
+        'azure-mgmt-appconfiguration': '1.0.0b1',
+        'azure-mgmt-compute':'17.0.0b1',
+        'azure-mgmt-eventhub':'8.0.0b1',
+        'azure-mgmt-keyvault':'7.0.0b1',
+        'azure-mgmt-monitor':'1.0.0b1',
+        'azure-mgmt-network':'16.0.0b1',
+        'azure-mgmt-resource':'15.0.0b1',
+        'azure-mgmt-storage':'16.0.0b1',
+        'azure-mgmt-containerservice': '14.0.0b1',
+        'azure-mgmt-web':'1.0.0b1',
+        'azure-mgmt-authorization':'1.0.0b1',
+        'azure-mgmt-servicebus':'6.0.0b1',
+        'azure-mgmt-cosmosdb':'6.0.0b1',
+        'azure-mgmt-sql':'1.0.0b1',
+        'azure-mgmt-redis':'12.0.0b1',
+        'azure-mgmt-containerregistry':'8.0.0b1',
+        'azure-mgmt-containerinstance':'7.0.0b1',
+        'azure-mgmt-resourcegraph':'7.0.0b1',
+        'azure-mgmt-subscription':'1.0.0b1',
+        'azure-mgmt-operationsmanagement':'1.0.0b1',
+        'azure-mgmt-datafactory':'1.0.0b1',
+        'azure-mgmt-rdbms':'8.0.0b1',
+        'azure-mgmt-loganalytics':'7.0.0b1',
+        'azure-mgmt-automation':'1.0.0b1',
+        'azure-mgmt-recoveryservices':'1.0.0b1',
+        'azure-mgmt-iothub':'1.0.0b1',
+        'azure-mgmt-logic':'9.0.0b1',
+        'azure-mgmt-hdinsight':'7.0.0b1',
+        'azure-mgmt-machinelearningservices':'1.0.0b1',
+        'azure-mgmt-datalake-store':'1.0.0b1',
+        'azure-mgmt-cdn':'10.0.0b1',
+        'azure-mgmt-devtestlabs':'9.0.0b1',
+        'azure-mgmt-apimanagement':'1.0.0b1',
+        'azure-mgmt-eventgrid':'8.0.0b1',
+        'azure-mgmt-consumption':'8.0.0b1',
+        'azure-mgmt-marketplaceordering':'1.0.0b1',
+        'azure-mgmt-advisor':'9.0.0b1',
+        'azure-mgmt-cognitiveservices':'11.0.0b1',
+        'azure-mgmt-security':'1.0.0b1',
+        'azure-mgmt-relay':'1.0.0b1',
+        'azure-mgmt-notificationhubs':'7.0.0b1',
+        'azure-mgmt-search':'8.0.0b1',
+        'azure-mgmt-policyinsights':'1.0.0b1',
+        'azure-mgmt-batch':'14.0.0b1',
+        'azure-mgmt-scheduler':'7.0.0b1',
+        'azure-mgmt-commerce':'6.0.0b1'
+    }
+    upbound = track2_versions.get(package_name)
+    if not upbound:
+        return versions
+    return list(filter(lambda x: version.parse(x) < version.parse(upbound), versions))
+	
 def main(
         input_parameter: str,
         version: Optional[str] = None,
@@ -176,6 +231,7 @@ def main(
             _LOGGER.info(f"Got {versions}")
             if last_pypi:
                 _LOGGER.info(f"Only keep last PyPI version")
+                versions = filter_track2_versions(package_name, versions)
                 versions = [versions[-1]]
 
         reports = []
