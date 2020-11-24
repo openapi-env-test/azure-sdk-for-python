@@ -90,7 +90,7 @@ def main(generate_input, generate_output):
         result['packages'].append(package_entry)
 
         # edit version, changelog file and do some check
-        if len(md_output) and package_name.find('mgmt') > -1:
+        if package_name.find('mgmt') > -1:
             edit_check_main(sdk_folder, folder_name, package_name, md_output)
 
     with open(generate_output, "w") as writer:

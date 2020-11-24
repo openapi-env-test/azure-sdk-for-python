@@ -4,9 +4,15 @@
     "generationCallMode": "one-for-all-configs"
   },
 
+  "initOptions": {
+    "initScript": {
+      "path": "python scripts/dev_setup.py -p azure-core"
+    }
+  },
+
   "generateOptions": {
     "generateScript": {
-      "path": "./tools/azure-sdk-tools/packaging_tools/generate_script_v2.py",
+      "path": "python -m packaging_tools.generate_script_v2",
       "stderr": {
         "showInComment": true
       },
