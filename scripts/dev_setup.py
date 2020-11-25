@@ -73,15 +73,6 @@ parser.add_argument(
     help="Comma separated list of packages that we want to take the 'opposite' installation method for.",
 )
 
-parser.add_argument(
-    "--neglect",
-    "-n",
-    nargs='*',
-    dest="neglect_list",
-    default="",
-    help="neglect parameters",
-)
-
 args = parser.parse_args()
 
 packages = {
