@@ -91,7 +91,7 @@ def main(generate_input, generate_output):
 
         # edit version, changelog file and do some check
         if package_name.find('mgmt') > -1:
-            edit_check_main(sdk_folder, folder_name, package_name, md_output)
+            edit_check_main(sdk_folder, folder_name, package_name, md_output, relative_path_readme)
 
     with open(generate_output, "w") as writer:
         json.dump(result, writer)

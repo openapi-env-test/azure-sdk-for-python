@@ -6,7 +6,7 @@
 
   "initOptions": {
     "initScript": {
-      "path": "python scripts/dev_setup.py -p azure-core"
+      "path": "python scripts/dev_setup.py -p azure-core -n"
     }
   },
 

@@ -84,7 +84,33 @@ def edit_version(version_file, md_output):
         file_out.writelines(version_content)
 
 
-def main(sdk_folder, folder_name, package_name, md_output):
+def log_pack(info):
+    return '[CHECK] ' + info
+
+
+def check_tag(version_folder, relative_path_readme):
+    with open(relative_path_readme, 'r') as file_in:
+        content = file_in.readlines()
+    for line in content:
+        if line.find('tag: package-') > -1:
+            tag = line.strip('\n').replace('tag: package-', '')
+            file_list = os.listdir(version_folder)
+            for file in file_list:
+                file_folder = str(Path(version_folder, file))
+                if not os.path.isfile(file_folder):
+                    continue
+                with open(file_folder, 'r') as file_in:
+                    file_content = file_in.readlines()
+                for file_line in file_content:
+                    if file_line.find(tag) > -1:
+                        _LOGGER.info(log_pack(f'find {tag} in {file_folder}'))
+                        return
+            _LOGGER.warning('do not find \'{tag}\', check it manually')
+            return
+    _LOGGER.warning(log_pack('do not find useful tag, check it manually !!!'))
+
+
+def main(sdk_folder, folder_name, package_name, md_output, relative_path_readme):
     service_name = package_name.replace('azure-mgmt-', '')
     basic_folder = str(Path(sdk_folder, folder_name, package_name))
     version_folder = str(Path(basic_folder, 'azure', 'mgmt', service_name))
@@ -100,6 +126,7 @@ def main(sdk_folder, folder_name, package_name, md_output):
     # do some check
     replace_bad_name(basic_folder, service_name)
     check_release_history(package_name)
+    check_tag(version_folder, relative_path_readme)
 
 
 if __name__ == "__main__":
@@ -108,5 +135,6 @@ if __name__ == "__main__":
     parser.add_argument('folder_name', help='specific folder.')
     parser.add_argument('package_name', help='release package name.')
     parser.add_argument('md_output', help='addtional changelog.')
+    parser.add_argument('relative_path_readme', help='readme path.')
     args = parser.parse_args()
-    main(args.sdk_folder, args.folder_name, args.package_name, args.md_output)
+    main(args.sdk_folder, args.folder_name, args.package_name, args.md_output, args.relative_path_readme)
