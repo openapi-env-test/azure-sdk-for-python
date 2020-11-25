@@ -12,7 +12,7 @@
 
   "generateOptions": {
     "generateScript": {
-      "path": "python -m packaging_tools.generate_script_v2",
+      "path": "python3 -m packaging_tools.generate_script_v2",
       "stderr": {
         "showInComment": true
       },
