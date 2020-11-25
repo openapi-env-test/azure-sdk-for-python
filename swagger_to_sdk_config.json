@@ -6,7 +6,7 @@
 
   "initOptions": {
     "initScript": {
-      "path": "python scripts/automation_init.py "
+      "path": "python3 scripts/automation_init.py "
     }
   },
 
