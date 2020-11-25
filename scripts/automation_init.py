@@ -16,10 +16,11 @@ def myPrint(info):
 
 if __name__ == '__main__':
     call('python scripts/dev_setup.py -p azure-core', shell=True)
-    myPrint('len(sys.argv):' + str(len(sys.argv)))
-    if len(sys.argv) == 3:
-        myPrint('sys.argv[2]:' + str(sys.argv[2]))
-        with open(sys.argv[2], 'w') as file_out:
+    for i in range(0, len(sys.argv)):
+        myPrint(sys.argv[i])
+    if len(sys.argv) == 4:
+        myPrint('sys.argv[3]:' + str(sys.argv[3]))
+        with open(sys.argv[3], 'w') as file_out:
             file_out.writelines(["{}\n"])
             myPrint('output succeed!!!')
 
