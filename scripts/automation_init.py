@@ -10,7 +10,7 @@ from subprocess import call
 import os
 
 if __name__ == '__main__':
-    print(os.getcwd())
+    print('xxxxxxxxxxx:'+os.getcwd())
     call('python scripts/dev_setup.py -p azure-core', shell=True)
     if len(sys.argv) == 3:
         with open(sys.argv[2], 'w') as file_out:
