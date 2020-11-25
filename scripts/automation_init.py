@@ -16,9 +16,9 @@ def myPrint(info):
 
 if __name__ == '__main__':
     call('python scripts/dev_setup.py -p azure-core', shell=True)
-    myPrint('len(sys.argv):' + len(sys.argv))
+    myPrint('len(sys.argv):' + str(len(sys.argv)))
     if len(sys.argv) == 3:
-        myPrint('sys.argv[2]:'+sys.argv[2])
+        myPrint('sys.argv[2]:' + str(sys.argv[2]))
         with open(sys.argv[2], 'w') as file_out:
             file_out.writelines(["{}\n"])
             myPrint('output succeed!!!')
