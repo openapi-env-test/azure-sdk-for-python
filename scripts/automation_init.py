@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
 # --------------------------------------------------------------------------------------------
 # Copyright (c) Microsoft Corporation. All rights reserved.
@@ -11,7 +11,7 @@ import os
 
 if __name__ == '__main__':
     print(os.getcwd())
-    call('python3 scripts/dev_setup.py -p azure-core', shell=True)
+    call('python scripts/dev_setup.py -p azure-core', shell=True)
     if len(sys.argv) == 3:
         with open(sys.argv[2], 'w') as file_out:
             file_out.writelines(["{}\n"])
