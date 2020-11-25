@@ -6,10 +6,10 @@
 # --------------------------------------------------------------------------------------------
 
 import sys
-from subprocess import check_call
+from subprocess import call
 
 if __name__ == '__main__':
-    check_call('python scripts/dev_setup.py -p azure-core')
+    call('python scripts/dev_setup.py -p azure-core', shell=True)
     if len(sys.argv) == 3:
         with open(sys.argv[2], 'w') as file_out:
             file_out.writelines(["{}\n"])
