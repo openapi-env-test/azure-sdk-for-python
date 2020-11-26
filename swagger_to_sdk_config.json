@@ -6,13 +6,13 @@
 
   "initOptions": {
     "initScript": {
-      "path": "python3 -m venv ../venv && source ../venv/Scripts/activate && python scripts/automation_init.py "
+      "path": "scripts/automation_init"
     }
   },
 
   "generateOptions": {
     "generateScript": {
-      "path": "python -m packaging_tools.generate_script_v2",
+      "path": "scripts/automation_generate",
       "stderr": {
         "showInComment": true
       },
