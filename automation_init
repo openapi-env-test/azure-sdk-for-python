@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set - x
+set - e
 python -m venv ../venv-sdk
 source ../venv-sdk/Scripts/activate
 python scripts/dev_setup.py -p azure-core
