@@ -3,5 +3,8 @@
 python -m venv ../venv-sdk
 source ../venv-sdk/Scripts/activate
 python scripts/dev_setup.py -p azure-core
-echo "{}" >> $2
-echo "[Generate] init success!!!"
+python << EOF
+print('[Generate]'+'$2')
+with open('$2', 'w') as file_out:
+  file_out.writelines(['{}\n'])
+EOF
