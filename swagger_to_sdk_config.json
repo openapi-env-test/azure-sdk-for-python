@@ -6,13 +6,13 @@
 
   "initOptions": {
     "initScript": {
-      "path": "chmod +x scripts/automation_init"
+      "path": "./scripts/automation_init"
     }
   },
 
   "generateOptions": {
     "generateScript": {
-      "path": "chmod +x scripts/automation_generate",
+      "path": "./scripts/automation_generate",
       "stderr": {
         "showInComment": true
       },
