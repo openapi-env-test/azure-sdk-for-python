@@ -6,13 +6,13 @@
 
   "initOptions": {
     "initScript": {
-      "path": "./scripts/automation_init.sh"
+      "path": "sh scripts/automation_init.sh"
     }
   },
 
   "generateOptions": {
     "generateScript": {
-      "path": "./scripts/automation_generate.sh",
+      "path": "sh scripts/automation_generate.sh",
       "stderr": {
         "showInComment": true
       },
