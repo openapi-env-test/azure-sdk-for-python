@@ -1,9 +1,11 @@
 #!/bin/bash
 
-set - x
-set - e
 rm -rf ../venv-sdk
 python3 -m venv ../venv-sdk
-source ../venv-sdk/bin/activate
+VIRTUAL_ENV=$(pwd)/../venv-sdk
+export VIRTUAL_ENV
+PATH="$VIRTUAL_ENV/bin:$PATH"
+export PATH
 python scripts/dev_setup.py -p azure-core
 echo "{}" >> $2
+echo "[Generate] init success!!!"
