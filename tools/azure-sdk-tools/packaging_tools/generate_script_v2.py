@@ -68,6 +68,9 @@ def main(generate_input, generate_output):
         package_entry["path"] = [folder_name]
         package_entry['readmeMd'] = data["relatedReadmeMdFiles"]
 
+        # Setup package locally
+        check_call(f'pip install --ignore-requires-python -e {str(Path(sdk_folder, folder_name, package_name))}',
+                   shell=True)
         # Changelog
         md_output = change_log_main(f"{package_name}:pypi", f"{package_name}:latest")
         package_entry["changelog"] = {
