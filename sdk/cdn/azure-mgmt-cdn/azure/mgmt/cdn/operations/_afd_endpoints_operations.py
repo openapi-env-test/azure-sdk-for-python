@@ -17,8 +17,8 @@ from msrestazure.polling.arm_polling import ARMPolling
 from .. import models
 
 
-class EndpointsOperations(object):
-    """EndpointsOperations operations.
+class AFDEndpointsOperations(object):
+    """AFDEndpointsOperations operations.
 
     You should not instantiate directly this class, but create a Client instance that will create it for you and attach it as attribute.
 
@@ -42,7 +42,7 @@ class EndpointsOperations(object):
 
     def list_by_profile(
             self, resource_group_name, profile_name, custom_headers=None, raw=False, **operation_config):
-        """Lists existing CDN endpoints.
+        """Lists existing AzureFrontDoor endpoints.
 
         :param resource_group_name: Name of the Resource group within the
          Azure subscription.
@@ -55,11 +55,11 @@ class EndpointsOperations(object):
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :return: An iterator like instance of Endpoint
+        :return: An iterator like instance of AFDEndpoint
         :rtype:
-         ~azure.mgmt.cdn.models.EndpointPaged[~azure.mgmt.cdn.models.Endpoint]
+         ~azure.mgmt.cdn.models.AFDEndpointPaged[~azure.mgmt.cdn.models.AFDEndpoint]
         :raises:
-         :class:`ErrorResponseException<azure.mgmt.cdn.models.ErrorResponseException>`
+         :class:`AfdErrorResponseException<azure.mgmt.cdn.models.AfdErrorResponseException>`
         """
         def prepare_request(next_link=None):
             if not next_link:
@@ -100,7 +100,7 @@ class EndpointsOperations(object):
             response = self._client.send(request, stream=False, **operation_config)
 
             if response.status_code not in [200]:
-                raise models.ErrorResponseException(self._deserialize, response)
+                raise models.AfdErrorResponseException(self._deserialize, response)
 
             return response
 
@@ -108,15 +108,15 @@ class EndpointsOperations(object):
         header_dict = None
         if raw:
             header_dict = {}
-        deserialized = models.EndpointPaged(internal_paging, self._deserialize.dependencies, header_dict)
+        deserialized = models.AFDEndpointPaged(internal_paging, self._deserialize.dependencies, header_dict)
 
         return deserialized
-    list_by_profile.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints'}
+    list_by_profile.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints'}
 
     def get(
             self, resource_group_name, profile_name, endpoint_name, custom_headers=None, raw=False, **operation_config):
-        """Gets an existing CDN endpoint with the specified endpoint name under
-        the specified subscription, resource group and profile.
+        """Gets an existing AzureFrontDoor endpoint with the specified endpoint
+        name under the specified subscription, resource group and profile.
 
         :param resource_group_name: Name of the Resource group within the
          Azure subscription.
@@ -132,11 +132,11 @@ class EndpointsOperations(object):
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :return: Endpoint or ClientRawResponse if raw=true
-        :rtype: ~azure.mgmt.cdn.models.Endpoint or
+        :return: AFDEndpoint or ClientRawResponse if raw=true
+        :rtype: ~azure.mgmt.cdn.models.AFDEndpoint or
          ~msrest.pipeline.ClientRawResponse
         :raises:
-         :class:`ErrorResponseException<azure.mgmt.cdn.models.ErrorResponseException>`
+         :class:`AfdErrorResponseException<azure.mgmt.cdn.models.AfdErrorResponseException>`
         """
         # Construct URL
         url = self.get.metadata['url']
@@ -167,18 +167,18 @@ class EndpointsOperations(object):
         response = self._client.send(request, stream=False, **operation_config)
 
         if response.status_code not in [200]:
-            raise models.ErrorResponseException(self._deserialize, response)
+            raise models.AfdErrorResponseException(self._deserialize, response)
 
         deserialized = None
         if response.status_code == 200:
-            deserialized = self._deserialize('Endpoint', response)
+            deserialized = self._deserialize('AFDEndpoint', response)
 
         if raw:
             client_raw_response = ClientRawResponse(deserialized, response)
             return client_raw_response
 
         return deserialized
-    get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}'}
+    get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}'}
 
 
     def _create_initial(
@@ -209,23 +209,21 @@ class EndpointsOperations(object):
             header_parameters['accept-language'] = self._serialize.header("self.config.accept_language", self.config.accept_language, 'str')
 
         # Construct body
-        body_content = self._serialize.body(endpoint, 'Endpoint')
+        body_content = self._serialize.body(endpoint, 'AFDEndpoint')
 
         # Construct and send request
         request = self._client.put(url, query_parameters, header_parameters, body_content)
         response = self._client.send(request, stream=False, **operation_config)
 
-        if response.status_code not in [200, 201, 202]:
-            raise models.ErrorResponseException(self._deserialize, response)
+        if response.status_code not in [200, 201]:
+            raise models.AfdErrorResponseException(self._deserialize, response)
 
         deserialized = None
 
         if response.status_code == 200:
-            deserialized = self._deserialize('Endpoint', response)
+            deserialized = self._deserialize('AFDEndpoint', response)
         if response.status_code == 201:
-            deserialized = self._deserialize('Endpoint', response)
-        if response.status_code == 202:
-            deserialized = self._deserialize('Endpoint', response)
+            deserialized = self._deserialize('AFDEndpoint', response)
 
         if raw:
             client_raw_response = ClientRawResponse(deserialized, response)
@@ -235,8 +233,8 @@ class EndpointsOperations(object):
 
     def create(
             self, resource_group_name, profile_name, endpoint_name, endpoint, custom_headers=None, raw=False, polling=True, **operation_config):
-        """Creates a new CDN endpoint with the specified endpoint name under the
-        specified subscription, resource group and profile.
+        """Creates a new AzureFrontDoor endpoint with the specified endpoint name
+        under the specified subscription, resource group and profile.
 
         :param resource_group_name: Name of the Resource group within the
          Azure subscription.
@@ -248,20 +246,20 @@ class EndpointsOperations(object):
          unique globally.
         :type endpoint_name: str
         :param endpoint: Endpoint properties
-        :type endpoint: ~azure.mgmt.cdn.models.Endpoint
+        :type endpoint: ~azure.mgmt.cdn.models.AFDEndpoint
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: The poller return type is ClientRawResponse, the
          direct response alongside the deserialized response
         :param polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
-        :return: An instance of LROPoller that returns Endpoint or
-         ClientRawResponse<Endpoint> if raw==True
+        :return: An instance of LROPoller that returns AFDEndpoint or
+         ClientRawResponse<AFDEndpoint> if raw==True
         :rtype:
-         ~msrestazure.azure_operation.AzureOperationPoller[~azure.mgmt.cdn.models.Endpoint]
+         ~msrestazure.azure_operation.AzureOperationPoller[~azure.mgmt.cdn.models.AFDEndpoint]
          or
-         ~msrestazure.azure_operation.AzureOperationPoller[~msrest.pipeline.ClientRawResponse[~azure.mgmt.cdn.models.Endpoint]]
+         ~msrestazure.azure_operation.AzureOperationPoller[~msrest.pipeline.ClientRawResponse[~azure.mgmt.cdn.models.AFDEndpoint]]
         :raises:
-         :class:`ErrorResponseException<azure.mgmt.cdn.models.ErrorResponseException>`
+         :class:`AfdErrorResponseException<azure.mgmt.cdn.models.AfdErrorResponseException>`
         """
         raw_result = self._create_initial(
             resource_group_name=resource_group_name,
@@ -274,7 +272,7 @@ class EndpointsOperations(object):
         )
 
         def get_long_running_output(response):
-            deserialized = self._deserialize('Endpoint', response)
+            deserialized = self._deserialize('AFDEndpoint', response)
 
             if raw:
                 client_raw_response = ClientRawResponse(deserialized, response)
@@ -289,7 +287,7 @@ class EndpointsOperations(object):
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
         return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
-    create.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}'}
+    create.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}'}
 
 
     def _update_initial(
@@ -320,21 +318,21 @@ class EndpointsOperations(object):
             header_parameters['accept-language'] = self._serialize.header("self.config.accept_language", self.config.accept_language, 'str')
 
         # Construct body
-        body_content = self._serialize.body(endpoint_update_properties, 'EndpointUpdateParameters')
+        body_content = self._serialize.body(endpoint_update_properties, 'AFDEndpointUpdateParameters')
 
         # Construct and send request
         request = self._client.patch(url, query_parameters, header_parameters, body_content)
         response = self._client.send(request, stream=False, **operation_config)
 
         if response.status_code not in [200, 202]:
-            raise models.ErrorResponseException(self._deserialize, response)
+            raise models.AfdErrorResponseException(self._deserialize, response)
 
         deserialized = None
 
         if response.status_code == 200:
-            deserialized = self._deserialize('Endpoint', response)
+            deserialized = self._deserialize('AFDEndpoint', response)
         if response.status_code == 202:
-            deserialized = self._deserialize('Endpoint', response)
+            deserialized = self._deserialize('AFDEndpoint', response)
 
         if raw:
             client_raw_response = ClientRawResponse(deserialized, response)
@@ -344,11 +342,11 @@ class EndpointsOperations(object):
 
     def update(
             self, resource_group_name, profile_name, endpoint_name, endpoint_update_properties, custom_headers=None, raw=False, polling=True, **operation_config):
-        """Updates an existing CDN endpoint with the specified endpoint name under
-        the specified subscription, resource group and profile. Only tags can
-        be updated after creating an endpoint. To update origins, use the
-        Update Origin operation. To update origin groups, use the Update Origin
-        group operation. To update custom domains, use the Update Custom Domain
+        """Updates an existing AzureFrontDoor endpoint with the specified endpoint
+        name under the specified subscription, resource group and profile. Only
+        tags can be updated after creating an endpoint. To update origins, use
+        the Update Origin operation. To update origin groups, use the Update
+        Origin group operation. To update domains, use the Update Custom Domain
         operation.
 
         :param resource_group_name: Name of the Resource group within the
@@ -362,20 +360,20 @@ class EndpointsOperations(object):
         :type endpoint_name: str
         :param endpoint_update_properties: Endpoint update properties
         :type endpoint_update_properties:
-         ~azure.mgmt.cdn.models.EndpointUpdateParameters
+         ~azure.mgmt.cdn.models.AFDEndpointUpdateParameters
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: The poller return type is ClientRawResponse, the
          direct response alongside the deserialized response
         :param polling: True for ARMPolling, False for no polling, or a
          polling object for personal polling strategy
-        :return: An instance of LROPoller that returns Endpoint or
-         ClientRawResponse<Endpoint> if raw==True
+        :return: An instance of LROPoller that returns AFDEndpoint or
+         ClientRawResponse<AFDEndpoint> if raw==True
         :rtype:
-         ~msrestazure.azure_operation.AzureOperationPoller[~azure.mgmt.cdn.models.Endpoint]
+         ~msrestazure.azure_operation.AzureOperationPoller[~azure.mgmt.cdn.models.AFDEndpoint]
          or
-         ~msrestazure.azure_operation.AzureOperationPoller[~msrest.pipeline.ClientRawResponse[~azure.mgmt.cdn.models.Endpoint]]
+         ~msrestazure.azure_operation.AzureOperationPoller[~msrest.pipeline.ClientRawResponse[~azure.mgmt.cdn.models.AFDEndpoint]]
         :raises:
-         :class:`ErrorResponseException<azure.mgmt.cdn.models.ErrorResponseException>`
+         :class:`AfdErrorResponseException<azure.mgmt.cdn.models.AfdErrorResponseException>`
         """
         raw_result = self._update_initial(
             resource_group_name=resource_group_name,
@@ -388,7 +386,7 @@ class EndpointsOperations(object):
         )
 
         def get_long_running_output(response):
-            deserialized = self._deserialize('Endpoint', response)
+            deserialized = self._deserialize('AFDEndpoint', response)
 
             if raw:
                 client_raw_response = ClientRawResponse(deserialized, response)
@@ -403,7 +401,7 @@ class EndpointsOperations(object):
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
         return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
-    update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}'}
+    update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}'}
 
 
     def _delete_initial(
@@ -435,8 +433,8 @@ class EndpointsOperations(object):
         request = self._client.delete(url, query_parameters, header_parameters)
         response = self._client.send(request, stream=False, **operation_config)
 
-        if response.status_code not in [202, 204]:
-            raise models.ErrorResponseException(self._deserialize, response)
+        if response.status_code not in [200, 204]:
+            raise models.AfdErrorResponseException(self._deserialize, response)
 
         if raw:
             client_raw_response = ClientRawResponse(None, response)
@@ -444,8 +442,8 @@ class EndpointsOperations(object):
 
     def delete(
             self, resource_group_name, profile_name, endpoint_name, custom_headers=None, raw=False, polling=True, **operation_config):
-        """Deletes an existing CDN endpoint with the specified endpoint name under
-        the specified subscription, resource group and profile.
+        """Deletes an existing AzureFrontDoor endpoint with the specified endpoint
+        name under the specified subscription, resource group and profile.
 
         :param resource_group_name: Name of the Resource group within the
          Azure subscription.
@@ -466,7 +464,7 @@ class EndpointsOperations(object):
         :rtype: ~msrestazure.azure_operation.AzureOperationPoller[None] or
          ~msrestazure.azure_operation.AzureOperationPoller[~msrest.pipeline.ClientRawResponse[None]]
         :raises:
-         :class:`ErrorResponseException<azure.mgmt.cdn.models.ErrorResponseException>`
+         :class:`AfdErrorResponseException<azure.mgmt.cdn.models.AfdErrorResponseException>`
         """
         raw_result = self._delete_initial(
             resource_group_name=resource_group_name,
@@ -489,214 +487,12 @@ class EndpointsOperations(object):
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
         return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
-    delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}'}
-
-
-    def _start_initial(
-            self, resource_group_name, profile_name, endpoint_name, custom_headers=None, raw=False, **operation_config):
-        # Construct URL
-        url = self.start.metadata['url']
-        path_format_arguments = {
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
-            'profileName': self._serialize.url("profile_name", profile_name, 'str'),
-            'endpointName': self._serialize.url("endpoint_name", endpoint_name, 'str'),
-            'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str')
-        }
-        url = self._client.format_url(url, **path_format_arguments)
-
-        # Construct parameters
-        query_parameters = {}
-        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
-
-        # Construct headers
-        header_parameters = {}
-        header_parameters['Accept'] = 'application/json'
-        if self.config.generate_client_request_id:
-            header_parameters['x-ms-client-request-id'] = str(uuid.uuid1())
-        if custom_headers:
-            header_parameters.update(custom_headers)
-        if self.config.accept_language is not None:
-            header_parameters['accept-language'] = self._serialize.header("self.config.accept_language", self.config.accept_language, 'str')
-
-        # Construct and send request
-        request = self._client.post(url, query_parameters, header_parameters)
-        response = self._client.send(request, stream=False, **operation_config)
-
-        if response.status_code not in [200, 202]:
-            raise models.ErrorResponseException(self._deserialize, response)
-
-        deserialized = None
-
-        if response.status_code == 200:
-            deserialized = self._deserialize('Endpoint', response)
-        if response.status_code == 202:
-            deserialized = self._deserialize('Endpoint', response)
-
-        if raw:
-            client_raw_response = ClientRawResponse(deserialized, response)
-            return client_raw_response
-
-        return deserialized
-
-    def start(
-            self, resource_group_name, profile_name, endpoint_name, custom_headers=None, raw=False, polling=True, **operation_config):
-        """Starts an existing CDN endpoint that is on a stopped state.
-
-        :param resource_group_name: Name of the Resource group within the
-         Azure subscription.
-        :type resource_group_name: str
-        :param profile_name: Name of the CDN profile which is unique within
-         the resource group.
-        :type profile_name: str
-        :param endpoint_name: Name of the endpoint under the profile which is
-         unique globally.
-        :type endpoint_name: str
-        :param dict custom_headers: headers that will be added to the request
-        :param bool raw: The poller return type is ClientRawResponse, the
-         direct response alongside the deserialized response
-        :param polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
-        :return: An instance of LROPoller that returns Endpoint or
-         ClientRawResponse<Endpoint> if raw==True
-        :rtype:
-         ~msrestazure.azure_operation.AzureOperationPoller[~azure.mgmt.cdn.models.Endpoint]
-         or
-         ~msrestazure.azure_operation.AzureOperationPoller[~msrest.pipeline.ClientRawResponse[~azure.mgmt.cdn.models.Endpoint]]
-        :raises:
-         :class:`ErrorResponseException<azure.mgmt.cdn.models.ErrorResponseException>`
-        """
-        raw_result = self._start_initial(
-            resource_group_name=resource_group_name,
-            profile_name=profile_name,
-            endpoint_name=endpoint_name,
-            custom_headers=custom_headers,
-            raw=True,
-            **operation_config
-        )
-
-        def get_long_running_output(response):
-            deserialized = self._deserialize('Endpoint', response)
-
-            if raw:
-                client_raw_response = ClientRawResponse(deserialized, response)
-                return client_raw_response
-
-            return deserialized
-
-        lro_delay = operation_config.get(
-            'long_running_operation_timeout',
-            self.config.long_running_operation_timeout)
-        if polling is True: polling_method = ARMPolling(lro_delay, **operation_config)
-        elif polling is False: polling_method = NoPolling()
-        else: polling_method = polling
-        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
-    start.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/start'}
-
-
-    def _stop_initial(
-            self, resource_group_name, profile_name, endpoint_name, custom_headers=None, raw=False, **operation_config):
-        # Construct URL
-        url = self.stop.metadata['url']
-        path_format_arguments = {
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
-            'profileName': self._serialize.url("profile_name", profile_name, 'str'),
-            'endpointName': self._serialize.url("endpoint_name", endpoint_name, 'str'),
-            'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str')
-        }
-        url = self._client.format_url(url, **path_format_arguments)
-
-        # Construct parameters
-        query_parameters = {}
-        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
-
-        # Construct headers
-        header_parameters = {}
-        header_parameters['Accept'] = 'application/json'
-        if self.config.generate_client_request_id:
-            header_parameters['x-ms-client-request-id'] = str(uuid.uuid1())
-        if custom_headers:
-            header_parameters.update(custom_headers)
-        if self.config.accept_language is not None:
-            header_parameters['accept-language'] = self._serialize.header("self.config.accept_language", self.config.accept_language, 'str')
-
-        # Construct and send request
-        request = self._client.post(url, query_parameters, header_parameters)
-        response = self._client.send(request, stream=False, **operation_config)
-
-        if response.status_code not in [200, 202]:
-            raise models.ErrorResponseException(self._deserialize, response)
-
-        deserialized = None
-
-        if response.status_code == 200:
-            deserialized = self._deserialize('Endpoint', response)
-        if response.status_code == 202:
-            deserialized = self._deserialize('Endpoint', response)
-
-        if raw:
-            client_raw_response = ClientRawResponse(deserialized, response)
-            return client_raw_response
-
-        return deserialized
-
-    def stop(
-            self, resource_group_name, profile_name, endpoint_name, custom_headers=None, raw=False, polling=True, **operation_config):
-        """Stops an existing running CDN endpoint.
-
-        :param resource_group_name: Name of the Resource group within the
-         Azure subscription.
-        :type resource_group_name: str
-        :param profile_name: Name of the CDN profile which is unique within
-         the resource group.
-        :type profile_name: str
-        :param endpoint_name: Name of the endpoint under the profile which is
-         unique globally.
-        :type endpoint_name: str
-        :param dict custom_headers: headers that will be added to the request
-        :param bool raw: The poller return type is ClientRawResponse, the
-         direct response alongside the deserialized response
-        :param polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
-        :return: An instance of LROPoller that returns Endpoint or
-         ClientRawResponse<Endpoint> if raw==True
-        :rtype:
-         ~msrestazure.azure_operation.AzureOperationPoller[~azure.mgmt.cdn.models.Endpoint]
-         or
-         ~msrestazure.azure_operation.AzureOperationPoller[~msrest.pipeline.ClientRawResponse[~azure.mgmt.cdn.models.Endpoint]]
-        :raises:
-         :class:`ErrorResponseException<azure.mgmt.cdn.models.ErrorResponseException>`
-        """
-        raw_result = self._stop_initial(
-            resource_group_name=resource_group_name,
-            profile_name=profile_name,
-            endpoint_name=endpoint_name,
-            custom_headers=custom_headers,
-            raw=True,
-            **operation_config
-        )
-
-        def get_long_running_output(response):
-            deserialized = self._deserialize('Endpoint', response)
-
-            if raw:
-                client_raw_response = ClientRawResponse(deserialized, response)
-                return client_raw_response
-
-            return deserialized
-
-        lro_delay = operation_config.get(
-            'long_running_operation_timeout',
-            self.config.long_running_operation_timeout)
-        if polling is True: polling_method = ARMPolling(lro_delay, **operation_config)
-        elif polling is False: polling_method = NoPolling()
-        else: polling_method = polling
-        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
-    stop.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/stop'}
+    delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}'}
 
 
     def _purge_content_initial(
-            self, resource_group_name, profile_name, endpoint_name, content_paths, custom_headers=None, raw=False, **operation_config):
-        content_file_paths = models.PurgeParameters(content_paths=content_paths)
+            self, resource_group_name, profile_name, endpoint_name, content_paths, domains=None, custom_headers=None, raw=False, **operation_config):
+        contents = models.AfdPurgeParameters(content_paths=content_paths, domains=domains)
 
         # Construct URL
         url = self.purge_content.metadata['url']
@@ -723,22 +519,22 @@ class EndpointsOperations(object):
             header_parameters['accept-language'] = self._serialize.header("self.config.accept_language", self.config.accept_language, 'str')
 
         # Construct body
-        body_content = self._serialize.body(content_file_paths, 'PurgeParameters')
+        body_content = self._serialize.body(contents, 'AfdPurgeParameters')
 
         # Construct and send request
         request = self._client.post(url, query_parameters, header_parameters, body_content)
         response = self._client.send(request, stream=False, **operation_config)
 
         if response.status_code not in [200, 202]:
-            raise models.ErrorResponseException(self._deserialize, response)
+            raise models.AfdErrorResponseException(self._deserialize, response)
 
         if raw:
             client_raw_response = ClientRawResponse(None, response)
             return client_raw_response
 
     def purge_content(
-            self, resource_group_name, profile_name, endpoint_name, content_paths, custom_headers=None, raw=False, polling=True, **operation_config):
-        """Removes a content from CDN.
+            self, resource_group_name, profile_name, endpoint_name, content_paths, domains=None, custom_headers=None, raw=False, polling=True, **operation_config):
+        """Removes a content from AzureFrontDoor.
 
         :param resource_group_name: Name of the Resource group within the
          Azure subscription.
@@ -752,6 +548,8 @@ class EndpointsOperations(object):
         :param content_paths: The path to the content to be purged. Can
          describe a file path or a wild card directory.
         :type content_paths: list[str]
+        :param domains: List of domains.
+        :type domains: list[str]
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: The poller return type is ClientRawResponse, the
          direct response alongside the deserialized response
@@ -762,13 +560,14 @@ class EndpointsOperations(object):
         :rtype: ~msrestazure.azure_operation.AzureOperationPoller[None] or
          ~msrestazure.azure_operation.AzureOperationPoller[~msrest.pipeline.ClientRawResponse[None]]
         :raises:
-         :class:`ErrorResponseException<azure.mgmt.cdn.models.ErrorResponseException>`
+         :class:`AfdErrorResponseException<azure.mgmt.cdn.models.AfdErrorResponseException>`
         """
         raw_result = self._purge_content_initial(
             resource_group_name=resource_group_name,
             profile_name=profile_name,
             endpoint_name=endpoint_name,
             content_paths=content_paths,
+            domains=domains,
             custom_headers=custom_headers,
             raw=True,
             **operation_config
@@ -782,187 +581,16 @@ class EndpointsOperations(object):
         lro_delay = operation_config.get(
             'long_running_operation_timeout',
             self.config.long_running_operation_timeout)
-        if polling is True: polling_method = ARMPolling(lro_delay, **operation_config)
+        if polling is True: polling_method = ARMPolling(lro_delay, lro_options={'final-state-via': 'azure-async-operation'}, **operation_config)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
         return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
-    purge_content.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/purge'}
-
-
-    def _load_content_initial(
-            self, resource_group_name, profile_name, endpoint_name, content_paths, custom_headers=None, raw=False, **operation_config):
-        content_file_paths = models.LoadParameters(content_paths=content_paths)
-
-        # Construct URL
-        url = self.load_content.metadata['url']
-        path_format_arguments = {
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
-            'profileName': self._serialize.url("profile_name", profile_name, 'str'),
-            'endpointName': self._serialize.url("endpoint_name", endpoint_name, 'str'),
-            'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str')
-        }
-        url = self._client.format_url(url, **path_format_arguments)
-
-        # Construct parameters
-        query_parameters = {}
-        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
-
-        # Construct headers
-        header_parameters = {}
-        header_parameters['Content-Type'] = 'application/json; charset=utf-8'
-        if self.config.generate_client_request_id:
-            header_parameters['x-ms-client-request-id'] = str(uuid.uuid1())
-        if custom_headers:
-            header_parameters.update(custom_headers)
-        if self.config.accept_language is not None:
-            header_parameters['accept-language'] = self._serialize.header("self.config.accept_language", self.config.accept_language, 'str')
-
-        # Construct body
-        body_content = self._serialize.body(content_file_paths, 'LoadParameters')
-
-        # Construct and send request
-        request = self._client.post(url, query_parameters, header_parameters, body_content)
-        response = self._client.send(request, stream=False, **operation_config)
-
-        if response.status_code not in [200, 202]:
-            raise models.ErrorResponseException(self._deserialize, response)
-
-        if raw:
-            client_raw_response = ClientRawResponse(None, response)
-            return client_raw_response
-
-    def load_content(
-            self, resource_group_name, profile_name, endpoint_name, content_paths, custom_headers=None, raw=False, polling=True, **operation_config):
-        """Pre-loads a content to CDN. Available for Verizon Profiles.
-
-        :param resource_group_name: Name of the Resource group within the
-         Azure subscription.
-        :type resource_group_name: str
-        :param profile_name: Name of the CDN profile which is unique within
-         the resource group.
-        :type profile_name: str
-        :param endpoint_name: Name of the endpoint under the profile which is
-         unique globally.
-        :type endpoint_name: str
-        :param content_paths: The path to the content to be loaded. Path
-         should be a relative file URL of the origin.
-        :type content_paths: list[str]
-        :param dict custom_headers: headers that will be added to the request
-        :param bool raw: The poller return type is ClientRawResponse, the
-         direct response alongside the deserialized response
-        :param polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
-        :return: An instance of LROPoller that returns None or
-         ClientRawResponse<None> if raw==True
-        :rtype: ~msrestazure.azure_operation.AzureOperationPoller[None] or
-         ~msrestazure.azure_operation.AzureOperationPoller[~msrest.pipeline.ClientRawResponse[None]]
-        :raises:
-         :class:`ErrorResponseException<azure.mgmt.cdn.models.ErrorResponseException>`
-        """
-        raw_result = self._load_content_initial(
-            resource_group_name=resource_group_name,
-            profile_name=profile_name,
-            endpoint_name=endpoint_name,
-            content_paths=content_paths,
-            custom_headers=custom_headers,
-            raw=True,
-            **operation_config
-        )
-
-        def get_long_running_output(response):
-            if raw:
-                client_raw_response = ClientRawResponse(None, response)
-                return client_raw_response
-
-        lro_delay = operation_config.get(
-            'long_running_operation_timeout',
-            self.config.long_running_operation_timeout)
-        if polling is True: polling_method = ARMPolling(lro_delay, **operation_config)
-        elif polling is False: polling_method = NoPolling()
-        else: polling_method = polling
-        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
-    load_content.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/load'}
-
-    def validate_custom_domain(
-            self, resource_group_name, profile_name, endpoint_name, host_name, custom_headers=None, raw=False, **operation_config):
-        """Validates the custom domain mapping to ensure it maps to the correct
-        CDN endpoint in DNS.
-
-        :param resource_group_name: Name of the Resource group within the
-         Azure subscription.
-        :type resource_group_name: str
-        :param profile_name: Name of the CDN profile which is unique within
-         the resource group.
-        :type profile_name: str
-        :param endpoint_name: Name of the endpoint under the profile which is
-         unique globally.
-        :type endpoint_name: str
-        :param host_name: The host name of the custom domain. Must be a domain
-         name.
-        :type host_name: str
-        :param dict custom_headers: headers that will be added to the request
-        :param bool raw: returns the direct response alongside the
-         deserialized response
-        :param operation_config: :ref:`Operation configuration
-         overrides<msrest:optionsforoperations>`.
-        :return: ValidateCustomDomainOutput or ClientRawResponse if raw=true
-        :rtype: ~azure.mgmt.cdn.models.ValidateCustomDomainOutput or
-         ~msrest.pipeline.ClientRawResponse
-        :raises:
-         :class:`ErrorResponseException<azure.mgmt.cdn.models.ErrorResponseException>`
-        """
-        custom_domain_properties = models.ValidateCustomDomainInput(host_name=host_name)
-
-        # Construct URL
-        url = self.validate_custom_domain.metadata['url']
-        path_format_arguments = {
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
-            'profileName': self._serialize.url("profile_name", profile_name, 'str'),
-            'endpointName': self._serialize.url("endpoint_name", endpoint_name, 'str'),
-            'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str')
-        }
-        url = self._client.format_url(url, **path_format_arguments)
-
-        # Construct parameters
-        query_parameters = {}
-        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
-
-        # Construct headers
-        header_parameters = {}
-        header_parameters['Accept'] = 'application/json'
-        header_parameters['Content-Type'] = 'application/json; charset=utf-8'
-        if self.config.generate_client_request_id:
-            header_parameters['x-ms-client-request-id'] = str(uuid.uuid1())
-        if custom_headers:
-            header_parameters.update(custom_headers)
-        if self.config.accept_language is not None:
-            header_parameters['accept-language'] = self._serialize.header("self.config.accept_language", self.config.accept_language, 'str')
-
-        # Construct body
-        body_content = self._serialize.body(custom_domain_properties, 'ValidateCustomDomainInput')
-
-        # Construct and send request
-        request = self._client.post(url, query_parameters, header_parameters, body_content)
-        response = self._client.send(request, stream=False, **operation_config)
-
-        if response.status_code not in [200]:
-            raise models.ErrorResponseException(self._deserialize, response)
-
-        deserialized = None
-        if response.status_code == 200:
-            deserialized = self._deserialize('ValidateCustomDomainOutput', response)
-
-        if raw:
-            client_raw_response = ClientRawResponse(deserialized, response)
-            return client_raw_response
-
-        return deserialized
-    validate_custom_domain.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/validateCustomDomain'}
+    purge_content.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/purge'}
 
     def list_resource_usage(
             self, resource_group_name, profile_name, endpoint_name, custom_headers=None, raw=False, **operation_config):
-        """Checks the quota and usage of geo filters and custom domains under the
-        given endpoint.
+        """Checks the quota and actual usage of endpoints under the given CDN
+        profile.
 
         :param resource_group_name: Name of the Resource group within the
          Azure subscription.
@@ -978,11 +606,11 @@ class EndpointsOperations(object):
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :return: An iterator like instance of ResourceUsage
+        :return: An iterator like instance of Usage
         :rtype:
-         ~azure.mgmt.cdn.models.ResourceUsagePaged[~azure.mgmt.cdn.models.ResourceUsage]
+         ~azure.mgmt.cdn.models.UsagePaged[~azure.mgmt.cdn.models.Usage]
         :raises:
-         :class:`ErrorResponseException<azure.mgmt.cdn.models.ErrorResponseException>`
+         :class:`AfdErrorResponseException<azure.mgmt.cdn.models.AfdErrorResponseException>`
         """
         def prepare_request(next_link=None):
             if not next_link:
@@ -1024,7 +652,7 @@ class EndpointsOperations(object):
             response = self._client.send(request, stream=False, **operation_config)
 
             if response.status_code not in [200]:
-                raise models.ErrorResponseException(self._deserialize, response)
+                raise models.AfdErrorResponseException(self._deserialize, response)
 
             return response
 
@@ -1032,7 +660,83 @@ class EndpointsOperations(object):
         header_dict = None
         if raw:
             header_dict = {}
-        deserialized = models.ResourceUsagePaged(internal_paging, self._deserialize.dependencies, header_dict)
+        deserialized = models.UsagePaged(internal_paging, self._deserialize.dependencies, header_dict)
 
         return deserialized
-    list_resource_usage.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/checkResourceUsage'}
+    list_resource_usage.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/usages'}
+
+    def validate_custom_domain(
+            self, resource_group_name, profile_name, endpoint_name, host_name, custom_headers=None, raw=False, **operation_config):
+        """Validates the custom domain mapping to ensure it maps to the correct
+        CDN endpoint in DNS.
+
+        :param resource_group_name: Name of the Resource group within the
+         Azure subscription.
+        :type resource_group_name: str
+        :param profile_name: Name of the CDN profile which is unique within
+         the resource group.
+        :type profile_name: str
+        :param endpoint_name: Name of the endpoint under the profile which is
+         unique globally.
+        :type endpoint_name: str
+        :param host_name: The host name of the custom domain. Must be a domain
+         name.
+        :type host_name: str
+        :param dict custom_headers: headers that will be added to the request
+        :param bool raw: returns the direct response alongside the
+         deserialized response
+        :param operation_config: :ref:`Operation configuration
+         overrides<msrest:optionsforoperations>`.
+        :return: ValidateCustomDomainOutput or ClientRawResponse if raw=true
+        :rtype: ~azure.mgmt.cdn.models.ValidateCustomDomainOutput or
+         ~msrest.pipeline.ClientRawResponse
+        :raises:
+         :class:`AfdErrorResponseException<azure.mgmt.cdn.models.AfdErrorResponseException>`
+        """
+        custom_domain_properties = models.ValidateCustomDomainInput(host_name=host_name)
+
+        # Construct URL
+        url = self.validate_custom_domain.metadata['url']
+        path_format_arguments = {
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
+            'profileName': self._serialize.url("profile_name", profile_name, 'str'),
+            'endpointName': self._serialize.url("endpoint_name", endpoint_name, 'str'),
+            'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str')
+        }
+        url = self._client.format_url(url, **path_format_arguments)
+
+        # Construct parameters
+        query_parameters = {}
+        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
+
+        # Construct headers
+        header_parameters = {}
+        header_parameters['Accept'] = 'application/json'
+        header_parameters['Content-Type'] = 'application/json; charset=utf-8'
+        if self.config.generate_client_request_id:
+            header_parameters['x-ms-client-request-id'] = str(uuid.uuid1())
+        if custom_headers:
+            header_parameters.update(custom_headers)
+        if self.config.accept_language is not None:
+            header_parameters['accept-language'] = self._serialize.header("self.config.accept_language", self.config.accept_language, 'str')
+
+        # Construct body
+        body_content = self._serialize.body(custom_domain_properties, 'ValidateCustomDomainInput')
+
+        # Construct and send request
+        request = self._client.post(url, query_parameters, header_parameters, body_content)
+        response = self._client.send(request, stream=False, **operation_config)
+
+        if response.status_code not in [200]:
+            raise models.AfdErrorResponseException(self._deserialize, response)
+
+        deserialized = None
+        if response.status_code == 200:
+            deserialized = self._deserialize('ValidateCustomDomainOutput', response)
+
+        if raw:
+            client_raw_response = ClientRawResponse(deserialized, response)
+            return client_raw_response
+
+        return deserialized
+    validate_custom_domain.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/validateCustomDomain'}
