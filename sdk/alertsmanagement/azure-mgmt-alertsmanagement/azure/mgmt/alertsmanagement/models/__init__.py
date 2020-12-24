@@ -10,10 +10,7 @@
 # --------------------------------------------------------------------------
 
 try:
-    from ._models_py3 import ActionGroup
     from ._models_py3 import ActionGroupsInformation
-    from ._models_py3 import ActionRule
-    from ._models_py3 import ActionRuleProperties
     from ._models_py3 import Alert
     from ._models_py3 import AlertModification
     from ._models_py3 import AlertModificationItem
@@ -27,36 +24,24 @@ try:
     from ._models_py3 import AlertsSummaryGroup
     from ._models_py3 import AlertsSummaryGroupItem
     from ._models_py3 import AzureResource
-    from ._models_py3 import Condition
-    from ._models_py3 import Conditions
     from ._models_py3 import Detector
-    from ._models_py3 import Diagnostics
     from ._models_py3 import ErrorResponse, ErrorResponseException
-    from ._models_py3 import ErrorResponse1, ErrorResponse1Exception
     from ._models_py3 import ErrorResponseBody
     from ._models_py3 import Essentials
-    from ._models_py3 import ManagedResource
     from ._models_py3 import MonitorServiceDetails
     from ._models_py3 import MonitorServiceList
     from ._models_py3 import Operation
     from ._models_py3 import OperationDisplay
-    from ._models_py3 import PatchObject
     from ._models_py3 import Resource
-    from ._models_py3 import Scope
+    from ._models_py3 import SmartDetectorErrorResponse, SmartDetectorErrorResponseException
     from ._models_py3 import SmartGroup
     from ._models_py3 import SmartGroupAggregatedProperty
     from ._models_py3 import SmartGroupModification
     from ._models_py3 import SmartGroupModificationItem
     from ._models_py3 import SmartGroupModificationProperties
-    from ._models_py3 import Suppression
-    from ._models_py3 import SuppressionConfig
-    from ._models_py3 import SuppressionSchedule
     from ._models_py3 import ThrottlingInformation
 except (SyntaxError, ImportError):
-    from ._models import ActionGroup
     from ._models import ActionGroupsInformation
-    from ._models import ActionRule
-    from ._models import ActionRuleProperties
     from ._models import Alert
     from ._models import AlertModification
     from ._models import AlertModificationItem
@@ -70,32 +55,22 @@ except (SyntaxError, ImportError):
     from ._models import AlertsSummaryGroup
     from ._models import AlertsSummaryGroupItem
     from ._models import AzureResource
-    from ._models import Condition
-    from ._models import Conditions
     from ._models import Detector
-    from ._models import Diagnostics
     from ._models import ErrorResponse, ErrorResponseException
-    from ._models import ErrorResponse1, ErrorResponse1Exception
     from ._models import ErrorResponseBody
     from ._models import Essentials
-    from ._models import ManagedResource
     from ._models import MonitorServiceDetails
     from ._models import MonitorServiceList
     from ._models import Operation
     from ._models import OperationDisplay
-    from ._models import PatchObject
     from ._models import Resource
-    from ._models import Scope
+    from ._models import SmartDetectorErrorResponse, SmartDetectorErrorResponseException
     from ._models import SmartGroup
     from ._models import SmartGroupAggregatedProperty
     from ._models import SmartGroupModification
     from ._models import SmartGroupModificationItem
     from ._models import SmartGroupModificationProperties
-    from ._models import Suppression
-    from ._models import SuppressionConfig
-    from ._models import SuppressionSchedule
     from ._models import ThrottlingInformation
-from ._paged_models import ActionRulePaged
 from ._paged_models import AlertPaged
 from ._paged_models import AlertRulePaged
 from ._paged_models import OperationPaged
@@ -109,10 +84,6 @@ from ._alerts_management_client_enums import (
     AlertModificationEvent,
     SmartGroupModificationEvent,
     State,
-    ScopeType,
-    Operator,
-    SuppressionType,
-    ActionRuleStatus,
     AlertRuleState,
     TimeRange,
     AlertsSortByFields,
@@ -121,10 +92,7 @@ from ._alerts_management_client_enums import (
 )
 
 __all__ = [
-    'ActionGroup',
     'ActionGroupsInformation',
-    'ActionRule',
-    'ActionRuleProperties',
     'Alert',
     'AlertModification',
     'AlertModificationItem',
@@ -138,35 +106,25 @@ __all__ = [
     'AlertsSummaryGroup',
     'AlertsSummaryGroupItem',
     'AzureResource',
-    'Condition',
-    'Conditions',
     'Detector',
-    'Diagnostics',
     'ErrorResponse', 'ErrorResponseException',
-    'ErrorResponse1', 'ErrorResponse1Exception',
     'ErrorResponseBody',
     'Essentials',
-    'ManagedResource',
     'MonitorServiceDetails',
     'MonitorServiceList',
     'Operation',
     'OperationDisplay',
-    'PatchObject',
     'Resource',
-    'Scope',
+    'SmartDetectorErrorResponse', 'SmartDetectorErrorResponseException',
     'SmartGroup',
     'SmartGroupAggregatedProperty',
     'SmartGroupModification',
     'SmartGroupModificationItem',
     'SmartGroupModificationProperties',
-    'Suppression',
-    'SuppressionConfig',
-    'SuppressionSchedule',
     'ThrottlingInformation',
     'OperationPaged',
     'AlertPaged',
     'SmartGroupPaged',
-    'ActionRulePaged',
     'AlertRulePaged',
     'Severity',
     'SignalType',
@@ -176,10 +134,6 @@ __all__ = [
     'AlertModificationEvent',
     'SmartGroupModificationEvent',
     'State',
-    'ScopeType',
-    'Operator',
-    'SuppressionType',
-    'ActionRuleStatus',
     'AlertRuleState',
     'TimeRange',
     'AlertsSortByFields',

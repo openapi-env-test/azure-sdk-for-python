@@ -64,6 +64,12 @@ class AlertModificationEvent(str, Enum):
     alert_created = "AlertCreated"
     state_change = "StateChange"
     monitor_condition_change = "MonitorConditionChange"
+    severity_change = "SeverityChange"
+    action_rule_triggered = "ActionRuleTriggered"
+    action_rule_suppressed = "ActionRuleSuppressed"
+    actions_triggered = "ActionsTriggered"
+    actions_suppressed = "ActionsSuppressed"
+    actions_failed = "ActionsFailed"
 
 
 class SmartGroupModificationEvent(str, Enum):
@@ -79,35 +85,6 @@ class State(str, Enum):
     new = "New"
     acknowledged = "Acknowledged"
     closed = "Closed"
-
-
-class ScopeType(str, Enum):
-
-    resource_group = "ResourceGroup"
-    resource = "Resource"
-
-
-class Operator(str, Enum):
-
-    equals = "Equals"
-    not_equals = "NotEquals"
-    contains = "Contains"
-    does_not_contain = "DoesNotContain"
-
-
-class SuppressionType(str, Enum):
-
-    always = "Always"
-    once = "Once"
-    daily = "Daily"
-    weekly = "Weekly"
-    monthly = "Monthly"
-
-
-class ActionRuleStatus(str, Enum):
-
-    enabled = "Enabled"
-    disabled = "Disabled"
 
 
 class AlertRuleState(str, Enum):

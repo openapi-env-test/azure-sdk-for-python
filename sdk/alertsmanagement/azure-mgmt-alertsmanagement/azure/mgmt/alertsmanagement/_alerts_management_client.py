@@ -16,7 +16,6 @@ from ._configuration import AlertsManagementClientConfiguration
 from .operations import Operations
 from .operations import AlertsOperations
 from .operations import SmartGroupsOperations
-from .operations import ActionRulesOperations
 from .operations import SmartDetectorAlertRulesOperations
 from . import models
 
@@ -33,8 +32,6 @@ class AlertsManagementClient(SDKClient):
     :vartype alerts: azure.mgmt.alertsmanagement.operations.AlertsOperations
     :ivar smart_groups: SmartGroups operations
     :vartype smart_groups: azure.mgmt.alertsmanagement.operations.SmartGroupsOperations
-    :ivar action_rules: ActionRules operations
-    :vartype action_rules: azure.mgmt.alertsmanagement.operations.ActionRulesOperations
     :ivar smart_detector_alert_rules: SmartDetectorAlertRules operations
     :vartype smart_detector_alert_rules: azure.mgmt.alertsmanagement.operations.SmartDetectorAlertRulesOperations
 
@@ -61,8 +58,6 @@ class AlertsManagementClient(SDKClient):
         self.alerts = AlertsOperations(
             self._client, self.config, self._serialize, self._deserialize)
         self.smart_groups = SmartGroupsOperations(
-            self._client, self.config, self._serialize, self._deserialize)
-        self.action_rules = ActionRulesOperations(
             self._client, self.config, self._serialize, self._deserialize)
         self.smart_detector_alert_rules = SmartDetectorAlertRulesOperations(
             self._client, self.config, self._serialize, self._deserialize)
