@@ -62,6 +62,7 @@ def main(generate_input, generate_output):
             "content": md_output,
             "hasBreakingChange": "Breaking changes" in md_output or "Initial Release" in md_output
         }
+        _LOGGER.info(f'({package_name})[CHANGELOG]:{md_output}')
         # Built package
         create_package(package_name)
         folder_name = package['path'][0]
