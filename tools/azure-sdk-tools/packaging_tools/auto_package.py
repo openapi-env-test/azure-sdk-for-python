@@ -36,11 +36,12 @@ def get_package_names(sdk_folder):
 def change_log_generate(package_name):
     from pypi_tools.pypi import PyPIClient
     client = PyPIClient()
-    versions = client.get_ordered_versions(package_name)
-    if versions:
-        return change_log_main(f"{package_name}:pypi", f"{package_name}:latest")
-    else:
+    try:
+        client.get_ordered_versions(package_name)
+    except:
         return "  - Initial Release"
+    else:
+        return change_log_main(f"{package_name}:pypi", f"{package_name}:latest")
 
 
 def main(generate_input, generate_output):
