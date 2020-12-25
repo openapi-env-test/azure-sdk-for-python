@@ -33,6 +33,16 @@ def get_package_names(sdk_folder):
     return package_names
 
 
+def change_log_generate(package_name):
+    from pypi_tools.pypi import PyPIClient
+    client = PyPIClient()
+    versions = client.get_ordered_versions(package_name)
+    if versions:
+        return change_log_main(f"{package_name}:pypi", f"{package_name}:latest")
+    else:
+        return "  - Initial Release"
+
+
 def main(generate_input, generate_output):
     with open(generate_input, "r") as reader:
         data = json.load(reader)
@@ -46,7 +56,7 @@ def main(generate_input, generate_output):
     for package in data.values():
         package_name = package['packageName']
         # Changelog
-        md_output = change_log_main(f"{package_name}:pypi", f"{package_name}:latest")
+        md_output = change_log_generate(package_name)
         package["changelog"] = {
             "content": md_output,
             "hasBreakingChange": "Breaking changes" in md_output
