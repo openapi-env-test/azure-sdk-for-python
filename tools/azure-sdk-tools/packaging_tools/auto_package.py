@@ -60,7 +60,7 @@ def main(generate_input, generate_output):
         md_output = change_log_generate(package_name)
         package["changelog"] = {
             "content": md_output,
-            "hasBreakingChange": "Breaking changes" in md_output
+            "hasBreakingChange": "Breaking changes" in md_output or "Initial Release" in md_output
         }
         # Built package
         create_package(package_name)
