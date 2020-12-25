@@ -5,27 +5,21 @@ import logging
 import os
 from pathlib import Path
 import re
-import runpy
 from subprocess import check_call
-import tempfile
 
-from .swaggertosdk.SwaggerToSdkCore import (
-    CONFIG_FILE,
-)
 from azure_devtools.ci_tools.git_tools import get_diff_file_list
-from .generate_sdk import generate
 from .change_log import main as change_log_main
-from .edit_check import main as edit_check_main
 
 _LOGGER = logging.getLogger(__name__)
 _SDK_FOLDER_RE = re.compile(r"^(sdk/[\w-]+)/(azure[\w-]+)/", re.ASCII)
 
-
 DEFAULT_DEST_FOLDER = "./dist"
+
 
 def create_package(name, dest_folder=DEFAULT_DEST_FOLDER):
     # a package will exist in either one, or the other folder. this is why we can resolve both at the same time.
-    absdirs = [os.path.dirname(package) for package in (glob.glob('{}/setup.py'.format(name)) + glob.glob('sdk/*/{}/setup.py'.format(name)))]
+    absdirs = [os.path.dirname(package) for package in
+               (glob.glob('{}/setup.py'.format(name)) + glob.glob('sdk/*/{}/setup.py'.format(name)))]
 
     absdirpath = os.path.abspath(absdirs[0])
     check_call(['python', 'setup.py', 'bdist_wheel', '-d', dest_folder], cwd=absdirpath)
@@ -42,59 +36,35 @@ def get_package_names(sdk_folder):
 def main(generate_input, generate_output):
     with open(generate_input, "r") as reader:
         data = json.load(reader)
+    if not data:
+        return
 
-    spec_folder = data['specFolder']
-    sdk_folder = "."
-    input_readme = data["relatedReadmeMdFiles"][0]
-
-    relative_path_readme = str(Path(spec_folder, input_readme))
-
-    generate(
-        CONFIG_FILE,
-        sdk_folder,
-        [],
-        relative_path_readme,
-        spec_folder,
-        force_generation=True
-    )
-    package_names = get_package_names(sdk_folder)
+    sdk_folder = '.'
     result = {
-        "packages": []
+        'packages': []
     }
-
-    for folder_name, package_name in package_names:
-        package_entry = {}
-        package_entry['packageName'] = package_name
-        package_entry["path"] = [folder_name]
-        package_entry['readmeMd'] = data["relatedReadmeMdFiles"]
-
-        # Setup package locally
-        check_call(f'pip install --ignore-requires-python -e {str(Path(sdk_folder, folder_name, package_name))}',
-                   shell=True)
+    for package in data.values():
+        package_name = package['packageName']
         # Changelog
         md_output = change_log_main(f"{package_name}:pypi", f"{package_name}:latest")
-        package_entry["changelog"] = {
+        package["changelog"] = {
             "content": md_output,
             "hasBreakingChange": "Breaking changes" in md_output
-        },
+        }
         # Built package
         create_package(package_name)
+        folder_name = package['path'][0]
         dist_path = Path(sdk_folder, folder_name, package_name, "dist")
-        package_entry["artifacts"] = [
+        package["artifacts"] = [
             str(dist_path / package_file) for package_file in os.listdir(dist_path)
         ]
         # Installation package
-        package_entry["installInstructions"] = {
+        package["installInstructions"] = {
             "full": "You can install the use using pip install of the artificats.",
-            "lite": "pip install <package-name>"
-        },
-        package_entry["result"]: "success"
-
-        result['packages'].append(package_entry)
-
-        # edit version, changelog file and do some check
-        if package_name.find('mgmt') > -1:
-            edit_check_main(sdk_folder, folder_name, package_name, md_output, relative_path_readme)
+            "lite": f"pip install {package_name}"
+        }
+        package["result"]: "success"
+        result['packages'].append(package)
 
     with open(generate_output, "w") as writer:
         json.dump(result, writer)
@@ -127,6 +97,7 @@ def generate_main():
         main_logger.setLevel(logging.DEBUG if args.debug else logging.INFO)
 
     main(args.generate_input, args.generate_output)
+
 
 if __name__ == "__main__":
     generate_main()
