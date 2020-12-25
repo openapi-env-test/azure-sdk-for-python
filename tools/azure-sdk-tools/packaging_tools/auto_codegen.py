@@ -45,7 +45,7 @@ def main(generate_input, generate_output):
     result = {}
     for input_readme in data["relatedReadmeMdFiles"]:
         relative_path_readme = str(Path(spec_folder, input_readme))
-
+        _LOGGER.info(f'[Readme]({input_readme})codegen begin')
         generate(CONFIG_FILE,
                  sdk_folder,
                  [],
@@ -54,6 +54,7 @@ def main(generate_input, generate_output):
                  force_generation=True
                  )
         package_names = get_package_names(sdk_folder)
+        _LOGGER.info(f'[Readme]({input_readme})codegen end. [(packages:{str(package_names)})]')
 
         for folder_name, package_name in package_names:
             if package_name not in result:
