@@ -112,6 +112,7 @@ def generate_code(input_file, global_conf, local_conf, output_dir=None, autorest
 
     cmd_line = autorest_bin.split()
     cmd_line += params
+    cmd_line.append('--debug')
     _LOGGER.info("Autorest cmd line:\n%s", " ".join(cmd_line))
 
     execute_simple_command(cmd_line, cwd=str(input_path))
