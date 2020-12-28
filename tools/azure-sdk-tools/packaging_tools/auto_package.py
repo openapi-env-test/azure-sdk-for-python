@@ -62,7 +62,7 @@ def main(generate_input, generate_output):
             "content": md_output,
             "hasBreakingChange": "Breaking changes" in md_output or "Initial Release" in md_output
         }
-        _LOGGER.info(f'({package_name})[CHANGELOG]:{md_output}')
+        _LOGGER.info(f'[PACKAGE]({package_name})[CHANGELOG]:{md_output}')
         # Built package
         create_package(package_name)
         folder_name = package['path'][0]
@@ -104,9 +104,8 @@ def generate_main():
 
     args = parser.parse_args()
     main_logger = logging.getLogger()
-    if args.verbose or args.debug:
-        logging.basicConfig()
-        main_logger.setLevel(logging.DEBUG if args.debug else logging.INFO)
+    logging.basicConfig()
+    main_logger.setLevel(logging.DEBUG if args.verbose or args.debug else logging.INFO)
 
     main(args.generate_input, args.generate_output)
 

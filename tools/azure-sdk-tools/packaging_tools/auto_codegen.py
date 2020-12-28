@@ -45,7 +45,7 @@ def main(generate_input, generate_output):
     result = {}
     for input_readme in data["relatedReadmeMdFiles"]:
         relative_path_readme = str(Path(spec_folder, input_readme))
-        _LOGGER.info(f'[Readme]({input_readme})codegen begin')
+        _LOGGER.info(f'[CODEGEN]({input_readme})codegen begin')
         generate(CONFIG_FILE,
                  sdk_folder,
                  [],
@@ -54,7 +54,7 @@ def main(generate_input, generate_output):
                  force_generation=True
                  )
         package_names = get_package_names(sdk_folder)
-        _LOGGER.info(f'[Readme]({input_readme})codegen end. [(packages:{str(package_names)})]')
+        _LOGGER.info(f'[CODEGEN]({input_readme})codegen end. [(packages:{str(package_names)})]')
 
         for folder_name, package_name in package_names:
             if package_name not in result:
@@ -105,9 +105,8 @@ def generate_main():
 
     args = parser.parse_args()
     main_logger = logging.getLogger()
-    if args.verbose or args.debug:
-        logging.basicConfig()
-        main_logger.setLevel(logging.DEBUG if args.debug else logging.INFO)
+    logging.basicConfig()
+    main_logger.setLevel(logging.DEBUG if args.verbose or args.debug else logging.INFO)
 
     main(args.generate_input, args.generate_output)
 
