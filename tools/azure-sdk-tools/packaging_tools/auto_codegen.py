@@ -46,13 +46,14 @@ def main(generate_input, generate_output):
     for input_readme in data["relatedReadmeMdFiles"]:
         relative_path_readme = str(Path(spec_folder, input_readme))
         _LOGGER.info(f'[CODEGEN]({input_readme})codegen begin')
-        generate(CONFIG_FILE,
-                 sdk_folder,
-                 [],
-                 relative_path_readme,
-                 spec_folder,
-                 force_generation=True
-                 )
+        # generate(CONFIG_FILE,
+        #          sdk_folder,
+        #          [],
+        #          relative_path_readme,
+        #          spec_folder,
+        #          force_generation=True
+        #          )
+        check_call(f'python -m packaging_tools.generate_sdk -v -m {relative_path_readme}', shell=True)
         package_names = get_package_names(sdk_folder)
         _LOGGER.info(f'[CODEGEN]({input_readme})codegen end. [(packages:{str(package_names)})]')
 
