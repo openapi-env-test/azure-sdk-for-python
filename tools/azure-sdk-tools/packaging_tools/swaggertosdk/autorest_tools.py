@@ -124,6 +124,7 @@ def generate_code(input_file, global_conf, local_conf, output_dir=None, autorest
 
 def execute_simple_command(cmd_line, cwd=None, shell=False, env=None):
     try:
+        _LOGGER.info(f"[DEBUG]:cmd_line:{cmd_line},cwd:{cwd}")
         process = subprocess.Popen(cmd_line,
                                    stderr=subprocess.STDOUT,
                                    stdout=subprocess.PIPE,
