@@ -137,14 +137,14 @@ def execute_simple_command(cmd_line, cwd=None, shell=False, env=None):
             output_buffer.append(line.rstrip())
             _LOGGER.info(f"==[autorest]"+output_buffer[-1])
         process.wait()
-        output = "\n".join(output_buffer)
-        if process.returncode:
-            raise subprocess.CalledProcessError(
-                process.returncode,
-                cmd_line,
-                output
-            )
-        return output
+        # output = "\n".join(output_buffer)
+        # if process.returncode:
+        #     raise subprocess.CalledProcessError(
+        #         process.returncode,
+        #         cmd_line,
+        #         output
+        #     )
+        # return output
     except Exception as err:
         _LOGGER.error(err)
         raise
