@@ -9,14 +9,5 @@
 # regenerated.
 # --------------------------------------------------------------------------
 
-from enum import Enum
+VERSION = "1.0.0"
 
-
-class HealthState(str, Enum):
-
-    healthy = "Healthy"
-    critical = "Critical"
-    warning = "Warning"
-    unknown = "Unknown"
-    disabled = "Disabled"
-    none = "None"
