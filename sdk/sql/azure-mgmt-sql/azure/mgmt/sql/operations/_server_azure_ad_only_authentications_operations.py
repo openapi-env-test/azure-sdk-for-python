@@ -27,8 +27,8 @@ class ServerAzureADOnlyAuthenticationsOperations(object):
     :param config: Configuration of service client.
     :param serializer: An object model serializer.
     :param deserializer: An object model deserializer.
-    :ivar api_version: The API version to use for the request. Constant value: "2020-02-02-preview".
     :ivar authentication_name: The name of server azure active directory only authentication. Constant value: "Default".
+    :ivar api_version: The API version to use for the request. Constant value: "2020-02-02-preview".
     """
 
     models = models
@@ -38,8 +38,8 @@ class ServerAzureADOnlyAuthenticationsOperations(object):
         self._client = client
         self._serialize = serializer
         self._deserialize = deserializer
-        self.api_version = "2020-02-02-preview"
         self.authentication_name = "Default"
+        self.api_version = "2020-02-02-preview"
 
         self.config = config
 
@@ -67,10 +67,10 @@ class ServerAzureADOnlyAuthenticationsOperations(object):
         # Construct URL
         url = self.get.metadata['url']
         path_format_arguments = {
-            'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str'),
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
             'serverName': self._serialize.url("server_name", server_name, 'str'),
-            'authenticationName': self._serialize.url("self.authentication_name", self.authentication_name, 'str')
+            'authenticationName': self._serialize.url("self.authentication_name", self.authentication_name, 'str'),
+            'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str')
         }
         url = self._client.format_url(url, **path_format_arguments)
 
@@ -116,10 +116,10 @@ class ServerAzureADOnlyAuthenticationsOperations(object):
         # Construct URL
         url = self.create_or_update.metadata['url']
         path_format_arguments = {
-            'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str'),
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
             'serverName': self._serialize.url("server_name", server_name, 'str'),
-            'authenticationName': self._serialize.url("self.authentication_name", self.authentication_name, 'str')
+            'authenticationName': self._serialize.url("self.authentication_name", self.authentication_name, 'str'),
+            'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str')
         }
         url = self._client.format_url(url, **path_format_arguments)
 
@@ -224,10 +224,10 @@ class ServerAzureADOnlyAuthenticationsOperations(object):
         # Construct URL
         url = self.delete.metadata['url']
         path_format_arguments = {
-            'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str'),
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
             'serverName': self._serialize.url("server_name", server_name, 'str'),
-            'authenticationName': self._serialize.url("self.authentication_name", self.authentication_name, 'str')
+            'authenticationName': self._serialize.url("self.authentication_name", self.authentication_name, 'str'),
+            'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str')
         }
         url = self._client.format_url(url, **path_format_arguments)
 
@@ -326,9 +326,9 @@ class ServerAzureADOnlyAuthenticationsOperations(object):
                 # Construct URL
                 url = self.list_by_server.metadata['url']
                 path_format_arguments = {
-                    'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str'),
                     'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
-                    'serverName': self._serialize.url("server_name", server_name, 'str')
+                    'serverName': self._serialize.url("server_name", server_name, 'str'),
+                    'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str')
                 }
                 url = self._client.format_url(url, **path_format_arguments)
 

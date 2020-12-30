@@ -47,7 +47,7 @@ class PrivateEndpointConnectionsOperations(object):
         :param resource_group_name: The name of the resource group. The name
          is case insensitive.
         :type resource_group_name: str
-        :param workspace_name: The name of the workspace
+        :param workspace_name: The name of the workspace.
         :type workspace_name: str
         :param private_endpoint_connection_name: The name of the private
          endpoint connection.
@@ -107,7 +107,9 @@ class PrivateEndpointConnectionsOperations(object):
 
 
     def _create_initial(
-            self, resource_group_name, workspace_name, private_endpoint_connection_name, custom_headers=None, raw=False, **operation_config):
+            self, resource_group_name, workspace_name, private_endpoint_connection_name, private_endpoint=None, private_link_service_connection_state=None, custom_headers=None, raw=False, **operation_config):
+        request = models.PrivateEndpointConnection(private_endpoint=private_endpoint, private_link_service_connection_state=private_link_service_connection_state)
+
         # Construct URL
         url = self.create.metadata['url']
         path_format_arguments = {
@@ -125,6 +127,7 @@ class PrivateEndpointConnectionsOperations(object):
         # Construct headers
         header_parameters = {}
         header_parameters['Accept'] = 'application/json'
+        header_parameters['Content-Type'] = 'application/json; charset=utf-8'
         if self.config.generate_client_request_id:
             header_parameters['x-ms-client-request-id'] = str(uuid.uuid1())
         if custom_headers:
@@ -132,8 +135,11 @@ class PrivateEndpointConnectionsOperations(object):
         if self.config.accept_language is not None:
             header_parameters['accept-language'] = self._serialize.header("self.config.accept_language", self.config.accept_language, 'str')
 
+        # Construct body
+        body_content = self._serialize.body(request, 'PrivateEndpointConnection')
+
         # Construct and send request
-        request = self._client.put(url, query_parameters, header_parameters)
+        request = self._client.put(url, query_parameters, header_parameters, body_content)
         response = self._client.send(request, stream=False, **operation_config)
 
         if response.status_code not in [200, 201]:
@@ -153,17 +159,24 @@ class PrivateEndpointConnectionsOperations(object):
         return deserialized
 
     def create(
-            self, resource_group_name, workspace_name, private_endpoint_connection_name, custom_headers=None, raw=False, polling=True, **operation_config):
+            self, resource_group_name, workspace_name, private_endpoint_connection_name, private_endpoint=None, private_link_service_connection_state=None, custom_headers=None, raw=False, polling=True, **operation_config):
         """Approve or reject a private endpoint connection.
 
         :param resource_group_name: The name of the resource group. The name
          is case insensitive.
         :type resource_group_name: str
-        :param workspace_name: The name of the workspace
+        :param workspace_name: The name of the workspace.
         :type workspace_name: str
         :param private_endpoint_connection_name: The name of the private
          endpoint connection.
         :type private_endpoint_connection_name: str
+        :param private_endpoint: The private endpoint which the connection
+         belongs to.
+        :type private_endpoint: ~azure.mgmt.synapse.models.PrivateEndpoint
+        :param private_link_service_connection_state: Connection state of the
+         private endpoint connection.
+        :type private_link_service_connection_state:
+         ~azure.mgmt.synapse.models.PrivateLinkServiceConnectionState
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: The poller return type is ClientRawResponse, the
          direct response alongside the deserialized response
@@ -183,6 +196,8 @@ class PrivateEndpointConnectionsOperations(object):
             resource_group_name=resource_group_name,
             workspace_name=workspace_name,
             private_endpoint_connection_name=private_endpoint_connection_name,
+            private_endpoint=private_endpoint,
+            private_link_service_connection_state=private_link_service_connection_state,
             custom_headers=custom_headers,
             raw=True,
             **operation_config
@@ -237,7 +252,7 @@ class PrivateEndpointConnectionsOperations(object):
         request = self._client.delete(url, query_parameters, header_parameters)
         response = self._client.send(request, stream=False, **operation_config)
 
-        if response.status_code not in [202, 204]:
+        if response.status_code not in [200, 202, 204]:
             raise models.ErrorContractException(self._deserialize, response)
 
         deserialized = None
@@ -258,7 +273,7 @@ class PrivateEndpointConnectionsOperations(object):
         :param resource_group_name: The name of the resource group. The name
          is case insensitive.
         :type resource_group_name: str
-        :param workspace_name: The name of the workspace
+        :param workspace_name: The name of the workspace.
         :type workspace_name: str
         :param private_endpoint_connection_name: The name of the private
          endpoint connection.
@@ -311,7 +326,7 @@ class PrivateEndpointConnectionsOperations(object):
         :param resource_group_name: The name of the resource group. The name
          is case insensitive.
         :type resource_group_name: str
-        :param workspace_name: The name of the workspace
+        :param workspace_name: The name of the workspace.
         :type workspace_name: str
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the

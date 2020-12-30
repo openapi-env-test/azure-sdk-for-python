@@ -48,7 +48,7 @@ class IntegrationRuntimeNodesOperations(object):
         :param resource_group_name: The name of the resource group. The name
          is case insensitive.
         :type resource_group_name: str
-        :param workspace_name: The name of the workspace
+        :param workspace_name: The name of the workspace.
         :type workspace_name: str
         :param integration_runtime_name: Integration runtime name
         :type integration_runtime_name: str
@@ -119,7 +119,7 @@ class IntegrationRuntimeNodesOperations(object):
         :param resource_group_name: The name of the resource group. The name
          is case insensitive.
         :type resource_group_name: str
-        :param workspace_name: The name of the workspace
+        :param workspace_name: The name of the workspace.
         :type workspace_name: str
         :param integration_runtime_name: Integration runtime name
         :type integration_runtime_name: str
@@ -200,7 +200,7 @@ class IntegrationRuntimeNodesOperations(object):
         :param resource_group_name: The name of the resource group. The name
          is case insensitive.
         :type resource_group_name: str
-        :param workspace_name: The name of the workspace
+        :param workspace_name: The name of the workspace.
         :type workspace_name: str
         :param integration_runtime_name: Integration runtime name
         :type integration_runtime_name: str
