@@ -6,6 +6,7 @@ PATH="$VIRTUAL_ENV/bin:$PATH"
 export PATH
 
 # node version degrade
+export PATH=/usr/local/n/versions/node/10.15.0/bin:$PATH
 node -v
 
 # generate code and package
