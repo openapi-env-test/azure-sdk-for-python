@@ -9,7 +9,6 @@ from .swaggertosdk.SwaggerToSdkCore import (
     CONFIG_FILE,
 )
 from azure_devtools.ci_tools.git_tools import get_diff_file_list
-from azure_devtools.ci_tools.git_tools import git_add_commit
 from .generate_sdk import generate
 
 _LOGGER = logging.getLogger(__name__)
