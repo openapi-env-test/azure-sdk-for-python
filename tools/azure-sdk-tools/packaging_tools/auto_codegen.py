@@ -61,9 +61,8 @@ def main(generate_input, generate_output):
         for folder_name, package_name in package_names:
             if package_name in package_total:
                 continue
-            else:
-                package_total.add(package_name)
 
+            package_total.add(package_name)
             if package_name not in result:
                 package_entry = {}
                 package_entry['packageName'] = package_name
