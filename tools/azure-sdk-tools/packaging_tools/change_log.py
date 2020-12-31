@@ -161,11 +161,6 @@ def get_report_from_parameter(input_parameter):
         )
         if not result:
             raise ValueError("Was not able to build a report")
-        if len(result) == 1:
-            with open(result[0], "r") as fd:
-                return json.load(fd)
-
-        raise NotImplementedError("Multi-api changelog not yet implemented")
 
     with open(input_parameter, "r") as fd:
         return json.load(fd)
