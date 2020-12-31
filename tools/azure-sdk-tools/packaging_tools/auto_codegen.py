@@ -9,6 +9,7 @@ from .swaggertosdk.SwaggerToSdkCore import (
     CONFIG_FILE,
 )
 from azure_devtools.ci_tools.git_tools import get_diff_file_list
+from azure_devtools.ci_tools.git_tools import git_add_commit
 from .generate_sdk import generate
 
 _LOGGER = logging.getLogger(__name__)
@@ -73,6 +74,10 @@ def main(generate_input, generate_output):
             # Setup package locally
             check_call(f'pip install --ignore-requires-python -e {str(Path(sdk_folder, folder_name, package_name))}',
                        shell=True)
+        # commit before next package code generation
+        if package_names:
+            git_add_commit(sdk_folder, f'code of {str(package_names)}')
+
 
     # remove duplicates
     for value in result.values():
