@@ -154,13 +154,18 @@ def get_report_from_parameter(input_parameter):
     if ":" in input_parameter:
         package_name, version = input_parameter.split(":")
         from .code_report import main
-        input_parameter = main(
+        result = main(
             package_name,
             version=version if version not in ["pypi", "latest"] else None,
             last_pypi=version == "pypi"
         )
-        if not input_parameter:
+        if not result:
             raise ValueError("Was not able to build a report")
+        if len(result) == 1:
+            with open(result[0], "r") as fd:
+                return json.load(fd)
+
+        raise NotImplementedError("Multi-api changelog not yet implemented")
 
     with open(input_parameter, "r") as fd:
         return json.load(fd)
