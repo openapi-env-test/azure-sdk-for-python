@@ -154,12 +154,12 @@ def get_report_from_parameter(input_parameter):
     if ":" in input_parameter:
         package_name, version = input_parameter.split(":")
         from .code_report import main
-        result = main(
+        input_parameter = main(
             package_name,
             version=version if version not in ["pypi", "latest"] else None,
             last_pypi=version == "pypi"
         )
-        if not result:
+        if not input_parameter:
             raise ValueError("Was not able to build a report")
 
     with open(input_parameter, "r") as fd:
