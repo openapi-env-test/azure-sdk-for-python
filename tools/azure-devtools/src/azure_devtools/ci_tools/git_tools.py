@@ -96,10 +96,3 @@ def get_diff_file_list(git_folder):
     repo.git.add("sdk")
     output = repo.git.diff("HEAD", "--name-only")
     return output.splitlines()
-
-def git_add_commit(git_folder, message):
-    """List of new files.
-    """
-    repo = Repo(str(git_folder))
-    repo.git.add("sdk")
-    repo.index.commit(message)

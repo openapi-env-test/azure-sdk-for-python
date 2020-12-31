@@ -44,6 +44,7 @@ def main(generate_input, generate_output):
     spec_folder = data['specFolder']
     sdk_folder = "."
     result = {}
+    package_total = set()
     for input_readme in data["relatedReadmeMdFiles"]:
         relative_path_readme = str(Path(spec_folder, input_readme))
         _LOGGER.info(f'[CODEGEN]({input_readme})codegen begin')
@@ -58,6 +59,11 @@ def main(generate_input, generate_output):
         _LOGGER.info(f'[CODEGEN]({input_readme})codegen end. [(packages:{str(package_names)})]')
 
         for folder_name, package_name in package_names:
+            if package_name in package_total:
+                continue
+            else:
+                package_total.add(package_name)
+
             if package_name not in result:
                 package_entry = {}
                 package_entry['packageName'] = package_name
@@ -74,9 +80,6 @@ def main(generate_input, generate_output):
             # Setup package locally
             check_call(f'pip install --ignore-requires-python -e {str(Path(sdk_folder, folder_name, package_name))}',
                        shell=True)
-        # commit before next package code generation
-        if package_names:
-            git_add_commit(sdk_folder, f'code of {str(package_names)}')
 
 
     # remove duplicates
