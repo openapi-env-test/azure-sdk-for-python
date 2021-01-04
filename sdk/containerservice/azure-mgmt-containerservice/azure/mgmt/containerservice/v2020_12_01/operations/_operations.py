@@ -25,7 +25,7 @@ class Operations(object):
     :param config: Configuration of service client.
     :param serializer: An object model serializer.
     :param deserializer: An object model deserializer.
-    :ivar api_version: Client Api Version. Constant value: "2020-11-01".
+    :ivar api_version: Client Api Version. Constant value: "2020-12-01".
     """
 
     models = models
@@ -35,13 +35,13 @@ class Operations(object):
         self._client = client
         self._serialize = serializer
         self._deserialize = deserializer
-        self.api_version = "2020-11-01"
+        self.api_version = "2020-12-01"
 
         self.config = config
 
     def list(
             self, custom_headers=None, raw=False, **operation_config):
-        """Minghc_Test_Gets a list of compute operations.
+        """Gets a list of compute operations.
 
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
@@ -50,7 +50,7 @@ class Operations(object):
          overrides<msrest:optionsforoperations>`.
         :return: An iterator like instance of OperationValue
         :rtype:
-         ~azure.mgmt.containerservice.v2020_11_01.models.OperationValuePaged[~azure.mgmt.containerservice.v2020_11_01.models.OperationValue]
+         ~azure.mgmt.containerservice.v2020_12_01.models.OperationValuePaged[~azure.mgmt.containerservice.v2020_12_01.models.OperationValue]
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
         def prepare_request(next_link=None):
