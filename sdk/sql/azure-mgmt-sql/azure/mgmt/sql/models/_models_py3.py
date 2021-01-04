@@ -57,50 +57,6 @@ class AutomaticTuningOptions(Model):
         self.reason_desc = None
 
 
-class AutomaticTuningServerOptions(Model):
-    """Automatic tuning properties for individual advisors.
-
-    Variables are only populated by the server, and will be ignored when
-    sending a request.
-
-    :param desired_state: Automatic tuning option desired state. Possible
-     values include: 'Off', 'On', 'Default'
-    :type desired_state: str or
-     ~azure.mgmt.sql.models.AutomaticTuningOptionModeDesired
-    :ivar actual_state: Automatic tuning option actual state. Possible values
-     include: 'Off', 'On'
-    :vartype actual_state: str or
-     ~azure.mgmt.sql.models.AutomaticTuningOptionModeActual
-    :ivar reason_code: Reason code if desired and actual state are different.
-    :vartype reason_code: int
-    :ivar reason_desc: Reason description if desired and actual state are
-     different. Possible values include: 'Default', 'Disabled',
-     'AutoConfigured'
-    :vartype reason_desc: str or
-     ~azure.mgmt.sql.models.AutomaticTuningServerReason
-    """
-
-    _validation = {
-        'actual_state': {'readonly': True},
-        'reason_code': {'readonly': True},
-        'reason_desc': {'readonly': True},
-    }
-
-    _attribute_map = {
-        'desired_state': {'key': 'desiredState', 'type': 'AutomaticTuningOptionModeDesired'},
-        'actual_state': {'key': 'actualState', 'type': 'AutomaticTuningOptionModeActual'},
-        'reason_code': {'key': 'reasonCode', 'type': 'int'},
-        'reason_desc': {'key': 'reasonDesc', 'type': 'AutomaticTuningServerReason'},
-    }
-
-    def __init__(self, *, desired_state=None, **kwargs) -> None:
-        super(AutomaticTuningServerOptions, self).__init__(**kwargs)
-        self.desired_state = desired_state
-        self.actual_state = None
-        self.reason_code = None
-        self.reason_desc = None
-
-
 class AutoPauseDelayTimeRange(Model):
     """Supported auto pause delay time range.
 
@@ -213,56 +169,6 @@ class ProxyResource(Resource):
 
     def __init__(self, **kwargs) -> None:
         super(ProxyResource, self).__init__(**kwargs)
-
-
-class BackupLongTermRetentionPolicy(ProxyResource):
-    """A long term retention policy.
-
-    Variables are only populated by the server, and will be ignored when
-    sending a request.
-
-    :ivar id: Resource ID.
-    :vartype id: str
-    :ivar name: Resource name.
-    :vartype name: str
-    :ivar type: Resource type.
-    :vartype type: str
-    :param weekly_retention: The weekly retention policy for an LTR backup in
-     an ISO 8601 format.
-    :type weekly_retention: str
-    :param monthly_retention: The monthly retention policy for an LTR backup
-     in an ISO 8601 format.
-    :type monthly_retention: str
-    :param yearly_retention: The yearly retention policy for an LTR backup in
-     an ISO 8601 format.
-    :type yearly_retention: str
-    :param week_of_year: The week of year to take the yearly backup in an ISO
-     8601 format.
-    :type week_of_year: int
-    """
-
-    _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-    }
-
-    _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'weekly_retention': {'key': 'properties.weeklyRetention', 'type': 'str'},
-        'monthly_retention': {'key': 'properties.monthlyRetention', 'type': 'str'},
-        'yearly_retention': {'key': 'properties.yearlyRetention', 'type': 'str'},
-        'week_of_year': {'key': 'properties.weekOfYear', 'type': 'int'},
-    }
-
-    def __init__(self, *, weekly_retention: str=None, monthly_retention: str=None, yearly_retention: str=None, week_of_year: int=None, **kwargs) -> None:
-        super(BackupLongTermRetentionPolicy, self).__init__(**kwargs)
-        self.weekly_retention = weekly_retention
-        self.monthly_retention = monthly_retention
-        self.yearly_retention = yearly_retention
-        self.week_of_year = week_of_year
 
 
 class BackupShortTermRetentionPolicy(ProxyResource):
@@ -793,175 +699,6 @@ class DatabaseAutomaticTuning(ProxyResource):
         self.desired_state = desired_state
         self.actual_state = None
         self.options = options
-
-
-class DatabaseBlobAuditingPolicy(ProxyResource):
-    """A database blob auditing policy.
-
-    Variables are only populated by the server, and will be ignored when
-    sending a request.
-
-    All required parameters must be populated in order to send to Azure.
-
-    :ivar id: Resource ID.
-    :vartype id: str
-    :ivar name: Resource name.
-    :vartype name: str
-    :ivar type: Resource type.
-    :vartype type: str
-    :ivar kind: Resource kind.
-    :vartype kind: str
-    :param state: Required. Specifies the state of the policy. If state is
-     Enabled, storageEndpoint or isAzureMonitorTargetEnabled are required.
-     Possible values include: 'Enabled', 'Disabled'
-    :type state: str or ~azure.mgmt.sql.models.BlobAuditingPolicyState
-    :param storage_endpoint: Specifies the blob storage endpoint (e.g.
-     https://MyAccount.blob.core.windows.net). If state is Enabled,
-     storageEndpoint or isAzureMonitorTargetEnabled is required.
-    :type storage_endpoint: str
-    :param storage_account_access_key: Specifies the identifier key of the
-     auditing storage account.
-     If state is Enabled and storageEndpoint is specified, not specifying the
-     storageAccountAccessKey will use SQL server system-assigned managed
-     identity to access the storage.
-     Prerequisites for using managed identity authentication:
-     1. Assign SQL Server a system-assigned managed identity in Azure Active
-     Directory (AAD).
-     2. Grant SQL Server identity access to the storage account by adding
-     'Storage Blob Data Contributor' RBAC role to the server identity.
-     For more information, see [Auditing to storage using Managed Identity
-     authentication](https://go.microsoft.com/fwlink/?linkid=2114355)
-    :type storage_account_access_key: str
-    :param retention_days: Specifies the number of days to keep in the audit
-     logs in the storage account.
-    :type retention_days: int
-    :param audit_actions_and_groups: Specifies the Actions-Groups and Actions
-     to audit.
-     The recommended set of action groups to use is the following combination -
-     this will audit all the queries and stored procedures executed against the
-     database, as well as successful and failed logins:
-     BATCH_COMPLETED_GROUP,
-     SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP,
-     FAILED_DATABASE_AUTHENTICATION_GROUP.
-     This above combination is also the set that is configured by default when
-     enabling auditing from the Azure portal.
-     The supported action groups to audit are (note: choose only specific
-     groups that cover your auditing needs. Using unnecessary groups could lead
-     to very large quantities of audit records):
-     APPLICATION_ROLE_CHANGE_PASSWORD_GROUP
-     BACKUP_RESTORE_GROUP
-     DATABASE_LOGOUT_GROUP
-     DATABASE_OBJECT_CHANGE_GROUP
-     DATABASE_OBJECT_OWNERSHIP_CHANGE_GROUP
-     DATABASE_OBJECT_PERMISSION_CHANGE_GROUP
-     DATABASE_OPERATION_GROUP
-     DATABASE_PERMISSION_CHANGE_GROUP
-     DATABASE_PRINCIPAL_CHANGE_GROUP
-     DATABASE_PRINCIPAL_IMPERSONATION_GROUP
-     DATABASE_ROLE_MEMBER_CHANGE_GROUP
-     FAILED_DATABASE_AUTHENTICATION_GROUP
-     SCHEMA_OBJECT_ACCESS_GROUP
-     SCHEMA_OBJECT_CHANGE_GROUP
-     SCHEMA_OBJECT_OWNERSHIP_CHANGE_GROUP
-     SCHEMA_OBJECT_PERMISSION_CHANGE_GROUP
-     SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP
-     USER_CHANGE_PASSWORD_GROUP
-     BATCH_STARTED_GROUP
-     BATCH_COMPLETED_GROUP
-     These are groups that cover all sql statements and stored procedures
-     executed against the database, and should not be used in combination with
-     other groups as this will result in duplicate audit logs.
-     For more information, see [Database-Level Audit Action
-     Groups](https://docs.microsoft.com/en-us/sql/relational-databases/security/auditing/sql-server-audit-action-groups-and-actions#database-level-audit-action-groups).
-     For Database auditing policy, specific Actions can also be specified (note
-     that Actions cannot be specified for Server auditing policy). The
-     supported actions to audit are:
-     SELECT
-     UPDATE
-     INSERT
-     DELETE
-     EXECUTE
-     RECEIVE
-     REFERENCES
-     The general form for defining an action to be audited is:
-     {action} ON {object} BY {principal}
-     Note that <object> in the above format can refer to an object like a
-     table, view, or stored procedure, or an entire database or schema. For the
-     latter cases, the forms DATABASE::{db_name} and SCHEMA::{schema_name} are
-     used, respectively.
-     For example:
-     SELECT on dbo.myTable by public
-     SELECT on DATABASE::myDatabase by public
-     SELECT on SCHEMA::mySchema by public
-     For more information, see [Database-Level Audit
-     Actions](https://docs.microsoft.com/en-us/sql/relational-databases/security/auditing/sql-server-audit-action-groups-and-actions#database-level-audit-actions)
-    :type audit_actions_and_groups: list[str]
-    :param storage_account_subscription_id: Specifies the blob storage
-     subscription Id.
-    :type storage_account_subscription_id: str
-    :param is_storage_secondary_key_in_use: Specifies whether
-     storageAccountAccessKey value is the storage's secondary key.
-    :type is_storage_secondary_key_in_use: bool
-    :param is_azure_monitor_target_enabled: Specifies whether audit events are
-     sent to Azure Monitor.
-     In order to send the events to Azure Monitor, specify 'state' as 'Enabled'
-     and 'isAzureMonitorTargetEnabled' as true.
-     When using REST API to configure auditing, Diagnostic Settings with
-     'SQLSecurityAuditEvents' diagnostic logs category on the database should
-     be also created.
-     Note that for server level audit you should use the 'master' database as
-     {databaseName}.
-     Diagnostic Settings URI format:
-     PUT
-     https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/providers/microsoft.insights/diagnosticSettings/{settingsName}?api-version=2017-05-01-preview
-     For more information, see [Diagnostic Settings REST
-     API](https://go.microsoft.com/fwlink/?linkid=2033207)
-     or [Diagnostic Settings
-     PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043)
-    :type is_azure_monitor_target_enabled: bool
-    :param queue_delay_ms: Specifies the amount of time in milliseconds that
-     can elapse before audit actions are forced to be processed.
-     The default minimum value is 1000 (1 second). The maximum is
-     2,147,483,647.
-    :type queue_delay_ms: int
-    """
-
-    _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'kind': {'readonly': True},
-        'state': {'required': True},
-    }
-
-    _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'kind': {'key': 'kind', 'type': 'str'},
-        'state': {'key': 'properties.state', 'type': 'BlobAuditingPolicyState'},
-        'storage_endpoint': {'key': 'properties.storageEndpoint', 'type': 'str'},
-        'storage_account_access_key': {'key': 'properties.storageAccountAccessKey', 'type': 'str'},
-        'retention_days': {'key': 'properties.retentionDays', 'type': 'int'},
-        'audit_actions_and_groups': {'key': 'properties.auditActionsAndGroups', 'type': '[str]'},
-        'storage_account_subscription_id': {'key': 'properties.storageAccountSubscriptionId', 'type': 'str'},
-        'is_storage_secondary_key_in_use': {'key': 'properties.isStorageSecondaryKeyInUse', 'type': 'bool'},
-        'is_azure_monitor_target_enabled': {'key': 'properties.isAzureMonitorTargetEnabled', 'type': 'bool'},
-        'queue_delay_ms': {'key': 'properties.queueDelayMs', 'type': 'int'},
-    }
-
-    def __init__(self, *, state, storage_endpoint: str=None, storage_account_access_key: str=None, retention_days: int=None, audit_actions_and_groups=None, storage_account_subscription_id: str=None, is_storage_secondary_key_in_use: bool=None, is_azure_monitor_target_enabled: bool=None, queue_delay_ms: int=None, **kwargs) -> None:
-        super(DatabaseBlobAuditingPolicy, self).__init__(**kwargs)
-        self.kind = None
-        self.state = state
-        self.storage_endpoint = storage_endpoint
-        self.storage_account_access_key = storage_account_access_key
-        self.retention_days = retention_days
-        self.audit_actions_and_groups = audit_actions_and_groups
-        self.storage_account_subscription_id = storage_account_subscription_id
-        self.is_storage_secondary_key_in_use = is_storage_secondary_key_in_use
-        self.is_azure_monitor_target_enabled = is_azure_monitor_target_enabled
-        self.queue_delay_ms = queue_delay_ms
 
 
 class DatabaseOperation(ProxyResource):
@@ -2485,6 +2222,10 @@ class ElasticPoolPerformanceLevelCapability(Model):
     :ivar zone_redundant: Whether or not zone redundancy is supported for the
      performance level.
     :vartype zone_redundant: bool
+    :ivar supported_maintenance_configurations: List of supported maintenance
+     configurations
+    :vartype supported_maintenance_configurations:
+     list[~azure.mgmt.sql.models.MaintenanceConfigurationCapability]
     :ivar status: The status of the capability. Possible values include:
      'Visible', 'Available', 'Default', 'Disabled'
     :vartype status: str or ~azure.mgmt.sql.models.CapabilityStatus
@@ -2502,6 +2243,7 @@ class ElasticPoolPerformanceLevelCapability(Model):
         'supported_per_database_max_sizes': {'readonly': True},
         'supported_per_database_max_performance_levels': {'readonly': True},
         'zone_redundant': {'readonly': True},
+        'supported_maintenance_configurations': {'readonly': True},
         'status': {'readonly': True},
     }
 
@@ -2515,6 +2257,7 @@ class ElasticPoolPerformanceLevelCapability(Model):
         'supported_per_database_max_sizes': {'key': 'supportedPerDatabaseMaxSizes', 'type': '[MaxSizeRangeCapability]'},
         'supported_per_database_max_performance_levels': {'key': 'supportedPerDatabaseMaxPerformanceLevels', 'type': '[ElasticPoolPerDatabaseMaxPerformanceLevelCapability]'},
         'zone_redundant': {'key': 'zoneRedundant', 'type': 'bool'},
+        'supported_maintenance_configurations': {'key': 'supportedMaintenanceConfigurations', 'type': '[MaintenanceConfigurationCapability]'},
         'status': {'key': 'status', 'type': 'CapabilityStatus'},
         'reason': {'key': 'reason', 'type': 'str'},
     }
@@ -2530,6 +2273,7 @@ class ElasticPoolPerformanceLevelCapability(Model):
         self.supported_per_database_max_sizes = None
         self.supported_per_database_max_performance_levels = None
         self.zone_redundant = None
+        self.supported_maintenance_configurations = None
         self.status = None
         self.reason = reason
 
@@ -2702,344 +2446,6 @@ class ExportDatabaseDefinition(Model):
         self.administrator_login_password = administrator_login_password
         self.authentication_type = authentication_type
         self.network_isolation = network_isolation
-
-
-class ExtendedDatabaseBlobAuditingPolicy(ProxyResource):
-    """An extended database blob auditing policy.
-
-    Variables are only populated by the server, and will be ignored when
-    sending a request.
-
-    All required parameters must be populated in order to send to Azure.
-
-    :ivar id: Resource ID.
-    :vartype id: str
-    :ivar name: Resource name.
-    :vartype name: str
-    :ivar type: Resource type.
-    :vartype type: str
-    :param predicate_expression: Specifies condition of where clause when
-     creating an audit.
-    :type predicate_expression: str
-    :param state: Required. Specifies the state of the policy. If state is
-     Enabled, storageEndpoint or isAzureMonitorTargetEnabled are required.
-     Possible values include: 'Enabled', 'Disabled'
-    :type state: str or ~azure.mgmt.sql.models.BlobAuditingPolicyState
-    :param storage_endpoint: Specifies the blob storage endpoint (e.g.
-     https://MyAccount.blob.core.windows.net). If state is Enabled,
-     storageEndpoint or isAzureMonitorTargetEnabled is required.
-    :type storage_endpoint: str
-    :param storage_account_access_key: Specifies the identifier key of the
-     auditing storage account.
-     If state is Enabled and storageEndpoint is specified, not specifying the
-     storageAccountAccessKey will use SQL server system-assigned managed
-     identity to access the storage.
-     Prerequisites for using managed identity authentication:
-     1. Assign SQL Server a system-assigned managed identity in Azure Active
-     Directory (AAD).
-     2. Grant SQL Server identity access to the storage account by adding
-     'Storage Blob Data Contributor' RBAC role to the server identity.
-     For more information, see [Auditing to storage using Managed Identity
-     authentication](https://go.microsoft.com/fwlink/?linkid=2114355)
-    :type storage_account_access_key: str
-    :param retention_days: Specifies the number of days to keep in the audit
-     logs in the storage account.
-    :type retention_days: int
-    :param audit_actions_and_groups: Specifies the Actions-Groups and Actions
-     to audit.
-     The recommended set of action groups to use is the following combination -
-     this will audit all the queries and stored procedures executed against the
-     database, as well as successful and failed logins:
-     BATCH_COMPLETED_GROUP,
-     SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP,
-     FAILED_DATABASE_AUTHENTICATION_GROUP.
-     This above combination is also the set that is configured by default when
-     enabling auditing from the Azure portal.
-     The supported action groups to audit are (note: choose only specific
-     groups that cover your auditing needs. Using unnecessary groups could lead
-     to very large quantities of audit records):
-     APPLICATION_ROLE_CHANGE_PASSWORD_GROUP
-     BACKUP_RESTORE_GROUP
-     DATABASE_LOGOUT_GROUP
-     DATABASE_OBJECT_CHANGE_GROUP
-     DATABASE_OBJECT_OWNERSHIP_CHANGE_GROUP
-     DATABASE_OBJECT_PERMISSION_CHANGE_GROUP
-     DATABASE_OPERATION_GROUP
-     DATABASE_PERMISSION_CHANGE_GROUP
-     DATABASE_PRINCIPAL_CHANGE_GROUP
-     DATABASE_PRINCIPAL_IMPERSONATION_GROUP
-     DATABASE_ROLE_MEMBER_CHANGE_GROUP
-     FAILED_DATABASE_AUTHENTICATION_GROUP
-     SCHEMA_OBJECT_ACCESS_GROUP
-     SCHEMA_OBJECT_CHANGE_GROUP
-     SCHEMA_OBJECT_OWNERSHIP_CHANGE_GROUP
-     SCHEMA_OBJECT_PERMISSION_CHANGE_GROUP
-     SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP
-     USER_CHANGE_PASSWORD_GROUP
-     BATCH_STARTED_GROUP
-     BATCH_COMPLETED_GROUP
-     These are groups that cover all sql statements and stored procedures
-     executed against the database, and should not be used in combination with
-     other groups as this will result in duplicate audit logs.
-     For more information, see [Database-Level Audit Action
-     Groups](https://docs.microsoft.com/en-us/sql/relational-databases/security/auditing/sql-server-audit-action-groups-and-actions#database-level-audit-action-groups).
-     For Database auditing policy, specific Actions can also be specified (note
-     that Actions cannot be specified for Server auditing policy). The
-     supported actions to audit are:
-     SELECT
-     UPDATE
-     INSERT
-     DELETE
-     EXECUTE
-     RECEIVE
-     REFERENCES
-     The general form for defining an action to be audited is:
-     {action} ON {object} BY {principal}
-     Note that <object> in the above format can refer to an object like a
-     table, view, or stored procedure, or an entire database or schema. For the
-     latter cases, the forms DATABASE::{db_name} and SCHEMA::{schema_name} are
-     used, respectively.
-     For example:
-     SELECT on dbo.myTable by public
-     SELECT on DATABASE::myDatabase by public
-     SELECT on SCHEMA::mySchema by public
-     For more information, see [Database-Level Audit
-     Actions](https://docs.microsoft.com/en-us/sql/relational-databases/security/auditing/sql-server-audit-action-groups-and-actions#database-level-audit-actions)
-    :type audit_actions_and_groups: list[str]
-    :param storage_account_subscription_id: Specifies the blob storage
-     subscription Id.
-    :type storage_account_subscription_id: str
-    :param is_storage_secondary_key_in_use: Specifies whether
-     storageAccountAccessKey value is the storage's secondary key.
-    :type is_storage_secondary_key_in_use: bool
-    :param is_azure_monitor_target_enabled: Specifies whether audit events are
-     sent to Azure Monitor.
-     In order to send the events to Azure Monitor, specify 'state' as 'Enabled'
-     and 'isAzureMonitorTargetEnabled' as true.
-     When using REST API to configure auditing, Diagnostic Settings with
-     'SQLSecurityAuditEvents' diagnostic logs category on the database should
-     be also created.
-     Note that for server level audit you should use the 'master' database as
-     {databaseName}.
-     Diagnostic Settings URI format:
-     PUT
-     https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/providers/microsoft.insights/diagnosticSettings/{settingsName}?api-version=2017-05-01-preview
-     For more information, see [Diagnostic Settings REST
-     API](https://go.microsoft.com/fwlink/?linkid=2033207)
-     or [Diagnostic Settings
-     PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043)
-    :type is_azure_monitor_target_enabled: bool
-    :param queue_delay_ms: Specifies the amount of time in milliseconds that
-     can elapse before audit actions are forced to be processed.
-     The default minimum value is 1000 (1 second). The maximum is
-     2,147,483,647.
-    :type queue_delay_ms: int
-    """
-
-    _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'state': {'required': True},
-    }
-
-    _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'predicate_expression': {'key': 'properties.predicateExpression', 'type': 'str'},
-        'state': {'key': 'properties.state', 'type': 'BlobAuditingPolicyState'},
-        'storage_endpoint': {'key': 'properties.storageEndpoint', 'type': 'str'},
-        'storage_account_access_key': {'key': 'properties.storageAccountAccessKey', 'type': 'str'},
-        'retention_days': {'key': 'properties.retentionDays', 'type': 'int'},
-        'audit_actions_and_groups': {'key': 'properties.auditActionsAndGroups', 'type': '[str]'},
-        'storage_account_subscription_id': {'key': 'properties.storageAccountSubscriptionId', 'type': 'str'},
-        'is_storage_secondary_key_in_use': {'key': 'properties.isStorageSecondaryKeyInUse', 'type': 'bool'},
-        'is_azure_monitor_target_enabled': {'key': 'properties.isAzureMonitorTargetEnabled', 'type': 'bool'},
-        'queue_delay_ms': {'key': 'properties.queueDelayMs', 'type': 'int'},
-    }
-
-    def __init__(self, *, state, predicate_expression: str=None, storage_endpoint: str=None, storage_account_access_key: str=None, retention_days: int=None, audit_actions_and_groups=None, storage_account_subscription_id: str=None, is_storage_secondary_key_in_use: bool=None, is_azure_monitor_target_enabled: bool=None, queue_delay_ms: int=None, **kwargs) -> None:
-        super(ExtendedDatabaseBlobAuditingPolicy, self).__init__(**kwargs)
-        self.predicate_expression = predicate_expression
-        self.state = state
-        self.storage_endpoint = storage_endpoint
-        self.storage_account_access_key = storage_account_access_key
-        self.retention_days = retention_days
-        self.audit_actions_and_groups = audit_actions_and_groups
-        self.storage_account_subscription_id = storage_account_subscription_id
-        self.is_storage_secondary_key_in_use = is_storage_secondary_key_in_use
-        self.is_azure_monitor_target_enabled = is_azure_monitor_target_enabled
-        self.queue_delay_ms = queue_delay_ms
-
-
-class ExtendedServerBlobAuditingPolicy(ProxyResource):
-    """An extended server blob auditing policy.
-
-    Variables are only populated by the server, and will be ignored when
-    sending a request.
-
-    All required parameters must be populated in order to send to Azure.
-
-    :ivar id: Resource ID.
-    :vartype id: str
-    :ivar name: Resource name.
-    :vartype name: str
-    :ivar type: Resource type.
-    :vartype type: str
-    :param predicate_expression: Specifies condition of where clause when
-     creating an audit.
-    :type predicate_expression: str
-    :param state: Required. Specifies the state of the policy. If state is
-     Enabled, storageEndpoint or isAzureMonitorTargetEnabled are required.
-     Possible values include: 'Enabled', 'Disabled'
-    :type state: str or ~azure.mgmt.sql.models.BlobAuditingPolicyState
-    :param storage_endpoint: Specifies the blob storage endpoint (e.g.
-     https://MyAccount.blob.core.windows.net). If state is Enabled,
-     storageEndpoint or isAzureMonitorTargetEnabled is required.
-    :type storage_endpoint: str
-    :param storage_account_access_key: Specifies the identifier key of the
-     auditing storage account.
-     If state is Enabled and storageEndpoint is specified, not specifying the
-     storageAccountAccessKey will use SQL server system-assigned managed
-     identity to access the storage.
-     Prerequisites for using managed identity authentication:
-     1. Assign SQL Server a system-assigned managed identity in Azure Active
-     Directory (AAD).
-     2. Grant SQL Server identity access to the storage account by adding
-     'Storage Blob Data Contributor' RBAC role to the server identity.
-     For more information, see [Auditing to storage using Managed Identity
-     authentication](https://go.microsoft.com/fwlink/?linkid=2114355)
-    :type storage_account_access_key: str
-    :param retention_days: Specifies the number of days to keep in the audit
-     logs in the storage account.
-    :type retention_days: int
-    :param audit_actions_and_groups: Specifies the Actions-Groups and Actions
-     to audit.
-     The recommended set of action groups to use is the following combination -
-     this will audit all the queries and stored procedures executed against the
-     database, as well as successful and failed logins:
-     BATCH_COMPLETED_GROUP,
-     SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP,
-     FAILED_DATABASE_AUTHENTICATION_GROUP.
-     This above combination is also the set that is configured by default when
-     enabling auditing from the Azure portal.
-     The supported action groups to audit are (note: choose only specific
-     groups that cover your auditing needs. Using unnecessary groups could lead
-     to very large quantities of audit records):
-     APPLICATION_ROLE_CHANGE_PASSWORD_GROUP
-     BACKUP_RESTORE_GROUP
-     DATABASE_LOGOUT_GROUP
-     DATABASE_OBJECT_CHANGE_GROUP
-     DATABASE_OBJECT_OWNERSHIP_CHANGE_GROUP
-     DATABASE_OBJECT_PERMISSION_CHANGE_GROUP
-     DATABASE_OPERATION_GROUP
-     DATABASE_PERMISSION_CHANGE_GROUP
-     DATABASE_PRINCIPAL_CHANGE_GROUP
-     DATABASE_PRINCIPAL_IMPERSONATION_GROUP
-     DATABASE_ROLE_MEMBER_CHANGE_GROUP
-     FAILED_DATABASE_AUTHENTICATION_GROUP
-     SCHEMA_OBJECT_ACCESS_GROUP
-     SCHEMA_OBJECT_CHANGE_GROUP
-     SCHEMA_OBJECT_OWNERSHIP_CHANGE_GROUP
-     SCHEMA_OBJECT_PERMISSION_CHANGE_GROUP
-     SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP
-     USER_CHANGE_PASSWORD_GROUP
-     BATCH_STARTED_GROUP
-     BATCH_COMPLETED_GROUP
-     These are groups that cover all sql statements and stored procedures
-     executed against the database, and should not be used in combination with
-     other groups as this will result in duplicate audit logs.
-     For more information, see [Database-Level Audit Action
-     Groups](https://docs.microsoft.com/en-us/sql/relational-databases/security/auditing/sql-server-audit-action-groups-and-actions#database-level-audit-action-groups).
-     For Database auditing policy, specific Actions can also be specified (note
-     that Actions cannot be specified for Server auditing policy). The
-     supported actions to audit are:
-     SELECT
-     UPDATE
-     INSERT
-     DELETE
-     EXECUTE
-     RECEIVE
-     REFERENCES
-     The general form for defining an action to be audited is:
-     {action} ON {object} BY {principal}
-     Note that <object> in the above format can refer to an object like a
-     table, view, or stored procedure, or an entire database or schema. For the
-     latter cases, the forms DATABASE::{db_name} and SCHEMA::{schema_name} are
-     used, respectively.
-     For example:
-     SELECT on dbo.myTable by public
-     SELECT on DATABASE::myDatabase by public
-     SELECT on SCHEMA::mySchema by public
-     For more information, see [Database-Level Audit
-     Actions](https://docs.microsoft.com/en-us/sql/relational-databases/security/auditing/sql-server-audit-action-groups-and-actions#database-level-audit-actions)
-    :type audit_actions_and_groups: list[str]
-    :param storage_account_subscription_id: Specifies the blob storage
-     subscription Id.
-    :type storage_account_subscription_id: str
-    :param is_storage_secondary_key_in_use: Specifies whether
-     storageAccountAccessKey value is the storage's secondary key.
-    :type is_storage_secondary_key_in_use: bool
-    :param is_azure_monitor_target_enabled: Specifies whether audit events are
-     sent to Azure Monitor.
-     In order to send the events to Azure Monitor, specify 'state' as 'Enabled'
-     and 'isAzureMonitorTargetEnabled' as true.
-     When using REST API to configure auditing, Diagnostic Settings with
-     'SQLSecurityAuditEvents' diagnostic logs category on the database should
-     be also created.
-     Note that for server level audit you should use the 'master' database as
-     {databaseName}.
-     Diagnostic Settings URI format:
-     PUT
-     https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/providers/microsoft.insights/diagnosticSettings/{settingsName}?api-version=2017-05-01-preview
-     For more information, see [Diagnostic Settings REST
-     API](https://go.microsoft.com/fwlink/?linkid=2033207)
-     or [Diagnostic Settings
-     PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043)
-    :type is_azure_monitor_target_enabled: bool
-    :param queue_delay_ms: Specifies the amount of time in milliseconds that
-     can elapse before audit actions are forced to be processed.
-     The default minimum value is 1000 (1 second). The maximum is
-     2,147,483,647.
-    :type queue_delay_ms: int
-    """
-
-    _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'state': {'required': True},
-    }
-
-    _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'predicate_expression': {'key': 'properties.predicateExpression', 'type': 'str'},
-        'state': {'key': 'properties.state', 'type': 'BlobAuditingPolicyState'},
-        'storage_endpoint': {'key': 'properties.storageEndpoint', 'type': 'str'},
-        'storage_account_access_key': {'key': 'properties.storageAccountAccessKey', 'type': 'str'},
-        'retention_days': {'key': 'properties.retentionDays', 'type': 'int'},
-        'audit_actions_and_groups': {'key': 'properties.auditActionsAndGroups', 'type': '[str]'},
-        'storage_account_subscription_id': {'key': 'properties.storageAccountSubscriptionId', 'type': 'str'},
-        'is_storage_secondary_key_in_use': {'key': 'properties.isStorageSecondaryKeyInUse', 'type': 'bool'},
-        'is_azure_monitor_target_enabled': {'key': 'properties.isAzureMonitorTargetEnabled', 'type': 'bool'},
-        'queue_delay_ms': {'key': 'properties.queueDelayMs', 'type': 'int'},
-    }
-
-    def __init__(self, *, state, predicate_expression: str=None, storage_endpoint: str=None, storage_account_access_key: str=None, retention_days: int=None, audit_actions_and_groups=None, storage_account_subscription_id: str=None, is_storage_secondary_key_in_use: bool=None, is_azure_monitor_target_enabled: bool=None, queue_delay_ms: int=None, **kwargs) -> None:
-        super(ExtendedServerBlobAuditingPolicy, self).__init__(**kwargs)
-        self.predicate_expression = predicate_expression
-        self.state = state
-        self.storage_endpoint = storage_endpoint
-        self.storage_account_access_key = storage_account_access_key
-        self.retention_days = retention_days
-        self.audit_actions_and_groups = audit_actions_and_groups
-        self.storage_account_subscription_id = storage_account_subscription_id
-        self.is_storage_secondary_key_in_use = is_storage_secondary_key_in_use
-        self.is_azure_monitor_target_enabled = is_azure_monitor_target_enabled
-        self.queue_delay_ms = queue_delay_ms
 
 
 class FailoverGroup(ProxyResource):
@@ -3844,643 +3250,6 @@ class InstancePoolVcoresCapability(Model):
         self.reason = reason
 
 
-class Job(ProxyResource):
-    """A job.
-
-    Variables are only populated by the server, and will be ignored when
-    sending a request.
-
-    :ivar id: Resource ID.
-    :vartype id: str
-    :ivar name: Resource name.
-    :vartype name: str
-    :ivar type: Resource type.
-    :vartype type: str
-    :param description: User-defined description of the job. Default value: ""
-     .
-    :type description: str
-    :ivar version: The job version number.
-    :vartype version: int
-    :param schedule: Schedule properties of the job.
-    :type schedule: ~azure.mgmt.sql.models.JobSchedule
-    """
-
-    _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'version': {'readonly': True},
-    }
-
-    _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'description': {'key': 'properties.description', 'type': 'str'},
-        'version': {'key': 'properties.version', 'type': 'int'},
-        'schedule': {'key': 'properties.schedule', 'type': 'JobSchedule'},
-    }
-
-    def __init__(self, *, description: str="", schedule=None, **kwargs) -> None:
-        super(Job, self).__init__(**kwargs)
-        self.description = description
-        self.version = None
-        self.schedule = schedule
-
-
-class JobAgent(TrackedResource):
-    """An Azure SQL job agent.
-
-    Variables are only populated by the server, and will be ignored when
-    sending a request.
-
-    All required parameters must be populated in order to send to Azure.
-
-    :ivar id: Resource ID.
-    :vartype id: str
-    :ivar name: Resource name.
-    :vartype name: str
-    :ivar type: Resource type.
-    :vartype type: str
-    :param location: Required. Resource location.
-    :type location: str
-    :param tags: Resource tags.
-    :type tags: dict[str, str]
-    :param sku: The name and tier of the SKU.
-    :type sku: ~azure.mgmt.sql.models.Sku
-    :param database_id: Required. Resource ID of the database to store job
-     metadata in.
-    :type database_id: str
-    :ivar state: The state of the job agent. Possible values include:
-     'Creating', 'Ready', 'Updating', 'Deleting', 'Disabled'
-    :vartype state: str or ~azure.mgmt.sql.models.JobAgentState
-    """
-
-    _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'location': {'required': True},
-        'database_id': {'required': True},
-        'state': {'readonly': True},
-    }
-
-    _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'location': {'key': 'location', 'type': 'str'},
-        'tags': {'key': 'tags', 'type': '{str}'},
-        'sku': {'key': 'sku', 'type': 'Sku'},
-        'database_id': {'key': 'properties.databaseId', 'type': 'str'},
-        'state': {'key': 'properties.state', 'type': 'str'},
-    }
-
-    def __init__(self, *, location: str, database_id: str, tags=None, sku=None, **kwargs) -> None:
-        super(JobAgent, self).__init__(location=location, tags=tags, **kwargs)
-        self.sku = sku
-        self.database_id = database_id
-        self.state = None
-
-
-class JobAgentUpdate(Model):
-    """An update to an Azure SQL job agent.
-
-    :param tags: Resource tags.
-    :type tags: dict[str, str]
-    """
-
-    _attribute_map = {
-        'tags': {'key': 'tags', 'type': '{str}'},
-    }
-
-    def __init__(self, *, tags=None, **kwargs) -> None:
-        super(JobAgentUpdate, self).__init__(**kwargs)
-        self.tags = tags
-
-
-class JobCredential(ProxyResource):
-    """A stored credential that can be used by a job to connect to target
-    databases.
-
-    Variables are only populated by the server, and will be ignored when
-    sending a request.
-
-    All required parameters must be populated in order to send to Azure.
-
-    :ivar id: Resource ID.
-    :vartype id: str
-    :ivar name: Resource name.
-    :vartype name: str
-    :ivar type: Resource type.
-    :vartype type: str
-    :param username: Required. The credential user name.
-    :type username: str
-    :param password: Required. The credential password.
-    :type password: str
-    """
-
-    _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'username': {'required': True},
-        'password': {'required': True},
-    }
-
-    _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'username': {'key': 'properties.username', 'type': 'str'},
-        'password': {'key': 'properties.password', 'type': 'str'},
-    }
-
-    def __init__(self, *, username: str, password: str, **kwargs) -> None:
-        super(JobCredential, self).__init__(**kwargs)
-        self.username = username
-        self.password = password
-
-
-class JobExecution(ProxyResource):
-    """An execution of a job.
-
-    Variables are only populated by the server, and will be ignored when
-    sending a request.
-
-    :ivar id: Resource ID.
-    :vartype id: str
-    :ivar name: Resource name.
-    :vartype name: str
-    :ivar type: Resource type.
-    :vartype type: str
-    :ivar job_version: The job version number.
-    :vartype job_version: int
-    :ivar step_name: The job step name.
-    :vartype step_name: str
-    :ivar step_id: The job step id.
-    :vartype step_id: int
-    :ivar job_execution_id: The unique identifier of the job execution.
-    :vartype job_execution_id: str
-    :ivar lifecycle: The detailed state of the job execution. Possible values
-     include: 'Created', 'InProgress', 'WaitingForChildJobExecutions',
-     'WaitingForRetry', 'Succeeded', 'SucceededWithSkipped', 'Failed',
-     'TimedOut', 'Canceled', 'Skipped'
-    :vartype lifecycle: str or ~azure.mgmt.sql.models.JobExecutionLifecycle
-    :ivar provisioning_state: The ARM provisioning state of the job execution.
-     Possible values include: 'Created', 'InProgress', 'Succeeded', 'Failed',
-     'Canceled'
-    :vartype provisioning_state: str or
-     ~azure.mgmt.sql.models.ProvisioningState
-    :ivar create_time: The time that the job execution was created.
-    :vartype create_time: datetime
-    :ivar start_time: The time that the job execution started.
-    :vartype start_time: datetime
-    :ivar end_time: The time that the job execution completed.
-    :vartype end_time: datetime
-    :param current_attempts: Number of times the job execution has been
-     attempted.
-    :type current_attempts: int
-    :ivar current_attempt_start_time: Start time of the current attempt.
-    :vartype current_attempt_start_time: datetime
-    :ivar last_message: The last status or error message.
-    :vartype last_message: str
-    :ivar target: The target that this execution is executed on.
-    :vartype target: ~azure.mgmt.sql.models.JobExecutionTarget
-    """
-
-    _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'job_version': {'readonly': True},
-        'step_name': {'readonly': True},
-        'step_id': {'readonly': True},
-        'job_execution_id': {'readonly': True},
-        'lifecycle': {'readonly': True},
-        'provisioning_state': {'readonly': True},
-        'create_time': {'readonly': True},
-        'start_time': {'readonly': True},
-        'end_time': {'readonly': True},
-        'current_attempt_start_time': {'readonly': True},
-        'last_message': {'readonly': True},
-        'target': {'readonly': True},
-    }
-
-    _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'job_version': {'key': 'properties.jobVersion', 'type': 'int'},
-        'step_name': {'key': 'properties.stepName', 'type': 'str'},
-        'step_id': {'key': 'properties.stepId', 'type': 'int'},
-        'job_execution_id': {'key': 'properties.jobExecutionId', 'type': 'str'},
-        'lifecycle': {'key': 'properties.lifecycle', 'type': 'str'},
-        'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
-        'create_time': {'key': 'properties.createTime', 'type': 'iso-8601'},
-        'start_time': {'key': 'properties.startTime', 'type': 'iso-8601'},
-        'end_time': {'key': 'properties.endTime', 'type': 'iso-8601'},
-        'current_attempts': {'key': 'properties.currentAttempts', 'type': 'int'},
-        'current_attempt_start_time': {'key': 'properties.currentAttemptStartTime', 'type': 'iso-8601'},
-        'last_message': {'key': 'properties.lastMessage', 'type': 'str'},
-        'target': {'key': 'properties.target', 'type': 'JobExecutionTarget'},
-    }
-
-    def __init__(self, *, current_attempts: int=None, **kwargs) -> None:
-        super(JobExecution, self).__init__(**kwargs)
-        self.job_version = None
-        self.step_name = None
-        self.step_id = None
-        self.job_execution_id = None
-        self.lifecycle = None
-        self.provisioning_state = None
-        self.create_time = None
-        self.start_time = None
-        self.end_time = None
-        self.current_attempts = current_attempts
-        self.current_attempt_start_time = None
-        self.last_message = None
-        self.target = None
-
-
-class JobExecutionTarget(Model):
-    """The target that a job execution is executed on.
-
-    Variables are only populated by the server, and will be ignored when
-    sending a request.
-
-    :ivar type: The type of the target. Possible values include:
-     'TargetGroup', 'SqlDatabase', 'SqlElasticPool', 'SqlShardMap', 'SqlServer'
-    :vartype type: str or ~azure.mgmt.sql.models.JobTargetType
-    :ivar server_name: The server name.
-    :vartype server_name: str
-    :ivar database_name: The database name.
-    :vartype database_name: str
-    """
-
-    _validation = {
-        'type': {'readonly': True},
-        'server_name': {'readonly': True},
-        'database_name': {'readonly': True},
-    }
-
-    _attribute_map = {
-        'type': {'key': 'type', 'type': 'str'},
-        'server_name': {'key': 'serverName', 'type': 'str'},
-        'database_name': {'key': 'databaseName', 'type': 'str'},
-    }
-
-    def __init__(self, **kwargs) -> None:
-        super(JobExecutionTarget, self).__init__(**kwargs)
-        self.type = None
-        self.server_name = None
-        self.database_name = None
-
-
-class JobSchedule(Model):
-    """Scheduling properties of a job.
-
-    :param start_time: Schedule start time. Default value:
-     "0001-01-01T00:00:00Z" .
-    :type start_time: datetime
-    :param end_time: Schedule end time. Default value: "9999-12-31T11:59:59Z"
-     .
-    :type end_time: datetime
-    :param type: Schedule interval type. Possible values include: 'Once',
-     'Recurring'. Default value: "Once" .
-    :type type: str or ~azure.mgmt.sql.models.JobScheduleType
-    :param enabled: Whether or not the schedule is enabled.
-    :type enabled: bool
-    :param interval: Value of the schedule's recurring interval, if the
-     schedule type is recurring. ISO8601 duration format.
-    :type interval: str
-    """
-
-    _attribute_map = {
-        'start_time': {'key': 'startTime', 'type': 'iso-8601'},
-        'end_time': {'key': 'endTime', 'type': 'iso-8601'},
-        'type': {'key': 'type', 'type': 'JobScheduleType'},
-        'enabled': {'key': 'enabled', 'type': 'bool'},
-        'interval': {'key': 'interval', 'type': 'str'},
-    }
-
-    def __init__(self, *, start_time="0001-01-01T00:00:00Z", end_time="9999-12-31T11:59:59Z", type="Once", enabled: bool=None, interval: str=None, **kwargs) -> None:
-        super(JobSchedule, self).__init__(**kwargs)
-        self.start_time = start_time
-        self.end_time = end_time
-        self.type = type
-        self.enabled = enabled
-        self.interval = interval
-
-
-class JobStep(ProxyResource):
-    """A job step.
-
-    Variables are only populated by the server, and will be ignored when
-    sending a request.
-
-    All required parameters must be populated in order to send to Azure.
-
-    :ivar id: Resource ID.
-    :vartype id: str
-    :ivar name: Resource name.
-    :vartype name: str
-    :ivar type: Resource type.
-    :vartype type: str
-    :param step_id: The job step's index within the job. If not specified when
-     creating the job step, it will be created as the last step. If not
-     specified when updating the job step, the step id is not modified.
-    :type step_id: int
-    :param target_group: Required. The resource ID of the target group that
-     the job step will be executed on.
-    :type target_group: str
-    :param credential: Required. The resource ID of the job credential that
-     will be used to connect to the targets.
-    :type credential: str
-    :param action: Required. The action payload of the job step.
-    :type action: ~azure.mgmt.sql.models.JobStepAction
-    :param output: Output destination properties of the job step.
-    :type output: ~azure.mgmt.sql.models.JobStepOutput
-    :param execution_options: Execution options for the job step.
-    :type execution_options: ~azure.mgmt.sql.models.JobStepExecutionOptions
-    """
-
-    _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'target_group': {'required': True},
-        'credential': {'required': True},
-        'action': {'required': True},
-    }
-
-    _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'step_id': {'key': 'properties.stepId', 'type': 'int'},
-        'target_group': {'key': 'properties.targetGroup', 'type': 'str'},
-        'credential': {'key': 'properties.credential', 'type': 'str'},
-        'action': {'key': 'properties.action', 'type': 'JobStepAction'},
-        'output': {'key': 'properties.output', 'type': 'JobStepOutput'},
-        'execution_options': {'key': 'properties.executionOptions', 'type': 'JobStepExecutionOptions'},
-    }
-
-    def __init__(self, *, target_group: str, credential: str, action, step_id: int=None, output=None, execution_options=None, **kwargs) -> None:
-        super(JobStep, self).__init__(**kwargs)
-        self.step_id = step_id
-        self.target_group = target_group
-        self.credential = credential
-        self.action = action
-        self.output = output
-        self.execution_options = execution_options
-
-
-class JobStepAction(Model):
-    """The action to be executed by a job step.
-
-    All required parameters must be populated in order to send to Azure.
-
-    :param type: Type of action being executed by the job step. Possible
-     values include: 'TSql'. Default value: "TSql" .
-    :type type: str or ~azure.mgmt.sql.models.JobStepActionType
-    :param source: The source of the action to execute. Possible values
-     include: 'Inline'. Default value: "Inline" .
-    :type source: str or ~azure.mgmt.sql.models.JobStepActionSource
-    :param value: Required. The action value, for example the text of the
-     T-SQL script to execute.
-    :type value: str
-    """
-
-    _validation = {
-        'value': {'required': True},
-    }
-
-    _attribute_map = {
-        'type': {'key': 'type', 'type': 'str'},
-        'source': {'key': 'source', 'type': 'str'},
-        'value': {'key': 'value', 'type': 'str'},
-    }
-
-    def __init__(self, *, value: str, type="TSql", source="Inline", **kwargs) -> None:
-        super(JobStepAction, self).__init__(**kwargs)
-        self.type = type
-        self.source = source
-        self.value = value
-
-
-class JobStepExecutionOptions(Model):
-    """The execution options of a job step.
-
-    :param timeout_seconds: Execution timeout for the job step. Default value:
-     43200 .
-    :type timeout_seconds: int
-    :param retry_attempts: Maximum number of times the job step will be
-     reattempted if the first attempt fails. Default value: 10 .
-    :type retry_attempts: int
-    :param initial_retry_interval_seconds: Initial delay between retries for
-     job step execution. Default value: 1 .
-    :type initial_retry_interval_seconds: int
-    :param maximum_retry_interval_seconds: The maximum amount of time to wait
-     between retries for job step execution. Default value: 120 .
-    :type maximum_retry_interval_seconds: int
-    :param retry_interval_backoff_multiplier: The backoff multiplier for the
-     time between retries. Default value: 2 .
-    :type retry_interval_backoff_multiplier: float
-    """
-
-    _attribute_map = {
-        'timeout_seconds': {'key': 'timeoutSeconds', 'type': 'int'},
-        'retry_attempts': {'key': 'retryAttempts', 'type': 'int'},
-        'initial_retry_interval_seconds': {'key': 'initialRetryIntervalSeconds', 'type': 'int'},
-        'maximum_retry_interval_seconds': {'key': 'maximumRetryIntervalSeconds', 'type': 'int'},
-        'retry_interval_backoff_multiplier': {'key': 'retryIntervalBackoffMultiplier', 'type': 'float'},
-    }
-
-    def __init__(self, *, timeout_seconds: int=43200, retry_attempts: int=10, initial_retry_interval_seconds: int=1, maximum_retry_interval_seconds: int=120, retry_interval_backoff_multiplier: float=2, **kwargs) -> None:
-        super(JobStepExecutionOptions, self).__init__(**kwargs)
-        self.timeout_seconds = timeout_seconds
-        self.retry_attempts = retry_attempts
-        self.initial_retry_interval_seconds = initial_retry_interval_seconds
-        self.maximum_retry_interval_seconds = maximum_retry_interval_seconds
-        self.retry_interval_backoff_multiplier = retry_interval_backoff_multiplier
-
-
-class JobStepOutput(Model):
-    """The output configuration of a job step.
-
-    All required parameters must be populated in order to send to Azure.
-
-    :param type: The output destination type. Possible values include:
-     'SqlDatabase'. Default value: "SqlDatabase" .
-    :type type: str or ~azure.mgmt.sql.models.JobStepOutputType
-    :param subscription_id: The output destination subscription id.
-    :type subscription_id: str
-    :param resource_group_name: The output destination resource group.
-    :type resource_group_name: str
-    :param server_name: Required. The output destination server name.
-    :type server_name: str
-    :param database_name: Required. The output destination database.
-    :type database_name: str
-    :param schema_name: The output destination schema. Default value: "dbo" .
-    :type schema_name: str
-    :param table_name: Required. The output destination table.
-    :type table_name: str
-    :param credential: Required. The resource ID of the credential to use to
-     connect to the output destination.
-    :type credential: str
-    """
-
-    _validation = {
-        'server_name': {'required': True},
-        'database_name': {'required': True},
-        'table_name': {'required': True},
-        'credential': {'required': True},
-    }
-
-    _attribute_map = {
-        'type': {'key': 'type', 'type': 'str'},
-        'subscription_id': {'key': 'subscriptionId', 'type': 'str'},
-        'resource_group_name': {'key': 'resourceGroupName', 'type': 'str'},
-        'server_name': {'key': 'serverName', 'type': 'str'},
-        'database_name': {'key': 'databaseName', 'type': 'str'},
-        'schema_name': {'key': 'schemaName', 'type': 'str'},
-        'table_name': {'key': 'tableName', 'type': 'str'},
-        'credential': {'key': 'credential', 'type': 'str'},
-    }
-
-    def __init__(self, *, server_name: str, database_name: str, table_name: str, credential: str, type="SqlDatabase", subscription_id: str=None, resource_group_name: str=None, schema_name: str="dbo", **kwargs) -> None:
-        super(JobStepOutput, self).__init__(**kwargs)
-        self.type = type
-        self.subscription_id = subscription_id
-        self.resource_group_name = resource_group_name
-        self.server_name = server_name
-        self.database_name = database_name
-        self.schema_name = schema_name
-        self.table_name = table_name
-        self.credential = credential
-
-
-class JobTarget(Model):
-    """A job target, for example a specific database or a container of databases
-    that is evaluated during job execution.
-
-    All required parameters must be populated in order to send to Azure.
-
-    :param membership_type: Whether the target is included or excluded from
-     the group. Possible values include: 'Include', 'Exclude'. Default value:
-     "Include" .
-    :type membership_type: str or
-     ~azure.mgmt.sql.models.JobTargetGroupMembershipType
-    :param type: Required. The target type. Possible values include:
-     'TargetGroup', 'SqlDatabase', 'SqlElasticPool', 'SqlShardMap', 'SqlServer'
-    :type type: str or ~azure.mgmt.sql.models.JobTargetType
-    :param server_name: The target server name.
-    :type server_name: str
-    :param database_name: The target database name.
-    :type database_name: str
-    :param elastic_pool_name: The target elastic pool name.
-    :type elastic_pool_name: str
-    :param shard_map_name: The target shard map.
-    :type shard_map_name: str
-    :param refresh_credential: The resource ID of the credential that is used
-     during job execution to connect to the target and determine the list of
-     databases inside the target.
-    :type refresh_credential: str
-    """
-
-    _validation = {
-        'type': {'required': True},
-    }
-
-    _attribute_map = {
-        'membership_type': {'key': 'membershipType', 'type': 'JobTargetGroupMembershipType'},
-        'type': {'key': 'type', 'type': 'str'},
-        'server_name': {'key': 'serverName', 'type': 'str'},
-        'database_name': {'key': 'databaseName', 'type': 'str'},
-        'elastic_pool_name': {'key': 'elasticPoolName', 'type': 'str'},
-        'shard_map_name': {'key': 'shardMapName', 'type': 'str'},
-        'refresh_credential': {'key': 'refreshCredential', 'type': 'str'},
-    }
-
-    def __init__(self, *, type, membership_type="Include", server_name: str=None, database_name: str=None, elastic_pool_name: str=None, shard_map_name: str=None, refresh_credential: str=None, **kwargs) -> None:
-        super(JobTarget, self).__init__(**kwargs)
-        self.membership_type = membership_type
-        self.type = type
-        self.server_name = server_name
-        self.database_name = database_name
-        self.elastic_pool_name = elastic_pool_name
-        self.shard_map_name = shard_map_name
-        self.refresh_credential = refresh_credential
-
-
-class JobTargetGroup(ProxyResource):
-    """A group of job targets.
-
-    Variables are only populated by the server, and will be ignored when
-    sending a request.
-
-    All required parameters must be populated in order to send to Azure.
-
-    :ivar id: Resource ID.
-    :vartype id: str
-    :ivar name: Resource name.
-    :vartype name: str
-    :ivar type: Resource type.
-    :vartype type: str
-    :param members: Required. Members of the target group.
-    :type members: list[~azure.mgmt.sql.models.JobTarget]
-    """
-
-    _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'members': {'required': True},
-    }
-
-    _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'members': {'key': 'properties.members', 'type': '[JobTarget]'},
-    }
-
-    def __init__(self, *, members, **kwargs) -> None:
-        super(JobTargetGroup, self).__init__(**kwargs)
-        self.members = members
-
-
-class JobVersion(ProxyResource):
-    """A job version.
-
-    Variables are only populated by the server, and will be ignored when
-    sending a request.
-
-    :ivar id: Resource ID.
-    :vartype id: str
-    :ivar name: Resource name.
-    :vartype name: str
-    :ivar type: Resource type.
-    :vartype type: str
-    """
-
-    _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-    }
-
-    _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-    }
-
-    def __init__(self, **kwargs) -> None:
-        super(JobVersion, self).__init__(**kwargs)
-
-
 class LicenseTypeCapability(Model):
     """The license type capability.
 
@@ -4589,100 +3358,43 @@ class LogSizeCapability(Model):
         self.unit = None
 
 
-class LongTermRetentionBackup(ProxyResource):
-    """A long term retention backup.
+class MaintenanceConfigurationCapability(Model):
+    """The maintenance configuration capability.
 
     Variables are only populated by the server, and will be ignored when
     sending a request.
 
-    :ivar id: Resource ID.
-    :vartype id: str
-    :ivar name: Resource name.
+    :ivar name: Maintenance configuration name
     :vartype name: str
-    :ivar type: Resource type.
-    :vartype type: str
-    :ivar server_name: The server name that the backup database belong to.
-    :vartype server_name: str
-    :ivar server_create_time: The create time of the server.
-    :vartype server_create_time: datetime
-    :ivar database_name: The name of the database the backup belong to
-    :vartype database_name: str
-    :ivar database_deletion_time: The delete time of the database
-    :vartype database_deletion_time: datetime
-    :ivar backup_time: The time the backup was taken
-    :vartype backup_time: datetime
-    :ivar backup_expiration_time: The time the long term retention backup will
-     expire.
-    :vartype backup_expiration_time: datetime
+    :ivar zone_redundant: Whether or not zone redundancy is supported for the
+     maintenance configuration.
+    :vartype zone_redundant: bool
+    :ivar status: The status of the capability. Possible values include:
+     'Visible', 'Available', 'Default', 'Disabled'
+    :vartype status: str or ~azure.mgmt.sql.models.CapabilityStatus
+    :param reason: The reason for the capability not being available.
+    :type reason: str
     """
 
     _validation = {
-        'id': {'readonly': True},
         'name': {'readonly': True},
-        'type': {'readonly': True},
-        'server_name': {'readonly': True},
-        'server_create_time': {'readonly': True},
-        'database_name': {'readonly': True},
-        'database_deletion_time': {'readonly': True},
-        'backup_time': {'readonly': True},
-        'backup_expiration_time': {'readonly': True},
+        'zone_redundant': {'readonly': True},
+        'status': {'readonly': True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
         'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'server_name': {'key': 'properties.serverName', 'type': 'str'},
-        'server_create_time': {'key': 'properties.serverCreateTime', 'type': 'iso-8601'},
-        'database_name': {'key': 'properties.databaseName', 'type': 'str'},
-        'database_deletion_time': {'key': 'properties.databaseDeletionTime', 'type': 'iso-8601'},
-        'backup_time': {'key': 'properties.backupTime', 'type': 'iso-8601'},
-        'backup_expiration_time': {'key': 'properties.backupExpirationTime', 'type': 'iso-8601'},
+        'zone_redundant': {'key': 'zoneRedundant', 'type': 'bool'},
+        'status': {'key': 'status', 'type': 'CapabilityStatus'},
+        'reason': {'key': 'reason', 'type': 'str'},
     }
 
-    def __init__(self, **kwargs) -> None:
-        super(LongTermRetentionBackup, self).__init__(**kwargs)
-        self.server_name = None
-        self.server_create_time = None
-        self.database_name = None
-        self.database_deletion_time = None
-        self.backup_time = None
-        self.backup_expiration_time = None
-
-
-class ManagedBackupShortTermRetentionPolicy(ProxyResource):
-    """A short term retention policy.
-
-    Variables are only populated by the server, and will be ignored when
-    sending a request.
-
-    :ivar id: Resource ID.
-    :vartype id: str
-    :ivar name: Resource name.
-    :vartype name: str
-    :ivar type: Resource type.
-    :vartype type: str
-    :param retention_days: The backup retention period in days. This is how
-     many days Point-in-Time Restore will be supported.
-    :type retention_days: int
-    """
-
-    _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-    }
-
-    _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'retention_days': {'key': 'properties.retentionDays', 'type': 'int'},
-    }
-
-    def __init__(self, *, retention_days: int=None, **kwargs) -> None:
-        super(ManagedBackupShortTermRetentionPolicy, self).__init__(**kwargs)
-        self.retention_days = retention_days
+    def __init__(self, *, reason: str=None, **kwargs) -> None:
+        super(MaintenanceConfigurationCapability, self).__init__(**kwargs)
+        self.name = None
+        self.zone_redundant = None
+        self.status = None
+        self.reason = reason
 
 
 class ManagedDatabase(TrackedResource):
@@ -4824,6 +3536,86 @@ class ManagedDatabase(TrackedResource):
         self.long_term_retention_backup_resource_id = long_term_retention_backup_resource_id
         self.auto_complete_restore = auto_complete_restore
         self.last_backup_name = last_backup_name
+
+
+class ManagedDatabaseRestoreDetailsResult(ProxyResource):
+    """A managed database restore details.
+
+    Variables are only populated by the server, and will be ignored when
+    sending a request.
+
+    :ivar id: Resource ID.
+    :vartype id: str
+    :ivar name: Resource name.
+    :vartype name: str
+    :ivar type: Resource type.
+    :vartype type: str
+    :ivar status: Restore status.
+    :vartype status: str
+    :ivar current_restoring_file_name: Current restoring file name.
+    :vartype current_restoring_file_name: str
+    :ivar last_restored_file_name: Last restored file name.
+    :vartype last_restored_file_name: str
+    :ivar last_restored_file_time: Last restored file time.
+    :vartype last_restored_file_time: datetime
+    :ivar percent_completed: Percent completed.
+    :vartype percent_completed: float
+    :ivar unrestorable_files: List of unrestorable files.
+    :vartype unrestorable_files: list[str]
+    :ivar number_of_files_detected: Number of files detected.
+    :vartype number_of_files_detected: long
+    :ivar last_uploaded_file_name: Last uploaded file name.
+    :vartype last_uploaded_file_name: str
+    :ivar last_uploaded_file_time: Last uploaded file time.
+    :vartype last_uploaded_file_time: datetime
+    :ivar block_reason: The reason why restore is in Blocked state.
+    :vartype block_reason: str
+    """
+
+    _validation = {
+        'id': {'readonly': True},
+        'name': {'readonly': True},
+        'type': {'readonly': True},
+        'status': {'readonly': True},
+        'current_restoring_file_name': {'readonly': True},
+        'last_restored_file_name': {'readonly': True},
+        'last_restored_file_time': {'readonly': True},
+        'percent_completed': {'readonly': True},
+        'unrestorable_files': {'readonly': True},
+        'number_of_files_detected': {'readonly': True},
+        'last_uploaded_file_name': {'readonly': True},
+        'last_uploaded_file_time': {'readonly': True},
+        'block_reason': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'id': {'key': 'id', 'type': 'str'},
+        'name': {'key': 'name', 'type': 'str'},
+        'type': {'key': 'type', 'type': 'str'},
+        'status': {'key': 'properties.status', 'type': 'str'},
+        'current_restoring_file_name': {'key': 'properties.currentRestoringFileName', 'type': 'str'},
+        'last_restored_file_name': {'key': 'properties.lastRestoredFileName', 'type': 'str'},
+        'last_restored_file_time': {'key': 'properties.lastRestoredFileTime', 'type': 'iso-8601'},
+        'percent_completed': {'key': 'properties.percentCompleted', 'type': 'float'},
+        'unrestorable_files': {'key': 'properties.unrestorableFiles', 'type': '[str]'},
+        'number_of_files_detected': {'key': 'properties.numberOfFilesDetected', 'type': 'long'},
+        'last_uploaded_file_name': {'key': 'properties.lastUploadedFileName', 'type': 'str'},
+        'last_uploaded_file_time': {'key': 'properties.lastUploadedFileTime', 'type': 'iso-8601'},
+        'block_reason': {'key': 'properties.blockReason', 'type': 'str'},
+    }
+
+    def __init__(self, **kwargs) -> None:
+        super(ManagedDatabaseRestoreDetailsResult, self).__init__(**kwargs)
+        self.status = None
+        self.current_restoring_file_name = None
+        self.last_restored_file_name = None
+        self.last_restored_file_time = None
+        self.percent_completed = None
+        self.unrestorable_files = None
+        self.number_of_files_detected = None
+        self.last_uploaded_file_name = None
+        self.last_uploaded_file_time = None
+        self.block_reason = None
 
 
 class ManagedDatabaseSecurityAlertPolicy(ProxyResource):
@@ -5322,6 +4114,13 @@ class ManagedInstanceEditionCapability(Model):
     :ivar supported_families: The supported families.
     :vartype supported_families:
      list[~azure.mgmt.sql.models.ManagedInstanceFamilyCapability]
+    :ivar supported_storage_capabilities: The list of supported storage
+     capabilities for this edition
+    :vartype supported_storage_capabilities:
+     list[~azure.mgmt.sql.models.StorageCapability]
+    :ivar zone_redundant: Whether or not zone redundancy is supported for the
+     edition.
+    :vartype zone_redundant: bool
     :ivar status: The status of the capability. Possible values include:
      'Visible', 'Available', 'Default', 'Disabled'
     :vartype status: str or ~azure.mgmt.sql.models.CapabilityStatus
@@ -5332,12 +4131,16 @@ class ManagedInstanceEditionCapability(Model):
     _validation = {
         'name': {'readonly': True},
         'supported_families': {'readonly': True},
+        'supported_storage_capabilities': {'readonly': True},
+        'zone_redundant': {'readonly': True},
         'status': {'readonly': True},
     }
 
     _attribute_map = {
         'name': {'key': 'name', 'type': 'str'},
         'supported_families': {'key': 'supportedFamilies', 'type': '[ManagedInstanceFamilyCapability]'},
+        'supported_storage_capabilities': {'key': 'supportedStorageCapabilities', 'type': '[StorageCapability]'},
+        'zone_redundant': {'key': 'zoneRedundant', 'type': 'bool'},
         'status': {'key': 'status', 'type': 'CapabilityStatus'},
         'reason': {'key': 'reason', 'type': 'str'},
     }
@@ -5346,6 +4149,8 @@ class ManagedInstanceEditionCapability(Model):
         super(ManagedInstanceEditionCapability, self).__init__(**kwargs)
         self.name = None
         self.supported_families = None
+        self.supported_storage_capabilities = None
+        self.zone_redundant = None
         self.status = None
         self.reason = reason
 
@@ -5629,6 +4434,39 @@ class ManagedInstanceLongTermRetentionPolicy(ProxyResource):
         self.monthly_retention = monthly_retention
         self.yearly_retention = yearly_retention
         self.week_of_year = week_of_year
+
+
+class ManagedInstanceMaintenanceConfigurationCapability(Model):
+    """The maintenance configuration capability.
+
+    Variables are only populated by the server, and will be ignored when
+    sending a request.
+
+    :ivar name: Maintenance configuration name
+    :vartype name: str
+    :ivar status: The status of the capability. Possible values include:
+     'Visible', 'Available', 'Default', 'Disabled'
+    :vartype status: str or ~azure.mgmt.sql.models.CapabilityStatus
+    :param reason: The reason for the capability not being available.
+    :type reason: str
+    """
+
+    _validation = {
+        'name': {'readonly': True},
+        'status': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'name': {'key': 'name', 'type': 'str'},
+        'status': {'key': 'status', 'type': 'CapabilityStatus'},
+        'reason': {'key': 'reason', 'type': 'str'},
+    }
+
+    def __init__(self, *, reason: str=None, **kwargs) -> None:
+        super(ManagedInstanceMaintenanceConfigurationCapability, self).__init__(**kwargs)
+        self.name = None
+        self.status = None
+        self.reason = reason
 
 
 class ManagedInstanceOperation(ProxyResource):
@@ -6137,6 +4975,10 @@ class ManagedInstanceVcoresCapability(Model):
     :ivar standalone_supported: True if this service objective is supported
      for standalone managed instances.
     :vartype standalone_supported: bool
+    :ivar supported_maintenance_configurations: List of supported maintenance
+     configurations
+    :vartype supported_maintenance_configurations:
+     list[~azure.mgmt.sql.models.ManagedInstanceMaintenanceConfigurationCapability]
     :ivar status: The status of the capability. Possible values include:
      'Visible', 'Available', 'Default', 'Disabled'
     :vartype status: str or ~azure.mgmt.sql.models.CapabilityStatus
@@ -6151,6 +4993,7 @@ class ManagedInstanceVcoresCapability(Model):
         'supported_storage_sizes': {'readonly': True},
         'instance_pool_supported': {'readonly': True},
         'standalone_supported': {'readonly': True},
+        'supported_maintenance_configurations': {'readonly': True},
         'status': {'readonly': True},
     }
 
@@ -6161,6 +5004,7 @@ class ManagedInstanceVcoresCapability(Model):
         'supported_storage_sizes': {'key': 'supportedStorageSizes', 'type': '[MaxSizeRangeCapability]'},
         'instance_pool_supported': {'key': 'instancePoolSupported', 'type': 'bool'},
         'standalone_supported': {'key': 'standaloneSupported', 'type': 'bool'},
+        'supported_maintenance_configurations': {'key': 'supportedMaintenanceConfigurations', 'type': '[ManagedInstanceMaintenanceConfigurationCapability]'},
         'status': {'key': 'status', 'type': 'CapabilityStatus'},
         'reason': {'key': 'reason', 'type': 'str'},
     }
@@ -6173,6 +5017,7 @@ class ManagedInstanceVcoresCapability(Model):
         self.supported_storage_sizes = None
         self.instance_pool_supported = None
         self.standalone_supported = None
+        self.supported_maintenance_configurations = None
         self.status = None
         self.reason = reason
 
@@ -8150,54 +6995,6 @@ class Server(TrackedResource):
         self.public_network_access = public_network_access
 
 
-class ServerAutomaticTuning(ProxyResource):
-    """Server-level Automatic Tuning.
-
-    Variables are only populated by the server, and will be ignored when
-    sending a request.
-
-    :ivar id: Resource ID.
-    :vartype id: str
-    :ivar name: Resource name.
-    :vartype name: str
-    :ivar type: Resource type.
-    :vartype type: str
-    :param desired_state: Automatic tuning desired state. Possible values
-     include: 'Custom', 'Auto', 'Unspecified'
-    :type desired_state: str or
-     ~azure.mgmt.sql.models.AutomaticTuningServerMode
-    :ivar actual_state: Automatic tuning actual state. Possible values
-     include: 'Custom', 'Auto', 'Unspecified'
-    :vartype actual_state: str or
-     ~azure.mgmt.sql.models.AutomaticTuningServerMode
-    :param options: Automatic tuning options definition.
-    :type options: dict[str,
-     ~azure.mgmt.sql.models.AutomaticTuningServerOptions]
-    """
-
-    _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'actual_state': {'readonly': True},
-    }
-
-    _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'desired_state': {'key': 'properties.desiredState', 'type': 'AutomaticTuningServerMode'},
-        'actual_state': {'key': 'properties.actualState', 'type': 'AutomaticTuningServerMode'},
-        'options': {'key': 'properties.options', 'type': '{AutomaticTuningServerOptions}'},
-    }
-
-    def __init__(self, *, desired_state=None, options=None, **kwargs) -> None:
-        super(ServerAutomaticTuning, self).__init__(**kwargs)
-        self.desired_state = desired_state
-        self.actual_state = None
-        self.options = options
-
-
 class ServerAzureADAdministrator(ProxyResource):
     """Azure Active Directory administrator.
 
@@ -8293,170 +7090,6 @@ class ServerAzureADOnlyAuthentication(ProxyResource):
     def __init__(self, *, azure_ad_only_authentication: bool, **kwargs) -> None:
         super(ServerAzureADOnlyAuthentication, self).__init__(**kwargs)
         self.azure_ad_only_authentication = azure_ad_only_authentication
-
-
-class ServerBlobAuditingPolicy(ProxyResource):
-    """A server blob auditing policy.
-
-    Variables are only populated by the server, and will be ignored when
-    sending a request.
-
-    All required parameters must be populated in order to send to Azure.
-
-    :ivar id: Resource ID.
-    :vartype id: str
-    :ivar name: Resource name.
-    :vartype name: str
-    :ivar type: Resource type.
-    :vartype type: str
-    :param state: Required. Specifies the state of the policy. If state is
-     Enabled, storageEndpoint or isAzureMonitorTargetEnabled are required.
-     Possible values include: 'Enabled', 'Disabled'
-    :type state: str or ~azure.mgmt.sql.models.BlobAuditingPolicyState
-    :param storage_endpoint: Specifies the blob storage endpoint (e.g.
-     https://MyAccount.blob.core.windows.net). If state is Enabled,
-     storageEndpoint or isAzureMonitorTargetEnabled is required.
-    :type storage_endpoint: str
-    :param storage_account_access_key: Specifies the identifier key of the
-     auditing storage account.
-     If state is Enabled and storageEndpoint is specified, not specifying the
-     storageAccountAccessKey will use SQL server system-assigned managed
-     identity to access the storage.
-     Prerequisites for using managed identity authentication:
-     1. Assign SQL Server a system-assigned managed identity in Azure Active
-     Directory (AAD).
-     2. Grant SQL Server identity access to the storage account by adding
-     'Storage Blob Data Contributor' RBAC role to the server identity.
-     For more information, see [Auditing to storage using Managed Identity
-     authentication](https://go.microsoft.com/fwlink/?linkid=2114355)
-    :type storage_account_access_key: str
-    :param retention_days: Specifies the number of days to keep in the audit
-     logs in the storage account.
-    :type retention_days: int
-    :param audit_actions_and_groups: Specifies the Actions-Groups and Actions
-     to audit.
-     The recommended set of action groups to use is the following combination -
-     this will audit all the queries and stored procedures executed against the
-     database, as well as successful and failed logins:
-     BATCH_COMPLETED_GROUP,
-     SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP,
-     FAILED_DATABASE_AUTHENTICATION_GROUP.
-     This above combination is also the set that is configured by default when
-     enabling auditing from the Azure portal.
-     The supported action groups to audit are (note: choose only specific
-     groups that cover your auditing needs. Using unnecessary groups could lead
-     to very large quantities of audit records):
-     APPLICATION_ROLE_CHANGE_PASSWORD_GROUP
-     BACKUP_RESTORE_GROUP
-     DATABASE_LOGOUT_GROUP
-     DATABASE_OBJECT_CHANGE_GROUP
-     DATABASE_OBJECT_OWNERSHIP_CHANGE_GROUP
-     DATABASE_OBJECT_PERMISSION_CHANGE_GROUP
-     DATABASE_OPERATION_GROUP
-     DATABASE_PERMISSION_CHANGE_GROUP
-     DATABASE_PRINCIPAL_CHANGE_GROUP
-     DATABASE_PRINCIPAL_IMPERSONATION_GROUP
-     DATABASE_ROLE_MEMBER_CHANGE_GROUP
-     FAILED_DATABASE_AUTHENTICATION_GROUP
-     SCHEMA_OBJECT_ACCESS_GROUP
-     SCHEMA_OBJECT_CHANGE_GROUP
-     SCHEMA_OBJECT_OWNERSHIP_CHANGE_GROUP
-     SCHEMA_OBJECT_PERMISSION_CHANGE_GROUP
-     SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP
-     USER_CHANGE_PASSWORD_GROUP
-     BATCH_STARTED_GROUP
-     BATCH_COMPLETED_GROUP
-     These are groups that cover all sql statements and stored procedures
-     executed against the database, and should not be used in combination with
-     other groups as this will result in duplicate audit logs.
-     For more information, see [Database-Level Audit Action
-     Groups](https://docs.microsoft.com/en-us/sql/relational-databases/security/auditing/sql-server-audit-action-groups-and-actions#database-level-audit-action-groups).
-     For Database auditing policy, specific Actions can also be specified (note
-     that Actions cannot be specified for Server auditing policy). The
-     supported actions to audit are:
-     SELECT
-     UPDATE
-     INSERT
-     DELETE
-     EXECUTE
-     RECEIVE
-     REFERENCES
-     The general form for defining an action to be audited is:
-     {action} ON {object} BY {principal}
-     Note that <object> in the above format can refer to an object like a
-     table, view, or stored procedure, or an entire database or schema. For the
-     latter cases, the forms DATABASE::{db_name} and SCHEMA::{schema_name} are
-     used, respectively.
-     For example:
-     SELECT on dbo.myTable by public
-     SELECT on DATABASE::myDatabase by public
-     SELECT on SCHEMA::mySchema by public
-     For more information, see [Database-Level Audit
-     Actions](https://docs.microsoft.com/en-us/sql/relational-databases/security/auditing/sql-server-audit-action-groups-and-actions#database-level-audit-actions)
-    :type audit_actions_and_groups: list[str]
-    :param storage_account_subscription_id: Specifies the blob storage
-     subscription Id.
-    :type storage_account_subscription_id: str
-    :param is_storage_secondary_key_in_use: Specifies whether
-     storageAccountAccessKey value is the storage's secondary key.
-    :type is_storage_secondary_key_in_use: bool
-    :param is_azure_monitor_target_enabled: Specifies whether audit events are
-     sent to Azure Monitor.
-     In order to send the events to Azure Monitor, specify 'state' as 'Enabled'
-     and 'isAzureMonitorTargetEnabled' as true.
-     When using REST API to configure auditing, Diagnostic Settings with
-     'SQLSecurityAuditEvents' diagnostic logs category on the database should
-     be also created.
-     Note that for server level audit you should use the 'master' database as
-     {databaseName}.
-     Diagnostic Settings URI format:
-     PUT
-     https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/providers/microsoft.insights/diagnosticSettings/{settingsName}?api-version=2017-05-01-preview
-     For more information, see [Diagnostic Settings REST
-     API](https://go.microsoft.com/fwlink/?linkid=2033207)
-     or [Diagnostic Settings
-     PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043)
-    :type is_azure_monitor_target_enabled: bool
-    :param queue_delay_ms: Specifies the amount of time in milliseconds that
-     can elapse before audit actions are forced to be processed.
-     The default minimum value is 1000 (1 second). The maximum is
-     2,147,483,647.
-    :type queue_delay_ms: int
-    """
-
-    _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'state': {'required': True},
-    }
-
-    _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'state': {'key': 'properties.state', 'type': 'BlobAuditingPolicyState'},
-        'storage_endpoint': {'key': 'properties.storageEndpoint', 'type': 'str'},
-        'storage_account_access_key': {'key': 'properties.storageAccountAccessKey', 'type': 'str'},
-        'retention_days': {'key': 'properties.retentionDays', 'type': 'int'},
-        'audit_actions_and_groups': {'key': 'properties.auditActionsAndGroups', 'type': '[str]'},
-        'storage_account_subscription_id': {'key': 'properties.storageAccountSubscriptionId', 'type': 'str'},
-        'is_storage_secondary_key_in_use': {'key': 'properties.isStorageSecondaryKeyInUse', 'type': 'bool'},
-        'is_azure_monitor_target_enabled': {'key': 'properties.isAzureMonitorTargetEnabled', 'type': 'bool'},
-        'queue_delay_ms': {'key': 'properties.queueDelayMs', 'type': 'int'},
-    }
-
-    def __init__(self, *, state, storage_endpoint: str=None, storage_account_access_key: str=None, retention_days: int=None, audit_actions_and_groups=None, storage_account_subscription_id: str=None, is_storage_secondary_key_in_use: bool=None, is_azure_monitor_target_enabled: bool=None, queue_delay_ms: int=None, **kwargs) -> None:
-        super(ServerBlobAuditingPolicy, self).__init__(**kwargs)
-        self.state = state
-        self.storage_endpoint = storage_endpoint
-        self.storage_account_access_key = storage_account_access_key
-        self.retention_days = retention_days
-        self.audit_actions_and_groups = audit_actions_and_groups
-        self.storage_account_subscription_id = storage_account_subscription_id
-        self.is_storage_secondary_key_in_use = is_storage_secondary_key_in_use
-        self.is_azure_monitor_target_enabled = is_azure_monitor_target_enabled
-        self.queue_delay_ms = queue_delay_ms
 
 
 class ServerCommunicationLink(ProxyResource):
@@ -9251,6 +7884,10 @@ class ServiceObjectiveCapability(Model):
      list[~azure.mgmt.sql.models.MinCapacityCapability]
     :ivar compute_model: The compute model
     :vartype compute_model: str
+    :ivar supported_maintenance_configurations: List of supported maintenance
+     configurations
+    :vartype supported_maintenance_configurations:
+     list[~azure.mgmt.sql.models.MaintenanceConfigurationCapability]
     :ivar status: The status of the capability. Possible values include:
      'Visible', 'Available', 'Default', 'Disabled'
     :vartype status: str or ~azure.mgmt.sql.models.CapabilityStatus
@@ -9270,6 +7907,7 @@ class ServiceObjectiveCapability(Model):
         'supported_auto_pause_delay': {'readonly': True},
         'supported_min_capacities': {'readonly': True},
         'compute_model': {'readonly': True},
+        'supported_maintenance_configurations': {'readonly': True},
         'status': {'readonly': True},
     }
 
@@ -9285,6 +7923,7 @@ class ServiceObjectiveCapability(Model):
         'supported_auto_pause_delay': {'key': 'supportedAutoPauseDelay', 'type': 'AutoPauseDelayTimeRange'},
         'supported_min_capacities': {'key': 'supportedMinCapacities', 'type': '[MinCapacityCapability]'},
         'compute_model': {'key': 'computeModel', 'type': 'str'},
+        'supported_maintenance_configurations': {'key': 'supportedMaintenanceConfigurations', 'type': '[MaintenanceConfigurationCapability]'},
         'status': {'key': 'status', 'type': 'CapabilityStatus'},
         'reason': {'key': 'reason', 'type': 'str'},
     }
@@ -9302,6 +7941,7 @@ class ServiceObjectiveCapability(Model):
         self.supported_auto_pause_delay = None
         self.supported_min_capacities = None
         self.compute_model = None
+        self.supported_maintenance_configurations = None
         self.status = None
         self.reason = reason
 

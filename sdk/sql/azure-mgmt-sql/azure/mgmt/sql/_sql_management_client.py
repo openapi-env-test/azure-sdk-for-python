@@ -43,26 +43,6 @@ from .operations import SyncAgentsOperations
 from .operations import SubscriptionUsagesOperations
 from .operations import VirtualClustersOperations
 from .operations import VirtualNetworkRulesOperations
-from .operations import ExtendedDatabaseBlobAuditingPoliciesOperations
-from .operations import ExtendedServerBlobAuditingPoliciesOperations
-from .operations import ServerBlobAuditingPoliciesOperations
-from .operations import DatabaseBlobAuditingPoliciesOperations
-from .operations import DatabaseVulnerabilityAssessmentRuleBaselinesOperations
-from .operations import DatabaseVulnerabilityAssessmentsOperations
-from .operations import JobAgentsOperations
-from .operations import JobCredentialsOperations
-from .operations import JobExecutionsOperations
-from .operations import JobsOperations
-from .operations import JobStepExecutionsOperations
-from .operations import JobStepsOperations
-from .operations import JobTargetExecutionsOperations
-from .operations import JobTargetGroupsOperations
-from .operations import JobVersionsOperations
-from .operations import LongTermRetentionBackupsOperations
-from .operations import BackupLongTermRetentionPoliciesOperations
-from .operations import ManagedBackupShortTermRetentionPoliciesOperations
-from .operations import ManagedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesOperations
-from .operations import ServerAutomaticTuningOperations
 from .operations import ServerDnsAliasesOperations
 from .operations import ServerSecurityAlertPoliciesOperations
 from .operations import RestorableDroppedManagedDatabasesOperations
@@ -102,6 +82,7 @@ from .operations import ServerAzureADAdministratorsOperations
 from .operations import SyncGroupsOperations
 from .operations import SyncMembersOperations
 from .operations import ManagedDatabasesOperations
+from .operations import ManagedDatabaseRestoreDetailsOperations
 from .operations import ServerAzureADOnlyAuthenticationsOperations
 from .operations import ManagedInstancesOperations
 from .operations import ManagedInstanceAzureADOnlyAuthenticationsOperations
@@ -176,46 +157,6 @@ class SqlManagementClient(SDKClient):
     :vartype virtual_clusters: azure.mgmt.sql.operations.VirtualClustersOperations
     :ivar virtual_network_rules: VirtualNetworkRules operations
     :vartype virtual_network_rules: azure.mgmt.sql.operations.VirtualNetworkRulesOperations
-    :ivar extended_database_blob_auditing_policies: ExtendedDatabaseBlobAuditingPolicies operations
-    :vartype extended_database_blob_auditing_policies: azure.mgmt.sql.operations.ExtendedDatabaseBlobAuditingPoliciesOperations
-    :ivar extended_server_blob_auditing_policies: ExtendedServerBlobAuditingPolicies operations
-    :vartype extended_server_blob_auditing_policies: azure.mgmt.sql.operations.ExtendedServerBlobAuditingPoliciesOperations
-    :ivar server_blob_auditing_policies: ServerBlobAuditingPolicies operations
-    :vartype server_blob_auditing_policies: azure.mgmt.sql.operations.ServerBlobAuditingPoliciesOperations
-    :ivar database_blob_auditing_policies: DatabaseBlobAuditingPolicies operations
-    :vartype database_blob_auditing_policies: azure.mgmt.sql.operations.DatabaseBlobAuditingPoliciesOperations
-    :ivar database_vulnerability_assessment_rule_baselines: DatabaseVulnerabilityAssessmentRuleBaselines operations
-    :vartype database_vulnerability_assessment_rule_baselines: azure.mgmt.sql.operations.DatabaseVulnerabilityAssessmentRuleBaselinesOperations
-    :ivar database_vulnerability_assessments: DatabaseVulnerabilityAssessments operations
-    :vartype database_vulnerability_assessments: azure.mgmt.sql.operations.DatabaseVulnerabilityAssessmentsOperations
-    :ivar job_agents: JobAgents operations
-    :vartype job_agents: azure.mgmt.sql.operations.JobAgentsOperations
-    :ivar job_credentials: JobCredentials operations
-    :vartype job_credentials: azure.mgmt.sql.operations.JobCredentialsOperations
-    :ivar job_executions: JobExecutions operations
-    :vartype job_executions: azure.mgmt.sql.operations.JobExecutionsOperations
-    :ivar jobs: Jobs operations
-    :vartype jobs: azure.mgmt.sql.operations.JobsOperations
-    :ivar job_step_executions: JobStepExecutions operations
-    :vartype job_step_executions: azure.mgmt.sql.operations.JobStepExecutionsOperations
-    :ivar job_steps: JobSteps operations
-    :vartype job_steps: azure.mgmt.sql.operations.JobStepsOperations
-    :ivar job_target_executions: JobTargetExecutions operations
-    :vartype job_target_executions: azure.mgmt.sql.operations.JobTargetExecutionsOperations
-    :ivar job_target_groups: JobTargetGroups operations
-    :vartype job_target_groups: azure.mgmt.sql.operations.JobTargetGroupsOperations
-    :ivar job_versions: JobVersions operations
-    :vartype job_versions: azure.mgmt.sql.operations.JobVersionsOperations
-    :ivar long_term_retention_backups: LongTermRetentionBackups operations
-    :vartype long_term_retention_backups: azure.mgmt.sql.operations.LongTermRetentionBackupsOperations
-    :ivar backup_long_term_retention_policies: BackupLongTermRetentionPolicies operations
-    :vartype backup_long_term_retention_policies: azure.mgmt.sql.operations.BackupLongTermRetentionPoliciesOperations
-    :ivar managed_backup_short_term_retention_policies: ManagedBackupShortTermRetentionPolicies operations
-    :vartype managed_backup_short_term_retention_policies: azure.mgmt.sql.operations.ManagedBackupShortTermRetentionPoliciesOperations
-    :ivar managed_restorable_dropped_database_backup_short_term_retention_policies: ManagedRestorableDroppedDatabaseBackupShortTermRetentionPolicies operations
-    :vartype managed_restorable_dropped_database_backup_short_term_retention_policies: azure.mgmt.sql.operations.ManagedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesOperations
-    :ivar server_automatic_tuning: ServerAutomaticTuning operations
-    :vartype server_automatic_tuning: azure.mgmt.sql.operations.ServerAutomaticTuningOperations
     :ivar server_dns_aliases: ServerDnsAliases operations
     :vartype server_dns_aliases: azure.mgmt.sql.operations.ServerDnsAliasesOperations
     :ivar server_security_alert_policies: ServerSecurityAlertPolicies operations
@@ -294,6 +235,8 @@ class SqlManagementClient(SDKClient):
     :vartype sync_members: azure.mgmt.sql.operations.SyncMembersOperations
     :ivar managed_databases: ManagedDatabases operations
     :vartype managed_databases: azure.mgmt.sql.operations.ManagedDatabasesOperations
+    :ivar managed_database_restore_details: ManagedDatabaseRestoreDetails operations
+    :vartype managed_database_restore_details: azure.mgmt.sql.operations.ManagedDatabaseRestoreDetailsOperations
     :ivar server_azure_ad_only_authentications: ServerAzureADOnlyAuthentications operations
     :vartype server_azure_ad_only_authentications: azure.mgmt.sql.operations.ServerAzureADOnlyAuthenticationsOperations
     :ivar managed_instances: ManagedInstances operations
@@ -384,46 +327,6 @@ class SqlManagementClient(SDKClient):
             self._client, self.config, self._serialize, self._deserialize)
         self.virtual_network_rules = VirtualNetworkRulesOperations(
             self._client, self.config, self._serialize, self._deserialize)
-        self.extended_database_blob_auditing_policies = ExtendedDatabaseBlobAuditingPoliciesOperations(
-            self._client, self.config, self._serialize, self._deserialize)
-        self.extended_server_blob_auditing_policies = ExtendedServerBlobAuditingPoliciesOperations(
-            self._client, self.config, self._serialize, self._deserialize)
-        self.server_blob_auditing_policies = ServerBlobAuditingPoliciesOperations(
-            self._client, self.config, self._serialize, self._deserialize)
-        self.database_blob_auditing_policies = DatabaseBlobAuditingPoliciesOperations(
-            self._client, self.config, self._serialize, self._deserialize)
-        self.database_vulnerability_assessment_rule_baselines = DatabaseVulnerabilityAssessmentRuleBaselinesOperations(
-            self._client, self.config, self._serialize, self._deserialize)
-        self.database_vulnerability_assessments = DatabaseVulnerabilityAssessmentsOperations(
-            self._client, self.config, self._serialize, self._deserialize)
-        self.job_agents = JobAgentsOperations(
-            self._client, self.config, self._serialize, self._deserialize)
-        self.job_credentials = JobCredentialsOperations(
-            self._client, self.config, self._serialize, self._deserialize)
-        self.job_executions = JobExecutionsOperations(
-            self._client, self.config, self._serialize, self._deserialize)
-        self.jobs = JobsOperations(
-            self._client, self.config, self._serialize, self._deserialize)
-        self.job_step_executions = JobStepExecutionsOperations(
-            self._client, self.config, self._serialize, self._deserialize)
-        self.job_steps = JobStepsOperations(
-            self._client, self.config, self._serialize, self._deserialize)
-        self.job_target_executions = JobTargetExecutionsOperations(
-            self._client, self.config, self._serialize, self._deserialize)
-        self.job_target_groups = JobTargetGroupsOperations(
-            self._client, self.config, self._serialize, self._deserialize)
-        self.job_versions = JobVersionsOperations(
-            self._client, self.config, self._serialize, self._deserialize)
-        self.long_term_retention_backups = LongTermRetentionBackupsOperations(
-            self._client, self.config, self._serialize, self._deserialize)
-        self.backup_long_term_retention_policies = BackupLongTermRetentionPoliciesOperations(
-            self._client, self.config, self._serialize, self._deserialize)
-        self.managed_backup_short_term_retention_policies = ManagedBackupShortTermRetentionPoliciesOperations(
-            self._client, self.config, self._serialize, self._deserialize)
-        self.managed_restorable_dropped_database_backup_short_term_retention_policies = ManagedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesOperations(
-            self._client, self.config, self._serialize, self._deserialize)
-        self.server_automatic_tuning = ServerAutomaticTuningOperations(
-            self._client, self.config, self._serialize, self._deserialize)
         self.server_dns_aliases = ServerDnsAliasesOperations(
             self._client, self.config, self._serialize, self._deserialize)
         self.server_security_alert_policies = ServerSecurityAlertPoliciesOperations(
@@ -501,6 +404,8 @@ class SqlManagementClient(SDKClient):
         self.sync_members = SyncMembersOperations(
             self._client, self.config, self._serialize, self._deserialize)
         self.managed_databases = ManagedDatabasesOperations(
+            self._client, self.config, self._serialize, self._deserialize)
+        self.managed_database_restore_details = ManagedDatabaseRestoreDetailsOperations(
             self._client, self.config, self._serialize, self._deserialize)
         self.server_azure_ad_only_authentications = ServerAzureADOnlyAuthenticationsOperations(
             self._client, self.config, self._serialize, self._deserialize)

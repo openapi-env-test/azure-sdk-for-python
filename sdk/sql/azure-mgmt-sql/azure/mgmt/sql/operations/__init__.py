@@ -39,26 +39,6 @@ from ._sync_agents_operations import SyncAgentsOperations
 from ._subscription_usages_operations import SubscriptionUsagesOperations
 from ._virtual_clusters_operations import VirtualClustersOperations
 from ._virtual_network_rules_operations import VirtualNetworkRulesOperations
-from ._extended_database_blob_auditing_policies_operations import ExtendedDatabaseBlobAuditingPoliciesOperations
-from ._extended_server_blob_auditing_policies_operations import ExtendedServerBlobAuditingPoliciesOperations
-from ._server_blob_auditing_policies_operations import ServerBlobAuditingPoliciesOperations
-from ._database_blob_auditing_policies_operations import DatabaseBlobAuditingPoliciesOperations
-from ._database_vulnerability_assessment_rule_baselines_operations import DatabaseVulnerabilityAssessmentRuleBaselinesOperations
-from ._database_vulnerability_assessments_operations import DatabaseVulnerabilityAssessmentsOperations
-from ._job_agents_operations import JobAgentsOperations
-from ._job_credentials_operations import JobCredentialsOperations
-from ._job_executions_operations import JobExecutionsOperations
-from ._jobs_operations import JobsOperations
-from ._job_step_executions_operations import JobStepExecutionsOperations
-from ._job_steps_operations import JobStepsOperations
-from ._job_target_executions_operations import JobTargetExecutionsOperations
-from ._job_target_groups_operations import JobTargetGroupsOperations
-from ._job_versions_operations import JobVersionsOperations
-from ._long_term_retention_backups_operations import LongTermRetentionBackupsOperations
-from ._backup_long_term_retention_policies_operations import BackupLongTermRetentionPoliciesOperations
-from ._managed_backup_short_term_retention_policies_operations import ManagedBackupShortTermRetentionPoliciesOperations
-from ._managed_restorable_dropped_database_backup_short_term_retention_policies_operations import ManagedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesOperations
-from ._server_automatic_tuning_operations import ServerAutomaticTuningOperations
 from ._server_dns_aliases_operations import ServerDnsAliasesOperations
 from ._server_security_alert_policies_operations import ServerSecurityAlertPoliciesOperations
 from ._restorable_dropped_managed_databases_operations import RestorableDroppedManagedDatabasesOperations
@@ -98,6 +78,7 @@ from ._server_azure_ad_administrators_operations import ServerAzureADAdministrat
 from ._sync_groups_operations import SyncGroupsOperations
 from ._sync_members_operations import SyncMembersOperations
 from ._managed_databases_operations import ManagedDatabasesOperations
+from ._managed_database_restore_details_operations import ManagedDatabaseRestoreDetailsOperations
 from ._server_azure_ad_only_authentications_operations import ServerAzureADOnlyAuthenticationsOperations
 from ._managed_instances_operations import ManagedInstancesOperations
 from ._managed_instance_azure_ad_only_authentications_operations import ManagedInstanceAzureADOnlyAuthenticationsOperations
@@ -135,26 +116,6 @@ __all__ = [
     'SubscriptionUsagesOperations',
     'VirtualClustersOperations',
     'VirtualNetworkRulesOperations',
-    'ExtendedDatabaseBlobAuditingPoliciesOperations',
-    'ExtendedServerBlobAuditingPoliciesOperations',
-    'ServerBlobAuditingPoliciesOperations',
-    'DatabaseBlobAuditingPoliciesOperations',
-    'DatabaseVulnerabilityAssessmentRuleBaselinesOperations',
-    'DatabaseVulnerabilityAssessmentsOperations',
-    'JobAgentsOperations',
-    'JobCredentialsOperations',
-    'JobExecutionsOperations',
-    'JobsOperations',
-    'JobStepExecutionsOperations',
-    'JobStepsOperations',
-    'JobTargetExecutionsOperations',
-    'JobTargetGroupsOperations',
-    'JobVersionsOperations',
-    'LongTermRetentionBackupsOperations',
-    'BackupLongTermRetentionPoliciesOperations',
-    'ManagedBackupShortTermRetentionPoliciesOperations',
-    'ManagedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesOperations',
-    'ServerAutomaticTuningOperations',
     'ServerDnsAliasesOperations',
     'ServerSecurityAlertPoliciesOperations',
     'RestorableDroppedManagedDatabasesOperations',
@@ -194,6 +155,7 @@ __all__ = [
     'SyncGroupsOperations',
     'SyncMembersOperations',
     'ManagedDatabasesOperations',
+    'ManagedDatabaseRestoreDetailsOperations',
     'ServerAzureADOnlyAuthenticationsOperations',
     'ManagedInstancesOperations',
     'ManagedInstanceAzureADOnlyAuthenticationsOperations',

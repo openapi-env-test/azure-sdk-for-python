@@ -11,9 +11,7 @@
 
 try:
     from ._models_py3 import AutomaticTuningOptions
-    from ._models_py3 import AutomaticTuningServerOptions
     from ._models_py3 import AutoPauseDelayTimeRange
-    from ._models_py3 import BackupLongTermRetentionPolicy
     from ._models_py3 import BackupShortTermRetentionPolicy
     from ._models_py3 import CheckNameAvailabilityRequest
     from ._models_py3 import CheckNameAvailabilityResponse
@@ -21,7 +19,6 @@ try:
     from ._models_py3 import CreateDatabaseRestorePointDefinition
     from ._models_py3 import Database
     from ._models_py3 import DatabaseAutomaticTuning
-    from ._models_py3 import DatabaseBlobAuditingPolicy
     from ._models_py3 import DatabaseOperation
     from ._models_py3 import DatabaseSecurityAlertPolicy
     from ._models_py3 import DatabaseUpdate
@@ -45,8 +42,6 @@ try:
     from ._models_py3 import ElasticPoolUpdate
     from ._models_py3 import EncryptionProtector
     from ._models_py3 import ExportDatabaseDefinition
-    from ._models_py3 import ExtendedDatabaseBlobAuditingPolicy
-    from ._models_py3 import ExtendedServerBlobAuditingPolicy
     from ._models_py3 import FailoverGroup
     from ._models_py3 import FailoverGroupReadOnlyEndpoint
     from ._models_py3 import FailoverGroupReadWriteEndpoint
@@ -64,26 +59,12 @@ try:
     from ._models_py3 import InstancePoolFamilyCapability
     from ._models_py3 import InstancePoolUpdate
     from ._models_py3 import InstancePoolVcoresCapability
-    from ._models_py3 import Job
-    from ._models_py3 import JobAgent
-    from ._models_py3 import JobAgentUpdate
-    from ._models_py3 import JobCredential
-    from ._models_py3 import JobExecution
-    from ._models_py3 import JobExecutionTarget
-    from ._models_py3 import JobSchedule
-    from ._models_py3 import JobStep
-    from ._models_py3 import JobStepAction
-    from ._models_py3 import JobStepExecutionOptions
-    from ._models_py3 import JobStepOutput
-    from ._models_py3 import JobTarget
-    from ._models_py3 import JobTargetGroup
-    from ._models_py3 import JobVersion
     from ._models_py3 import LicenseTypeCapability
     from ._models_py3 import LocationCapabilities
     from ._models_py3 import LogSizeCapability
-    from ._models_py3 import LongTermRetentionBackup
-    from ._models_py3 import ManagedBackupShortTermRetentionPolicy
+    from ._models_py3 import MaintenanceConfigurationCapability
     from ._models_py3 import ManagedDatabase
+    from ._models_py3 import ManagedDatabaseRestoreDetailsResult
     from ._models_py3 import ManagedDatabaseSecurityAlertPolicy
     from ._models_py3 import ManagedDatabaseUpdate
     from ._models_py3 import ManagedInstance
@@ -95,6 +76,7 @@ try:
     from ._models_py3 import ManagedInstanceKey
     from ._models_py3 import ManagedInstanceLongTermRetentionBackup
     from ._models_py3 import ManagedInstanceLongTermRetentionPolicy
+    from ._models_py3 import ManagedInstanceMaintenanceConfigurationCapability
     from ._models_py3 import ManagedInstanceOperation
     from ._models_py3 import ManagedInstanceOperationParametersPair
     from ._models_py3 import ManagedInstanceOperationSteps
@@ -150,10 +132,8 @@ try:
     from ._models_py3 import RestorePoint
     from ._models_py3 import SensitivityLabel
     from ._models_py3 import Server
-    from ._models_py3 import ServerAutomaticTuning
     from ._models_py3 import ServerAzureADAdministrator
     from ._models_py3 import ServerAzureADOnlyAuthentication
-    from ._models_py3 import ServerBlobAuditingPolicy
     from ._models_py3 import ServerCommunicationLink
     from ._models_py3 import ServerConnectionPolicy
     from ._models_py3 import ServerDevOpsAuditingSettings
@@ -208,9 +188,7 @@ try:
     from ._models_py3 import WorkloadGroup
 except (SyntaxError, ImportError):
     from ._models import AutomaticTuningOptions
-    from ._models import AutomaticTuningServerOptions
     from ._models import AutoPauseDelayTimeRange
-    from ._models import BackupLongTermRetentionPolicy
     from ._models import BackupShortTermRetentionPolicy
     from ._models import CheckNameAvailabilityRequest
     from ._models import CheckNameAvailabilityResponse
@@ -218,7 +196,6 @@ except (SyntaxError, ImportError):
     from ._models import CreateDatabaseRestorePointDefinition
     from ._models import Database
     from ._models import DatabaseAutomaticTuning
-    from ._models import DatabaseBlobAuditingPolicy
     from ._models import DatabaseOperation
     from ._models import DatabaseSecurityAlertPolicy
     from ._models import DatabaseUpdate
@@ -242,8 +219,6 @@ except (SyntaxError, ImportError):
     from ._models import ElasticPoolUpdate
     from ._models import EncryptionProtector
     from ._models import ExportDatabaseDefinition
-    from ._models import ExtendedDatabaseBlobAuditingPolicy
-    from ._models import ExtendedServerBlobAuditingPolicy
     from ._models import FailoverGroup
     from ._models import FailoverGroupReadOnlyEndpoint
     from ._models import FailoverGroupReadWriteEndpoint
@@ -261,26 +236,12 @@ except (SyntaxError, ImportError):
     from ._models import InstancePoolFamilyCapability
     from ._models import InstancePoolUpdate
     from ._models import InstancePoolVcoresCapability
-    from ._models import Job
-    from ._models import JobAgent
-    from ._models import JobAgentUpdate
-    from ._models import JobCredential
-    from ._models import JobExecution
-    from ._models import JobExecutionTarget
-    from ._models import JobSchedule
-    from ._models import JobStep
-    from ._models import JobStepAction
-    from ._models import JobStepExecutionOptions
-    from ._models import JobStepOutput
-    from ._models import JobTarget
-    from ._models import JobTargetGroup
-    from ._models import JobVersion
     from ._models import LicenseTypeCapability
     from ._models import LocationCapabilities
     from ._models import LogSizeCapability
-    from ._models import LongTermRetentionBackup
-    from ._models import ManagedBackupShortTermRetentionPolicy
+    from ._models import MaintenanceConfigurationCapability
     from ._models import ManagedDatabase
+    from ._models import ManagedDatabaseRestoreDetailsResult
     from ._models import ManagedDatabaseSecurityAlertPolicy
     from ._models import ManagedDatabaseUpdate
     from ._models import ManagedInstance
@@ -292,6 +253,7 @@ except (SyntaxError, ImportError):
     from ._models import ManagedInstanceKey
     from ._models import ManagedInstanceLongTermRetentionBackup
     from ._models import ManagedInstanceLongTermRetentionPolicy
+    from ._models import ManagedInstanceMaintenanceConfigurationCapability
     from ._models import ManagedInstanceOperation
     from ._models import ManagedInstanceOperationParametersPair
     from ._models import ManagedInstanceOperationSteps
@@ -347,10 +309,8 @@ except (SyntaxError, ImportError):
     from ._models import RestorePoint
     from ._models import SensitivityLabel
     from ._models import Server
-    from ._models import ServerAutomaticTuning
     from ._models import ServerAzureADAdministrator
     from ._models import ServerAzureADOnlyAuthentication
-    from ._models import ServerBlobAuditingPolicy
     from ._models import ServerCommunicationLink
     from ._models import ServerConnectionPolicy
     from ._models import ServerDevOpsAuditingSettings
@@ -404,7 +364,6 @@ except (SyntaxError, ImportError):
     from ._models import WorkloadClassifier
     from ._models import WorkloadGroup
 from ._paged_models import BackupShortTermRetentionPolicyPaged
-from ._paged_models import DatabaseBlobAuditingPolicyPaged
 from ._paged_models import DatabaseOperationPaged
 from ._paged_models import DatabasePaged
 from ._paged_models import DatabaseUsagePaged
@@ -415,22 +374,11 @@ from ._paged_models import ElasticPoolDatabaseActivityPaged
 from ._paged_models import ElasticPoolOperationPaged
 from ._paged_models import ElasticPoolPaged
 from ._paged_models import EncryptionProtectorPaged
-from ._paged_models import ExtendedDatabaseBlobAuditingPolicyPaged
-from ._paged_models import ExtendedServerBlobAuditingPolicyPaged
 from ._paged_models import FailoverGroupPaged
 from ._paged_models import FirewallRulePaged
 from ._paged_models import GeoBackupPolicyPaged
 from ._paged_models import InstanceFailoverGroupPaged
 from ._paged_models import InstancePoolPaged
-from ._paged_models import JobAgentPaged
-from ._paged_models import JobCredentialPaged
-from ._paged_models import JobExecutionPaged
-from ._paged_models import JobPaged
-from ._paged_models import JobStepPaged
-from ._paged_models import JobTargetGroupPaged
-from ._paged_models import JobVersionPaged
-from ._paged_models import LongTermRetentionBackupPaged
-from ._paged_models import ManagedBackupShortTermRetentionPolicyPaged
 from ._paged_models import ManagedDatabasePaged
 from ._paged_models import ManagedDatabaseSecurityAlertPolicyPaged
 from ._paged_models import ManagedInstanceAdministratorPaged
@@ -459,7 +407,6 @@ from ._paged_models import RestorePointPaged
 from ._paged_models import SensitivityLabelPaged
 from ._paged_models import ServerAzureADAdministratorPaged
 from ._paged_models import ServerAzureADOnlyAuthenticationPaged
-from ._paged_models import ServerBlobAuditingPolicyPaged
 from ._paged_models import ServerCommunicationLinkPaged
 from ._paged_models import ServerDevOpsAuditingSettingsPaged
 from ._paged_models import ServerDnsAliasPaged
@@ -520,18 +467,6 @@ from ._sql_management_client_enums import (
     SyncAgentState,
     SyncMemberDbType,
     VirtualNetworkRuleState,
-    BlobAuditingPolicyState,
-    JobAgentState,
-    JobExecutionLifecycle,
-    ProvisioningState,
-    JobTargetType,
-    JobScheduleType,
-    JobStepActionType,
-    JobStepActionSource,
-    JobStepOutputType,
-    JobTargetGroupMembershipType,
-    AutomaticTuningServerMode,
-    AutomaticTuningServerReason,
     RestorePointType,
     SensitivityLabelRank,
     ManagementOperationState,
@@ -573,17 +508,12 @@ from ._sql_management_client_enums import (
     StorageKeyType,
     ElasticPoolState,
     ElasticPoolLicenseType,
+    BlobAuditingPolicyState,
     CreatedByType,
-    LongTermRetentionDatabaseState,
-    VulnerabilityAssessmentPolicyBaselineName,
     SensitivityLabelSource,
+    VulnerabilityAssessmentPolicyBaselineName,
     CapabilityGroup,
-    DatabaseState1,
-    DatabaseState2,
-    DatabaseState3,
-    DatabaseState4,
-    DatabaseState5,
-    DatabaseState6,
+    DatabaseState,
     AggregationFunctionType,
     MetricType,
     ReplicaType,
@@ -591,9 +521,7 @@ from ._sql_management_client_enums import (
 
 __all__ = [
     'AutomaticTuningOptions',
-    'AutomaticTuningServerOptions',
     'AutoPauseDelayTimeRange',
-    'BackupLongTermRetentionPolicy',
     'BackupShortTermRetentionPolicy',
     'CheckNameAvailabilityRequest',
     'CheckNameAvailabilityResponse',
@@ -601,7 +529,6 @@ __all__ = [
     'CreateDatabaseRestorePointDefinition',
     'Database',
     'DatabaseAutomaticTuning',
-    'DatabaseBlobAuditingPolicy',
     'DatabaseOperation',
     'DatabaseSecurityAlertPolicy',
     'DatabaseUpdate',
@@ -625,8 +552,6 @@ __all__ = [
     'ElasticPoolUpdate',
     'EncryptionProtector',
     'ExportDatabaseDefinition',
-    'ExtendedDatabaseBlobAuditingPolicy',
-    'ExtendedServerBlobAuditingPolicy',
     'FailoverGroup',
     'FailoverGroupReadOnlyEndpoint',
     'FailoverGroupReadWriteEndpoint',
@@ -644,26 +569,12 @@ __all__ = [
     'InstancePoolFamilyCapability',
     'InstancePoolUpdate',
     'InstancePoolVcoresCapability',
-    'Job',
-    'JobAgent',
-    'JobAgentUpdate',
-    'JobCredential',
-    'JobExecution',
-    'JobExecutionTarget',
-    'JobSchedule',
-    'JobStep',
-    'JobStepAction',
-    'JobStepExecutionOptions',
-    'JobStepOutput',
-    'JobTarget',
-    'JobTargetGroup',
-    'JobVersion',
     'LicenseTypeCapability',
     'LocationCapabilities',
     'LogSizeCapability',
-    'LongTermRetentionBackup',
-    'ManagedBackupShortTermRetentionPolicy',
+    'MaintenanceConfigurationCapability',
     'ManagedDatabase',
+    'ManagedDatabaseRestoreDetailsResult',
     'ManagedDatabaseSecurityAlertPolicy',
     'ManagedDatabaseUpdate',
     'ManagedInstance',
@@ -675,6 +586,7 @@ __all__ = [
     'ManagedInstanceKey',
     'ManagedInstanceLongTermRetentionBackup',
     'ManagedInstanceLongTermRetentionPolicy',
+    'ManagedInstanceMaintenanceConfigurationCapability',
     'ManagedInstanceOperation',
     'ManagedInstanceOperationParametersPair',
     'ManagedInstanceOperationSteps',
@@ -730,10 +642,8 @@ __all__ = [
     'RestorePoint',
     'SensitivityLabel',
     'Server',
-    'ServerAutomaticTuning',
     'ServerAzureADAdministrator',
     'ServerAzureADOnlyAuthentication',
-    'ServerBlobAuditingPolicy',
     'ServerCommunicationLink',
     'ServerConnectionPolicy',
     'ServerDevOpsAuditingSettings',
@@ -815,20 +725,6 @@ __all__ = [
     'SubscriptionUsagePaged',
     'VirtualClusterPaged',
     'VirtualNetworkRulePaged',
-    'ExtendedDatabaseBlobAuditingPolicyPaged',
-    'ExtendedServerBlobAuditingPolicyPaged',
-    'ServerBlobAuditingPolicyPaged',
-    'DatabaseBlobAuditingPolicyPaged',
-    'DatabaseVulnerabilityAssessmentPaged',
-    'JobAgentPaged',
-    'JobCredentialPaged',
-    'JobExecutionPaged',
-    'JobPaged',
-    'JobStepPaged',
-    'JobTargetGroupPaged',
-    'JobVersionPaged',
-    'LongTermRetentionBackupPaged',
-    'ManagedBackupShortTermRetentionPolicyPaged',
     'ServerDnsAliasPaged',
     'ServerSecurityAlertPolicyPaged',
     'RestorableDroppedManagedDatabasePaged',
@@ -840,6 +736,7 @@ __all__ = [
     'DatabaseOperationPaged',
     'ElasticPoolOperationPaged',
     'VulnerabilityAssessmentScanRecordPaged',
+    'DatabaseVulnerabilityAssessmentPaged',
     'InstanceFailoverGroupPaged',
     'ManagedInstanceKeyPaged',
     'ManagedInstanceEncryptionProtectorPaged',
@@ -902,18 +799,6 @@ __all__ = [
     'SyncAgentState',
     'SyncMemberDbType',
     'VirtualNetworkRuleState',
-    'BlobAuditingPolicyState',
-    'JobAgentState',
-    'JobExecutionLifecycle',
-    'ProvisioningState',
-    'JobTargetType',
-    'JobScheduleType',
-    'JobStepActionType',
-    'JobStepActionSource',
-    'JobStepOutputType',
-    'JobTargetGroupMembershipType',
-    'AutomaticTuningServerMode',
-    'AutomaticTuningServerReason',
     'RestorePointType',
     'SensitivityLabelRank',
     'ManagementOperationState',
@@ -955,17 +840,12 @@ __all__ = [
     'StorageKeyType',
     'ElasticPoolState',
     'ElasticPoolLicenseType',
+    'BlobAuditingPolicyState',
     'CreatedByType',
-    'LongTermRetentionDatabaseState',
-    'VulnerabilityAssessmentPolicyBaselineName',
     'SensitivityLabelSource',
+    'VulnerabilityAssessmentPolicyBaselineName',
     'CapabilityGroup',
-    'DatabaseState1',
-    'DatabaseState2',
-    'DatabaseState3',
-    'DatabaseState4',
-    'DatabaseState5',
-    'DatabaseState6',
+    'DatabaseState',
     'AggregationFunctionType',
     'MetricType',
     'ReplicaType',

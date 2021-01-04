@@ -317,94 +317,6 @@ class VirtualNetworkRuleState(str, Enum):
     unknown = "Unknown"
 
 
-class BlobAuditingPolicyState(str, Enum):
-
-    enabled = "Enabled"
-    disabled = "Disabled"
-
-
-class JobAgentState(str, Enum):
-
-    creating = "Creating"
-    ready = "Ready"
-    updating = "Updating"
-    deleting = "Deleting"
-    disabled = "Disabled"
-
-
-class JobExecutionLifecycle(str, Enum):
-
-    created = "Created"
-    in_progress = "InProgress"
-    waiting_for_child_job_executions = "WaitingForChildJobExecutions"
-    waiting_for_retry = "WaitingForRetry"
-    succeeded = "Succeeded"
-    succeeded_with_skipped = "SucceededWithSkipped"
-    failed = "Failed"
-    timed_out = "TimedOut"
-    canceled = "Canceled"
-    skipped = "Skipped"
-
-
-class ProvisioningState(str, Enum):
-
-    created = "Created"
-    in_progress = "InProgress"
-    succeeded = "Succeeded"
-    failed = "Failed"
-    canceled = "Canceled"
-
-
-class JobTargetType(str, Enum):
-
-    target_group = "TargetGroup"
-    sql_database = "SqlDatabase"
-    sql_elastic_pool = "SqlElasticPool"
-    sql_shard_map = "SqlShardMap"
-    sql_server = "SqlServer"
-
-
-class JobScheduleType(str, Enum):
-
-    once = "Once"
-    recurring = "Recurring"
-
-
-class JobStepActionType(str, Enum):
-
-    tsql = "TSql"
-
-
-class JobStepActionSource(str, Enum):
-
-    inline = "Inline"
-
-
-class JobStepOutputType(str, Enum):
-
-    sql_database = "SqlDatabase"
-
-
-class JobTargetGroupMembershipType(str, Enum):
-
-    include = "Include"
-    exclude = "Exclude"
-
-
-class AutomaticTuningServerMode(str, Enum):
-
-    custom = "Custom"
-    auto = "Auto"
-    unspecified = "Unspecified"
-
-
-class AutomaticTuningServerReason(str, Enum):
-
-    default = "Default"
-    disabled = "Disabled"
-    auto_configured = "AutoConfigured"
-
-
 class RestorePointType(str, Enum):
 
     continuous = "CONTINUOUS"
@@ -734,6 +646,12 @@ class ElasticPoolLicenseType(str, Enum):
     base_price = "BasePrice"
 
 
+class BlobAuditingPolicyState(str, Enum):
+
+    enabled = "Enabled"
+    disabled = "Disabled"
+
+
 class CreatedByType(str, Enum):
 
     user = "User"
@@ -742,23 +660,16 @@ class CreatedByType(str, Enum):
     key = "Key"
 
 
-class LongTermRetentionDatabaseState(str, Enum):
+class SensitivityLabelSource(str, Enum):
 
-    all = "All"
-    live = "Live"
-    deleted = "Deleted"
+    current = "current"
+    recommended = "recommended"
 
 
 class VulnerabilityAssessmentPolicyBaselineName(str, Enum):
 
     master = "master"
     default = "default"
-
-
-class SensitivityLabelSource(str, Enum):
-
-    current = "current"
-    recommended = "recommended"
 
 
 class CapabilityGroup(str, Enum):
@@ -770,42 +681,7 @@ class CapabilityGroup(str, Enum):
     supported_managed_instance_editions = "supportedManagedInstanceEditions"
 
 
-class DatabaseState1(str, Enum):
-
-    all = "All"
-    live = "Live"
-    deleted = "Deleted"
-
-
-class DatabaseState2(str, Enum):
-
-    all = "All"
-    live = "Live"
-    deleted = "Deleted"
-
-
-class DatabaseState3(str, Enum):
-
-    all = "All"
-    live = "Live"
-    deleted = "Deleted"
-
-
-class DatabaseState4(str, Enum):
-
-    all = "All"
-    live = "Live"
-    deleted = "Deleted"
-
-
-class DatabaseState5(str, Enum):
-
-    all = "All"
-    live = "Live"
-    deleted = "Deleted"
-
-
-class DatabaseState6(str, Enum):
+class DatabaseState(str, Enum):
 
     all = "All"
     live = "Live"
