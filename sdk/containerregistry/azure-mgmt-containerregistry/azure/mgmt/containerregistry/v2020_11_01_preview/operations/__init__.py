@@ -9,7 +9,6 @@
 # regenerated.
 # --------------------------------------------------------------------------
 
-from ._connected_registries_operations import ConnectedRegistriesOperations
 from ._export_pipelines_operations import ExportPipelinesOperations
 from ._registries_operations import RegistriesOperations
 from ._import_pipelines_operations import ImportPipelinesOperations
@@ -17,16 +16,9 @@ from ._operations import Operations
 from ._pipeline_runs_operations import PipelineRunsOperations
 from ._private_endpoint_connections_operations import PrivateEndpointConnectionsOperations
 from ._replications_operations import ReplicationsOperations
-from ._scope_maps_operations import ScopeMapsOperations
-from ._tokens_operations import TokensOperations
 from ._webhooks_operations import WebhooksOperations
-from ._agent_pools_operations import AgentPoolsOperations
-from ._runs_operations import RunsOperations
-from ._task_runs_operations import TaskRunsOperations
-from ._tasks_operations import TasksOperations
 
 __all__ = [
-    'ConnectedRegistriesOperations',
     'ExportPipelinesOperations',
     'RegistriesOperations',
     'ImportPipelinesOperations',
@@ -34,11 +26,5 @@ __all__ = [
     'PipelineRunsOperations',
     'PrivateEndpointConnectionsOperations',
     'ReplicationsOperations',
-    'ScopeMapsOperations',
-    'TokensOperations',
     'WebhooksOperations',
-    'AgentPoolsOperations',
-    'RunsOperations',
-    'TaskRunsOperations',
-    'TasksOperations',
 ]

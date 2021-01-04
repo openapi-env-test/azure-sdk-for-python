@@ -12,19 +12,6 @@
 from msrest.paging import Paged
 
 
-class ConnectedRegistryPaged(Paged):
-    """
-    A paging container for iterating over a list of :class:`ConnectedRegistry <azure.mgmt.containerregistry.v2020_11_01_preview.models.ConnectedRegistry>` object
-    """
-
-    _attribute_map = {
-        'next_link': {'key': 'nextLink', 'type': 'str'},
-        'current_page': {'key': 'value', 'type': '[ConnectedRegistry]'}
-    }
-
-    def __init__(self, *args, **kwargs):
-
-        super(ConnectedRegistryPaged, self).__init__(*args, **kwargs)
 class ExportPipelinePaged(Paged):
     """
     A paging container for iterating over a list of :class:`ExportPipeline <azure.mgmt.containerregistry.v2020_11_01_preview.models.ExportPipeline>` object
@@ -129,32 +116,6 @@ class ReplicationPaged(Paged):
     def __init__(self, *args, **kwargs):
 
         super(ReplicationPaged, self).__init__(*args, **kwargs)
-class ScopeMapPaged(Paged):
-    """
-    A paging container for iterating over a list of :class:`ScopeMap <azure.mgmt.containerregistry.v2020_11_01_preview.models.ScopeMap>` object
-    """
-
-    _attribute_map = {
-        'next_link': {'key': 'nextLink', 'type': 'str'},
-        'current_page': {'key': 'value', 'type': '[ScopeMap]'}
-    }
-
-    def __init__(self, *args, **kwargs):
-
-        super(ScopeMapPaged, self).__init__(*args, **kwargs)
-class TokenPaged(Paged):
-    """
-    A paging container for iterating over a list of :class:`Token <azure.mgmt.containerregistry.v2020_11_01_preview.models.Token>` object
-    """
-
-    _attribute_map = {
-        'next_link': {'key': 'nextLink', 'type': 'str'},
-        'current_page': {'key': 'value', 'type': '[Token]'}
-    }
-
-    def __init__(self, *args, **kwargs):
-
-        super(TokenPaged, self).__init__(*args, **kwargs)
 class WebhookPaged(Paged):
     """
     A paging container for iterating over a list of :class:`Webhook <azure.mgmt.containerregistry.v2020_11_01_preview.models.Webhook>` object
@@ -181,55 +142,3 @@ class EventPaged(Paged):
     def __init__(self, *args, **kwargs):
 
         super(EventPaged, self).__init__(*args, **kwargs)
-class AgentPoolPaged(Paged):
-    """
-    A paging container for iterating over a list of :class:`AgentPool <azure.mgmt.containerregistry.v2020_11_01_preview.models.AgentPool>` object
-    """
-
-    _attribute_map = {
-        'next_link': {'key': 'nextLink', 'type': 'str'},
-        'current_page': {'key': 'value', 'type': '[AgentPool]'}
-    }
-
-    def __init__(self, *args, **kwargs):
-
-        super(AgentPoolPaged, self).__init__(*args, **kwargs)
-class RunPaged(Paged):
-    """
-    A paging container for iterating over a list of :class:`Run <azure.mgmt.containerregistry.v2020_11_01_preview.models.Run>` object
-    """
-
-    _attribute_map = {
-        'next_link': {'key': 'nextLink', 'type': 'str'},
-        'current_page': {'key': 'value', 'type': '[Run]'}
-    }
-
-    def __init__(self, *args, **kwargs):
-
-        super(RunPaged, self).__init__(*args, **kwargs)
-class TaskRunPaged(Paged):
-    """
-    A paging container for iterating over a list of :class:`TaskRun <azure.mgmt.containerregistry.v2020_11_01_preview.models.TaskRun>` object
-    """
-
-    _attribute_map = {
-        'next_link': {'key': 'nextLink', 'type': 'str'},
-        'current_page': {'key': 'value', 'type': '[TaskRun]'}
-    }
-
-    def __init__(self, *args, **kwargs):
-
-        super(TaskRunPaged, self).__init__(*args, **kwargs)
-class TaskPaged(Paged):
-    """
-    A paging container for iterating over a list of :class:`Task <azure.mgmt.containerregistry.v2020_11_01_preview.models.Task>` object
-    """
-
-    _attribute_map = {
-        'next_link': {'key': 'nextLink', 'type': 'str'},
-        'current_page': {'key': 'value', 'type': '[Task]'}
-    }
-
-    def __init__(self, *args, **kwargs):
-
-        super(TaskPaged, self).__init__(*args, **kwargs)
