@@ -1,9 +1,8 @@
 #!/bin/bash
 
-printenv
-rm -rf $(TMPDIR)/venv-sdk
-python3 -m venv $(TMPDIR)/venv-sdk
-VIRTUAL_ENV=$(TMPDIR)/venv-sdk
+rm -rf $TMPDIR/venv-sdk
+python3 -m venv $TMPDIR/venv-sdk
+VIRTUAL_ENV=$TMPDIR/venv-sdk
 export VIRTUAL_ENV
 PATH="$VIRTUAL_ENV/bin:$PATH"
 export PATH
