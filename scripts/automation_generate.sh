@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VIRTUAL_ENV=$(pwd)/../venv-sdk
+VIRTUAL_ENV=$(TMP_FOLDER)/venv-sdk
 export VIRTUAL_ENV
 PATH="$VIRTUAL_ENV/bin:$PATH"
 export PATH
