@@ -11,7 +11,7 @@ sudo n 10.15.0
 export PATH=/usr/local/n/versions/node/10.15.0/bin:$PATH
 
 # generate code and package
-python -m packaging_tools.auto_codegen "$1" "../venv-sdk/auto_temp.json" 2>&1
+python -m packaging_tools.auto_codegen "$1" "$TMPDIR/venv-sdk/auto_temp.json" 2>&1
 echo "[Generate] codegen done!!!"
-python -m packaging_tools.auto_package "../venv-sdk/auto_temp.json" "$2" 2>&1
+python -m packaging_tools.auto_package "$TMPDIR/venv-sdk/auto_temp.json" "$2" 2>&1
 echo "[Generate] generate done!!!"
