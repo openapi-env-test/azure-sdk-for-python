@@ -1,5 +1,6 @@
 #!/bin/bash
 
+printenv
 rm -rf $(TMPDIR)/venv-sdk
 python3 -m venv $(TMPDIR)/venv-sdk
 VIRTUAL_ENV=$(TMPDIR)/venv-sdk
