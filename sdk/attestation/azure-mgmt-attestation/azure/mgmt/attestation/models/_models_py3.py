@@ -117,8 +117,6 @@ class AttestationProvider(TrackedResource):
     :type tags: dict[str, str]
     :param location: Required. The geo-location where the resource lives
     :type location: str
-    :ivar system_data: The system metadata relating to this resource
-    :vartype system_data: ~azure.mgmt.attestation.models.SystemData
     :param trust_model: Trust model for the attestation service instance.
     :type trust_model: str
     :param status: Status of attestation service. Possible values include:
@@ -134,7 +132,6 @@ class AttestationProvider(TrackedResource):
         'name': {'readonly': True},
         'type': {'readonly': True},
         'location': {'required': True},
-        'system_data': {'readonly': True},
     }
 
     _attribute_map = {
@@ -143,7 +140,6 @@ class AttestationProvider(TrackedResource):
         'type': {'key': 'type', 'type': 'str'},
         'tags': {'key': 'tags', 'type': '{str}'},
         'location': {'key': 'location', 'type': 'str'},
-        'system_data': {'key': 'systemData', 'type': 'SystemData'},
         'trust_model': {'key': 'properties.trustModel', 'type': 'str'},
         'status': {'key': 'properties.status', 'type': 'str'},
         'attest_uri': {'key': 'properties.attestUri', 'type': 'str'},
@@ -151,7 +147,6 @@ class AttestationProvider(TrackedResource):
 
     def __init__(self, *, location: str, tags=None, trust_model: str=None, status=None, attest_uri: str=None, **kwargs) -> None:
         super(AttestationProvider, self).__init__(tags=tags, location=location, **kwargs)
-        self.system_data = None
         self.trust_model = trust_model
         self.status = status
         self.attest_uri = attest_uri
@@ -160,27 +155,16 @@ class AttestationProvider(TrackedResource):
 class AttestationProviderListResult(Model):
     """Attestation Providers List.
 
-    Variables are only populated by the server, and will be ignored when
-    sending a request.
-
-    :ivar system_data: The system metadata relating to this resource
-    :vartype system_data: ~azure.mgmt.attestation.models.SystemData
     :param value: Attestation Provider array.
     :type value: list[~azure.mgmt.attestation.models.AttestationProvider]
     """
 
-    _validation = {
-        'system_data': {'readonly': True},
-    }
-
     _attribute_map = {
-        'system_data': {'key': 'systemData', 'type': 'SystemData'},
         'value': {'key': 'value', 'type': '[AttestationProvider]'},
     }
 
     def __init__(self, *, value=None, **kwargs) -> None:
         super(AttestationProviderListResult, self).__init__(**kwargs)
-        self.system_data = None
         self.value = value
 
 
@@ -223,6 +207,8 @@ class AttestationServiceCreationSpecificParams(Model):
     """Client supplied parameters used to create a new attestation service
     instance.
 
+    :param attestation_policy: Name of attestation policy.
+    :type attestation_policy: str
     :param policy_signing_certificates: JSON Web Key Set defining a set of
      X.509 Certificates that will represent the parent certificate for the
      signing certificate used for policy operations
@@ -231,11 +217,13 @@ class AttestationServiceCreationSpecificParams(Model):
     """
 
     _attribute_map = {
+        'attestation_policy': {'key': 'attestationPolicy', 'type': 'str'},
         'policy_signing_certificates': {'key': 'policySigningCertificates', 'type': 'JSONWebKeySet'},
     }
 
-    def __init__(self, *, policy_signing_certificates=None, **kwargs) -> None:
+    def __init__(self, *, attestation_policy: str=None, policy_signing_certificates=None, **kwargs) -> None:
         super(AttestationServiceCreationSpecificParams, self).__init__(**kwargs)
+        self.attestation_policy = attestation_policy
         self.policy_signing_certificates = policy_signing_certificates
 
 
@@ -351,8 +339,8 @@ class JSONWebKey(Model):
 
     All required parameters must be populated in order to send to Azure.
 
-    :param alg: Required. The "alg" (algorithm) parameter identifies the
-     algorithm intended for
+    :param alg: The "alg" (algorithm) parameter identifies the algorithm
+     intended for
      use with the key.  The values used should either be registered in the
      IANA "JSON Web Signature and Encryption Algorithms" registry
      established by [JWA] or be a value that contains a Collision-
@@ -370,8 +358,8 @@ class JSONWebKey(Model):
     :type e: str
     :param k: Symmetric key
     :type k: str
-    :param kid: Required. The "kid" (key ID) parameter is used to match a
-     specific key.  This
+    :param kid: The "kid" (key ID) parameter is used to match a specific key.
+     This
      is used, for instance, to choose among a set of keys within a JWK Set
      during key rollover.  The structure of the "kid" value is
      unspecified.  When "kid" values are used within a JWK Set, different
@@ -396,8 +384,7 @@ class JSONWebKey(Model):
     :type q: str
     :param qi: RSA Private Key Parameter
     :type qi: str
-    :param use: Required. Use ("public key use") identifies the intended use
-     of
+    :param use: Use ("public key use") identifies the intended use of
      the public key. The "use" parameter is employed to indicate whether
      a public key is used for encrypting data or verifying the signature
      on data. Values are commonly "sig" (signature) or "enc" (encryption).
@@ -418,10 +405,7 @@ class JSONWebKey(Model):
     """
 
     _validation = {
-        'alg': {'required': True},
-        'kid': {'required': True},
         'kty': {'required': True},
-        'use': {'required': True},
     }
 
     _attribute_map = {
@@ -444,7 +428,7 @@ class JSONWebKey(Model):
         'y': {'key': 'y', 'type': 'str'},
     }
 
-    def __init__(self, *, alg: str, kid: str, kty: str, use: str, crv: str=None, d: str=None, dp: str=None, dq: str=None, e: str=None, k: str=None, n: str=None, p: str=None, q: str=None, qi: str=None, x: str=None, x5c=None, y: str=None, **kwargs) -> None:
+    def __init__(self, *, kty: str, alg: str=None, crv: str=None, d: str=None, dp: str=None, dq: str=None, e: str=None, k: str=None, kid: str=None, n: str=None, p: str=None, q: str=None, qi: str=None, use: str=None, x: str=None, x5c=None, y: str=None, **kwargs) -> None:
         super(JSONWebKey, self).__init__(**kwargs)
         self.alg = alg
         self.crv = crv
@@ -489,27 +473,16 @@ class JSONWebKeySet(Model):
 class OperationList(Model):
     """List of supported operations.
 
-    Variables are only populated by the server, and will be ignored when
-    sending a request.
-
-    :ivar system_data: The system metadata relating to this resource
-    :vartype system_data: ~azure.mgmt.attestation.models.SystemData
     :param value: List of supported operations.
     :type value: list[~azure.mgmt.attestation.models.OperationsDefinition]
     """
 
-    _validation = {
-        'system_data': {'readonly': True},
-    }
-
     _attribute_map = {
-        'system_data': {'key': 'systemData', 'type': 'SystemData'},
         'value': {'key': 'value', 'type': '[OperationsDefinition]'},
     }
 
     def __init__(self, *, value=None, **kwargs) -> None:
         super(OperationList, self).__init__(**kwargs)
-        self.system_data = None
         self.value = value
 
 
@@ -594,44 +567,3 @@ class ProxyResource(Resource):
 
     def __init__(self, **kwargs) -> None:
         super(ProxyResource, self).__init__(**kwargs)
-
-
-class SystemData(Model):
-    """Metadata pertaining to creation and last modification of the resource.
-
-    :param created_by: The identity that created the resource.
-    :type created_by: str
-    :param created_by_type: The type of identity that created the resource.
-     Possible values include: 'User', 'Application', 'ManagedIdentity', 'Key'
-    :type created_by_type: str or ~azure.mgmt.attestation.models.CreatedByType
-    :param created_at: The timestamp of resource creation (UTC).
-    :type created_at: datetime
-    :param last_modified_by: The identity that last modified the resource.
-    :type last_modified_by: str
-    :param last_modified_by_type: The type of identity that last modified the
-     resource. Possible values include: 'User', 'Application',
-     'ManagedIdentity', 'Key'
-    :type last_modified_by_type: str or
-     ~azure.mgmt.attestation.models.CreatedByType
-    :param last_modified_at: The type of identity that last modified the
-     resource.
-    :type last_modified_at: datetime
-    """
-
-    _attribute_map = {
-        'created_by': {'key': 'createdBy', 'type': 'str'},
-        'created_by_type': {'key': 'createdByType', 'type': 'str'},
-        'created_at': {'key': 'createdAt', 'type': 'iso-8601'},
-        'last_modified_by': {'key': 'lastModifiedBy', 'type': 'str'},
-        'last_modified_by_type': {'key': 'lastModifiedByType', 'type': 'str'},
-        'last_modified_at': {'key': 'lastModifiedAt', 'type': 'iso-8601'},
-    }
-
-    def __init__(self, *, created_by: str=None, created_by_type=None, created_at=None, last_modified_by: str=None, last_modified_by_type=None, last_modified_at=None, **kwargs) -> None:
-        super(SystemData, self).__init__(**kwargs)
-        self.created_by = created_by
-        self.created_by_type = created_by_type
-        self.created_at = created_at
-        self.last_modified_by = last_modified_by
-        self.last_modified_by_type = last_modified_by_type
-        self.last_modified_at = last_modified_at
