@@ -131,7 +131,7 @@ def execute_simple_command(cmd_line, cwd=None, shell=False, env=None):
                                    shell=shell,
                                    env=env)
         output_buffer = []
-        for line in io.TextIOWrapper(process.stdout, encoding='utf-8'):
+        for line in process.stdout.readlines():
             output_buffer.append(line.rstrip())
             _LOGGER.info(f"==[autorest]"+output_buffer[-1])
         process.wait()
