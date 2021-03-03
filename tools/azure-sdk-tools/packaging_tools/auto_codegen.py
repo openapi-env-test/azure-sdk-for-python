@@ -1,11 +1,13 @@
 import argparse
 import json
 import logging
+import os
 from pathlib import Path
 import re
 from subprocess import check_call
 
 from .swaggertosdk.SwaggerToSdkCore import (
+    read_config,
     CONFIG_FILE,
 )
 from azure_devtools.ci_tools.git_tools import get_add_diff_file_list
@@ -37,6 +39,28 @@ def init_new_service(package_name, folder_name):
             with open(str(ci), 'w') as file_out:
                 file_out.writelines(content)
 
+def update_service_metadata(sdk_folder, data, global_conf, package_name):
+
+    # metadata
+    AUTOREST = global_conf["autorest_options"]["version"]
+    AUTOREST_PYTHON = global_conf["autorest_options"]["use"].split("@")[2]
+    COMMIT = data["headSha"]
+
+    metadata_path = os.path.join(sdk_folder, "/sdk/metadata/mgmt")
+    if not os.path.exists(metadata_path):
+        os.makedirs(metadata_path)
+
+    service_data = os.path.join(metadata_path, "{service}.json".format(package_name))
+    with open(service_data, "w") as writer:
+        json.dumps(
+            {
+                "autorest": AUTOREST,
+                "autorest.python": AUTOREST_PYTHON,
+                "commit": COMMIT_ID
+            },
+            writer
+        )
+
 
 def main(generate_input, generate_output):
     with open(generate_input, "r") as reader:
@@ -59,6 +83,8 @@ def main(generate_input, generate_output):
         package_names = get_package_names(sdk_folder)
         _LOGGER.info(f'[CODEGEN]({input_readme})codegen end. [(packages:{str(package_names)})]')
 
+        global_config = read_config(Path(sdk_folder).expanduser(), CONFIG_FILE)["meta"]
+
         for folder_name, package_name in package_names:
             if package_name in package_total:
                 continue
@@ -73,6 +99,9 @@ def main(generate_input, generate_output):
             else:
                 result[package_name]["path"].append(folder_name)
                 result[package_name]["readmeMd"].append(input_readme)
+
+            # Update metadata
+            update_service_metadata(sdk_folder, data, global_conf, package_name)
 
             # Generate some necessary file for new service
             init_new_service(package_name, folder_name)
