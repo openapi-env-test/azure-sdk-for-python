@@ -39,31 +39,27 @@ def init_new_service(package_name, folder_name):
             with open(str(ci), 'w') as file_out:
                 file_out.writelines(content)
 
-def update_service_metadata(sdk_folder, data, global_conf, package_name):
-
-    package_name = package_name.split('-')[-1]
+def update_service_metadata(sdk_folder, data, global_conf, folder_name, package_name):
 
     # metadata
-    AUTOREST = global_conf["autorest_options"]["version"]
-    AUTOREST_PYTHON = global_conf["autorest_options"]["use"].split("@")[2]
-    COMMIT = data["headSha"]
+    _metadata = {
+        "autorest": global_conf["autorest_options"]["version"],
+        "autorest.python": global_conf["autorest_options"]["use"].split("@")[2],
+        "commit": data["headSha"]
+    }
+
+    _LOGGER.info("Metadata json:\n {}".format(json.dumps(_metadata, indent=2)))
 
     # metadata_folder = Path(sdk_folder, "sdk/metadata/mgmt").expanduser()
-    metadata_folder = Path(sdk_folder, f"sdk/{package_name}/azure-mgmt-{package_name}/metadata/mgmt").expanduser()
+    metadata_folder = Path(sdk_folder, folder_name, package_name).expanduser()
     if not os.path.exists(metadata_folder):
-        _LOGGER.info(f"Create metadatafolder: {metadata_folder}")
-        os.makedirs(metadata_folder)
+        _LOGGER.info(f"Metadata folder is not exists:{metadata_folder}")
+        _LOGGER.info("Failed to save metadata.")
+        return
 
-    service_data = os.path.join(metadata_folder, f"{package_name}.json")
+    service_data = os.path.join(metadata_folder, f"_meta.json")
     with open(service_data, "w") as writer:
-        json.dump(
-            {
-                "autorest": AUTOREST,
-                "autorest.python": AUTOREST_PYTHON,
-                "commit": COMMIT
-            },
-            writer
-        )
+        json.dump(_metadata, writer, indent=2)
     _LOGGER.info(f"Saved metadata to {service_data}")
 
 
@@ -106,7 +102,7 @@ def main(generate_input, generate_output):
                 result[package_name]["readmeMd"].append(input_readme)
 
             # Update metadata
-            update_service_metadata(sdk_folder, data, global_conf, package_name)
+            update_service_metadata(sdk_folder, data, global_conf, folder_name, package_name)
 
             # Generate some necessary file for new service
             init_new_service(package_name, folder_name)
