@@ -48,7 +48,8 @@ def update_service_metadata(sdk_folder, data, global_conf, package_name):
     AUTOREST_PYTHON = global_conf["autorest_options"]["use"].split("@")[2]
     COMMIT = data["headSha"]
 
-    metadata_folder = Path(sdk_folder, "sdk/metadata/mgmt").expanduser()
+    # metadata_folder = Path(sdk_folder, "sdk/metadata/mgmt").expanduser()
+    metadata_folder = Path(sdk_folder, f"sdk/{package_name}/azure-mgmt-{package_name}/metadata/mgmt").expanduser()
     if not os.path.exists(metadata_folder):
         _LOGGER.info(f"Create metadatafolder: {metadata_folder}")
         os.makedirs(metadata_folder)
