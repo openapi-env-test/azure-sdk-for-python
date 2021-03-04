@@ -54,7 +54,7 @@ def update_service_metadata(sdk_folder, data, global_conf, package_name):
 
     service_data = os.path.join(metadata_folder, "{0}.json".format(package_name))
     with open(service_data, "w") as writer:
-        json.dumps(
+        json.dump(
             {
                 "autorest": AUTOREST,
                 "autorest.python": AUTOREST_PYTHON,
