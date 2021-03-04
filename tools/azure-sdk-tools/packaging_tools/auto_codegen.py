@@ -45,12 +45,14 @@ def update_service_metadata(sdk_folder, data, global_conf, package_name):
     AUTOREST = global_conf["autorest_options"]["version"]
     AUTOREST_PYTHON = global_conf["autorest_options"]["use"].split("@")[2]
     COMMIT = data["headSha"]
+    sdk_folder = Path(sdk_folder).expanduser()
+    metadata_folder = Path("sdk/metadata/mgmt").expanduser()
 
-    metadata_path = os.path.join(sdk_folder, "/sdk/metadata/mgmt")
-    if not os.path.exists(metadata_path):
-        os.makedirs(metadata_path)
+    metadata_folder = os.path.join(sdk_folder, metadata_folder)
+    if not os.path.exists(metadata_folder):
+        os.makedirs(metadata_folder)
 
-    service_data = os.path.join(metadata_path, "{service}.json".format(package_name))
+    service_data = os.path.join(metadata_folder, "{service}.json".format(package_name))
     with open(service_data, "w") as writer:
         json.dumps(
             {
