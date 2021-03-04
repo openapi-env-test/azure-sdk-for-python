@@ -58,7 +58,7 @@ def update_service_metadata(sdk_folder, data, global_conf, package_name):
             {
                 "autorest": AUTOREST,
                 "autorest.python": AUTOREST_PYTHON,
-                "commit": COMMIT_ID
+                "commit": COMMIT
             },
             writer
         )
