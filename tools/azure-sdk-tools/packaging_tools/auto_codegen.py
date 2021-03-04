@@ -83,7 +83,7 @@ def main(generate_input, generate_output):
         package_names = get_package_names(sdk_folder)
         _LOGGER.info(f'[CODEGEN]({input_readme})codegen end. [(packages:{str(package_names)})]')
 
-        global_config = read_config(Path(sdk_folder).expanduser(), CONFIG_FILE)["meta"]
+        global_conf = read_config(Path(sdk_folder).expanduser(), CONFIG_FILE)["meta"]
 
         for folder_name, package_name in package_names:
             if package_name in package_total:
