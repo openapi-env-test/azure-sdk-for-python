@@ -41,18 +41,19 @@ def init_new_service(package_name, folder_name):
 
 def update_service_metadata(sdk_folder, data, global_conf, package_name):
 
+    package_name = package_name.split('-')[-1]
+
     # metadata
     AUTOREST = global_conf["autorest_options"]["version"]
     AUTOREST_PYTHON = global_conf["autorest_options"]["use"].split("@")[2]
     COMMIT = data["headSha"]
-    sdk_folder = Path(sdk_folder).expanduser()
-    metadata_folder = Path("sdk/metadata/mgmt").expanduser()
 
-    metadata_folder = os.path.join(sdk_folder, metadata_folder)
+    metadata_folder = Path(sdk_folder, "sdk/metadata/mgmt").expanduser()
     if not os.path.exists(metadata_folder):
+        _LOGGER.info(f"Create metadatafolder: {metadata_folder}")
         os.makedirs(metadata_folder)
 
-    service_data = os.path.join(metadata_folder, "{0}.json".format(package_name))
+    service_data = os.path.join(metadata_folder, f"{package_name}.json")
     with open(service_data, "w") as writer:
         json.dump(
             {
@@ -62,6 +63,7 @@ def update_service_metadata(sdk_folder, data, global_conf, package_name):
             },
             writer
         )
+    _LOGGER.info(f"Saved metadata to {service_data}")
 
 
 def main(generate_input, generate_output):
