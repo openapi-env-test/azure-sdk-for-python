@@ -46,11 +46,7 @@ def update_service_metadata(sdk_folder, data, config, folder_name, package_name,
     global_conf = config["meta"]
     local_conf = config["projects"][readme_file]
 
-    cmd = [
-        "autorest",
-        input_readme,
-        f"--output-folder={sdk_folder}"
-    ]
+    cmd = ["autorest", input_readme]
     cmd += build_autorest_options(global_conf, local_conf)
 
     # metadata
@@ -59,7 +55,7 @@ def update_service_metadata(sdk_folder, data, config, folder_name, package_name,
         "autorest.python": global_conf["autorest_options"]["use"].split("@")[2],
         "commit": data["headSha"],
         "repository_url": data["repoHttpsUrl"],
-        "autorest_command": cmd,
+        "autorest_command": " ".join(cmd),
         "readme": input_readme
     }
 
@@ -79,17 +75,17 @@ def update_service_metadata(sdk_folder, data, config, folder_name, package_name,
 
     # Check whether MANIFEST.in includes _meta.json
     require_meta = "include _meta.json\n"
-    manifest_path = os.path.join(metadata_folder, "MANIFEST.in")
+    manifest_file = os.path.join(metadata_folder, "MANIFEST.in")
     includes = []
     write_flag = False
-    with open("MANIFEST.in", "r") as f:
+    with open(manifest_file, "r") as f:
         includes = f.readlines()
         if require_meta not in includes:
             includes = [require_meta] + includes
             write_flag = True
 
     if write_flag:
-        with open("MANIFEST.in", "w") as f:
+        with open(manifest_file, "w") as f:
             f.write("".join(includes))
 
 
