@@ -11,7 +11,7 @@ from .swaggertosdk.SwaggerToSdkCore import (
     CONFIG_FILE,
 )
 from azure_devtools.ci_tools.git_tools import get_add_diff_file_list
-from .autorest_tools  import build_autorest_options
+from .swaggertosdk.autorest_tools  import build_autorest_options
 from .generate_sdk import generate
 
 _LOGGER = logging.getLogger(__name__)
