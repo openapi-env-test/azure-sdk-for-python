@@ -58,7 +58,7 @@ def update_service_metadata(sdk_folder, data, config, folder_name, package_name,
         "autorest": global_conf["autorest_options"]["version"],
         "autorest.python": global_conf["autorest_options"]["use"].split("@")[2],
         "commit": data["headSha"],
-        "repository_url": data["repoHttpUrl"],
+        "repository_url": data["repoHttpsUrl"],
         "autorest_command": cmd,
         "readme": input_readme
     }
@@ -72,10 +72,25 @@ def update_service_metadata(sdk_folder, data, config, folder_name, package_name,
         _LOGGER.info("Failed to save metadata.")
         return
 
-    service_data = os.path.join(metadata_folder, f"_meta.json")
+    service_data = os.path.join(metadata_folder, "_meta.json")
     with open(service_data, "w") as writer:
         json.dump(_metadata, writer, indent=2)
     _LOGGER.info(f"Saved metadata to {service_data}")
+
+    # Check whether MANIFEST.in includes _meta.json
+    require_meta = "include _meta.json\n"
+    manifest_path = os.path.join(metadata_folder, "MANIFEST.in")
+    includes = []
+    write_flag = False
+    with open("MANIFEST.in", "r") as f:
+        includes = f.readlines()
+        if require_meta not in includes:
+            includes = [require_meta] + includes
+            write_flag = True
+
+    if write_flag:
+        with open("MANIFEST.in", "w") as f:
+            f.write("".join(includes))
 
 
 def main(generate_input, generate_output):
