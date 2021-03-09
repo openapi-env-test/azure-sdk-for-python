@@ -40,7 +40,7 @@ def init_new_service(package_name, folder_name):
             with open(str(ci), 'w') as file_out:
                 file_out.writelines(content)
 
-def update_service_metadata(sdk_folder, data, global_conf, folder_name, package_name, spec_folder, input_readme):
+def update_service_metadata(sdk_folder, data, config, folder_name, package_name, spec_folder, input_readme):
 
     readme_file = str(Path(spec_folder, input_readme))
     global_conf = config["meta"]
