@@ -1,14 +1,17 @@
 import argparse
 import json
 import logging
+import os
 from pathlib import Path
 import re
 from subprocess import check_call
 
 from .swaggertosdk.SwaggerToSdkCore import (
+    read_config,
     CONFIG_FILE,
 )
-from azure_devtools.ci_tools.git_tools import get_diff_file_list
+from azure_devtools.ci_tools.git_tools import get_add_diff_file_list
+from .swaggertosdk.autorest_tools  import build_autorest_options
 from .generate_sdk import generate
 
 _LOGGER = logging.getLogger(__name__)
@@ -18,7 +21,7 @@ DEFAULT_DEST_FOLDER = "./dist"
 
 
 def get_package_names(sdk_folder):
-    files = get_diff_file_list(sdk_folder)
+    files = get_add_diff_file_list(sdk_folder)
     matches = {_SDK_FOLDER_RE.search(f) for f in files}
     package_names = {match.groups() for match in matches if match is not None}
     return package_names
@@ -37,6 +40,54 @@ def init_new_service(package_name, folder_name):
             with open(str(ci), 'w') as file_out:
                 file_out.writelines(content)
 
+def update_service_metadata(sdk_folder, data, config, folder_name, package_name, spec_folder, input_readme):
+
+    readme_file = str(Path(spec_folder, input_readme))
+    global_conf = config["meta"]
+    local_conf = config["projects"][readme_file]
+
+    cmd = ["autorest", input_readme]
+    cmd += build_autorest_options(global_conf, local_conf)
+
+    # metadata
+    _metadata = {
+        "autorest": global_conf["autorest_options"]["version"],
+        "autorest.python": global_conf["autorest_options"]["use"].split("@")[2],
+        "commit": data["headSha"],
+        "repository_url": data["repoHttpsUrl"],
+        "autorest_command": " ".join(cmd),
+        "readme": input_readme
+    }
+
+    _LOGGER.info("Metadata json:\n {}".format(json.dumps(_metadata, indent=2)))
+
+    # metadata_folder = Path(sdk_folder, "sdk/metadata/mgmt").expanduser()
+    metadata_folder = Path(sdk_folder, folder_name, package_name).expanduser()
+    if not os.path.exists(metadata_folder):
+        _LOGGER.info(f"Metadata folder is not exists:{metadata_folder}")
+        _LOGGER.info("Failed to save metadata.")
+        return
+
+    service_data = os.path.join(metadata_folder, "_meta.json")
+    with open(service_data, "w") as writer:
+        json.dump(_metadata, writer, indent=2)
+    _LOGGER.info(f"Saved metadata to {service_data}")
+
+    # Check whether MANIFEST.in includes _meta.json
+    require_meta = "include _meta.json\n"
+    manifest_file = os.path.join(metadata_folder, "MANIFEST.in")
+    includes = []
+    write_flag = False
+    with open(manifest_file, "r") as f:
+        includes = f.readlines()
+        if require_meta not in includes:
+            includes = [require_meta] + includes
+            write_flag = True
+
+    if write_flag:
+        with open(manifest_file, "w") as f:
+            f.write("".join(includes))
+
 
 def main(generate_input, generate_output):
     with open(generate_input, "r") as reader:
@@ -49,15 +100,18 @@ def main(generate_input, generate_output):
     for input_readme in data["relatedReadmeMdFiles"]:
         relative_path_readme = str(Path(spec_folder, input_readme))
         _LOGGER.info(f'[CODEGEN]({input_readme})codegen begin')
+        config = read_config(Path(sdk_folder).expanduser(), CONFIG_FILE)
         generate(CONFIG_FILE,
                  sdk_folder,
                  [],
                  relative_path_readme,
                  spec_folder,
-                 force_generation=True
+                 force_generation=True,
+                 config=config
                  )
         package_names = get_package_names(sdk_folder)
         _LOGGER.info(f'[CODEGEN]({input_readme})codegen end. [(packages:{str(package_names)})]')
+
 
         for folder_name, package_name in package_names:
             if package_name in package_total:
@@ -73,6 +127,9 @@ def main(generate_input, generate_output):
             else:
                 result[package_name]["path"].append(folder_name)
                 result[package_name]["readmeMd"].append(input_readme)
+
+            # Update metadata
+            update_service_metadata(sdk_folder, data, config, folder_name, package_name, spec_folder, input_readme)
 
             # Generate some necessary file for new service
             init_new_service(package_name, folder_name)
