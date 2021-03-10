@@ -862,10 +862,10 @@ class DomainsOperations(object):
         **kwargs  # type: Any
     ):
         # type: (...) -> "_models.DomainOwnershipIdentifier"
-        """Creates an ownership identifier for a domain or updates identifier details for an existing identifer.
+        """Creates an ownership identifier for a domain or updates identifier details for an existing identifier.
 
         Creates an ownership identifier for a domain or updates identifier details for an existing
-        identifer.
+        identifier.
 
         :param resource_group_name: Name of the resource group to which the resource belongs.
         :type resource_group_name: str
@@ -996,10 +996,10 @@ class DomainsOperations(object):
         **kwargs  # type: Any
     ):
         # type: (...) -> "_models.DomainOwnershipIdentifier"
-        """Creates an ownership identifier for a domain or updates identifier details for an existing identifer.
+        """Creates an ownership identifier for a domain or updates identifier details for an existing identifier.
 
         Creates an ownership identifier for a domain or updates identifier details for an existing
-        identifer.
+        identifier.
 
         :param resource_group_name: Name of the resource group to which the resource belongs.
         :type resource_group_name: str
