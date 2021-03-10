@@ -1719,8 +1719,11 @@ class Image(Resource):
     :type storage_profile: ~azure.mgmt.compute.v2020_12_01.models.ImageStorageProfile
     :ivar provisioning_state: The provisioning state.
     :vartype provisioning_state: str
-    :param hyper_v_generation: Gets the HyperVGenerationType of the VirtualMachine created from the
-     image. Possible values include: "V1", "V2".
+    :param hyper_v_generation: Specifies the HyperVGenerationType of the VirtualMachine created
+     from the image. From API Version 2019-03-01 if the image source is a blob, then we need the
+     user to specify the value, if the source is managed resource like disk or snapshot, we may
+     require the user to specify the property if we cannot deduce it from the source managed
+     resource. Possible values include: "V1", "V2".
     :type hyper_v_generation: str or ~azure.mgmt.compute.v2020_12_01.models.HyperVGenerationTypes
     """
 
@@ -1785,7 +1788,8 @@ class ImageDisk(msrest.serialization.Model):
     :type disk_size_gb: int
     :param storage_account_type: Specifies the storage account type for the managed disk. NOTE:
      UltraSSD_LRS can only be used with data disks, it cannot be used with OS Disk. Possible values
-     include: "Standard_LRS", "Premium_LRS", "StandardSSD_LRS", "UltraSSD_LRS".
+     include: "Standard_LRS", "Premium_LRS", "StandardSSD_LRS", "UltraSSD_LRS", "Premium_ZRS",
+     "StandardSSD_ZRS".
     :type storage_account_type: str or ~azure.mgmt.compute.v2020_12_01.models.StorageAccountTypes
     :param disk_encryption_set: Specifies the customer managed disk encryption set resource id for
      the managed image disk.
@@ -1847,7 +1851,8 @@ class ImageDataDisk(ImageDisk):
     :type disk_size_gb: int
     :param storage_account_type: Specifies the storage account type for the managed disk. NOTE:
      UltraSSD_LRS can only be used with data disks, it cannot be used with OS Disk. Possible values
-     include: "Standard_LRS", "Premium_LRS", "StandardSSD_LRS", "UltraSSD_LRS".
+     include: "Standard_LRS", "Premium_LRS", "StandardSSD_LRS", "UltraSSD_LRS", "Premium_ZRS",
+     "StandardSSD_ZRS".
     :type storage_account_type: str or ~azure.mgmt.compute.v2020_12_01.models.StorageAccountTypes
     :param disk_encryption_set: Specifies the customer managed disk encryption set resource id for
      the managed image disk.
@@ -1946,7 +1951,8 @@ class ImageOSDisk(ImageDisk):
     :type disk_size_gb: int
     :param storage_account_type: Specifies the storage account type for the managed disk. NOTE:
      UltraSSD_LRS can only be used with data disks, it cannot be used with OS Disk. Possible values
-     include: "Standard_LRS", "Premium_LRS", "StandardSSD_LRS", "UltraSSD_LRS".
+     include: "Standard_LRS", "Premium_LRS", "StandardSSD_LRS", "UltraSSD_LRS", "Premium_ZRS",
+     "StandardSSD_ZRS".
     :type storage_account_type: str or ~azure.mgmt.compute.v2020_12_01.models.StorageAccountTypes
     :param disk_encryption_set: Specifies the customer managed disk encryption set resource id for
      the managed image disk.
@@ -2104,8 +2110,11 @@ class ImageUpdate(UpdateResource):
     :type storage_profile: ~azure.mgmt.compute.v2020_12_01.models.ImageStorageProfile
     :ivar provisioning_state: The provisioning state.
     :vartype provisioning_state: str
-    :param hyper_v_generation: Gets the HyperVGenerationType of the VirtualMachine created from the
-     image. Possible values include: "V1", "V2".
+    :param hyper_v_generation: Specifies the HyperVGenerationType of the VirtualMachine created
+     from the image. From API Version 2019-03-01 if the image source is a blob, then we need the
+     user to specify the value, if the source is managed resource like disk or snapshot, we may
+     require the user to specify the property if we cannot deduce it from the source managed
+     resource. Possible values include: "V1", "V2".
     :type hyper_v_generation: str or ~azure.mgmt.compute.v2020_12_01.models.HyperVGenerationTypes
     """
 
@@ -2671,7 +2680,8 @@ class ManagedDiskParameters(SubResource):
     :type id: str
     :param storage_account_type: Specifies the storage account type for the managed disk. NOTE:
      UltraSSD_LRS can only be used with data disks, it cannot be used with OS Disk. Possible values
-     include: "Standard_LRS", "Premium_LRS", "StandardSSD_LRS", "UltraSSD_LRS".
+     include: "Standard_LRS", "Premium_LRS", "StandardSSD_LRS", "UltraSSD_LRS", "Premium_ZRS",
+     "StandardSSD_ZRS".
     :type storage_account_type: str or ~azure.mgmt.compute.v2020_12_01.models.StorageAccountTypes
     :param disk_encryption_set: Specifies the customer managed disk encryption set resource id for
      the managed disk.
@@ -7442,7 +7452,8 @@ class VirtualMachineScaleSetManagedDiskParameters(msrest.serialization.Model):
 
     :param storage_account_type: Specifies the storage account type for the managed disk. NOTE:
      UltraSSD_LRS can only be used with data disks, it cannot be used with OS Disk. Possible values
-     include: "Standard_LRS", "Premium_LRS", "StandardSSD_LRS", "UltraSSD_LRS".
+     include: "Standard_LRS", "Premium_LRS", "StandardSSD_LRS", "UltraSSD_LRS", "Premium_ZRS",
+     "StandardSSD_ZRS".
     :type storage_account_type: str or ~azure.mgmt.compute.v2020_12_01.models.StorageAccountTypes
     :param disk_encryption_set: Specifies the customer managed disk encryption set resource id for
      the managed disk.
