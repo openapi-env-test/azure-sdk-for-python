@@ -128,11 +128,11 @@ def main(generate_input, generate_output):
                 result[package_name]["path"].append(folder_name)
                 result[package_name]["readmeMd"].append(input_readme)
 
-            # Update metadata
-            update_service_metadata(sdk_folder, data, config, folder_name, package_name, spec_folder, input_readme)
-
             # Generate some necessary file for new service
             init_new_service(package_name, folder_name)
+
+            # Update metadata
+            update_service_metadata(sdk_folder, data, config, folder_name, package_name, spec_folder, input_readme)
 
             # Setup package locally
             check_call(f'pip install --ignore-requires-python -e {str(Path(sdk_folder, folder_name, package_name))}',
