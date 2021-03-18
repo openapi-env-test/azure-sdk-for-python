@@ -26,14 +26,6 @@ class _CaseInsensitiveEnumMeta(EnumMeta):
             raise AttributeError(name)
 
 
-class AuthenticationMode(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
-    """Authentication Mode. Valid modes are ``ConnectionString``\ , ``Msi`` and 'UserToken'.
-    """
-
-    MSI = "Msi"
-    USER_TOKEN = "UserToken"
-    CONNECTION_STRING = "ConnectionString"
-
 class ClusterProvisioningState(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """The status of the cluster provisioning. The three terminal states are: Succeeded, Failed and
     Canceled
@@ -50,45 +42,6 @@ class ClusterSkuName(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
 
     DEFAULT = "Default"  #: The default SKU.
 
-class CompatibilityLevel(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
-    """Controls certain runtime behaviors of the streaming job.
-    """
-
-    ONE0 = "1.0"
-
-class ContentStoragePolicy(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
-    """Valid values are JobStorageAccount and SystemAccount. If set to JobStorageAccount, this
-    requires the user to also specify jobStorageAccount property. .
-    """
-
-    SYSTEM_ACCOUNT = "SystemAccount"
-    JOB_STORAGE_ACCOUNT = "JobStorageAccount"
-
-class Encoding(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
-    """Specifies the encoding of the incoming data in the case of input and the encoding of outgoing
-    data in the case of output.
-    """
-
-    UTF8 = "UTF8"
-
-class EventSerializationType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
-    """Indicates the type of serialization that the input or output uses. Required on PUT
-    (CreateOrReplace) requests.
-    """
-
-    CSV = "Csv"
-    AVRO = "Avro"
-    JSON = "Json"
-    CUSTOM_CLR = "CustomClr"
-    PARQUET = "Parquet"
-
-class EventsOutOfOrderPolicy(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
-    """Indicates the policy to apply to events that arrive out of order in the input event stream.
-    """
-
-    ADJUST = "Adjust"
-    DROP = "Drop"
-
 class JobState(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """The current execution state of the streaming job.
     """
@@ -103,46 +56,3 @@ class JobState(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     DEGRADED = "Degraded"  #: The job is currently in the Degraded state.
     RESTARTING = "Restarting"  #: The job is currently in the Restarting state.
     SCALING = "Scaling"  #: The job is currently in the Scaling state.
-
-class JobType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
-    """Describes the type of the job. Valid modes are ``Cloud`` and 'Edge'.
-    """
-
-    CLOUD = "Cloud"
-    EDGE = "Edge"
-
-class JsonOutputSerializationFormat(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
-    """Specifies the format of the JSON the output will be written in. The currently supported values
-    are 'lineSeparated' indicating the output will be formatted by having each JSON object
-    separated by a new line and 'array' indicating the output will be formatted as an array of JSON
-    objects.
-    """
-
-    LINE_SEPARATED = "LineSeparated"
-    ARRAY = "Array"
-
-class OutputErrorPolicy(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
-    """Indicates the policy to apply to events that arrive at the output and cannot be written to the
-    external storage due to being malformed (missing column values, column values of wrong type or
-    size).
-    """
-
-    STOP = "Stop"
-    DROP = "Drop"
-
-class OutputStartMode(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
-    """Value may be JobStartTime, CustomTime, or LastOutputEventTime to indicate whether the starting
-    point of the output event stream should start whenever the job is started, start at a custom
-    user time stamp specified via the outputStartTime property, or start from the last event output
-    time.
-    """
-
-    JOB_START_TIME = "JobStartTime"
-    CUSTOM_TIME = "CustomTime"
-    LAST_OUTPUT_EVENT_TIME = "LastOutputEventTime"
-
-class StreamingJobSkuName(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
-    """The name of the SKU. Required on PUT (CreateOrReplace) requests.
-    """
-
-    STANDARD = "Standard"

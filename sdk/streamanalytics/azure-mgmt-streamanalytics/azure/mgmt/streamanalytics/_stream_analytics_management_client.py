@@ -18,13 +18,6 @@ if TYPE_CHECKING:
     from azure.core.credentials import TokenCredential
 
 from ._configuration import StreamAnalyticsManagementClientConfiguration
-from .operations import FunctionsOperations
-from .operations import InputsOperations
-from .operations import OutputsOperations
-from .operations import StreamingJobsOperations
-from .operations import SubscriptionsOperations
-from .operations import TransformationsOperations
-from .operations import Operations
 from .operations import ClustersOperations
 from .operations import PrivateEndpointsOperations
 from . import models
@@ -33,20 +26,6 @@ from . import models
 class StreamAnalyticsManagementClient(object):
     """Stream Analytics Client.
 
-    :ivar functions: FunctionsOperations operations
-    :vartype functions: stream_analytics_management_client.operations.FunctionsOperations
-    :ivar inputs: InputsOperations operations
-    :vartype inputs: stream_analytics_management_client.operations.InputsOperations
-    :ivar outputs: OutputsOperations operations
-    :vartype outputs: stream_analytics_management_client.operations.OutputsOperations
-    :ivar streaming_jobs: StreamingJobsOperations operations
-    :vartype streaming_jobs: stream_analytics_management_client.operations.StreamingJobsOperations
-    :ivar subscriptions: SubscriptionsOperations operations
-    :vartype subscriptions: stream_analytics_management_client.operations.SubscriptionsOperations
-    :ivar transformations: TransformationsOperations operations
-    :vartype transformations: stream_analytics_management_client.operations.TransformationsOperations
-    :ivar operations: Operations operations
-    :vartype operations: stream_analytics_management_client.operations.Operations
     :ivar clusters: ClustersOperations operations
     :vartype clusters: stream_analytics_management_client.operations.ClustersOperations
     :ivar private_endpoints: PrivateEndpointsOperations operations
@@ -74,23 +53,8 @@ class StreamAnalyticsManagementClient(object):
 
         client_models = {k: v for k, v in models.__dict__.items() if isinstance(v, type)}
         self._serialize = Serializer(client_models)
-        self._serialize.client_side_validation = False
         self._deserialize = Deserializer(client_models)
 
-        self.functions = FunctionsOperations(
-            self._client, self._config, self._serialize, self._deserialize)
-        self.inputs = InputsOperations(
-            self._client, self._config, self._serialize, self._deserialize)
-        self.outputs = OutputsOperations(
-            self._client, self._config, self._serialize, self._deserialize)
-        self.streaming_jobs = StreamingJobsOperations(
-            self._client, self._config, self._serialize, self._deserialize)
-        self.subscriptions = SubscriptionsOperations(
-            self._client, self._config, self._serialize, self._deserialize)
-        self.transformations = TransformationsOperations(
-            self._client, self._config, self._serialize, self._deserialize)
-        self.operations = Operations(
-            self._client, self._config, self._serialize, self._deserialize)
         self.clusters = ClustersOperations(
             self._client, self._config, self._serialize, self._deserialize)
         self.private_endpoints = PrivateEndpointsOperations(
