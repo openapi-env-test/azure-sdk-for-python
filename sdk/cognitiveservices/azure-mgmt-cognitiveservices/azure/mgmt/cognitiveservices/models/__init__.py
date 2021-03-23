@@ -21,6 +21,7 @@ try:
     from ._models_py3 import CognitiveServicesAccountEnumerateSkusResult
     from ._models_py3 import CognitiveServicesAccountKeys
     from ._models_py3 import CognitiveServicesAccountProperties
+    from ._models_py3 import CognitiveServicesAccountSkuChangeInfo
     from ._models_py3 import CognitiveServicesResourceAndSku
     from ._models_py3 import Encryption
     from ._models_py3 import Error, ErrorException
@@ -66,6 +67,7 @@ except (SyntaxError, ImportError):
     from ._models import CognitiveServicesAccountEnumerateSkusResult
     from ._models import CognitiveServicesAccountKeys
     from ._models import CognitiveServicesAccountProperties
+    from ._models import CognitiveServicesAccountSkuChangeInfo
     from ._models import CognitiveServicesResourceAndSku
     from ._models import Encryption
     from ._models import Error, ErrorException
@@ -129,6 +131,7 @@ __all__ = [
     'CognitiveServicesAccountEnumerateSkusResult',
     'CognitiveServicesAccountKeys',
     'CognitiveServicesAccountProperties',
+    'CognitiveServicesAccountSkuChangeInfo',
     'CognitiveServicesResourceAndSku',
     'Encryption',
     'Error', 'ErrorException',

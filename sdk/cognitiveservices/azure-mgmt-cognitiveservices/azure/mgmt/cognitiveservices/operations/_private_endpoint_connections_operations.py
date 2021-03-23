@@ -11,7 +11,6 @@
 
 import uuid
 from msrest.pipeline import ClientRawResponse
-from msrestazure.azure_exceptions import CloudError
 
 from .. import models
 
@@ -124,7 +123,8 @@ class PrivateEndpointConnectionsOperations(object):
         :return: PrivateEndpointConnection or ClientRawResponse if raw=true
         :rtype: ~azure.mgmt.cognitiveservices.models.PrivateEndpointConnection
          or ~msrest.pipeline.ClientRawResponse
-        :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
+        :raises:
+         :class:`ErrorException<azure.mgmt.cognitiveservices.models.ErrorException>`
         """
         # Construct URL
         url = self.get.metadata['url']
@@ -155,9 +155,7 @@ class PrivateEndpointConnectionsOperations(object):
         response = self._client.send(request, stream=False, **operation_config)
 
         if response.status_code not in [200]:
-            exp = CloudError(response)
-            exp.request_id = response.headers.get('x-ms-request-id')
-            raise exp
+            raise models.ErrorException(self._deserialize, response)
 
         deserialized = None
         if response.status_code == 200:
@@ -171,7 +169,7 @@ class PrivateEndpointConnectionsOperations(object):
     get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}'}
 
     def create_or_update(
-            self, resource_group_name, account_name, private_endpoint_connection_name, properties=None, custom_headers=None, raw=False, **operation_config):
+            self, resource_group_name, account_name, private_endpoint_connection_name, properties=None, location=None, custom_headers=None, raw=False, **operation_config):
         """Update the state of specified private endpoint connection associated
         with the Cognitive Services account.
 
@@ -186,6 +184,8 @@ class PrivateEndpointConnectionsOperations(object):
         :param properties: Resource properties.
         :type properties:
          ~azure.mgmt.cognitiveservices.models.PrivateEndpointConnectionProperties
+        :param location: The location of the private endpoint connection
+        :type location: str
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
@@ -194,9 +194,10 @@ class PrivateEndpointConnectionsOperations(object):
         :return: PrivateEndpointConnection or ClientRawResponse if raw=true
         :rtype: ~azure.mgmt.cognitiveservices.models.PrivateEndpointConnection
          or ~msrest.pipeline.ClientRawResponse
-        :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
+        :raises:
+         :class:`ErrorException<azure.mgmt.cognitiveservices.models.ErrorException>`
         """
-        properties1 = models.PrivateEndpointConnection(properties=properties)
+        properties1 = models.PrivateEndpointConnection(properties=properties, location=location)
 
         # Construct URL
         url = self.create_or_update.metadata['url']
@@ -231,9 +232,7 @@ class PrivateEndpointConnectionsOperations(object):
         response = self._client.send(request, stream=False, **operation_config)
 
         if response.status_code not in [200]:
-            exp = CloudError(response)
-            exp.request_id = response.headers.get('x-ms-request-id')
-            raise exp
+            raise models.ErrorException(self._deserialize, response)
 
         deserialized = None
         if response.status_code == 200:
@@ -266,7 +265,8 @@ class PrivateEndpointConnectionsOperations(object):
          overrides<msrest:optionsforoperations>`.
         :return: None or ClientRawResponse if raw=true
         :rtype: None or ~msrest.pipeline.ClientRawResponse
-        :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
+        :raises:
+         :class:`ErrorException<azure.mgmt.cognitiveservices.models.ErrorException>`
         """
         # Construct URL
         url = self.delete.metadata['url']
@@ -296,9 +296,7 @@ class PrivateEndpointConnectionsOperations(object):
         response = self._client.send(request, stream=False, **operation_config)
 
         if response.status_code not in [200, 204]:
-            exp = CloudError(response)
-            exp.request_id = response.headers.get('x-ms-request-id')
-            raise exp
+            raise models.ErrorException(self._deserialize, response)
 
         if raw:
             client_raw_response = ClientRawResponse(None, response)

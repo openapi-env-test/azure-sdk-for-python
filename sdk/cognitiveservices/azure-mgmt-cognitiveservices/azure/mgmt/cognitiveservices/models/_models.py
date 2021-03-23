@@ -16,16 +16,19 @@ from msrest.exceptions import HttpOperationError
 class Resource(Model):
     """Resource.
 
+    Common fields that are returned in the response for all Azure Resource
+    Manager resources.
+
     Variables are only populated by the server, and will be ignored when
     sending a request.
 
-    :ivar id: Fully qualified resource Id for the resource. Ex -
+    :ivar id: Fully qualified resource ID for the resource. Ex -
      /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
     :vartype id: str
     :ivar name: The name of the resource
     :vartype name: str
-    :ivar type: The type of the resource. Ex-
-     Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
+    :ivar type: The type of the resource. E.g.
+     "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
     :vartype type: str
     """
 
@@ -49,19 +52,21 @@ class Resource(Model):
 
 
 class AzureEntityResource(Resource):
-    """The resource model definition for a Azure Resource Manager resource with an
-    etag.
+    """Entity Resource.
+
+    The resource model definition for an Azure Resource Manager resource with
+    an etag.
 
     Variables are only populated by the server, and will be ignored when
     sending a request.
 
-    :ivar id: Fully qualified resource Id for the resource. Ex -
+    :ivar id: Fully qualified resource ID for the resource. Ex -
      /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
     :vartype id: str
     :ivar name: The name of the resource
     :vartype name: str
-    :ivar type: The type of the resource. Ex-
-     Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
+    :ivar type: The type of the resource. E.g.
+     "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
     :vartype type: str
     :ivar etag: Resource Etag.
     :vartype etag: str
@@ -309,6 +314,12 @@ class CognitiveServicesAccountApiProperties(Model):
     :param qna_runtime_endpoint: (QnAMaker Only) The runtime endpoint of
      QnAMaker.
     :type qna_runtime_endpoint: str
+    :param qna_azure_search_endpoint_key: (QnAMaker Only) The Azure Search
+     endpoint key of QnAMaker.
+    :type qna_azure_search_endpoint_key: str
+    :param qna_azure_search_endpoint_id: (QnAMaker Only) The Azure Search
+     endpoint id of QnAMaker.
+    :type qna_azure_search_endpoint_id: str
     :param statistics_enabled: (Bing Search Only) The flag to enable
      statistics of Bing Search.
     :type statistics_enabled: bool
@@ -342,6 +353,8 @@ class CognitiveServicesAccountApiProperties(Model):
 
     _attribute_map = {
         'qna_runtime_endpoint': {'key': 'qnaRuntimeEndpoint', 'type': 'str'},
+        'qna_azure_search_endpoint_key': {'key': 'qnaAzureSearchEndpointKey', 'type': 'str'},
+        'qna_azure_search_endpoint_id': {'key': 'qnaAzureSearchEndpointId', 'type': 'str'},
         'statistics_enabled': {'key': 'statisticsEnabled', 'type': 'bool'},
         'event_hub_connection_string': {'key': 'eventHubConnectionString', 'type': 'str'},
         'storage_account_connection_string': {'key': 'storageAccountConnectionString', 'type': 'str'},
@@ -354,6 +367,8 @@ class CognitiveServicesAccountApiProperties(Model):
     def __init__(self, **kwargs):
         super(CognitiveServicesAccountApiProperties, self).__init__(**kwargs)
         self.qna_runtime_endpoint = kwargs.get('qna_runtime_endpoint', None)
+        self.qna_azure_search_endpoint_key = kwargs.get('qna_azure_search_endpoint_key', None)
+        self.qna_azure_search_endpoint_id = kwargs.get('qna_azure_search_endpoint_id', None)
         self.statistics_enabled = kwargs.get('statistics_enabled', None)
         self.event_hub_connection_string = kwargs.get('event_hub_connection_string', None)
         self.storage_account_connection_string = kwargs.get('storage_account_connection_string', None)
@@ -428,6 +443,11 @@ class CognitiveServicesAccountProperties(Model):
      values are read-only and for reference only.
     :vartype capabilities:
      list[~azure.mgmt.cognitiveservices.models.SkuCapability]
+    :ivar is_migrated: If the resource is migrated from an existing key.
+    :vartype is_migrated: bool
+    :ivar sku_change_info: Sku change info of account.
+    :vartype sku_change_info:
+     ~azure.mgmt.cognitiveservices.models.CognitiveServicesAccountSkuChangeInfo
     :param custom_sub_domain_name: Optional subdomain name used for
      token-based authentication.
     :type custom_sub_domain_name: str
@@ -451,6 +471,8 @@ class CognitiveServicesAccountProperties(Model):
     :param api_properties: The api properties for special APIs.
     :type api_properties:
      ~azure.mgmt.cognitiveservices.models.CognitiveServicesAccountApiProperties
+    :ivar date_created: Gets the date of cognitive services account creation.
+    :vartype date_created: str
     """
 
     _validation = {
@@ -458,6 +480,9 @@ class CognitiveServicesAccountProperties(Model):
         'endpoint': {'readonly': True},
         'internal_id': {'readonly': True},
         'capabilities': {'readonly': True},
+        'is_migrated': {'readonly': True},
+        'sku_change_info': {'readonly': True},
+        'date_created': {'readonly': True},
     }
 
     _attribute_map = {
@@ -465,6 +490,8 @@ class CognitiveServicesAccountProperties(Model):
         'endpoint': {'key': 'endpoint', 'type': 'str'},
         'internal_id': {'key': 'internalId', 'type': 'str'},
         'capabilities': {'key': 'capabilities', 'type': '[SkuCapability]'},
+        'is_migrated': {'key': 'isMigrated', 'type': 'bool'},
+        'sku_change_info': {'key': 'skuChangeInfo', 'type': 'CognitiveServicesAccountSkuChangeInfo'},
         'custom_sub_domain_name': {'key': 'customSubDomainName', 'type': 'str'},
         'network_acls': {'key': 'networkAcls', 'type': 'NetworkRuleSet'},
         'encryption': {'key': 'encryption', 'type': 'Encryption'},
@@ -472,6 +499,7 @@ class CognitiveServicesAccountProperties(Model):
         'private_endpoint_connections': {'key': 'privateEndpointConnections', 'type': '[PrivateEndpointConnection]'},
         'public_network_access': {'key': 'publicNetworkAccess', 'type': 'str'},
         'api_properties': {'key': 'apiProperties', 'type': 'CognitiveServicesAccountApiProperties'},
+        'date_created': {'key': 'dateCreated', 'type': 'str'},
     }
 
     def __init__(self, **kwargs):
@@ -480,6 +508,8 @@ class CognitiveServicesAccountProperties(Model):
         self.endpoint = None
         self.internal_id = None
         self.capabilities = None
+        self.is_migrated = None
+        self.sku_change_info = None
         self.custom_sub_domain_name = kwargs.get('custom_sub_domain_name', None)
         self.network_acls = kwargs.get('network_acls', None)
         self.encryption = kwargs.get('encryption', None)
@@ -487,6 +517,41 @@ class CognitiveServicesAccountProperties(Model):
         self.private_endpoint_connections = kwargs.get('private_endpoint_connections', None)
         self.public_network_access = kwargs.get('public_network_access', None)
         self.api_properties = kwargs.get('api_properties', None)
+        self.date_created = None
+
+
+class CognitiveServicesAccountSkuChangeInfo(Model):
+    """Sku change info of account.
+
+    Variables are only populated by the server, and will be ignored when
+    sending a request.
+
+    :ivar count_of_downgrades: Gets the count of downgrades.
+    :vartype count_of_downgrades: float
+    :ivar count_of_upgrades_after_downgrades: Gets the count of upgrades after
+     downgrades.
+    :vartype count_of_upgrades_after_downgrades: float
+    :ivar last_change_date: Gets the last change date.
+    :vartype last_change_date: str
+    """
+
+    _validation = {
+        'count_of_downgrades': {'readonly': True},
+        'count_of_upgrades_after_downgrades': {'readonly': True},
+        'last_change_date': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'count_of_downgrades': {'key': 'countOfDowngrades', 'type': 'float'},
+        'count_of_upgrades_after_downgrades': {'key': 'countOfUpgradesAfterDowngrades', 'type': 'float'},
+        'last_change_date': {'key': 'lastChangeDate', 'type': 'str'},
+    }
+
+    def __init__(self, **kwargs):
+        super(CognitiveServicesAccountSkuChangeInfo, self).__init__(**kwargs)
+        self.count_of_downgrades = None
+        self.count_of_upgrades_after_downgrades = None
+        self.last_change_date = None
 
 
 class CognitiveServicesResourceAndSku(Model):
@@ -818,23 +883,28 @@ class PrivateEndpointConnection(Resource):
     Variables are only populated by the server, and will be ignored when
     sending a request.
 
-    :ivar id: Fully qualified resource Id for the resource. Ex -
+    :ivar id: Fully qualified resource ID for the resource. Ex -
      /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
     :vartype id: str
     :ivar name: The name of the resource
     :vartype name: str
-    :ivar type: The type of the resource. Ex-
-     Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
+    :ivar type: The type of the resource. E.g.
+     "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
     :vartype type: str
     :param properties: Resource properties.
     :type properties:
      ~azure.mgmt.cognitiveservices.models.PrivateEndpointConnectionProperties
+    :ivar etag: Entity Tag
+    :vartype etag: str
+    :param location: The location of the private endpoint connection
+    :type location: str
     """
 
     _validation = {
         'id': {'readonly': True},
         'name': {'readonly': True},
         'type': {'readonly': True},
+        'etag': {'readonly': True},
     }
 
     _attribute_map = {
@@ -842,11 +912,15 @@ class PrivateEndpointConnection(Resource):
         'name': {'key': 'name', 'type': 'str'},
         'type': {'key': 'type', 'type': 'str'},
         'properties': {'key': 'properties', 'type': 'PrivateEndpointConnectionProperties'},
+        'etag': {'key': 'etag', 'type': 'str'},
+        'location': {'key': 'location', 'type': 'str'},
     }
 
     def __init__(self, **kwargs):
         super(PrivateEndpointConnection, self).__init__(**kwargs)
         self.properties = kwargs.get('properties', None)
+        self.etag = None
+        self.location = kwargs.get('location', None)
 
 
 class PrivateEndpointConnectionListResult(Model):
@@ -906,13 +980,13 @@ class PrivateLinkResource(Resource):
     Variables are only populated by the server, and will be ignored when
     sending a request.
 
-    :ivar id: Fully qualified resource Id for the resource. Ex -
+    :ivar id: Fully qualified resource ID for the resource. Ex -
      /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
     :vartype id: str
     :ivar name: The name of the resource
     :vartype name: str
-    :ivar type: The type of the resource. Ex-
-     Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
+    :ivar type: The type of the resource. E.g.
+     "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
     :vartype type: str
     :param properties: Resource properties.
     :type properties:
@@ -1003,38 +1077,40 @@ class PrivateLinkServiceConnectionState(Model):
      ~azure.mgmt.cognitiveservices.models.PrivateEndpointServiceConnectionStatus
     :param description: The reason for approval/rejection of the connection.
     :type description: str
-    :param action_required: A message indicating if changes on the service
+    :param actions_required: A message indicating if changes on the service
      provider require any updates on the consumer.
-    :type action_required: str
+    :type actions_required: str
     """
 
     _attribute_map = {
         'status': {'key': 'status', 'type': 'str'},
         'description': {'key': 'description', 'type': 'str'},
-        'action_required': {'key': 'actionRequired', 'type': 'str'},
+        'actions_required': {'key': 'actionsRequired', 'type': 'str'},
     }
 
     def __init__(self, **kwargs):
         super(PrivateLinkServiceConnectionState, self).__init__(**kwargs)
         self.status = kwargs.get('status', None)
         self.description = kwargs.get('description', None)
-        self.action_required = kwargs.get('action_required', None)
+        self.actions_required = kwargs.get('actions_required', None)
 
 
 class ProxyResource(Resource):
-    """The resource model definition for a ARM proxy resource. It will have
-    everything other than required location and tags.
+    """Proxy Resource.
+
+    The resource model definition for a Azure Resource Manager proxy resource.
+    It will not have tags and a location.
 
     Variables are only populated by the server, and will be ignored when
     sending a request.
 
-    :ivar id: Fully qualified resource Id for the resource. Ex -
+    :ivar id: Fully qualified resource ID for the resource. Ex -
      /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
     :vartype id: str
     :ivar name: The name of the resource
     :vartype name: str
-    :ivar type: The type of the resource. Ex-
-     Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
+    :ivar type: The type of the resource. E.g.
+     "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
     :vartype type: str
     """
 
@@ -1212,7 +1288,7 @@ class Sku(Model):
      creation, optional for update.
     :type name: str
     :ivar tier: Gets the sku tier. This is based on the SKU name. Possible
-     values include: 'Free', 'Standard', 'Premium'
+     values include: 'Free', 'Standard', 'Premium', 'Enterprise'
     :vartype tier: str or ~azure.mgmt.cognitiveservices.models.SkuTier
     """
 
@@ -1223,7 +1299,7 @@ class Sku(Model):
 
     _attribute_map = {
         'name': {'key': 'name', 'type': 'str'},
-        'tier': {'key': 'tier', 'type': 'SkuTier'},
+        'tier': {'key': 'tier', 'type': 'str'},
     }
 
     def __init__(self, **kwargs):
@@ -1253,20 +1329,23 @@ class SkuCapability(Model):
 
 
 class TrackedResource(Resource):
-    """The resource model definition for a ARM tracked top level resource.
+    """Tracked Resource.
+
+    The resource model definition for an Azure Resource Manager tracked top
+    level resource which has 'tags' and a 'location'.
 
     Variables are only populated by the server, and will be ignored when
     sending a request.
 
     All required parameters must be populated in order to send to Azure.
 
-    :ivar id: Fully qualified resource Id for the resource. Ex -
+    :ivar id: Fully qualified resource ID for the resource. Ex -
      /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
     :vartype id: str
     :ivar name: The name of the resource
     :vartype name: str
-    :ivar type: The type of the resource. Ex-
-     Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts.
+    :ivar type: The type of the resource. E.g.
+     "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts"
     :vartype type: str
     :param tags: Resource tags.
     :type tags: dict[str, str]
