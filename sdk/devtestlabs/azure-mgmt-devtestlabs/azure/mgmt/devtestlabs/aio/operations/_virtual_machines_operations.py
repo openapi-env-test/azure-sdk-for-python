@@ -462,7 +462,7 @@ class VirtualMachinesOperations:
         resource_group_name: str,
         lab_name: str,
         name: str,
-        lab_virtual_machine: "_models.LabVirtualMachineFragment",
+        tags: Optional[Dict[str, str]] = None,
         **kwargs
     ) -> "_models.LabVirtualMachine":
         """Allows modifying tags of virtual machines. All other properties will be ignored.
@@ -473,8 +473,8 @@ class VirtualMachinesOperations:
         :type lab_name: str
         :param name: The name of the virtual machine.
         :type name: str
-        :param lab_virtual_machine: A virtual machine.
-        :type lab_virtual_machine: ~azure.mgmt.devtestlabs.models.LabVirtualMachineFragment
+        :param tags: The tags of the resource.
+        :type tags: dict[str, str]
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: LabVirtualMachine, or the result of cls(response)
         :rtype: ~azure.mgmt.devtestlabs.models.LabVirtualMachine
@@ -485,6 +485,8 @@ class VirtualMachinesOperations:
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
+
+        _lab_virtual_machine = _models.UpdateResource(tags=tags)
         api_version = "2018-09-15"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"
@@ -509,7 +511,7 @@ class VirtualMachinesOperations:
         header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
 
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(lab_virtual_machine, 'LabVirtualMachineFragment')
+        body_content = self._serialize.body(_lab_virtual_machine, 'UpdateResource')
         body_content_kwargs['content'] = body_content
         request = self._client.patch(url, query_parameters, header_parameters, **body_content_kwargs)
         pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)

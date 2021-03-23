@@ -470,7 +470,7 @@ class CustomImagesOperations(object):
         resource_group_name,  # type: str
         lab_name,  # type: str
         name,  # type: str
-        custom_image,  # type: "_models.CustomImageFragment"
+        tags=None,  # type: Optional[Dict[str, str]]
         **kwargs  # type: Any
     ):
         # type: (...) -> "_models.CustomImage"
@@ -482,8 +482,8 @@ class CustomImagesOperations(object):
         :type lab_name: str
         :param name: The name of the custom image.
         :type name: str
-        :param custom_image: A custom image.
-        :type custom_image: ~azure.mgmt.devtestlabs.models.CustomImageFragment
+        :param tags: The tags of the resource.
+        :type tags: dict[str, str]
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: CustomImage, or the result of cls(response)
         :rtype: ~azure.mgmt.devtestlabs.models.CustomImage
@@ -494,6 +494,8 @@ class CustomImagesOperations(object):
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
+
+        _custom_image = _models.UpdateResource(tags=tags)
         api_version = "2018-09-15"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"
@@ -518,7 +520,7 @@ class CustomImagesOperations(object):
         header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
 
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(custom_image, 'CustomImageFragment')
+        body_content = self._serialize.body(_custom_image, 'UpdateResource')
         body_content_kwargs['content'] = body_content
         request = self._client.patch(url, query_parameters, header_parameters, **body_content_kwargs)
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)

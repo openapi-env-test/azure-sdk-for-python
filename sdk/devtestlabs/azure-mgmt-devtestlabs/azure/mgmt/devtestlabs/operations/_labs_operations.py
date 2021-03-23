@@ -536,7 +536,7 @@ class LabsOperations(object):
         self,
         resource_group_name,  # type: str
         name,  # type: str
-        lab,  # type: "_models.LabFragment"
+        tags=None,  # type: Optional[Dict[str, str]]
         **kwargs  # type: Any
     ):
         # type: (...) -> "_models.Lab"
@@ -546,8 +546,8 @@ class LabsOperations(object):
         :type resource_group_name: str
         :param name: The name of the lab.
         :type name: str
-        :param lab: A lab.
-        :type lab: ~azure.mgmt.devtestlabs.models.LabFragment
+        :param tags: The tags of the resource.
+        :type tags: dict[str, str]
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: Lab, or the result of cls(response)
         :rtype: ~azure.mgmt.devtestlabs.models.Lab
@@ -558,6 +558,8 @@ class LabsOperations(object):
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
+
+        _lab = _models.UpdateResource(tags=tags)
         api_version = "2018-09-15"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"
@@ -581,7 +583,7 @@ class LabsOperations(object):
         header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
 
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(lab, 'LabFragment')
+        body_content = self._serialize.body(_lab, 'UpdateResource')
         body_content_kwargs['content'] = body_content
         request = self._client.patch(url, query_parameters, header_parameters, **body_content_kwargs)
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)

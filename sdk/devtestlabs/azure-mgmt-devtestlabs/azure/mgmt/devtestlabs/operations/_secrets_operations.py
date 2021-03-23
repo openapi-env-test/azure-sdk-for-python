@@ -434,7 +434,6 @@ class SecretsOperations(object):
         user_name,  # type: str
         name,  # type: str
         tags=None,  # type: Optional[Dict[str, str]]
-        value=None,  # type: Optional[str]
         **kwargs  # type: Any
     ):
         # type: (...) -> "_models.Secret"
@@ -450,8 +449,6 @@ class SecretsOperations(object):
         :type name: str
         :param tags: The tags of the resource.
         :type tags: dict[str, str]
-        :param value: The value of the secret for secret creation.
-        :type value: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: Secret, or the result of cls(response)
         :rtype: ~azure.mgmt.devtestlabs.models.Secret
@@ -463,7 +460,7 @@ class SecretsOperations(object):
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        _secret = _models.SecretFragment(tags=tags, value=value)
+        _secret = _models.UpdateResource(tags=tags)
         api_version = "2018-09-15"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"
@@ -489,7 +486,7 @@ class SecretsOperations(object):
         header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
 
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(_secret, 'SecretFragment')
+        body_content = self._serialize.body(_secret, 'UpdateResource')
         body_content_kwargs['content'] = body_content
         request = self._client.patch(url, query_parameters, header_parameters, **body_content_kwargs)
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)

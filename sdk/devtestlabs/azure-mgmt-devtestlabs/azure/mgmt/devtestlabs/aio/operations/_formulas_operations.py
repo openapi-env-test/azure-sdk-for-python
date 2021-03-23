@@ -404,7 +404,7 @@ class FormulasOperations:
         resource_group_name: str,
         lab_name: str,
         name: str,
-        formula: "_models.FormulaFragment",
+        tags: Optional[Dict[str, str]] = None,
         **kwargs
     ) -> "_models.Formula":
         """Allows modifying tags of formulas. All other properties will be ignored.
@@ -415,8 +415,8 @@ class FormulasOperations:
         :type lab_name: str
         :param name: The name of the formula.
         :type name: str
-        :param formula: A formula for creating a VM, specifying an image base and other parameters.
-        :type formula: ~azure.mgmt.devtestlabs.models.FormulaFragment
+        :param tags: The tags of the resource.
+        :type tags: dict[str, str]
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: Formula, or the result of cls(response)
         :rtype: ~azure.mgmt.devtestlabs.models.Formula
@@ -427,6 +427,8 @@ class FormulasOperations:
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
+
+        _formula = _models.UpdateResource(tags=tags)
         api_version = "2018-09-15"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"
@@ -451,7 +453,7 @@ class FormulasOperations:
         header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
 
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(formula, 'FormulaFragment')
+        body_content = self._serialize.body(_formula, 'UpdateResource')
         body_content_kwargs['content'] = body_content
         request = self._client.patch(url, query_parameters, header_parameters, **body_content_kwargs)
         pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
