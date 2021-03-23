@@ -1,0 +1,8 @@
+{
+  "autorest": "3.0.6272",
+  "autorest.python": "5.4.3",
+  "commit": "b1d8670bff3ec1173f4b69da7dc0aadb39a96f27",
+  "repository_url": "https://github.com/openapi-env-test/azure-rest-api-specs",
+  "autorest_command": "autorest specification/datalake-store/resource-manager/readme.md --multiapi --python --python-mode=update --python-sdks-folder=/home/vsts/work/1/s/azure-sdk-for-python/sdk --track2 --use=@autorest/python@5.4.3 --version=3.0.6272",
+  "readme": "specification/datalake-store/resource-manager/readme.md"
+}
