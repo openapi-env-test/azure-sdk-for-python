@@ -26,7 +26,7 @@ class SynchronizationSettingsOperations(object):
     :param config: Configuration of service client.
     :param serializer: An object model serializer.
     :param deserializer: An object model deserializer.
-    :ivar api_version: The api version to use. Constant value: "2019-11-01".
+    :ivar api_version: The api version to use. Constant value: "2020-09-01".
     """
 
     models = models
@@ -36,7 +36,7 @@ class SynchronizationSettingsOperations(object):
         self._client = client
         self._serialize = serializer
         self._deserialize = deserializer
-        self.api_version = "2019-11-01"
+        self.api_version = "2020-09-01"
 
         self.config = config
 
@@ -113,7 +113,7 @@ class SynchronizationSettingsOperations(object):
             self, resource_group_name, account_name, share_name, synchronization_setting_name, synchronization_setting, custom_headers=None, raw=False, **operation_config):
         """Adds a new synchronization setting to an existing share.
 
-        Create or update a synchronizationSetting .
+        Create a synchronizationSetting.
 
         :param resource_group_name: The resource group name.
         :type resource_group_name: str

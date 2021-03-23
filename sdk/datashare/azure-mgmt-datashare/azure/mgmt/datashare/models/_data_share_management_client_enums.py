@@ -26,14 +26,16 @@ class ProvisioningState(str, Enum):
     failed = "Failed"
 
 
-class Status(str, Enum):
+class DataSetMappingStatus(str, Enum):
 
-    accepted = "Accepted"
-    in_progress = "InProgress"
-    transient_failure = "TransientFailure"
-    succeeded = "Succeeded"
-    failed = "Failed"
-    canceled = "Canceled"
+    ok = "Ok"
+    broken = "Broken"
+
+
+class OutputType(str, Enum):
+
+    csv = "Csv"
+    parquet = "Parquet"
 
 
 class InvitationStatus(str, Enum):
@@ -42,18 +44,6 @@ class InvitationStatus(str, Enum):
     accepted = "Accepted"
     rejected = "Rejected"
     withdrawn = "Withdrawn"
-
-
-class ShareKind(str, Enum):
-
-    copy_based = "CopyBased"
-    in_place = "InPlace"
-
-
-class SynchronizationMode(str, Enum):
-
-    incremental = "Incremental"
-    full_sync = "FullSync"
 
 
 class DataSetType(str, Enum):
@@ -70,6 +60,17 @@ class DataSetType(str, Enum):
     kusto_database = "KustoDatabase"
     sql_db_table = "SqlDBTable"
     sql_dw_table = "SqlDWTable"
+    synapse_workspace_sql_pool_table = "SynapseWorkspaceSqlPoolTable"
+
+
+class Status(str, Enum):
+
+    accepted = "Accepted"
+    in_progress = "InProgress"
+    transient_failure = "TransientFailure"
+    succeeded = "Succeeded"
+    failed = "Failed"
+    canceled = "Canceled"
 
 
 class ShareSubscriptionStatus(str, Enum):
@@ -80,10 +81,32 @@ class ShareSubscriptionStatus(str, Enum):
     revoking = "Revoking"
 
 
+class CreatedByType(str, Enum):
+
+    user = "User"
+    application = "Application"
+    managed_identity = "ManagedIdentity"
+    key = "Key"
+
+
+class LastModifiedByType(str, Enum):
+
+    user = "User"
+    application = "Application"
+    managed_identity = "ManagedIdentity"
+    key = "Key"
+
+
 class RecurrenceInterval(str, Enum):
 
     hour = "Hour"
     day = "Day"
+
+
+class SynchronizationMode(str, Enum):
+
+    incremental = "Incremental"
+    full_sync = "FullSync"
 
 
 class TriggerStatus(str, Enum):
@@ -93,13 +116,7 @@ class TriggerStatus(str, Enum):
     source_synchronization_setting_deleted = "SourceSynchronizationSettingDeleted"
 
 
-class DataSetMappingStatus(str, Enum):
+class ShareKind(str, Enum):
 
-    ok = "Ok"
-    broken = "Broken"
-
-
-class OutputType(str, Enum):
-
-    csv = "Csv"
-    parquet = "Parquet"
+    copy_based = "CopyBased"
+    in_place = "InPlace"

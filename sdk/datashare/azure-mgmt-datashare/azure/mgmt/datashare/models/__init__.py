@@ -60,9 +60,12 @@ try:
     from ._models_py3 import SqlDBTableDataSetMapping
     from ._models_py3 import SqlDWTableDataSet
     from ._models_py3 import SqlDWTableDataSetMapping
+    from ._models_py3 import SynapseWorkspaceSqlPoolTableDataSet
+    from ._models_py3 import SynapseWorkspaceSqlPoolTableDataSetMapping
     from ._models_py3 import SynchronizationDetails
     from ._models_py3 import SynchronizationSetting
     from ._models_py3 import Synchronize
+    from ._models_py3 import SystemData
     from ._models_py3 import Trigger
 except (SyntaxError, ImportError):
     from ._models import Account
@@ -115,9 +118,12 @@ except (SyntaxError, ImportError):
     from ._models import SqlDBTableDataSetMapping
     from ._models import SqlDWTableDataSet
     from ._models import SqlDWTableDataSetMapping
+    from ._models import SynapseWorkspaceSqlPoolTableDataSet
+    from ._models import SynapseWorkspaceSqlPoolTableDataSetMapping
     from ._models import SynchronizationDetails
     from ._models import SynchronizationSetting
     from ._models import Synchronize
+    from ._models import SystemData
     from ._models import Trigger
 from ._paged_models import AccountPaged
 from ._paged_models import ConsumerInvitationPaged
@@ -138,16 +144,18 @@ from ._paged_models import TriggerPaged
 from ._data_share_management_client_enums import (
     Type,
     ProvisioningState,
-    Status,
-    InvitationStatus,
-    ShareKind,
-    SynchronizationMode,
-    DataSetType,
-    ShareSubscriptionStatus,
-    RecurrenceInterval,
-    TriggerStatus,
     DataSetMappingStatus,
     OutputType,
+    InvitationStatus,
+    DataSetType,
+    Status,
+    ShareSubscriptionStatus,
+    CreatedByType,
+    LastModifiedByType,
+    RecurrenceInterval,
+    SynchronizationMode,
+    TriggerStatus,
+    ShareKind,
 )
 
 __all__ = [
@@ -201,9 +209,12 @@ __all__ = [
     'SqlDBTableDataSetMapping',
     'SqlDWTableDataSet',
     'SqlDWTableDataSetMapping',
+    'SynapseWorkspaceSqlPoolTableDataSet',
+    'SynapseWorkspaceSqlPoolTableDataSetMapping',
     'SynchronizationDetails',
     'SynchronizationSetting',
     'Synchronize',
+    'SystemData',
     'Trigger',
     'AccountPaged',
     'ConsumerInvitationPaged',
@@ -211,26 +222,28 @@ __all__ = [
     'DataSetMappingPaged',
     'InvitationPaged',
     'OperationModelPaged',
-    'SharePaged',
-    'ShareSynchronizationPaged',
     'SynchronizationDetailsPaged',
+    'ShareSynchronizationPaged',
+    'SharePaged',
     'ProviderShareSubscriptionPaged',
-    'ShareSubscriptionPaged',
     'SourceShareSynchronizationSettingPaged',
     'ShareSubscriptionSynchronizationPaged',
+    'ShareSubscriptionPaged',
     'ConsumerSourceDataSetPaged',
     'SynchronizationSettingPaged',
     'TriggerPaged',
     'Type',
     'ProvisioningState',
-    'Status',
-    'InvitationStatus',
-    'ShareKind',
-    'SynchronizationMode',
-    'DataSetType',
-    'ShareSubscriptionStatus',
-    'RecurrenceInterval',
-    'TriggerStatus',
     'DataSetMappingStatus',
     'OutputType',
+    'InvitationStatus',
+    'DataSetType',
+    'Status',
+    'ShareSubscriptionStatus',
+    'CreatedByType',
+    'LastModifiedByType',
+    'RecurrenceInterval',
+    'SynchronizationMode',
+    'TriggerStatus',
+    'ShareKind',
 ]
