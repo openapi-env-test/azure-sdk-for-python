@@ -25,18 +25,22 @@ class Resource(Model):
     :vartype name: str
     :ivar type: Resource type.
     :vartype type: str
+    :ivar system_data:
+    :vartype system_data: ~azure.mgmt.cdn.models.SystemData
     """
 
     _validation = {
         'id': {'readonly': True},
         'name': {'readonly': True},
         'type': {'readonly': True},
+        'system_data': {'readonly': True},
     }
 
     _attribute_map = {
         'id': {'key': 'id', 'type': 'str'},
         'name': {'key': 'name', 'type': 'str'},
         'type': {'key': 'type', 'type': 'str'},
+        'system_data': {'key': 'systemData', 'type': 'SystemData'},
     }
 
     def __init__(self, **kwargs):
@@ -44,6 +48,7 @@ class Resource(Model):
         self.id = None
         self.name = None
         self.type = None
+        self.system_data = None
 
 
 class ProxyResource(Resource):
@@ -79,7 +84,6 @@ class ProxyResource(Resource):
 
     def __init__(self, **kwargs):
         super(ProxyResource, self).__init__(**kwargs)
-        self.system_data = None
 
 
 class AFDDomain(ProxyResource):
@@ -237,36 +241,35 @@ class TrackedResource(Resource):
     :vartype name: str
     :ivar type: Resource type.
     :vartype type: str
+    :ivar system_data:
+    :vartype system_data: ~azure.mgmt.cdn.models.SystemData
     :param location: Required. Resource location.
     :type location: str
     :param tags: Resource tags.
     :type tags: dict[str, str]
-    :ivar system_data:
-    :vartype system_data: ~azure.mgmt.cdn.models.SystemData
     """
 
     _validation = {
         'id': {'readonly': True},
         'name': {'readonly': True},
         'type': {'readonly': True},
-        'location': {'required': True},
         'system_data': {'readonly': True},
+        'location': {'required': True},
     }
 
     _attribute_map = {
         'id': {'key': 'id', 'type': 'str'},
         'name': {'key': 'name', 'type': 'str'},
         'type': {'key': 'type', 'type': 'str'},
+        'system_data': {'key': 'systemData', 'type': 'SystemData'},
         'location': {'key': 'location', 'type': 'str'},
         'tags': {'key': 'tags', 'type': '{str}'},
-        'system_data': {'key': 'systemData', 'type': 'SystemData'},
     }
 
     def __init__(self, **kwargs):
         super(TrackedResource, self).__init__(**kwargs)
         self.location = kwargs.get('location', None)
         self.tags = kwargs.get('tags', None)
-        self.system_data = None
 
 
 class AFDEndpoint(TrackedResource):
@@ -286,12 +289,12 @@ class AFDEndpoint(TrackedResource):
     :vartype name: str
     :ivar type: Resource type.
     :vartype type: str
+    :ivar system_data:
+    :vartype system_data: ~azure.mgmt.cdn.models.SystemData
     :param location: Required. Resource location.
     :type location: str
     :param tags: Resource tags.
     :type tags: dict[str, str]
-    :ivar system_data:
-    :vartype system_data: ~azure.mgmt.cdn.models.SystemData
     :param origin_response_timeout_seconds: Send and receive timeout on
      forwarding request to the origin. When timeout is reached, the request
      fails and returns.
@@ -316,8 +319,8 @@ class AFDEndpoint(TrackedResource):
         'id': {'readonly': True},
         'name': {'readonly': True},
         'type': {'readonly': True},
-        'location': {'required': True},
         'system_data': {'readonly': True},
+        'location': {'required': True},
         'origin_response_timeout_seconds': {'minimum': 16},
         'provisioning_state': {'readonly': True},
         'deployment_status': {'readonly': True},
@@ -328,9 +331,9 @@ class AFDEndpoint(TrackedResource):
         'id': {'key': 'id', 'type': 'str'},
         'name': {'key': 'name', 'type': 'str'},
         'type': {'key': 'type', 'type': 'str'},
+        'system_data': {'key': 'systemData', 'type': 'SystemData'},
         'location': {'key': 'location', 'type': 'str'},
         'tags': {'key': 'tags', 'type': '{str}'},
-        'system_data': {'key': 'systemData', 'type': 'SystemData'},
         'origin_response_timeout_seconds': {'key': 'properties.originResponseTimeoutSeconds', 'type': 'int'},
         'enabled_state': {'key': 'properties.enabledState', 'type': 'str'},
         'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
@@ -1001,12 +1004,12 @@ class CdnWebApplicationFirewallPolicy(TrackedResource):
     :vartype name: str
     :ivar type: Resource type.
     :vartype type: str
+    :ivar system_data:
+    :vartype system_data: ~azure.mgmt.cdn.models.SystemData
     :param location: Required. Resource location.
     :type location: str
     :param tags: Resource tags.
     :type tags: dict[str, str]
-    :ivar system_data:
-    :vartype system_data: ~azure.mgmt.cdn.models.SystemData
     :param policy_settings: Describes  policySettings for policy
     :type policy_settings: ~azure.mgmt.cdn.models.PolicySettings
     :param rate_limit_rules: Describes rate limit rules inside the policy.
@@ -1039,8 +1042,8 @@ class CdnWebApplicationFirewallPolicy(TrackedResource):
         'id': {'readonly': True},
         'name': {'readonly': True},
         'type': {'readonly': True},
-        'location': {'required': True},
         'system_data': {'readonly': True},
+        'location': {'required': True},
         'endpoint_links': {'readonly': True},
         'provisioning_state': {'readonly': True},
         'resource_state': {'readonly': True},
@@ -1051,9 +1054,9 @@ class CdnWebApplicationFirewallPolicy(TrackedResource):
         'id': {'key': 'id', 'type': 'str'},
         'name': {'key': 'name', 'type': 'str'},
         'type': {'key': 'type', 'type': 'str'},
+        'system_data': {'key': 'systemData', 'type': 'SystemData'},
         'location': {'key': 'location', 'type': 'str'},
         'tags': {'key': 'tags', 'type': '{str}'},
-        'system_data': {'key': 'systemData', 'type': 'SystemData'},
         'policy_settings': {'key': 'properties.policySettings', 'type': 'PolicySettings'},
         'rate_limit_rules': {'key': 'properties.rateLimitRules', 'type': 'RateLimitRuleList'},
         'custom_rules': {'key': 'properties.customRules', 'type': 'CustomRuleList'},
@@ -2470,12 +2473,12 @@ class Endpoint(TrackedResource):
     :vartype name: str
     :ivar type: Resource type.
     :vartype type: str
+    :ivar system_data:
+    :vartype system_data: ~azure.mgmt.cdn.models.SystemData
     :param location: Required. Resource location.
     :type location: str
     :param tags: Resource tags.
     :type tags: dict[str, str]
-    :ivar system_data:
-    :vartype system_data: ~azure.mgmt.cdn.models.SystemData
     :param origin_path: A directory path on the origin that CDN can use to
      retrieve content from, e.g. contoso.cloudapp.net/originpath.
     :type origin_path: str
@@ -2562,8 +2565,8 @@ class Endpoint(TrackedResource):
         'id': {'readonly': True},
         'name': {'readonly': True},
         'type': {'readonly': True},
-        'location': {'required': True},
         'system_data': {'readonly': True},
+        'location': {'required': True},
         'host_name': {'readonly': True},
         'origins': {'required': True},
         'resource_state': {'readonly': True},
@@ -2574,9 +2577,9 @@ class Endpoint(TrackedResource):
         'id': {'key': 'id', 'type': 'str'},
         'name': {'key': 'name', 'type': 'str'},
         'type': {'key': 'type', 'type': 'str'},
+        'system_data': {'key': 'systemData', 'type': 'SystemData'},
         'location': {'key': 'location', 'type': 'str'},
         'tags': {'key': 'tags', 'type': '{str}'},
-        'system_data': {'key': 'systemData', 'type': 'SystemData'},
         'origin_path': {'key': 'properties.originPath', 'type': 'str'},
         'content_types_to_compress': {'key': 'properties.contentTypesToCompress', 'type': '[str]'},
         'origin_host_header': {'key': 'properties.originHostHeader', 'type': 'str'},
@@ -3459,6 +3462,8 @@ class ManagedRuleSetDefinition(Resource):
     :vartype name: str
     :ivar type: Resource type.
     :vartype type: str
+    :ivar system_data:
+    :vartype system_data: ~azure.mgmt.cdn.models.SystemData
     :ivar provisioning_state: Provisioning state of the managed rule set.
     :vartype provisioning_state: str
     :ivar rule_set_type: Type of the managed rule set.
@@ -3477,6 +3482,7 @@ class ManagedRuleSetDefinition(Resource):
         'id': {'readonly': True},
         'name': {'readonly': True},
         'type': {'readonly': True},
+        'system_data': {'readonly': True},
         'provisioning_state': {'readonly': True},
         'rule_set_type': {'readonly': True},
         'rule_set_version': {'readonly': True},
@@ -3487,6 +3493,7 @@ class ManagedRuleSetDefinition(Resource):
         'id': {'key': 'id', 'type': 'str'},
         'name': {'key': 'name', 'type': 'str'},
         'type': {'key': 'type', 'type': 'str'},
+        'system_data': {'key': 'systemData', 'type': 'SystemData'},
         'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
         'rule_set_type': {'key': 'properties.ruleSetType', 'type': 'str'},
         'rule_set_version': {'key': 'properties.ruleSetVersion', 'type': 'str'},
@@ -4210,12 +4217,12 @@ class Profile(TrackedResource):
     :vartype name: str
     :ivar type: Resource type.
     :vartype type: str
+    :ivar system_data:
+    :vartype system_data: ~azure.mgmt.cdn.models.SystemData
     :param location: Required. Resource location.
     :type location: str
     :param tags: Resource tags.
     :type tags: dict[str, str]
-    :ivar system_data:
-    :vartype system_data: ~azure.mgmt.cdn.models.SystemData
     :param sku: Required. The pricing tier (defines a CDN provider, feature
      list and rate) of the CDN profile.
     :type sku: ~azure.mgmt.cdn.models.Sku
@@ -4233,8 +4240,8 @@ class Profile(TrackedResource):
         'id': {'readonly': True},
         'name': {'readonly': True},
         'type': {'readonly': True},
-        'location': {'required': True},
         'system_data': {'readonly': True},
+        'location': {'required': True},
         'sku': {'required': True},
         'resource_state': {'readonly': True},
         'provisioning_state': {'readonly': True},
@@ -4245,9 +4252,9 @@ class Profile(TrackedResource):
         'id': {'key': 'id', 'type': 'str'},
         'name': {'key': 'name', 'type': 'str'},
         'type': {'key': 'type', 'type': 'str'},
+        'system_data': {'key': 'systemData', 'type': 'SystemData'},
         'location': {'key': 'location', 'type': 'str'},
         'tags': {'key': 'tags', 'type': '{str}'},
-        'system_data': {'key': 'systemData', 'type': 'SystemData'},
         'sku': {'key': 'sku', 'type': 'Sku'},
         'resource_state': {'key': 'properties.resourceState', 'type': 'str'},
         'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},

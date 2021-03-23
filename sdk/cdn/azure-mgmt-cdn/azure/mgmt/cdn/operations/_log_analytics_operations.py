@@ -39,7 +39,7 @@ class LogAnalyticsOperations(object):
         self.config = config
 
     def get_log_analytics_metrics(
-            self, resource_group_name, profile_name, metrics, date_time_begin, date_time_end, granularity, group_by=None, continents=None, country_or_regions=None, custom_domains=None, protocols=None, custom_headers=None, raw=False, **operation_config):
+            self, resource_group_name, profile_name, metrics, date_time_begin, date_time_end, granularity, custom_domains, protocols, group_by=None, continents=None, country_or_regions=None, custom_headers=None, raw=False, **operation_config):
         """Get log report for AFD profile.
 
         :param resource_group_name: Name of the Resource group within the
@@ -49,23 +49,23 @@ class LogAnalyticsOperations(object):
          the resource group.
         :type profile_name: str
         :param metrics:
-        :type metrics: list[str]
+        :type metrics: list[str or ~azure.mgmt.cdn.models.LogMetric]
         :param date_time_begin:
         :type date_time_begin: datetime
         :param date_time_end:
         :type date_time_end: datetime
         :param granularity: Possible values include: 'PT5M', 'PT1H', 'P1D'
-        :type granularity: str
-        :param group_by:
-        :type group_by: list[str]
-        :param continents:
-        :type continents: list[str]
-        :param country_or_regions:
-        :type country_or_regions: list[str]
+        :type granularity: str or ~azure.mgmt.cdn.models.LogMetricsGranularity
         :param custom_domains:
         :type custom_domains: list[str]
         :param protocols:
         :type protocols: list[str]
+        :param group_by:
+        :type group_by: list[str or ~azure.mgmt.cdn.models.LogMetricsGroupBy]
+        :param continents:
+        :type continents: list[str]
+        :param country_or_regions:
+        :type country_or_regions: list[str]
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
@@ -99,10 +99,8 @@ class LogAnalyticsOperations(object):
             query_parameters['continents'] = self._serialize.query("continents", continents, '[str]', div=',')
         if country_or_regions is not None:
             query_parameters['countryOrRegions'] = self._serialize.query("country_or_regions", country_or_regions, '[str]', div=',')
-        if custom_domains is not None:
-            query_parameters['customDomains'] = self._serialize.query("custom_domains", custom_domains, '[str]', div=',')
-        if protocols is not None:
-            query_parameters['protocols'] = self._serialize.query("protocols", protocols, '[str]', div=',')
+        query_parameters['customDomains'] = self._serialize.query("custom_domains", custom_domains, '[str]', div=',')
+        query_parameters['protocols'] = self._serialize.query("protocols", protocols, '[str]', div=',')
 
         # Construct headers
         header_parameters = {}
@@ -143,9 +141,9 @@ class LogAnalyticsOperations(object):
          the resource group.
         :type profile_name: str
         :param rankings:
-        :type rankings: list[str]
+        :type rankings: list[str or ~azure.mgmt.cdn.models.LogRanking]
         :param metrics:
-        :type metrics: list[str]
+        :type metrics: list[str or ~azure.mgmt.cdn.models.LogRankingMetric]
         :param max_ranking:
         :type max_ranking: int
         :param date_time_begin:
@@ -348,19 +346,19 @@ class LogAnalyticsOperations(object):
          the resource group.
         :type profile_name: str
         :param metrics:
-        :type metrics: list[str]
+        :type metrics: list[str or ~azure.mgmt.cdn.models.WafMetric]
         :param date_time_begin:
         :type date_time_begin: datetime
         :param date_time_end:
         :type date_time_end: datetime
         :param granularity: Possible values include: 'PT5M', 'PT1H', 'P1D'
-        :type granularity: str
+        :type granularity: str or ~azure.mgmt.cdn.models.WafGranularity
         :param actions:
-        :type actions: list[str]
+        :type actions: list[str or ~azure.mgmt.cdn.models.WafAction]
         :param group_by:
-        :type group_by: list[str]
+        :type group_by: list[str or ~azure.mgmt.cdn.models.WafRankingGroupBy]
         :param rule_types:
-        :type rule_types: list[str]
+        :type rule_types: list[str or ~azure.mgmt.cdn.models.WafRuleType]
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
@@ -434,7 +432,7 @@ class LogAnalyticsOperations(object):
          the resource group.
         :type profile_name: str
         :param metrics:
-        :type metrics: list[str]
+        :type metrics: list[str or ~azure.mgmt.cdn.models.WafMetric]
         :param date_time_begin:
         :type date_time_begin: datetime
         :param date_time_end:
@@ -442,11 +440,11 @@ class LogAnalyticsOperations(object):
         :param max_ranking:
         :type max_ranking: int
         :param rankings:
-        :type rankings: list[str]
+        :type rankings: list[str or ~azure.mgmt.cdn.models.WafRankingType]
         :param actions:
-        :type actions: list[str]
+        :type actions: list[str or ~azure.mgmt.cdn.models.WafAction]
         :param rule_types:
-        :type rule_types: list[str]
+        :type rule_types: list[str or ~azure.mgmt.cdn.models.WafRuleType]
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response

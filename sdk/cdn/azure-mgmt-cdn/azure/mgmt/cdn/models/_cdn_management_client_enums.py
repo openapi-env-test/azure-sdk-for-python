@@ -559,3 +559,93 @@ class PolicyResourceState(str, Enum):
     disabling = "Disabling"
     disabled = "Disabled"
     deleting = "Deleting"
+
+
+class LogMetric(str, Enum):
+
+    client_request_count = "clientRequestCount"
+    client_request_traffic = "clientRequestTraffic"
+    client_request_bandwidth = "clientRequestBandwidth"
+    origin_request_traffic = "originRequestTraffic"
+    origin_request_bandwidth = "originRequestBandwidth"
+    total_latency = "totalLatency"
+
+
+class LogMetricsGranularity(str, Enum):
+
+    pt5_m = "PT5M"
+    pt1_h = "PT1H"
+    p1_d = "P1D"
+
+
+class LogMetricsGroupBy(str, Enum):
+
+    http_status_code = "httpStatusCode"
+    protocol = "protocol"
+    cache_status = "cacheStatus"
+    country = "country"
+    custom_domain = "customDomain"
+
+
+class LogRanking(str, Enum):
+
+    url = "url"
+    referrer = "referrer"
+    browser = "browser"
+    user_agent = "userAgent"
+    country_or_region = "countryOrRegion"
+
+
+class LogRankingMetric(str, Enum):
+
+    client_request_count = "clientRequestCount"
+    client_request_traffic = "clientRequestTraffic"
+    hit_count = "hitCount"
+    miss_count = "missCount"
+    user_error_count = "userErrorCount"
+    error_count = "errorCount"
+
+
+class WafMetric(str, Enum):
+
+    client_request_count = "clientRequestCount"
+
+
+class WafGranularity(str, Enum):
+
+    pt5_m = "PT5M"
+    pt1_h = "PT1H"
+    p1_d = "P1D"
+
+
+class WafAction(str, Enum):
+
+    allow = "allow"
+    block = "block"
+    log = "log"
+    redirect = "redirect"
+
+
+class WafRankingGroupBy(str, Enum):
+
+    http_status_code = "httpStatusCode"
+    custom_domain = "customDomain"
+
+
+class WafRuleType(str, Enum):
+
+    managed = "managed"
+    custom = "custom"
+    bot = "bot"
+
+
+class WafRankingType(str, Enum):
+
+    action = "action"
+    rule_group = "ruleGroup"
+    rule_id = "ruleId"
+    user_agent = "userAgent"
+    client_ip = "clientIp"
+    url = "url"
+    country = "country"
+    rule_type = "ruleType"

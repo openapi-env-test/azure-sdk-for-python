@@ -441,6 +441,17 @@ from ._cdn_management_client_enums import (
     ManagedRuleEnabledState,
     ProvisioningState,
     PolicyResourceState,
+    LogMetric,
+    LogMetricsGranularity,
+    LogMetricsGroupBy,
+    LogRanking,
+    LogRankingMetric,
+    WafMetric,
+    WafGranularity,
+    WafAction,
+    WafRankingGroupBy,
+    WafRuleType,
+    WafRankingType,
 )
 
 __all__ = [
@@ -700,4 +711,15 @@ __all__ = [
     'ManagedRuleEnabledState',
     'ProvisioningState',
     'PolicyResourceState',
+    'LogMetric',
+    'LogMetricsGranularity',
+    'LogMetricsGroupBy',
+    'LogRanking',
+    'LogRankingMetric',
+    'WafMetric',
+    'WafGranularity',
+    'WafAction',
+    'WafRankingGroupBy',
+    'WafRuleType',
+    'WafRankingType',
 ]
