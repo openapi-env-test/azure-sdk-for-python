@@ -66,7 +66,7 @@ class AggregatedCostOperations:
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2019-10-01"
+        api_version = "2019-11-01"
         accept = "application/json"
 
         # Construct URL
@@ -126,7 +126,7 @@ class AggregatedCostOperations:
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2019-10-01"
+        api_version = "2019-11-01"
         accept = "application/json"
 
         # Construct URL
@@ -160,4 +160,4 @@ class AggregatedCostOperations:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    get_for_billing_period_by_management_group.metadata = {'url': '/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}/Microsoft.Consumption/aggregatedcost'}  # type: ignore
+    get_for_billing_period_by_management_group.metadata = {'url': '/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}/Microsoft.Consumption/aggregatedCost'}  # type: ignore

@@ -73,7 +73,7 @@ class BudgetsOperations:
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2019-10-01"
+        api_version = "2019-11-01"
         accept = "application/json"
 
         def prepare_request(next_link=None):
@@ -159,7 +159,7 @@ class BudgetsOperations:
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2019-10-01"
+        api_version = "2019-11-01"
         accept = "application/json"
 
         # Construct URL
@@ -202,9 +202,9 @@ class BudgetsOperations:
         parameters: "_models.Budget",
         **kwargs
     ) -> "_models.Budget":
-        """The operation to create or update a budget. Update operation requires latest eTag to be set in
-        the request mandatorily. You may obtain the latest eTag by performing a get operation. Create
-        operation does not require eTag.
+        """The operation to create or update a budget. You can optionally provide an eTag if desired as a
+        form of concurrency control. To obtain the latest eTag for a given budget, perform a get
+        operation prior to your put operation.
 
         :param scope: The scope associated with budget operations. This includes
          '/subscriptions/{subscriptionId}/' for subscription scope,
@@ -235,7 +235,7 @@ class BudgetsOperations:
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2019-10-01"
+        api_version = "2019-11-01"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"
 
@@ -315,7 +315,7 @@ class BudgetsOperations:
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2019-10-01"
+        api_version = "2019-11-01"
         accept = "application/json"
 
         # Construct URL
