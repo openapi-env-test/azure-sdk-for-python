@@ -1,0 +1,8 @@
+{
+  "autorest": "V2",
+  "autorest.python": "~4.0.71",
+  "commit": "5d7973824f633af9782087ba60a1fc9c9de8185b",
+  "repository_url": "https://github.com/openapi-env-test/azure-rest-api-specs",
+  "autorest_command": "autorest specification/hdinsight/resource-manager/readme.md --keep-version-file --multiapi --no-async --python --python-mode=update --python-sdks-folder=/home/vsts/work/1/s/azure-sdk-for-python/sdk --use=@microsoft.azure/autorest.python@~4.0.71 --version=V2",
+  "readme": "specification/hdinsight/resource-manager/readme.md"
+}
