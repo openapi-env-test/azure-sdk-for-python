@@ -48,7 +48,7 @@ class AccountCredentialDetails(Model):
         'share_credential_details': {'key': 'shareCredentialDetails', 'type': '[ShareCredentialDetails]'},
     }
 
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(AccountCredentialDetails, self).__init__(**kwargs)
         self.account_name = None
         self.data_destination_type = None
@@ -85,7 +85,7 @@ class AddressValidationOutput(Model):
         'alternate_addresses': {'key': 'properties.alternateAddresses', 'type': '[ShippingAddress]'},
     }
 
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(AddressValidationOutput, self).__init__(**kwargs)
         self.error = None
         self.validation_status = None
@@ -114,7 +114,7 @@ class ApplianceNetworkConfiguration(Model):
         'mac_address': {'key': 'macAddress', 'type': 'str'},
     }
 
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(ApplianceNetworkConfiguration, self).__init__(**kwargs)
         self.name = None
         self.mac_address = None
@@ -146,7 +146,7 @@ class ArmBaseObject(Model):
         'type': {'key': 'type', 'type': 'str'},
     }
 
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(ArmBaseObject, self).__init__(**kwargs)
         self.name = None
         self.id = None
@@ -191,11 +191,11 @@ class AvailableSkuRequest(Model):
 
     transfer_type = "ImportToAzure"
 
-    def __init__(self, *, country: str, location: str, sku_names=None, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(AvailableSkuRequest, self).__init__(**kwargs)
-        self.country = country
-        self.location = location
-        self.sku_names = sku_names
+        self.country = kwargs.get('country', None)
+        self.location = kwargs.get('location', None)
+        self.sku_names = kwargs.get('sku_names', None)
 
 
 class CancellationReason(Model):
@@ -215,9 +215,9 @@ class CancellationReason(Model):
         'reason': {'key': 'reason', 'type': 'str'},
     }
 
-    def __init__(self, *, reason: str, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(CancellationReason, self).__init__(**kwargs)
-        self.reason = reason
+        self.reason = kwargs.get('reason', None)
 
 
 class CloudError(Model):
@@ -248,12 +248,12 @@ class CloudError(Model):
         'details': {'key': 'details', 'type': '[CloudError]'},
     }
 
-    def __init__(self, *, target: str=None, details=None, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(CloudError, self).__init__(**kwargs)
         self.code = None
         self.message = None
-        self.target = target
-        self.details = details
+        self.target = kwargs.get('target', None)
+        self.details = kwargs.get('details', None)
 
 
 class CloudErrorException(HttpOperationError):
@@ -304,14 +304,14 @@ class ContactDetails(Model):
         'notification_preference': {'key': 'notificationPreference', 'type': '[NotificationPreference]'},
     }
 
-    def __init__(self, *, contact_name: str, phone: str, email_list, phone_extension: str=None, mobile: str=None, notification_preference=None, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(ContactDetails, self).__init__(**kwargs)
-        self.contact_name = contact_name
-        self.phone = phone
-        self.phone_extension = phone_extension
-        self.mobile = mobile
-        self.email_list = email_list
-        self.notification_preference = notification_preference
+        self.contact_name = kwargs.get('contact_name', None)
+        self.phone = kwargs.get('phone', None)
+        self.phone_extension = kwargs.get('phone_extension', None)
+        self.mobile = kwargs.get('mobile', None)
+        self.email_list = kwargs.get('email_list', None)
+        self.notification_preference = kwargs.get('notification_preference', None)
 
 
 class CopyLogDetails(Model):
@@ -339,7 +339,7 @@ class CopyLogDetails(Model):
         'copy_log_details_type': {'DataBox': 'DataBoxAccountCopyLogDetails', 'DataBoxDisk': 'DataBoxDiskCopyLogDetails', 'DataBoxHeavy': 'DataBoxHeavyAccountCopyLogDetails'}
     }
 
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(CopyLogDetails, self).__init__(**kwargs)
         self.copy_log_details_type = None
 
@@ -410,7 +410,7 @@ class CopyProgress(Model):
         'files_errored_out': {'key': 'filesErroredOut', 'type': 'long'},
     }
 
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(CopyProgress, self).__init__(**kwargs)
         self.storage_account_name = None
         self.data_destination_type = None
@@ -455,9 +455,9 @@ class ValidationRequest(Model):
         'validation_category': {'JobCreationValidation': 'CreateJobValidations'}
     }
 
-    def __init__(self, *, individual_request_details, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(ValidationRequest, self).__init__(**kwargs)
-        self.individual_request_details = individual_request_details
+        self.individual_request_details = kwargs.get('individual_request_details', None)
         self.validation_category = None
 
 
@@ -484,8 +484,8 @@ class CreateJobValidations(ValidationRequest):
         'validation_category': {'key': 'validationCategory', 'type': 'str'},
     }
 
-    def __init__(self, *, individual_request_details, **kwargs) -> None:
-        super(CreateJobValidations, self).__init__(individual_request_details=individual_request_details, **kwargs)
+    def __init__(self, **kwargs):
+        super(CreateJobValidations, self).__init__(**kwargs)
         self.validation_category = 'JobCreationValidation'
 
 
@@ -516,7 +516,7 @@ class ValidationInputRequest(Model):
         'validation_type': {'ValidateCreateOrderLimit': 'CreateOrderLimitForSubscriptionValidationRequest', 'ValidateDataDestinationDetails': 'DataDestinationDetailsValidationRequest', 'ValidatePreferences': 'PreferencesValidationRequest', 'ValidateSkuAvailability': 'SkuAvailabilityValidationRequest', 'ValidateSubscriptionIsAllowedToCreateJob': 'SubscriptionIsAllowedToCreateJobValidationRequest', 'ValidateAddress': 'ValidateAddress'}
     }
 
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(ValidationInputRequest, self).__init__(**kwargs)
         self.validation_type = None
 
@@ -543,9 +543,9 @@ class CreateOrderLimitForSubscriptionValidationRequest(ValidationInputRequest):
         'device_type': {'key': 'deviceType', 'type': 'SkuName'},
     }
 
-    def __init__(self, *, device_type, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(CreateOrderLimitForSubscriptionValidationRequest, self).__init__(**kwargs)
-        self.device_type = device_type
+        self.device_type = kwargs.get('device_type', None)
         self.validation_type = 'ValidateCreateOrderLimit'
 
 
@@ -586,7 +586,7 @@ class ValidationInputResponse(Model):
         'validation_type': {'ValidateCreateOrderLimit': 'CreateOrderLimitForSubscriptionValidationResponseProperties', 'ValidateDataDestinationDetails': 'DataDestinationDetailsValidationResponseProperties', 'ValidatePreferences': 'PreferencesValidationResponseProperties', 'ValidateSkuAvailability': 'SkuAvailabilityValidationResponseProperties', 'ValidateSubscriptionIsAllowedToCreateJob': 'SubscriptionIsAllowedToCreateJobValidationResponseProperties'}
     }
 
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(ValidationInputResponse, self).__init__(**kwargs)
         self.error = None
         self.validation_type = None
@@ -621,7 +621,7 @@ class CreateOrderLimitForSubscriptionValidationResponseProperties(ValidationInpu
         'status': {'key': 'status', 'type': 'ValidationStatus'},
     }
 
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(CreateOrderLimitForSubscriptionValidationResponseProperties, self).__init__(**kwargs)
         self.status = None
         self.validation_type = 'ValidateCreateOrderLimit'
@@ -655,7 +655,7 @@ class DataBoxAccountCopyLogDetails(CopyLogDetails):
         'copy_log_link': {'key': 'copyLogLink', 'type': 'str'},
     }
 
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(DataBoxAccountCopyLogDetails, self).__init__(**kwargs)
         self.account_name = None
         self.copy_log_link = None
@@ -694,7 +694,7 @@ class DataBoxDiskCopyLogDetails(CopyLogDetails):
         'verbose_log_link': {'key': 'verboseLogLink', 'type': 'str'},
     }
 
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(DataBoxDiskCopyLogDetails, self).__init__(**kwargs)
         self.disk_serial_number = None
         self.error_log_link = None
@@ -736,7 +736,7 @@ class DataBoxDiskCopyProgress(Model):
         'status': {'key': 'status', 'type': 'CopyStatus'},
     }
 
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(DataBoxDiskCopyProgress, self).__init__(**kwargs)
         self.serial_number = None
         self.bytes_copied = None
@@ -756,9 +756,9 @@ class JobDetails(Model):
 
     All required parameters must be populated in order to send to Azure.
 
-    :param expected_data_size_in_terabytes: The expected size of the data,
+    :param expected_data_size_in_tera_bytes: The expected size of the data,
      which needs to be transferred in this job, in terabytes.
-    :type expected_data_size_in_terabytes: int
+    :type expected_data_size_in_tera_bytes: int
     :ivar job_stages: List of stages that run in the job.
     :vartype job_stages: list[~azure.mgmt.databox.models.JobStages]
     :param contact_details: Required. Contact details for notification and
@@ -805,7 +805,7 @@ class JobDetails(Model):
     }
 
     _attribute_map = {
-        'expected_data_size_in_terabytes': {'key': 'expectedDataSizeInTerabytes', 'type': 'int'},
+        'expected_data_size_in_tera_bytes': {'key': 'expectedDataSizeInTeraBytes', 'type': 'int'},
         'job_stages': {'key': 'jobStages', 'type': '[JobStages]'},
         'contact_details': {'key': 'contactDetails', 'type': 'ContactDetails'},
         'shipping_address': {'key': 'shippingAddress', 'type': 'ShippingAddress'},
@@ -824,17 +824,17 @@ class JobDetails(Model):
         'job_details_type': {'DataBoxDisk': 'DataBoxDiskJobDetails', 'DataBoxHeavy': 'DataBoxHeavyJobDetails', 'DataBox': 'DataBoxJobDetails'}
     }
 
-    def __init__(self, *, contact_details, shipping_address, destination_account_details, expected_data_size_in_terabytes: int=None, preferences=None, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(JobDetails, self).__init__(**kwargs)
-        self.expected_data_size_in_terabytes = expected_data_size_in_terabytes
+        self.expected_data_size_in_tera_bytes = kwargs.get('expected_data_size_in_tera_bytes', None)
         self.job_stages = None
-        self.contact_details = contact_details
-        self.shipping_address = shipping_address
+        self.contact_details = kwargs.get('contact_details', None)
+        self.shipping_address = kwargs.get('shipping_address', None)
         self.delivery_package = None
         self.return_package = None
-        self.destination_account_details = destination_account_details
+        self.destination_account_details = kwargs.get('destination_account_details', None)
         self.error_details = None
-        self.preferences = preferences
+        self.preferences = kwargs.get('preferences', None)
         self.copy_log_details = None
         self.reverse_shipment_label_sas_key = None
         self.chain_of_custody_sas_key = None
@@ -849,9 +849,9 @@ class DataBoxDiskJobDetails(JobDetails):
 
     All required parameters must be populated in order to send to Azure.
 
-    :param expected_data_size_in_terabytes: The expected size of the data,
+    :param expected_data_size_in_tera_bytes: The expected size of the data,
      which needs to be transferred in this job, in terabytes.
-    :type expected_data_size_in_terabytes: int
+    :type expected_data_size_in_tera_bytes: int
     :ivar job_stages: List of stages that run in the job.
     :vartype job_stages: list[~azure.mgmt.databox.models.JobStages]
     :param contact_details: Required. Contact details for notification and
@@ -913,7 +913,7 @@ class DataBoxDiskJobDetails(JobDetails):
     }
 
     _attribute_map = {
-        'expected_data_size_in_terabytes': {'key': 'expectedDataSizeInTerabytes', 'type': 'int'},
+        'expected_data_size_in_tera_bytes': {'key': 'expectedDataSizeInTeraBytes', 'type': 'int'},
         'job_stages': {'key': 'jobStages', 'type': '[JobStages]'},
         'contact_details': {'key': 'contactDetails', 'type': 'ContactDetails'},
         'shipping_address': {'key': 'shippingAddress', 'type': 'ShippingAddress'},
@@ -932,12 +932,12 @@ class DataBoxDiskJobDetails(JobDetails):
         'passkey': {'key': 'passkey', 'type': 'str'},
     }
 
-    def __init__(self, *, contact_details, shipping_address, destination_account_details, expected_data_size_in_terabytes: int=None, preferences=None, preferred_disks=None, passkey: str=None, **kwargs) -> None:
-        super(DataBoxDiskJobDetails, self).__init__(expected_data_size_in_terabytes=expected_data_size_in_terabytes, contact_details=contact_details, shipping_address=shipping_address, destination_account_details=destination_account_details, preferences=preferences, **kwargs)
-        self.preferred_disks = preferred_disks
+    def __init__(self, **kwargs):
+        super(DataBoxDiskJobDetails, self).__init__(**kwargs)
+        self.preferred_disks = kwargs.get('preferred_disks', None)
         self.copy_progress = None
         self.disks_and_size_details = None
-        self.passkey = passkey
+        self.passkey = kwargs.get('passkey', None)
         self.job_details_type = 'DataBoxDisk'
 
 
@@ -971,9 +971,9 @@ class JobSecrets(Model):
         'job_secrets_type': {'DataBoxDisk': 'DataBoxDiskJobSecrets', 'DataBoxHeavy': 'DataBoxHeavyJobSecrets', 'DataBox': 'DataboxJobSecrets'}
     }
 
-    def __init__(self, *, dc_access_security_code=None, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(JobSecrets, self).__init__(**kwargs)
-        self.dc_access_security_code = dc_access_security_code
+        self.dc_access_security_code = kwargs.get('dc_access_security_code', None)
         self.job_secrets_type = None
 
 
@@ -1014,8 +1014,8 @@ class DataBoxDiskJobSecrets(JobSecrets):
         'is_passkey_user_defined': {'key': 'isPasskeyUserDefined', 'type': 'bool'},
     }
 
-    def __init__(self, *, dc_access_security_code=None, **kwargs) -> None:
-        super(DataBoxDiskJobSecrets, self).__init__(dc_access_security_code=dc_access_security_code, **kwargs)
+    def __init__(self, **kwargs):
+        super(DataBoxDiskJobSecrets, self).__init__(**kwargs)
         self.disk_secrets = None
         self.pass_key = None
         self.is_passkey_user_defined = None
@@ -1050,7 +1050,7 @@ class DataBoxHeavyAccountCopyLogDetails(CopyLogDetails):
         'copy_log_link': {'key': 'copyLogLink', 'type': '[str]'},
     }
 
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(DataBoxHeavyAccountCopyLogDetails, self).__init__(**kwargs)
         self.account_name = None
         self.copy_log_link = None
@@ -1065,9 +1065,9 @@ class DataBoxHeavyJobDetails(JobDetails):
 
     All required parameters must be populated in order to send to Azure.
 
-    :param expected_data_size_in_terabytes: The expected size of the data,
+    :param expected_data_size_in_tera_bytes: The expected size of the data,
      which needs to be transferred in this job, in terabytes.
-    :type expected_data_size_in_terabytes: int
+    :type expected_data_size_in_tera_bytes: int
     :ivar job_stages: List of stages that run in the job.
     :vartype job_stages: list[~azure.mgmt.databox.models.JobStages]
     :param contact_details: Required. Contact details for notification and
@@ -1119,7 +1119,7 @@ class DataBoxHeavyJobDetails(JobDetails):
     }
 
     _attribute_map = {
-        'expected_data_size_in_terabytes': {'key': 'expectedDataSizeInTerabytes', 'type': 'int'},
+        'expected_data_size_in_tera_bytes': {'key': 'expectedDataSizeInTeraBytes', 'type': 'int'},
         'job_stages': {'key': 'jobStages', 'type': '[JobStages]'},
         'contact_details': {'key': 'contactDetails', 'type': 'ContactDetails'},
         'shipping_address': {'key': 'shippingAddress', 'type': 'ShippingAddress'},
@@ -1136,10 +1136,10 @@ class DataBoxHeavyJobDetails(JobDetails):
         'device_password': {'key': 'devicePassword', 'type': 'str'},
     }
 
-    def __init__(self, *, contact_details, shipping_address, destination_account_details, expected_data_size_in_terabytes: int=None, preferences=None, device_password: str=None, **kwargs) -> None:
-        super(DataBoxHeavyJobDetails, self).__init__(expected_data_size_in_terabytes=expected_data_size_in_terabytes, contact_details=contact_details, shipping_address=shipping_address, destination_account_details=destination_account_details, preferences=preferences, **kwargs)
+    def __init__(self, **kwargs):
+        super(DataBoxHeavyJobDetails, self).__init__(**kwargs)
         self.copy_progress = None
-        self.device_password = device_password
+        self.device_password = kwargs.get('device_password', None)
         self.job_details_type = 'DataBoxHeavy'
 
 
@@ -1174,8 +1174,8 @@ class DataBoxHeavyJobSecrets(JobSecrets):
         'cabinet_pod_secrets': {'key': 'cabinetPodSecrets', 'type': '[DataBoxHeavySecret]'},
     }
 
-    def __init__(self, *, dc_access_security_code=None, **kwargs) -> None:
-        super(DataBoxHeavyJobSecrets, self).__init__(dc_access_security_code=dc_access_security_code, **kwargs)
+    def __init__(self, **kwargs):
+        super(DataBoxHeavyJobSecrets, self).__init__(**kwargs)
         self.cabinet_pod_secrets = None
         self.job_secrets_type = 'DataBoxHeavy'
 
@@ -1217,7 +1217,7 @@ class DataBoxHeavySecret(Model):
         'account_credential_details': {'key': 'accountCredentialDetails', 'type': '[AccountCredentialDetails]'},
     }
 
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(DataBoxHeavySecret, self).__init__(**kwargs)
         self.device_serial_number = None
         self.device_password = None
@@ -1234,9 +1234,9 @@ class DataBoxJobDetails(JobDetails):
 
     All required parameters must be populated in order to send to Azure.
 
-    :param expected_data_size_in_terabytes: The expected size of the data,
+    :param expected_data_size_in_tera_bytes: The expected size of the data,
      which needs to be transferred in this job, in terabytes.
-    :type expected_data_size_in_terabytes: int
+    :type expected_data_size_in_tera_bytes: int
     :ivar job_stages: List of stages that run in the job.
     :vartype job_stages: list[~azure.mgmt.databox.models.JobStages]
     :param contact_details: Required. Contact details for notification and
@@ -1288,7 +1288,7 @@ class DataBoxJobDetails(JobDetails):
     }
 
     _attribute_map = {
-        'expected_data_size_in_terabytes': {'key': 'expectedDataSizeInTerabytes', 'type': 'int'},
+        'expected_data_size_in_tera_bytes': {'key': 'expectedDataSizeInTeraBytes', 'type': 'int'},
         'job_stages': {'key': 'jobStages', 'type': '[JobStages]'},
         'contact_details': {'key': 'contactDetails', 'type': 'ContactDetails'},
         'shipping_address': {'key': 'shippingAddress', 'type': 'ShippingAddress'},
@@ -1305,10 +1305,10 @@ class DataBoxJobDetails(JobDetails):
         'device_password': {'key': 'devicePassword', 'type': 'str'},
     }
 
-    def __init__(self, *, contact_details, shipping_address, destination_account_details, expected_data_size_in_terabytes: int=None, preferences=None, device_password: str=None, **kwargs) -> None:
-        super(DataBoxJobDetails, self).__init__(expected_data_size_in_terabytes=expected_data_size_in_terabytes, contact_details=contact_details, shipping_address=shipping_address, destination_account_details=destination_account_details, preferences=preferences, **kwargs)
+    def __init__(self, **kwargs):
+        super(DataBoxJobDetails, self).__init__(**kwargs)
         self.copy_progress = None
-        self.device_password = device_password
+        self.device_password = kwargs.get('device_password', None)
         self.job_details_type = 'DataBox'
 
 
@@ -1337,9 +1337,9 @@ class DataboxJobSecrets(JobSecrets):
         'pod_secrets': {'key': 'podSecrets', 'type': '[DataBoxSecret]'},
     }
 
-    def __init__(self, *, dc_access_security_code=None, pod_secrets=None, **kwargs) -> None:
-        super(DataboxJobSecrets, self).__init__(dc_access_security_code=dc_access_security_code, **kwargs)
-        self.pod_secrets = pod_secrets
+    def __init__(self, **kwargs):
+        super(DataboxJobSecrets, self).__init__(**kwargs)
+        self.pod_secrets = kwargs.get('pod_secrets', None)
         self.job_secrets_type = 'DataBox'
 
 
@@ -1374,9 +1374,9 @@ class ScheduleAvailabilityRequest(Model):
         'sku_name': {'DataBox': 'DataBoxScheduleAvailabilityRequest', 'DataBoxDisk': 'DiskScheduleAvailabilityRequest', 'DataBoxHeavy': 'HeavyScheduleAvailabilityRequest'}
     }
 
-    def __init__(self, *, storage_location: str, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(ScheduleAvailabilityRequest, self).__init__(**kwargs)
-        self.storage_location = storage_location
+        self.storage_location = kwargs.get('storage_location', None)
         self.sku_name = None
 
 
@@ -1403,8 +1403,8 @@ class DataBoxScheduleAvailabilityRequest(ScheduleAvailabilityRequest):
         'sku_name': {'key': 'skuName', 'type': 'str'},
     }
 
-    def __init__(self, *, storage_location: str, **kwargs) -> None:
-        super(DataBoxScheduleAvailabilityRequest, self).__init__(storage_location=storage_location, **kwargs)
+    def __init__(self, **kwargs):
+        super(DataBoxScheduleAvailabilityRequest, self).__init__(**kwargs)
         self.sku_name = 'DataBox'
 
 
@@ -1445,7 +1445,7 @@ class DataBoxSecret(Model):
         'account_credential_details': {'key': 'accountCredentialDetails', 'type': '[AccountCredentialDetails]'},
     }
 
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(DataBoxSecret, self).__init__(**kwargs)
         self.device_serial_number = None
         self.device_password = None
@@ -1481,10 +1481,10 @@ class DataDestinationDetailsValidationRequest(ValidationInputRequest):
         'location': {'key': 'location', 'type': 'str'},
     }
 
-    def __init__(self, *, destination_account_details, location: str, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(DataDestinationDetailsValidationRequest, self).__init__(**kwargs)
-        self.destination_account_details = destination_account_details
-        self.location = location
+        self.destination_account_details = kwargs.get('destination_account_details', None)
+        self.location = kwargs.get('location', None)
         self.validation_type = 'ValidateDataDestinationDetails'
 
 
@@ -1517,7 +1517,7 @@ class DataDestinationDetailsValidationResponseProperties(ValidationInputResponse
         'status': {'key': 'status', 'type': 'ValidationStatus'},
     }
 
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(DataDestinationDetailsValidationResponseProperties, self).__init__(**kwargs)
         self.status = None
         self.validation_type = 'ValidateDataDestinationDetails'
@@ -1533,14 +1533,14 @@ class DcAccessSecurityCode(Model):
     """
 
     _attribute_map = {
-        'forward_dc_access_code': {'key': 'forwardDcAccessCode', 'type': 'str'},
-        'reverse_dc_access_code': {'key': 'reverseDcAccessCode', 'type': 'str'},
+        'forward_dc_access_code': {'key': 'forwardDCAccessCode', 'type': 'str'},
+        'reverse_dc_access_code': {'key': 'reverseDCAccessCode', 'type': 'str'},
     }
 
-    def __init__(self, *, forward_dc_access_code: str=None, reverse_dc_access_code: str=None, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(DcAccessSecurityCode, self).__init__(**kwargs)
-        self.forward_dc_access_code = forward_dc_access_code
-        self.reverse_dc_access_code = reverse_dc_access_code
+        self.forward_dc_access_code = kwargs.get('forward_dc_access_code', None)
+        self.reverse_dc_access_code = kwargs.get('reverse_dc_access_code', None)
 
 
 class DestinationAccountDetails(Model):
@@ -1575,10 +1575,10 @@ class DestinationAccountDetails(Model):
         'data_destination_type': {'ManagedDisk': 'DestinationManagedDiskDetails', 'StorageAccount': 'DestinationStorageAccountDetails'}
     }
 
-    def __init__(self, *, account_id: str=None, share_password: str=None, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(DestinationAccountDetails, self).__init__(**kwargs)
-        self.account_id = account_id
-        self.share_password = share_password
+        self.account_id = kwargs.get('account_id', None)
+        self.share_password = kwargs.get('share_password', None)
         self.data_destination_type = None
 
 
@@ -1616,10 +1616,10 @@ class DestinationManagedDiskDetails(DestinationAccountDetails):
         'staging_storage_account_id': {'key': 'stagingStorageAccountId', 'type': 'str'},
     }
 
-    def __init__(self, *, resource_group_id: str, staging_storage_account_id: str, account_id: str=None, share_password: str=None, **kwargs) -> None:
-        super(DestinationManagedDiskDetails, self).__init__(account_id=account_id, share_password=share_password, **kwargs)
-        self.resource_group_id = resource_group_id
-        self.staging_storage_account_id = staging_storage_account_id
+    def __init__(self, **kwargs):
+        super(DestinationManagedDiskDetails, self).__init__(**kwargs)
+        self.resource_group_id = kwargs.get('resource_group_id', None)
+        self.staging_storage_account_id = kwargs.get('staging_storage_account_id', None)
         self.data_destination_type = 'ManagedDisk'
 
 
@@ -1651,9 +1651,9 @@ class DestinationStorageAccountDetails(DestinationAccountDetails):
         'storage_account_id': {'key': 'storageAccountId', 'type': 'str'},
     }
 
-    def __init__(self, *, storage_account_id: str, account_id: str=None, share_password: str=None, **kwargs) -> None:
-        super(DestinationStorageAccountDetails, self).__init__(account_id=account_id, share_password=share_password, **kwargs)
-        self.storage_account_id = storage_account_id
+    def __init__(self, **kwargs):
+        super(DestinationStorageAccountDetails, self).__init__(**kwargs)
+        self.storage_account_id = kwargs.get('storage_account_id', None)
         self.data_destination_type = 'StorageAccount'
 
 
@@ -1679,7 +1679,7 @@ class DestinationToServiceLocationMap(Model):
         'service_location': {'key': 'serviceLocation', 'type': 'str'},
     }
 
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(DestinationToServiceLocationMap, self).__init__(**kwargs)
         self.destination_location = None
         self.service_location = None
@@ -1696,26 +1696,26 @@ class DiskScheduleAvailabilityRequest(ScheduleAvailabilityRequest):
     :type storage_location: str
     :param sku_name: Required. Constant filled by server.
     :type sku_name: str
-    :param expected_data_size_in_terabytes: Required. The expected size of the
-     data, which needs to be transferred in this job, in terabytes.
-    :type expected_data_size_in_terabytes: int
+    :param expected_data_size_in_tera_bytes: Required. The expected size of
+     the data, which needs to be transferred in this job, in terabytes.
+    :type expected_data_size_in_tera_bytes: int
     """
 
     _validation = {
         'storage_location': {'required': True},
         'sku_name': {'required': True},
-        'expected_data_size_in_terabytes': {'required': True},
+        'expected_data_size_in_tera_bytes': {'required': True},
     }
 
     _attribute_map = {
         'storage_location': {'key': 'storageLocation', 'type': 'str'},
         'sku_name': {'key': 'skuName', 'type': 'str'},
-        'expected_data_size_in_terabytes': {'key': 'expectedDataSizeInTerabytes', 'type': 'int'},
+        'expected_data_size_in_tera_bytes': {'key': 'expectedDataSizeInTeraBytes', 'type': 'int'},
     }
 
-    def __init__(self, *, storage_location: str, expected_data_size_in_terabytes: int, **kwargs) -> None:
-        super(DiskScheduleAvailabilityRequest, self).__init__(storage_location=storage_location, **kwargs)
-        self.expected_data_size_in_terabytes = expected_data_size_in_terabytes
+    def __init__(self, **kwargs):
+        super(DiskScheduleAvailabilityRequest, self).__init__(**kwargs)
+        self.expected_data_size_in_tera_bytes = kwargs.get('expected_data_size_in_tera_bytes', None)
         self.sku_name = 'DataBoxDisk'
 
 
@@ -1742,7 +1742,7 @@ class DiskSecret(Model):
         'bit_locker_key': {'key': 'bitLockerKey', 'type': 'str'},
     }
 
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(DiskSecret, self).__init__(**kwargs)
         self.disk_serial_number = None
         self.bit_locker_key = None
@@ -1772,7 +1772,7 @@ class Error(Model):
         'message': {'key': 'message', 'type': 'str'},
     }
 
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(Error, self).__init__(**kwargs)
         self.code = None
         self.message = None
@@ -1801,8 +1801,8 @@ class HeavyScheduleAvailabilityRequest(ScheduleAvailabilityRequest):
         'sku_name': {'key': 'skuName', 'type': 'str'},
     }
 
-    def __init__(self, *, storage_location: str, **kwargs) -> None:
-        super(HeavyScheduleAvailabilityRequest, self).__init__(storage_location=storage_location, **kwargs)
+    def __init__(self, **kwargs):
+        super(HeavyScheduleAvailabilityRequest, self).__init__(**kwargs)
         self.sku_name = 'DataBoxHeavy'
 
 
@@ -1817,9 +1817,9 @@ class JobDeliveryInfo(Model):
         'scheduled_date_time': {'key': 'scheduledDateTime', 'type': 'iso-8601'},
     }
 
-    def __init__(self, *, scheduled_date_time=None, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(JobDeliveryInfo, self).__init__(**kwargs)
-        self.scheduled_date_time = scheduled_date_time
+        self.scheduled_date_time = kwargs.get('scheduled_date_time', None)
 
 
 class JobErrorDetails(Model):
@@ -1852,7 +1852,7 @@ class JobErrorDetails(Model):
         'exception_message': {'key': 'exceptionMessage', 'type': 'str'},
     }
 
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(JobErrorDetails, self).__init__(**kwargs)
         self.error_message = None
         self.error_code = None
@@ -1890,11 +1890,11 @@ class Resource(Model):
         'sku': {'key': 'sku', 'type': 'Sku'},
     }
 
-    def __init__(self, *, location: str, sku, tags=None, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(Resource, self).__init__(**kwargs)
-        self.location = location
-        self.tags = tags
-        self.sku = sku
+        self.location = kwargs.get('location', None)
+        self.tags = kwargs.get('tags', None)
+        self.sku = kwargs.get('sku', None)
 
 
 class JobResource(Resource):
@@ -1942,7 +1942,7 @@ class JobResource(Resource):
     :ivar cancellation_reason: Reason for cancellation.
     :vartype cancellation_reason: str
     :param delivery_type: Delivery type of Job. Possible values include:
-     'NonScheduled', 'Scheduled'
+     'NonScheduled', 'Scheduled'. Default value: "NonScheduled" .
     :type delivery_type: str or ~azure.mgmt.databox.models.JobDeliveryType
     :param delivery_info: Delivery Info of Job.
     :type delivery_info: ~azure.mgmt.databox.models.JobDeliveryInfo
@@ -1993,18 +1993,18 @@ class JobResource(Resource):
         'type': {'key': 'type', 'type': 'str'},
     }
 
-    def __init__(self, *, location: str, sku, tags=None, details=None, delivery_type=None, delivery_info=None, **kwargs) -> None:
-        super(JobResource, self).__init__(location=location, tags=tags, sku=sku, **kwargs)
+    def __init__(self, **kwargs):
+        super(JobResource, self).__init__(**kwargs)
         self.is_cancellable = None
         self.is_deletable = None
         self.is_shipping_address_editable = None
         self.status = None
         self.start_time = None
         self.error = None
-        self.details = details
+        self.details = kwargs.get('details', None)
         self.cancellation_reason = None
-        self.delivery_type = delivery_type
-        self.delivery_info = delivery_info
+        self.delivery_type = kwargs.get('delivery_type', "NonScheduled")
+        self.delivery_info = kwargs.get('delivery_info', None)
         self.is_cancellable_without_fee = None
         self.name = None
         self.id = None
@@ -2031,11 +2031,11 @@ class JobResourceUpdateParameter(Model):
         'tags': {'key': 'tags', 'type': '{str}'},
     }
 
-    def __init__(self, *, details=None, destination_account_details=None, tags=None, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(JobResourceUpdateParameter, self).__init__(**kwargs)
-        self.details = details
-        self.destination_account_details = destination_account_details
-        self.tags = tags
+        self.details = kwargs.get('details', None)
+        self.destination_account_details = kwargs.get('destination_account_details', None)
+        self.tags = kwargs.get('tags', None)
 
 
 class JobStages(Model):
@@ -2083,7 +2083,7 @@ class JobStages(Model):
         'error_details': {'key': 'errorDetails', 'type': '[JobErrorDetails]'},
     }
 
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(JobStages, self).__init__(**kwargs)
         self.stage_name = None
         self.display_name = None
@@ -2103,6 +2103,7 @@ class NotificationPreference(Model):
      'DataCopy'
     :type stage_name: str or ~azure.mgmt.databox.models.NotificationStageName
     :param send_notification: Required. Notification is required or not.
+     Default value: True .
     :type send_notification: bool
     """
 
@@ -2116,10 +2117,10 @@ class NotificationPreference(Model):
         'send_notification': {'key': 'sendNotification', 'type': 'bool'},
     }
 
-    def __init__(self, *, stage_name, send_notification: bool, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(NotificationPreference, self).__init__(**kwargs)
-        self.stage_name = stage_name
-        self.send_notification = send_notification
+        self.stage_name = kwargs.get('stage_name', None)
+        self.send_notification = kwargs.get('send_notification', True)
 
 
 class Operation(Model):
@@ -2153,7 +2154,7 @@ class Operation(Model):
         'origin': {'key': 'origin', 'type': 'str'},
     }
 
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(Operation, self).__init__(**kwargs)
         self.name = None
         self.display = None
@@ -2182,12 +2183,12 @@ class OperationDisplay(Model):
         'description': {'key': 'description', 'type': 'str'},
     }
 
-    def __init__(self, *, provider: str=None, resource: str=None, operation: str=None, description: str=None, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(OperationDisplay, self).__init__(**kwargs)
-        self.provider = provider
-        self.resource = resource
-        self.operation = operation
-        self.description = description
+        self.provider = kwargs.get('provider', None)
+        self.resource = kwargs.get('resource', None)
+        self.operation = kwargs.get('operation', None)
+        self.description = kwargs.get('description', None)
 
 
 class PackageShippingDetails(Model):
@@ -2216,7 +2217,7 @@ class PackageShippingDetails(Model):
         'tracking_url': {'key': 'trackingUrl', 'type': 'str'},
     }
 
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(PackageShippingDetails, self).__init__(**kwargs)
         self.carrier_name = None
         self.tracking_id = None
@@ -2239,10 +2240,10 @@ class Preferences(Model):
         'transport_preferences': {'key': 'transportPreferences', 'type': 'TransportPreferences'},
     }
 
-    def __init__(self, *, preferred_data_center_region=None, transport_preferences=None, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(Preferences, self).__init__(**kwargs)
-        self.preferred_data_center_region = preferred_data_center_region
-        self.transport_preferences = transport_preferences
+        self.preferred_data_center_region = kwargs.get('preferred_data_center_region', None)
+        self.transport_preferences = kwargs.get('transport_preferences', None)
 
 
 class PreferencesValidationRequest(ValidationInputRequest):
@@ -2271,10 +2272,10 @@ class PreferencesValidationRequest(ValidationInputRequest):
         'device_type': {'key': 'deviceType', 'type': 'SkuName'},
     }
 
-    def __init__(self, *, device_type, preference=None, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(PreferencesValidationRequest, self).__init__(**kwargs)
-        self.preference = preference
-        self.device_type = device_type
+        self.preference = kwargs.get('preference', None)
+        self.device_type = kwargs.get('device_type', None)
         self.validation_type = 'ValidatePreferences'
 
 
@@ -2307,7 +2308,7 @@ class PreferencesValidationResponseProperties(ValidationInputResponse):
         'status': {'key': 'status', 'type': 'ValidationStatus'},
     }
 
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(PreferencesValidationResponseProperties, self).__init__(**kwargs)
         self.status = None
         self.validation_type = 'ValidatePreferences'
@@ -2331,10 +2332,10 @@ class RegionConfigurationRequest(Model):
         'transport_availability_request': {'key': 'transportAvailabilityRequest', 'type': 'TransportAvailabilityRequest'},
     }
 
-    def __init__(self, *, schedule_availability_request=None, transport_availability_request=None, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(RegionConfigurationRequest, self).__init__(**kwargs)
-        self.schedule_availability_request = schedule_availability_request
-        self.transport_availability_request = transport_availability_request
+        self.schedule_availability_request = kwargs.get('schedule_availability_request', None)
+        self.transport_availability_request = kwargs.get('transport_availability_request', None)
 
 
 class RegionConfigurationResponse(Model):
@@ -2363,7 +2364,7 @@ class RegionConfigurationResponse(Model):
         'transport_availability_response': {'key': 'transportAvailabilityResponse', 'type': 'TransportAvailabilityResponse'},
     }
 
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(RegionConfigurationResponse, self).__init__(**kwargs)
         self.schedule_availability_response = None
         self.transport_availability_response = None
@@ -2387,7 +2388,7 @@ class ScheduleAvailabilityResponse(Model):
         'available_dates': {'key': 'availableDates', 'type': '[iso-8601]'},
     }
 
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(ScheduleAvailabilityResponse, self).__init__(**kwargs)
         self.available_dates = None
 
@@ -2430,7 +2431,7 @@ class ShareCredentialDetails(Model):
         'supported_access_protocols': {'key': 'supportedAccessProtocols', 'type': '[AccessProtocol]'},
     }
 
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(ShareCredentialDetails, self).__init__(**kwargs)
         self.share_name = None
         self.share_type = None
@@ -2467,11 +2468,11 @@ class ShipmentPickUpRequest(Model):
         'shipment_location': {'key': 'shipmentLocation', 'type': 'str'},
     }
 
-    def __init__(self, *, start_time, end_time, shipment_location: str, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(ShipmentPickUpRequest, self).__init__(**kwargs)
-        self.start_time = start_time
-        self.end_time = end_time
-        self.shipment_location = shipment_location
+        self.start_time = kwargs.get('start_time', None)
+        self.end_time = kwargs.get('end_time', None)
+        self.shipment_location = kwargs.get('shipment_location', None)
 
 
 class ShipmentPickUpResponse(Model):
@@ -2497,7 +2498,7 @@ class ShipmentPickUpResponse(Model):
         'ready_by_time': {'key': 'readyByTime', 'type': 'iso-8601'},
     }
 
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(ShipmentPickUpResponse, self).__init__(**kwargs)
         self.confirmation_number = None
         self.ready_by_time = None
@@ -2527,7 +2528,7 @@ class ShippingAddress(Model):
     :param company_name: Name of the company.
     :type company_name: str
     :param address_type: Type of address. Possible values include: 'None',
-     'Residential', 'Commercial'
+     'Residential', 'Commercial'. Default value: "None" .
     :type address_type: str or ~azure.mgmt.databox.models.AddressType
     """
 
@@ -2550,18 +2551,18 @@ class ShippingAddress(Model):
         'address_type': {'key': 'addressType', 'type': 'AddressType'},
     }
 
-    def __init__(self, *, street_address1: str, country: str, postal_code: str, street_address2: str=None, street_address3: str=None, city: str=None, state_or_province: str=None, zip_extended_code: str=None, company_name: str=None, address_type=None, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(ShippingAddress, self).__init__(**kwargs)
-        self.street_address1 = street_address1
-        self.street_address2 = street_address2
-        self.street_address3 = street_address3
-        self.city = city
-        self.state_or_province = state_or_province
-        self.country = country
-        self.postal_code = postal_code
-        self.zip_extended_code = zip_extended_code
-        self.company_name = company_name
-        self.address_type = address_type
+        self.street_address1 = kwargs.get('street_address1', None)
+        self.street_address2 = kwargs.get('street_address2', None)
+        self.street_address3 = kwargs.get('street_address3', None)
+        self.city = kwargs.get('city', None)
+        self.state_or_province = kwargs.get('state_or_province', None)
+        self.country = kwargs.get('country', None)
+        self.postal_code = kwargs.get('postal_code', None)
+        self.zip_extended_code = kwargs.get('zip_extended_code', None)
+        self.company_name = kwargs.get('company_name', None)
+        self.address_type = kwargs.get('address_type', "None")
 
 
 class Sku(Model):
@@ -2588,11 +2589,11 @@ class Sku(Model):
         'family': {'key': 'family', 'type': 'str'},
     }
 
-    def __init__(self, *, name, display_name: str=None, family: str=None, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(Sku, self).__init__(**kwargs)
-        self.name = name
-        self.display_name = display_name
-        self.family = family
+        self.name = kwargs.get('name', None)
+        self.display_name = kwargs.get('display_name', None)
+        self.family = kwargs.get('family', None)
 
 
 class SkuAvailabilityValidationRequest(ValidationInputRequest):
@@ -2639,11 +2640,11 @@ class SkuAvailabilityValidationRequest(ValidationInputRequest):
 
     transfer_type = "ImportToAzure"
 
-    def __init__(self, *, device_type, country: str, location: str, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(SkuAvailabilityValidationRequest, self).__init__(**kwargs)
-        self.device_type = device_type
-        self.country = country
-        self.location = location
+        self.device_type = kwargs.get('device_type', None)
+        self.country = kwargs.get('country', None)
+        self.location = kwargs.get('location', None)
         self.validation_type = 'ValidateSkuAvailability'
 
 
@@ -2676,7 +2677,7 @@ class SkuAvailabilityValidationResponseProperties(ValidationInputResponse):
         'status': {'key': 'status', 'type': 'ValidationStatus'},
     }
 
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(SkuAvailabilityValidationResponseProperties, self).__init__(**kwargs)
         self.status = None
         self.validation_type = 'ValidateSkuAvailability'
@@ -2704,7 +2705,7 @@ class SkuCapacity(Model):
         'maximum': {'key': 'maximum', 'type': 'str'},
     }
 
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(SkuCapacity, self).__init__(**kwargs)
         self.usable = None
         self.maximum = None
@@ -2732,7 +2733,7 @@ class SkuCost(Model):
         'meter_type': {'key': 'meterType', 'type': 'str'},
     }
 
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(SkuCost, self).__init__(**kwargs)
         self.meter_id = None
         self.meter_type = None
@@ -2793,7 +2794,7 @@ class SkuInformation(Model):
         'required_feature': {'key': 'properties.requiredFeature', 'type': 'str'},
     }
 
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(SkuInformation, self).__init__(**kwargs)
         self.sku = None
         self.enabled = None
@@ -2823,7 +2824,7 @@ class SubscriptionIsAllowedToCreateJobValidationRequest(ValidationInputRequest):
         'validation_type': {'key': 'validationType', 'type': 'str'},
     }
 
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(SubscriptionIsAllowedToCreateJobValidationRequest, self).__init__(**kwargs)
         self.validation_type = 'ValidateSubscriptionIsAllowedToCreateJob'
 
@@ -2857,7 +2858,7 @@ class SubscriptionIsAllowedToCreateJobValidationResponseProperties(ValidationInp
         'status': {'key': 'status', 'type': 'ValidationStatus'},
     }
 
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(SubscriptionIsAllowedToCreateJobValidationResponseProperties, self).__init__(**kwargs)
         self.status = None
         self.validation_type = 'ValidateSubscriptionIsAllowedToCreateJob'
@@ -2883,7 +2884,7 @@ class TransportAvailabilityDetails(Model):
         'shipment_type': {'key': 'shipmentType', 'type': 'TransportShipmentTypes'},
     }
 
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(TransportAvailabilityDetails, self).__init__(**kwargs)
         self.shipment_type = None
 
@@ -2900,9 +2901,9 @@ class TransportAvailabilityRequest(Model):
         'sku_name': {'key': 'skuName', 'type': 'SkuName'},
     }
 
-    def __init__(self, *, sku_name=None, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(TransportAvailabilityRequest, self).__init__(**kwargs)
-        self.sku_name = sku_name
+        self.sku_name = kwargs.get('sku_name', None)
 
 
 class TransportAvailabilityResponse(Model):
@@ -2925,7 +2926,7 @@ class TransportAvailabilityResponse(Model):
         'transport_availability_details': {'key': 'transportAvailabilityDetails', 'type': '[TransportAvailabilityDetails]'},
     }
 
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(TransportAvailabilityResponse, self).__init__(**kwargs)
         self.transport_availability_details = None
 
@@ -2950,9 +2951,9 @@ class TransportPreferences(Model):
         'preferred_shipment_type': {'key': 'preferredShipmentType', 'type': 'TransportShipmentTypes'},
     }
 
-    def __init__(self, *, preferred_shipment_type, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(TransportPreferences, self).__init__(**kwargs)
-        self.preferred_shipment_type = preferred_shipment_type
+        self.preferred_shipment_type = kwargs.get('preferred_shipment_type', None)
 
 
 class UnencryptedCredentials(Model):
@@ -2977,7 +2978,7 @@ class UnencryptedCredentials(Model):
         'job_secrets': {'key': 'jobSecrets', 'type': 'JobSecrets'},
     }
 
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(UnencryptedCredentials, self).__init__(**kwargs)
         self.job_name = None
         self.job_secrets = None
@@ -2997,10 +2998,10 @@ class UpdateJobDetails(Model):
         'shipping_address': {'key': 'shippingAddress', 'type': 'ShippingAddress'},
     }
 
-    def __init__(self, *, contact_details=None, shipping_address=None, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(UpdateJobDetails, self).__init__(**kwargs)
-        self.contact_details = contact_details
-        self.shipping_address = shipping_address
+        self.contact_details = kwargs.get('contact_details', None)
+        self.shipping_address = kwargs.get('shipping_address', None)
 
 
 class ValidateAddress(ValidationInputRequest):
@@ -3035,11 +3036,11 @@ class ValidateAddress(ValidationInputRequest):
         'transport_preferences': {'key': 'transportPreferences', 'type': 'TransportPreferences'},
     }
 
-    def __init__(self, *, shipping_address, device_type, transport_preferences=None, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(ValidateAddress, self).__init__(**kwargs)
-        self.shipping_address = shipping_address
-        self.device_type = device_type
-        self.transport_preferences = transport_preferences
+        self.shipping_address = kwargs.get('shipping_address', None)
+        self.device_type = kwargs.get('device_type', None)
+        self.transport_preferences = kwargs.get('transport_preferences', None)
         self.validation_type = 'ValidateAddress'
 
 
@@ -3069,7 +3070,7 @@ class ValidationResponse(Model):
         'individual_response_details': {'key': 'properties.individualResponseDetails', 'type': '[ValidationInputResponse]'},
     }
 
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super(ValidationResponse, self).__init__(**kwargs)
         self.status = None
         self.individual_response_details = None
