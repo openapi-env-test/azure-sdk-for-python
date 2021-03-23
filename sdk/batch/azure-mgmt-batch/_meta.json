@@ -1,0 +1,8 @@
+{
+  "autorest": "3.0.6272",
+  "autorest.python": "5.4.3",
+  "commit": "54ae358fb1f965c429db53fdf3ba4f453bf362f8",
+  "repository_url": "https://github.com/openapi-env-test/azure-rest-api-specs",
+  "autorest_command": "autorest specification/batch/resource-manager/readme.md --multiapi --python --python-mode=update --python-sdks-folder=/home/vsts/work/1/s/azure-sdk-for-python/sdk --track2 --use=@autorest/python@5.4.3 --version=3.0.6272",
+  "readme": "specification/batch/resource-manager/readme.md"
+}
