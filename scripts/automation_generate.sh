@@ -6,9 +6,9 @@ PATH="$VIRTUAL_ENV/bin:$PATH"
 export PATH
 
 # node version degrade
-sudo npm install -g n
-sudo n 10.15.0
-export PATH=/usr/local/n/versions/node/10.15.0/bin:$PATH
+#sudo npm install -g n
+#sudo n 10.15.0
+#export PATH=/usr/local/n/versions/node/10.15.0/bin:$PATH
 
 TEMP_FILE="$TMPDIR/venv-sdk/auto_temp.json"
 # generate code
