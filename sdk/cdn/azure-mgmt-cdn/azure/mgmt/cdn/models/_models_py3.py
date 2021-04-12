@@ -55,7 +55,43 @@ class Resource(msrest.serialization.Model):
         self.system_data = None
 
 
-class AFDDomain(Resource):
+class ProxyResource(Resource):
+    """The resource model definition for a ARM proxy resource. It will have everything other than required location and tags.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    :ivar id: Resource ID.
+    :vartype id: str
+    :ivar name: Resource name.
+    :vartype name: str
+    :ivar type: Resource type.
+    :vartype type: str
+    :ivar system_data: Read only system data.
+    :vartype system_data: ~azure.mgmt.cdn.models.SystemData
+    """
+
+    _validation = {
+        'id': {'readonly': True},
+        'name': {'readonly': True},
+        'type': {'readonly': True},
+        'system_data': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'id': {'key': 'id', 'type': 'str'},
+        'name': {'key': 'name', 'type': 'str'},
+        'type': {'key': 'type', 'type': 'str'},
+        'system_data': {'key': 'systemData', 'type': 'SystemData'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(ProxyResource, self).__init__(**kwargs)
+
+
+class AFDDomain(ProxyResource):
     """Friendly domain name mapping to the endpoint hostname that the customer provides for branding purposes, e.g. www.contoso.com.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -664,7 +700,7 @@ class AfdErrorResponse(msrest.serialization.Model):
         self.error = error
 
 
-class AFDOrigin(Resource):
+class AFDOrigin(ProxyResource):
     """CDN origin is the source of the content being delivered via CDN. When the edge nodes represented by an endpoint do not have the requested content cached, they attempt to fetch it from one or more of the configured origins.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -772,7 +808,7 @@ class AFDOrigin(Resource):
         self.deployment_status = None
 
 
-class AFDOriginGroup(Resource):
+class AFDOriginGroup(ProxyResource):
     """AFDOrigin group comprising of origins is used for load balancing to origins when the content cannot be served from CDN.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -2132,7 +2168,7 @@ class CookiesMatchConditionParameters(msrest.serialization.Model):
         self.transforms = transforms
 
 
-class CustomDomain(Resource):
+class CustomDomain(ProxyResource):
     """Friendly domain name mapping to the endpoint hostname that the customer provides for branding purposes, e.g. www.contoso.com.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -3405,7 +3441,7 @@ class DomainValidationProperties(msrest.serialization.Model):
         self.expiration_date = None
 
 
-class EdgeNode(Resource):
+class EdgeNode(ProxyResource):
     """Edgenode is a global Point of Presence (POP) location used to deliver CDN content to end users.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -5216,7 +5252,7 @@ class OperationsListResult(msrest.serialization.Model):
         self.next_link = next_link
 
 
-class Origin(Resource):
+class Origin(ProxyResource):
     """CDN origin is the source of the content being delivered via CDN. When the edge nodes represented by an endpoint do not have the requested content cached, they attempt to fetch it from one or more of the configured origins.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -5340,7 +5376,7 @@ class Origin(Resource):
         self.private_endpoint_status = None
 
 
-class OriginGroup(Resource):
+class OriginGroup(ProxyResource):
     """Origin group comprising of origins is used for load balancing to origins when the content cannot be served from CDN.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -6202,42 +6238,6 @@ class ProfileUpdateParameters(msrest.serialization.Model):
         self.tags = tags
 
 
-class ProxyResource(Resource):
-    """The resource model definition for a ARM proxy resource. It will have everything other than required location and tags.
-
-    Variables are only populated by the server, and will be ignored when sending a request.
-
-    :ivar id: Resource ID.
-    :vartype id: str
-    :ivar name: Resource name.
-    :vartype name: str
-    :ivar type: Resource type.
-    :vartype type: str
-    :ivar system_data: Read only system data.
-    :vartype system_data: ~azure.mgmt.cdn.models.SystemData
-    """
-
-    _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'system_data': {'readonly': True},
-    }
-
-    _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'system_data': {'key': 'systemData', 'type': 'SystemData'},
-    }
-
-    def __init__(
-        self,
-        **kwargs
-    ):
-        super(ProxyResource, self).__init__(**kwargs)
-
-
 class PurgeParameters(msrest.serialization.Model):
     """Parameters required for content purge.
 
@@ -7093,7 +7093,7 @@ class ResponseBasedOriginErrorDetectionParameters(msrest.serialization.Model):
         self.http_error_ranges = http_error_ranges
 
 
-class Route(Resource):
+class Route(ProxyResource):
     """Friendly Routes name mapping to the any Routes or secret related information.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -7518,7 +7518,7 @@ class RouteUpdateParameters(msrest.serialization.Model):
         self.enabled_state = enabled_state
 
 
-class Rule(Resource):
+class Rule(ProxyResource):
     """Friendly Rules name mapping to the any Rules or secret related information.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -7725,7 +7725,7 @@ class RuleProperties(AFDStateProperties, RuleUpdatePropertiesParameters):
         self.deployment_status = None
 
 
-class RuleSet(Resource):
+class RuleSet(ProxyResource):
     """Friendly RuleSet name mapping to the any RuleSet or secret related information.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -7876,7 +7876,7 @@ class RuleUpdateParameters(msrest.serialization.Model):
         self.match_processing_behavior = match_processing_behavior
 
 
-class Secret(Resource):
+class Secret(ProxyResource):
     """Friendly Secret name mapping to the any Secret or secret related information.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -7997,7 +7997,7 @@ class SecretProperties(AFDStateProperties):
         self.parameters = parameters
 
 
-class SecurityPolicy(Resource):
+class SecurityPolicy(ProxyResource):
     """SecurityPolicy association for AzureFrontDoor profile.
 
     Variables are only populated by the server, and will be ignored when sending a request.
