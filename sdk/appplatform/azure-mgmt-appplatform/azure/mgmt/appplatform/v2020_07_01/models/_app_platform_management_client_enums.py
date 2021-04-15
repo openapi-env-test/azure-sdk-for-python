@@ -97,6 +97,7 @@ class ProvisioningState(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     MOVING = "Moving"
     MOVED = "Moved"
     MOVE_FAILED = "MoveFailed"
+    TESTING = "Testing"
 
 class ResourceSkuRestrictionsReasonCode(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """Gets the reason for restriction. Possible values include: 'QuotaId',

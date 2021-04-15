@@ -587,7 +587,7 @@ class ClusterResourceProperties(msrest.serialization.Model):
 
     :ivar provisioning_state: Provisioning state of the Service. Possible values include:
      "Creating", "Updating", "Deleting", "Deleted", "Succeeded", "Failed", "Moving", "Moved",
-     "MoveFailed".
+     "MoveFailed", "Testing".
     :vartype provisioning_state: str or
      ~azure.mgmt.appplatform.v2020_07_01.models.ProvisioningState
     :param network_profile: Network profile of the Service.
@@ -596,12 +596,15 @@ class ClusterResourceProperties(msrest.serialization.Model):
     :vartype version: int
     :ivar service_id: ServiceInstanceEntity GUID which uniquely identifies a created resource.
     :vartype service_id: str
+    :ivar foo: bar.
+    :vartype foo: str
     """
 
     _validation = {
         'provisioning_state': {'readonly': True},
         'version': {'readonly': True},
         'service_id': {'readonly': True},
+        'foo': {'readonly': True},
     }
 
     _attribute_map = {
@@ -609,6 +612,7 @@ class ClusterResourceProperties(msrest.serialization.Model):
         'network_profile': {'key': 'networkProfile', 'type': 'NetworkProfile'},
         'version': {'key': 'version', 'type': 'int'},
         'service_id': {'key': 'serviceId', 'type': 'str'},
+        'foo': {'key': 'foo', 'type': 'str'},
     }
 
     def __init__(
@@ -622,6 +626,7 @@ class ClusterResourceProperties(msrest.serialization.Model):
         self.network_profile = network_profile
         self.version = None
         self.service_id = None
+        self.foo = None
 
 
 class ConfigServerGitProperty(msrest.serialization.Model):
