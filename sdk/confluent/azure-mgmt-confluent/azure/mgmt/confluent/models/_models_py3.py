@@ -7,12 +7,10 @@
 # --------------------------------------------------------------------------
 
 import datetime
-from typing import Dict, List, Optional, Union
+from typing import Dict, List, Optional
 
 from azure.core.exceptions import HttpResponseError
 import msrest.serialization
-
-from ._confluent_management_client_enums import *
 
 
 class ConfluentAgreementResource(msrest.serialization.Model):
@@ -161,6 +159,8 @@ class ErrorResponseBody(msrest.serialization.Model):
 class OfferDetail(msrest.serialization.Model):
     """Confluent Offer detail.
 
+    Variables are only populated by the server, and will be ignored when sending a request.
+
     :param publisher_id: Publisher Id.
     :type publisher_id: str
     :param id: Offer Id.
@@ -171,10 +171,10 @@ class OfferDetail(msrest.serialization.Model):
     :type plan_name: str
     :param term_unit: Offer Plan Term unit.
     :type term_unit: str
-    :param status: SaaS Offer Status. Possible values include: "Started",
-     "PendingFulfillmentStart", "InProgress", "Subscribed", "Suspended", "Reinstated", "Succeeded",
-     "Failed", "Unsubscribed", "Updating".
-    :type status: str or ~azure.mgmt.confluent.models.SaaSOfferStatus
+    :ivar status: SaaS Offer Status. Possible values include: "Started", "PendingFulfillmentStart",
+     "InProgress", "Subscribed", "Suspended", "Reinstated", "Succeeded", "Failed", "Unsubscribed",
+     "Updating".
+    :vartype status: str or ~azure.mgmt.confluent.models.SaaSOfferStatus
     """
 
     _validation = {
@@ -183,6 +183,7 @@ class OfferDetail(msrest.serialization.Model):
         'plan_id': {'max_length': 50, 'min_length': 0},
         'plan_name': {'max_length': 50, 'min_length': 0},
         'term_unit': {'max_length': 25, 'min_length': 0},
+        'status': {'readonly': True},
     }
 
     _attribute_map = {
@@ -202,7 +203,6 @@ class OfferDetail(msrest.serialization.Model):
         plan_id: Optional[str] = None,
         plan_name: Optional[str] = None,
         term_unit: Optional[str] = None,
-        status: Optional[Union[str, "SaaSOfferStatus"]] = None,
         **kwargs
     ):
         super(OfferDetail, self).__init__(**kwargs)
@@ -211,7 +211,7 @@ class OfferDetail(msrest.serialization.Model):
         self.plan_id = plan_id
         self.plan_name = plan_name
         self.term_unit = term_unit
-        self.status = status
+        self.status = None
 
 
 class OperationDisplay(msrest.serialization.Model):
@@ -253,11 +253,17 @@ class OperationDisplay(msrest.serialization.Model):
 class OperationListResult(msrest.serialization.Model):
     """Result of GET request to list Confluent operations.
 
+    Variables are only populated by the server, and will be ignored when sending a request.
+
     :param value: List of Confluent operations supported by the Microsoft.Confluent provider.
     :type value: list[~azure.mgmt.confluent.models.OperationResult]
-    :param next_link: URL to get the next set of operation list results if there are any.
-    :type next_link: str
+    :ivar next_link: URL to get the next set of operation list results if there are any.
+    :vartype next_link: str
     """
+
+    _validation = {
+        'next_link': {'readonly': True},
+    }
 
     _attribute_map = {
         'value': {'key': 'value', 'type': '[OperationResult]'},
@@ -268,12 +274,11 @@ class OperationListResult(msrest.serialization.Model):
         self,
         *,
         value: Optional[List["OperationResult"]] = None,
-        next_link: Optional[str] = None,
         **kwargs
     ):
         super(OperationListResult, self).__init__(**kwargs)
         self.value = value
-        self.next_link = next_link
+        self.next_link = None
 
 
 class OperationResult(msrest.serialization.Model):
@@ -324,18 +329,18 @@ class OrganizationResource(msrest.serialization.Model):
     :type location: str
     :ivar created_time: The creation time of the resource.
     :vartype created_time: ~datetime.datetime
-    :param provisioning_state: Provision states for confluent RP. Possible values include:
+    :ivar provisioning_state: Provision states for confluent RP. Possible values include:
      "Accepted", "Creating", "Updating", "Deleting", "Succeeded", "Failed", "Canceled", "Deleted",
      "NotSpecified".
-    :type provisioning_state: str or ~azure.mgmt.confluent.models.ProvisionState
+    :vartype provisioning_state: str or ~azure.mgmt.confluent.models.ProvisionState
     :ivar organization_id: Id of the Confluent organization.
     :vartype organization_id: str
     :ivar sso_url: SSO url for the Confluent organization.
     :vartype sso_url: str
     :param offer_detail: Confluent offer detail.
-    :type offer_detail: ~azure.mgmt.confluent.models.OfferDetail
+    :type offer_detail: ~azure.mgmt.confluent.models.OrganizationResourcePropertiesOfferDetail
     :param user_detail: Subscriber detail.
-    :type user_detail: ~azure.mgmt.confluent.models.UserDetail
+    :type user_detail: ~azure.mgmt.confluent.models.OrganizationResourcePropertiesUserDetail
     """
 
     _validation = {
@@ -343,6 +348,7 @@ class OrganizationResource(msrest.serialization.Model):
         'name': {'readonly': True},
         'type': {'readonly': True},
         'created_time': {'readonly': True},
+        'provisioning_state': {'readonly': True},
         'organization_id': {'readonly': True},
         'sso_url': {'readonly': True},
     }
@@ -357,8 +363,8 @@ class OrganizationResource(msrest.serialization.Model):
         'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
         'organization_id': {'key': 'properties.organizationId', 'type': 'str'},
         'sso_url': {'key': 'properties.ssoUrl', 'type': 'str'},
-        'offer_detail': {'key': 'properties.offerDetail', 'type': 'OfferDetail'},
-        'user_detail': {'key': 'properties.userDetail', 'type': 'UserDetail'},
+        'offer_detail': {'key': 'properties.offerDetail', 'type': 'OrganizationResourcePropertiesOfferDetail'},
+        'user_detail': {'key': 'properties.userDetail', 'type': 'OrganizationResourcePropertiesUserDetail'},
     }
 
     def __init__(
@@ -366,9 +372,8 @@ class OrganizationResource(msrest.serialization.Model):
         *,
         tags: Optional[Dict[str, str]] = None,
         location: Optional[str] = None,
-        provisioning_state: Optional[Union[str, "ProvisionState"]] = None,
-        offer_detail: Optional["OfferDetail"] = None,
-        user_detail: Optional["UserDetail"] = None,
+        offer_detail: Optional["OrganizationResourcePropertiesOfferDetail"] = None,
+        user_detail: Optional["OrganizationResourcePropertiesUserDetail"] = None,
         **kwargs
     ):
         super(OrganizationResource, self).__init__(**kwargs)
@@ -378,7 +383,7 @@ class OrganizationResource(msrest.serialization.Model):
         self.tags = tags
         self.location = location
         self.created_time = None
-        self.provisioning_state = provisioning_state
+        self.provisioning_state = None
         self.organization_id = None
         self.sso_url = None
         self.offer_detail = offer_detail
@@ -418,22 +423,23 @@ class OrganizationResourceProperties(msrest.serialization.Model):
 
     :ivar created_time: The creation time of the resource.
     :vartype created_time: ~datetime.datetime
-    :param provisioning_state: Provision states for confluent RP. Possible values include:
+    :ivar provisioning_state: Provision states for confluent RP. Possible values include:
      "Accepted", "Creating", "Updating", "Deleting", "Succeeded", "Failed", "Canceled", "Deleted",
      "NotSpecified".
-    :type provisioning_state: str or ~azure.mgmt.confluent.models.ProvisionState
+    :vartype provisioning_state: str or ~azure.mgmt.confluent.models.ProvisionState
     :ivar organization_id: Id of the Confluent organization.
     :vartype organization_id: str
     :ivar sso_url: SSO url for the Confluent organization.
     :vartype sso_url: str
     :param offer_detail: Confluent offer detail.
-    :type offer_detail: ~azure.mgmt.confluent.models.OfferDetail
+    :type offer_detail: ~azure.mgmt.confluent.models.OrganizationResourcePropertiesOfferDetail
     :param user_detail: Subscriber detail.
-    :type user_detail: ~azure.mgmt.confluent.models.UserDetail
+    :type user_detail: ~azure.mgmt.confluent.models.OrganizationResourcePropertiesUserDetail
     """
 
     _validation = {
         'created_time': {'readonly': True},
+        'provisioning_state': {'readonly': True},
         'organization_id': {'readonly': True},
         'sso_url': {'readonly': True},
     }
@@ -443,21 +449,20 @@ class OrganizationResourceProperties(msrest.serialization.Model):
         'provisioning_state': {'key': 'provisioningState', 'type': 'str'},
         'organization_id': {'key': 'organizationId', 'type': 'str'},
         'sso_url': {'key': 'ssoUrl', 'type': 'str'},
-        'offer_detail': {'key': 'offerDetail', 'type': 'OfferDetail'},
-        'user_detail': {'key': 'userDetail', 'type': 'UserDetail'},
+        'offer_detail': {'key': 'offerDetail', 'type': 'OrganizationResourcePropertiesOfferDetail'},
+        'user_detail': {'key': 'userDetail', 'type': 'OrganizationResourcePropertiesUserDetail'},
     }
 
     def __init__(
         self,
         *,
-        provisioning_state: Optional[Union[str, "ProvisionState"]] = None,
-        offer_detail: Optional["OfferDetail"] = None,
-        user_detail: Optional["UserDetail"] = None,
+        offer_detail: Optional["OrganizationResourcePropertiesOfferDetail"] = None,
+        user_detail: Optional["OrganizationResourcePropertiesUserDetail"] = None,
         **kwargs
     ):
         super(OrganizationResourceProperties, self).__init__(**kwargs)
         self.created_time = None
-        self.provisioning_state = provisioning_state
+        self.provisioning_state = None
         self.organization_id = None
         self.sso_url = None
         self.offer_detail = offer_detail
@@ -471,22 +476,23 @@ class OrganizationResourcePropertiesAutoGenerated(OrganizationResourceProperties
 
     :ivar created_time: The creation time of the resource.
     :vartype created_time: ~datetime.datetime
-    :param provisioning_state: Provision states for confluent RP. Possible values include:
+    :ivar provisioning_state: Provision states for confluent RP. Possible values include:
      "Accepted", "Creating", "Updating", "Deleting", "Succeeded", "Failed", "Canceled", "Deleted",
      "NotSpecified".
-    :type provisioning_state: str or ~azure.mgmt.confluent.models.ProvisionState
+    :vartype provisioning_state: str or ~azure.mgmt.confluent.models.ProvisionState
     :ivar organization_id: Id of the Confluent organization.
     :vartype organization_id: str
     :ivar sso_url: SSO url for the Confluent organization.
     :vartype sso_url: str
     :param offer_detail: Confluent offer detail.
-    :type offer_detail: ~azure.mgmt.confluent.models.OfferDetail
+    :type offer_detail: ~azure.mgmt.confluent.models.OrganizationResourcePropertiesOfferDetail
     :param user_detail: Subscriber detail.
-    :type user_detail: ~azure.mgmt.confluent.models.UserDetail
+    :type user_detail: ~azure.mgmt.confluent.models.OrganizationResourcePropertiesUserDetail
     """
 
     _validation = {
         'created_time': {'readonly': True},
+        'provisioning_state': {'readonly': True},
         'organization_id': {'readonly': True},
         'sso_url': {'readonly': True},
     }
@@ -496,23 +502,24 @@ class OrganizationResourcePropertiesAutoGenerated(OrganizationResourceProperties
         'provisioning_state': {'key': 'provisioningState', 'type': 'str'},
         'organization_id': {'key': 'organizationId', 'type': 'str'},
         'sso_url': {'key': 'ssoUrl', 'type': 'str'},
-        'offer_detail': {'key': 'offerDetail', 'type': 'OfferDetail'},
-        'user_detail': {'key': 'userDetail', 'type': 'UserDetail'},
+        'offer_detail': {'key': 'offerDetail', 'type': 'OrganizationResourcePropertiesOfferDetail'},
+        'user_detail': {'key': 'userDetail', 'type': 'OrganizationResourcePropertiesUserDetail'},
     }
 
     def __init__(
         self,
         *,
-        provisioning_state: Optional[Union[str, "ProvisionState"]] = None,
-        offer_detail: Optional["OfferDetail"] = None,
-        user_detail: Optional["UserDetail"] = None,
+        offer_detail: Optional["OrganizationResourcePropertiesOfferDetail"] = None,
+        user_detail: Optional["OrganizationResourcePropertiesUserDetail"] = None,
         **kwargs
     ):
-        super(OrganizationResourcePropertiesAutoGenerated, self).__init__(provisioning_state=provisioning_state, offer_detail=offer_detail, user_detail=user_detail, **kwargs)
+        super(OrganizationResourcePropertiesAutoGenerated, self).__init__(offer_detail=offer_detail, user_detail=user_detail, **kwargs)
 
 
 class OrganizationResourcePropertiesOfferDetail(OfferDetail):
     """Confluent offer detail.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
 
     :param publisher_id: Publisher Id.
     :type publisher_id: str
@@ -524,10 +531,10 @@ class OrganizationResourcePropertiesOfferDetail(OfferDetail):
     :type plan_name: str
     :param term_unit: Offer Plan Term unit.
     :type term_unit: str
-    :param status: SaaS Offer Status. Possible values include: "Started",
-     "PendingFulfillmentStart", "InProgress", "Subscribed", "Suspended", "Reinstated", "Succeeded",
-     "Failed", "Unsubscribed", "Updating".
-    :type status: str or ~azure.mgmt.confluent.models.SaaSOfferStatus
+    :ivar status: SaaS Offer Status. Possible values include: "Started", "PendingFulfillmentStart",
+     "InProgress", "Subscribed", "Suspended", "Reinstated", "Succeeded", "Failed", "Unsubscribed",
+     "Updating".
+    :vartype status: str or ~azure.mgmt.confluent.models.SaaSOfferStatus
     """
 
     _validation = {
@@ -536,6 +543,7 @@ class OrganizationResourcePropertiesOfferDetail(OfferDetail):
         'plan_id': {'max_length': 50, 'min_length': 0},
         'plan_name': {'max_length': 50, 'min_length': 0},
         'term_unit': {'max_length': 25, 'min_length': 0},
+        'status': {'readonly': True},
     }
 
     _attribute_map = {
@@ -555,10 +563,9 @@ class OrganizationResourcePropertiesOfferDetail(OfferDetail):
         plan_id: Optional[str] = None,
         plan_name: Optional[str] = None,
         term_unit: Optional[str] = None,
-        status: Optional[Union[str, "SaaSOfferStatus"]] = None,
         **kwargs
     ):
-        super(OrganizationResourcePropertiesOfferDetail, self).__init__(publisher_id=publisher_id, id=id, plan_id=plan_id, plan_name=plan_name, term_unit=term_unit, status=status, **kwargs)
+        super(OrganizationResourcePropertiesOfferDetail, self).__init__(publisher_id=publisher_id, id=id, plan_id=plan_id, plan_name=plan_name, term_unit=term_unit, **kwargs)
 
 
 class UserDetail(msrest.serialization.Model):
