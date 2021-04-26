@@ -827,7 +827,7 @@ class VaultsOperations:
         }
         error_map.update(kwargs.pop('error_map', {}))
         filter = "resourceType eq 'Microsoft.KeyVault/vaults'"
-        api_version = "2020-04-01-preview"
+        api_version = "2015-11-01"
         accept = "application/json"
 
         def prepare_request(next_link=None):
