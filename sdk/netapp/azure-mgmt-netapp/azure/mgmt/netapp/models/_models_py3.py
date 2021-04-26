@@ -214,8 +214,9 @@ class Backup(msrest.serialization.Model):
     :vartype size: long
     :param label: Label for backup.
     :type label: str
-    :ivar backup_type: Type of backup adhoc or scheduled.
-    :vartype backup_type: str
+    :ivar backup_type: Type of backup Manual or Scheduled. Possible values include: "Manual",
+     "Scheduled".
+    :vartype backup_type: str or ~azure.mgmt.netapp.models.BackupType
     :ivar failure_reason: Failure reason.
     :vartype failure_reason: str
     :ivar volume_name: Volume name.
@@ -290,8 +291,9 @@ class BackupPatch(msrest.serialization.Model):
     :vartype size: long
     :param label: Label for backup.
     :type label: str
-    :ivar backup_type: Type of backup adhoc or scheduled.
-    :vartype backup_type: str
+    :ivar backup_type: Type of backup Manual or Scheduled. Possible values include: "Manual",
+     "Scheduled".
+    :vartype backup_type: str or ~azure.mgmt.netapp.models.BackupType
     :ivar failure_reason: Failure reason.
     :vartype failure_reason: str
     :ivar volume_name: Volume name.
@@ -2379,7 +2381,7 @@ class Volume(msrest.serialization.Model):
     :type usage_threshold: long
     :param export_policy: Set of export policy rules.
     :type export_policy: ~azure.mgmt.netapp.models.VolumePropertiesExportPolicy
-    :param protocol_types: Set of protocol types, default NFSv3, CIFS fro SMB protocol.
+    :param protocol_types: Set of protocol types, default NFSv3, CIFS for SMB protocol.
     :type protocol_types: list[str]
     :ivar provisioning_state: Azure lifecycle management.
     :vartype provisioning_state: str
