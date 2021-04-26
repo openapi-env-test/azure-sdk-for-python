@@ -7,11 +7,9 @@
 # --------------------------------------------------------------------------
 
 from ._marketplace_agreements_operations import MarketplaceAgreementsOperations
-from ._organization_operations_operations import OrganizationOperationsOperations
 from ._organization_operations import OrganizationOperations
 
 __all__ = [
     'MarketplaceAgreementsOperations',
-    'OrganizationOperationsOperations',
     'OrganizationOperations',
 ]
