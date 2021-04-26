@@ -16,24 +16,22 @@ if TYPE_CHECKING:
     from typing import Any, Optional
 
     from azure.core.credentials import TokenCredential
+    from azure.core.pipeline.transport import HttpRequest, HttpResponse
 
-from ._configuration import AzureMapsResourceProviderConfiguration
+from ._configuration import AzureMapsManagementClientConfiguration
 from .operations import AccountsOperations
 from .operations import MapsOperations
-from .operations import PrivateAtlasesOperations
 from .operations import CreatorsOperations
 from . import models
 
 
-class AzureMapsResourceProvider(object):
-    """Resource Provider.
+class AzureMapsManagementClient(object):
+    """Azure Maps.
 
     :ivar accounts: AccountsOperations operations
     :vartype accounts: azure.mgmt.maps.operations.AccountsOperations
     :ivar maps: MapsOperations operations
     :vartype maps: azure.mgmt.maps.operations.MapsOperations
-    :ivar private_atlases: PrivateAtlasesOperations operations
-    :vartype private_atlases: azure.mgmt.maps.operations.PrivateAtlasesOperations
     :ivar creators: CreatorsOperations operations
     :vartype creators: azure.mgmt.maps.operations.CreatorsOperations
     :param credential: Credential needed for the client to connect to Azure.
@@ -53,7 +51,7 @@ class AzureMapsResourceProvider(object):
         # type: (...) -> None
         if not base_url:
             base_url = 'https://management.azure.com'
-        self._config = AzureMapsResourceProviderConfiguration(credential, subscription_id, **kwargs)
+        self._config = AzureMapsManagementClientConfiguration(credential, subscription_id, **kwargs)
         self._client = ARMPipelineClient(base_url=base_url, config=self._config, **kwargs)
 
         client_models = {k: v for k, v in models.__dict__.items() if isinstance(v, type)}
@@ -65,17 +63,33 @@ class AzureMapsResourceProvider(object):
             self._client, self._config, self._serialize, self._deserialize)
         self.maps = MapsOperations(
             self._client, self._config, self._serialize, self._deserialize)
-        self.private_atlases = PrivateAtlasesOperations(
-            self._client, self._config, self._serialize, self._deserialize)
         self.creators = CreatorsOperations(
             self._client, self._config, self._serialize, self._deserialize)
+
+    def _send_request(self, http_request, **kwargs):
+        # type: (HttpRequest, Any) -> HttpResponse
+        """Runs the network request through the client's chained policies.
+
+        :param http_request: The network request you want to make. Required.
+        :type http_request: ~azure.core.pipeline.transport.HttpRequest
+        :keyword bool stream: Whether the response payload will be streamed. Defaults to True.
+        :return: The response of your network call. Does not do error handling on your response.
+        :rtype: ~azure.core.pipeline.transport.HttpResponse
+        """
+        path_format_arguments = {
+            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
+        }
+        http_request.url = self._client.format_url(http_request.url, **path_format_arguments)
+        stream = kwargs.pop("stream", True)
+        pipeline_response = self._client._pipeline.run(http_request, stream=stream, **kwargs)
+        return pipeline_response.http_response
 
     def close(self):
         # type: () -> None
         self._client.close()
 
     def __enter__(self):
-        # type: () -> AzureMapsResourceProvider
+        # type: () -> AzureMapsManagementClient
         self._client.__enter__()
         return self
 
