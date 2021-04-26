@@ -918,9 +918,8 @@ class NetworkFunctionUserConfigurationOsProfile(msrest.serialization.Model):
      saved as a file. For more information see `Custom Data on Azure VMs
      <https://azure.microsoft.com/en-us/blog/custom-data-and-cloud-init-on-windows-azure/>`_
      :code:`<br>`:code:`<br>` For using cloud-init for your Linux VM, see `Using cloud-init to
-     customize a Linux VM during creation <https://docs.microsoft.com/azure/virtual-
-     machines/virtual-machines-linux-using-cloud-init?toc=%2fazure%2fvirtual-
-     machines%2flinux%2ftoc.json>`_.
+     customize a Linux VM during creation
+     <https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-using-cloud-init?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json>`_.
     :type custom_data: str
     """
 
@@ -1268,20 +1267,19 @@ class OsProfile(msrest.serialization.Model):
      :code:`<br>`:code:`<br>` **Minimum-length (Linux):** 1  character :code:`<br>`:code:`<br>`
      **Max-length (Linux):** 64 characters :code:`<br>`:code:`<br>` **Max-length (Windows):** 20
      characters  :code:`<br>`:code:`<br>`:code:`<li>` For root access to the Linux VM, see `Using
-     root privileges on Linux virtual machines in Azure <https://docs.microsoft.com/azure/virtual-
-     machines/virtual-machines-linux-use-root-privileges?toc=%2fazure%2fvirtual-
-     machines%2flinux%2ftoc.json>`_\ :code:`<br>`:code:`<li>` For a list of built-in system users on
-     Linux that should not be used in this field, see `Selecting User Names for Linux on Azure
-     <https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-
-     usernames?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json>`_.
+     root privileges on Linux virtual machines in Azure
+     <https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-use-root-privileges?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json>`_\
+     :code:`<br>`:code:`<li>` For a list of built-in system users on Linux that should not be used
+     in this field, see `Selecting User Names for Linux on Azure
+     <https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-usernames?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json>`_.
     :type admin_username: str
     :param linux_configuration: Specifies the Linux operating system settings on the virtual
      machine. :code:`<br>`:code:`<br>`For a list of supported Linux distributions, see `Linux on
-     Azure-Endorsed Distributions <https://docs.microsoft.com/azure/virtual-machines/virtual-
-     machines-linux-endorsed-distros?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json>`_
-     :code:`<br>`:code:`<br>` For running non-endorsed distributions, see `Information for Non-
-     Endorsed Distributions <https://docs.microsoft.com/azure/virtual-machines/virtual-machines-
-     linux-create-upload-generic?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json>`_.
+     Azure-Endorsed Distributions
+     <https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-endorsed-distros?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json>`_
+     :code:`<br>`:code:`<br>` For running non-endorsed distributions, see `Information for
+     Non-Endorsed Distributions
+     <https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-create-upload-generic?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json>`_.
     :type linux_configuration: ~hybrid_network_management_client.models.LinuxConfiguration
     :param custom_data: Specifies a base-64 encoded string of custom data. The base-64 encoded
      string is decoded to a binary array that is saved as a file on the virtual machine. The maximum
@@ -1291,9 +1289,8 @@ class OsProfile(msrest.serialization.Model):
      saved as a file. For more information see `Custom Data on Azure VMs
      <https://azure.microsoft.com/en-us/blog/custom-data-and-cloud-init-on-windows-azure/>`_
      :code:`<br>`:code:`<br>` For using cloud-init for your Linux VM, see `Using cloud-init to
-     customize a Linux VM during creation <https://docs.microsoft.com/azure/virtual-
-     machines/virtual-machines-linux-using-cloud-init?toc=%2fazure%2fvirtual-
-     machines%2flinux%2ftoc.json>`_.
+     customize a Linux VM during creation
+     <https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-using-cloud-init?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json>`_.
     :type custom_data: str
     :param custom_data_required: Indicates if custom data is required to deploy this role.
     :type custom_data_required: bool
@@ -1517,8 +1514,7 @@ class SshPublicKey(msrest.serialization.Model):
     :param key_data: SSH public key certificate used to authenticate with the VM through ssh. The
      key needs to be at least 2048-bit and in ssh-rsa format. :code:`<br>`:code:`<br>` For creating
      ssh keys, see `Create SSH keys on Linux and Mac for Linux VMs in Azure
-     <https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-mac-create-ssh-
-     keys?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json>`_.
+     <https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-mac-create-ssh-keys?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json>`_.
     :type key_data: str
     """
 
