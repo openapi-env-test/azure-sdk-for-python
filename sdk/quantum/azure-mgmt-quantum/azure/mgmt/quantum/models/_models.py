@@ -10,6 +10,62 @@ from azure.core.exceptions import HttpResponseError
 import msrest.serialization
 
 
+class CheckNameAvailabilityParameters(msrest.serialization.Model):
+    """Details of check name availability request body.
+
+    :param name: Name for checking availability.
+    :type name: str
+    :param type: The resource type of Quantum Workspace.
+    :type type: str
+    """
+
+    _attribute_map = {
+        'name': {'key': 'name', 'type': 'str'},
+        'type': {'key': 'type', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(CheckNameAvailabilityParameters, self).__init__(**kwargs)
+        self.name = kwargs.get('name', None)
+        self.type = kwargs.get('type', "Microsoft.Quantum/Workspaces")
+
+
+class CheckNameAvailabilityResult(msrest.serialization.Model):
+    """Result of check name availability.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    :param name_available: Indicator of availability of the Quantum Workspace resource name.
+    :type name_available: bool
+    :param reason: The reason of unavailability.
+    :type reason: str
+    :ivar message: The detailed info regarding the reason associated with the Namespace.
+    :vartype message: str
+    """
+
+    _validation = {
+        'message': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'name_available': {'key': 'nameAvailable', 'type': 'bool'},
+        'reason': {'key': 'reason', 'type': 'str'},
+        'message': {'key': 'message', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(CheckNameAvailabilityResult, self).__init__(**kwargs)
+        self.name_available = kwargs.get('name_available', None)
+        self.reason = kwargs.get('reason', None)
+        self.message = None
+
+
 class ErrorAdditionalInfo(msrest.serialization.Model):
     """The resource management error additional info.
 
@@ -561,6 +617,8 @@ class QuantumWorkspace(TrackedResource):
     :type location: str
     :param identity: Managed Identity information.
     :type identity: ~azure.mgmt.quantum.models.QuantumWorkspaceIdentity
+    :ivar system_data: System metadata.
+    :vartype system_data: ~azure.mgmt.quantum.models.SystemData
     :param providers: List of Providers selected for this Workspace.
     :type providers: list[~azure.mgmt.quantum.models.Provider]
     :ivar usable: Whether the current workspace is ready to accept Jobs. Possible values include:
@@ -580,6 +638,7 @@ class QuantumWorkspace(TrackedResource):
         'name': {'readonly': True},
         'type': {'readonly': True},
         'location': {'required': True},
+        'system_data': {'readonly': True},
         'usable': {'readonly': True},
         'provisioning_state': {'readonly': True},
         'endpoint_uri': {'readonly': True},
@@ -592,6 +651,7 @@ class QuantumWorkspace(TrackedResource):
         'tags': {'key': 'tags', 'type': '{str}'},
         'location': {'key': 'location', 'type': 'str'},
         'identity': {'key': 'identity', 'type': 'QuantumWorkspaceIdentity'},
+        'system_data': {'key': 'systemData', 'type': 'SystemData'},
         'providers': {'key': 'properties.providers', 'type': '[Provider]'},
         'usable': {'key': 'properties.usable', 'type': 'str'},
         'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
@@ -605,6 +665,7 @@ class QuantumWorkspace(TrackedResource):
     ):
         super(QuantumWorkspace, self).__init__(**kwargs)
         self.identity = kwargs.get('identity', None)
+        self.system_data = None
         self.providers = kwargs.get('providers', None)
         self.usable = None
         self.provisioning_state = None
@@ -701,8 +762,12 @@ class SkuDescription(msrest.serialization.Model):
     :type id: str
     :param name: Display name of this sku.
     :type name: str
+    :param version: Display name of this sku.
+    :type version: str
     :param description: Description about this sku.
     :type description: str
+    :param restricted_access_uri: Uri to subscribe to the restricted access sku.
+    :type restricted_access_uri: str
     :param targets: The list of targets available for this sku.
     :type targets: list[str]
     :param quota_dimensions: The list of quota dimensions for this sku.
@@ -714,7 +779,9 @@ class SkuDescription(msrest.serialization.Model):
     _attribute_map = {
         'id': {'key': 'id', 'type': 'str'},
         'name': {'key': 'name', 'type': 'str'},
+        'version': {'key': 'version', 'type': 'str'},
         'description': {'key': 'description', 'type': 'str'},
+        'restricted_access_uri': {'key': 'restrictedAccessUri', 'type': 'str'},
         'targets': {'key': 'targets', 'type': '[str]'},
         'quota_dimensions': {'key': 'quotaDimensions', 'type': '[QuotaDimension]'},
         'pricing_details': {'key': 'pricingDetails', 'type': '[PricingDetail]'},
@@ -727,10 +794,53 @@ class SkuDescription(msrest.serialization.Model):
         super(SkuDescription, self).__init__(**kwargs)
         self.id = kwargs.get('id', None)
         self.name = kwargs.get('name', None)
+        self.version = kwargs.get('version', None)
         self.description = kwargs.get('description', None)
+        self.restricted_access_uri = kwargs.get('restricted_access_uri', None)
         self.targets = kwargs.get('targets', None)
         self.quota_dimensions = kwargs.get('quota_dimensions', None)
         self.pricing_details = kwargs.get('pricing_details', None)
+
+
+class SystemData(msrest.serialization.Model):
+    """Metadata pertaining to creation and last modification of the resource.
+
+    :param created_by: The identity that created the resource.
+    :type created_by: str
+    :param created_by_type: The type of identity that created the resource. Possible values
+     include: "User", "Application", "ManagedIdentity", "Key".
+    :type created_by_type: str or ~azure.mgmt.quantum.models.CreatedByType
+    :param created_at: The timestamp of resource creation (UTC).
+    :type created_at: ~datetime.datetime
+    :param last_modified_by: The identity that last modified the resource.
+    :type last_modified_by: str
+    :param last_modified_by_type: The type of identity that last modified the resource. Possible
+     values include: "User", "Application", "ManagedIdentity", "Key".
+    :type last_modified_by_type: str or ~azure.mgmt.quantum.models.CreatedByType
+    :param last_modified_at: The timestamp of resource last modification (UTC).
+    :type last_modified_at: ~datetime.datetime
+    """
+
+    _attribute_map = {
+        'created_by': {'key': 'createdBy', 'type': 'str'},
+        'created_by_type': {'key': 'createdByType', 'type': 'str'},
+        'created_at': {'key': 'createdAt', 'type': 'iso-8601'},
+        'last_modified_by': {'key': 'lastModifiedBy', 'type': 'str'},
+        'last_modified_by_type': {'key': 'lastModifiedByType', 'type': 'str'},
+        'last_modified_at': {'key': 'lastModifiedAt', 'type': 'iso-8601'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(SystemData, self).__init__(**kwargs)
+        self.created_by = kwargs.get('created_by', None)
+        self.created_by_type = kwargs.get('created_by_type', None)
+        self.created_at = kwargs.get('created_at', None)
+        self.last_modified_by = kwargs.get('last_modified_by', None)
+        self.last_modified_by_type = kwargs.get('last_modified_by_type', None)
+        self.last_modified_at = kwargs.get('last_modified_at', None)
 
 
 class TagsObject(msrest.serialization.Model):
