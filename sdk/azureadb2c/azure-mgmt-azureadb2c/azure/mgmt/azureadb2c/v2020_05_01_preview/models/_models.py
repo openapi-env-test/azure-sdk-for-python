@@ -53,8 +53,8 @@ class ErrorResponse(msrest.serialization.Model):
     :ivar details: The error details.
     :vartype details: list[~$(python-base-namespace).v2020_05_01_preview.models.ErrorResponse]
     :ivar additional_info: The error additional info.
-    :vartype additional_info: list[~$(python-base-
-     namespace).v2020_05_01_preview.models.ErrorAdditionalInfo]
+    :vartype additional_info:
+     list[~$(python-base-namespace).v2020_05_01_preview.models.ErrorAdditionalInfo]
     """
 
     _validation = {
