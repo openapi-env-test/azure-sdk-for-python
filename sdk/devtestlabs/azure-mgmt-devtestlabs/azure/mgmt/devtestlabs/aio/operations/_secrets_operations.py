@@ -297,8 +297,8 @@ class SecretsOperations:
         :type secret: ~azure.mgmt.devtestlabs.models.Secret
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: Pass in True if you'd like the AsyncARMPolling polling method,
+         False for no polling, or your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either Secret or the result of cls(response)
@@ -425,7 +425,6 @@ class SecretsOperations:
         user_name: str,
         name: str,
         tags: Optional[Dict[str, str]] = None,
-        value: Optional[str] = None,
         **kwargs
     ) -> "_models.Secret":
         """Allows modifying tags of secrets. All other properties will be ignored.
@@ -440,8 +439,6 @@ class SecretsOperations:
         :type name: str
         :param tags: The tags of the resource.
         :type tags: dict[str, str]
-        :param value: The value of the secret for secret creation.
-        :type value: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: Secret, or the result of cls(response)
         :rtype: ~azure.mgmt.devtestlabs.models.Secret
@@ -453,7 +450,7 @@ class SecretsOperations:
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        _secret = _models.SecretFragment(tags=tags, value=value)
+        _secret = _models.SecretFragment(tags=tags)
         api_version = "2018-09-15"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"

@@ -377,7 +377,7 @@ class ServiceFabricSchedulesOperations:
         user_name: str,
         service_fabric_name: str,
         name: str,
-        schedule: "_models.ScheduleFragment",
+        tags: Optional[Dict[str, str]] = None,
         **kwargs
     ) -> "_models.Schedule":
         """Allows modifying tags of schedules. All other properties will be ignored.
@@ -392,8 +392,8 @@ class ServiceFabricSchedulesOperations:
         :type service_fabric_name: str
         :param name: The name of the schedule.
         :type name: str
-        :param schedule: A schedule.
-        :type schedule: ~azure.mgmt.devtestlabs.models.ScheduleFragment
+        :param tags: The tags of the resource.
+        :type tags: dict[str, str]
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: Schedule, or the result of cls(response)
         :rtype: ~azure.mgmt.devtestlabs.models.Schedule
@@ -404,6 +404,8 @@ class ServiceFabricSchedulesOperations:
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
+
+        _schedule = _models.ScheduleFragment(tags=tags)
         api_version = "2018-09-15"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"
@@ -430,7 +432,7 @@ class ServiceFabricSchedulesOperations:
         header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
 
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(schedule, 'ScheduleFragment')
+        body_content = self._serialize.body(_schedule, 'ScheduleFragment')
         body_content_kwargs['content'] = body_content
         request = self._client.patch(url, query_parameters, header_parameters, **body_content_kwargs)
         pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
@@ -521,8 +523,8 @@ class ServiceFabricSchedulesOperations:
         :type name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: Pass in True if you'd like the AsyncARMPolling polling method,
+         False for no polling, or your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either None or the result of cls(response)
