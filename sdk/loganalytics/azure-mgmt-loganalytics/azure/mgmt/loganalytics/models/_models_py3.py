@@ -2565,23 +2565,18 @@ class WorkspaceSku(msrest.serialization.Model):
     :param capacity_reservation_level: The capacity reservation level for this workspace, when
      CapacityReservation sku is selected.
     :type capacity_reservation_level: int
-    :ivar max_capacity_reservation_level: The maximum capacity reservation level available for this
-     workspace, when CapacityReservation sku is selected.
-    :vartype max_capacity_reservation_level: int
     :ivar last_sku_update: The last time when the sku was updated.
     :vartype last_sku_update: str
     """
 
     _validation = {
         'name': {'required': True},
-        'max_capacity_reservation_level': {'readonly': True},
         'last_sku_update': {'readonly': True},
     }
 
     _attribute_map = {
         'name': {'key': 'name', 'type': 'str'},
         'capacity_reservation_level': {'key': 'capacityReservationLevel', 'type': 'int'},
-        'max_capacity_reservation_level': {'key': 'maxCapacityReservationLevel', 'type': 'int'},
         'last_sku_update': {'key': 'lastSkuUpdate', 'type': 'str'},
     }
 
@@ -2595,5 +2590,4 @@ class WorkspaceSku(msrest.serialization.Model):
         super(WorkspaceSku, self).__init__(**kwargs)
         self.name = name
         self.capacity_reservation_level = capacity_reservation_level
-        self.max_capacity_reservation_level = None
         self.last_sku_update = None
