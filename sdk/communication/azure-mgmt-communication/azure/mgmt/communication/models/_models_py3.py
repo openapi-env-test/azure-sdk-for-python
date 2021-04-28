@@ -276,7 +276,7 @@ class ErrorAdditionalInfo(msrest.serialization.Model):
     :ivar type: The additional info type.
     :vartype type: str
     :ivar info: The additional info.
-    :vartype info: object
+    :vartype info: str
     """
 
     _validation = {
@@ -286,7 +286,7 @@ class ErrorAdditionalInfo(msrest.serialization.Model):
 
     _attribute_map = {
         'type': {'key': 'type', 'type': 'str'},
-        'info': {'key': 'info', 'type': 'object'},
+        'info': {'key': 'info', 'type': 'str'},
     }
 
     def __init__(
@@ -458,8 +458,8 @@ class NameAvailabilityParameters(msrest.serialization.Model):
     :param type: Required. The resource type. Should be always
      "Microsoft.Communication/CommunicationServices".
     :type type: str
-    :param name: Required. The CommunicationService name to validate. e.g."my-CommunicationService-
-     name-here".
+    :param name: Required. The CommunicationService name to validate.
+     e.g."my-CommunicationService-name-here".
     :type name: str
     """
 
@@ -493,8 +493,8 @@ class Operation(msrest.serialization.Model):
     :ivar name: The name of the operation, as per Resource-Based Access Control (RBAC). Examples:
      "Microsoft.Compute/virtualMachines/write", "Microsoft.Compute/virtualMachines/capture/action".
     :vartype name: str
-    :ivar is_data_action: Whether the operation applies to data-plane. This is "true" for data-
-     plane operations and "false" for ARM/control-plane operations.
+    :ivar is_data_action: Whether the operation applies to data-plane. This is "true" for
+     data-plane operations and "false" for ARM/control-plane operations.
     :vartype is_data_action: bool
     :param display: Localized display information for this particular operation.
     :type display: ~communication_service_management_client.models.OperationDisplay
@@ -665,8 +665,8 @@ class OperationStatus(msrest.serialization.Model):
 class RegenerateKeyParameters(msrest.serialization.Model):
     """Parameters describes the request to regenerate access keys.
 
-    :param key_type: The keyType to regenerate. Must be either 'primary' or 'secondary'(case-
-     insensitive). Possible values include: "Primary", "Secondary".
+    :param key_type: The keyType to regenerate. Must be either 'primary' or
+     'secondary'(case-insensitive). Possible values include: "Primary", "Secondary".
     :type key_type: str or ~communication_service_management_client.models.KeyType
     """
 
