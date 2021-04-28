@@ -479,9 +479,9 @@ class AlertProperties(msrest.serialization.Model):
     :param essentials: This object contains consistent fields across different monitor services.
     :type essentials: ~azure.mgmt.alertsmanagement.models.Essentials
     :ivar context: Any object.
-    :vartype context: object
+    :vartype context: str
     :ivar egress_config: Any object.
-    :vartype egress_config: object
+    :vartype egress_config: str
     """
 
     _validation = {
@@ -491,8 +491,8 @@ class AlertProperties(msrest.serialization.Model):
 
     _attribute_map = {
         'essentials': {'key': 'essentials', 'type': 'Essentials'},
-        'context': {'key': 'context', 'type': 'object'},
-        'egress_config': {'key': 'egressConfig', 'type': 'object'},
+        'context': {'key': 'context', 'type': 'str'},
+        'egress_config': {'key': 'egressConfig', 'type': 'str'},
     }
 
     def __init__(
@@ -956,7 +956,7 @@ class Detector(msrest.serialization.Model):
     :param id: Required. The detector id.
     :type id: str
     :param parameters: The detector's parameters.'.
-    :type parameters: dict[str, object]
+    :type parameters: dict[str, str]
     :param name: The Smart Detector name. By default this is not populated, unless it's specified
      in expandDetector.
     :type name: str
@@ -977,7 +977,7 @@ class Detector(msrest.serialization.Model):
 
     _attribute_map = {
         'id': {'key': 'id', 'type': 'str'},
-        'parameters': {'key': 'parameters', 'type': '{object}'},
+        'parameters': {'key': 'parameters', 'type': '{str}'},
         'name': {'key': 'name', 'type': 'str'},
         'description': {'key': 'description', 'type': 'str'},
         'supported_resource_types': {'key': 'supportedResourceTypes', 'type': '[str]'},
@@ -1461,14 +1461,14 @@ class PatchObject(msrest.serialization.Model):
     """Data contract for patch.
 
     :param tags: A set of tags. tags to be updated.
-    :type tags: object
+    :type tags: str
     :param status: Indicates if the given action rule is enabled or disabled. Possible values
      include: "Enabled", "Disabled".
     :type status: str or ~azure.mgmt.alertsmanagement.models.ActionRuleStatus
     """
 
     _attribute_map = {
-        'tags': {'key': 'tags', 'type': 'object'},
+        'tags': {'key': 'tags', 'type': 'str'},
         'status': {'key': 'properties.status', 'type': 'str'},
     }
 
