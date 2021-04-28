@@ -116,8 +116,9 @@ class AssociationsOperations(object):
         """Create or update an association.
 
         :param scope: The scope of the association. The scope can be any valid REST resource instance.
-         For example, use '/subscriptions/{subscription-id}/resourceGroups/{resource-group-
-         name}/providers/Microsoft.Compute/virtualMachines/{vm-name}' for a virtual machine resource.
+         For example, use
+         '/subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/providers/Microsoft.Compute/virtualMachines/{vm-name}'
+         for a virtual machine resource.
         :type scope: str
         :param association_name: The name of the association.
         :type association_name: str
