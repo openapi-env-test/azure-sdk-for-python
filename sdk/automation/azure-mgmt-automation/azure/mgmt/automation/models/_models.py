@@ -442,6 +442,8 @@ class AutomationAccount(TrackedResource):
     :type location: str
     :param etag: Gets or sets the etag of the resource.
     :type etag: str
+    :param identity: Identity for the resource.
+    :type identity: ~azure.mgmt.automation.models.Identity
     :param sku: Gets or sets the SKU of account.
     :type sku: ~azure.mgmt.automation.models.Sku
     :param last_modified_by: Gets or sets the last modified by.
@@ -454,6 +456,15 @@ class AutomationAccount(TrackedResource):
     :vartype last_modified_time: ~datetime.datetime
     :param description: Gets or sets the description.
     :type description: str
+    :param encryption: Encryption properties for the automation account.
+    :type encryption: ~azure.mgmt.automation.models.EncryptionProperties
+    :param private_endpoint_connections: List of Automation operations supported by the Automation
+     resource provider.
+    :type private_endpoint_connections:
+     list[~azure.mgmt.automation.models.PrivateEndpointConnection]
+    :param public_network_access: Indicates whether traffic on the non-ARM endpoint (Webhook/Agent)
+     is allowed from the public internet.
+    :type public_network_access: bool
     """
 
     _validation = {
@@ -472,12 +483,16 @@ class AutomationAccount(TrackedResource):
         'tags': {'key': 'tags', 'type': '{str}'},
         'location': {'key': 'location', 'type': 'str'},
         'etag': {'key': 'etag', 'type': 'str'},
+        'identity': {'key': 'identity', 'type': 'Identity'},
         'sku': {'key': 'properties.sku', 'type': 'Sku'},
         'last_modified_by': {'key': 'properties.lastModifiedBy', 'type': 'str'},
         'state': {'key': 'properties.state', 'type': 'str'},
         'creation_time': {'key': 'properties.creationTime', 'type': 'iso-8601'},
         'last_modified_time': {'key': 'properties.lastModifiedTime', 'type': 'iso-8601'},
         'description': {'key': 'properties.description', 'type': 'str'},
+        'encryption': {'key': 'properties.encryption', 'type': 'EncryptionProperties'},
+        'private_endpoint_connections': {'key': 'properties.privateEndpointConnections', 'type': '[PrivateEndpointConnection]'},
+        'public_network_access': {'key': 'properties.publicNetworkAccess', 'type': 'bool'},
     }
 
     def __init__(
@@ -486,12 +501,16 @@ class AutomationAccount(TrackedResource):
     ):
         super(AutomationAccount, self).__init__(**kwargs)
         self.etag = kwargs.get('etag', None)
+        self.identity = kwargs.get('identity', None)
         self.sku = kwargs.get('sku', None)
         self.last_modified_by = kwargs.get('last_modified_by', None)
         self.state = None
         self.creation_time = None
         self.last_modified_time = None
         self.description = kwargs.get('description', None)
+        self.encryption = kwargs.get('encryption', None)
+        self.private_endpoint_connections = kwargs.get('private_endpoint_connections', None)
+        self.public_network_access = kwargs.get('public_network_access', None)
 
 
 class AutomationAccountCreateOrUpdateParameters(msrest.serialization.Model):
@@ -501,17 +520,27 @@ class AutomationAccountCreateOrUpdateParameters(msrest.serialization.Model):
     :type name: str
     :param location: Gets or sets the location of the resource.
     :type location: str
+    :param identity: Sets the identity property for automation account.
+    :type identity: ~azure.mgmt.automation.models.Identity
     :param tags: A set of tags. Gets or sets the tags attached to the resource.
     :type tags: dict[str, str]
     :param sku: Gets or sets account SKU.
     :type sku: ~azure.mgmt.automation.models.Sku
+    :param encryption: Set the encryption properties for the automation account.
+    :type encryption: ~azure.mgmt.automation.models.EncryptionProperties
+    :param public_network_access: Indicates whether traffic on the non-ARM endpoint (Webhook/Agent)
+     is allowed from the public internet.
+    :type public_network_access: bool
     """
 
     _attribute_map = {
         'name': {'key': 'name', 'type': 'str'},
         'location': {'key': 'location', 'type': 'str'},
+        'identity': {'key': 'identity', 'type': 'Identity'},
         'tags': {'key': 'tags', 'type': '{str}'},
         'sku': {'key': 'properties.sku', 'type': 'Sku'},
+        'encryption': {'key': 'properties.encryption', 'type': 'EncryptionProperties'},
+        'public_network_access': {'key': 'properties.publicNetworkAccess', 'type': 'bool'},
     }
 
     def __init__(
@@ -521,8 +550,11 @@ class AutomationAccountCreateOrUpdateParameters(msrest.serialization.Model):
         super(AutomationAccountCreateOrUpdateParameters, self).__init__(**kwargs)
         self.name = kwargs.get('name', None)
         self.location = kwargs.get('location', None)
+        self.identity = kwargs.get('identity', None)
         self.tags = kwargs.get('tags', None)
         self.sku = kwargs.get('sku', None)
+        self.encryption = kwargs.get('encryption', None)
+        self.public_network_access = kwargs.get('public_network_access', None)
 
 
 class AutomationAccountListResult(msrest.serialization.Model):
@@ -555,17 +587,27 @@ class AutomationAccountUpdateParameters(msrest.serialization.Model):
     :type name: str
     :param location: Gets or sets the location of the resource.
     :type location: str
+    :param identity: Sets the identity property for automation account.
+    :type identity: ~azure.mgmt.automation.models.Identity
     :param tags: A set of tags. Gets or sets the tags attached to the resource.
     :type tags: dict[str, str]
     :param sku: Gets or sets account SKU.
     :type sku: ~azure.mgmt.automation.models.Sku
+    :param encryption: Set the encryption properties for the automation account.
+    :type encryption: ~azure.mgmt.automation.models.EncryptionProperties
+    :param public_network_access: Indicates whether traffic on the non-ARM endpoint (Webhook/Agent)
+     is allowed from the public internet.
+    :type public_network_access: bool
     """
 
     _attribute_map = {
         'name': {'key': 'name', 'type': 'str'},
         'location': {'key': 'location', 'type': 'str'},
+        'identity': {'key': 'identity', 'type': 'Identity'},
         'tags': {'key': 'tags', 'type': '{str}'},
         'sku': {'key': 'properties.sku', 'type': 'Sku'},
+        'encryption': {'key': 'properties.encryption', 'type': 'EncryptionProperties'},
+        'public_network_access': {'key': 'properties.publicNetworkAccess', 'type': 'bool'},
     }
 
     def __init__(
@@ -575,8 +617,11 @@ class AutomationAccountUpdateParameters(msrest.serialization.Model):
         super(AutomationAccountUpdateParameters, self).__init__(**kwargs)
         self.name = kwargs.get('name', None)
         self.location = kwargs.get('location', None)
+        self.identity = kwargs.get('identity', None)
         self.tags = kwargs.get('tags', None)
         self.sku = kwargs.get('sku', None)
+        self.encryption = kwargs.get('encryption', None)
+        self.public_network_access = kwargs.get('public_network_access', None)
 
 
 class AzureQueryProperties(msrest.serialization.Model):
@@ -606,7 +651,39 @@ class AzureQueryProperties(msrest.serialization.Model):
         self.tag_settings = kwargs.get('tag_settings', None)
 
 
-class Certificate(Resource):
+class ProxyResource(Resource):
+    """ARM proxy resource.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    :ivar id: Fully qualified resource Id for the resource.
+    :vartype id: str
+    :ivar name: The name of the resource.
+    :vartype name: str
+    :ivar type: The type of the resource.
+    :vartype type: str
+    """
+
+    _validation = {
+        'id': {'readonly': True},
+        'name': {'readonly': True},
+        'type': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'id': {'key': 'id', 'type': 'str'},
+        'name': {'key': 'name', 'type': 'str'},
+        'type': {'key': 'type', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(ProxyResource, self).__init__(**kwargs)
+
+
+class Certificate(ProxyResource):
     """Definition of the certificate.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -755,7 +832,37 @@ class CertificateUpdateParameters(msrest.serialization.Model):
         self.description = kwargs.get('description', None)
 
 
-class Connection(Resource):
+class ComponentsSgqdofSchemasIdentityPropertiesUserassignedidentitiesAdditionalproperties(msrest.serialization.Model):
+    """ComponentsSgqdofSchemasIdentityPropertiesUserassignedidentitiesAdditionalproperties.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    :ivar principal_id: The principal id of user assigned identity.
+    :vartype principal_id: str
+    :ivar client_id: The client id of user assigned identity.
+    :vartype client_id: str
+    """
+
+    _validation = {
+        'principal_id': {'readonly': True},
+        'client_id': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'principal_id': {'key': 'principalId', 'type': 'str'},
+        'client_id': {'key': 'clientId', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(ComponentsSgqdofSchemasIdentityPropertiesUserassignedidentitiesAdditionalproperties, self).__init__(**kwargs)
+        self.principal_id = None
+        self.client_id = None
+
+
+class Connection(ProxyResource):
     """Definition of the connection.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -1120,7 +1227,7 @@ class ContentSource(msrest.serialization.Model):
         self.version = kwargs.get('version', None)
 
 
-class Credential(Resource):
+class Credential(ProxyResource):
     """Definition of the credential.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -1264,7 +1371,7 @@ class CredentialUpdateParameters(msrest.serialization.Model):
         self.description = kwargs.get('description', None)
 
 
-class DscCompilationJob(Resource):
+class DscCompilationJob(ProxyResource):
     """Definition of the Dsc Compilation job.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -1740,7 +1847,7 @@ class DscMetaConfiguration(msrest.serialization.Model):
         self.allow_module_overwrite = kwargs.get('allow_module_overwrite', None)
 
 
-class DscNode(Resource):
+class DscNode(ProxyResource):
     """Definition of a DscNode.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -1814,7 +1921,7 @@ class DscNode(Resource):
         self.name_properties_node_configuration_name = kwargs.get('name_properties_node_configuration_name', None)
 
 
-class DscNodeConfiguration(Resource):
+class DscNodeConfiguration(ProxyResource):
     """Definition of the dsc node configuration.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -2255,6 +2362,55 @@ class DscReportResourceNavigation(msrest.serialization.Model):
         self.resource_id = kwargs.get('resource_id', None)
 
 
+class EncryptionProperties(msrest.serialization.Model):
+    """The encryption settings for automation account.
+
+    :param key_vault_properties: Key vault properties.
+    :type key_vault_properties: ~azure.mgmt.automation.models.KeyVaultProperties
+    :param key_source: Encryption Key Source. Possible values include: "Microsoft.Automation",
+     "Microsoft.Keyvault".
+    :type key_source: str or ~azure.mgmt.automation.models.EncryptionKeySourceType
+    :param identity: User identity used for CMK.
+    :type identity: ~azure.mgmt.automation.models.EncryptionPropertiesIdentity
+    """
+
+    _attribute_map = {
+        'key_vault_properties': {'key': 'keyVaultProperties', 'type': 'KeyVaultProperties'},
+        'key_source': {'key': 'keySource', 'type': 'str'},
+        'identity': {'key': 'identity', 'type': 'EncryptionPropertiesIdentity'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(EncryptionProperties, self).__init__(**kwargs)
+        self.key_vault_properties = kwargs.get('key_vault_properties', None)
+        self.key_source = kwargs.get('key_source', None)
+        self.identity = kwargs.get('identity', None)
+
+
+class EncryptionPropertiesIdentity(msrest.serialization.Model):
+    """User identity used for CMK.
+
+    :param user_assigned_identity: The user identity used for CMK. It will be an ARM resource id in
+     the form:
+     '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
+    :type user_assigned_identity: str
+    """
+
+    _attribute_map = {
+        'user_assigned_identity': {'key': 'userAssignedIdentity', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(EncryptionPropertiesIdentity, self).__init__(**kwargs)
+        self.user_assigned_identity = kwargs.get('user_assigned_identity', None)
+
+
 class ErrorResponse(msrest.serialization.Model):
     """Error response of an operation failure.
 
@@ -2419,7 +2575,49 @@ class HybridRunbookWorkerGroupUpdateParameters(msrest.serialization.Model):
         self.credential = kwargs.get('credential', None)
 
 
-class Job(Resource):
+class Identity(msrest.serialization.Model):
+    """Identity for the resource.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    :ivar principal_id: The principal ID of resource identity.
+    :vartype principal_id: str
+    :ivar tenant_id: The tenant ID of resource.
+    :vartype tenant_id: str
+    :param type: The identity type. Possible values include: "SystemAssigned", "UserAssigned",
+     "SystemAssigned, UserAssigned", "None".
+    :type type: str or ~azure.mgmt.automation.models.ResourceIdentityType
+    :param user_assigned_identities: The list of user identities associated with the resource. The
+     user identity dictionary key references will be ARM resource ids in the form:
+     '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
+    :type user_assigned_identities: dict[str,
+     ~azure.mgmt.automation.models.ComponentsSgqdofSchemasIdentityPropertiesUserassignedidentitiesAdditionalproperties]
+    """
+
+    _validation = {
+        'principal_id': {'readonly': True},
+        'tenant_id': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'principal_id': {'key': 'principalId', 'type': 'str'},
+        'tenant_id': {'key': 'tenantId', 'type': 'str'},
+        'type': {'key': 'type', 'type': 'str'},
+        'user_assigned_identities': {'key': 'userAssignedIdentities', 'type': '{ComponentsSgqdofSchemasIdentityPropertiesUserassignedidentitiesAdditionalproperties}'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(Identity, self).__init__(**kwargs)
+        self.principal_id = None
+        self.tenant_id = None
+        self.type = kwargs.get('type', None)
+        self.user_assigned_identities = kwargs.get('user_assigned_identities', None)
+
+
+class Job(ProxyResource):
     """Definition of the job.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -2511,7 +2709,7 @@ class Job(Resource):
         self.provisioning_state = kwargs.get('provisioning_state', None)
 
 
-class JobCollectionItem(Resource):
+class JobCollectionItem(ProxyResource):
     """Job collection item properties.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -2804,7 +3002,7 @@ class JobStream(msrest.serialization.Model):
     :param summary: Gets or sets the summary.
     :type summary: str
     :param value: Gets or sets the values of the job stream.
-    :type value: dict[str, object]
+    :type value: dict[str, str]
     """
 
     _attribute_map = {
@@ -2814,7 +3012,7 @@ class JobStream(msrest.serialization.Model):
         'stream_type': {'key': 'properties.streamType', 'type': 'str'},
         'stream_text': {'key': 'properties.streamText', 'type': 'str'},
         'summary': {'key': 'properties.summary', 'type': 'str'},
-        'value': {'key': 'properties.value', 'type': '{object}'},
+        'value': {'key': 'properties.value', 'type': '{str}'},
     }
 
     def __init__(
@@ -2906,6 +3104,33 @@ class KeyListResult(msrest.serialization.Model):
     ):
         super(KeyListResult, self).__init__(**kwargs)
         self.keys = kwargs.get('keys', None)
+
+
+class KeyVaultProperties(msrest.serialization.Model):
+    """Settings concerning key vault encryption for a configuration store.
+
+    :param keyvault_uri: The URI of the key vault key used to encrypt data.
+    :type keyvault_uri: str
+    :param key_name: The name of key used to encrypt data.
+    :type key_name: str
+    :param key_version: The key version of the key used to encrypt data.
+    :type key_version: str
+    """
+
+    _attribute_map = {
+        'keyvault_uri': {'key': 'keyvaultUri', 'type': 'str'},
+        'key_name': {'key': 'keyName', 'type': 'str'},
+        'key_version': {'key': 'keyVersion', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(KeyVaultProperties, self).__init__(**kwargs)
+        self.keyvault_uri = kwargs.get('keyvault_uri', None)
+        self.key_name = kwargs.get('key_name', None)
+        self.key_version = kwargs.get('key_version', None)
 
 
 class LinkedWorkspace(msrest.serialization.Model):
@@ -3326,8 +3551,8 @@ class OperationListResult(msrest.serialization.Model):
         self.value = kwargs.get('value', None)
 
 
-class ProxyResource(Resource):
-    """ARM proxy resource.
+class PrivateEndpointConnection(ProxyResource):
+    """A private endpoint connection.
 
     Variables are only populated by the server, and will be ignored when sending a request.
 
@@ -3337,6 +3562,12 @@ class ProxyResource(Resource):
     :vartype name: str
     :ivar type: The type of the resource.
     :vartype type: str
+    :param private_endpoint: Private endpoint which the connection belongs to.
+    :type private_endpoint: ~azure.mgmt.automation.models.PrivateEndpointProperty
+    :param private_link_service_connection_state: Connection State of the Private Endpoint
+     Connection.
+    :type private_link_service_connection_state:
+     ~azure.mgmt.automation.models.PrivateLinkServiceConnectionStateProperty
     """
 
     _validation = {
@@ -3349,13 +3580,150 @@ class ProxyResource(Resource):
         'id': {'key': 'id', 'type': 'str'},
         'name': {'key': 'name', 'type': 'str'},
         'type': {'key': 'type', 'type': 'str'},
+        'private_endpoint': {'key': 'properties.privateEndpoint', 'type': 'PrivateEndpointProperty'},
+        'private_link_service_connection_state': {'key': 'properties.privateLinkServiceConnectionState', 'type': 'PrivateLinkServiceConnectionStateProperty'},
     }
 
     def __init__(
         self,
         **kwargs
     ):
-        super(ProxyResource, self).__init__(**kwargs)
+        super(PrivateEndpointConnection, self).__init__(**kwargs)
+        self.private_endpoint = kwargs.get('private_endpoint', None)
+        self.private_link_service_connection_state = kwargs.get('private_link_service_connection_state', None)
+
+
+class PrivateEndpointConnectionListResult(msrest.serialization.Model):
+    """A list of private endpoint connections.
+
+    :param value: Array of private endpoint connections.
+    :type value: list[~azure.mgmt.automation.models.PrivateEndpointConnection]
+    """
+
+    _attribute_map = {
+        'value': {'key': 'value', 'type': '[PrivateEndpointConnection]'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(PrivateEndpointConnectionListResult, self).__init__(**kwargs)
+        self.value = kwargs.get('value', None)
+
+
+class PrivateEndpointProperty(msrest.serialization.Model):
+    """Private endpoint which the connection belongs to.
+
+    :param id: Resource id of the private endpoint.
+    :type id: str
+    """
+
+    _attribute_map = {
+        'id': {'key': 'id', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(PrivateEndpointProperty, self).__init__(**kwargs)
+        self.id = kwargs.get('id', None)
+
+
+class PrivateLinkResource(ProxyResource):
+    """A private link resource.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    :ivar id: Fully qualified resource Id for the resource.
+    :vartype id: str
+    :ivar name: The name of the resource.
+    :vartype name: str
+    :ivar type: The type of the resource.
+    :vartype type: str
+    :ivar group_id: The private link resource group id.
+    :vartype group_id: str
+    :ivar required_members: The private link resource required member names.
+    :vartype required_members: list[str]
+    """
+
+    _validation = {
+        'id': {'readonly': True},
+        'name': {'readonly': True},
+        'type': {'readonly': True},
+        'group_id': {'readonly': True},
+        'required_members': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'id': {'key': 'id', 'type': 'str'},
+        'name': {'key': 'name', 'type': 'str'},
+        'type': {'key': 'type', 'type': 'str'},
+        'group_id': {'key': 'properties.groupId', 'type': 'str'},
+        'required_members': {'key': 'properties.requiredMembers', 'type': '[str]'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(PrivateLinkResource, self).__init__(**kwargs)
+        self.group_id = None
+        self.required_members = None
+
+
+class PrivateLinkResourceListResult(msrest.serialization.Model):
+    """A list of private link resources.
+
+    :param value: Array of private link resources.
+    :type value: list[~azure.mgmt.automation.models.PrivateLinkResource]
+    """
+
+    _attribute_map = {
+        'value': {'key': 'value', 'type': '[PrivateLinkResource]'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(PrivateLinkResourceListResult, self).__init__(**kwargs)
+        self.value = kwargs.get('value', None)
+
+
+class PrivateLinkServiceConnectionStateProperty(msrest.serialization.Model):
+    """Connection State of the Private Endpoint Connection.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    :param status: The private link service connection status.
+    :type status: str
+    :param description: The private link service connection description.
+    :type description: str
+    :ivar actions_required: Any action that is required beyond basic workflow (approve/ reject/
+     disconnect).
+    :vartype actions_required: str
+    """
+
+    _validation = {
+        'actions_required': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'status': {'key': 'status', 'type': 'str'},
+        'description': {'key': 'description', 'type': 'str'},
+        'actions_required': {'key': 'actionsRequired', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(PrivateLinkServiceConnectionStateProperty, self).__init__(**kwargs)
+        self.status = kwargs.get('status', None)
+        self.description = kwargs.get('description', None)
+        self.actions_required = None
 
 
 class PythonPackageCreateParameters(msrest.serialization.Model):
@@ -3857,7 +4225,7 @@ class RunbookUpdateParameters(msrest.serialization.Model):
         self.log_activity_trace = kwargs.get('log_activity_trace', None)
 
 
-class Schedule(Resource):
+class Schedule(ProxyResource):
     """Definition of the schedule.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -4598,7 +4966,7 @@ class SoftwareUpdateConfigurationTasks(msrest.serialization.Model):
         self.post_task = kwargs.get('post_task', None)
 
 
-class SourceControl(Resource):
+class SourceControl(ProxyResource):
     """Definition of the source control.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -5010,7 +5378,7 @@ class SourceControlSyncJobStreamById(msrest.serialization.Model):
     :param stream_text: The text of the sync job stream.
     :type stream_text: str
     :param value: The values of the job stream.
-    :type value: dict[str, object]
+    :type value: dict[str, str]
     """
 
     _validation = {
@@ -5025,7 +5393,7 @@ class SourceControlSyncJobStreamById(msrest.serialization.Model):
         'time': {'key': 'properties.time', 'type': 'iso-8601'},
         'stream_type': {'key': 'properties.streamType', 'type': 'str'},
         'stream_text': {'key': 'properties.streamText', 'type': 'str'},
-        'value': {'key': 'properties.value', 'type': '{object}'},
+        'value': {'key': 'properties.value', 'type': '{str}'},
     }
 
     def __init__(
@@ -5608,7 +5976,7 @@ class UsageListResult(msrest.serialization.Model):
         self.value = kwargs.get('value', None)
 
 
-class Variable(Resource):
+class Variable(ProxyResource):
     """Definition of the variable.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -5880,7 +6248,7 @@ class WatcherUpdateParameters(msrest.serialization.Model):
         self.execution_frequency_in_seconds = kwargs.get('execution_frequency_in_seconds', None)
 
 
-class Webhook(Resource):
+class Webhook(ProxyResource):
     """Definition of the webhook type.
 
     Variables are only populated by the server, and will be ignored when sending a request.

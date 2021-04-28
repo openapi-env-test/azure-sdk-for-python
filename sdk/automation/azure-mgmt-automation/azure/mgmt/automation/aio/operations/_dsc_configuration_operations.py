@@ -93,7 +93,7 @@ class DscConfigurationOperations:
 
         if response.status_code not in [200, 204]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = self._deserialize(_models.ErrorResponse, response)
+            error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         if cls:
@@ -153,7 +153,7 @@ class DscConfigurationOperations:
 
         if response.status_code not in [200]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = self._deserialize(_models.ErrorResponse, response)
+            error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         deserialized = self._deserialize('DscConfiguration', pipeline_response)
@@ -235,7 +235,7 @@ class DscConfigurationOperations:
 
         if response.status_code not in [200, 201]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = self._deserialize(_models.ErrorResponse, response)
+            error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         if response.status_code == 200:
@@ -305,7 +305,10 @@ class DscConfigurationOperations:
 
         body_content_kwargs = {}  # type: Dict[str, Any]
         if header_parameters['Content-Type'].split(";")[0] in ['text/plain']:
-            body_content = self._serialize.body(parameters, 'str')
+            if parameters is not None:
+                body_content = self._serialize.body(parameters, 'str')
+            else:
+                body_content = None
             body_content_kwargs['content'] = body_content
         elif header_parameters['Content-Type'].split(";")[0] in ['application/json']:
             if parameters is not None:
@@ -324,7 +327,7 @@ class DscConfigurationOperations:
 
         if response.status_code not in [200]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = self._deserialize(_models.ErrorResponse, response)
+            error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         deserialized = self._deserialize('DscConfiguration', pipeline_response)
@@ -481,7 +484,7 @@ class DscConfigurationOperations:
             response = pipeline_response.http_response
 
             if response.status_code not in [200]:
-                error = self._deserialize(_models.ErrorResponse, response)
+                error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, response)
                 map_error(status_code=response.status_code, response=response, error_map=error_map)
                 raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
