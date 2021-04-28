@@ -1448,8 +1448,7 @@ class CloudServiceConfiguration(msrest.serialization.Model):
      2008 R2 SP1. 3 - OS Family 3, equivalent to Windows Server 2012. 4 - OS Family 4, equivalent to
      Windows Server 2012 R2. 5 - OS Family 5, equivalent to Windows Server 2016. 6 - OS Family 6,
      equivalent to Windows Server 2019. For more information, see Azure Guest OS Releases
-     (https://azure.microsoft.com/documentation/articles/cloud-services-guestos-update-
-     matrix/#releases).
+     (https://azure.microsoft.com/documentation/articles/cloud-services-guestos-update-matrix/#releases).
     :type os_family: str
     :param os_version: The default value is * which specifies the latest operating system version
      for the specified OS family.
@@ -1622,8 +1621,8 @@ class DataDisk(msrest.serialization.Model):
       readWrite - The caching mode for the disk is read and write.
     
       The default value for caching is none. For information about the caching options see:
-     https://blogs.msdn.microsoft.com/windowsazurestorage/2012/06/27/exploring-windows-azure-drives-
-     disks-and-images/. Possible values include: "None", "ReadOnly", "ReadWrite".
+     https://blogs.msdn.microsoft.com/windowsazurestorage/2012/06/27/exploring-windows-azure-drives-disks-and-images/.
+     Possible values include: "None", "ReadOnly", "ReadWrite".
     :type caching: str or ~azure.mgmt.batch.models.CachingType
     :param disk_size_gb: Required. The initial disk size in GB when creating new data disk.
     :type disk_size_gb: int
@@ -1850,8 +1849,7 @@ class ImageReference(msrest.serialization.Model):
     :param id: This property is mutually exclusive with other properties. The Shared Image Gallery
      image must have replicas in the same region as the Azure Batch account. For information about
      the firewall settings for the Batch node agent to communicate with the Batch service see
-     https://docs.microsoft.com/en-us/azure/batch/batch-api-basics#virtual-network-vnet-and-
-     firewall-configuration.
+     https://docs.microsoft.com/en-us/azure/batch/batch-api-basics#virtual-network-vnet-and-firewall-configuration.
     :type id: str
     """
 
@@ -2248,8 +2246,8 @@ class NetworkConfiguration(msrest.serialization.Model):
      29876 and 29877, as well as port 22 for Linux and port 3389 for Windows. For pools created with
      a cloud service configuration, enable ports 10100, 20100, and 30100. Also enable outbound
      connections to Azure Storage on port 443. For cloudServiceConfiguration pools, only 'classic'
-     VNETs are supported. For more details see: https://docs.microsoft.com/en-us/azure/batch/batch-
-     api-basics#virtual-network-vnet-and-firewall-configuration.
+     VNETs are supported. For more details see:
+     https://docs.microsoft.com/en-us/azure/batch/batch-api-basics#virtual-network-vnet-and-firewall-configuration.
     :type subnet_id: str
     :param endpoint_configuration: Pool endpoint configuration is only supported on pools with the
      virtualMachineConfiguration property.
@@ -2389,14 +2387,14 @@ class Operation(msrest.serialization.Model):
     :param origin: The intended executor of the operation.
     :type origin: str
     :param properties: Any object.
-    :type properties: object
+    :type properties: str
     """
 
     _attribute_map = {
         'name': {'key': 'name', 'type': 'str'},
         'display': {'key': 'display', 'type': 'OperationDisplay'},
         'origin': {'key': 'origin', 'type': 'str'},
-        'properties': {'key': 'properties', 'type': 'object'},
+        'properties': {'key': 'properties', 'type': 'str'},
     }
 
     def __init__(
@@ -2506,9 +2504,10 @@ class Pool(ProxyResource):
      sizes for pools using images from the Virtual Machines Marketplace (pools created with
      virtualMachineConfiguration) see Sizes for Virtual Machines (Linux)
      (https://azure.microsoft.com/documentation/articles/virtual-machines-linux-sizes/) or Sizes for
-     Virtual Machines (Windows) (https://azure.microsoft.com/documentation/articles/virtual-
-     machines-windows-sizes/). Batch supports all Azure VM sizes except STANDARD_A0 and those with
-     premium storage (STANDARD_GS, STANDARD_DS, and STANDARD_DSV2 series).
+     Virtual Machines (Windows)
+     (https://azure.microsoft.com/documentation/articles/virtual-machines-windows-sizes/). Batch
+     supports all Azure VM sizes except STANDARD_A0 and those with premium storage (STANDARD_GS,
+     STANDARD_DS, and STANDARD_DSV2 series).
     :type vm_size: str
     :param deployment_configuration: Using CloudServiceConfiguration specifies that the nodes
      should be creating using Azure Cloud Services (PaaS), while VirtualMachineConfiguration uses
@@ -3370,10 +3369,10 @@ class VMExtension(msrest.serialization.Model):
      upgrade minor versions unless redeployed, even with this property set to true.
     :type auto_upgrade_minor_version: bool
     :param settings: Any object.
-    :type settings: object
+    :type settings: str
     :param protected_settings: The extension can contain either protectedSettings or
      protectedSettingsFromKeyVault or no protected settings at all.
-    :type protected_settings: object
+    :type protected_settings: str
     :param provision_after_extensions: Collection of extension names after which this extension
      needs to be provisioned.
     :type provision_after_extensions: list[str]
@@ -3391,8 +3390,8 @@ class VMExtension(msrest.serialization.Model):
         'type': {'key': 'type', 'type': 'str'},
         'type_handler_version': {'key': 'typeHandlerVersion', 'type': 'str'},
         'auto_upgrade_minor_version': {'key': 'autoUpgradeMinorVersion', 'type': 'bool'},
-        'settings': {'key': 'settings', 'type': 'object'},
-        'protected_settings': {'key': 'protectedSettings', 'type': 'object'},
+        'settings': {'key': 'settings', 'type': 'str'},
+        'protected_settings': {'key': 'protectedSettings', 'type': 'str'},
         'provision_after_extensions': {'key': 'provisionAfterExtensions', 'type': '[str]'},
     }
 
