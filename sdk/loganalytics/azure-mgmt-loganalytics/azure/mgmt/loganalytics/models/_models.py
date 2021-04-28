@@ -614,7 +614,7 @@ class DataSource(ProxyResource):
     :vartype type: str
     :param properties: Required. The data source properties in raw json format, each kind of data
      source have it's own schema.
-    :type properties: object
+    :type properties: str
     :param etag: The ETag of the data source.
     :type etag: str
     :param kind: Required. The kind of the DataSource. Possible values include: "WindowsEvent",
@@ -645,7 +645,7 @@ class DataSource(ProxyResource):
         'id': {'key': 'id', 'type': 'str'},
         'name': {'key': 'name', 'type': 'str'},
         'type': {'key': 'type', 'type': 'str'},
-        'properties': {'key': 'properties', 'type': 'object'},
+        'properties': {'key': 'properties', 'type': 'str'},
         'etag': {'key': 'etag', 'type': 'str'},
         'kind': {'key': 'kind', 'type': 'str'},
         'tags': {'key': 'tags', 'type': '{str}'},
@@ -722,7 +722,7 @@ class ErrorAdditionalInfo(msrest.serialization.Model):
     :ivar type: The additional info type.
     :vartype type: str
     :ivar info: The additional info.
-    :vartype info: object
+    :vartype info: str
     """
 
     _validation = {
@@ -732,7 +732,7 @@ class ErrorAdditionalInfo(msrest.serialization.Model):
 
     _attribute_map = {
         'type': {'key': 'type', 'type': 'str'},
-        'info': {'key': 'info', 'type': 'object'},
+        'info': {'key': 'info', 'type': 'str'},
     }
 
     def __init__(
@@ -1952,7 +1952,7 @@ class Workspace(TrackedResource):
     :vartype private_link_scoped_resources:
      list[~azure.mgmt.loganalytics.models.PrivateLinkScopedResource]
     :param features: Workspace features.
-    :type features: dict[str, object]
+    :type features: dict[str, str]
     """
 
     _validation = {
@@ -1984,7 +1984,7 @@ class Workspace(TrackedResource):
         'public_network_access_for_query': {'key': 'properties.publicNetworkAccessForQuery', 'type': 'str'},
         'force_cmk_for_query': {'key': 'properties.forceCmkForQuery', 'type': 'bool'},
         'private_link_scoped_resources': {'key': 'properties.privateLinkScopedResources', 'type': '[PrivateLinkScopedResource]'},
-        'features': {'key': 'properties.features', 'type': '{object}'},
+        'features': {'key': 'properties.features', 'type': '{str}'},
     }
 
     def __init__(
@@ -2149,7 +2149,7 @@ class WorkspacePatch(AzureEntityResource):
     :vartype private_link_scoped_resources:
      list[~azure.mgmt.loganalytics.models.PrivateLinkScopedResource]
     :param features: Workspace features.
-    :type features: dict[str, object]
+    :type features: dict[str, str]
     """
 
     _validation = {
@@ -2180,7 +2180,7 @@ class WorkspacePatch(AzureEntityResource):
         'public_network_access_for_query': {'key': 'properties.publicNetworkAccessForQuery', 'type': 'str'},
         'force_cmk_for_query': {'key': 'properties.forceCmkForQuery', 'type': 'bool'},
         'private_link_scoped_resources': {'key': 'properties.privateLinkScopedResources', 'type': '[PrivateLinkScopedResource]'},
-        'features': {'key': 'properties.features', 'type': '{object}'},
+        'features': {'key': 'properties.features', 'type': '{str}'},
     }
 
     def __init__(
@@ -2334,23 +2334,18 @@ class WorkspaceSku(msrest.serialization.Model):
     :param capacity_reservation_level: The capacity reservation level for this workspace, when
      CapacityReservation sku is selected.
     :type capacity_reservation_level: int
-    :ivar max_capacity_reservation_level: The maximum capacity reservation level available for this
-     workspace, when CapacityReservation sku is selected.
-    :vartype max_capacity_reservation_level: int
     :ivar last_sku_update: The last time when the sku was updated.
     :vartype last_sku_update: str
     """
 
     _validation = {
         'name': {'required': True},
-        'max_capacity_reservation_level': {'readonly': True},
         'last_sku_update': {'readonly': True},
     }
 
     _attribute_map = {
         'name': {'key': 'name', 'type': 'str'},
         'capacity_reservation_level': {'key': 'capacityReservationLevel', 'type': 'int'},
-        'max_capacity_reservation_level': {'key': 'maxCapacityReservationLevel', 'type': 'int'},
         'last_sku_update': {'key': 'lastSkuUpdate', 'type': 'str'},
     }
 
@@ -2361,5 +2356,4 @@ class WorkspaceSku(msrest.serialization.Model):
         super(WorkspaceSku, self).__init__(**kwargs)
         self.name = kwargs['name']
         self.capacity_reservation_level = kwargs.get('capacity_reservation_level', None)
-        self.max_capacity_reservation_level = None
         self.last_sku_update = None
