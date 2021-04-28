@@ -483,15 +483,15 @@ class VirtualNetworkPeering(msrest.serialization.Model):
      true. This flag cannot be set if virtual network already has a gateway.
     :type use_remote_gateways: bool
     :param databricks_virtual_network: The remote virtual network should be in the same region. See
-     here to learn more (https://docs.microsoft.com/en-us/azure/databricks/administration-
-     guide/cloud-configurations/azure/vnet-peering).
+     here to learn more
+     (https://docs.microsoft.com/en-us/azure/databricks/administration-guide/cloud-configurations/azure/vnet-peering).
     :type databricks_virtual_network:
      ~azure.mgmt.databricks.models.VirtualNetworkPeeringPropertiesFormatDatabricksVirtualNetwork
     :param databricks_address_space: The reference to the databricks virtual network address space.
     :type databricks_address_space: ~azure.mgmt.databricks.models.AddressSpace
     :param remote_virtual_network: Required. The remote virtual network should be in the same
-     region. See here to learn more (https://docs.microsoft.com/en-
-     us/azure/databricks/administration-guide/cloud-configurations/azure/vnet-peering).
+     region. See here to learn more
+     (https://docs.microsoft.com/en-us/azure/databricks/administration-guide/cloud-configurations/azure/vnet-peering).
     :type remote_virtual_network:
      ~azure.mgmt.databricks.models.VirtualNetworkPeeringPropertiesFormatRemoteVirtualNetwork
     :param remote_address_space: The reference to the remote virtual network address space.
@@ -786,7 +786,7 @@ class WorkspaceCustomObjectParameter(msrest.serialization.Model):
      "String".
     :vartype type: str or ~azure.mgmt.databricks.models.CustomParameterType
     :param value: Required. The value which should be used for this field.
-    :type value: object
+    :type value: str
     """
 
     _validation = {
@@ -796,13 +796,13 @@ class WorkspaceCustomObjectParameter(msrest.serialization.Model):
 
     _attribute_map = {
         'type': {'key': 'type', 'type': 'str'},
-        'value': {'key': 'value', 'type': 'object'},
+        'value': {'key': 'value', 'type': 'str'},
     }
 
     def __init__(
         self,
         *,
-        value: object,
+        value: str,
         **kwargs
     ):
         super(WorkspaceCustomObjectParameter, self).__init__(**kwargs)
@@ -812,6 +812,8 @@ class WorkspaceCustomObjectParameter(msrest.serialization.Model):
 
 class WorkspaceCustomParameters(msrest.serialization.Model):
     """Custom Parameters used for Cluster Creation.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
 
     :param aml_workspace_id: The ID of a Azure Machine Learning workspace to link with Databricks
      workspace.
@@ -825,6 +827,18 @@ class WorkspaceCustomParameters(msrest.serialization.Model):
     :type custom_private_subnet_name: ~azure.mgmt.databricks.models.WorkspaceCustomStringParameter
     :param enable_no_public_ip: Should the Public IP be Disabled?.
     :type enable_no_public_ip: ~azure.mgmt.databricks.models.WorkspaceCustomBooleanParameter
+    :param load_balancer_backend_pool_name: Name of the outbound Load Balancer Backend Pool for
+     Secure Cluster Connectivity (No Public IP).
+    :type load_balancer_backend_pool_name:
+     ~azure.mgmt.databricks.models.WorkspaceCustomStringParameter
+    :param load_balancer_id: Resource URI of Outbound Load balancer for Secure Cluster Connectivity
+     (No Public IP) workspace.
+    :type load_balancer_id: ~azure.mgmt.databricks.models.WorkspaceCustomStringParameter
+    :param nat_gateway_name: Name of the NAT gateway for Secure Cluster Connectivity (No Public IP)
+     workspace subnets.
+    :type nat_gateway_name: ~azure.mgmt.databricks.models.WorkspaceCustomStringParameter
+    :param public_ip_name: Name of the Public IP for No Public IP workspace with managed vNet.
+    :type public_ip_name: ~azure.mgmt.databricks.models.WorkspaceCustomStringParameter
     :param prepare_encryption: Prepare the workspace for encryption. Enables the Managed Identity
      for managed storage account.
     :type prepare_encryption: ~azure.mgmt.databricks.models.WorkspaceCustomBooleanParameter
@@ -836,7 +850,22 @@ class WorkspaceCustomParameters(msrest.serialization.Model):
      data at rest.
     :type require_infrastructure_encryption:
      ~azure.mgmt.databricks.models.WorkspaceCustomBooleanParameter
+    :param storage_account_name: Default DBFS storage account name.
+    :type storage_account_name: ~azure.mgmt.databricks.models.WorkspaceCustomStringParameter
+    :param storage_account_sku_name: Storage account SKU name, ex: Standard_GRS, Standard_LRS.
+     Refer https://aka.ms/storageskus for valid inputs.
+    :type storage_account_sku_name: ~azure.mgmt.databricks.models.WorkspaceCustomStringParameter
+    :param vnet_address_prefix: Address prefix for Managed virtual network. Default value for this
+     input is 10.139.
+    :type vnet_address_prefix: ~azure.mgmt.databricks.models.WorkspaceCustomStringParameter
+    :ivar resource_tags: Tags applied to resources under Managed resource group. These can be
+     updated by updating tags at workspace level.
+    :vartype resource_tags: ~azure.mgmt.databricks.models.WorkspaceCustomObjectParameter
     """
+
+    _validation = {
+        'resource_tags': {'readonly': True},
+    }
 
     _attribute_map = {
         'aml_workspace_id': {'key': 'amlWorkspaceId', 'type': 'WorkspaceCustomStringParameter'},
@@ -844,9 +873,17 @@ class WorkspaceCustomParameters(msrest.serialization.Model):
         'custom_public_subnet_name': {'key': 'customPublicSubnetName', 'type': 'WorkspaceCustomStringParameter'},
         'custom_private_subnet_name': {'key': 'customPrivateSubnetName', 'type': 'WorkspaceCustomStringParameter'},
         'enable_no_public_ip': {'key': 'enableNoPublicIp', 'type': 'WorkspaceCustomBooleanParameter'},
+        'load_balancer_backend_pool_name': {'key': 'loadBalancerBackendPoolName', 'type': 'WorkspaceCustomStringParameter'},
+        'load_balancer_id': {'key': 'loadBalancerId', 'type': 'WorkspaceCustomStringParameter'},
+        'nat_gateway_name': {'key': 'natGatewayName', 'type': 'WorkspaceCustomStringParameter'},
+        'public_ip_name': {'key': 'publicIpName', 'type': 'WorkspaceCustomStringParameter'},
         'prepare_encryption': {'key': 'prepareEncryption', 'type': 'WorkspaceCustomBooleanParameter'},
         'encryption': {'key': 'encryption', 'type': 'WorkspaceEncryptionParameter'},
         'require_infrastructure_encryption': {'key': 'requireInfrastructureEncryption', 'type': 'WorkspaceCustomBooleanParameter'},
+        'storage_account_name': {'key': 'storageAccountName', 'type': 'WorkspaceCustomStringParameter'},
+        'storage_account_sku_name': {'key': 'storageAccountSkuName', 'type': 'WorkspaceCustomStringParameter'},
+        'vnet_address_prefix': {'key': 'vnetAddressPrefix', 'type': 'WorkspaceCustomStringParameter'},
+        'resource_tags': {'key': 'resourceTags', 'type': 'WorkspaceCustomObjectParameter'},
     }
 
     def __init__(
@@ -857,9 +894,16 @@ class WorkspaceCustomParameters(msrest.serialization.Model):
         custom_public_subnet_name: Optional["WorkspaceCustomStringParameter"] = None,
         custom_private_subnet_name: Optional["WorkspaceCustomStringParameter"] = None,
         enable_no_public_ip: Optional["WorkspaceCustomBooleanParameter"] = None,
+        load_balancer_backend_pool_name: Optional["WorkspaceCustomStringParameter"] = None,
+        load_balancer_id: Optional["WorkspaceCustomStringParameter"] = None,
+        nat_gateway_name: Optional["WorkspaceCustomStringParameter"] = None,
+        public_ip_name: Optional["WorkspaceCustomStringParameter"] = None,
         prepare_encryption: Optional["WorkspaceCustomBooleanParameter"] = None,
         encryption: Optional["WorkspaceEncryptionParameter"] = None,
         require_infrastructure_encryption: Optional["WorkspaceCustomBooleanParameter"] = None,
+        storage_account_name: Optional["WorkspaceCustomStringParameter"] = None,
+        storage_account_sku_name: Optional["WorkspaceCustomStringParameter"] = None,
+        vnet_address_prefix: Optional["WorkspaceCustomStringParameter"] = None,
         **kwargs
     ):
         super(WorkspaceCustomParameters, self).__init__(**kwargs)
@@ -868,9 +912,17 @@ class WorkspaceCustomParameters(msrest.serialization.Model):
         self.custom_public_subnet_name = custom_public_subnet_name
         self.custom_private_subnet_name = custom_private_subnet_name
         self.enable_no_public_ip = enable_no_public_ip
+        self.load_balancer_backend_pool_name = load_balancer_backend_pool_name
+        self.load_balancer_id = load_balancer_id
+        self.nat_gateway_name = nat_gateway_name
+        self.public_ip_name = public_ip_name
         self.prepare_encryption = prepare_encryption
         self.encryption = encryption
         self.require_infrastructure_encryption = require_infrastructure_encryption
+        self.storage_account_name = storage_account_name
+        self.storage_account_sku_name = storage_account_sku_name
+        self.vnet_address_prefix = vnet_address_prefix
+        self.resource_tags = None
 
 
 class WorkspaceCustomStringParameter(msrest.serialization.Model):
