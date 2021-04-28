@@ -284,8 +284,8 @@ class VirtualNetworksOperations:
         :type virtual_network: ~azure.mgmt.devtestlabs.models.VirtualNetwork
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: Pass in True if you'd like the AsyncARMPolling polling method,
+         False for no polling, or your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either VirtualNetwork or the result of cls(response)
@@ -403,8 +403,8 @@ class VirtualNetworksOperations:
         :type name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: True for ARMPolling, False for no polling, or a
-         polling object for personal polling strategy
+        :keyword polling: Pass in True if you'd like the AsyncARMPolling polling method,
+         False for no polling, or your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either None or the result of cls(response)
@@ -460,7 +460,7 @@ class VirtualNetworksOperations:
         resource_group_name: str,
         lab_name: str,
         name: str,
-        virtual_network: "_models.VirtualNetworkFragment",
+        tags: Optional[Dict[str, str]] = None,
         **kwargs
     ) -> "_models.VirtualNetwork":
         """Allows modifying tags of virtual networks. All other properties will be ignored.
@@ -471,8 +471,8 @@ class VirtualNetworksOperations:
         :type lab_name: str
         :param name: The name of the virtual network.
         :type name: str
-        :param virtual_network: A virtual network.
-        :type virtual_network: ~azure.mgmt.devtestlabs.models.VirtualNetworkFragment
+        :param tags: The tags of the resource.
+        :type tags: dict[str, str]
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: VirtualNetwork, or the result of cls(response)
         :rtype: ~azure.mgmt.devtestlabs.models.VirtualNetwork
@@ -483,6 +483,8 @@ class VirtualNetworksOperations:
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
+
+        _virtual_network = _models.VirtualNetworkFragment(tags=tags)
         api_version = "2018-09-15"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"
@@ -507,7 +509,7 @@ class VirtualNetworksOperations:
         header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
 
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(virtual_network, 'VirtualNetworkFragment')
+        body_content = self._serialize.body(_virtual_network, 'VirtualNetworkFragment')
         body_content_kwargs['content'] = body_content
         request = self._client.patch(url, query_parameters, header_parameters, **body_content_kwargs)
         pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
