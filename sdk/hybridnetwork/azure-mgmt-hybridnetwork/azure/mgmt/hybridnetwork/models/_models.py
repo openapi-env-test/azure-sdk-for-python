@@ -327,7 +327,7 @@ class ErrorAdditionalInfo(msrest.serialization.Model):
     :ivar type: The additional info type.
     :vartype type: str
     :ivar info: The additional info.
-    :vartype info: object
+    :vartype info: str
     """
 
     _validation = {
@@ -337,7 +337,7 @@ class ErrorAdditionalInfo(msrest.serialization.Model):
 
     _attribute_map = {
         'type': {'key': 'type', 'type': 'str'},
-        'info': {'key': 'info', 'type': 'object'},
+        'info': {'key': 'info', 'type': 'str'},
     }
 
     def __init__(
@@ -516,7 +516,7 @@ class NetworkFunction(TrackedResource):
     :ivar managed_application: The resource URI of the managed application.
     :vartype managed_application: ~hybrid_network_management_client.models.SubResource
     :param managed_application_parameters: The parameters for the managed application.
-    :type managed_application_parameters: object
+    :type managed_application_parameters: str
     :param network_function_user_configurations: The network function configurations from the user.
     :type network_function_user_configurations:
      list[~hybrid_network_management_client.models.NetworkFunctionUserConfiguration]
@@ -549,7 +549,7 @@ class NetworkFunction(TrackedResource):
         'service_key': {'key': 'properties.serviceKey', 'type': 'str'},
         'vendor_provisioning_state': {'key': 'properties.vendorProvisioningState', 'type': 'str'},
         'managed_application': {'key': 'properties.managedApplication', 'type': 'SubResource'},
-        'managed_application_parameters': {'key': 'properties.managedApplicationParameters', 'type': 'object'},
+        'managed_application_parameters': {'key': 'properties.managedApplicationParameters', 'type': 'str'},
         'network_function_user_configurations': {'key': 'properties.networkFunctionUserConfigurations', 'type': '[NetworkFunctionUserConfiguration]'},
     }
 
@@ -622,10 +622,10 @@ class NetworkFunctionRoleConfiguration(msrest.serialization.Model):
     :type os_profile: ~hybrid_network_management_client.models.OsProfile
     :param user_data_template: The user data template for customers. This is a json schema template
      describing the format and data type of user data parameters.
-    :type user_data_template: object
+    :type user_data_template: str
     :param user_data_parameters: The user parameters for customers. The format of user data
      parameters has to be matched with the provided user data template.
-    :type user_data_parameters: object
+    :type user_data_parameters: str
     :param network_interfaces: The network interface configurations.
     :type network_interfaces: list[~hybrid_network_management_client.models.NetworkInterface]
     :param storage_profile: Specifies the storage settings for the virtual machine disks.
@@ -639,8 +639,8 @@ class NetworkFunctionRoleConfiguration(msrest.serialization.Model):
         'role_type': {'key': 'roleType', 'type': 'str'},
         'virtual_machine_size': {'key': 'virtualMachineSize', 'type': 'str'},
         'os_profile': {'key': 'osProfile', 'type': 'OsProfile'},
-        'user_data_template': {'key': 'userDataTemplate', 'type': 'object'},
-        'user_data_parameters': {'key': 'userDataParameters', 'type': 'object'},
+        'user_data_template': {'key': 'userDataTemplate', 'type': 'str'},
+        'user_data_parameters': {'key': 'userDataParameters', 'type': 'str'},
         'network_interfaces': {'key': 'networkInterfaces', 'type': '[NetworkInterface]'},
         'storage_profile': {'key': 'storageProfile', 'type': 'StorageProfile'},
         'custom_profile': {'key': 'customProfile', 'type': 'CustomProfile'},
@@ -761,17 +761,17 @@ class NetworkFunctionSkuRoleDetails(msrest.serialization.Model):
     :param role_name: The name of the network function role.
     :type role_name: str
     :param user_data_template: The user data template for customers.
-    :type user_data_template: object
+    :type user_data_template: str
     :param user_data_parameters: The user parameters for customers.
-    :type user_data_parameters: object
+    :type user_data_parameters: str
     :param network_interfaces: The network interface configuration.
     :type network_interfaces: list[~hybrid_network_management_client.models.NetworkInterface]
     """
 
     _attribute_map = {
         'role_name': {'key': 'roleName', 'type': 'str'},
-        'user_data_template': {'key': 'userDataTemplate', 'type': 'object'},
-        'user_data_parameters': {'key': 'userDataParameters', 'type': 'object'},
+        'user_data_template': {'key': 'userDataTemplate', 'type': 'str'},
+        'user_data_parameters': {'key': 'userDataParameters', 'type': 'str'},
         'network_interfaces': {'key': 'networkInterfaces', 'type': '[NetworkInterface]'},
     }
 
@@ -812,7 +812,7 @@ class NetworkFunctionUserConfiguration(msrest.serialization.Model):
     :param role_name: The name of the network function role.
     :type role_name: str
     :param user_data_parameters: The user data parameters from the customer.
-    :type user_data_parameters: object
+    :type user_data_parameters: str
     :param network_interfaces: The network interface configuration.
     :type network_interfaces: list[~hybrid_network_management_client.models.NetworkInterface]
     :param os_profile: Specifies the operating system settings for the role instance.
@@ -822,7 +822,7 @@ class NetworkFunctionUserConfiguration(msrest.serialization.Model):
 
     _attribute_map = {
         'role_name': {'key': 'roleName', 'type': 'str'},
-        'user_data_parameters': {'key': 'userDataParameters', 'type': 'object'},
+        'user_data_parameters': {'key': 'userDataParameters', 'type': 'str'},
         'network_interfaces': {'key': 'networkInterfaces', 'type': '[NetworkInterface]'},
         'os_profile': {'key': 'osProfile', 'type': 'NetworkFunctionUserConfigurationOsProfile'},
     }
@@ -849,9 +849,8 @@ class NetworkFunctionUserConfigurationOsProfile(msrest.serialization.Model):
      saved as a file. For more information see `Custom Data on Azure VMs
      <https://azure.microsoft.com/en-us/blog/custom-data-and-cloud-init-on-windows-azure/>`_
      :code:`<br>`:code:`<br>` For using cloud-init for your Linux VM, see `Using cloud-init to
-     customize a Linux VM during creation <https://docs.microsoft.com/azure/virtual-
-     machines/virtual-machines-linux-using-cloud-init?toc=%2fazure%2fvirtual-
-     machines%2flinux%2ftoc.json>`_.
+     customize a Linux VM during creation
+     <https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-using-cloud-init?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json>`_.
     :type custom_data: str
     """
 
@@ -900,7 +899,7 @@ class NetworkFunctionVendorConfiguration(msrest.serialization.Model):
     :param os_profile: Specifies the operating system settings for the role instance.
     :type os_profile: ~hybrid_network_management_client.models.OsProfile
     :ivar user_data_parameters: The user parameters from the customer.
-    :vartype user_data_parameters: object
+    :vartype user_data_parameters: str
     :param network_interfaces: The network interface configurations.
     :type network_interfaces: list[~hybrid_network_management_client.models.NetworkInterface]
     """
@@ -912,7 +911,7 @@ class NetworkFunctionVendorConfiguration(msrest.serialization.Model):
     _attribute_map = {
         'role_name': {'key': 'roleName', 'type': 'str'},
         'os_profile': {'key': 'osProfile', 'type': 'OsProfile'},
-        'user_data_parameters': {'key': 'userDataParameters', 'type': 'object'},
+        'user_data_parameters': {'key': 'userDataParameters', 'type': 'str'},
         'network_interfaces': {'key': 'networkInterfaces', 'type': '[NetworkInterface]'},
     }
 
@@ -1166,20 +1165,19 @@ class OsProfile(msrest.serialization.Model):
      :code:`<br>`:code:`<br>` **Minimum-length (Linux):** 1  character :code:`<br>`:code:`<br>`
      **Max-length (Linux):** 64 characters :code:`<br>`:code:`<br>` **Max-length (Windows):** 20
      characters  :code:`<br>`:code:`<br>`:code:`<li>` For root access to the Linux VM, see `Using
-     root privileges on Linux virtual machines in Azure <https://docs.microsoft.com/azure/virtual-
-     machines/virtual-machines-linux-use-root-privileges?toc=%2fazure%2fvirtual-
-     machines%2flinux%2ftoc.json>`_\ :code:`<br>`:code:`<li>` For a list of built-in system users on
-     Linux that should not be used in this field, see `Selecting User Names for Linux on Azure
-     <https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-
-     usernames?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json>`_.
+     root privileges on Linux virtual machines in Azure
+     <https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-use-root-privileges?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json>`_\
+     :code:`<br>`:code:`<li>` For a list of built-in system users on Linux that should not be used
+     in this field, see `Selecting User Names for Linux on Azure
+     <https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-usernames?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json>`_.
     :type admin_username: str
     :param linux_configuration: Specifies the Linux operating system settings on the virtual
      machine. :code:`<br>`:code:`<br>`For a list of supported Linux distributions, see `Linux on
-     Azure-Endorsed Distributions <https://docs.microsoft.com/azure/virtual-machines/virtual-
-     machines-linux-endorsed-distros?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json>`_
-     :code:`<br>`:code:`<br>` For running non-endorsed distributions, see `Information for Non-
-     Endorsed Distributions <https://docs.microsoft.com/azure/virtual-machines/virtual-machines-
-     linux-create-upload-generic?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json>`_.
+     Azure-Endorsed Distributions
+     <https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-endorsed-distros?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json>`_
+     :code:`<br>`:code:`<br>` For running non-endorsed distributions, see `Information for
+     Non-Endorsed Distributions
+     <https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-create-upload-generic?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json>`_.
     :type linux_configuration: ~hybrid_network_management_client.models.LinuxConfiguration
     :param custom_data: Specifies a base-64 encoded string of custom data. The base-64 encoded
      string is decoded to a binary array that is saved as a file on the virtual machine. The maximum
@@ -1189,9 +1187,8 @@ class OsProfile(msrest.serialization.Model):
      saved as a file. For more information see `Custom Data on Azure VMs
      <https://azure.microsoft.com/en-us/blog/custom-data-and-cloud-init-on-windows-azure/>`_
      :code:`<br>`:code:`<br>` For using cloud-init for your Linux VM, see `Using cloud-init to
-     customize a Linux VM during creation <https://docs.microsoft.com/azure/virtual-
-     machines/virtual-machines-linux-using-cloud-init?toc=%2fazure%2fvirtual-
-     machines%2flinux%2ftoc.json>`_.
+     customize a Linux VM during creation
+     <https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-using-cloud-init?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json>`_.
     :type custom_data: str
     :param custom_data_required: Indicates if custom data is required to deploy this role.
     :type custom_data_required: bool
@@ -1398,8 +1395,7 @@ class SshPublicKey(msrest.serialization.Model):
     :param key_data: SSH public key certificate used to authenticate with the VM through ssh. The
      key needs to be at least 2048-bit and in ssh-rsa format. :code:`<br>`:code:`<br>` For creating
      ssh keys, see `Create SSH keys on Linux and Mac for Linux VMs in Azure
-     <https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-mac-create-ssh-
-     keys?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json>`_.
+     <https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-mac-create-ssh-keys?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json>`_.
     :type key_data: str
     """
 
@@ -1679,9 +1675,9 @@ class VendorSku(ProxyResource):
     :type preview: bool
     :param managed_application_parameters: The parameters for the managed application to be
      supplied by the vendor.
-    :type managed_application_parameters: object
+    :type managed_application_parameters: str
     :param managed_application_template: The template for the managed application deployment.
-    :type managed_application_template: object
+    :type managed_application_template: str
     :param network_function_template: The template definition of the network function.
     :type network_function_template:
      ~hybrid_network_management_client.models.NetworkFunctionTemplate
@@ -1702,8 +1698,8 @@ class VendorSku(ProxyResource):
         'sku_type': {'key': 'properties.skuType', 'type': 'str'},
         'deployment_mode': {'key': 'properties.deploymentMode', 'type': 'str'},
         'preview': {'key': 'properties.preview', 'type': 'bool'},
-        'managed_application_parameters': {'key': 'properties.managedApplicationParameters', 'type': 'object'},
-        'managed_application_template': {'key': 'properties.managedApplicationTemplate', 'type': 'object'},
+        'managed_application_parameters': {'key': 'properties.managedApplicationParameters', 'type': 'str'},
+        'managed_application_template': {'key': 'properties.managedApplicationTemplate', 'type': 'str'},
         'network_function_template': {'key': 'properties.networkFunctionTemplate', 'type': 'NetworkFunctionTemplate'},
     }
 
