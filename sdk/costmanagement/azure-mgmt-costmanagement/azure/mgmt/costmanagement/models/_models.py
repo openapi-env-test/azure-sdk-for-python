@@ -181,7 +181,7 @@ class AlertPropertiesDetails(msrest.serialization.Model):
     :param meter_filter: array of meters to filter by.
     :type meter_filter: list[object]
     :param tag_filter: tags to filter by.
-    :type tag_filter: object
+    :type tag_filter: str
     :param threshold: notification threshold percentage as a decimal which activated this alert.
     :type threshold: float
     :param operator: operator used to compare currentSpend with amount. Possible values include:
@@ -210,7 +210,7 @@ class AlertPropertiesDetails(msrest.serialization.Model):
         'resource_group_filter': {'key': 'resourceGroupFilter', 'type': '[object]'},
         'resource_filter': {'key': 'resourceFilter', 'type': '[object]'},
         'meter_filter': {'key': 'meterFilter', 'type': '[object]'},
-        'tag_filter': {'key': 'tagFilter', 'type': 'object'},
+        'tag_filter': {'key': 'tagFilter', 'type': 'str'},
         'threshold': {'key': 'threshold', 'type': 'float'},
         'operator': {'key': 'operator', 'type': 'str'},
         'amount': {'key': 'amount', 'type': 'float'},

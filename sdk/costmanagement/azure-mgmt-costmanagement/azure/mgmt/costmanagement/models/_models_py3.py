@@ -202,7 +202,7 @@ class AlertPropertiesDetails(msrest.serialization.Model):
     :param meter_filter: array of meters to filter by.
     :type meter_filter: list[object]
     :param tag_filter: tags to filter by.
-    :type tag_filter: object
+    :type tag_filter: str
     :param threshold: notification threshold percentage as a decimal which activated this alert.
     :type threshold: float
     :param operator: operator used to compare currentSpend with amount. Possible values include:
@@ -231,7 +231,7 @@ class AlertPropertiesDetails(msrest.serialization.Model):
         'resource_group_filter': {'key': 'resourceGroupFilter', 'type': '[object]'},
         'resource_filter': {'key': 'resourceFilter', 'type': '[object]'},
         'meter_filter': {'key': 'meterFilter', 'type': '[object]'},
-        'tag_filter': {'key': 'tagFilter', 'type': 'object'},
+        'tag_filter': {'key': 'tagFilter', 'type': 'str'},
         'threshold': {'key': 'threshold', 'type': 'float'},
         'operator': {'key': 'operator', 'type': 'str'},
         'amount': {'key': 'amount', 'type': 'float'},
@@ -252,7 +252,7 @@ class AlertPropertiesDetails(msrest.serialization.Model):
         resource_group_filter: Optional[List[object]] = None,
         resource_filter: Optional[List[object]] = None,
         meter_filter: Optional[List[object]] = None,
-        tag_filter: Optional[object] = None,
+        tag_filter: Optional[str] = None,
         threshold: Optional[float] = None,
         operator: Optional[Union[str, "AlertOperator"]] = None,
         amount: Optional[float] = None,
