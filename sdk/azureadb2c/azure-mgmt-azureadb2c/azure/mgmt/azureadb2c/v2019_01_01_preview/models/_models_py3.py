@@ -32,8 +32,8 @@ class AsyncOperationStatus(msrest.serialization.Model):
     :param error: Error response if async operation failed.
     :type error: ~$(python-base-namespace).v2019_01_01_preview.models.AsyncOperationStatusError
     :param billing_config: The billing configuration for the tenant.
-    :type billing_config: ~$(python-base-
-     namespace).v2019_01_01_preview.models.B2CTenantResourcePropertiesBillingConfig
+    :type billing_config:
+     ~$(python-base-namespace).v2019_01_01_preview.models.B2CTenantResourcePropertiesBillingConfig
     :param tenant_id: An identifier of the B2C tenant.
     :type tenant_id: str
     """
@@ -152,15 +152,15 @@ class B2CTenantResource(msrest.serialization.Model):
     :vartype id: str
     :ivar name: The name of the B2C tenant resource.
     :vartype name: str
-    :param location: Required. The location in which the resource is hosted and data resides. Refer
-     to `this documentation <https://aka.ms/B2CDataResidency>`_ to see valid data residency
-     locations. Please choose one of 'United States', 'Europe', and 'Asia Pacific'.
+    :param location: Required. The location in which the resource is hosted and data resides. Can
+     be one of 'United States', 'Europe', 'Asia Pacific', or 'Australia' (preview). Refer to `this
+     documentation <https://aka.ms/B2CDataResidency>`_ for more information.
     :type location: str
     :param tags: A set of tags. Resource Tags.
     :type tags: dict[str, str]
     :param billing_config: The billing configuration for the tenant.
-    :type billing_config: ~$(python-base-
-     namespace).v2019_01_01_preview.models.B2CTenantResourcePropertiesBillingConfig
+    :type billing_config:
+     ~$(python-base-namespace).v2019_01_01_preview.models.B2CTenantResourcePropertiesBillingConfig
     :param tenant_id: An identifier of the B2C tenant.
     :type tenant_id: str
     """
@@ -274,8 +274,8 @@ class B2CTenantUpdateRequest(msrest.serialization.Model):
     :param tags: A set of tags. Resource Tags.
     :type tags: dict[str, str]
     :param billing_config: The billing configuration for the tenant.
-    :type billing_config: ~$(python-base-
-     namespace).v2019_01_01_preview.models.B2CTenantResourcePropertiesBillingConfig
+    :type billing_config:
+     ~$(python-base-namespace).v2019_01_01_preview.models.B2CTenantResourcePropertiesBillingConfig
     :param tenant_id: An identifier of the B2C tenant.
     :type tenant_id: str
     """
@@ -344,13 +344,13 @@ class CreateTenantRequestBody(msrest.serialization.Model):
 
     All required parameters must be populated in order to send to Azure.
 
-    :param location: Required. The location in which the resource is hosted and data resides. Refer
-     to `this documentation <https://aka.ms/B2CDataResidency>`_ to see valid data residency
-     locations. Please choose one of 'United States', 'Europe', and 'Asia Pacific'.
+    :param location: Required. The location in which the resource is hosted and data resides. Can
+     be one of 'United States', 'Europe', 'Asia Pacific', or 'Australia' (preview). Refer to `this
+     documentation <https://aka.ms/B2CDataResidency>`_ for more information.
     :type location: str
     :param properties: Required.
-    :type properties: ~$(python-base-
-     namespace).v2019_01_01_preview.models.CreateTenantRequestBodyProperties
+    :type properties:
+     ~$(python-base-namespace).v2019_01_01_preview.models.CreateTenantRequestBodyProperties
     :param sku: Required. SKU properties of the Azure AD B2C tenant. Learn more about Azure AD B2C
      billing at `aka.ms/b2cBilling <https://aka.ms/b2cBilling>`_.
     :type sku: ~$(python-base-namespace).v2019_01_01_preview.models.B2CResourceSKU
@@ -424,7 +424,7 @@ class ErrorAdditionalInfo(msrest.serialization.Model):
     :ivar type: The additional info type.
     :vartype type: str
     :ivar info: The additional info.
-    :vartype info: object
+    :vartype info: str
     """
 
     _validation = {
@@ -434,7 +434,7 @@ class ErrorAdditionalInfo(msrest.serialization.Model):
 
     _attribute_map = {
         'type': {'key': 'type', 'type': 'str'},
-        'info': {'key': 'info', 'type': 'object'},
+        'info': {'key': 'info', 'type': 'str'},
     }
 
     def __init__(
@@ -460,8 +460,8 @@ class ErrorResponse(msrest.serialization.Model):
     :ivar details: The error details.
     :vartype details: list[~$(python-base-namespace).v2019_01_01_preview.models.ErrorResponse]
     :ivar additional_info: The error additional info.
-    :vartype additional_info: list[~$(python-base-
-     namespace).v2019_01_01_preview.models.ErrorAdditionalInfo]
+    :vartype additional_info:
+     list[~$(python-base-namespace).v2019_01_01_preview.models.ErrorAdditionalInfo]
     """
 
     _validation = {
@@ -502,8 +502,8 @@ class NameAvailabilityResponse(msrest.serialization.Model):
     :type name_available: bool
     :param reason: Describes the reason for the 'nameAvailable' value. Possible values include:
      "AlreadyExists", "Invalid".
-    :type reason: str or ~$(python-base-
-     namespace).v2019_01_01_preview.models.NameAvailabilityReasonType
+    :type reason: str or
+     ~$(python-base-namespace).v2019_01_01_preview.models.NameAvailabilityReasonType
     """
 
     _attribute_map = {

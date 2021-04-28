@@ -19,7 +19,7 @@ class ErrorAdditionalInfo(msrest.serialization.Model):
     :ivar type: The additional info type.
     :vartype type: str
     :ivar info: The additional info.
-    :vartype info: object
+    :vartype info: str
     """
 
     _validation = {
@@ -29,7 +29,7 @@ class ErrorAdditionalInfo(msrest.serialization.Model):
 
     _attribute_map = {
         'type': {'key': 'type', 'type': 'str'},
-        'info': {'key': 'info', 'type': 'object'},
+        'info': {'key': 'info', 'type': 'str'},
     }
 
     def __init__(
@@ -55,8 +55,8 @@ class ErrorResponse(msrest.serialization.Model):
     :ivar details: The error details.
     :vartype details: list[~$(python-base-namespace).v2020_05_01_preview.models.ErrorResponse]
     :ivar additional_info: The error additional info.
-    :vartype additional_info: list[~$(python-base-
-     namespace).v2020_05_01_preview.models.ErrorAdditionalInfo]
+    :vartype additional_info:
+     list[~$(python-base-namespace).v2020_05_01_preview.models.ErrorAdditionalInfo]
     """
 
     _validation = {

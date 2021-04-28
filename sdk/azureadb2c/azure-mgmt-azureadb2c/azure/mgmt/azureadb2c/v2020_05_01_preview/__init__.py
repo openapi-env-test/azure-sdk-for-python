@@ -7,6 +7,9 @@
 # --------------------------------------------------------------------------
 
 from ._cpim_configuration_client import CPIMConfigurationClient
+from ._version import VERSION
+
+__version__ = VERSION
 __all__ = ['CPIMConfigurationClient']
 
 try:

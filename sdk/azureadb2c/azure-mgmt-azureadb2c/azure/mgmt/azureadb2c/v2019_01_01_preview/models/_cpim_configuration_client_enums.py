@@ -30,9 +30,15 @@ class B2CResourceSKUName(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """The name of the SKU for the tenant.
     """
 
-    STANDARD = "Standard"  #: Azure AD B2C usage is billed to a linked Azure subscription and uses a monthly active users (MAU) billing model.
-    PREMIUM_P1 = "PremiumP1"  #: Azure AD B2C usage is billed to a linked Azure subscription and uses number of authentications based billing.
-    PREMIUM_P2 = "PremiumP2"  #: Azure AD B2C usage is billed to a linked Azure subscription and uses number of authentications based billing.
+    #: Azure AD B2C usage is billed to a linked Azure subscription and uses a monthly active users
+    #: (MAU) billing model.
+    STANDARD = "Standard"
+    #: Azure AD B2C usage is billed to a linked Azure subscription and uses number of authentications
+    #: based billing.
+    PREMIUM_P1 = "PremiumP1"
+    #: Azure AD B2C usage is billed to a linked Azure subscription and uses number of authentications
+    #: based billing.
+    PREMIUM_P2 = "PremiumP2"
 
 class BillingType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """The type of billing. Will be MAU for all new customers. If 'Auths', it can be updated to 'MAU'.
@@ -40,20 +46,30 @@ class BillingType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     `aka.ms/b2cBilling <https://aka.ms/b2cbilling>`_.
     """
 
-    MAU = "MAU"  #: Azure AD B2C usage is billed to a linked Azure subscription and uses a monthly active users (MAU) billing model.
-    AUTHS = "Auths"  #: Azure AD B2C usage is billed to a linked Azure subscription and uses number of authentications based billing.
+    #: Azure AD B2C usage is billed to a linked Azure subscription and uses a monthly active users
+    #: (MAU) billing model.
+    MAU = "MAU"
+    #: Azure AD B2C usage is billed to a linked Azure subscription and uses number of authentications
+    #: based billing.
+    AUTHS = "Auths"
 
 class NameAvailabilityReasonType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """Describes the reason for the 'nameAvailable' value.
     """
 
-    ALREADY_EXISTS = "AlreadyExists"  #: The name is already in use and is therefore unavailable.
-    INVALID = "Invalid"  #: The name provided does not match the resource provider’s naming requirements (incorrect length, unsupported characters, etc.).
+    #: The name is already in use and is therefore unavailable.
+    ALREADY_EXISTS = "AlreadyExists"
+    #: The name provided does not match the resource provider’s naming requirements (incorrect length,
+    #: unsupported characters, etc.).
+    INVALID = "Invalid"
 
 class StatusType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """The status of the operation.
     """
 
-    SUCCEEDED = "Succeeded"  #: The operation succeeded.
-    PENDING = "Pending"  #: The operation is pending.
-    FAILED = "Failed"  #: The operation failed.
+    #: The operation succeeded.
+    SUCCEEDED = "Succeeded"
+    #: The operation is pending.
+    PENDING = "Pending"
+    #: The operation failed.
+    FAILED = "Failed"
