@@ -408,6 +408,38 @@ class DeletedVaultProperties(msrest.serialization.Model):
         self.purge_protection_enabled = None
 
 
+class DimensionProperties(msrest.serialization.Model):
+    """Type of operation: get, read, delete, etc.
+
+    :param name: Name of dimension.
+    :type name: str
+    :param display_name: Display name of dimension.
+    :type display_name: str
+    :param to_be_exported_for_shoebox: Property to specify whether the dimension should be exported
+     for Shoebox.
+    :type to_be_exported_for_shoebox: bool
+    """
+
+    _attribute_map = {
+        'name': {'key': 'name', 'type': 'str'},
+        'display_name': {'key': 'displayName', 'type': 'str'},
+        'to_be_exported_for_shoebox': {'key': 'toBeExportedForShoebox', 'type': 'bool'},
+    }
+
+    def __init__(
+        self,
+        *,
+        name: Optional[str] = None,
+        display_name: Optional[str] = None,
+        to_be_exported_for_shoebox: Optional[bool] = None,
+        **kwargs
+    ):
+        super(DimensionProperties, self).__init__(**kwargs)
+        self.name = name
+        self.display_name = display_name
+        self.to_be_exported_for_shoebox = to_be_exported_for_shoebox
+
+
 class Error(msrest.serialization.Model):
     """The server error.
 
@@ -803,6 +835,78 @@ class ManagedHsmSku(msrest.serialization.Model):
         self.name = name
 
 
+class MetricSpecification(msrest.serialization.Model):
+    """Metric specification of operation.
+
+    :param name: Name of metric specification.
+    :type name: str
+    :param display_name: Display name of metric specification.
+    :type display_name: str
+    :param display_description: Display description of metric specification.
+    :type display_description: str
+    :param unit: The metric unit. Possible values include: 'Bytes', 'Count', 'Milliseconds'.
+    :type unit: str
+    :param aggregation_type: The metric aggregation type. Possible values include: 'Average',
+     'Count', 'Total'.
+    :type aggregation_type: str
+    :param supported_aggregation_types: The supported aggregation types for the metrics.
+    :type supported_aggregation_types: list[str]
+    :param supported_time_grain_types: The supported time grain types for the metrics.
+    :type supported_time_grain_types: list[str]
+    :param lock_aggregation_type: The metric lock aggregation type.
+    :type lock_aggregation_type: str
+    :param dimensions: The dimensions of metric.
+    :type dimensions: list[~azure.mgmt.keyvault.v2021_04_01_preview.models.DimensionProperties]
+    :param fill_gap_with_zero: Property to specify whether to fill gap with zero.
+    :type fill_gap_with_zero: bool
+    :param internal_metric_name: The internal metric name.
+    :type internal_metric_name: str
+    """
+
+    _attribute_map = {
+        'name': {'key': 'name', 'type': 'str'},
+        'display_name': {'key': 'displayName', 'type': 'str'},
+        'display_description': {'key': 'displayDescription', 'type': 'str'},
+        'unit': {'key': 'unit', 'type': 'str'},
+        'aggregation_type': {'key': 'aggregationType', 'type': 'str'},
+        'supported_aggregation_types': {'key': 'supportedAggregationTypes', 'type': '[str]'},
+        'supported_time_grain_types': {'key': 'supportedTimeGrainTypes', 'type': '[str]'},
+        'lock_aggregation_type': {'key': 'lockAggregationType', 'type': 'str'},
+        'dimensions': {'key': 'dimensions', 'type': '[DimensionProperties]'},
+        'fill_gap_with_zero': {'key': 'fillGapWithZero', 'type': 'bool'},
+        'internal_metric_name': {'key': 'internalMetricName', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        *,
+        name: Optional[str] = None,
+        display_name: Optional[str] = None,
+        display_description: Optional[str] = None,
+        unit: Optional[str] = None,
+        aggregation_type: Optional[str] = None,
+        supported_aggregation_types: Optional[List[str]] = None,
+        supported_time_grain_types: Optional[List[str]] = None,
+        lock_aggregation_type: Optional[str] = None,
+        dimensions: Optional[List["DimensionProperties"]] = None,
+        fill_gap_with_zero: Optional[bool] = None,
+        internal_metric_name: Optional[str] = None,
+        **kwargs
+    ):
+        super(MetricSpecification, self).__init__(**kwargs)
+        self.name = name
+        self.display_name = display_name
+        self.display_description = display_description
+        self.unit = unit
+        self.aggregation_type = aggregation_type
+        self.supported_aggregation_types = supported_aggregation_types
+        self.supported_time_grain_types = supported_time_grain_types
+        self.lock_aggregation_type = lock_aggregation_type
+        self.dimensions = dimensions
+        self.fill_gap_with_zero = fill_gap_with_zero
+        self.internal_metric_name = internal_metric_name
+
+
 class MHSMIPRule(msrest.serialization.Model):
     """A rule governing the accessibility of a managed hsm pool from a specific ip address or ip range.
 
@@ -1157,8 +1261,7 @@ class MHSMVirtualNetworkRule(msrest.serialization.Model):
     All required parameters must be populated in order to send to Azure.
 
     :param id: Required. Full resource id of a vnet subnet, such as
-     '/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-
-     vnet/subnets/subnet1'.
+     '/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1'.
     :type id: str
     """
 
@@ -1499,6 +1602,10 @@ class PrivateEndpointConnection(Resource):
 class PrivateEndpointConnectionItem(msrest.serialization.Model):
     """Private endpoint connection item.
 
+    :param id: Id of private endpoint connection.
+    :type id: str
+    :param etag: Modified whenever there is a change in the state of private endpoint connection.
+    :type etag: str
     :param private_endpoint: Properties of the private endpoint object.
     :type private_endpoint: ~azure.mgmt.keyvault.v2021_04_01_preview.models.PrivateEndpoint
     :param private_link_service_connection_state: Approval state of the private link connection.
@@ -1511,6 +1618,8 @@ class PrivateEndpointConnectionItem(msrest.serialization.Model):
     """
 
     _attribute_map = {
+        'id': {'key': 'id', 'type': 'str'},
+        'etag': {'key': 'etag', 'type': 'str'},
         'private_endpoint': {'key': 'properties.privateEndpoint', 'type': 'PrivateEndpoint'},
         'private_link_service_connection_state': {'key': 'properties.privateLinkServiceConnectionState', 'type': 'PrivateLinkServiceConnectionState'},
         'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
@@ -1519,12 +1628,16 @@ class PrivateEndpointConnectionItem(msrest.serialization.Model):
     def __init__(
         self,
         *,
+        id: Optional[str] = None,
+        etag: Optional[str] = None,
         private_endpoint: Optional["PrivateEndpoint"] = None,
         private_link_service_connection_state: Optional["PrivateLinkServiceConnectionState"] = None,
         provisioning_state: Optional[Union[str, "PrivateEndpointConnectionProvisioningState"]] = None,
         **kwargs
     ):
         super(PrivateEndpointConnectionItem, self).__init__(**kwargs)
+        self.id = id
+        self.etag = etag
         self.private_endpoint = private_endpoint
         self.private_link_service_connection_state = private_link_service_connection_state
         self.provisioning_state = provisioning_state
@@ -1952,20 +2065,26 @@ class ServiceSpecification(msrest.serialization.Model):
     :param log_specifications: Log specifications of operation.
     :type log_specifications:
      list[~azure.mgmt.keyvault.v2021_04_01_preview.models.LogSpecification]
+    :param metric_specifications: Metric specifications of operation.
+    :type metric_specifications:
+     list[~azure.mgmt.keyvault.v2021_04_01_preview.models.MetricSpecification]
     """
 
     _attribute_map = {
         'log_specifications': {'key': 'logSpecifications', 'type': '[LogSpecification]'},
+        'metric_specifications': {'key': 'metricSpecifications', 'type': '[MetricSpecification]'},
     }
 
     def __init__(
         self,
         *,
         log_specifications: Optional[List["LogSpecification"]] = None,
+        metric_specifications: Optional[List["MetricSpecification"]] = None,
         **kwargs
     ):
         super(ServiceSpecification, self).__init__(**kwargs)
         self.log_specifications = log_specifications
+        self.metric_specifications = metric_specifications
 
 
 class Sku(msrest.serialization.Model):
@@ -2425,6 +2544,8 @@ class VaultProperties(msrest.serialization.Model):
     :type access_policies: list[~azure.mgmt.keyvault.v2021_04_01_preview.models.AccessPolicyEntry]
     :param vault_uri: The URI of the vault for performing operations on keys and secrets.
     :type vault_uri: str
+    :ivar hsm_pool_resource_id: The resource id of HSM Pool.
+    :vartype hsm_pool_resource_id: str
     :param enabled_for_deployment: Property to specify whether Azure Virtual Machines are permitted
      to retrieve certificates stored as secrets from the key vault.
     :type enabled_for_deployment: bool
@@ -2473,6 +2594,7 @@ class VaultProperties(msrest.serialization.Model):
     _validation = {
         'tenant_id': {'required': True},
         'sku': {'required': True},
+        'hsm_pool_resource_id': {'readonly': True},
         'private_endpoint_connections': {'readonly': True},
     }
 
@@ -2481,6 +2603,7 @@ class VaultProperties(msrest.serialization.Model):
         'sku': {'key': 'sku', 'type': 'Sku'},
         'access_policies': {'key': 'accessPolicies', 'type': '[AccessPolicyEntry]'},
         'vault_uri': {'key': 'vaultUri', 'type': 'str'},
+        'hsm_pool_resource_id': {'key': 'hsmPoolResourceId', 'type': 'str'},
         'enabled_for_deployment': {'key': 'enabledForDeployment', 'type': 'bool'},
         'enabled_for_disk_encryption': {'key': 'enabledForDiskEncryption', 'type': 'bool'},
         'enabled_for_template_deployment': {'key': 'enabledForTemplateDeployment', 'type': 'bool'},
@@ -2518,6 +2641,7 @@ class VaultProperties(msrest.serialization.Model):
         self.sku = sku
         self.access_policies = access_policies
         self.vault_uri = vault_uri
+        self.hsm_pool_resource_id = None
         self.enabled_for_deployment = enabled_for_deployment
         self.enabled_for_disk_encryption = enabled_for_disk_encryption
         self.enabled_for_template_deployment = enabled_for_template_deployment
@@ -2537,9 +2661,11 @@ class VirtualNetworkRule(msrest.serialization.Model):
     All required parameters must be populated in order to send to Azure.
 
     :param id: Required. Full resource id of a vnet subnet, such as
-     '/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-
-     vnet/subnets/subnet1'.
+     '/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1'.
     :type id: str
+    :param ignore_missing_vnet_service_endpoint: Property to specify whether NRP will ignore the
+     check if parent subnet has serviceEndpoints configured.
+    :type ignore_missing_vnet_service_endpoint: bool
     """
 
     _validation = {
@@ -2548,13 +2674,16 @@ class VirtualNetworkRule(msrest.serialization.Model):
 
     _attribute_map = {
         'id': {'key': 'id', 'type': 'str'},
+        'ignore_missing_vnet_service_endpoint': {'key': 'ignoreMissingVnetServiceEndpoint', 'type': 'bool'},
     }
 
     def __init__(
         self,
         *,
         id: str,
+        ignore_missing_vnet_service_endpoint: Optional[bool] = None,
         **kwargs
     ):
         super(VirtualNetworkRule, self).__init__(**kwargs)
         self.id = id
+        self.ignore_missing_vnet_service_endpoint = ignore_missing_vnet_service_endpoint

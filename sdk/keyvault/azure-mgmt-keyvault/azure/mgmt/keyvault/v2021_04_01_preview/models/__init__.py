@@ -17,6 +17,7 @@ try:
     from ._models_py3 import DeletedVault
     from ._models_py3 import DeletedVaultListResult
     from ._models_py3 import DeletedVaultProperties
+    from ._models_py3 import DimensionProperties
     from ._models_py3 import Error
     from ._models_py3 import IPRule
     from ._models_py3 import LogSpecification
@@ -36,6 +37,7 @@ try:
     from ._models_py3 import ManagedHsmProperties
     from ._models_py3 import ManagedHsmResource
     from ._models_py3 import ManagedHsmSku
+    from ._models_py3 import MetricSpecification
     from ._models_py3 import NetworkRuleSet
     from ._models_py3 import Operation
     from ._models_py3 import OperationDisplay
@@ -81,6 +83,7 @@ except (SyntaxError, ImportError):
     from ._models import DeletedVault  # type: ignore
     from ._models import DeletedVaultListResult  # type: ignore
     from ._models import DeletedVaultProperties  # type: ignore
+    from ._models import DimensionProperties  # type: ignore
     from ._models import Error  # type: ignore
     from ._models import IPRule  # type: ignore
     from ._models import LogSpecification  # type: ignore
@@ -100,6 +103,7 @@ except (SyntaxError, ImportError):
     from ._models import ManagedHsmProperties  # type: ignore
     from ._models import ManagedHsmResource  # type: ignore
     from ._models import ManagedHsmSku  # type: ignore
+    from ._models import MetricSpecification  # type: ignore
     from ._models import NetworkRuleSet  # type: ignore
     from ._models import Operation  # type: ignore
     from ._models import OperationDisplay  # type: ignore
@@ -169,6 +173,7 @@ __all__ = [
     'DeletedVault',
     'DeletedVaultListResult',
     'DeletedVaultProperties',
+    'DimensionProperties',
     'Error',
     'IPRule',
     'LogSpecification',
@@ -188,6 +193,7 @@ __all__ = [
     'ManagedHsmProperties',
     'ManagedHsmResource',
     'ManagedHsmSku',
+    'MetricSpecification',
     'NetworkRuleSet',
     'Operation',
     'OperationDisplay',
