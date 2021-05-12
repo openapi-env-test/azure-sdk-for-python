@@ -130,7 +130,7 @@ class BaselineOperations:
 
         if response.status_code not in [200]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = self._deserialize(_models.ErrorResponse, response)
+            error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         deserialized = self._deserialize('BaselineResponse', pipeline_response)
@@ -139,4 +139,4 @@ class BaselineOperations:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    get.metadata = {'url': '/{resourceUri}/providers/microsoft.insights/baseline'}  # type: ignore
+    get.metadata = {'url': '/{resourceUri}/providers/Microsoft.Insights/baseline'}  # type: ignore

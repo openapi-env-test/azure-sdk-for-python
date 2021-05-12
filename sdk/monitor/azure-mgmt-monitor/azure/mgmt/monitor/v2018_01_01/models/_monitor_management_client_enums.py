@@ -43,7 +43,7 @@ class ResultType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     METADATA = "Metadata"
 
 class Unit(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
-    """the unit of the metric.
+    """The unit of the metric.
     """
 
     COUNT = "Count"

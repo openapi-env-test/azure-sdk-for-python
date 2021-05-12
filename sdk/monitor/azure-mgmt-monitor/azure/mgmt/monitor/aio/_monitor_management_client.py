@@ -9,12 +9,19 @@
 # regenerated.
 # --------------------------------------------------------------------------
 
-from azure.mgmt.core import AsyncARMPipelineClient
-from msrest import Serializer, Deserializer
+from typing import Any, Optional, TYPE_CHECKING
 
+from azure.core.pipeline.transport import AsyncHttpResponse, HttpRequest
+from azure.mgmt.core import AsyncARMPipelineClient
 from azure.profiles import KnownProfiles, ProfileDefinition
 from azure.profiles.multiapiclient import MultiApiClientMixin
+from msrest import Deserializer, Serializer
+
 from ._configuration import MonitorManagementClientConfiguration
+
+if TYPE_CHECKING:
+    # pylint: disable=unused-import,ungrouped-imports
+    from azure.core.credentials_async import AsyncTokenCredential
 
 class _SDKClient(object):
     def __init__(self, *args, **kwargs):
@@ -36,35 +43,38 @@ class MonitorManagementClient(MultiApiClientMixin, _SDKClient):
 
     :param credential: Credential needed for the client to connect to Azure.
     :type credential: ~azure.core.credentials_async.AsyncTokenCredential
-    :param subscription_id: The Azure subscription Id.
+    :param subscription_id: The ID of the target subscription.
     :type subscription_id: str
-    :param str api_version: API version to use if no profile is provided, or if
-     missing in profile.
-    :param str base_url: Service URL
+    :param api_version: API version to use if no profile is provided, or if missing in profile.
+    :type api_version: str
+    :param base_url: Service URL
+    :type base_url: str
     :param profile: A profile definition, from KnownProfiles to dict.
     :type profile: azure.profiles.KnownProfiles
     :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
     """
 
-    DEFAULT_API_VERSION = '2019-10-17-preview'
+    DEFAULT_API_VERSION = '2020-10-01'
     _PROFILE_TAG = "azure.mgmt.monitor.MonitorManagementClient"
     LATEST_PROFILE = ProfileDefinition({
         _PROFILE_TAG: {
             None: DEFAULT_API_VERSION,
             'action_groups': '2019-06-01',
-            'activity_log_alerts': '2017-04-01',
             'activity_logs': '2015-04-01',
             'alert_rule_incidents': '2016-03-01',
             'alert_rules': '2016-03-01',
             'autoscale_settings': '2015-04-01',
             'baseline': '2018-09-01',
             'baselines': '2019-03-01',
+            'data_collection_rule_associations': '2019-11-01-preview',
+            'data_collection_rules': '2019-11-01-preview',
             'diagnostic_settings': '2017-05-01-preview',
             'diagnostic_settings_category': '2017-05-01-preview',
             'event_categories': '2015-04-01',
             'guest_diagnostics_settings': '2018-06-01-preview',
             'guest_diagnostics_settings_association': '2018-06-01-preview',
             'log_profiles': '2016-03-01',
+            'management_group_diagnostic_settings': '2020-01-01-preview',
             'metric_alerts': '2018-03-01',
             'metric_alerts_status': '2018-03-01',
             'metric_baseline': '2018-09-01',
@@ -72,6 +82,11 @@ class MonitorManagementClient(MultiApiClientMixin, _SDKClient):
             'metric_namespaces': '2017-12-01-preview',
             'metrics': '2018-01-01',
             'operations': '2015-04-01',
+            'private_endpoint_connections': '2019-10-17-preview',
+            'private_link_resources': '2019-10-17-preview',
+            'private_link_scope_operation_status': '2019-10-17-preview',
+            'private_link_scoped_resources': '2019-10-17-preview',
+            'private_link_scopes': '2019-10-17-preview',
             'scheduled_query_rules': '2018-04-16',
             'service_diagnostic_settings': '2016-09-01',
             'subscription_diagnostic_settings': '2017-05-01-preview',
@@ -83,11 +98,11 @@ class MonitorManagementClient(MultiApiClientMixin, _SDKClient):
 
     def __init__(
         self,
-        credential,  # type: "AsyncTokenCredential"
-        subscription_id,  # type: str
-        api_version=None,
-        base_url=None,
-        profile=KnownProfiles.default,
+        credential: "AsyncTokenCredential",
+        subscription_id: str,
+        api_version: Optional[str] = None,
+        base_url: Optional[str] = None,
+        profile: KnownProfiles = KnownProfiles.default,
         **kwargs  # type: Any
     ) -> None:
         if not base_url:
@@ -128,6 +143,7 @@ class MonitorManagementClient(MultiApiClientMixin, _SDKClient):
            * 2019-11-01-preview: :mod:`v2019_11_01_preview.models<azure.mgmt.monitor.v2019_11_01_preview.models>`
            * 2020-01-01-preview: :mod:`v2020_01_01_preview.models<azure.mgmt.monitor.v2020_01_01_preview.models>`
            * 2020-05-01-preview: :mod:`v2020_05_01_preview.models<azure.mgmt.monitor.v2020_05_01_preview.models>`
+           * 2020-10-01: :mod:`v2020_10_01.models<azure.mgmt.monitor.v2020_10_01.models>`
         """
         if api_version == '2015-04-01':
             from ..v2015_04_01 import models
@@ -192,6 +208,9 @@ class MonitorManagementClient(MultiApiClientMixin, _SDKClient):
         elif api_version == '2020-05-01-preview':
             from ..v2020_05_01_preview import models
             return models
+        elif api_version == '2020-10-01':
+            from ..v2020_10_01 import models
+            return models
         raise ValueError("API version {} is not available".format(api_version))
 
     @property
@@ -225,12 +244,15 @@ class MonitorManagementClient(MultiApiClientMixin, _SDKClient):
 
            * 2017-03-01-preview: :class:`ActivityLogAlertsOperations<azure.mgmt.monitor.v2017_03_01_preview.aio.operations.ActivityLogAlertsOperations>`
            * 2017-04-01: :class:`ActivityLogAlertsOperations<azure.mgmt.monitor.v2017_04_01.aio.operations.ActivityLogAlertsOperations>`
+           * 2020-10-01: :class:`ActivityLogAlertsOperations<azure.mgmt.monitor.v2020_10_01.aio.operations.ActivityLogAlertsOperations>`
         """
         api_version = self._get_api_version('activity_log_alerts')
         if api_version == '2017-03-01-preview':
             from ..v2017_03_01_preview.aio.operations import ActivityLogAlertsOperations as OperationClass
         elif api_version == '2017-04-01':
             from ..v2017_04_01.aio.operations import ActivityLogAlertsOperations as OperationClass
+        elif api_version == '2020-10-01':
+            from ..v2020_10_01.aio.operations import ActivityLogAlertsOperations as OperationClass
         else:
             raise ValueError("API version {} does not have operation group 'activity_log_alerts'".format(api_version))
         return OperationClass(self._client, self._config, Serializer(self._models_dict(api_version)), Deserializer(self._models_dict(api_version)))
@@ -265,10 +287,16 @@ class MonitorManagementClient(MultiApiClientMixin, _SDKClient):
     def alert_rules(self):
         """Instance depends on the API version:
 
+           * 2015-04-01: :class:`AlertRulesOperations<azure.mgmt.monitor.v2015_04_01.aio.operations.AlertRulesOperations>`
+           * 2015-07-01: :class:`AlertRulesOperations<azure.mgmt.monitor.v2015_07_01.aio.operations.AlertRulesOperations>`
            * 2016-03-01: :class:`AlertRulesOperations<azure.mgmt.monitor.v2016_03_01.aio.operations.AlertRulesOperations>`
         """
         api_version = self._get_api_version('alert_rules')
-        if api_version == '2016-03-01':
+        if api_version == '2015-04-01':
+            from ..v2015_04_01.aio.operations import AlertRulesOperations as OperationClass
+        elif api_version == '2015-07-01':
+            from ..v2015_07_01.aio.operations import AlertRulesOperations as OperationClass
+        elif api_version == '2016-03-01':
             from ..v2016_03_01.aio.operations import AlertRulesOperations as OperationClass
         else:
             raise ValueError("API version {} does not have operation group 'alert_rules'".format(api_version))

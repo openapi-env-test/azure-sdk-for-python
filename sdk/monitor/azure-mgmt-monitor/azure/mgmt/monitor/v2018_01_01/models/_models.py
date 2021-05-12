@@ -97,6 +97,10 @@ class Metric(msrest.serialization.Model):
     :param name: Required. the name and the display name of the metric, i.e. it is localizable
      string.
     :type name: ~$(python-base-namespace).v2018_01_01.models.LocalizableString
+    :param display_description: Required. Detailed description of this metric.
+    :type display_description: str
+    :param error_code: 'Success' or the error details on query failures for this metric.
+    :type error_code: str
     :param unit: Required. the unit of the metric. Possible values include: "Count", "Bytes",
      "Seconds", "CountPerSecond", "BytesPerSecond", "Percent", "MilliSeconds", "ByteSeconds",
      "Unspecified", "Cores", "MilliCores", "NanoCores", "BitsPerSecond".
@@ -109,6 +113,7 @@ class Metric(msrest.serialization.Model):
         'id': {'required': True},
         'type': {'required': True},
         'name': {'required': True},
+        'display_description': {'required': True},
         'unit': {'required': True},
         'timeseries': {'required': True},
     }
@@ -117,6 +122,8 @@ class Metric(msrest.serialization.Model):
         'id': {'key': 'id', 'type': 'str'},
         'type': {'key': 'type', 'type': 'str'},
         'name': {'key': 'name', 'type': 'LocalizableString'},
+        'display_description': {'key': 'displayDescription', 'type': 'str'},
+        'error_code': {'key': 'errorCode', 'type': 'str'},
         'unit': {'key': 'unit', 'type': 'str'},
         'timeseries': {'key': 'timeseries', 'type': '[TimeSeriesElement]'},
     }
@@ -129,6 +136,8 @@ class Metric(msrest.serialization.Model):
         self.id = kwargs['id']
         self.type = kwargs['type']
         self.name = kwargs['name']
+        self.display_description = kwargs['display_description']
+        self.error_code = kwargs.get('error_code', None)
         self.unit = kwargs['unit']
         self.timeseries = kwargs['timeseries']
 
@@ -169,6 +178,10 @@ class MetricDefinition(msrest.serialization.Model):
     :type namespace: str
     :param name: the name and the display name of the metric, i.e. it is a localizable string.
     :type name: ~$(python-base-namespace).v2018_01_01.models.LocalizableString
+    :param display_description: Detailed description of this metric.
+    :type display_description: str
+    :param category: Custom category name for this metric.
+    :type category: str
     :param unit: the unit of the metric. Possible values include: "Count", "Bytes", "Seconds",
      "CountPerSecond", "BytesPerSecond", "Percent", "MilliSeconds", "ByteSeconds", "Unspecified",
      "Cores", "MilliCores", "NanoCores", "BitsPerSecond".
@@ -176,15 +189,15 @@ class MetricDefinition(msrest.serialization.Model):
     :param primary_aggregation_type: the primary aggregation type value defining how to use the
      values for display. Possible values include: "None", "Average", "Count", "Minimum", "Maximum",
      "Total".
-    :type primary_aggregation_type: str or ~$(python-base-
-     namespace).v2018_01_01.models.AggregationType
+    :type primary_aggregation_type: str or
+     ~$(python-base-namespace).v2018_01_01.models.AggregationType
     :param supported_aggregation_types: the collection of what aggregation types are supported.
-    :type supported_aggregation_types: list[str or ~$(python-base-
-     namespace).v2018_01_01.models.AggregationType]
+    :type supported_aggregation_types: list[str or
+     ~$(python-base-namespace).v2018_01_01.models.AggregationType]
     :param metric_availabilities: the collection of what aggregation intervals are available to be
      queried.
-    :type metric_availabilities: list[~$(python-base-
-     namespace).v2018_01_01.models.MetricAvailability]
+    :type metric_availabilities:
+     list[~$(python-base-namespace).v2018_01_01.models.MetricAvailability]
     :param id: the resource identifier of the metric definition.
     :type id: str
     :param dimensions: the name and the display name of the dimension, i.e. it is a localizable
@@ -197,6 +210,8 @@ class MetricDefinition(msrest.serialization.Model):
         'resource_id': {'key': 'resourceId', 'type': 'str'},
         'namespace': {'key': 'namespace', 'type': 'str'},
         'name': {'key': 'name', 'type': 'LocalizableString'},
+        'display_description': {'key': 'displayDescription', 'type': 'str'},
+        'category': {'key': 'category', 'type': 'str'},
         'unit': {'key': 'unit', 'type': 'str'},
         'primary_aggregation_type': {'key': 'primaryAggregationType', 'type': 'str'},
         'supported_aggregation_types': {'key': 'supportedAggregationTypes', 'type': '[str]'},
@@ -214,6 +229,8 @@ class MetricDefinition(msrest.serialization.Model):
         self.resource_id = kwargs.get('resource_id', None)
         self.namespace = kwargs.get('namespace', None)
         self.name = kwargs.get('name', None)
+        self.display_description = kwargs.get('display_description', None)
+        self.category = kwargs.get('category', None)
         self.unit = kwargs.get('unit', None)
         self.primary_aggregation_type = kwargs.get('primary_aggregation_type', None)
         self.supported_aggregation_types = kwargs.get('supported_aggregation_types', None)
@@ -298,7 +315,7 @@ class Response(msrest.serialization.Model):
 
     All required parameters must be populated in order to send to Azure.
 
-    :param cost: The integer value representing the cost of the query, for data case.
+    :param cost: The integer value representing the relative cost of the query.
     :type cost: int
     :param timespan: Required. The timespan for which the data was retrieved. Its value consists of
      two datetimes concatenated, separated by '/'.  This may be adjusted in the future and returned
@@ -308,9 +325,9 @@ class Response(msrest.serialization.Model):
      may be adjusted in the future and returned back from what was originally requested.  This is
      not present if a metadata request was made.
     :type interval: ~datetime.timedelta
-    :param namespace: The namespace of the metrics been queried.
+    :param namespace: The namespace of the metrics being queried.
     :type namespace: str
-    :param resourceregion: The region of the resource been queried for metrics.
+    :param resourceregion: The region of the resource being queried for metrics.
     :type resourceregion: str
     :param value: Required. the value of the collection.
     :type value: list[~$(python-base-namespace).v2018_01_01.models.Metric]
