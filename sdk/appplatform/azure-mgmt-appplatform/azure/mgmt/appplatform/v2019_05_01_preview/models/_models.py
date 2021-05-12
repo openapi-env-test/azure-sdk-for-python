@@ -329,7 +329,7 @@ class BindingResourceProperties(msrest.serialization.Model):
     :param key: The key of the bound resource.
     :type key: str
     :param binding_parameters: Binding parameters of the Binding resource.
-    :type binding_parameters: dict[str, object]
+    :type binding_parameters: dict[str, str]
     :ivar generated_properties: The generated Spring Boot property file for this binding. The
      secret will be deducted.
     :vartype generated_properties: str
@@ -352,7 +352,7 @@ class BindingResourceProperties(msrest.serialization.Model):
         'resource_type': {'key': 'resourceType', 'type': 'str'},
         'resource_id': {'key': 'resourceId', 'type': 'str'},
         'key': {'key': 'key', 'type': 'str'},
-        'binding_parameters': {'key': 'bindingParameters', 'type': '{object}'},
+        'binding_parameters': {'key': 'bindingParameters', 'type': '{str}'},
         'generated_properties': {'key': 'generatedProperties', 'type': 'str'},
         'created_at': {'key': 'createdAt', 'type': 'str'},
         'updated_at': {'key': 'updatedAt', 'type': 'str'},
@@ -2222,8 +2222,8 @@ class UserSourceInfo(msrest.serialization.Model):
     :type relative_path: str
     :param version: Version of the source.
     :type version: str
-    :param artifact_selector: Selector for the artifact to be used for the deployment for multi-
-     module projects. This should be
+    :param artifact_selector: Selector for the artifact to be used for the deployment for
+     multi-module projects. This should be
      the relative path to the target module/project.
     :type artifact_selector: str
     """
