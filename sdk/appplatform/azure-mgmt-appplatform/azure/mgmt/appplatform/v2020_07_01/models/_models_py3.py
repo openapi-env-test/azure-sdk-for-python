@@ -206,7 +206,7 @@ class AppResourceProperties(msrest.serialization.Model):
         public: Optional[bool] = None,
         active_deployment_name: Optional[str] = None,
         fqdn: Optional[str] = None,
-        https_only: Optional[bool] = None,
+        https_only: Optional[bool] = False,
         temporary_disk: Optional["TemporaryDisk"] = None,
         persistent_disk: Optional["PersistentDisk"] = None,
         **kwargs
@@ -354,7 +354,7 @@ class BindingResourceProperties(msrest.serialization.Model):
     :param key: The key of the bound resource.
     :type key: str
     :param binding_parameters: Binding parameters of the Binding resource.
-    :type binding_parameters: dict[str, object]
+    :type binding_parameters: dict[str, str]
     :ivar generated_properties: The generated Spring Boot property file for this binding. The
      secret will be deducted.
     :vartype generated_properties: str
@@ -377,7 +377,7 @@ class BindingResourceProperties(msrest.serialization.Model):
         'resource_type': {'key': 'resourceType', 'type': 'str'},
         'resource_id': {'key': 'resourceId', 'type': 'str'},
         'key': {'key': 'key', 'type': 'str'},
-        'binding_parameters': {'key': 'bindingParameters', 'type': '{object}'},
+        'binding_parameters': {'key': 'bindingParameters', 'type': '{str}'},
         'generated_properties': {'key': 'generatedProperties', 'type': 'str'},
         'created_at': {'key': 'createdAt', 'type': 'str'},
         'updated_at': {'key': 'updatedAt', 'type': 'str'},
@@ -388,7 +388,7 @@ class BindingResourceProperties(msrest.serialization.Model):
         *,
         resource_id: Optional[str] = None,
         key: Optional[str] = None,
-        binding_parameters: Optional[Dict[str, object]] = None,
+        binding_parameters: Optional[Dict[str, str]] = None,
         **kwargs
     ):
         super(BindingResourceProperties, self).__init__(**kwargs)
@@ -1197,7 +1197,7 @@ class DeploymentSettings(msrest.serialization.Model):
     :param environment_variables: Collection of environment variables.
     :type environment_variables: dict[str, str]
     :param runtime_version: Runtime version. Possible values include: "Java_8", "Java_11",
-     "NetCore_31".
+     "NetCore_31". Default value: "Java_8".
     :type runtime_version: str or ~azure.mgmt.appplatform.v2020_07_01.models.RuntimeVersion
     """
 
@@ -1218,7 +1218,7 @@ class DeploymentSettings(msrest.serialization.Model):
         jvm_options: Optional[str] = None,
         net_core_main_entry_path: Optional[str] = None,
         environment_variables: Optional[Dict[str, str]] = None,
-        runtime_version: Optional[Union[str, "RuntimeVersion"]] = None,
+        runtime_version: Optional[Union[str, "RuntimeVersion"]] = "Java_8",
         **kwargs
     ):
         super(DeploymentSettings, self).__init__(**kwargs)
@@ -2555,8 +2555,8 @@ class UserSourceInfo(msrest.serialization.Model):
     :type relative_path: str
     :param version: Version of the source.
     :type version: str
-    :param artifact_selector: Selector for the artifact to be used for the deployment for multi-
-     module projects. This should be
+    :param artifact_selector: Selector for the artifact to be used for the deployment for
+     multi-module projects. This should be
      the relative path to the target module/project.
     :type artifact_selector: str
     """
