@@ -54,7 +54,7 @@ class ServicesOperations(object):
         **kwargs  # type: Any
     ):
         # type: (...) -> "_models.ServiceResource"
-        """Get a Service and its properties.
+        """Get a Service and its properties. Test. Test2 d.
 
         :param resource_group_name: The name of the resource group that contains the resource. You can
          obtain this value from the Azure Resource Manager API or the portal.
