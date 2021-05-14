@@ -52,7 +52,7 @@ class Operations(object):
         # type: (...) -> Iterable["_models.ResourceProviderOperationList"]
         """Retrieves a list of available API operations under this Resource Provider.
 
-        Retrieves a list of available API operations.
+        Retrieves a list of available API.
 
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: An iterator like instance of either ResourceProviderOperationList or the result of cls(response)
