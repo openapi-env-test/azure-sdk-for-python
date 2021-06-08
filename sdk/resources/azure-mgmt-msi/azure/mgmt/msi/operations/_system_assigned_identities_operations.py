@@ -50,7 +50,7 @@ class SystemAssignedIdentitiesOperations(object):
         **kwargs  # type: Any
     ):
         # type: (...) -> "_models.SystemAssignedIdentity"
-        """Gets the systemAssignedIdentity available under the specified RP scope.
+        """Gets the systemAssignedIdentity available under the specified RP scope. Update 1.
 
         :param scope: The resource provider scope of the resource. Parent resource being extended by
          Managed Identities.
