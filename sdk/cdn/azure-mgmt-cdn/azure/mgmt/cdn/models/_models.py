@@ -50,7 +50,43 @@ class Resource(msrest.serialization.Model):
         self.system_data = None
 
 
-class AFDDomain(Resource):
+class ProxyResource(Resource):
+    """The resource model definition for a ARM proxy resource. It will have everything other than required location and tags.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    :ivar id: Resource ID.
+    :vartype id: str
+    :ivar name: Resource name.
+    :vartype name: str
+    :ivar type: Resource type.
+    :vartype type: str
+    :ivar system_data: Read only system data.
+    :vartype system_data: ~azure.mgmt.cdn.models.SystemData
+    """
+
+    _validation = {
+        'id': {'readonly': True},
+        'name': {'readonly': True},
+        'type': {'readonly': True},
+        'system_data': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'id': {'key': 'id', 'type': 'str'},
+        'name': {'key': 'name', 'type': 'str'},
+        'type': {'key': 'type', 'type': 'str'},
+        'system_data': {'key': 'systemData', 'type': 'SystemData'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(ProxyResource, self).__init__(**kwargs)
+
+
+class AFDDomain(ProxyResource):
     """Friendly domain name mapping to the endpoint hostname that the customer provides for branding purposes, e.g. www.contoso.com.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -617,7 +653,7 @@ class AfdErrorResponse(msrest.serialization.Model):
         self.error = kwargs.get('error', None)
 
 
-class AFDOrigin(Resource):
+class AFDOrigin(ProxyResource):
     """CDN origin is the source of the content being delivered via CDN. When the edge nodes represented by an endpoint do not have the requested content cached, they attempt to fetch it from one or more of the configured origins.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -653,7 +689,7 @@ class AFDOrigin(Resource):
     :type weight: int
     :param shared_private_link_resource: The properties of the private link resource for private
      origin.
-    :type shared_private_link_resource: object
+    :type shared_private_link_resource: any
     :param enabled_state: Whether to enable health probes to be made against backends defined under
      backendPools. Health probes can only be disabled if there is a single enabled backend in single
      enabled backend pool. Possible values include: "Enabled", "Disabled".
@@ -715,7 +751,7 @@ class AFDOrigin(Resource):
         self.deployment_status = None
 
 
-class AFDOriginGroup(Resource):
+class AFDOriginGroup(ProxyResource):
     """AFDOrigin group comprising of origins is used for load balancing to origins when the content cannot be served from CDN.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -1027,7 +1063,7 @@ class AFDOriginUpdatePropertiesParameters(msrest.serialization.Model):
     :type weight: int
     :param shared_private_link_resource: The properties of the private link resource for private
      origin.
-    :type shared_private_link_resource: object
+    :type shared_private_link_resource: any
     :param enabled_state: Whether to enable health probes to be made against backends defined under
      backendPools. Health probes can only be disabled if there is a single enabled backend in single
      enabled backend pool. Possible values include: "Enabled", "Disabled".
@@ -1097,7 +1133,7 @@ class AFDOriginProperties(AFDStateProperties, AFDOriginUpdatePropertiesParameter
     :type weight: int
     :param shared_private_link_resource: The properties of the private link resource for private
      origin.
-    :type shared_private_link_resource: object
+    :type shared_private_link_resource: any
     :param enabled_state: Whether to enable health probes to be made against backends defined under
      backendPools. Health probes can only be disabled if there is a single enabled backend in single
      enabled backend pool. Possible values include: "Enabled", "Disabled".
@@ -1177,7 +1213,7 @@ class AFDOriginUpdateParameters(msrest.serialization.Model):
     :type weight: int
     :param shared_private_link_resource: The properties of the private link resource for private
      origin.
-    :type shared_private_link_resource: object
+    :type shared_private_link_resource: any
     :param enabled_state: Whether to enable health probes to be made against backends defined under
      backendPools. Health probes can only be disabled if there is a single enabled backend in single
      enabled backend pool. Possible values include: "Enabled", "Disabled".
@@ -1947,7 +1983,7 @@ class CookiesMatchConditionParameters(msrest.serialization.Model):
         self.transforms = kwargs.get('transforms', None)
 
 
-class CustomDomain(Resource):
+class CustomDomain(ProxyResource):
     """Friendly domain name mapping to the endpoint hostname that the customer provides for branding purposes, e.g. www.contoso.com.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -3130,7 +3166,7 @@ class DomainValidationProperties(msrest.serialization.Model):
         self.expiration_date = None
 
 
-class EdgeNode(Resource):
+class EdgeNode(ProxyResource):
     """Edgenode is a global Point of Presence (POP) location used to deliver CDN content to end users.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -4768,7 +4804,7 @@ class OperationsListResult(msrest.serialization.Model):
         self.next_link = kwargs.get('next_link', None)
 
 
-class Origin(Resource):
+class Origin(ProxyResource):
     """CDN origin is the source of the content being delivered via CDN. When the edge nodes represented by an endpoint do not have the requested content cached, they attempt to fetch it from one or more of the configured origins.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -4880,7 +4916,7 @@ class Origin(Resource):
         self.private_endpoint_status = None
 
 
-class OriginGroup(Resource):
+class OriginGroup(ProxyResource):
     """Origin group comprising of origins is used for load balancing to origins when the content cannot be served from CDN.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -5461,7 +5497,8 @@ class PolicySettings(msrest.serialization.Model):
     :param default_custom_block_response_status_code: If the action type is block, this field
      defines the default customer overridable http response status code. Possible values include:
      200, 403, 405, 406, 429.
-    :type default_custom_block_response_status_code: str or ~azure.mgmt.cdn.models.Enum46
+    :type default_custom_block_response_status_code: str or
+     ~azure.mgmt.cdn.models.PolicySettingsDefaultCustomBlockResponseStatusCode
     :param default_custom_block_response_body: If the action type is block, customer can override
      the response body. The body must be specified in base64 encoding.
     :type default_custom_block_response_body: str
@@ -5656,42 +5693,6 @@ class ProfileUpdateParameters(msrest.serialization.Model):
     ):
         super(ProfileUpdateParameters, self).__init__(**kwargs)
         self.tags = kwargs.get('tags', None)
-
-
-class ProxyResource(Resource):
-    """The resource model definition for a ARM proxy resource. It will have everything other than required location and tags.
-
-    Variables are only populated by the server, and will be ignored when sending a request.
-
-    :ivar id: Resource ID.
-    :vartype id: str
-    :ivar name: Resource name.
-    :vartype name: str
-    :ivar type: Resource type.
-    :vartype type: str
-    :ivar system_data: Read only system data.
-    :vartype system_data: ~azure.mgmt.cdn.models.SystemData
-    """
-
-    _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'system_data': {'readonly': True},
-    }
-
-    _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'system_data': {'key': 'systemData', 'type': 'SystemData'},
-    }
-
-    def __init__(
-        self,
-        **kwargs
-    ):
-        super(ProxyResource, self).__init__(**kwargs)
 
 
 class PurgeParameters(msrest.serialization.Model):
@@ -6464,7 +6465,7 @@ class ResponseBasedOriginErrorDetectionParameters(msrest.serialization.Model):
         self.http_error_ranges = kwargs.get('http_error_ranges', None)
 
 
-class Route(Resource):
+class Route(ProxyResource):
     """Friendly Routes name mapping to the any Routes or secret related information.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -6491,7 +6492,7 @@ class Route(Resource):
     :param patterns_to_match: The route patterns of the rule.
     :type patterns_to_match: list[str]
     :param compression_settings: compression settings.
-    :type compression_settings: object
+    :type compression_settings: any
     :param query_string_caching_behavior: Defines how CDN caches requests that include query
      strings. You can ignore any query strings when caching, bypass caching to prevent requests that
      contain query strings from being cached, or cache every request with a unique URL. Possible
@@ -6616,7 +6617,7 @@ class RouteUpdatePropertiesParameters(msrest.serialization.Model):
     :param patterns_to_match: The route patterns of the rule.
     :type patterns_to_match: list[str]
     :param compression_settings: compression settings.
-    :type compression_settings: object
+    :type compression_settings: any
     :param query_string_caching_behavior: Defines how CDN caches requests that include query
      strings. You can ignore any query strings when caching, bypass caching to prevent requests that
      contain query strings from being cached, or cache every request with a unique URL. Possible
@@ -6691,7 +6692,7 @@ class RouteProperties(AFDStateProperties, RouteUpdatePropertiesParameters):
     :param patterns_to_match: The route patterns of the rule.
     :type patterns_to_match: list[str]
     :param compression_settings: compression settings.
-    :type compression_settings: object
+    :type compression_settings: any
     :param query_string_caching_behavior: Defines how CDN caches requests that include query
      strings. You can ignore any query strings when caching, bypass caching to prevent requests that
      contain query strings from being cached, or cache every request with a unique URL. Possible
@@ -6779,7 +6780,7 @@ class RouteUpdateParameters(msrest.serialization.Model):
     :param patterns_to_match: The route patterns of the rule.
     :type patterns_to_match: list[str]
     :param compression_settings: compression settings.
-    :type compression_settings: object
+    :type compression_settings: any
     :param query_string_caching_behavior: Defines how CDN caches requests that include query
      strings. You can ignore any query strings when caching, bypass caching to prevent requests that
      contain query strings from being cached, or cache every request with a unique URL. Possible
@@ -6835,7 +6836,7 @@ class RouteUpdateParameters(msrest.serialization.Model):
         self.enabled_state = kwargs.get('enabled_state', None)
 
 
-class Rule(Resource):
+class Rule(ProxyResource):
     """Friendly Rules name mapping to the any Rules or secret related information.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -7025,7 +7026,7 @@ class RuleProperties(AFDStateProperties, RuleUpdatePropertiesParameters):
         self.deployment_status = None
 
 
-class RuleSet(Resource):
+class RuleSet(ProxyResource):
     """Friendly RuleSet name mapping to the any RuleSet or secret related information.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -7169,7 +7170,7 @@ class RuleUpdateParameters(msrest.serialization.Model):
         self.match_processing_behavior = kwargs.get('match_processing_behavior', None)
 
 
-class Secret(Resource):
+class Secret(ProxyResource):
     """Friendly Secret name mapping to the any Secret or secret related information.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -7284,7 +7285,7 @@ class SecretProperties(AFDStateProperties):
         self.parameters = kwargs.get('parameters', None)
 
 
-class SecurityPolicy(Resource):
+class SecurityPolicy(ProxyResource):
     """SecurityPolicy association for AzureFrontDoor profile.
 
     Variables are only populated by the server, and will be ignored when sending a request.
