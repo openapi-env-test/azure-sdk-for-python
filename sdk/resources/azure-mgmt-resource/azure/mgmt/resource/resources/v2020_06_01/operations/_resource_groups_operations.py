@@ -60,7 +60,7 @@ class ResourceGroupsOperations(object):
         # Construct URL
         url = self.check_existence.metadata['url']
         path_format_arguments = {
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
             'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str')
         }
         url = self._client.format_url(url, **path_format_arguments)
@@ -121,7 +121,7 @@ class ResourceGroupsOperations(object):
         # Construct URL
         url = self.create_or_update.metadata['url']
         path_format_arguments = {
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
             'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str')
         }
         url = self._client.format_url(url, **path_format_arguments)
@@ -168,19 +168,19 @@ class ResourceGroupsOperations(object):
 
 
     def _delete_initial(
-            self, resource_group_name, force_deletion_resource_types=None, custom_headers=None, raw=False, **operation_config):
+            self, resource_group_name, force_deletion_types=None, custom_headers=None, raw=False, **operation_config):
         # Construct URL
         url = self.delete.metadata['url']
         path_format_arguments = {
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
             'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str')
         }
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}
-        if force_deletion_resource_types is not None:
-            query_parameters['forceDeletionResourceTypes'] = self._serialize.query("force_deletion_resource_types", force_deletion_resource_types, 'str')
+        if force_deletion_types is not None:
+            query_parameters['forceDeletionTypes'] = self._serialize.query("force_deletion_types", force_deletion_types, 'str')
         query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
 
         # Construct headers
@@ -206,7 +206,7 @@ class ResourceGroupsOperations(object):
             return client_raw_response
 
     def delete(
-            self, resource_group_name, force_deletion_resource_types=None, custom_headers=None, raw=False, polling=True, **operation_config):
+            self, resource_group_name, force_deletion_types=None, custom_headers=None, raw=False, polling=True, **operation_config):
         """Deletes a resource group.
 
         When you delete a resource group, all of its resources are also
@@ -216,10 +216,10 @@ class ResourceGroupsOperations(object):
         :param resource_group_name: The name of the resource group to delete.
          The name is case insensitive.
         :type resource_group_name: str
-        :param force_deletion_resource_types: The resource types you want to
-         force delete. Currently, only the following is supported:
-         forceDeletionResourceTypes=Microsoft.Compute/virtualMachines,Microsoft.Compute/virtualMachineScaleSets
-        :type force_deletion_resource_types: str
+        :param force_deletion_types: The resource types you want to force
+         delete. Currently, only the following is supported:
+         forceDeletionTypes=Microsoft.Compute/virtualMachines,Microsoft.Compute/virtualMachineScaleSets
+        :type force_deletion_types: str
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: The poller return type is ClientRawResponse, the
          direct response alongside the deserialized response
@@ -233,7 +233,7 @@ class ResourceGroupsOperations(object):
         """
         raw_result = self._delete_initial(
             resource_group_name=resource_group_name,
-            force_deletion_resource_types=force_deletion_resource_types,
+            force_deletion_types=force_deletion_types,
             custom_headers=custom_headers,
             raw=True,
             **operation_config
@@ -274,7 +274,7 @@ class ResourceGroupsOperations(object):
         # Construct URL
         url = self.get.metadata['url']
         path_format_arguments = {
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
             'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str')
         }
         url = self._client.format_url(url, **path_format_arguments)
@@ -342,7 +342,7 @@ class ResourceGroupsOperations(object):
         # Construct URL
         url = self.update.metadata['url']
         path_format_arguments = {
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
             'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str')
         }
         url = self._client.format_url(url, **path_format_arguments)
@@ -394,7 +394,7 @@ class ResourceGroupsOperations(object):
         url = self.export_template.metadata['url']
         path_format_arguments = {
             'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str'),
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$')
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1)
         }
         url = self._client.format_url(url, **path_format_arguments)
 
