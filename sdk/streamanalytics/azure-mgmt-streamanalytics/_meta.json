@@ -1,0 +1,11 @@
+{
+  "autorest": "3.4.2",
+  "use": [
+    "@autorest/python@5.8.0",
+    "@autorest/modelerfour@4.19.2"
+  ],
+  "commit": "ba507c503e3dfecbd24567e0c7be1b0db9ea2a6a",
+  "repository_url": "https://github.com/openapi-env-test/azure-rest-api-specs",
+  "autorest_command": "autorest specification/streamanalytics/resource-manager/readme.md --multiapi --python --python-mode=update --python-sdks-folder=/home/vsts/work/1/s/azure-sdk-for-python/sdk --track2 --use=@autorest/python@5.8.0 --use=@autorest/modelerfour@4.19.2 --version=3.4.2",
+  "readme": "specification/streamanalytics/resource-manager/readme.md"
+}
