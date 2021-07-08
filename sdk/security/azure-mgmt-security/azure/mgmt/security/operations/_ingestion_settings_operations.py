@@ -16,8 +16,8 @@ from msrestazure.azure_exceptions import CloudError
 from .. import models
 
 
-class OnPremiseIotSensorsOperations(object):
-    """OnPremiseIotSensorsOperations operations.
+class IngestionSettingsOperations(object):
+    """IngestionSettingsOperations operations.
 
     You should not instantiate directly this class, but create a Client instance that will create it for you and attach it as attribute.
 
@@ -25,7 +25,7 @@ class OnPremiseIotSensorsOperations(object):
     :param config: Configuration of service client.
     :param serializer: An object model serializer.
     :param deserializer: An object model deserializer.
-    :ivar api_version: API version for the operation. Constant value: "2020-08-06-preview".
+    :ivar api_version: API version for the operation. Constant value: "2021-01-15-preview".
     """
 
     models = models
@@ -35,78 +35,91 @@ class OnPremiseIotSensorsOperations(object):
         self._client = client
         self._serialize = serializer
         self._deserialize = deserializer
-        self.api_version = "2020-08-06-preview"
+        self.api_version = "2021-01-15-preview"
 
         self.config = config
 
     def list(
             self, custom_headers=None, raw=False, **operation_config):
-        """List on-premise IoT sensors.
+        """Settings for ingesting security data and logs to correlate with
+        resources associated with the subscription.
 
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :return: OnPremiseIotSensorsList or ClientRawResponse if raw=true
-        :rtype: ~azure.mgmt.security.models.OnPremiseIotSensorsList or
-         ~msrest.pipeline.ClientRawResponse
+        :return: An iterator like instance of IngestionSetting
+        :rtype:
+         ~azure.mgmt.security.models.IngestionSettingPaged[~azure.mgmt.security.models.IngestionSetting]
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
-        # Construct URL
-        url = self.list.metadata['url']
-        path_format_arguments = {
-            'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str', pattern=r'^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$')
-        }
-        url = self._client.format_url(url, **path_format_arguments)
+        def prepare_request(next_link=None):
+            if not next_link:
+                # Construct URL
+                url = self.list.metadata['url']
+                path_format_arguments = {
+                    'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str', pattern=r'^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$')
+                }
+                url = self._client.format_url(url, **path_format_arguments)
 
-        # Construct parameters
-        query_parameters = {}
-        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
+                # Construct parameters
+                query_parameters = {}
+                query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
 
-        # Construct headers
-        header_parameters = {}
-        header_parameters['Accept'] = 'application/json'
-        if self.config.generate_client_request_id:
-            header_parameters['x-ms-client-request-id'] = str(uuid.uuid1())
-        if custom_headers:
-            header_parameters.update(custom_headers)
-        if self.config.accept_language is not None:
-            header_parameters['accept-language'] = self._serialize.header("self.config.accept_language", self.config.accept_language, 'str')
+            else:
+                url = next_link
+                query_parameters = {}
 
-        # Construct and send request
-        request = self._client.get(url, query_parameters, header_parameters)
-        response = self._client.send(request, stream=False, **operation_config)
+            # Construct headers
+            header_parameters = {}
+            header_parameters['Accept'] = 'application/json'
+            if self.config.generate_client_request_id:
+                header_parameters['x-ms-client-request-id'] = str(uuid.uuid1())
+            if custom_headers:
+                header_parameters.update(custom_headers)
+            if self.config.accept_language is not None:
+                header_parameters['accept-language'] = self._serialize.header("self.config.accept_language", self.config.accept_language, 'str')
 
-        if response.status_code not in [200]:
-            exp = CloudError(response)
-            exp.request_id = response.headers.get('x-ms-request-id')
-            raise exp
+            # Construct and send request
+            request = self._client.get(url, query_parameters, header_parameters)
+            return request
 
-        deserialized = None
-        if response.status_code == 200:
-            deserialized = self._deserialize('OnPremiseIotSensorsList', response)
+        def internal_paging(next_link=None):
+            request = prepare_request(next_link)
 
+            response = self._client.send(request, stream=False, **operation_config)
+
+            if response.status_code not in [200]:
+                exp = CloudError(response)
+                exp.request_id = response.headers.get('x-ms-request-id')
+                raise exp
+
+            return response
+
+        # Deserialize response
+        header_dict = None
         if raw:
-            client_raw_response = ClientRawResponse(deserialized, response)
-            return client_raw_response
+            header_dict = {}
+        deserialized = models.IngestionSettingPaged(internal_paging, self._deserialize.dependencies, header_dict)
 
         return deserialized
-    list.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Security/onPremiseIotSensors'}
+    list.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Security/ingestionSettings'}
 
     def get(
-            self, on_premise_iot_sensor_name, custom_headers=None, raw=False, **operation_config):
-        """Get on-premise IoT sensor.
+            self, ingestion_setting_name, custom_headers=None, raw=False, **operation_config):
+        """Settings for ingesting security data and logs to correlate with
+        resources associated with the subscription.
 
-        :param on_premise_iot_sensor_name: Name of the on-premise IoT sensor
-        :type on_premise_iot_sensor_name: str
+        :param ingestion_setting_name: Name of the ingestion setting
+        :type ingestion_setting_name: str
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :return: OnPremiseIotSensor or ClientRawResponse if raw=true
-        :rtype: ~azure.mgmt.security.models.OnPremiseIotSensor or
+        :return: IngestionSetting or ClientRawResponse if raw=true
+        :rtype: ~azure.mgmt.security.models.IngestionSetting or
          ~msrest.pipeline.ClientRawResponse
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
@@ -114,7 +127,7 @@ class OnPremiseIotSensorsOperations(object):
         url = self.get.metadata['url']
         path_format_arguments = {
             'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str', pattern=r'^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$'),
-            'onPremiseIotSensorName': self._serialize.url("on_premise_iot_sensor_name", on_premise_iot_sensor_name, 'str')
+            'ingestionSettingName': self._serialize.url("ingestion_setting_name", ingestion_setting_name, 'str')
         }
         url = self._client.format_url(url, **path_format_arguments)
 
@@ -143,36 +156,41 @@ class OnPremiseIotSensorsOperations(object):
 
         deserialized = None
         if response.status_code == 200:
-            deserialized = self._deserialize('OnPremiseIotSensor', response)
+            deserialized = self._deserialize('IngestionSetting', response)
 
         if raw:
             client_raw_response = ClientRawResponse(deserialized, response)
             return client_raw_response
 
         return deserialized
-    get.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Security/onPremiseIotSensors/{onPremiseIotSensorName}'}
+    get.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Security/ingestionSettings/{ingestionSettingName}'}
 
-    def create_or_update(
-            self, on_premise_iot_sensor_name, custom_headers=None, raw=False, **operation_config):
-        """Create or update on-premise IoT sensor.
+    def create(
+            self, ingestion_setting_name, properties=None, custom_headers=None, raw=False, **operation_config):
+        """Create setting for ingesting security data and logs to correlate with
+        resources associated with the subscription.
 
-        :param on_premise_iot_sensor_name: Name of the on-premise IoT sensor
-        :type on_premise_iot_sensor_name: str
+        :param ingestion_setting_name: Name of the ingestion setting
+        :type ingestion_setting_name: str
+        :param properties: Ingestion setting data
+        :type properties: object
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :return: OnPremiseIotSensor or ClientRawResponse if raw=true
-        :rtype: ~azure.mgmt.security.models.OnPremiseIotSensor or
+        :return: IngestionSetting or ClientRawResponse if raw=true
+        :rtype: ~azure.mgmt.security.models.IngestionSetting or
          ~msrest.pipeline.ClientRawResponse
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
+        ingestion_setting = models.IngestionSetting(properties=properties)
+
         # Construct URL
-        url = self.create_or_update.metadata['url']
+        url = self.create.metadata['url']
         path_format_arguments = {
             'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str', pattern=r'^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$'),
-            'onPremiseIotSensorName': self._serialize.url("on_premise_iot_sensor_name", on_premise_iot_sensor_name, 'str')
+            'ingestionSettingName': self._serialize.url("ingestion_setting_name", ingestion_setting_name, 'str')
         }
         url = self._client.format_url(url, **path_format_arguments)
 
@@ -183,6 +201,7 @@ class OnPremiseIotSensorsOperations(object):
         # Construct headers
         header_parameters = {}
         header_parameters['Accept'] = 'application/json'
+        header_parameters['Content-Type'] = 'application/json; charset=utf-8'
         if self.config.generate_client_request_id:
             header_parameters['x-ms-client-request-id'] = str(uuid.uuid1())
         if custom_headers:
@@ -190,34 +209,35 @@ class OnPremiseIotSensorsOperations(object):
         if self.config.accept_language is not None:
             header_parameters['accept-language'] = self._serialize.header("self.config.accept_language", self.config.accept_language, 'str')
 
+        # Construct body
+        body_content = self._serialize.body(ingestion_setting, 'IngestionSetting')
+
         # Construct and send request
-        request = self._client.put(url, query_parameters, header_parameters)
+        request = self._client.put(url, query_parameters, header_parameters, body_content)
         response = self._client.send(request, stream=False, **operation_config)
 
-        if response.status_code not in [200, 201]:
+        if response.status_code not in [200]:
             exp = CloudError(response)
             exp.request_id = response.headers.get('x-ms-request-id')
             raise exp
 
         deserialized = None
         if response.status_code == 200:
-            deserialized = self._deserialize('OnPremiseIotSensor', response)
-        if response.status_code == 201:
-            deserialized = self._deserialize('OnPremiseIotSensor', response)
+            deserialized = self._deserialize('IngestionSetting', response)
 
         if raw:
             client_raw_response = ClientRawResponse(deserialized, response)
             return client_raw_response
 
         return deserialized
-    create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Security/onPremiseIotSensors/{onPremiseIotSensorName}'}
+    create.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Security/ingestionSettings/{ingestionSettingName}'}
 
     def delete(
-            self, on_premise_iot_sensor_name, custom_headers=None, raw=False, **operation_config):
-        """Delete on-premise IoT sensor.
+            self, ingestion_setting_name, custom_headers=None, raw=False, **operation_config):
+        """Deletes the ingestion settings for this subscription.
 
-        :param on_premise_iot_sensor_name: Name of the on-premise IoT sensor
-        :type on_premise_iot_sensor_name: str
+        :param ingestion_setting_name: Name of the ingestion setting
+        :type ingestion_setting_name: str
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
@@ -231,7 +251,7 @@ class OnPremiseIotSensorsOperations(object):
         url = self.delete.metadata['url']
         path_format_arguments = {
             'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str', pattern=r'^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$'),
-            'onPremiseIotSensorName': self._serialize.url("on_premise_iot_sensor_name", on_premise_iot_sensor_name, 'str')
+            'ingestionSettingName': self._serialize.url("ingestion_setting_name", ingestion_setting_name, 'str')
         }
         url = self._client.format_url(url, **path_format_arguments)
 
@@ -260,33 +280,30 @@ class OnPremiseIotSensorsOperations(object):
         if raw:
             client_raw_response = ClientRawResponse(None, response)
             return client_raw_response
-    delete.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Security/onPremiseIotSensors/{onPremiseIotSensorName}'}
+    delete.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Security/ingestionSettings/{ingestionSettingName}'}
 
-    def download_activation(
-            self, on_premise_iot_sensor_name, custom_headers=None, raw=False, callback=None, **operation_config):
-        """Download sensor activation file.
+    def list_tokens(
+            self, ingestion_setting_name, custom_headers=None, raw=False, **operation_config):
+        """Returns the token that is used for correlating ingested telemetry with
+        the resources in the subscription.
 
-        :param on_premise_iot_sensor_name: Name of the on-premise IoT sensor
-        :type on_premise_iot_sensor_name: str
+        :param ingestion_setting_name: Name of the ingestion setting
+        :type ingestion_setting_name: str
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
-        :param callback: When specified, will be called with each chunk of
-         data that is streamed. The callback should take two arguments, the
-         bytes of the current chunk of data and the response object. If the
-         data is uploading, response will be None.
-        :type callback: Callable[Bytes, response=None]
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :return: object or ClientRawResponse if raw=true
-        :rtype: Generator or ~msrest.pipeline.ClientRawResponse
+        :return: IngestionSettingToken or ClientRawResponse if raw=true
+        :rtype: ~azure.mgmt.security.models.IngestionSettingToken or
+         ~msrest.pipeline.ClientRawResponse
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
         # Construct URL
-        url = self.download_activation.metadata['url']
+        url = self.list_tokens.metadata['url']
         path_format_arguments = {
             'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str', pattern=r'^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$'),
-            'onPremiseIotSensorName': self._serialize.url("on_premise_iot_sensor_name", on_premise_iot_sensor_name, 'str')
+            'ingestionSettingName': self._serialize.url("ingestion_setting_name", ingestion_setting_name, 'str')
         }
         url = self._client.format_url(url, **path_format_arguments)
 
@@ -296,7 +313,7 @@ class OnPremiseIotSensorsOperations(object):
 
         # Construct headers
         header_parameters = {}
-        header_parameters['Accept'] = 'application/zip'
+        header_parameters['Accept'] = 'application/json'
         if self.config.generate_client_request_id:
             header_parameters['x-ms-client-request-id'] = str(uuid.uuid1())
         if custom_headers:
@@ -306,51 +323,45 @@ class OnPremiseIotSensorsOperations(object):
 
         # Construct and send request
         request = self._client.post(url, query_parameters, header_parameters)
-        response = self._client.send(request, stream=True, **operation_config)
+        response = self._client.send(request, stream=False, **operation_config)
 
         if response.status_code not in [200]:
             exp = CloudError(response)
             exp.request_id = response.headers.get('x-ms-request-id')
             raise exp
 
-        deserialized = self._client.stream_download(response, callback)
+        deserialized = None
+        if response.status_code == 200:
+            deserialized = self._deserialize('IngestionSettingToken', response)
 
         if raw:
             client_raw_response = ClientRawResponse(deserialized, response)
             return client_raw_response
 
         return deserialized
-    download_activation.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Security/onPremiseIotSensors/{onPremiseIotSensorName}/downloadActivation'}
+    list_tokens.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Security/ingestionSettings/{ingestionSettingName}/listTokens'}
 
-    def download_reset_password(
-            self, on_premise_iot_sensor_name, appliance_id=None, custom_headers=None, raw=False, callback=None, **operation_config):
-        """Download file for reset password of the sensor.
+    def list_connection_strings(
+            self, ingestion_setting_name, custom_headers=None, raw=False, **operation_config):
+        """Connection strings for ingesting security scan logs and data.
 
-        :param on_premise_iot_sensor_name: Name of the on-premise IoT sensor
-        :type on_premise_iot_sensor_name: str
-        :param appliance_id: The appliance id of the sensor.
-        :type appliance_id: str
+        :param ingestion_setting_name: Name of the ingestion setting
+        :type ingestion_setting_name: str
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
-        :param callback: When specified, will be called with each chunk of
-         data that is streamed. The callback should take two arguments, the
-         bytes of the current chunk of data and the response object. If the
-         data is uploading, response will be None.
-        :type callback: Callable[Bytes, response=None]
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :return: object or ClientRawResponse if raw=true
-        :rtype: Generator or ~msrest.pipeline.ClientRawResponse
+        :return: ConnectionStrings or ClientRawResponse if raw=true
+        :rtype: ~azure.mgmt.security.models.ConnectionStrings or
+         ~msrest.pipeline.ClientRawResponse
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
-        body = models.ResetPasswordInput(appliance_id=appliance_id)
-
         # Construct URL
-        url = self.download_reset_password.metadata['url']
+        url = self.list_connection_strings.metadata['url']
         path_format_arguments = {
             'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str', pattern=r'^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$'),
-            'onPremiseIotSensorName': self._serialize.url("on_premise_iot_sensor_name", on_premise_iot_sensor_name, 'str')
+            'ingestionSettingName': self._serialize.url("ingestion_setting_name", ingestion_setting_name, 'str')
         }
         url = self._client.format_url(url, **path_format_arguments)
 
@@ -360,8 +371,7 @@ class OnPremiseIotSensorsOperations(object):
 
         # Construct headers
         header_parameters = {}
-        header_parameters['Accept'] = 'application/zip'
-        header_parameters['Content-Type'] = 'application/json; charset=utf-8'
+        header_parameters['Accept'] = 'application/json'
         if self.config.generate_client_request_id:
             header_parameters['x-ms-client-request-id'] = str(uuid.uuid1())
         if custom_headers:
@@ -369,23 +379,22 @@ class OnPremiseIotSensorsOperations(object):
         if self.config.accept_language is not None:
             header_parameters['accept-language'] = self._serialize.header("self.config.accept_language", self.config.accept_language, 'str')
 
-        # Construct body
-        body_content = self._serialize.body(body, 'ResetPasswordInput')
-
         # Construct and send request
-        request = self._client.post(url, query_parameters, header_parameters, body_content)
-        response = self._client.send(request, stream=True, **operation_config)
+        request = self._client.post(url, query_parameters, header_parameters)
+        response = self._client.send(request, stream=False, **operation_config)
 
         if response.status_code not in [200]:
             exp = CloudError(response)
             exp.request_id = response.headers.get('x-ms-request-id')
             raise exp
 
-        deserialized = self._client.stream_download(response, callback)
+        deserialized = None
+        if response.status_code == 200:
+            deserialized = self._deserialize('ConnectionStrings', response)
 
         if raw:
             client_raw_response = ClientRawResponse(deserialized, response)
             return client_raw_response
 
         return deserialized
-    download_reset_password.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Security/onPremiseIotSensors/{onPremiseIotSensorName}/downloadResetPassword'}
+    list_connection_strings.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Security/ingestionSettings/{ingestionSettingName}/listConnectionStrings'}
