@@ -43,7 +43,7 @@ class VideoAnalyzersOperations:
     async def list(
         self,
         resource_group_name: str,
-        **kwargs
+        **kwargs: Any
     ) -> "_models.VideoAnalyzerCollection":
         """List Video Analyzer accounts.
 
@@ -68,7 +68,7 @@ class VideoAnalyzersOperations:
         url = self.list.metadata['url']  # type: ignore
         path_format_arguments = {
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
@@ -101,7 +101,7 @@ class VideoAnalyzersOperations:
         self,
         resource_group_name: str,
         account_name: str,
-        **kwargs
+        **kwargs: Any
     ) -> "_models.VideoAnalyzer":
         """Get a Video Analyzer account.
 
@@ -128,7 +128,7 @@ class VideoAnalyzersOperations:
         url = self.get.metadata['url']  # type: ignore
         path_format_arguments = {
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
             'accountName': self._serialize.url("account_name", account_name, 'str'),
         }
         url = self._client.format_url(url, **path_format_arguments)
@@ -163,7 +163,7 @@ class VideoAnalyzersOperations:
         resource_group_name: str,
         account_name: str,
         parameters: "_models.VideoAnalyzer",
-        **kwargs
+        **kwargs: Any
     ) -> "_models.VideoAnalyzer":
         """Create or update a Video Analyzer account.
 
@@ -193,7 +193,7 @@ class VideoAnalyzersOperations:
         url = self.create_or_update.metadata['url']  # type: ignore
         path_format_arguments = {
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
             'accountName': self._serialize.url("account_name", account_name, 'str'),
         }
         url = self._client.format_url(url, **path_format_arguments)
@@ -235,7 +235,7 @@ class VideoAnalyzersOperations:
         self,
         resource_group_name: str,
         account_name: str,
-        **kwargs
+        **kwargs: Any
     ) -> None:
         """Delete a Video Analyzer account.
 
@@ -262,7 +262,7 @@ class VideoAnalyzersOperations:
         url = self.delete.metadata['url']  # type: ignore
         path_format_arguments = {
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
             'accountName': self._serialize.url("account_name", account_name, 'str'),
         }
         url = self._client.format_url(url, **path_format_arguments)
@@ -294,7 +294,7 @@ class VideoAnalyzersOperations:
         resource_group_name: str,
         account_name: str,
         parameters: "_models.VideoAnalyzerUpdate",
-        **kwargs
+        **kwargs: Any
     ) -> "_models.VideoAnalyzer":
         """Update a Video Analyzer account.
 
@@ -324,7 +324,7 @@ class VideoAnalyzersOperations:
         url = self.update.metadata['url']  # type: ignore
         path_format_arguments = {
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
             'accountName': self._serialize.url("account_name", account_name, 'str'),
         }
         url = self._client.format_url(url, **path_format_arguments)
@@ -363,7 +363,7 @@ class VideoAnalyzersOperations:
         resource_group_name: str,
         account_name: str,
         parameters: "_models.SyncStorageKeysInput",
-        **kwargs
+        **kwargs: Any
     ) -> None:
         """Synchronizes Storage Account Keys.
 
@@ -394,7 +394,7 @@ class VideoAnalyzersOperations:
         url = self.sync_storage_keys.metadata['url']  # type: ignore
         path_format_arguments = {
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
             'accountName': self._serialize.url("account_name", account_name, 'str'),
         }
         url = self._client.format_url(url, **path_format_arguments)
@@ -427,7 +427,7 @@ class VideoAnalyzersOperations:
 
     async def list_by_subscription(
         self,
-        **kwargs
+        **kwargs: Any
     ) -> "_models.VideoAnalyzerCollection":
         """List Video Analyzer accounts.
 

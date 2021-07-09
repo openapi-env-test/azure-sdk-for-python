@@ -4,7 +4,7 @@
     "client": {
         "name": "VideoAnalyzer",
         "filename": "_video_analyzer",
-        "description": "Azure Video Analyzer ARM Client.",
+        "description": "Azure Video Analyzer provides a platform for you to build intelligent video applications that span the edge and the cloud.",
         "base_url": "\u0027https://management.azure.com\u0027",
         "custom_base_url": null,
         "azure_arm": true,

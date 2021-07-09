@@ -27,7 +27,7 @@ from .. import models
 
 
 class VideoAnalyzer(object):
-    """Azure Video Analyzer ARM Client.
+    """Azure Video Analyzer provides a platform for you to build intelligent video applications that span the edge and the cloud.
 
     :ivar operations: Operations operations
     :vartype operations: video_analyzer.aio.operations.Operations

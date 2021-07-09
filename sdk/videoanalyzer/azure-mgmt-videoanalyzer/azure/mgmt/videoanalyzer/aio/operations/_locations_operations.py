@@ -44,7 +44,7 @@ class LocationsOperations:
         self,
         location_name: str,
         parameters: "_models.CheckNameAvailabilityRequest",
-        **kwargs
+        **kwargs: Any
     ) -> "_models.CheckNameAvailabilityResponse":
         """Check Name Availability.
 

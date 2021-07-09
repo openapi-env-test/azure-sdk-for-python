@@ -48,7 +48,7 @@ class EdgeModulesOperations:
         filter: Optional[str] = None,
         top: Optional[int] = None,
         orderby: Optional[str] = None,
-        **kwargs
+        **kwargs: Any
     ) -> AsyncIterable["_models.EdgeModuleEntityCollection"]:
         """List edge module resources.
 
@@ -89,7 +89,7 @@ class EdgeModulesOperations:
                 url = self.list.metadata['url']  # type: ignore
                 path_format_arguments = {
                     'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
-                    'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
+                    'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
                     'accountName': self._serialize.url("account_name", account_name, 'str'),
                 }
                 url = self._client.format_url(url, **path_format_arguments)
@@ -140,7 +140,7 @@ class EdgeModulesOperations:
         resource_group_name: str,
         account_name: str,
         edge_module_name: str,
-        **kwargs
+        **kwargs: Any
     ) -> "_models.EdgeModuleEntity":
         """Retrieves an existing edge module resource.
 
@@ -169,7 +169,7 @@ class EdgeModulesOperations:
         url = self.get.metadata['url']  # type: ignore
         path_format_arguments = {
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
             'accountName': self._serialize.url("account_name", account_name, 'str'),
             'edgeModuleName': self._serialize.url("edge_module_name", edge_module_name, 'str'),
         }
@@ -206,7 +206,7 @@ class EdgeModulesOperations:
         account_name: str,
         edge_module_name: str,
         parameters: "_models.EdgeModuleEntity",
-        **kwargs
+        **kwargs: Any
     ) -> "_models.EdgeModuleEntity":
         """Creates a new edge module or updates an existing one.
 
@@ -244,7 +244,7 @@ class EdgeModulesOperations:
         url = self.create_or_update.metadata['url']  # type: ignore
         path_format_arguments = {
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
             'accountName': self._serialize.url("account_name", account_name, 'str'),
             'edgeModuleName': self._serialize.url("edge_module_name", edge_module_name, 'str'),
         }
@@ -288,7 +288,7 @@ class EdgeModulesOperations:
         resource_group_name: str,
         account_name: str,
         edge_module_name: str,
-        **kwargs
+        **kwargs: Any
     ) -> None:
         """Deletes an existing edge module resource.
 
@@ -319,7 +319,7 @@ class EdgeModulesOperations:
         url = self.delete.metadata['url']  # type: ignore
         path_format_arguments = {
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
             'accountName': self._serialize.url("account_name", account_name, 'str'),
             'edgeModuleName': self._serialize.url("edge_module_name", edge_module_name, 'str'),
         }
@@ -353,7 +353,7 @@ class EdgeModulesOperations:
         account_name: str,
         edge_module_name: str,
         parameters: "_models.ListProvisioningTokenInput",
-        **kwargs
+        **kwargs: Any
     ) -> "_models.EdgeModuleProvisioningToken":
         """Creates a new provisioning token.
 
@@ -391,7 +391,7 @@ class EdgeModulesOperations:
         url = self.list_provisioning_token.metadata['url']  # type: ignore
         path_format_arguments = {
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
             'accountName': self._serialize.url("account_name", account_name, 'str'),
             'edgeModuleName': self._serialize.url("edge_module_name", edge_module_name, 'str'),
         }

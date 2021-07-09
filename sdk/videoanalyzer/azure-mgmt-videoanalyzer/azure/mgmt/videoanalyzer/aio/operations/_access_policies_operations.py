@@ -46,7 +46,7 @@ class AccessPoliciesOperations:
         resource_group_name: str,
         account_name: str,
         top: Optional[int] = None,
-        **kwargs
+        **kwargs: Any
     ) -> AsyncIterable["_models.AccessPolicyEntityCollection"]:
         """List access policy resources.
 
@@ -83,7 +83,7 @@ class AccessPoliciesOperations:
                 url = self.list.metadata['url']  # type: ignore
                 path_format_arguments = {
                     'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
-                    'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
+                    'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
                     'accountName': self._serialize.url("account_name", account_name, 'str'),
                 }
                 url = self._client.format_url(url, **path_format_arguments)
@@ -130,7 +130,7 @@ class AccessPoliciesOperations:
         resource_group_name: str,
         account_name: str,
         access_policy_name: str,
-        **kwargs
+        **kwargs: Any
     ) -> "_models.AccessPolicyEntity":
         """Retrieves an access policy resource.
 
@@ -159,7 +159,7 @@ class AccessPoliciesOperations:
         url = self.get.metadata['url']  # type: ignore
         path_format_arguments = {
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
             'accountName': self._serialize.url("account_name", account_name, 'str'),
             'accessPolicyName': self._serialize.url("access_policy_name", access_policy_name, 'str'),
         }
@@ -196,7 +196,7 @@ class AccessPoliciesOperations:
         account_name: str,
         access_policy_name: str,
         parameters: "_models.AccessPolicyEntity",
-        **kwargs
+        **kwargs: Any
     ) -> "_models.AccessPolicyEntity":
         """Creates or updates an access policy.
 
@@ -228,7 +228,7 @@ class AccessPoliciesOperations:
         url = self.create_or_update.metadata['url']  # type: ignore
         path_format_arguments = {
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
             'accountName': self._serialize.url("account_name", account_name, 'str'),
             'accessPolicyName': self._serialize.url("access_policy_name", access_policy_name, 'str'),
         }
@@ -272,7 +272,7 @@ class AccessPoliciesOperations:
         resource_group_name: str,
         account_name: str,
         access_policy_name: str,
-        **kwargs
+        **kwargs: Any
     ) -> None:
         """Deletes an access policy.
 
@@ -301,7 +301,7 @@ class AccessPoliciesOperations:
         url = self.delete.metadata['url']  # type: ignore
         path_format_arguments = {
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
             'accountName': self._serialize.url("account_name", account_name, 'str'),
             'accessPolicyName': self._serialize.url("access_policy_name", access_policy_name, 'str'),
         }
@@ -335,7 +335,7 @@ class AccessPoliciesOperations:
         account_name: str,
         access_policy_name: str,
         parameters: "_models.AccessPolicyEntity",
-        **kwargs
+        **kwargs: Any
     ) -> "_models.AccessPolicyEntity":
         """Updates an existing access policy.
 
@@ -367,7 +367,7 @@ class AccessPoliciesOperations:
         url = self.update.metadata['url']  # type: ignore
         path_format_arguments = {
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
             'accountName': self._serialize.url("account_name", account_name, 'str'),
             'accessPolicyName': self._serialize.url("access_policy_name", access_policy_name, 'str'),
         }
