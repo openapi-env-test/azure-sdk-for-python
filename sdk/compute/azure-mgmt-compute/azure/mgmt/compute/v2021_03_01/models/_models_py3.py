@@ -3590,10 +3590,9 @@ class ManagedDiskParameters(SubResource):
 
     :param id: Resource Id.
     :type id: str
-    :param storage_account_type: Specifies the storage account type for the managed disk. Managed
-     OS disk storage account type can only be set when you create the scale set. NOTE: UltraSSD_LRS
-     can only be used with data disks, it cannot be used with OS Disk. Possible values include:
-     "Standard_LRS", "Premium_LRS", "StandardSSD_LRS", "UltraSSD_LRS", "Premium_ZRS",
+    :param storage_account_type: Specifies the storage account type for the managed disk. NOTE:
+     UltraSSD_LRS can only be used with data disks, it cannot be used with OS Disk. Possible values
+     include: "Standard_LRS", "Premium_LRS", "StandardSSD_LRS", "UltraSSD_LRS", "Premium_ZRS",
      "StandardSSD_ZRS".
     :type storage_account_type: str or ~azure.mgmt.compute.v2021_03_01.models.StorageAccountTypes
     :param disk_encryption_set: Specifies the customer managed disk encryption set resource id for
@@ -4587,27 +4586,37 @@ class ProxyResource(msrest.serialization.Model):
 class PublicIPAddressSku(msrest.serialization.Model):
     """Describes the public IP Sku.
 
-    :param name: Specify public IP sku name. Possible values include: "Basic", "Standard".
-    :type name: str or ~azure.mgmt.compute.v2021_03_01.models.PublicIPAddressSkuName
-    :param tier: Specify public IP sku tier. Possible values include: "Regional", "Global".
-    :type tier: str or ~azure.mgmt.compute.v2021_03_01.models.PublicIPAddressSkuTier
+    All required parameters must be populated in order to send to Azure.
+
+    :param public_ip_address_sku_name: Required. Specify public IP sku name. Possible values
+     include: "Basic", "Standard".
+    :type public_ip_address_sku_name: str or
+     ~azure.mgmt.compute.v2021_03_01.models.PublicIPAddressSkuName
+    :param public_ip_address_sku_tier: Specify public IP sku tier. Possible values include:
+     "Regional", "Global".
+    :type public_ip_address_sku_tier: str or
+     ~azure.mgmt.compute.v2021_03_01.models.PublicIPAddressSkuTier
     """
 
+    _validation = {
+        'public_ip_address_sku_name': {'required': True},
+    }
+
     _attribute_map = {
-        'name': {'key': 'name', 'type': 'str'},
-        'tier': {'key': 'tier', 'type': 'str'},
+        'public_ip_address_sku_name': {'key': 'publicIPAddressSkuName', 'type': 'str'},
+        'public_ip_address_sku_tier': {'key': 'publicIPAddressSkuTier', 'type': 'str'},
     }
 
     def __init__(
         self,
         *,
-        name: Optional[Union[str, "PublicIPAddressSkuName"]] = None,
-        tier: Optional[Union[str, "PublicIPAddressSkuTier"]] = None,
+        public_ip_address_sku_name: Union[str, "PublicIPAddressSkuName"],
+        public_ip_address_sku_tier: Optional[Union[str, "PublicIPAddressSkuTier"]] = None,
         **kwargs
     ):
         super(PublicIPAddressSku, self).__init__(**kwargs)
-        self.name = name
-        self.tier = tier
+        self.public_ip_address_sku_name = public_ip_address_sku_name
+        self.public_ip_address_sku_tier = public_ip_address_sku_tier
 
 
 class PurchasePlan(msrest.serialization.Model):
@@ -4802,9 +4811,6 @@ class RestorePoint(ProxyResource):
     :vartype name: str
     :ivar type: Resource type.
     :vartype type: str
-    :param exclude_disks: List of disk resource ids that the customer wishes to exclude from the
-     restore point. If no disks are specified, all disks will be included.
-    :type exclude_disks: list[~azure.mgmt.compute.v2021_03_01.models.ApiEntityReference]
     :ivar source_metadata: Gets the details of the VM captured at the time of the restore point
      creation.
     :vartype source_metadata: ~azure.mgmt.compute.v2021_03_01.models.RestorePointSourceMetadata
@@ -4818,6 +4824,9 @@ class RestorePoint(ProxyResource):
      restore point operation.
     :vartype provisioning_details:
      ~azure.mgmt.compute.v2021_03_01.models.RestorePointProvisioningDetails
+    :param exclude_disks: List of disk resource ids that the customer wishes to exclude from the
+     restore point. If no disks are specified, all disks will be included.
+    :type exclude_disks: list[~azure.mgmt.compute.v2021_03_01.models.ApiEntityReference]
     """
 
     _validation = {
@@ -4834,11 +4843,11 @@ class RestorePoint(ProxyResource):
         'id': {'key': 'id', 'type': 'str'},
         'name': {'key': 'name', 'type': 'str'},
         'type': {'key': 'type', 'type': 'str'},
-        'exclude_disks': {'key': 'properties.excludeDisks', 'type': '[ApiEntityReference]'},
-        'source_metadata': {'key': 'properties.sourceMetadata', 'type': 'RestorePointSourceMetadata'},
-        'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
-        'consistency_mode': {'key': 'properties.consistencyMode', 'type': 'str'},
-        'provisioning_details': {'key': 'properties.provisioningDetails', 'type': 'RestorePointProvisioningDetails'},
+        'source_metadata': {'key': 'sourceMetadata', 'type': 'RestorePointSourceMetadata'},
+        'provisioning_state': {'key': 'provisioningState', 'type': 'str'},
+        'consistency_mode': {'key': 'consistencyMode', 'type': 'str'},
+        'provisioning_details': {'key': 'provisioningDetails', 'type': 'RestorePointProvisioningDetails'},
+        'exclude_disks': {'key': 'excludeDisks', 'type': '[ApiEntityReference]'},
     }
 
     def __init__(
@@ -4848,11 +4857,11 @@ class RestorePoint(ProxyResource):
         **kwargs
     ):
         super(RestorePoint, self).__init__(**kwargs)
-        self.exclude_disks = exclude_disks
         self.source_metadata = None
         self.provisioning_state = None
         self.consistency_mode = None
         self.provisioning_details = None
+        self.exclude_disks = exclude_disks
 
 
 class RestorePointCollection(Resource):
@@ -5081,8 +5090,6 @@ class RestorePointSourceMetadata(msrest.serialization.Model):
     :type vm_id: str
     :param security_profile: Gets the security profile.
     :type security_profile: ~azure.mgmt.compute.v2021_03_01.models.SecurityProfile
-    :param location: Location of the VM from which the restore point was created.
-    :type location: str
     """
 
     _attribute_map = {
@@ -5093,7 +5100,6 @@ class RestorePointSourceMetadata(msrest.serialization.Model):
         'license_type': {'key': 'licenseType', 'type': 'str'},
         'vm_id': {'key': 'vmId', 'type': 'str'},
         'security_profile': {'key': 'securityProfile', 'type': 'SecurityProfile'},
-        'location': {'key': 'location', 'type': 'str'},
     }
 
     def __init__(
@@ -5106,7 +5112,6 @@ class RestorePointSourceMetadata(msrest.serialization.Model):
         license_type: Optional[str] = None,
         vm_id: Optional[str] = None,
         security_profile: Optional["SecurityProfile"] = None,
-        location: Optional[str] = None,
         **kwargs
     ):
         super(RestorePointSourceMetadata, self).__init__(**kwargs)
@@ -5117,7 +5122,6 @@ class RestorePointSourceMetadata(msrest.serialization.Model):
         self.license_type = license_type
         self.vm_id = vm_id
         self.security_profile = security_profile
-        self.location = location
 
 
 class RestorePointSourceVMDataDisk(msrest.serialization.Model):
@@ -6088,9 +6092,9 @@ class SecurityProfile(msrest.serialization.Model):
     :type encryption_at_host: bool
     :param security_type: Specifies the SecurityType of the virtual machine. It is set as
      TrustedLaunch to enable UefiSettings. :code:`<br>`:code:`<br>` Default: UefiSettings will not
-     be enabled unless this property is set as TrustedLaunch. Possible values include:
-     "TrustedLaunch".
-    :type security_type: str or ~azure.mgmt.compute.v2021_03_01.models.SecurityTypes
+     be enabled unless this property is set as TrustedLaunch. The only acceptable values to pass in
+     are None and "TrustedLaunch". The default value is None.
+    :type security_type: str
     """
 
     _attribute_map = {
@@ -6104,7 +6108,7 @@ class SecurityProfile(msrest.serialization.Model):
         *,
         uefi_settings: Optional["UefiSettings"] = None,
         encryption_at_host: Optional[bool] = None,
-        security_type: Optional[Union[str, "SecurityTypes"]] = None,
+        security_type: Optional[str] = None,
         **kwargs
     ):
         super(SecurityProfile, self).__init__(**kwargs)

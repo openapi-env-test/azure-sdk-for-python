@@ -3600,10 +3600,9 @@ class ManagedDiskParameters(SubResource):
 
     :param id: Resource Id.
     :type id: str
-    :param storage_account_type: Specifies the storage account type for the managed disk. Managed
-     OS disk storage account type can only be set when you create the scale set. NOTE: UltraSSD_LRS
-     can only be used with data disks, it cannot be used with OS Disk. Possible values include:
-     "Standard_LRS", "Premium_LRS", "StandardSSD_LRS", "UltraSSD_LRS", "Premium_ZRS",
+    :param storage_account_type: Specifies the storage account type for the managed disk. NOTE:
+     UltraSSD_LRS can only be used with data disks, it cannot be used with OS Disk. Possible values
+     include: "Standard_LRS", "Premium_LRS", "StandardSSD_LRS", "UltraSSD_LRS", "Premium_ZRS",
      "StandardSSD_ZRS".
     :type storage_account_type: str or ~azure.mgmt.compute.v2020_12_01.models.StorageAccountTypes
     :param disk_encryption_set: Specifies the customer managed disk encryption set resource id for
@@ -5189,9 +5188,9 @@ class SecurityProfile(msrest.serialization.Model):
     :type encryption_at_host: bool
     :param security_type: Specifies the SecurityType of the virtual machine. It is set as
      TrustedLaunch to enable UefiSettings. :code:`<br>`:code:`<br>` Default: UefiSettings will not
-     be enabled unless this property is set as TrustedLaunch. Possible values include:
-     "TrustedLaunch".
-    :type security_type: str or ~azure.mgmt.compute.v2020_12_01.models.SecurityTypes
+     be enabled unless this property is set as TrustedLaunch. The only acceptable values to pass in
+     are None and "TrustedLaunch". The default value is None.
+    :type security_type: str
     """
 
     _attribute_map = {
