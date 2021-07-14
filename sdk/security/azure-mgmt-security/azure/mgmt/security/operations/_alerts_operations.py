@@ -12,6 +12,8 @@
 import uuid
 from msrest.pipeline import ClientRawResponse
 from msrestazure.azure_exceptions import CloudError
+from msrest.polling import LROPoller, NoPolling
+from msrestazure.polling.arm_polling import ARMPolling
 
 from .. import models
 
@@ -25,7 +27,7 @@ class AlertsOperations(object):
     :param config: Configuration of service client.
     :param serializer: An object model serializer.
     :param deserializer: An object model deserializer.
-    :ivar api_version: API version for the operation. Constant value: "2020-01-01".
+    :ivar api_version: API version for the operation. Constant value: "2021-01-01".
     """
 
     models = models
@@ -35,7 +37,7 @@ class AlertsOperations(object):
         self._client = client
         self._serialize = serializer
         self._deserialize = deserializer
-        self.api_version = "2020-01-01"
+        self.api_version = "2021-01-01"
 
         self.config = config
 
@@ -175,7 +177,7 @@ class AlertsOperations(object):
         return deserialized
     list_by_resource_group.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/alerts'}
 
-    def list_subscription_level_alerts_by_region(
+    def list_subscription_level_by_region(
             self, custom_headers=None, raw=False, **operation_config):
         """List all the alerts that are associated with the subscription that are
         stored in a specific location.
@@ -193,7 +195,7 @@ class AlertsOperations(object):
         def prepare_request(next_link=None):
             if not next_link:
                 # Construct URL
-                url = self.list_subscription_level_alerts_by_region.metadata['url']
+                url = self.list_subscription_level_by_region.metadata['url']
                 path_format_arguments = {
                     'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str', pattern=r'^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$'),
                     'ascLocation': self._serialize.url("self.config.asc_location", self.config.asc_location, 'str')
@@ -241,9 +243,9 @@ class AlertsOperations(object):
         deserialized = models.AlertPaged(internal_paging, self._deserialize.dependencies, header_dict)
 
         return deserialized
-    list_subscription_level_alerts_by_region.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/alerts'}
+    list_subscription_level_by_region.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/alerts'}
 
-    def list_resource_group_level_alerts_by_region(
+    def list_resource_group_level_by_region(
             self, resource_group_name, custom_headers=None, raw=False, **operation_config):
         """List all the alerts that are associated with the resource group that
         are stored in a specific location.
@@ -264,7 +266,7 @@ class AlertsOperations(object):
         def prepare_request(next_link=None):
             if not next_link:
                 # Construct URL
-                url = self.list_resource_group_level_alerts_by_region.metadata['url']
+                url = self.list_resource_group_level_by_region.metadata['url']
                 path_format_arguments = {
                     'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str', pattern=r'^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$'),
                     'ascLocation': self._serialize.url("self.config.asc_location", self.config.asc_location, 'str'),
@@ -313,9 +315,9 @@ class AlertsOperations(object):
         deserialized = models.AlertPaged(internal_paging, self._deserialize.dependencies, header_dict)
 
         return deserialized
-    list_resource_group_level_alerts_by_region.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/alerts'}
+    list_resource_group_level_by_region.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/alerts'}
 
-    def get_subscription_level_alert(
+    def get_subscription_level(
             self, alert_name, custom_headers=None, raw=False, **operation_config):
         """Get an alert that is associated with a subscription.
 
@@ -332,7 +334,7 @@ class AlertsOperations(object):
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
         # Construct URL
-        url = self.get_subscription_level_alert.metadata['url']
+        url = self.get_subscription_level.metadata['url']
         path_format_arguments = {
             'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str', pattern=r'^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$'),
             'ascLocation': self._serialize.url("self.config.asc_location", self.config.asc_location, 'str'),
@@ -372,9 +374,9 @@ class AlertsOperations(object):
             return client_raw_response
 
         return deserialized
-    get_subscription_level_alert.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}'}
+    get_subscription_level.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}'}
 
-    def get_resource_group_level_alerts(
+    def get_resource_group_level(
             self, alert_name, resource_group_name, custom_headers=None, raw=False, **operation_config):
         """Get an alert that is associated a resource group or a resource in a
         resource group.
@@ -395,7 +397,7 @@ class AlertsOperations(object):
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
         # Construct URL
-        url = self.get_resource_group_level_alerts.metadata['url']
+        url = self.get_resource_group_level.metadata['url']
         path_format_arguments = {
             'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str', pattern=r'^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$'),
             'ascLocation': self._serialize.url("self.config.asc_location", self.config.asc_location, 'str'),
@@ -436,9 +438,9 @@ class AlertsOperations(object):
             return client_raw_response
 
         return deserialized
-    get_resource_group_level_alerts.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}'}
+    get_resource_group_level.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}'}
 
-    def update_subscription_level_alert_state_to_dismiss(
+    def update_subscription_level_state_to_dismiss(
             self, alert_name, custom_headers=None, raw=False, **operation_config):
         """Update the alert's state.
 
@@ -454,7 +456,7 @@ class AlertsOperations(object):
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
         # Construct URL
-        url = self.update_subscription_level_alert_state_to_dismiss.metadata['url']
+        url = self.update_subscription_level_state_to_dismiss.metadata['url']
         path_format_arguments = {
             'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str', pattern=r'^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$'),
             'ascLocation': self._serialize.url("self.config.asc_location", self.config.asc_location, 'str'),
@@ -487,7 +489,7 @@ class AlertsOperations(object):
         if raw:
             client_raw_response = ClientRawResponse(None, response)
             return client_raw_response
-    update_subscription_level_alert_state_to_dismiss.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}/dismiss'}
+    update_subscription_level_state_to_dismiss.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}/dismiss'}
 
     def update_subscription_level_state_to_resolve(
             self, alert_name, custom_headers=None, raw=False, **operation_config):
@@ -540,7 +542,7 @@ class AlertsOperations(object):
             return client_raw_response
     update_subscription_level_state_to_resolve.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}/resolve'}
 
-    def update_subscription_level_alert_state_to_reactivate(
+    def update_subscription_level_state_to_activate(
             self, alert_name, custom_headers=None, raw=False, **operation_config):
         """Update the alert's state.
 
@@ -556,7 +558,7 @@ class AlertsOperations(object):
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
         # Construct URL
-        url = self.update_subscription_level_alert_state_to_reactivate.metadata['url']
+        url = self.update_subscription_level_state_to_activate.metadata['url']
         path_format_arguments = {
             'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str', pattern=r'^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$'),
             'ascLocation': self._serialize.url("self.config.asc_location", self.config.asc_location, 'str'),
@@ -589,7 +591,7 @@ class AlertsOperations(object):
         if raw:
             client_raw_response = ClientRawResponse(None, response)
             return client_raw_response
-    update_subscription_level_alert_state_to_reactivate.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}/activate'}
+    update_subscription_level_state_to_activate.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}/activate'}
 
     def update_resource_group_level_state_to_resolve(
             self, alert_name, resource_group_name, custom_headers=None, raw=False, **operation_config):
@@ -646,7 +648,7 @@ class AlertsOperations(object):
             return client_raw_response
     update_resource_group_level_state_to_resolve.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}/resolve'}
 
-    def update_resource_group_level_alert_state_to_dismiss(
+    def update_resource_group_level_state_to_dismiss(
             self, alert_name, resource_group_name, custom_headers=None, raw=False, **operation_config):
         """Update the alert's state.
 
@@ -665,7 +667,7 @@ class AlertsOperations(object):
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
         # Construct URL
-        url = self.update_resource_group_level_alert_state_to_dismiss.metadata['url']
+        url = self.update_resource_group_level_state_to_dismiss.metadata['url']
         path_format_arguments = {
             'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str', pattern=r'^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$'),
             'ascLocation': self._serialize.url("self.config.asc_location", self.config.asc_location, 'str'),
@@ -699,9 +701,9 @@ class AlertsOperations(object):
         if raw:
             client_raw_response = ClientRawResponse(None, response)
             return client_raw_response
-    update_resource_group_level_alert_state_to_dismiss.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}/dismiss'}
+    update_resource_group_level_state_to_dismiss.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}/dismiss'}
 
-    def update_resource_group_level_alert_state_to_reactivate(
+    def update_resource_group_level_state_to_activate(
             self, alert_name, resource_group_name, custom_headers=None, raw=False, **operation_config):
         """Update the alert's state.
 
@@ -720,7 +722,7 @@ class AlertsOperations(object):
         :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
         """
         # Construct URL
-        url = self.update_resource_group_level_alert_state_to_reactivate.metadata['url']
+        url = self.update_resource_group_level_state_to_activate.metadata['url']
         path_format_arguments = {
             'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str', pattern=r'^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$'),
             'ascLocation': self._serialize.url("self.config.asc_location", self.config.asc_location, 'str'),
@@ -754,4 +756,86 @@ class AlertsOperations(object):
         if raw:
             client_raw_response = ClientRawResponse(None, response)
             return client_raw_response
-    update_resource_group_level_alert_state_to_reactivate.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}/activate'}
+    update_resource_group_level_state_to_activate.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}/activate'}
+
+
+    def _simulate_initial(
+            self, properties=None, custom_headers=None, raw=False, **operation_config):
+        alert_simulator_request_body = models.AlertSimulatorRequestBody(properties=properties)
+
+        # Construct URL
+        url = self.simulate.metadata['url']
+        path_format_arguments = {
+            'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str', pattern=r'^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$'),
+            'ascLocation': self._serialize.url("self.config.asc_location", self.config.asc_location, 'str')
+        }
+        url = self._client.format_url(url, **path_format_arguments)
+
+        # Construct parameters
+        query_parameters = {}
+        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
+
+        # Construct headers
+        header_parameters = {}
+        header_parameters['Content-Type'] = 'application/json; charset=utf-8'
+        if self.config.generate_client_request_id:
+            header_parameters['x-ms-client-request-id'] = str(uuid.uuid1())
+        if custom_headers:
+            header_parameters.update(custom_headers)
+        if self.config.accept_language is not None:
+            header_parameters['accept-language'] = self._serialize.header("self.config.accept_language", self.config.accept_language, 'str')
+
+        # Construct body
+        body_content = self._serialize.body(alert_simulator_request_body, 'AlertSimulatorRequestBody')
+
+        # Construct and send request
+        request = self._client.post(url, query_parameters, header_parameters, body_content)
+        response = self._client.send(request, stream=False, **operation_config)
+
+        if response.status_code not in [202]:
+            exp = CloudError(response)
+            exp.request_id = response.headers.get('x-ms-request-id')
+            raise exp
+
+        if raw:
+            client_raw_response = ClientRawResponse(None, response)
+            return client_raw_response
+
+    def simulate(
+            self, properties=None, custom_headers=None, raw=False, polling=True, **operation_config):
+        """Simulate security alerts.
+
+        :param properties: Alert Simulator request body data.
+        :type properties:
+         ~azure.mgmt.security.models.AlertSimulatorRequestProperties
+        :param dict custom_headers: headers that will be added to the request
+        :param bool raw: The poller return type is ClientRawResponse, the
+         direct response alongside the deserialized response
+        :param polling: True for ARMPolling, False for no polling, or a
+         polling object for personal polling strategy
+        :return: An instance of LROPoller that returns None or
+         ClientRawResponse<None> if raw==True
+        :rtype: ~msrestazure.azure_operation.AzureOperationPoller[None] or
+         ~msrestazure.azure_operation.AzureOperationPoller[~msrest.pipeline.ClientRawResponse[None]]
+        :raises: :class:`CloudError<msrestazure.azure_exceptions.CloudError>`
+        """
+        raw_result = self._simulate_initial(
+            properties=properties,
+            custom_headers=custom_headers,
+            raw=True,
+            **operation_config
+        )
+
+        def get_long_running_output(response):
+            if raw:
+                client_raw_response = ClientRawResponse(None, response)
+                return client_raw_response
+
+        lro_delay = operation_config.get(
+            'long_running_operation_timeout',
+            self.config.long_running_operation_timeout)
+        if polling is True: polling_method = ARMPolling(lro_delay, **operation_config)
+        elif polling is False: polling_method = NoPolling()
+        else: polling_method = polling
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+    simulate.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/alerts/default/simulate'}

@@ -20,10 +20,15 @@ try:
     from ._models_py3 import AdaptiveNetworkHardening
     from ._models_py3 import AdaptiveNetworkHardeningEnforceRequest
     from ._models_py3 import AdditionalData
+    from ._models_py3 import AdditionalWorkspacesProperties
     from ._models_py3 import AdvancedThreatProtectionSetting
     from ._models_py3 import Alert
     from ._models_py3 import AlertEntity
+    from ._models_py3 import AlertSimulatorBundlesRequestProperties
+    from ._models_py3 import AlertSimulatorRequestBody
+    from ._models_py3 import AlertSimulatorRequestProperties
     from ._models_py3 import AlertsSuppressionRule
+    from ._models_py3 import AlertSyncSettings
     from ._models_py3 import AllowedConnectionsResource
     from ._models_py3 import AllowlistCustomAlertRule
     from ._models_py3 import AmqpC2DMessagesNotInAllowedRange
@@ -63,6 +68,8 @@ try:
     from ._models_py3 import ConnectableResource
     from ._models_py3 import ConnectedResource
     from ._models_py3 import ConnectedWorkspace
+    from ._models_py3 import ConnectionFromIpNotAllowed
+    from ._models_py3 import ConnectionStrings
     from ._models_py3 import ConnectionToIpNotAllowed
     from ._models_py3 import ConnectorSetting
     from ._models_py3 import ContainerRegistryVulnerabilityProperties
@@ -76,6 +83,7 @@ try:
     from ._models_py3 import DirectMethodInvokesNotInAllowedRange
     from ._models_py3 import DiscoveredSecuritySolution
     from ._models_py3 import EffectiveNetworkSecurityGroups
+    from ._models_py3 import ErrorAdditionalInfo
     from ._models_py3 import ETag
     from ._models_py3 import ExternalSecuritySolution
     from ._models_py3 import ExternalSecuritySolutionKind1
@@ -91,13 +99,14 @@ try:
     from ._models_py3 import InformationProtectionKeyword
     from ._models_py3 import InformationProtectionPolicy
     from ._models_py3 import InformationType
-    from ._models_py3 import IotAlert
+    from ._models_py3 import IngestionConnectionString
+    from ._models_py3 import IngestionSetting
+    from ._models_py3 import IngestionSettingToken
     from ._models_py3 import IotAlertModel
     from ._models_py3 import IotAlertType
     from ._models_py3 import IotAlertTypeList
     from ._models_py3 import IotDefenderSettingsList
     from ._models_py3 import IotDefenderSettingsModel
-    from ._models_py3 import IotRecommendation
     from ._models_py3 import IotRecommendationModel
     from ._models_py3 import IotRecommendationType
     from ._models_py3 import IotRecommendationTypeList
@@ -111,9 +120,11 @@ try:
     from ._models_py3 import IoTSecuritySolutionAnalyticsModelList
     from ._models_py3 import IoTSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem
     from ._models_py3 import IoTSecuritySolutionModel
-    from ._models_py3 import IotSensor
     from ._models_py3 import IotSensorsList
+    from ._models_py3 import IotSensorsModel
     from ._models_py3 import IoTSeverityMetrics
+    from ._models_py3 import IotSitesList
+    from ._models_py3 import IotSitesModel
     from ._models_py3 import IpAddress
     from ._models_py3 import JitNetworkAccessPolicy
     from ._models_py3 import JitNetworkAccessPolicyInitiatePort
@@ -148,7 +159,6 @@ try:
     from ._models_py3 import PackageDownloadsSensor
     from ._models_py3 import PackageDownloadsSensorFull
     from ._models_py3 import PackageDownloadsSensorFullOvf
-    from ._models_py3 import PackageDownloadsThreatIntelligence
     from ._models_py3 import PathRecommendation
     from ._models_py3 import Pricing
     from ._models_py3 import PricingList
@@ -164,6 +174,7 @@ try:
     from ._models_py3 import RegulatoryComplianceControl
     from ._models_py3 import RegulatoryComplianceStandard
     from ._models_py3 import Remediation
+    from ._models_py3 import ResetPasswordInput
     from ._models_py3 import Resource
     from ._models_py3 import ResourceDetails
     from ._models_py3 import ResourceIdentifier
@@ -204,11 +215,12 @@ try:
     from ._models_py3 import ServerVulnerabilityProperties
     from ._models_py3 import ServicePrincipalProperties
     from ._models_py3 import Setting
-    from ._models_py3 import SettingResource
     from ._models_py3 import Site
+    from ._models_py3 import Software
     from ._models_py3 import SqlServerVulnerabilityProperties
     from ._models_py3 import SubAssessmentStatus
     from ._models_py3 import SuppressionAlertsScope
+    from ._models_py3 import SystemData
     from ._models_py3 import Tags
     from ._models_py3 import TagsResource
     from ._models_py3 import ThresholdCustomAlertRule
@@ -221,6 +233,7 @@ try:
     from ._models_py3 import TwinUpdatesNotInAllowedRange
     from ._models_py3 import UnauthorizedOperationsNotInAllowedRange
     from ._models_py3 import UpdateIotSecuritySolutionData
+    from ._models_py3 import UpgradePackageDownloadInfo
     from ._models_py3 import UserDefinedResourcesProperties
     from ._models_py3 import UserRecommendation
     from ._models_py3 import VaRule
@@ -238,10 +251,15 @@ except (SyntaxError, ImportError):
     from ._models import AdaptiveNetworkHardening
     from ._models import AdaptiveNetworkHardeningEnforceRequest
     from ._models import AdditionalData
+    from ._models import AdditionalWorkspacesProperties
     from ._models import AdvancedThreatProtectionSetting
     from ._models import Alert
     from ._models import AlertEntity
+    from ._models import AlertSimulatorBundlesRequestProperties
+    from ._models import AlertSimulatorRequestBody
+    from ._models import AlertSimulatorRequestProperties
     from ._models import AlertsSuppressionRule
+    from ._models import AlertSyncSettings
     from ._models import AllowedConnectionsResource
     from ._models import AllowlistCustomAlertRule
     from ._models import AmqpC2DMessagesNotInAllowedRange
@@ -281,6 +299,8 @@ except (SyntaxError, ImportError):
     from ._models import ConnectableResource
     from ._models import ConnectedResource
     from ._models import ConnectedWorkspace
+    from ._models import ConnectionFromIpNotAllowed
+    from ._models import ConnectionStrings
     from ._models import ConnectionToIpNotAllowed
     from ._models import ConnectorSetting
     from ._models import ContainerRegistryVulnerabilityProperties
@@ -294,6 +314,7 @@ except (SyntaxError, ImportError):
     from ._models import DirectMethodInvokesNotInAllowedRange
     from ._models import DiscoveredSecuritySolution
     from ._models import EffectiveNetworkSecurityGroups
+    from ._models import ErrorAdditionalInfo
     from ._models import ETag
     from ._models import ExternalSecuritySolution
     from ._models import ExternalSecuritySolutionKind1
@@ -309,13 +330,14 @@ except (SyntaxError, ImportError):
     from ._models import InformationProtectionKeyword
     from ._models import InformationProtectionPolicy
     from ._models import InformationType
-    from ._models import IotAlert
+    from ._models import IngestionConnectionString
+    from ._models import IngestionSetting
+    from ._models import IngestionSettingToken
     from ._models import IotAlertModel
     from ._models import IotAlertType
     from ._models import IotAlertTypeList
     from ._models import IotDefenderSettingsList
     from ._models import IotDefenderSettingsModel
-    from ._models import IotRecommendation
     from ._models import IotRecommendationModel
     from ._models import IotRecommendationType
     from ._models import IotRecommendationTypeList
@@ -329,9 +351,11 @@ except (SyntaxError, ImportError):
     from ._models import IoTSecuritySolutionAnalyticsModelList
     from ._models import IoTSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem
     from ._models import IoTSecuritySolutionModel
-    from ._models import IotSensor
     from ._models import IotSensorsList
+    from ._models import IotSensorsModel
     from ._models import IoTSeverityMetrics
+    from ._models import IotSitesList
+    from ._models import IotSitesModel
     from ._models import IpAddress
     from ._models import JitNetworkAccessPolicy
     from ._models import JitNetworkAccessPolicyInitiatePort
@@ -366,7 +390,6 @@ except (SyntaxError, ImportError):
     from ._models import PackageDownloadsSensor
     from ._models import PackageDownloadsSensorFull
     from ._models import PackageDownloadsSensorFullOvf
-    from ._models import PackageDownloadsThreatIntelligence
     from ._models import PathRecommendation
     from ._models import Pricing
     from ._models import PricingList
@@ -382,6 +405,7 @@ except (SyntaxError, ImportError):
     from ._models import RegulatoryComplianceControl
     from ._models import RegulatoryComplianceStandard
     from ._models import Remediation
+    from ._models import ResetPasswordInput
     from ._models import Resource
     from ._models import ResourceDetails
     from ._models import ResourceIdentifier
@@ -422,11 +446,12 @@ except (SyntaxError, ImportError):
     from ._models import ServerVulnerabilityProperties
     from ._models import ServicePrincipalProperties
     from ._models import Setting
-    from ._models import SettingResource
     from ._models import Site
+    from ._models import Software
     from ._models import SqlServerVulnerabilityProperties
     from ._models import SubAssessmentStatus
     from ._models import SuppressionAlertsScope
+    from ._models import SystemData
     from ._models import Tags
     from ._models import TagsResource
     from ._models import ThresholdCustomAlertRule
@@ -439,6 +464,7 @@ except (SyntaxError, ImportError):
     from ._models import TwinUpdatesNotInAllowedRange
     from ._models import UnauthorizedOperationsNotInAllowedRange
     from ._models import UpdateIotSecuritySolutionData
+    from ._models import UpgradePackageDownloadInfo
     from ._models import UserDefinedResourcesProperties
     from ._models import UserRecommendation
     from ._models import VaRule
@@ -460,10 +486,9 @@ from ._paged_models import DeviceSecurityGroupPaged
 from ._paged_models import DiscoveredSecuritySolutionPaged
 from ._paged_models import ExternalSecuritySolutionPaged
 from ._paged_models import InformationProtectionPolicyPaged
+from ._paged_models import IngestionSettingPaged
 from ._paged_models import IotAlertModelPaged
-from ._paged_models import IotAlertPaged
 from ._paged_models import IotRecommendationModelPaged
-from ._paged_models import IotRecommendationPaged
 from ._paged_models import IoTSecurityAggregatedAlertPaged
 from ._paged_models import IoTSecurityAggregatedRecommendationPaged
 from ._paged_models import IoTSecuritySolutionModelPaged
@@ -482,6 +507,7 @@ from ._paged_models import SecuritySolutionPaged
 from ._paged_models import SecuritySubAssessmentPaged
 from ._paged_models import SecurityTaskPaged
 from ._paged_models import SettingPaged
+from ._paged_models import SoftwarePaged
 from ._paged_models import TopologyResourcePaged
 from ._paged_models import WorkspaceSettingPaged
 from ._security_center_enums import (
@@ -494,10 +520,10 @@ from ._security_center_enums import (
     RecommendationType,
     RecommendationConfigStatus,
     UnmaskedIpLoggingStatus,
+    AdditionalWorkspaceType,
+    AdditionalWorkspaceDataType,
+    CreatedByType,
     ReportedSeverity,
-    AlertSeverity,
-    AlertIntent,
-    RecommendationSeverity,
     AutoProvision,
     Rank,
     AlertNotifications,
@@ -509,7 +535,7 @@ from ._security_center_enums import (
     PropertyType,
     Operator,
     RuleState,
-    Category,
+    Categories,
     UserImpact,
     ImplementationEffort,
     Threats,
@@ -517,8 +543,6 @@ from ._security_center_enums import (
     AssessmentStatusCode,
     Direction,
     TransportProtocol,
-    Intent,
-    AlertStatus,
     Protocol,
     Status,
     StatusReason,
@@ -535,7 +559,11 @@ from ._security_center_enums import (
     RuleStatus,
     RuleSeverity,
     RuleType,
+    OnboardingKind,
     VersionKind,
+    SensorStatus,
+    TiStatus,
+    SensorType,
     MacSignificance,
     RelationToIpStatus,
     ManagementState,
@@ -545,6 +573,13 @@ from ._security_center_enums import (
     ProgrammingState,
     ScanningFunctionality,
     DeviceStatus,
+    AlertSeverity,
+    AlertIntent,
+    RecommendationSeverity,
+    Intent,
+    AlertStatus,
+    BundleType,
+    EndOfSupportStatus,
     ExpandEnum,
     ConnectionType,
     ExpandControlsEnum,
@@ -561,10 +596,15 @@ __all__ = [
     'AdaptiveNetworkHardening',
     'AdaptiveNetworkHardeningEnforceRequest',
     'AdditionalData',
+    'AdditionalWorkspacesProperties',
     'AdvancedThreatProtectionSetting',
     'Alert',
     'AlertEntity',
+    'AlertSimulatorBundlesRequestProperties',
+    'AlertSimulatorRequestBody',
+    'AlertSimulatorRequestProperties',
     'AlertsSuppressionRule',
+    'AlertSyncSettings',
     'AllowedConnectionsResource',
     'AllowlistCustomAlertRule',
     'AmqpC2DMessagesNotInAllowedRange',
@@ -604,6 +644,8 @@ __all__ = [
     'ConnectableResource',
     'ConnectedResource',
     'ConnectedWorkspace',
+    'ConnectionFromIpNotAllowed',
+    'ConnectionStrings',
     'ConnectionToIpNotAllowed',
     'ConnectorSetting',
     'ContainerRegistryVulnerabilityProperties',
@@ -617,6 +659,7 @@ __all__ = [
     'DirectMethodInvokesNotInAllowedRange',
     'DiscoveredSecuritySolution',
     'EffectiveNetworkSecurityGroups',
+    'ErrorAdditionalInfo',
     'ETag',
     'ExternalSecuritySolution',
     'ExternalSecuritySolutionKind1',
@@ -632,13 +675,14 @@ __all__ = [
     'InformationProtectionKeyword',
     'InformationProtectionPolicy',
     'InformationType',
-    'IotAlert',
+    'IngestionConnectionString',
+    'IngestionSetting',
+    'IngestionSettingToken',
     'IotAlertModel',
     'IotAlertType',
     'IotAlertTypeList',
     'IotDefenderSettingsList',
     'IotDefenderSettingsModel',
-    'IotRecommendation',
     'IotRecommendationModel',
     'IotRecommendationType',
     'IotRecommendationTypeList',
@@ -652,9 +696,11 @@ __all__ = [
     'IoTSecuritySolutionAnalyticsModelList',
     'IoTSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem',
     'IoTSecuritySolutionModel',
-    'IotSensor',
     'IotSensorsList',
+    'IotSensorsModel',
     'IoTSeverityMetrics',
+    'IotSitesList',
+    'IotSitesModel',
     'IpAddress',
     'JitNetworkAccessPolicy',
     'JitNetworkAccessPolicyInitiatePort',
@@ -689,7 +735,6 @@ __all__ = [
     'PackageDownloadsSensor',
     'PackageDownloadsSensorFull',
     'PackageDownloadsSensorFullOvf',
-    'PackageDownloadsThreatIntelligence',
     'PathRecommendation',
     'Pricing',
     'PricingList',
@@ -705,6 +750,7 @@ __all__ = [
     'RegulatoryComplianceControl',
     'RegulatoryComplianceStandard',
     'Remediation',
+    'ResetPasswordInput',
     'Resource',
     'ResourceDetails',
     'ResourceIdentifier',
@@ -745,11 +791,12 @@ __all__ = [
     'ServerVulnerabilityProperties',
     'ServicePrincipalProperties',
     'Setting',
-    'SettingResource',
     'Site',
+    'Software',
     'SqlServerVulnerabilityProperties',
     'SubAssessmentStatus',
     'SuppressionAlertsScope',
+    'SystemData',
     'Tags',
     'TagsResource',
     'ThresholdCustomAlertRule',
@@ -762,6 +809,7 @@ __all__ = [
     'TwinUpdatesNotInAllowedRange',
     'UnauthorizedOperationsNotInAllowedRange',
     'UpdateIotSecuritySolutionData',
+    'UpgradePackageDownloadInfo',
     'UserDefinedResourcesProperties',
     'UserRecommendation',
     'VaRule',
@@ -769,15 +817,10 @@ __all__ = [
     'VmRecommendation',
     'WorkspaceSetting',
     'ComplianceResultPaged',
-    'SettingPaged',
     'DeviceSecurityGroupPaged',
     'IoTSecuritySolutionModelPaged',
     'IoTSecurityAggregatedAlertPaged',
     'IoTSecurityAggregatedRecommendationPaged',
-    'IotAlertPaged',
-    'IotAlertModelPaged',
-    'IotRecommendationPaged',
-    'IotRecommendationModelPaged',
     'AscLocationPaged',
     'OperationPaged',
     'SecurityTaskPaged',
@@ -797,7 +840,6 @@ __all__ = [
     'AdaptiveNetworkHardeningPaged',
     'AllowedConnectionsResourcePaged',
     'TopologyResourcePaged',
-    'AlertPaged',
     'JitNetworkAccessPolicyPaged',
     'DiscoveredSecuritySolutionPaged',
     'ExternalSecuritySolutionPaged',
@@ -807,6 +849,12 @@ __all__ = [
     'SecuritySolutionPaged',
     'ConnectorSettingPaged',
     'DevicePaged',
+    'IotAlertModelPaged',
+    'IotRecommendationModelPaged',
+    'AlertPaged',
+    'SettingPaged',
+    'IngestionSettingPaged',
+    'SoftwarePaged',
     'ResourceStatus',
     'PricingTier',
     'ValueType',
@@ -816,10 +864,10 @@ __all__ = [
     'RecommendationType',
     'RecommendationConfigStatus',
     'UnmaskedIpLoggingStatus',
+    'AdditionalWorkspaceType',
+    'AdditionalWorkspaceDataType',
+    'CreatedByType',
     'ReportedSeverity',
-    'AlertSeverity',
-    'AlertIntent',
-    'RecommendationSeverity',
     'AutoProvision',
     'Rank',
     'AlertNotifications',
@@ -831,7 +879,7 @@ __all__ = [
     'PropertyType',
     'Operator',
     'RuleState',
-    'Category',
+    'Categories',
     'UserImpact',
     'ImplementationEffort',
     'Threats',
@@ -839,8 +887,6 @@ __all__ = [
     'AssessmentStatusCode',
     'Direction',
     'TransportProtocol',
-    'Intent',
-    'AlertStatus',
     'Protocol',
     'Status',
     'StatusReason',
@@ -857,7 +903,11 @@ __all__ = [
     'RuleStatus',
     'RuleSeverity',
     'RuleType',
+    'OnboardingKind',
     'VersionKind',
+    'SensorStatus',
+    'TiStatus',
+    'SensorType',
     'MacSignificance',
     'RelationToIpStatus',
     'ManagementState',
@@ -867,6 +917,13 @@ __all__ = [
     'ProgrammingState',
     'ScanningFunctionality',
     'DeviceStatus',
+    'AlertSeverity',
+    'AlertIntent',
+    'RecommendationSeverity',
+    'Intent',
+    'AlertStatus',
+    'BundleType',
+    'EndOfSupportStatus',
     'ExpandEnum',
     'ConnectionType',
     'ExpandControlsEnum',

@@ -15,17 +15,12 @@ from msrest import Serializer, Deserializer
 from ._configuration import SecurityCenterConfiguration
 from .operations import ComplianceResultsOperations
 from .operations import PricingsOperations
-from .operations import SettingsOperations
 from .operations import AdvancedThreatProtectionOperations
 from .operations import DeviceSecurityGroupsOperations
 from .operations import IotSecuritySolutionOperations
 from .operations import IotSecuritySolutionAnalyticsOperations
 from .operations import IotSecuritySolutionsAnalyticsAggregatedAlertOperations
 from .operations import IotSecuritySolutionsAnalyticsRecommendationOperations
-from .operations import IotAlertTypesOperations
-from .operations import IotAlertsOperations
-from .operations import IotRecommendationTypesOperations
-from .operations import IotRecommendationsOperations
 from .operations import LocationsOperations
 from .operations import Operations
 from .operations import TasksOperations
@@ -47,7 +42,6 @@ from .operations import AdaptiveApplicationControlsOperations
 from .operations import AdaptiveNetworkHardeningsOperations
 from .operations import AllowedConnectionsOperations
 from .operations import TopologyOperations
-from .operations import AlertsOperations
 from .operations import JitNetworkAccessPoliciesOperations
 from .operations import DiscoveredSecuritySolutionsOperations
 from .operations import SecuritySolutionsReferenceDataOperations
@@ -66,6 +60,15 @@ from .operations import DevicesForSubscriptionOperations
 from .operations import DevicesForHubOperations
 from .operations import DeviceOperations
 from .operations import OnPremiseIotSensorsOperations
+from .operations import IotSitesOperations
+from .operations import IotAlertsOperations
+from .operations import IotAlertTypesOperations
+from .operations import IotRecommendationsOperations
+from .operations import IotRecommendationTypesOperations
+from .operations import AlertsOperations
+from .operations import SettingsOperations
+from .operations import IngestionSettingsOperations
+from .operations import SoftwareInventoriesOperations
 from . import models
 
 
@@ -79,8 +82,6 @@ class SecurityCenter(SDKClient):
     :vartype compliance_results: azure.mgmt.security.operations.ComplianceResultsOperations
     :ivar pricings: Pricings operations
     :vartype pricings: azure.mgmt.security.operations.PricingsOperations
-    :ivar settings: Settings operations
-    :vartype settings: azure.mgmt.security.operations.SettingsOperations
     :ivar advanced_threat_protection: AdvancedThreatProtection operations
     :vartype advanced_threat_protection: azure.mgmt.security.operations.AdvancedThreatProtectionOperations
     :ivar device_security_groups: DeviceSecurityGroups operations
@@ -93,14 +94,6 @@ class SecurityCenter(SDKClient):
     :vartype iot_security_solutions_analytics_aggregated_alert: azure.mgmt.security.operations.IotSecuritySolutionsAnalyticsAggregatedAlertOperations
     :ivar iot_security_solutions_analytics_recommendation: IotSecuritySolutionsAnalyticsRecommendation operations
     :vartype iot_security_solutions_analytics_recommendation: azure.mgmt.security.operations.IotSecuritySolutionsAnalyticsRecommendationOperations
-    :ivar iot_alert_types: IotAlertTypes operations
-    :vartype iot_alert_types: azure.mgmt.security.operations.IotAlertTypesOperations
-    :ivar iot_alerts: IotAlerts operations
-    :vartype iot_alerts: azure.mgmt.security.operations.IotAlertsOperations
-    :ivar iot_recommendation_types: IotRecommendationTypes operations
-    :vartype iot_recommendation_types: azure.mgmt.security.operations.IotRecommendationTypesOperations
-    :ivar iot_recommendations: IotRecommendations operations
-    :vartype iot_recommendations: azure.mgmt.security.operations.IotRecommendationsOperations
     :ivar locations: Locations operations
     :vartype locations: azure.mgmt.security.operations.LocationsOperations
     :ivar operations: Operations operations
@@ -143,8 +136,6 @@ class SecurityCenter(SDKClient):
     :vartype allowed_connections: azure.mgmt.security.operations.AllowedConnectionsOperations
     :ivar topology: Topology operations
     :vartype topology: azure.mgmt.security.operations.TopologyOperations
-    :ivar alerts: Alerts operations
-    :vartype alerts: azure.mgmt.security.operations.AlertsOperations
     :ivar jit_network_access_policies: JitNetworkAccessPolicies operations
     :vartype jit_network_access_policies: azure.mgmt.security.operations.JitNetworkAccessPoliciesOperations
     :ivar discovered_security_solutions: DiscoveredSecuritySolutions operations
@@ -181,6 +172,24 @@ class SecurityCenter(SDKClient):
     :vartype device: azure.mgmt.security.operations.DeviceOperations
     :ivar on_premise_iot_sensors: OnPremiseIotSensors operations
     :vartype on_premise_iot_sensors: azure.mgmt.security.operations.OnPremiseIotSensorsOperations
+    :ivar iot_sites: IotSites operations
+    :vartype iot_sites: azure.mgmt.security.operations.IotSitesOperations
+    :ivar iot_alerts: IotAlerts operations
+    :vartype iot_alerts: azure.mgmt.security.operations.IotAlertsOperations
+    :ivar iot_alert_types: IotAlertTypes operations
+    :vartype iot_alert_types: azure.mgmt.security.operations.IotAlertTypesOperations
+    :ivar iot_recommendations: IotRecommendations operations
+    :vartype iot_recommendations: azure.mgmt.security.operations.IotRecommendationsOperations
+    :ivar iot_recommendation_types: IotRecommendationTypes operations
+    :vartype iot_recommendation_types: azure.mgmt.security.operations.IotRecommendationTypesOperations
+    :ivar alerts: Alerts operations
+    :vartype alerts: azure.mgmt.security.operations.AlertsOperations
+    :ivar settings: Settings operations
+    :vartype settings: azure.mgmt.security.operations.SettingsOperations
+    :ivar ingestion_settings: IngestionSettings operations
+    :vartype ingestion_settings: azure.mgmt.security.operations.IngestionSettingsOperations
+    :ivar software_inventories: SoftwareInventories operations
+    :vartype software_inventories: azure.mgmt.security.operations.SoftwareInventoriesOperations
 
     :param credentials: Credentials needed for the client to connect to Azure.
     :type credentials: :mod:`A msrestazure Credentials
@@ -207,8 +216,6 @@ class SecurityCenter(SDKClient):
             self._client, self.config, self._serialize, self._deserialize)
         self.pricings = PricingsOperations(
             self._client, self.config, self._serialize, self._deserialize)
-        self.settings = SettingsOperations(
-            self._client, self.config, self._serialize, self._deserialize)
         self.advanced_threat_protection = AdvancedThreatProtectionOperations(
             self._client, self.config, self._serialize, self._deserialize)
         self.device_security_groups = DeviceSecurityGroupsOperations(
@@ -220,14 +227,6 @@ class SecurityCenter(SDKClient):
         self.iot_security_solutions_analytics_aggregated_alert = IotSecuritySolutionsAnalyticsAggregatedAlertOperations(
             self._client, self.config, self._serialize, self._deserialize)
         self.iot_security_solutions_analytics_recommendation = IotSecuritySolutionsAnalyticsRecommendationOperations(
-            self._client, self.config, self._serialize, self._deserialize)
-        self.iot_alert_types = IotAlertTypesOperations(
-            self._client, self.config, self._serialize, self._deserialize)
-        self.iot_alerts = IotAlertsOperations(
-            self._client, self.config, self._serialize, self._deserialize)
-        self.iot_recommendation_types = IotRecommendationTypesOperations(
-            self._client, self.config, self._serialize, self._deserialize)
-        self.iot_recommendations = IotRecommendationsOperations(
             self._client, self.config, self._serialize, self._deserialize)
         self.locations = LocationsOperations(
             self._client, self.config, self._serialize, self._deserialize)
@@ -271,8 +270,6 @@ class SecurityCenter(SDKClient):
             self._client, self.config, self._serialize, self._deserialize)
         self.topology = TopologyOperations(
             self._client, self.config, self._serialize, self._deserialize)
-        self.alerts = AlertsOperations(
-            self._client, self.config, self._serialize, self._deserialize)
         self.jit_network_access_policies = JitNetworkAccessPoliciesOperations(
             self._client, self.config, self._serialize, self._deserialize)
         self.discovered_security_solutions = DiscoveredSecuritySolutionsOperations(
@@ -308,4 +305,22 @@ class SecurityCenter(SDKClient):
         self.device = DeviceOperations(
             self._client, self.config, self._serialize, self._deserialize)
         self.on_premise_iot_sensors = OnPremiseIotSensorsOperations(
+            self._client, self.config, self._serialize, self._deserialize)
+        self.iot_sites = IotSitesOperations(
+            self._client, self.config, self._serialize, self._deserialize)
+        self.iot_alerts = IotAlertsOperations(
+            self._client, self.config, self._serialize, self._deserialize)
+        self.iot_alert_types = IotAlertTypesOperations(
+            self._client, self.config, self._serialize, self._deserialize)
+        self.iot_recommendations = IotRecommendationsOperations(
+            self._client, self.config, self._serialize, self._deserialize)
+        self.iot_recommendation_types = IotRecommendationTypesOperations(
+            self._client, self.config, self._serialize, self._deserialize)
+        self.alerts = AlertsOperations(
+            self._client, self.config, self._serialize, self._deserialize)
+        self.settings = SettingsOperations(
+            self._client, self.config, self._serialize, self._deserialize)
+        self.ingestion_settings = IngestionSettingsOperations(
+            self._client, self.config, self._serialize, self._deserialize)
+        self.software_inventories = SoftwareInventoriesOperations(
             self._client, self.config, self._serialize, self._deserialize)
