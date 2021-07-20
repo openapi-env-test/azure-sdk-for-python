@@ -12,15 +12,17 @@ from azure.core.async_paging import AsyncItemPaged, AsyncList
 from azure.core.exceptions import ClientAuthenticationError, HttpResponseError, ResourceExistsError, ResourceNotFoundError, map_error
 from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import AsyncHttpResponse, HttpRequest
+from azure.core.polling import AsyncLROPoller, AsyncNoPolling, AsyncPollingMethod
 from azure.mgmt.core.exceptions import ARMErrorFormat
+from azure.mgmt.core.polling.async_arm_polling import AsyncARMPolling
 
 from ... import models as _models
 
 T = TypeVar('T')
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
 
-class AuthorizationServerOperations:
-    """AuthorizationServerOperations async operations.
+class PrivateEndpointConnectionOperations:
+    """PrivateEndpointConnectionOperations async operations.
 
     You should not instantiate this class directly. Instead, you should create a Client instance that
     instantiates it for you and attaches it as an attribute.
@@ -45,33 +47,20 @@ class AuthorizationServerOperations:
         self,
         resource_group_name: str,
         service_name: str,
-        filter: Optional[str] = None,
-        top: Optional[int] = None,
-        skip: Optional[int] = None,
         **kwargs: Any
-    ) -> AsyncIterable["_models.AuthorizationServerCollection"]:
-        """Lists a collection of authorization servers defined within a service instance.
+    ) -> AsyncIterable["_models.PrivateEndpointConnectionCollection"]:
+        """Lists all private endpoint connections of the API Management service instance.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
         :param service_name: The name of the API Management service.
         :type service_name: str
-        :param filter: |     Field     |     Usage     |     Supported operators     |     Supported
-         functions     |</br>|-------------|-------------|-------------|-------------|</br>| name |
-         filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>|
-         displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith
-         |</br>.
-        :type filter: str
-        :param top: Number of records to return.
-        :type top: int
-        :param skip: Number of records to skip.
-        :type skip: int
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either AuthorizationServerCollection or the result of cls(response)
-        :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.apimanagement.models.AuthorizationServerCollection]
+        :return: An iterator like instance of either PrivateEndpointConnectionCollection or the result of cls(response)
+        :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.apimanagement.models.PrivateEndpointConnectionCollection]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.AuthorizationServerCollection"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.PrivateEndpointConnectionCollection"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -88,19 +77,13 @@ class AuthorizationServerOperations:
                 # Construct URL
                 url = self.list_by_service.metadata['url']  # type: ignore
                 path_format_arguments = {
+                    'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
                     'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
                     'serviceName': self._serialize.url("service_name", service_name, 'str', max_length=50, min_length=1, pattern=r'^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$'),
-                    'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
                 }
                 url = self._client.format_url(url, **path_format_arguments)
                 # Construct parameters
                 query_parameters = {}  # type: Dict[str, Any]
-                if filter is not None:
-                    query_parameters['$filter'] = self._serialize.query("filter", filter, 'str')
-                if top is not None:
-                    query_parameters['$top'] = self._serialize.query("top", top, 'int', minimum=1)
-                if skip is not None:
-                    query_parameters['$skip'] = self._serialize.query("skip", skip, 'int', minimum=0)
                 query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
 
                 request = self._client.get(url, query_parameters, header_parameters)
@@ -111,7 +94,7 @@ class AuthorizationServerOperations:
             return request
 
         async def extract_data(pipeline_response):
-            deserialized = self._deserialize('AuthorizationServerCollection', pipeline_response)
+            deserialized = self._deserialize('PrivateEndpointConnectionCollection', pipeline_response)
             list_of_elem = deserialized.value
             if cls:
                 list_of_elem = cls(list_of_elem)
@@ -133,29 +116,29 @@ class AuthorizationServerOperations:
         return AsyncItemPaged(
             get_next, extract_data
         )
-    list_by_service.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationServers'}  # type: ignore
+    list_by_service.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/privateEndpointConnections'}  # type: ignore
 
-    async def get_entity_tag(
+    async def get_by_name(
         self,
         resource_group_name: str,
         service_name: str,
-        authsid: str,
+        private_endpoint_connection_name: str,
         **kwargs: Any
-    ) -> bool:
-        """Gets the entity state (Etag) version of the authorizationServer specified by its identifier.
+    ) -> "_models.RemotePrivateEndpointConnectionWrapper":
+        """Gets the details of the Private Endpoint Connection specified by its identifier.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
         :param service_name: The name of the API Management service.
         :type service_name: str
-        :param authsid: Identifier of the authorization server.
-        :type authsid: str
+        :param private_endpoint_connection_name: Name of the private endpoint connection.
+        :type private_endpoint_connection_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: bool, or the result of cls(response)
-        :rtype: bool
+        :return: RemotePrivateEndpointConnectionWrapper, or the result of cls(response)
+        :rtype: ~azure.mgmt.apimanagement.models.RemotePrivateEndpointConnectionWrapper
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[None]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.RemotePrivateEndpointConnectionWrapper"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -164,75 +147,11 @@ class AuthorizationServerOperations:
         accept = "application/json"
 
         # Construct URL
-        url = self.get_entity_tag.metadata['url']  # type: ignore
+        url = self.get_by_name.metadata['url']  # type: ignore
         path_format_arguments = {
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
             'serviceName': self._serialize.url("service_name", service_name, 'str', max_length=50, min_length=1, pattern=r'^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$'),
-            'authsid': self._serialize.url("authsid", authsid, 'str', max_length=80, min_length=1, pattern=r'^[^*#&+:<>?]+$'),
-            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
-        }
-        url = self._client.format_url(url, **path_format_arguments)
-
-        # Construct parameters
-        query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
-
-        # Construct headers
-        header_parameters = {}  # type: Dict[str, Any]
-        header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
-
-        request = self._client.head(url, query_parameters, header_parameters)
-        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
-        response = pipeline_response.http_response
-
-        if response.status_code not in [200]:
-            map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, response)
-            raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
-
-        response_headers = {}
-        response_headers['ETag']=self._deserialize('str', response.headers.get('ETag'))
-
-        if cls:
-            return cls(pipeline_response, None, response_headers)
-
-        return 200 <= response.status_code <= 299
-    get_entity_tag.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationServers/{authsid}'}  # type: ignore
-
-    async def get(
-        self,
-        resource_group_name: str,
-        service_name: str,
-        authsid: str,
-        **kwargs: Any
-    ) -> "_models.AuthorizationServerContract":
-        """Gets the details of the authorization server specified by its identifier.
-
-        :param resource_group_name: The name of the resource group.
-        :type resource_group_name: str
-        :param service_name: The name of the API Management service.
-        :type service_name: str
-        :param authsid: Identifier of the authorization server.
-        :type authsid: str
-        :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: AuthorizationServerContract, or the result of cls(response)
-        :rtype: ~azure.mgmt.apimanagement.models.AuthorizationServerContract
-        :raises: ~azure.core.exceptions.HttpResponseError
-        """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.AuthorizationServerContract"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2021-04-01-preview"
-        accept = "application/json"
-
-        # Construct URL
-        url = self.get.metadata['url']  # type: ignore
-        path_format_arguments = {
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
-            'serviceName': self._serialize.url("service_name", service_name, 'str', max_length=50, min_length=1, pattern=r'^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$'),
-            'authsid': self._serialize.url("authsid", authsid, 'str', max_length=80, min_length=1, pattern=r'^[^*#&+:<>?]+$'),
+            'privateEndpointConnectionName': self._serialize.url("private_endpoint_connection_name", private_endpoint_connection_name, 'str'),
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
         }
         url = self._client.format_url(url, **path_format_arguments)
@@ -254,44 +173,23 @@ class AuthorizationServerOperations:
             error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
-        response_headers = {}
-        response_headers['ETag']=self._deserialize('str', response.headers.get('ETag'))
-        deserialized = self._deserialize('AuthorizationServerContract', pipeline_response)
+        deserialized = self._deserialize('RemotePrivateEndpointConnectionWrapper', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, response_headers)
+            return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationServers/{authsid}'}  # type: ignore
+    get_by_name.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/privateEndpointConnections/{privateEndpointConnectionName}'}  # type: ignore
 
-    async def create_or_update(
+    async def _create_or_update_initial(
         self,
         resource_group_name: str,
         service_name: str,
-        authsid: str,
-        parameters: "_models.AuthorizationServerContract",
-        if_match: Optional[str] = None,
+        private_endpoint_connection_name: str,
+        private_endpoint_connection_request: "_models.PrivateEndpointConnectionRequest",
         **kwargs: Any
-    ) -> "_models.AuthorizationServerContract":
-        """Creates new authorization server or updates an existing authorization server.
-
-        :param resource_group_name: The name of the resource group.
-        :type resource_group_name: str
-        :param service_name: The name of the API Management service.
-        :type service_name: str
-        :param authsid: Identifier of the authorization server.
-        :type authsid: str
-        :param parameters: Create or update parameters.
-        :type parameters: ~azure.mgmt.apimanagement.models.AuthorizationServerContract
-        :param if_match: ETag of the Entity. Not required when creating an entity, but required when
-         updating an entity.
-        :type if_match: str
-        :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: AuthorizationServerContract, or the result of cls(response)
-        :rtype: ~azure.mgmt.apimanagement.models.AuthorizationServerContract
-        :raises: ~azure.core.exceptions.HttpResponseError
-        """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.AuthorizationServerContract"]
+    ) -> Optional["_models.PrivateEndpointConnectionRequestResponse"]:
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.PrivateEndpointConnectionRequestResponse"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -301,11 +199,11 @@ class AuthorizationServerOperations:
         accept = "application/json"
 
         # Construct URL
-        url = self.create_or_update.metadata['url']  # type: ignore
+        url = self._create_or_update_initial.metadata['url']  # type: ignore
         path_format_arguments = {
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
             'serviceName': self._serialize.url("service_name", service_name, 'str', max_length=50, min_length=1, pattern=r'^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$'),
-            'authsid': self._serialize.url("authsid", authsid, 'str', max_length=80, min_length=1, pattern=r'^[^*#&+:<>?]+$'),
+            'privateEndpointConnectionName': self._serialize.url("private_endpoint_connection_name", private_endpoint_connection_name, 'str'),
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
         }
         url = self._client.format_url(url, **path_format_arguments)
@@ -316,13 +214,11 @@ class AuthorizationServerOperations:
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
-        if if_match is not None:
-            header_parameters['If-Match'] = self._serialize.header("if_match", if_match, 'str')
         header_parameters['Content-Type'] = self._serialize.header("content_type", content_type, 'str')
         header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
 
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(parameters, 'AuthorizationServerContract')
+        body_content = self._serialize.body(private_endpoint_connection_request, 'PrivateEndpointConnectionRequest')
         body_content_kwargs['content'] = body_content
         request = self._client.put(url, query_parameters, header_parameters, **body_content_kwargs)
         pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
@@ -333,123 +229,99 @@ class AuthorizationServerOperations:
             error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
-        response_headers = {}
+        deserialized = None
         if response.status_code == 200:
-            response_headers['ETag']=self._deserialize('str', response.headers.get('ETag'))
-            deserialized = self._deserialize('AuthorizationServerContract', pipeline_response)
-
-        if response.status_code == 201:
-            response_headers['ETag']=self._deserialize('str', response.headers.get('ETag'))
-            deserialized = self._deserialize('AuthorizationServerContract', pipeline_response)
+            deserialized = self._deserialize('PrivateEndpointConnectionRequestResponse', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, response_headers)
+            return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationServers/{authsid}'}  # type: ignore
+    _create_or_update_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/privateEndpointConnections/{privateEndpointConnectionName}'}  # type: ignore
 
-    async def update(
+    async def begin_create_or_update(
         self,
         resource_group_name: str,
         service_name: str,
-        authsid: str,
-        if_match: str,
-        parameters: "_models.AuthorizationServerUpdateContract",
+        private_endpoint_connection_name: str,
+        private_endpoint_connection_request: "_models.PrivateEndpointConnectionRequest",
         **kwargs: Any
-    ) -> "_models.AuthorizationServerContract":
-        """Updates the details of the authorization server specified by its identifier.
+    ) -> AsyncLROPoller["_models.PrivateEndpointConnectionRequestResponse"]:
+        """Creates a new Private Endpoint Connection or updates an existing one.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
         :param service_name: The name of the API Management service.
         :type service_name: str
-        :param authsid: Identifier of the authorization server.
-        :type authsid: str
-        :param if_match: ETag of the Entity. ETag should match the current entity state from the header
-         response of the GET request or it should be * for unconditional update.
-        :type if_match: str
-        :param parameters: OAuth2 Server settings Update parameters.
-        :type parameters: ~azure.mgmt.apimanagement.models.AuthorizationServerUpdateContract
+        :param private_endpoint_connection_name: Name of the private endpoint connection.
+        :type private_endpoint_connection_name: str
+        :param private_endpoint_connection_request:
+        :type private_endpoint_connection_request: ~azure.mgmt.apimanagement.models.PrivateEndpointConnectionRequest
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: AuthorizationServerContract, or the result of cls(response)
-        :rtype: ~azure.mgmt.apimanagement.models.AuthorizationServerContract
-        :raises: ~azure.core.exceptions.HttpResponseError
+        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
+        :keyword polling: By default, your polling method will be AsyncARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
+        :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
+        :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
+        :return: An instance of AsyncLROPoller that returns either PrivateEndpointConnectionRequestResponse or the result of cls(response)
+        :rtype: ~azure.core.polling.AsyncLROPoller[~azure.mgmt.apimanagement.models.PrivateEndpointConnectionRequestResponse]
+        :raises ~azure.core.exceptions.HttpResponseError:
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.AuthorizationServerContract"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2021-04-01-preview"
-        content_type = kwargs.pop("content_type", "application/json")
-        accept = "application/json"
+        polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.PrivateEndpointConnectionRequestResponse"]
+        lro_delay = kwargs.pop(
+            'polling_interval',
+            self._config.polling_interval
+        )
+        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
+        if cont_token is None:
+            raw_result = await self._create_or_update_initial(
+                resource_group_name=resource_group_name,
+                service_name=service_name,
+                private_endpoint_connection_name=private_endpoint_connection_name,
+                private_endpoint_connection_request=private_endpoint_connection_request,
+                cls=lambda x,y,z: x,
+                **kwargs
+            )
 
-        # Construct URL
-        url = self.update.metadata['url']  # type: ignore
+        kwargs.pop('error_map', None)
+        kwargs.pop('content_type', None)
+
+        def get_long_running_output(pipeline_response):
+            deserialized = self._deserialize('PrivateEndpointConnectionRequestResponse', pipeline_response)
+
+            if cls:
+                return cls(pipeline_response, deserialized, {})
+            return deserialized
+
         path_format_arguments = {
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
             'serviceName': self._serialize.url("service_name", service_name, 'str', max_length=50, min_length=1, pattern=r'^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$'),
-            'authsid': self._serialize.url("authsid", authsid, 'str', max_length=80, min_length=1, pattern=r'^[^*#&+:<>?]+$'),
+            'privateEndpointConnectionName': self._serialize.url("private_endpoint_connection_name", private_endpoint_connection_name, 'str'),
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
         }
-        url = self._client.format_url(url, **path_format_arguments)
 
-        # Construct parameters
-        query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+        if polling is True: polling_method = AsyncARMPolling(lro_delay, path_format_arguments=path_format_arguments,  **kwargs)
+        elif polling is False: polling_method = AsyncNoPolling()
+        else: polling_method = polling
+        if cont_token:
+            return AsyncLROPoller.from_continuation_token(
+                polling_method=polling_method,
+                continuation_token=cont_token,
+                client=self._client,
+                deserialization_callback=get_long_running_output
+            )
+        else:
+            return AsyncLROPoller(self._client, raw_result, get_long_running_output, polling_method)
+    begin_create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/privateEndpointConnections/{privateEndpointConnectionName}'}  # type: ignore
 
-        # Construct headers
-        header_parameters = {}  # type: Dict[str, Any]
-        header_parameters['If-Match'] = self._serialize.header("if_match", if_match, 'str')
-        header_parameters['Content-Type'] = self._serialize.header("content_type", content_type, 'str')
-        header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
-
-        body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(parameters, 'AuthorizationServerUpdateContract')
-        body_content_kwargs['content'] = body_content
-        request = self._client.patch(url, query_parameters, header_parameters, **body_content_kwargs)
-        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
-        response = pipeline_response.http_response
-
-        if response.status_code not in [200]:
-            map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, response)
-            raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
-
-        response_headers = {}
-        response_headers['ETag']=self._deserialize('str', response.headers.get('ETag'))
-        deserialized = self._deserialize('AuthorizationServerContract', pipeline_response)
-
-        if cls:
-            return cls(pipeline_response, deserialized, response_headers)
-
-        return deserialized
-    update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationServers/{authsid}'}  # type: ignore
-
-    async def delete(
+    async def _delete_initial(
         self,
         resource_group_name: str,
         service_name: str,
-        authsid: str,
-        if_match: str,
+        private_endpoint_connection_name: str,
         **kwargs: Any
     ) -> None:
-        """Deletes specific authorization server instance.
-
-        :param resource_group_name: The name of the resource group.
-        :type resource_group_name: str
-        :param service_name: The name of the API Management service.
-        :type service_name: str
-        :param authsid: Identifier of the authorization server.
-        :type authsid: str
-        :param if_match: ETag of the Entity. ETag should match the current entity state from the header
-         response of the GET request or it should be * for unconditional update.
-        :type if_match: str
-        :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: None, or the result of cls(response)
-        :rtype: None
-        :raises: ~azure.core.exceptions.HttpResponseError
-        """
         cls = kwargs.pop('cls', None)  # type: ClsType[None]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
@@ -459,11 +331,11 @@ class AuthorizationServerOperations:
         accept = "application/json"
 
         # Construct URL
-        url = self.delete.metadata['url']  # type: ignore
+        url = self._delete_initial.metadata['url']  # type: ignore
         path_format_arguments = {
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
             'serviceName': self._serialize.url("service_name", service_name, 'str', max_length=50, min_length=1, pattern=r'^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$'),
-            'authsid': self._serialize.url("authsid", authsid, 'str', max_length=80, min_length=1, pattern=r'^[^*#&+:<>?]+$'),
+            'privateEndpointConnectionName': self._serialize.url("private_endpoint_connection_name", private_endpoint_connection_name, 'str'),
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
         }
         url = self._client.format_url(url, **path_format_arguments)
@@ -474,14 +346,13 @@ class AuthorizationServerOperations:
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
-        header_parameters['If-Match'] = self._serialize.header("if_match", if_match, 'str')
         header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
 
         request = self._client.delete(url, query_parameters, header_parameters)
         pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
-        if response.status_code not in [200, 204]:
+        if response.status_code not in [200, 201]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
             error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
@@ -489,29 +360,95 @@ class AuthorizationServerOperations:
         if cls:
             return cls(pipeline_response, None, {})
 
-    delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationServers/{authsid}'}  # type: ignore
+    _delete_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/privateEndpointConnections/{privateEndpointConnectionName}'}  # type: ignore
 
-    async def list_secrets(
+    async def begin_delete(
         self,
         resource_group_name: str,
         service_name: str,
-        authsid: str,
+        private_endpoint_connection_name: str,
         **kwargs: Any
-    ) -> "_models.AuthorizationServerSecretsContract":
-        """Gets the client secret details of the authorization server.
+    ) -> AsyncLROPoller[None]:
+        """Deletes the specified Private Endpoint Connection.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
         :param service_name: The name of the API Management service.
         :type service_name: str
-        :param authsid: Identifier of the authorization server.
-        :type authsid: str
+        :param private_endpoint_connection_name: Name of the private endpoint connection.
+        :type private_endpoint_connection_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: AuthorizationServerSecretsContract, or the result of cls(response)
-        :rtype: ~azure.mgmt.apimanagement.models.AuthorizationServerSecretsContract
+        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
+        :keyword polling: By default, your polling method will be AsyncARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
+        :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
+        :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
+        :return: An instance of AsyncLROPoller that returns either None or the result of cls(response)
+        :rtype: ~azure.core.polling.AsyncLROPoller[None]
+        :raises ~azure.core.exceptions.HttpResponseError:
+        """
+        polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
+        cls = kwargs.pop('cls', None)  # type: ClsType[None]
+        lro_delay = kwargs.pop(
+            'polling_interval',
+            self._config.polling_interval
+        )
+        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
+        if cont_token is None:
+            raw_result = await self._delete_initial(
+                resource_group_name=resource_group_name,
+                service_name=service_name,
+                private_endpoint_connection_name=private_endpoint_connection_name,
+                cls=lambda x,y,z: x,
+                **kwargs
+            )
+
+        kwargs.pop('error_map', None)
+        kwargs.pop('content_type', None)
+
+        def get_long_running_output(pipeline_response):
+            if cls:
+                return cls(pipeline_response, None, {})
+
+        path_format_arguments = {
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
+            'serviceName': self._serialize.url("service_name", service_name, 'str', max_length=50, min_length=1, pattern=r'^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$'),
+            'privateEndpointConnectionName': self._serialize.url("private_endpoint_connection_name", private_endpoint_connection_name, 'str'),
+            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
+        }
+
+        if polling is True: polling_method = AsyncARMPolling(lro_delay, path_format_arguments=path_format_arguments,  **kwargs)
+        elif polling is False: polling_method = AsyncNoPolling()
+        else: polling_method = polling
+        if cont_token:
+            return AsyncLROPoller.from_continuation_token(
+                polling_method=polling_method,
+                continuation_token=cont_token,
+                client=self._client,
+                deserialization_callback=get_long_running_output
+            )
+        else:
+            return AsyncLROPoller(self._client, raw_result, get_long_running_output, polling_method)
+    begin_delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/privateEndpointConnections/{privateEndpointConnectionName}'}  # type: ignore
+
+    async def list_private_link_resources(
+        self,
+        resource_group_name: str,
+        service_name: str,
+        **kwargs: Any
+    ) -> "_models.PrivateLinkGroupResources":
+        """Description for Gets the private link resources.
+
+        :param resource_group_name: The name of the resource group.
+        :type resource_group_name: str
+        :param service_name: The name of the API Management service.
+        :type service_name: str
+        :keyword callable cls: A custom type or function that will be passed the direct response
+        :return: PrivateLinkGroupResources, or the result of cls(response)
+        :rtype: ~azure.mgmt.apimanagement.models.PrivateLinkGroupResources
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.AuthorizationServerSecretsContract"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.PrivateLinkGroupResources"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -520,12 +457,11 @@ class AuthorizationServerOperations:
         accept = "application/json"
 
         # Construct URL
-        url = self.list_secrets.metadata['url']  # type: ignore
+        url = self.list_private_link_resources.metadata['url']  # type: ignore
         path_format_arguments = {
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
-            'serviceName': self._serialize.url("service_name", service_name, 'str', max_length=50, min_length=1, pattern=r'^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$'),
-            'authsid': self._serialize.url("authsid", authsid, 'str', max_length=80, min_length=1, pattern=r'^[^*#&+:<>?]+$'),
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
+            'serviceName': self._serialize.url("service_name", service_name, 'str', max_length=50, min_length=1, pattern=r'^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$'),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
@@ -537,7 +473,7 @@ class AuthorizationServerOperations:
         header_parameters = {}  # type: Dict[str, Any]
         header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
 
-        request = self._client.post(url, query_parameters, header_parameters)
+        request = self._client.get(url, query_parameters, header_parameters)
         pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
@@ -546,12 +482,73 @@ class AuthorizationServerOperations:
             error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
-        response_headers = {}
-        response_headers['ETag']=self._deserialize('str', response.headers.get('ETag'))
-        deserialized = self._deserialize('AuthorizationServerSecretsContract', pipeline_response)
+        deserialized = self._deserialize('PrivateLinkGroupResources', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, response_headers)
+            return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    list_secrets.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationServers/{authsid}/listSecrets'}  # type: ignore
+    list_private_link_resources.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/privateLinkResources'}  # type: ignore
+
+    async def get_private_link_resource(
+        self,
+        resource_group_name: str,
+        service_name: str,
+        private_link_sub_resource_name: str,
+        **kwargs: Any
+    ) -> "_models.PrivateLinkGroupResource":
+        """Description for Gets the private link resources.
+
+        :param resource_group_name: The name of the resource group.
+        :type resource_group_name: str
+        :param service_name: The name of the API Management service.
+        :type service_name: str
+        :param private_link_sub_resource_name: Name of the private link resource.
+        :type private_link_sub_resource_name: str
+        :keyword callable cls: A custom type or function that will be passed the direct response
+        :return: PrivateLinkGroupResource, or the result of cls(response)
+        :rtype: ~azure.mgmt.apimanagement.models.PrivateLinkGroupResource
+        :raises: ~azure.core.exceptions.HttpResponseError
+        """
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.PrivateLinkGroupResource"]
+        error_map = {
+            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
+        }
+        error_map.update(kwargs.pop('error_map', {}))
+        api_version = "2021-04-01-preview"
+        accept = "application/json"
+
+        # Construct URL
+        url = self.get_private_link_resource.metadata['url']  # type: ignore
+        path_format_arguments = {
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
+            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
+            'serviceName': self._serialize.url("service_name", service_name, 'str', max_length=50, min_length=1, pattern=r'^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$'),
+            'privateLinkSubResourceName': self._serialize.url("private_link_sub_resource_name", private_link_sub_resource_name, 'str'),
+        }
+        url = self._client.format_url(url, **path_format_arguments)
+
+        # Construct parameters
+        query_parameters = {}  # type: Dict[str, Any]
+        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+
+        # Construct headers
+        header_parameters = {}  # type: Dict[str, Any]
+        header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
+
+        request = self._client.get(url, query_parameters, header_parameters)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
+        response = pipeline_response.http_response
+
+        if response.status_code not in [200]:
+            map_error(status_code=response.status_code, response=response, error_map=error_map)
+            error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, response)
+            raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
+
+        deserialized = self._deserialize('PrivateLinkGroupResource', pipeline_response)
+
+        if cls:
+            return cls(pipeline_response, deserialized, {})
+
+        return deserialized
+    get_private_link_resource.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/privateLinkResources/{privateLinkSubResourceName}'}  # type: ignore

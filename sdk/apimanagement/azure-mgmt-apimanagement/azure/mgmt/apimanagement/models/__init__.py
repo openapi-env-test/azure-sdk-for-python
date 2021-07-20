@@ -14,6 +14,7 @@ try:
     from ._models_py3 import AccessInformationUpdateParameters
     from ._models_py3 import AdditionalLocation
     from ._models_py3 import ApiCollection
+    from ._models_py3 import ApiContactInformation
     from ._models_py3 import ApiContract
     from ._models_py3 import ApiContractProperties
     from ._models_py3 import ApiContractUpdateProperties
@@ -23,6 +24,7 @@ try:
     from ._models_py3 import ApiEntityBaseContract
     from ._models_py3 import ApiExportResult
     from ._models_py3 import ApiExportResultValue
+    from ._models_py3 import ApiLicenseInformation
     from ._models_py3 import ApiManagementServiceApplyNetworkConfigurationParameters
     from ._models_py3 import ApiManagementServiceBackupRestoreParameters
     from ._models_py3 import ApiManagementServiceBaseProperties
@@ -62,6 +64,7 @@ try:
     from ._models_py3 import ApiVersionSetUpdateParameters
     from ._models_py3 import ApiVersionSetUpdateParametersProperties
     from ._models_py3 import ApimResource
+    from ._models_py3 import ArmIdWrapper
     from ._models_py3 import AssociationContract
     from ._models_py3 import AuthenticationSettingsContract
     from ._models_py3 import AuthorizationServerCollection
@@ -110,6 +113,8 @@ try:
     from ._models_py3 import EmailTemplateContract
     from ._models_py3 import EmailTemplateParametersContractProperties
     from ._models_py3 import EmailTemplateUpdateParameters
+    from ._models_py3 import EndpointDependency
+    from ._models_py3 import EndpointDetail
     from ._models_py3 import ErrorFieldContract
     from ._models_py3 import ErrorResponse
     from ._models_py3 import ErrorResponseBody
@@ -185,6 +190,8 @@ try:
     from ._models_py3 import OperationTagResourceContractProperties
     from ._models_py3 import OperationUpdateContract
     from ._models_py3 import OperationUpdateContractProperties
+    from ._models_py3 import OutboundEnvironmentEndpoint
+    from ._models_py3 import OutboundEnvironmentEndpointList
     from ._models_py3 import ParameterContract
     from ._models_py3 import PipelineDiagnosticSettings
     from ._models_py3 import PolicyCollection
@@ -199,6 +206,16 @@ try:
     from ._models_py3 import PortalSettingsContract
     from ._models_py3 import PortalSigninSettings
     from ._models_py3 import PortalSignupSettings
+    from ._models_py3 import PrivateEndpointConnectionCollection
+    from ._models_py3 import PrivateEndpointConnectionRequest
+    from ._models_py3 import PrivateEndpointConnectionRequestProperties
+    from ._models_py3 import PrivateEndpointConnectionRequestProperty
+    from ._models_py3 import PrivateEndpointConnectionRequestPropertyPrivateLinkServiceConnectionState
+    from ._models_py3 import PrivateEndpointConnectionRequestResponse
+    from ._models_py3 import PrivateLinkConnectionState
+    from ._models_py3 import PrivateLinkGroupResource
+    from ._models_py3 import PrivateLinkGroupResourceProperty
+    from ._models_py3 import PrivateLinkGroupResources
     from ._models_py3 import ProductCollection
     from ._models_py3 import ProductContract
     from ._models_py3 import ProductContractProperties
@@ -219,6 +236,7 @@ try:
     from ._models_py3 import RegionContract
     from ._models_py3 import RegionListResult
     from ._models_py3 import RegistrationDelegationSettingsProperties
+    from ._models_py3 import RemotePrivateEndpointConnectionWrapper
     from ._models_py3 import ReportCollection
     from ._models_py3 import ReportRecordContract
     from ._models_py3 import RepresentationContract
@@ -243,6 +261,7 @@ try:
     from ._models_py3 import SubscriptionKeysContract
     from ._models_py3 import SubscriptionUpdateParameters
     from ._models_py3 import SubscriptionsDelegationSettingsProperties
+    from ._models_py3 import SystemData
     from ._models_py3 import TagCollection
     from ._models_py3 import TagContract
     from ._models_py3 import TagCreateUpdateParameters
@@ -282,6 +301,7 @@ except (SyntaxError, ImportError):
     from ._models import AccessInformationUpdateParameters  # type: ignore
     from ._models import AdditionalLocation  # type: ignore
     from ._models import ApiCollection  # type: ignore
+    from ._models import ApiContactInformation  # type: ignore
     from ._models import ApiContract  # type: ignore
     from ._models import ApiContractProperties  # type: ignore
     from ._models import ApiContractUpdateProperties  # type: ignore
@@ -291,6 +311,7 @@ except (SyntaxError, ImportError):
     from ._models import ApiEntityBaseContract  # type: ignore
     from ._models import ApiExportResult  # type: ignore
     from ._models import ApiExportResultValue  # type: ignore
+    from ._models import ApiLicenseInformation  # type: ignore
     from ._models import ApiManagementServiceApplyNetworkConfigurationParameters  # type: ignore
     from ._models import ApiManagementServiceBackupRestoreParameters  # type: ignore
     from ._models import ApiManagementServiceBaseProperties  # type: ignore
@@ -330,6 +351,7 @@ except (SyntaxError, ImportError):
     from ._models import ApiVersionSetUpdateParameters  # type: ignore
     from ._models import ApiVersionSetUpdateParametersProperties  # type: ignore
     from ._models import ApimResource  # type: ignore
+    from ._models import ArmIdWrapper  # type: ignore
     from ._models import AssociationContract  # type: ignore
     from ._models import AuthenticationSettingsContract  # type: ignore
     from ._models import AuthorizationServerCollection  # type: ignore
@@ -378,6 +400,8 @@ except (SyntaxError, ImportError):
     from ._models import EmailTemplateContract  # type: ignore
     from ._models import EmailTemplateParametersContractProperties  # type: ignore
     from ._models import EmailTemplateUpdateParameters  # type: ignore
+    from ._models import EndpointDependency  # type: ignore
+    from ._models import EndpointDetail  # type: ignore
     from ._models import ErrorFieldContract  # type: ignore
     from ._models import ErrorResponse  # type: ignore
     from ._models import ErrorResponseBody  # type: ignore
@@ -453,6 +477,8 @@ except (SyntaxError, ImportError):
     from ._models import OperationTagResourceContractProperties  # type: ignore
     from ._models import OperationUpdateContract  # type: ignore
     from ._models import OperationUpdateContractProperties  # type: ignore
+    from ._models import OutboundEnvironmentEndpoint  # type: ignore
+    from ._models import OutboundEnvironmentEndpointList  # type: ignore
     from ._models import ParameterContract  # type: ignore
     from ._models import PipelineDiagnosticSettings  # type: ignore
     from ._models import PolicyCollection  # type: ignore
@@ -467,6 +493,16 @@ except (SyntaxError, ImportError):
     from ._models import PortalSettingsContract  # type: ignore
     from ._models import PortalSigninSettings  # type: ignore
     from ._models import PortalSignupSettings  # type: ignore
+    from ._models import PrivateEndpointConnectionCollection  # type: ignore
+    from ._models import PrivateEndpointConnectionRequest  # type: ignore
+    from ._models import PrivateEndpointConnectionRequestProperties  # type: ignore
+    from ._models import PrivateEndpointConnectionRequestProperty  # type: ignore
+    from ._models import PrivateEndpointConnectionRequestPropertyPrivateLinkServiceConnectionState  # type: ignore
+    from ._models import PrivateEndpointConnectionRequestResponse  # type: ignore
+    from ._models import PrivateLinkConnectionState  # type: ignore
+    from ._models import PrivateLinkGroupResource  # type: ignore
+    from ._models import PrivateLinkGroupResourceProperty  # type: ignore
+    from ._models import PrivateLinkGroupResources  # type: ignore
     from ._models import ProductCollection  # type: ignore
     from ._models import ProductContract  # type: ignore
     from ._models import ProductContractProperties  # type: ignore
@@ -487,6 +523,7 @@ except (SyntaxError, ImportError):
     from ._models import RegionContract  # type: ignore
     from ._models import RegionListResult  # type: ignore
     from ._models import RegistrationDelegationSettingsProperties  # type: ignore
+    from ._models import RemotePrivateEndpointConnectionWrapper  # type: ignore
     from ._models import ReportCollection  # type: ignore
     from ._models import ReportRecordContract  # type: ignore
     from ._models import RepresentationContract  # type: ignore
@@ -511,6 +548,7 @@ except (SyntaxError, ImportError):
     from ._models import SubscriptionKeysContract  # type: ignore
     from ._models import SubscriptionUpdateParameters  # type: ignore
     from ._models import SubscriptionsDelegationSettingsProperties  # type: ignore
+    from ._models import SystemData  # type: ignore
     from ._models import TagCollection  # type: ignore
     from ._models import TagContract  # type: ignore
     from ._models import TagCreateUpdateParameters  # type: ignore
@@ -545,6 +583,7 @@ except (SyntaxError, ImportError):
 
 from ._api_management_client_enums import (
     AccessIdName,
+    AccessType,
     AlwaysLog,
     ApiManagementSkuCapacityScaleType,
     ApiManagementSkuRestrictionsReasonCode,
@@ -559,11 +598,14 @@ from ._api_management_client_enums import (
     BearerTokenSendingMethod,
     BearerTokenSendingMethods,
     CertificateConfigurationStoreName,
+    CertificateSource,
+    CertificateStatus,
     ClientAuthenticationMethod,
     ConfigurationIdName,
     Confirmation,
     ConnectivityStatusType,
     ContentFormat,
+    CreatedByType,
     DataMaskingMode,
     ExportApi,
     ExportFormat,
@@ -585,6 +627,7 @@ from ._api_management_client_enums import (
     PortalRevisionStatus,
     ProductState,
     Protocol,
+    PublicNetworkAccess,
     ResourceSkuCapacityScaleType,
     SamplingType,
     SettingsTypeName,
@@ -607,6 +650,7 @@ __all__ = [
     'AccessInformationUpdateParameters',
     'AdditionalLocation',
     'ApiCollection',
+    'ApiContactInformation',
     'ApiContract',
     'ApiContractProperties',
     'ApiContractUpdateProperties',
@@ -616,6 +660,7 @@ __all__ = [
     'ApiEntityBaseContract',
     'ApiExportResult',
     'ApiExportResultValue',
+    'ApiLicenseInformation',
     'ApiManagementServiceApplyNetworkConfigurationParameters',
     'ApiManagementServiceBackupRestoreParameters',
     'ApiManagementServiceBaseProperties',
@@ -655,6 +700,7 @@ __all__ = [
     'ApiVersionSetUpdateParameters',
     'ApiVersionSetUpdateParametersProperties',
     'ApimResource',
+    'ArmIdWrapper',
     'AssociationContract',
     'AuthenticationSettingsContract',
     'AuthorizationServerCollection',
@@ -703,6 +749,8 @@ __all__ = [
     'EmailTemplateContract',
     'EmailTemplateParametersContractProperties',
     'EmailTemplateUpdateParameters',
+    'EndpointDependency',
+    'EndpointDetail',
     'ErrorFieldContract',
     'ErrorResponse',
     'ErrorResponseBody',
@@ -778,6 +826,8 @@ __all__ = [
     'OperationTagResourceContractProperties',
     'OperationUpdateContract',
     'OperationUpdateContractProperties',
+    'OutboundEnvironmentEndpoint',
+    'OutboundEnvironmentEndpointList',
     'ParameterContract',
     'PipelineDiagnosticSettings',
     'PolicyCollection',
@@ -792,6 +842,16 @@ __all__ = [
     'PortalSettingsContract',
     'PortalSigninSettings',
     'PortalSignupSettings',
+    'PrivateEndpointConnectionCollection',
+    'PrivateEndpointConnectionRequest',
+    'PrivateEndpointConnectionRequestProperties',
+    'PrivateEndpointConnectionRequestProperty',
+    'PrivateEndpointConnectionRequestPropertyPrivateLinkServiceConnectionState',
+    'PrivateEndpointConnectionRequestResponse',
+    'PrivateLinkConnectionState',
+    'PrivateLinkGroupResource',
+    'PrivateLinkGroupResourceProperty',
+    'PrivateLinkGroupResources',
     'ProductCollection',
     'ProductContract',
     'ProductContractProperties',
@@ -812,6 +872,7 @@ __all__ = [
     'RegionContract',
     'RegionListResult',
     'RegistrationDelegationSettingsProperties',
+    'RemotePrivateEndpointConnectionWrapper',
     'ReportCollection',
     'ReportRecordContract',
     'RepresentationContract',
@@ -836,6 +897,7 @@ __all__ = [
     'SubscriptionKeysContract',
     'SubscriptionUpdateParameters',
     'SubscriptionsDelegationSettingsProperties',
+    'SystemData',
     'TagCollection',
     'TagContract',
     'TagCreateUpdateParameters',
@@ -868,6 +930,7 @@ __all__ = [
     'VirtualNetworkConfiguration',
     'X509CertificateName',
     'AccessIdName',
+    'AccessType',
     'AlwaysLog',
     'ApiManagementSkuCapacityScaleType',
     'ApiManagementSkuRestrictionsReasonCode',
@@ -882,11 +945,14 @@ __all__ = [
     'BearerTokenSendingMethod',
     'BearerTokenSendingMethods',
     'CertificateConfigurationStoreName',
+    'CertificateSource',
+    'CertificateStatus',
     'ClientAuthenticationMethod',
     'ConfigurationIdName',
     'Confirmation',
     'ConnectivityStatusType',
     'ContentFormat',
+    'CreatedByType',
     'DataMaskingMode',
     'ExportApi',
     'ExportFormat',
@@ -908,6 +974,7 @@ __all__ = [
     'PortalRevisionStatus',
     'ProductState',
     'Protocol',
+    'PublicNetworkAccess',
     'ResourceSkuCapacityScaleType',
     'SamplingType',
     'SettingsTypeName',

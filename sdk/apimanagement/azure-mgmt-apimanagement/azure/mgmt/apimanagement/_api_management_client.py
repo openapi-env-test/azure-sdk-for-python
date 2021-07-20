@@ -16,6 +16,7 @@ if TYPE_CHECKING:
     from typing import Any, Optional
 
     from azure.core.credentials import TokenCredential
+    from azure.core.pipeline.transport import HttpRequest, HttpResponse
 
 from ._configuration import ApiManagementClientConfiguration
 from .operations import ApiOperations
@@ -62,6 +63,7 @@ from .operations import NotificationOperations
 from .operations import NotificationRecipientUserOperations
 from .operations import NotificationRecipientEmailOperations
 from .operations import OpenIdConnectProviderOperations
+from .operations import OutboundNetworkDependenciesEndpointsOperations
 from .operations import PolicyOperations
 from .operations import PolicyDescriptionOperations
 from .operations import PortalRevisionOperations
@@ -69,6 +71,7 @@ from .operations import PortalSettingsOperations
 from .operations import SignInSettingsOperations
 from .operations import SignUpSettingsOperations
 from .operations import DelegationSettingsOperations
+from .operations import PrivateEndpointConnectionOperations
 from .operations import ProductOperations
 from .operations import ProductApiOperations
 from .operations import ProductGroupOperations
@@ -184,6 +187,8 @@ class ApiManagementClient(object):
     :vartype notification_recipient_email: azure.mgmt.apimanagement.operations.NotificationRecipientEmailOperations
     :ivar open_id_connect_provider: OpenIdConnectProviderOperations operations
     :vartype open_id_connect_provider: azure.mgmt.apimanagement.operations.OpenIdConnectProviderOperations
+    :ivar outbound_network_dependencies_endpoints: OutboundNetworkDependenciesEndpointsOperations operations
+    :vartype outbound_network_dependencies_endpoints: azure.mgmt.apimanagement.operations.OutboundNetworkDependenciesEndpointsOperations
     :ivar policy: PolicyOperations operations
     :vartype policy: azure.mgmt.apimanagement.operations.PolicyOperations
     :ivar policy_description: PolicyDescriptionOperations operations
@@ -198,6 +203,8 @@ class ApiManagementClient(object):
     :vartype sign_up_settings: azure.mgmt.apimanagement.operations.SignUpSettingsOperations
     :ivar delegation_settings: DelegationSettingsOperations operations
     :vartype delegation_settings: azure.mgmt.apimanagement.operations.DelegationSettingsOperations
+    :ivar private_endpoint_connection: PrivateEndpointConnectionOperations operations
+    :vartype private_endpoint_connection: azure.mgmt.apimanagement.operations.PrivateEndpointConnectionOperations
     :ivar product: ProductOperations operations
     :vartype product: azure.mgmt.apimanagement.operations.ProductOperations
     :ivar product_api: ProductApiOperations operations
@@ -354,6 +361,8 @@ class ApiManagementClient(object):
             self._client, self._config, self._serialize, self._deserialize)
         self.open_id_connect_provider = OpenIdConnectProviderOperations(
             self._client, self._config, self._serialize, self._deserialize)
+        self.outbound_network_dependencies_endpoints = OutboundNetworkDependenciesEndpointsOperations(
+            self._client, self._config, self._serialize, self._deserialize)
         self.policy = PolicyOperations(
             self._client, self._config, self._serialize, self._deserialize)
         self.policy_description = PolicyDescriptionOperations(
@@ -367,6 +376,8 @@ class ApiManagementClient(object):
         self.sign_up_settings = SignUpSettingsOperations(
             self._client, self._config, self._serialize, self._deserialize)
         self.delegation_settings = DelegationSettingsOperations(
+            self._client, self._config, self._serialize, self._deserialize)
+        self.private_endpoint_connection = PrivateEndpointConnectionOperations(
             self._client, self._config, self._serialize, self._deserialize)
         self.product = ProductOperations(
             self._client, self._config, self._serialize, self._deserialize)
@@ -410,6 +421,24 @@ class ApiManagementClient(object):
             self._client, self._config, self._serialize, self._deserialize)
         self.user_confirmation_password = UserConfirmationPasswordOperations(
             self._client, self._config, self._serialize, self._deserialize)
+
+    def _send_request(self, http_request, **kwargs):
+        # type: (HttpRequest, Any) -> HttpResponse
+        """Runs the network request through the client's chained policies.
+
+        :param http_request: The network request you want to make. Required.
+        :type http_request: ~azure.core.pipeline.transport.HttpRequest
+        :keyword bool stream: Whether the response payload will be streamed. Defaults to True.
+        :return: The response of your network call. Does not do error handling on your response.
+        :rtype: ~azure.core.pipeline.transport.HttpResponse
+        """
+        path_format_arguments = {
+            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
+        }
+        http_request.url = self._client.format_url(http_request.url, **path_format_arguments)
+        stream = kwargs.pop("stream", True)
+        pipeline_response = self._client._pipeline.run(http_request, stream=stream, **kwargs)
+        return pipeline_response.http_response
 
     def close(self):
         # type: () -> None

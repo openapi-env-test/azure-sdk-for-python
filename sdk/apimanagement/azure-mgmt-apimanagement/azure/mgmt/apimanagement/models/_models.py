@@ -234,6 +234,10 @@ class AdditionalLocation(msrest.serialization.Model):
      service which is deployed in an Internal Virtual Network in a particular additional location.
      Available only for Basic, Standard, Premium and Isolated SKU.
     :vartype private_ip_addresses: list[str]
+    :param public_ip_address_id: Public Standard SKU IP V4 based IP address to be associated with
+     Virtual Network deployed service in the location. Supported only for Premium SKU being deployed
+     in Virtual Network.
+    :type public_ip_address_id: str
     :param virtual_network_configuration: Virtual network configuration for the location.
     :type virtual_network_configuration:
      ~azure.mgmt.apimanagement.models.VirtualNetworkConfiguration
@@ -258,6 +262,7 @@ class AdditionalLocation(msrest.serialization.Model):
         'zones': {'key': 'zones', 'type': '[str]'},
         'public_ip_addresses': {'key': 'publicIPAddresses', 'type': '[str]'},
         'private_ip_addresses': {'key': 'privateIPAddresses', 'type': '[str]'},
+        'public_ip_address_id': {'key': 'publicIpAddressId', 'type': 'str'},
         'virtual_network_configuration': {'key': 'virtualNetworkConfiguration', 'type': 'VirtualNetworkConfiguration'},
         'gateway_regional_url': {'key': 'gatewayRegionalUrl', 'type': 'str'},
         'disable_gateway': {'key': 'disableGateway', 'type': 'bool'},
@@ -273,13 +278,14 @@ class AdditionalLocation(msrest.serialization.Model):
         self.zones = kwargs.get('zones', None)
         self.public_ip_addresses = None
         self.private_ip_addresses = None
+        self.public_ip_address_id = kwargs.get('public_ip_address_id', None)
         self.virtual_network_configuration = kwargs.get('virtual_network_configuration', None)
         self.gateway_regional_url = None
         self.disable_gateway = kwargs.get('disable_gateway', False)
 
 
 class ApiCollection(msrest.serialization.Model):
-    """Paged Api list representation.
+    """Paged API list representation.
 
     Variables are only populated by the server, and will be ignored when sending a request.
 
@@ -312,8 +318,36 @@ class ApiCollection(msrest.serialization.Model):
         self.next_link = None
 
 
+class ApiContactInformation(msrest.serialization.Model):
+    """API contact information.
+
+    :param name: The identifying name of the contact person/organization.
+    :type name: str
+    :param url: The URL pointing to the contact information. MUST be in the format of a URL.
+    :type url: str
+    :param email: The email address of the contact person/organization. MUST be in the format of an
+     email address.
+    :type email: str
+    """
+
+    _attribute_map = {
+        'name': {'key': 'name', 'type': 'str'},
+        'url': {'key': 'url', 'type': 'str'},
+        'email': {'key': 'email', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(ApiContactInformation, self).__init__(**kwargs)
+        self.name = kwargs.get('name', None)
+        self.url = kwargs.get('url', None)
+        self.email = kwargs.get('email', None)
+
+
 class ApiContract(Resource):
-    """Api details.
+    """API details.
 
     Variables are only populated by the server, and will be ignored when sending a request.
 
@@ -330,26 +364,33 @@ class ApiContract(Resource):
     :param subscription_key_parameter_names: Protocols over which API is made available.
     :type subscription_key_parameter_names:
      ~azure.mgmt.apimanagement.models.SubscriptionKeyParameterNamesContract
-    :param api_type: Type of API. Possible values include: "http", "soap".
+    :param api_type: Type of API. Possible values include: "http", "soap", "websocket", "graphql".
     :type api_type: str or ~azure.mgmt.apimanagement.models.ApiType
-    :param api_revision: Describes the Revision of the Api. If no value is provided, default
+    :param api_revision: Describes the revision of the API. If no value is provided, default
      revision 1 is created.
     :type api_revision: str
-    :param api_version: Indicates the Version identifier of the API if the API is versioned.
+    :param api_version: Indicates the version identifier of the API if the API is versioned.
     :type api_version: str
     :param is_current: Indicates if API revision is current api revision.
     :type is_current: bool
     :ivar is_online: Indicates if API revision is accessible via the gateway.
     :vartype is_online: bool
-    :param api_revision_description: Description of the Api Revision.
+    :param api_revision_description: Description of the API Revision.
     :type api_revision_description: str
-    :param api_version_description: Description of the Api Version.
+    :param api_version_description: Description of the API Version.
     :type api_version_description: str
     :param api_version_set_id: A resource identifier for the related ApiVersionSet.
     :type api_version_set_id: str
     :param subscription_required: Specifies whether an API or Product subscription is required for
      accessing the API.
     :type subscription_required: bool
+    :param terms_of_service_url: A URL to the Terms of Service for the API. MUST be in the format
+     of a URL.
+    :type terms_of_service_url: str
+    :param contact: Contact information for the API.
+    :type contact: ~azure.mgmt.apimanagement.models.ApiContactInformation
+    :param license: License information for the API.
+    :type license: ~azure.mgmt.apimanagement.models.ApiLicenseInformation
     :param source_api_id: API identifier of the source API.
     :type source_api_id: str
     :param display_name: API name. Must be 1 to 300 characters long.
@@ -397,6 +438,9 @@ class ApiContract(Resource):
         'api_version_description': {'key': 'properties.apiVersionDescription', 'type': 'str'},
         'api_version_set_id': {'key': 'properties.apiVersionSetId', 'type': 'str'},
         'subscription_required': {'key': 'properties.subscriptionRequired', 'type': 'bool'},
+        'terms_of_service_url': {'key': 'properties.termsOfServiceUrl', 'type': 'str'},
+        'contact': {'key': 'properties.contact', 'type': 'ApiContactInformation'},
+        'license': {'key': 'properties.license', 'type': 'ApiLicenseInformation'},
         'source_api_id': {'key': 'properties.sourceApiId', 'type': 'str'},
         'display_name': {'key': 'properties.displayName', 'type': 'str'},
         'service_url': {'key': 'properties.serviceUrl', 'type': 'str'},
@@ -422,6 +466,9 @@ class ApiContract(Resource):
         self.api_version_description = kwargs.get('api_version_description', None)
         self.api_version_set_id = kwargs.get('api_version_set_id', None)
         self.subscription_required = kwargs.get('subscription_required', None)
+        self.terms_of_service_url = kwargs.get('terms_of_service_url', None)
+        self.contact = kwargs.get('contact', None)
+        self.license = kwargs.get('license', None)
         self.source_api_id = kwargs.get('source_api_id', None)
         self.display_name = kwargs.get('display_name', None)
         self.service_url = kwargs.get('service_url', None)
@@ -442,26 +489,33 @@ class ApiEntityBaseContract(msrest.serialization.Model):
     :param subscription_key_parameter_names: Protocols over which API is made available.
     :type subscription_key_parameter_names:
      ~azure.mgmt.apimanagement.models.SubscriptionKeyParameterNamesContract
-    :param api_type: Type of API. Possible values include: "http", "soap".
+    :param api_type: Type of API. Possible values include: "http", "soap", "websocket", "graphql".
     :type api_type: str or ~azure.mgmt.apimanagement.models.ApiType
-    :param api_revision: Describes the Revision of the Api. If no value is provided, default
+    :param api_revision: Describes the revision of the API. If no value is provided, default
      revision 1 is created.
     :type api_revision: str
-    :param api_version: Indicates the Version identifier of the API if the API is versioned.
+    :param api_version: Indicates the version identifier of the API if the API is versioned.
     :type api_version: str
     :param is_current: Indicates if API revision is current api revision.
     :type is_current: bool
     :ivar is_online: Indicates if API revision is accessible via the gateway.
     :vartype is_online: bool
-    :param api_revision_description: Description of the Api Revision.
+    :param api_revision_description: Description of the API Revision.
     :type api_revision_description: str
-    :param api_version_description: Description of the Api Version.
+    :param api_version_description: Description of the API Version.
     :type api_version_description: str
     :param api_version_set_id: A resource identifier for the related ApiVersionSet.
     :type api_version_set_id: str
     :param subscription_required: Specifies whether an API or Product subscription is required for
      accessing the API.
     :type subscription_required: bool
+    :param terms_of_service_url: A URL to the Terms of Service for the API. MUST be in the format
+     of a URL.
+    :type terms_of_service_url: str
+    :param contact: Contact information for the API.
+    :type contact: ~azure.mgmt.apimanagement.models.ApiContactInformation
+    :param license: License information for the API.
+    :type license: ~azure.mgmt.apimanagement.models.ApiLicenseInformation
     """
 
     _validation = {
@@ -485,6 +539,9 @@ class ApiEntityBaseContract(msrest.serialization.Model):
         'api_version_description': {'key': 'apiVersionDescription', 'type': 'str'},
         'api_version_set_id': {'key': 'apiVersionSetId', 'type': 'str'},
         'subscription_required': {'key': 'subscriptionRequired', 'type': 'bool'},
+        'terms_of_service_url': {'key': 'termsOfServiceUrl', 'type': 'str'},
+        'contact': {'key': 'contact', 'type': 'ApiContactInformation'},
+        'license': {'key': 'license', 'type': 'ApiLicenseInformation'},
     }
 
     def __init__(
@@ -504,10 +561,13 @@ class ApiEntityBaseContract(msrest.serialization.Model):
         self.api_version_description = kwargs.get('api_version_description', None)
         self.api_version_set_id = kwargs.get('api_version_set_id', None)
         self.subscription_required = kwargs.get('subscription_required', None)
+        self.terms_of_service_url = kwargs.get('terms_of_service_url', None)
+        self.contact = kwargs.get('contact', None)
+        self.license = kwargs.get('license', None)
 
 
 class ApiContractProperties(ApiEntityBaseContract):
-    """Api Entity Properties.
+    """API Entity Properties.
 
     Variables are only populated by the server, and will be ignored when sending a request.
 
@@ -520,26 +580,33 @@ class ApiContractProperties(ApiEntityBaseContract):
     :param subscription_key_parameter_names: Protocols over which API is made available.
     :type subscription_key_parameter_names:
      ~azure.mgmt.apimanagement.models.SubscriptionKeyParameterNamesContract
-    :param api_type: Type of API. Possible values include: "http", "soap".
+    :param api_type: Type of API. Possible values include: "http", "soap", "websocket", "graphql".
     :type api_type: str or ~azure.mgmt.apimanagement.models.ApiType
-    :param api_revision: Describes the Revision of the Api. If no value is provided, default
+    :param api_revision: Describes the revision of the API. If no value is provided, default
      revision 1 is created.
     :type api_revision: str
-    :param api_version: Indicates the Version identifier of the API if the API is versioned.
+    :param api_version: Indicates the version identifier of the API if the API is versioned.
     :type api_version: str
     :param is_current: Indicates if API revision is current api revision.
     :type is_current: bool
     :ivar is_online: Indicates if API revision is accessible via the gateway.
     :vartype is_online: bool
-    :param api_revision_description: Description of the Api Revision.
+    :param api_revision_description: Description of the API Revision.
     :type api_revision_description: str
-    :param api_version_description: Description of the Api Version.
+    :param api_version_description: Description of the API Version.
     :type api_version_description: str
     :param api_version_set_id: A resource identifier for the related ApiVersionSet.
     :type api_version_set_id: str
     :param subscription_required: Specifies whether an API or Product subscription is required for
      accessing the API.
     :type subscription_required: bool
+    :param terms_of_service_url: A URL to the Terms of Service for the API. MUST be in the format
+     of a URL.
+    :type terms_of_service_url: str
+    :param contact: Contact information for the API.
+    :type contact: ~azure.mgmt.apimanagement.models.ApiContactInformation
+    :param license: License information for the API.
+    :type license: ~azure.mgmt.apimanagement.models.ApiLicenseInformation
     :param source_api_id: API identifier of the source API.
     :type source_api_id: str
     :param display_name: API name. Must be 1 to 300 characters long.
@@ -581,6 +648,9 @@ class ApiContractProperties(ApiEntityBaseContract):
         'api_version_description': {'key': 'apiVersionDescription', 'type': 'str'},
         'api_version_set_id': {'key': 'apiVersionSetId', 'type': 'str'},
         'subscription_required': {'key': 'subscriptionRequired', 'type': 'bool'},
+        'terms_of_service_url': {'key': 'termsOfServiceUrl', 'type': 'str'},
+        'contact': {'key': 'contact', 'type': 'ApiContactInformation'},
+        'license': {'key': 'license', 'type': 'ApiLicenseInformation'},
         'source_api_id': {'key': 'sourceApiId', 'type': 'str'},
         'display_name': {'key': 'displayName', 'type': 'str'},
         'service_url': {'key': 'serviceUrl', 'type': 'str'},
@@ -614,26 +684,33 @@ class ApiContractUpdateProperties(ApiEntityBaseContract):
     :param subscription_key_parameter_names: Protocols over which API is made available.
     :type subscription_key_parameter_names:
      ~azure.mgmt.apimanagement.models.SubscriptionKeyParameterNamesContract
-    :param api_type: Type of API. Possible values include: "http", "soap".
+    :param api_type: Type of API. Possible values include: "http", "soap", "websocket", "graphql".
     :type api_type: str or ~azure.mgmt.apimanagement.models.ApiType
-    :param api_revision: Describes the Revision of the Api. If no value is provided, default
+    :param api_revision: Describes the revision of the API. If no value is provided, default
      revision 1 is created.
     :type api_revision: str
-    :param api_version: Indicates the Version identifier of the API if the API is versioned.
+    :param api_version: Indicates the version identifier of the API if the API is versioned.
     :type api_version: str
     :param is_current: Indicates if API revision is current api revision.
     :type is_current: bool
     :ivar is_online: Indicates if API revision is accessible via the gateway.
     :vartype is_online: bool
-    :param api_revision_description: Description of the Api Revision.
+    :param api_revision_description: Description of the API Revision.
     :type api_revision_description: str
-    :param api_version_description: Description of the Api Version.
+    :param api_version_description: Description of the API Version.
     :type api_version_description: str
     :param api_version_set_id: A resource identifier for the related ApiVersionSet.
     :type api_version_set_id: str
     :param subscription_required: Specifies whether an API or Product subscription is required for
      accessing the API.
     :type subscription_required: bool
+    :param terms_of_service_url: A URL to the Terms of Service for the API. MUST be in the format
+     of a URL.
+    :type terms_of_service_url: str
+    :param contact: Contact information for the API.
+    :type contact: ~azure.mgmt.apimanagement.models.ApiContactInformation
+    :param license: License information for the API.
+    :type license: ~azure.mgmt.apimanagement.models.ApiLicenseInformation
     :param display_name: API name.
     :type display_name: str
     :param service_url: Absolute URL of the backend service implementing this API.
@@ -670,6 +747,9 @@ class ApiContractUpdateProperties(ApiEntityBaseContract):
         'api_version_description': {'key': 'apiVersionDescription', 'type': 'str'},
         'api_version_set_id': {'key': 'apiVersionSetId', 'type': 'str'},
         'subscription_required': {'key': 'subscriptionRequired', 'type': 'bool'},
+        'terms_of_service_url': {'key': 'termsOfServiceUrl', 'type': 'str'},
+        'contact': {'key': 'contact', 'type': 'ApiContactInformation'},
+        'license': {'key': 'license', 'type': 'ApiLicenseInformation'},
         'display_name': {'key': 'displayName', 'type': 'str'},
         'service_url': {'key': 'serviceUrl', 'type': 'str'},
         'path': {'key': 'path', 'type': 'str'},
@@ -699,26 +779,33 @@ class ApiCreateOrUpdateParameter(msrest.serialization.Model):
     :param subscription_key_parameter_names: Protocols over which API is made available.
     :type subscription_key_parameter_names:
      ~azure.mgmt.apimanagement.models.SubscriptionKeyParameterNamesContract
-    :param api_type: Type of API. Possible values include: "http", "soap".
+    :param api_type: Type of API. Possible values include: "http", "soap", "websocket", "graphql".
     :type api_type: str or ~azure.mgmt.apimanagement.models.ApiType
-    :param api_revision: Describes the Revision of the Api. If no value is provided, default
+    :param api_revision: Describes the revision of the API. If no value is provided, default
      revision 1 is created.
     :type api_revision: str
-    :param api_version: Indicates the Version identifier of the API if the API is versioned.
+    :param api_version: Indicates the version identifier of the API if the API is versioned.
     :type api_version: str
     :param is_current: Indicates if API revision is current api revision.
     :type is_current: bool
     :ivar is_online: Indicates if API revision is accessible via the gateway.
     :vartype is_online: bool
-    :param api_revision_description: Description of the Api Revision.
+    :param api_revision_description: Description of the API Revision.
     :type api_revision_description: str
-    :param api_version_description: Description of the Api Version.
+    :param api_version_description: Description of the API Version.
     :type api_version_description: str
     :param api_version_set_id: A resource identifier for the related ApiVersionSet.
     :type api_version_set_id: str
     :param subscription_required: Specifies whether an API or Product subscription is required for
      accessing the API.
     :type subscription_required: bool
+    :param terms_of_service_url: A URL to the Terms of Service for the API. MUST be in the format
+     of a URL.
+    :type terms_of_service_url: str
+    :param contact: Contact information for the API.
+    :type contact: ~azure.mgmt.apimanagement.models.ApiContactInformation
+    :param license: License information for the API.
+    :type license: ~azure.mgmt.apimanagement.models.ApiLicenseInformation
     :param source_api_id: API identifier of the source API.
     :type source_api_id: str
     :param display_name: API name. Must be 1 to 300 characters long.
@@ -737,16 +824,19 @@ class ApiCreateOrUpdateParameter(msrest.serialization.Model):
     :param value: Content value when Importing an API.
     :type value: str
     :param format: Format of the Content in which the API is getting imported. Possible values
-     include: "wadl-xml", "wadl-link-json", "swagger-json", "swagger-link-json", "wsdl", "wsdl-
-     link", "openapi", "openapi+json", "openapi-link", "openapi+json-link".
+     include: "wadl-xml", "wadl-link-json", "swagger-json", "swagger-link-json", "wsdl",
+     "wsdl-link", "openapi", "openapi+json", "openapi-link", "openapi+json-link", "graphql-link".
     :type format: str or ~azure.mgmt.apimanagement.models.ContentFormat
     :param wsdl_selector: Criteria to limit import of WSDL to a subset of the document.
     :type wsdl_selector: ~azure.mgmt.apimanagement.models.ApiCreateOrUpdatePropertiesWsdlSelector
-    :param soap_api_type: Type of Api to create.
+    :param soap_api_type: Type of API to create.
     
     
-     * ``http`` creates a SOAP to REST API
-     * ``soap`` creates a SOAP pass-through API . Possible values include: "http", "soap".
+     * ``http`` creates a REST API
+     * ``soap`` creates a SOAP pass-through API
+     * ``websocket`` creates websocket API
+     * ``graphql`` creates GraphQL API. Possible values include: "http", "soap", "websocket",
+     "graphql".
     :type soap_api_type: str or ~azure.mgmt.apimanagement.models.SoapApiType
     """
 
@@ -774,6 +864,9 @@ class ApiCreateOrUpdateParameter(msrest.serialization.Model):
         'api_version_description': {'key': 'properties.apiVersionDescription', 'type': 'str'},
         'api_version_set_id': {'key': 'properties.apiVersionSetId', 'type': 'str'},
         'subscription_required': {'key': 'properties.subscriptionRequired', 'type': 'bool'},
+        'terms_of_service_url': {'key': 'properties.termsOfServiceUrl', 'type': 'str'},
+        'contact': {'key': 'properties.contact', 'type': 'ApiContactInformation'},
+        'license': {'key': 'properties.license', 'type': 'ApiLicenseInformation'},
         'source_api_id': {'key': 'properties.sourceApiId', 'type': 'str'},
         'display_name': {'key': 'properties.displayName', 'type': 'str'},
         'service_url': {'key': 'properties.serviceUrl', 'type': 'str'},
@@ -803,6 +896,9 @@ class ApiCreateOrUpdateParameter(msrest.serialization.Model):
         self.api_version_description = kwargs.get('api_version_description', None)
         self.api_version_set_id = kwargs.get('api_version_set_id', None)
         self.subscription_required = kwargs.get('subscription_required', None)
+        self.terms_of_service_url = kwargs.get('terms_of_service_url', None)
+        self.contact = kwargs.get('contact', None)
+        self.license = kwargs.get('license', None)
         self.source_api_id = kwargs.get('source_api_id', None)
         self.display_name = kwargs.get('display_name', None)
         self.service_url = kwargs.get('service_url', None)
@@ -816,7 +912,7 @@ class ApiCreateOrUpdateParameter(msrest.serialization.Model):
 
 
 class ApiCreateOrUpdateProperties(ApiContractProperties):
-    """Api Create or Update Properties.
+    """API Create or Update Properties.
 
     Variables are only populated by the server, and will be ignored when sending a request.
 
@@ -829,26 +925,33 @@ class ApiCreateOrUpdateProperties(ApiContractProperties):
     :param subscription_key_parameter_names: Protocols over which API is made available.
     :type subscription_key_parameter_names:
      ~azure.mgmt.apimanagement.models.SubscriptionKeyParameterNamesContract
-    :param api_type: Type of API. Possible values include: "http", "soap".
+    :param api_type: Type of API. Possible values include: "http", "soap", "websocket", "graphql".
     :type api_type: str or ~azure.mgmt.apimanagement.models.ApiType
-    :param api_revision: Describes the Revision of the Api. If no value is provided, default
+    :param api_revision: Describes the revision of the API. If no value is provided, default
      revision 1 is created.
     :type api_revision: str
-    :param api_version: Indicates the Version identifier of the API if the API is versioned.
+    :param api_version: Indicates the version identifier of the API if the API is versioned.
     :type api_version: str
     :param is_current: Indicates if API revision is current api revision.
     :type is_current: bool
     :ivar is_online: Indicates if API revision is accessible via the gateway.
     :vartype is_online: bool
-    :param api_revision_description: Description of the Api Revision.
+    :param api_revision_description: Description of the API Revision.
     :type api_revision_description: str
-    :param api_version_description: Description of the Api Version.
+    :param api_version_description: Description of the API Version.
     :type api_version_description: str
     :param api_version_set_id: A resource identifier for the related ApiVersionSet.
     :type api_version_set_id: str
     :param subscription_required: Specifies whether an API or Product subscription is required for
      accessing the API.
     :type subscription_required: bool
+    :param terms_of_service_url: A URL to the Terms of Service for the API. MUST be in the format
+     of a URL.
+    :type terms_of_service_url: str
+    :param contact: Contact information for the API.
+    :type contact: ~azure.mgmt.apimanagement.models.ApiContactInformation
+    :param license: License information for the API.
+    :type license: ~azure.mgmt.apimanagement.models.ApiLicenseInformation
     :param source_api_id: API identifier of the source API.
     :type source_api_id: str
     :param display_name: API name. Must be 1 to 300 characters long.
@@ -867,16 +970,19 @@ class ApiCreateOrUpdateProperties(ApiContractProperties):
     :param value: Content value when Importing an API.
     :type value: str
     :param format: Format of the Content in which the API is getting imported. Possible values
-     include: "wadl-xml", "wadl-link-json", "swagger-json", "swagger-link-json", "wsdl", "wsdl-
-     link", "openapi", "openapi+json", "openapi-link", "openapi+json-link".
+     include: "wadl-xml", "wadl-link-json", "swagger-json", "swagger-link-json", "wsdl",
+     "wsdl-link", "openapi", "openapi+json", "openapi-link", "openapi+json-link", "graphql-link".
     :type format: str or ~azure.mgmt.apimanagement.models.ContentFormat
     :param wsdl_selector: Criteria to limit import of WSDL to a subset of the document.
     :type wsdl_selector: ~azure.mgmt.apimanagement.models.ApiCreateOrUpdatePropertiesWsdlSelector
-    :param soap_api_type: Type of Api to create.
+    :param soap_api_type: Type of API to create.
     
     
-     * ``http`` creates a SOAP to REST API
-     * ``soap`` creates a SOAP pass-through API . Possible values include: "http", "soap".
+     * ``http`` creates a REST API
+     * ``soap`` creates a SOAP pass-through API
+     * ``websocket`` creates websocket API
+     * ``graphql`` creates GraphQL API. Possible values include: "http", "soap", "websocket",
+     "graphql".
     :type soap_api_type: str or ~azure.mgmt.apimanagement.models.SoapApiType
     """
 
@@ -904,6 +1010,9 @@ class ApiCreateOrUpdateProperties(ApiContractProperties):
         'api_version_description': {'key': 'apiVersionDescription', 'type': 'str'},
         'api_version_set_id': {'key': 'apiVersionSetId', 'type': 'str'},
         'subscription_required': {'key': 'subscriptionRequired', 'type': 'bool'},
+        'terms_of_service_url': {'key': 'termsOfServiceUrl', 'type': 'str'},
+        'contact': {'key': 'contact', 'type': 'ApiContactInformation'},
+        'license': {'key': 'license', 'type': 'ApiLicenseInformation'},
         'source_api_id': {'key': 'sourceApiId', 'type': 'str'},
         'display_name': {'key': 'displayName', 'type': 'str'},
         'service_url': {'key': 'serviceUrl', 'type': 'str'},
@@ -955,11 +1064,11 @@ class ApiExportResult(msrest.serialization.Model):
 
     :param id: ResourceId of the API which was exported.
     :type id: str
-    :param export_result_format: Format in which the Api Details are exported to the Storage Blob
-     with Sas Key valid for 5 minutes. Possible values include: "swagger-link-json", "wsdl-
-     link+xml", "wadl-link-json", "openapi-link".
+    :param export_result_format: Format in which the API Details are exported to the Storage Blob
+     with Sas Key valid for 5 minutes. Possible values include: "swagger-link-json",
+     "wsdl-link+xml", "wadl-link-json", "openapi-link".
     :type export_result_format: str or ~azure.mgmt.apimanagement.models.ExportResultFormat
-    :param value: The object defining the schema of the exported Api Detail.
+    :param value: The object defining the schema of the exported API Detail.
     :type value: ~azure.mgmt.apimanagement.models.ApiExportResultValue
     """
 
@@ -980,7 +1089,7 @@ class ApiExportResult(msrest.serialization.Model):
 
 
 class ApiExportResultValue(msrest.serialization.Model):
-    """The object defining the schema of the exported Api Detail.
+    """The object defining the schema of the exported API Detail.
 
     :param link: Link to the Storage Blob containing the result of the export operation. The Blob
      Uri is only valid for 5 minutes.
@@ -997,6 +1106,29 @@ class ApiExportResultValue(msrest.serialization.Model):
     ):
         super(ApiExportResultValue, self).__init__(**kwargs)
         self.link = kwargs.get('link', None)
+
+
+class ApiLicenseInformation(msrest.serialization.Model):
+    """API license information.
+
+    :param name: The license name used for the API.
+    :type name: str
+    :param url: A URL to the license used for the API. MUST be in the format of a URL.
+    :type url: str
+    """
+
+    _attribute_map = {
+        'name': {'key': 'name', 'type': 'str'},
+        'url': {'key': 'url', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(ApiLicenseInformation, self).__init__(**kwargs)
+        self.name = kwargs.get('name', None)
+        self.url = kwargs.get('url', None)
 
 
 class ApiManagementServiceApplyNetworkConfigurationParameters(msrest.serialization.Model):
@@ -1024,31 +1156,39 @@ class ApiManagementServiceBackupRestoreParameters(msrest.serialization.Model):
 
     All required parameters must be populated in order to send to Azure.
 
-    :param storage_account: Required. Azure Cloud Storage account (used to place/retrieve the
-     backup) name.
+    :param storage_account: Required. The name of the Azure storage account (used to place/retrieve
+     the backup).
     :type storage_account: str
-    :param access_key: Required. Azure Cloud Storage account (used to place/retrieve the backup)
-     access key.
-    :type access_key: str
-    :param container_name: Required. Azure Cloud Storage blob container name used to place/retrieve
-     the backup.
+    :param container_name: Required. The name of the blob container (used to place/retrieve the
+     backup).
     :type container_name: str
-    :param backup_name: Required. The name of the backup file to create.
+    :param backup_name: Required. The name of the backup file to create/retrieve.
     :type backup_name: str
+    :param access_type: The type of access to be used for the storage account. Possible values
+     include: "AccessKey", "SystemAssignedManagedIdentity", "UserAssignedManagedIdentity". Default
+     value: "AccessKey".
+    :type access_type: str or ~azure.mgmt.apimanagement.models.AccessType
+    :param access_key: Storage account access key. Required only if ``accessType`` is set to
+     ``AccessKey``.
+    :type access_key: str
+    :param client_id: The Client ID of user assigned managed identity. Required only if
+     ``accessType`` is set to ``UserAssignedManagedIdentity``.
+    :type client_id: str
     """
 
     _validation = {
         'storage_account': {'required': True},
-        'access_key': {'required': True},
         'container_name': {'required': True},
         'backup_name': {'required': True},
     }
 
     _attribute_map = {
         'storage_account': {'key': 'storageAccount', 'type': 'str'},
-        'access_key': {'key': 'accessKey', 'type': 'str'},
         'container_name': {'key': 'containerName', 'type': 'str'},
         'backup_name': {'key': 'backupName', 'type': 'str'},
+        'access_type': {'key': 'accessType', 'type': 'str'},
+        'access_key': {'key': 'accessKey', 'type': 'str'},
+        'client_id': {'key': 'clientId', 'type': 'str'},
     }
 
     def __init__(
@@ -1057,9 +1197,11 @@ class ApiManagementServiceBackupRestoreParameters(msrest.serialization.Model):
     ):
         super(ApiManagementServiceBackupRestoreParameters, self).__init__(**kwargs)
         self.storage_account = kwargs['storage_account']
-        self.access_key = kwargs['access_key']
         self.container_name = kwargs['container_name']
         self.backup_name = kwargs['backup_name']
+        self.access_type = kwargs.get('access_type', "AccessKey")
+        self.access_key = kwargs.get('access_key', None)
+        self.client_id = kwargs.get('client_id', None)
 
 
 class ApiManagementServiceBaseProperties(msrest.serialization.Model):
@@ -1100,6 +1242,15 @@ class ApiManagementServiceBaseProperties(msrest.serialization.Model):
      service in Primary region which is deployed in an Internal Virtual Network. Available only for
      Basic, Standard, Premium and Isolated SKU.
     :vartype private_ip_addresses: list[str]
+    :param public_ip_address_id: Public Standard SKU IP V4 based IP address to be associated with
+     Virtual Network deployed service in the region. Supported only for Developer and Premium SKU
+     being deployed in Virtual Network.
+    :type public_ip_address_id: str
+    :param public_network_access: Whether or not public endpoint access is allowed for this API
+     Management service.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. If
+     'Disabled', private endpoints are the exclusive access method. Default value is 'Enabled'.
+     Possible values include: "Enabled", "Disabled".
+    :type public_network_access: str or ~azure.mgmt.apimanagement.models.PublicNetworkAccess
     :param virtual_network_configuration: Virtual network configuration of the API Management
      service.
     :type virtual_network_configuration:
@@ -1157,6 +1308,9 @@ class ApiManagementServiceBaseProperties(msrest.serialization.Model):
     :param restore: Undelete Api Management Service if it was previously soft-deleted. If this flag
      is specified and set to True all other properties will be ignored.
     :type restore: bool
+    :param private_endpoint_connections: List of Private Endpoint Connections of this service.
+    :type private_endpoint_connections:
+     list[~azure.mgmt.apimanagement.models.RemotePrivateEndpointConnectionWrapper]
     """
 
     _validation = {
@@ -1188,6 +1342,8 @@ class ApiManagementServiceBaseProperties(msrest.serialization.Model):
         'hostname_configurations': {'key': 'hostnameConfigurations', 'type': '[HostnameConfiguration]'},
         'public_ip_addresses': {'key': 'publicIPAddresses', 'type': '[str]'},
         'private_ip_addresses': {'key': 'privateIPAddresses', 'type': '[str]'},
+        'public_ip_address_id': {'key': 'publicIpAddressId', 'type': 'str'},
+        'public_network_access': {'key': 'publicNetworkAccess', 'type': 'str'},
         'virtual_network_configuration': {'key': 'virtualNetworkConfiguration', 'type': 'VirtualNetworkConfiguration'},
         'additional_locations': {'key': 'additionalLocations', 'type': '[AdditionalLocation]'},
         'custom_properties': {'key': 'customProperties', 'type': '{str}'},
@@ -1197,6 +1353,7 @@ class ApiManagementServiceBaseProperties(msrest.serialization.Model):
         'virtual_network_type': {'key': 'virtualNetworkType', 'type': 'str'},
         'api_version_constraint': {'key': 'apiVersionConstraint', 'type': 'ApiVersionConstraint'},
         'restore': {'key': 'restore', 'type': 'bool'},
+        'private_endpoint_connections': {'key': 'privateEndpointConnections', 'type': '[RemotePrivateEndpointConnectionWrapper]'},
     }
 
     def __init__(
@@ -1217,6 +1374,8 @@ class ApiManagementServiceBaseProperties(msrest.serialization.Model):
         self.hostname_configurations = kwargs.get('hostname_configurations', None)
         self.public_ip_addresses = None
         self.private_ip_addresses = None
+        self.public_ip_address_id = kwargs.get('public_ip_address_id', None)
+        self.public_network_access = kwargs.get('public_network_access', None)
         self.virtual_network_configuration = kwargs.get('virtual_network_configuration', None)
         self.additional_locations = kwargs.get('additional_locations', None)
         self.custom_properties = kwargs.get('custom_properties', None)
@@ -1226,6 +1385,7 @@ class ApiManagementServiceBaseProperties(msrest.serialization.Model):
         self.virtual_network_type = kwargs.get('virtual_network_type', "None")
         self.api_version_constraint = kwargs.get('api_version_constraint', None)
         self.restore = kwargs.get('restore', False)
+        self.private_endpoint_connections = kwargs.get('private_endpoint_connections', None)
 
 
 class ApiManagementServiceCheckNameAvailabilityParameters(msrest.serialization.Model):
@@ -1457,6 +1617,15 @@ class ApiManagementServiceProperties(ApiManagementServiceBaseProperties):
      service in Primary region which is deployed in an Internal Virtual Network. Available only for
      Basic, Standard, Premium and Isolated SKU.
     :vartype private_ip_addresses: list[str]
+    :param public_ip_address_id: Public Standard SKU IP V4 based IP address to be associated with
+     Virtual Network deployed service in the region. Supported only for Developer and Premium SKU
+     being deployed in Virtual Network.
+    :type public_ip_address_id: str
+    :param public_network_access: Whether or not public endpoint access is allowed for this API
+     Management service.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. If
+     'Disabled', private endpoints are the exclusive access method. Default value is 'Enabled'.
+     Possible values include: "Enabled", "Disabled".
+    :type public_network_access: str or ~azure.mgmt.apimanagement.models.PublicNetworkAccess
     :param virtual_network_configuration: Virtual network configuration of the API Management
      service.
     :type virtual_network_configuration:
@@ -1514,6 +1683,9 @@ class ApiManagementServiceProperties(ApiManagementServiceBaseProperties):
     :param restore: Undelete Api Management Service if it was previously soft-deleted. If this flag
      is specified and set to True all other properties will be ignored.
     :type restore: bool
+    :param private_endpoint_connections: List of Private Endpoint Connections of this service.
+    :type private_endpoint_connections:
+     list[~azure.mgmt.apimanagement.models.RemotePrivateEndpointConnectionWrapper]
     :param publisher_email: Required. Publisher email.
     :type publisher_email: str
     :param publisher_name: Required. Publisher name.
@@ -1551,6 +1723,8 @@ class ApiManagementServiceProperties(ApiManagementServiceBaseProperties):
         'hostname_configurations': {'key': 'hostnameConfigurations', 'type': '[HostnameConfiguration]'},
         'public_ip_addresses': {'key': 'publicIPAddresses', 'type': '[str]'},
         'private_ip_addresses': {'key': 'privateIPAddresses', 'type': '[str]'},
+        'public_ip_address_id': {'key': 'publicIpAddressId', 'type': 'str'},
+        'public_network_access': {'key': 'publicNetworkAccess', 'type': 'str'},
         'virtual_network_configuration': {'key': 'virtualNetworkConfiguration', 'type': 'VirtualNetworkConfiguration'},
         'additional_locations': {'key': 'additionalLocations', 'type': '[AdditionalLocation]'},
         'custom_properties': {'key': 'customProperties', 'type': '{str}'},
@@ -1560,6 +1734,7 @@ class ApiManagementServiceProperties(ApiManagementServiceBaseProperties):
         'virtual_network_type': {'key': 'virtualNetworkType', 'type': 'str'},
         'api_version_constraint': {'key': 'apiVersionConstraint', 'type': 'ApiVersionConstraint'},
         'restore': {'key': 'restore', 'type': 'bool'},
+        'private_endpoint_connections': {'key': 'privateEndpointConnections', 'type': '[RemotePrivateEndpointConnectionWrapper]'},
         'publisher_email': {'key': 'publisherEmail', 'type': 'str'},
         'publisher_name': {'key': 'publisherName', 'type': 'str'},
     }
@@ -1631,6 +1806,8 @@ class ApiManagementServiceResource(ApimResource):
     :type sku: ~azure.mgmt.apimanagement.models.ApiManagementServiceSkuProperties
     :param identity: Managed service identity of the Api Management service.
     :type identity: ~azure.mgmt.apimanagement.models.ApiManagementServiceIdentity
+    :ivar system_data: Metadata pertaining to creation and last modification of the resource.
+    :vartype system_data: ~azure.mgmt.apimanagement.models.SystemData
     :param location: Required. Resource location.
     :type location: str
     :ivar etag: ETag of the resource.
@@ -1670,6 +1847,15 @@ class ApiManagementServiceResource(ApimResource):
      service in Primary region which is deployed in an Internal Virtual Network. Available only for
      Basic, Standard, Premium and Isolated SKU.
     :vartype private_ip_addresses: list[str]
+    :param public_ip_address_id: Public Standard SKU IP V4 based IP address to be associated with
+     Virtual Network deployed service in the region. Supported only for Developer and Premium SKU
+     being deployed in Virtual Network.
+    :type public_ip_address_id: str
+    :param public_network_access: Whether or not public endpoint access is allowed for this API
+     Management service.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. If
+     'Disabled', private endpoints are the exclusive access method. Default value is 'Enabled'.
+     Possible values include: "Enabled", "Disabled".
+    :type public_network_access: str or ~azure.mgmt.apimanagement.models.PublicNetworkAccess
     :param virtual_network_configuration: Virtual network configuration of the API Management
      service.
     :type virtual_network_configuration:
@@ -1727,6 +1913,9 @@ class ApiManagementServiceResource(ApimResource):
     :param restore: Undelete Api Management Service if it was previously soft-deleted. If this flag
      is specified and set to True all other properties will be ignored.
     :type restore: bool
+    :param private_endpoint_connections: List of Private Endpoint Connections of this service.
+    :type private_endpoint_connections:
+     list[~azure.mgmt.apimanagement.models.RemotePrivateEndpointConnectionWrapper]
     :param publisher_email: Required. Publisher email.
     :type publisher_email: str
     :param publisher_name: Required. Publisher name.
@@ -1738,6 +1927,7 @@ class ApiManagementServiceResource(ApimResource):
         'name': {'readonly': True},
         'type': {'readonly': True},
         'sku': {'required': True},
+        'system_data': {'readonly': True},
         'location': {'required': True},
         'etag': {'readonly': True},
         'notification_sender_email': {'max_length': 100, 'min_length': 0},
@@ -1763,6 +1953,7 @@ class ApiManagementServiceResource(ApimResource):
         'tags': {'key': 'tags', 'type': '{str}'},
         'sku': {'key': 'sku', 'type': 'ApiManagementServiceSkuProperties'},
         'identity': {'key': 'identity', 'type': 'ApiManagementServiceIdentity'},
+        'system_data': {'key': 'systemData', 'type': 'SystemData'},
         'location': {'key': 'location', 'type': 'str'},
         'etag': {'key': 'etag', 'type': 'str'},
         'zones': {'key': 'zones', 'type': '[str]'},
@@ -1779,6 +1970,8 @@ class ApiManagementServiceResource(ApimResource):
         'hostname_configurations': {'key': 'properties.hostnameConfigurations', 'type': '[HostnameConfiguration]'},
         'public_ip_addresses': {'key': 'properties.publicIPAddresses', 'type': '[str]'},
         'private_ip_addresses': {'key': 'properties.privateIPAddresses', 'type': '[str]'},
+        'public_ip_address_id': {'key': 'properties.publicIpAddressId', 'type': 'str'},
+        'public_network_access': {'key': 'properties.publicNetworkAccess', 'type': 'str'},
         'virtual_network_configuration': {'key': 'properties.virtualNetworkConfiguration', 'type': 'VirtualNetworkConfiguration'},
         'additional_locations': {'key': 'properties.additionalLocations', 'type': '[AdditionalLocation]'},
         'custom_properties': {'key': 'properties.customProperties', 'type': '{str}'},
@@ -1788,6 +1981,7 @@ class ApiManagementServiceResource(ApimResource):
         'virtual_network_type': {'key': 'properties.virtualNetworkType', 'type': 'str'},
         'api_version_constraint': {'key': 'properties.apiVersionConstraint', 'type': 'ApiVersionConstraint'},
         'restore': {'key': 'properties.restore', 'type': 'bool'},
+        'private_endpoint_connections': {'key': 'properties.privateEndpointConnections', 'type': '[RemotePrivateEndpointConnectionWrapper]'},
         'publisher_email': {'key': 'properties.publisherEmail', 'type': 'str'},
         'publisher_name': {'key': 'properties.publisherName', 'type': 'str'},
     }
@@ -1799,6 +1993,7 @@ class ApiManagementServiceResource(ApimResource):
         super(ApiManagementServiceResource, self).__init__(**kwargs)
         self.sku = kwargs['sku']
         self.identity = kwargs.get('identity', None)
+        self.system_data = None
         self.location = kwargs['location']
         self.etag = None
         self.zones = kwargs.get('zones', None)
@@ -1815,6 +2010,8 @@ class ApiManagementServiceResource(ApimResource):
         self.hostname_configurations = kwargs.get('hostname_configurations', None)
         self.public_ip_addresses = None
         self.private_ip_addresses = None
+        self.public_ip_address_id = kwargs.get('public_ip_address_id', None)
+        self.public_network_access = kwargs.get('public_network_access', None)
         self.virtual_network_configuration = kwargs.get('virtual_network_configuration', None)
         self.additional_locations = kwargs.get('additional_locations', None)
         self.custom_properties = kwargs.get('custom_properties', None)
@@ -1824,6 +2021,7 @@ class ApiManagementServiceResource(ApimResource):
         self.virtual_network_type = kwargs.get('virtual_network_type', "None")
         self.api_version_constraint = kwargs.get('api_version_constraint', None)
         self.restore = kwargs.get('restore', False)
+        self.private_endpoint_connections = kwargs.get('private_endpoint_connections', None)
         self.publisher_email = kwargs['publisher_email']
         self.publisher_name = kwargs['publisher_name']
 
@@ -1912,6 +2110,15 @@ class ApiManagementServiceUpdateParameters(ApimResource):
      service in Primary region which is deployed in an Internal Virtual Network. Available only for
      Basic, Standard, Premium and Isolated SKU.
     :vartype private_ip_addresses: list[str]
+    :param public_ip_address_id: Public Standard SKU IP V4 based IP address to be associated with
+     Virtual Network deployed service in the region. Supported only for Developer and Premium SKU
+     being deployed in Virtual Network.
+    :type public_ip_address_id: str
+    :param public_network_access: Whether or not public endpoint access is allowed for this API
+     Management service.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. If
+     'Disabled', private endpoints are the exclusive access method. Default value is 'Enabled'.
+     Possible values include: "Enabled", "Disabled".
+    :type public_network_access: str or ~azure.mgmt.apimanagement.models.PublicNetworkAccess
     :param virtual_network_configuration: Virtual network configuration of the API Management
      service.
     :type virtual_network_configuration:
@@ -1969,6 +2176,9 @@ class ApiManagementServiceUpdateParameters(ApimResource):
     :param restore: Undelete Api Management Service if it was previously soft-deleted. If this flag
      is specified and set to True all other properties will be ignored.
     :type restore: bool
+    :param private_endpoint_connections: List of Private Endpoint Connections of this service.
+    :type private_endpoint_connections:
+     list[~azure.mgmt.apimanagement.models.RemotePrivateEndpointConnectionWrapper]
     :param publisher_email: Publisher email.
     :type publisher_email: str
     :param publisher_name: Publisher name.
@@ -2017,6 +2227,8 @@ class ApiManagementServiceUpdateParameters(ApimResource):
         'hostname_configurations': {'key': 'properties.hostnameConfigurations', 'type': '[HostnameConfiguration]'},
         'public_ip_addresses': {'key': 'properties.publicIPAddresses', 'type': '[str]'},
         'private_ip_addresses': {'key': 'properties.privateIPAddresses', 'type': '[str]'},
+        'public_ip_address_id': {'key': 'properties.publicIpAddressId', 'type': 'str'},
+        'public_network_access': {'key': 'properties.publicNetworkAccess', 'type': 'str'},
         'virtual_network_configuration': {'key': 'properties.virtualNetworkConfiguration', 'type': 'VirtualNetworkConfiguration'},
         'additional_locations': {'key': 'properties.additionalLocations', 'type': '[AdditionalLocation]'},
         'custom_properties': {'key': 'properties.customProperties', 'type': '{str}'},
@@ -2026,6 +2238,7 @@ class ApiManagementServiceUpdateParameters(ApimResource):
         'virtual_network_type': {'key': 'properties.virtualNetworkType', 'type': 'str'},
         'api_version_constraint': {'key': 'properties.apiVersionConstraint', 'type': 'ApiVersionConstraint'},
         'restore': {'key': 'properties.restore', 'type': 'bool'},
+        'private_endpoint_connections': {'key': 'properties.privateEndpointConnections', 'type': '[RemotePrivateEndpointConnectionWrapper]'},
         'publisher_email': {'key': 'properties.publisherEmail', 'type': 'str'},
         'publisher_name': {'key': 'properties.publisherName', 'type': 'str'},
     }
@@ -2051,6 +2264,8 @@ class ApiManagementServiceUpdateParameters(ApimResource):
         self.hostname_configurations = kwargs.get('hostname_configurations', None)
         self.public_ip_addresses = None
         self.private_ip_addresses = None
+        self.public_ip_address_id = kwargs.get('public_ip_address_id', None)
+        self.public_network_access = kwargs.get('public_network_access', None)
         self.virtual_network_configuration = kwargs.get('virtual_network_configuration', None)
         self.additional_locations = kwargs.get('additional_locations', None)
         self.custom_properties = kwargs.get('custom_properties', None)
@@ -2060,6 +2275,7 @@ class ApiManagementServiceUpdateParameters(ApimResource):
         self.virtual_network_type = kwargs.get('virtual_network_type', "None")
         self.api_version_constraint = kwargs.get('api_version_constraint', None)
         self.restore = kwargs.get('restore', False)
+        self.private_endpoint_connections = kwargs.get('private_endpoint_connections', None)
         self.publisher_email = kwargs.get('publisher_email', None)
         self.publisher_name = kwargs.get('publisher_name', None)
 
@@ -2102,6 +2318,15 @@ class ApiManagementServiceUpdateProperties(ApiManagementServiceBaseProperties):
      service in Primary region which is deployed in an Internal Virtual Network. Available only for
      Basic, Standard, Premium and Isolated SKU.
     :vartype private_ip_addresses: list[str]
+    :param public_ip_address_id: Public Standard SKU IP V4 based IP address to be associated with
+     Virtual Network deployed service in the region. Supported only for Developer and Premium SKU
+     being deployed in Virtual Network.
+    :type public_ip_address_id: str
+    :param public_network_access: Whether or not public endpoint access is allowed for this API
+     Management service.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. If
+     'Disabled', private endpoints are the exclusive access method. Default value is 'Enabled'.
+     Possible values include: "Enabled", "Disabled".
+    :type public_network_access: str or ~azure.mgmt.apimanagement.models.PublicNetworkAccess
     :param virtual_network_configuration: Virtual network configuration of the API Management
      service.
     :type virtual_network_configuration:
@@ -2159,6 +2384,9 @@ class ApiManagementServiceUpdateProperties(ApiManagementServiceBaseProperties):
     :param restore: Undelete Api Management Service if it was previously soft-deleted. If this flag
      is specified and set to True all other properties will be ignored.
     :type restore: bool
+    :param private_endpoint_connections: List of Private Endpoint Connections of this service.
+    :type private_endpoint_connections:
+     list[~azure.mgmt.apimanagement.models.RemotePrivateEndpointConnectionWrapper]
     :param publisher_email: Publisher email.
     :type publisher_email: str
     :param publisher_name: Publisher name.
@@ -2196,6 +2424,8 @@ class ApiManagementServiceUpdateProperties(ApiManagementServiceBaseProperties):
         'hostname_configurations': {'key': 'hostnameConfigurations', 'type': '[HostnameConfiguration]'},
         'public_ip_addresses': {'key': 'publicIPAddresses', 'type': '[str]'},
         'private_ip_addresses': {'key': 'privateIPAddresses', 'type': '[str]'},
+        'public_ip_address_id': {'key': 'publicIpAddressId', 'type': 'str'},
+        'public_network_access': {'key': 'publicNetworkAccess', 'type': 'str'},
         'virtual_network_configuration': {'key': 'virtualNetworkConfiguration', 'type': 'VirtualNetworkConfiguration'},
         'additional_locations': {'key': 'additionalLocations', 'type': '[AdditionalLocation]'},
         'custom_properties': {'key': 'customProperties', 'type': '{str}'},
@@ -2205,6 +2435,7 @@ class ApiManagementServiceUpdateProperties(ApiManagementServiceBaseProperties):
         'virtual_network_type': {'key': 'virtualNetworkType', 'type': 'str'},
         'api_version_constraint': {'key': 'apiVersionConstraint', 'type': 'ApiVersionConstraint'},
         'restore': {'key': 'restore', 'type': 'bool'},
+        'private_endpoint_connections': {'key': 'privateEndpointConnections', 'type': '[RemotePrivateEndpointConnectionWrapper]'},
         'publisher_email': {'key': 'publisherEmail', 'type': 'str'},
         'publisher_name': {'key': 'publisherName', 'type': 'str'},
     }
@@ -2671,7 +2902,7 @@ class ApiReleaseContract(Resource):
 
 
 class ApiRevisionCollection(msrest.serialization.Model):
-    """Paged Api Revision list representation.
+    """Paged API Revision list representation.
 
     Variables are only populated by the server, and will be ignored when sending a request.
 
@@ -2814,26 +3045,33 @@ class ApiTagResourceContractProperties(ApiEntityBaseContract):
     :param subscription_key_parameter_names: Protocols over which API is made available.
     :type subscription_key_parameter_names:
      ~azure.mgmt.apimanagement.models.SubscriptionKeyParameterNamesContract
-    :param api_type: Type of API. Possible values include: "http", "soap".
+    :param api_type: Type of API. Possible values include: "http", "soap", "websocket", "graphql".
     :type api_type: str or ~azure.mgmt.apimanagement.models.ApiType
-    :param api_revision: Describes the Revision of the Api. If no value is provided, default
+    :param api_revision: Describes the revision of the API. If no value is provided, default
      revision 1 is created.
     :type api_revision: str
-    :param api_version: Indicates the Version identifier of the API if the API is versioned.
+    :param api_version: Indicates the version identifier of the API if the API is versioned.
     :type api_version: str
     :param is_current: Indicates if API revision is current api revision.
     :type is_current: bool
     :ivar is_online: Indicates if API revision is accessible via the gateway.
     :vartype is_online: bool
-    :param api_revision_description: Description of the Api Revision.
+    :param api_revision_description: Description of the API Revision.
     :type api_revision_description: str
-    :param api_version_description: Description of the Api Version.
+    :param api_version_description: Description of the API Version.
     :type api_version_description: str
     :param api_version_set_id: A resource identifier for the related ApiVersionSet.
     :type api_version_set_id: str
     :param subscription_required: Specifies whether an API or Product subscription is required for
      accessing the API.
     :type subscription_required: bool
+    :param terms_of_service_url: A URL to the Terms of Service for the API. MUST be in the format
+     of a URL.
+    :type terms_of_service_url: str
+    :param contact: Contact information for the API.
+    :type contact: ~azure.mgmt.apimanagement.models.ApiContactInformation
+    :param license: License information for the API.
+    :type license: ~azure.mgmt.apimanagement.models.ApiLicenseInformation
     :param id: API identifier in the form /apis/{apiId}.
     :type id: str
     :param name: API name.
@@ -2872,6 +3110,9 @@ class ApiTagResourceContractProperties(ApiEntityBaseContract):
         'api_version_description': {'key': 'apiVersionDescription', 'type': 'str'},
         'api_version_set_id': {'key': 'apiVersionSetId', 'type': 'str'},
         'subscription_required': {'key': 'subscriptionRequired', 'type': 'bool'},
+        'terms_of_service_url': {'key': 'termsOfServiceUrl', 'type': 'str'},
+        'contact': {'key': 'contact', 'type': 'ApiContactInformation'},
+        'license': {'key': 'license', 'type': 'ApiLicenseInformation'},
         'id': {'key': 'id', 'type': 'str'},
         'name': {'key': 'name', 'type': 'str'},
         'service_url': {'key': 'serviceUrl', 'type': 'str'},
@@ -2903,26 +3144,33 @@ class ApiUpdateContract(msrest.serialization.Model):
     :param subscription_key_parameter_names: Protocols over which API is made available.
     :type subscription_key_parameter_names:
      ~azure.mgmt.apimanagement.models.SubscriptionKeyParameterNamesContract
-    :param api_type: Type of API. Possible values include: "http", "soap".
+    :param api_type: Type of API. Possible values include: "http", "soap", "websocket", "graphql".
     :type api_type: str or ~azure.mgmt.apimanagement.models.ApiType
-    :param api_revision: Describes the Revision of the Api. If no value is provided, default
+    :param api_revision: Describes the revision of the API. If no value is provided, default
      revision 1 is created.
     :type api_revision: str
-    :param api_version: Indicates the Version identifier of the API if the API is versioned.
+    :param api_version: Indicates the version identifier of the API if the API is versioned.
     :type api_version: str
     :param is_current: Indicates if API revision is current api revision.
     :type is_current: bool
     :ivar is_online: Indicates if API revision is accessible via the gateway.
     :vartype is_online: bool
-    :param api_revision_description: Description of the Api Revision.
+    :param api_revision_description: Description of the API Revision.
     :type api_revision_description: str
-    :param api_version_description: Description of the Api Version.
+    :param api_version_description: Description of the API Version.
     :type api_version_description: str
     :param api_version_set_id: A resource identifier for the related ApiVersionSet.
     :type api_version_set_id: str
     :param subscription_required: Specifies whether an API or Product subscription is required for
      accessing the API.
     :type subscription_required: bool
+    :param terms_of_service_url: A URL to the Terms of Service for the API. MUST be in the format
+     of a URL.
+    :type terms_of_service_url: str
+    :param contact: Contact information for the API.
+    :type contact: ~azure.mgmt.apimanagement.models.ApiContactInformation
+    :param license: License information for the API.
+    :type license: ~azure.mgmt.apimanagement.models.ApiLicenseInformation
     :param display_name: API name.
     :type display_name: str
     :param service_url: Absolute URL of the backend service implementing this API.
@@ -2959,6 +3207,9 @@ class ApiUpdateContract(msrest.serialization.Model):
         'api_version_description': {'key': 'properties.apiVersionDescription', 'type': 'str'},
         'api_version_set_id': {'key': 'properties.apiVersionSetId', 'type': 'str'},
         'subscription_required': {'key': 'properties.subscriptionRequired', 'type': 'bool'},
+        'terms_of_service_url': {'key': 'properties.termsOfServiceUrl', 'type': 'str'},
+        'contact': {'key': 'properties.contact', 'type': 'ApiContactInformation'},
+        'license': {'key': 'properties.license', 'type': 'ApiLicenseInformation'},
         'display_name': {'key': 'properties.displayName', 'type': 'str'},
         'service_url': {'key': 'properties.serviceUrl', 'type': 'str'},
         'path': {'key': 'properties.path', 'type': 'str'},
@@ -2982,6 +3233,9 @@ class ApiUpdateContract(msrest.serialization.Model):
         self.api_version_description = kwargs.get('api_version_description', None)
         self.api_version_set_id = kwargs.get('api_version_set_id', None)
         self.subscription_required = kwargs.get('subscription_required', None)
+        self.terms_of_service_url = kwargs.get('terms_of_service_url', None)
+        self.contact = kwargs.get('contact', None)
+        self.license = kwargs.get('license', None)
         self.display_name = kwargs.get('display_name', None)
         self.service_url = kwargs.get('service_url', None)
         self.path = kwargs.get('path', None)
@@ -3009,7 +3263,7 @@ class ApiVersionConstraint(msrest.serialization.Model):
 
 
 class ApiVersionSetCollection(msrest.serialization.Model):
-    """Paged Api Version Set list representation.
+    """Paged API Version Set list representation.
 
     :param value: Page values.
     :type value: list[~azure.mgmt.apimanagement.models.ApiVersionSetContract]
@@ -3036,7 +3290,7 @@ class ApiVersionSetCollection(msrest.serialization.Model):
 
 
 class ApiVersionSetContract(Resource):
-    """Api Version Set Contract details.
+    """API Version Set Contract details.
 
     Variables are only populated by the server, and will be ignored when sending a request.
 
@@ -3138,7 +3392,7 @@ class ApiVersionSetContractDetails(msrest.serialization.Model):
 
 
 class ApiVersionSetEntityBase(msrest.serialization.Model):
-    """Api Version set base parameters.
+    """API Version set base parameters.
 
     :param description: Description of API Version Set.
     :type description: str
@@ -3216,7 +3470,7 @@ class ApiVersionSetContractProperties(ApiVersionSetEntityBase):
 
 
 class ApiVersionSetUpdateParameters(msrest.serialization.Model):
-    """Parameters to update or create an Api Version Set Contract.
+    """Parameters to update or create an API Version Set Contract.
 
     :param description: Description of API Version Set.
     :type description: str
@@ -3300,6 +3554,31 @@ class ApiVersionSetUpdateParametersProperties(ApiVersionSetEntityBase):
         self.versioning_scheme = kwargs.get('versioning_scheme', None)
 
 
+class ArmIdWrapper(msrest.serialization.Model):
+    """A wrapper for an ARM resource id.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    :ivar id:
+    :vartype id: str
+    """
+
+    _validation = {
+        'id': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'id': {'key': 'id', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(ArmIdWrapper, self).__init__(**kwargs)
+        self.id = None
+
+
 class AssociationContract(Resource):
     """Association entity details.
 
@@ -3311,15 +3590,15 @@ class AssociationContract(Resource):
     :vartype name: str
     :ivar type: Resource type for API Management resource.
     :vartype type: str
-    :ivar provisioning_state: Provisioning state. Default value: "created".
-    :vartype provisioning_state: str
+    :param provisioning_state: Provisioning state. The only acceptable values to pass in are None
+     and "created". The default value is None.
+    :type provisioning_state: str
     """
 
     _validation = {
         'id': {'readonly': True},
         'name': {'readonly': True},
         'type': {'readonly': True},
-        'provisioning_state': {'constant': True},
     }
 
     _attribute_map = {
@@ -3329,13 +3608,12 @@ class AssociationContract(Resource):
         'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
     }
 
-    provisioning_state = "created"
-
     def __init__(
         self,
         **kwargs
     ):
         super(AssociationContract, self).__init__(**kwargs)
+        self.provisioning_state = kwargs.get('provisioning_state', None)
 
 
 class AuthenticationSettingsContract(msrest.serialization.Model):
@@ -3421,8 +3699,8 @@ class AuthorizationServerContract(Resource):
      security.
     :type support_state: bool
     :param default_scope: Access token scope that is going to be requested by default. Can be
-     overridden at the API level. Should be provided in the form of a string containing space-
-     delimited values.
+     overridden at the API level. Should be provided in the form of a string containing
+     space-delimited values.
     :type default_scope: str
     :param bearer_token_sending_methods: Specifies the mechanism by which access token is passed to
      the API.
@@ -3531,8 +3809,8 @@ class AuthorizationServerContractBaseProperties(msrest.serialization.Model):
      security.
     :type support_state: bool
     :param default_scope: Access token scope that is going to be requested by default. Can be
-     overridden at the API level. Should be provided in the form of a string containing space-
-     delimited values.
+     overridden at the API level. Should be provided in the form of a string containing
+     space-delimited values.
     :type default_scope: str
     :param bearer_token_sending_methods: Specifies the mechanism by which access token is passed to
      the API.
@@ -3603,8 +3881,8 @@ class AuthorizationServerContractProperties(AuthorizationServerContractBasePrope
      security.
     :type support_state: bool
     :param default_scope: Access token scope that is going to be requested by default. Can be
-     overridden at the API level. Should be provided in the form of a string containing space-
-     delimited values.
+     overridden at the API level. Should be provided in the form of a string containing
+     space-delimited values.
     :type default_scope: str
     :param bearer_token_sending_methods: Specifies the mechanism by which access token is passed to
      the API.
@@ -3738,8 +4016,8 @@ class AuthorizationServerUpdateContract(Resource):
      security.
     :type support_state: bool
     :param default_scope: Access token scope that is going to be requested by default. Can be
-     overridden at the API level. Should be provided in the form of a string containing space-
-     delimited values.
+     overridden at the API level. Should be provided in the form of a string containing
+     space-delimited values.
     :type default_scope: str
     :param bearer_token_sending_methods: Specifies the mechanism by which access token is passed to
      the API.
@@ -3848,8 +4126,8 @@ class AuthorizationServerUpdateContractProperties(AuthorizationServerContractBas
      security.
     :type support_state: bool
     :param default_scope: Access token scope that is going to be requested by default. Can be
-     overridden at the API level. Should be provided in the form of a string containing space-
-     delimited values.
+     overridden at the API level. Should be provided in the form of a string containing
+     space-delimited values.
     :type default_scope: str
     :param bearer_token_sending_methods: Specifies the mechanism by which access token is passed to
      the API.
@@ -3955,7 +4233,7 @@ class BackendBaseParameters(msrest.serialization.Model):
     :param description: Backend Description.
     :type description: str
     :param resource_id: Management Uri of the Resource in External System. This url can be the Arm
-     Resource Id of Logic Apps, Function Apps or Api Apps.
+     Resource Id of Logic Apps, Function Apps or API Apps.
     :type resource_id: str
     :param properties: Backend Properties contract.
     :type properties: ~azure.mgmt.apimanagement.models.BackendProperties
@@ -4040,7 +4318,7 @@ class BackendContract(Resource):
     :param description: Backend Description.
     :type description: str
     :param resource_id: Management Uri of the Resource in External System. This url can be the Arm
-     Resource Id of Logic Apps, Function Apps or Api Apps.
+     Resource Id of Logic Apps, Function Apps or API Apps.
     :type resource_id: str
     :param properties: Backend Properties contract.
     :type properties: ~azure.mgmt.apimanagement.models.BackendProperties
@@ -4107,7 +4385,7 @@ class BackendContractProperties(BackendBaseParameters):
     :param description: Backend Description.
     :type description: str
     :param resource_id: Management Uri of the Resource in External System. This url can be the Arm
-     Resource Id of Logic Apps, Function Apps or Api Apps.
+     Resource Id of Logic Apps, Function Apps or API Apps.
     :type resource_id: str
     :param properties: Backend Properties contract.
     :type properties: ~azure.mgmt.apimanagement.models.BackendProperties
@@ -4366,7 +4644,7 @@ class BackendUpdateParameterProperties(BackendBaseParameters):
     :param description: Backend Description.
     :type description: str
     :param resource_id: Management Uri of the Resource in External System. This url can be the Arm
-     Resource Id of Logic Apps, Function Apps or Api Apps.
+     Resource Id of Logic Apps, Function Apps or API Apps.
     :type resource_id: str
     :param properties: Backend Properties contract.
     :type properties: ~azure.mgmt.apimanagement.models.BackendProperties
@@ -4418,7 +4696,7 @@ class BackendUpdateParameters(msrest.serialization.Model):
     :param description: Backend Description.
     :type description: str
     :param resource_id: Management Uri of the Resource in External System. This url can be the Arm
-     Resource Id of Logic Apps, Function Apps or Api Apps.
+     Resource Id of Logic Apps, Function Apps or API Apps.
     :type resource_id: str
     :param properties: Backend Properties contract.
     :type properties: ~azure.mgmt.apimanagement.models.BackendProperties
@@ -4912,7 +5190,7 @@ class ContentItemContract(Resource):
     :ivar type: Resource type for API Management resource.
     :vartype type: str
     :param properties: Properties of the content item.
-    :type properties: dict[str, object]
+    :type properties: dict[str, any]
     """
 
     _validation = {
@@ -4984,7 +5262,7 @@ class ContentTypeContract(Resource):
     :param description: Content type description.
     :type description: str
     :param schema: Content type schema.
-    :type schema: object
+    :type schema: any
     :param version: Content type version.
     :type version: str
     """
@@ -5065,7 +5343,7 @@ class DataMaskingEntity(msrest.serialization.Model):
 
 
 class DeletedServiceContract(Resource):
-    """Deleted Api Management Service information.
+    """Deleted API Management Service information.
 
     Variables are only populated by the server, and will be ignored when sending a request.
 
@@ -5075,7 +5353,7 @@ class DeletedServiceContract(Resource):
     :vartype name: str
     :ivar type: Resource type for API Management resource.
     :vartype type: str
-    :ivar location: Api Management Service Master Location.
+    :ivar location: API Management Service Master Location.
     :vartype location: str
     :param service_id: Fully-qualified API Management Service Resource ID.
     :type service_id: str
@@ -5117,7 +5395,7 @@ class DeletedServiceContract(Resource):
 
 
 class DeletedServicesCollection(msrest.serialization.Model):
-    """Paged deleted Api Management Services List Representation.
+    """Paged deleted API Management Services List Representation.
 
     Variables are only populated by the server, and will be ignored when sending a request.
 
@@ -5317,7 +5595,7 @@ class EmailTemplateContract(Resource):
     :type title: str
     :param description: Description of the Email Template.
     :type description: str
-    :ivar is_default: Whether the template is the default template provided by Api Management or
+    :ivar is_default: Whether the template is the default template provided by API Management or
      has been edited.
     :vartype is_default: bool
     :param parameters: Email Template Parameter values.
@@ -5431,6 +5709,52 @@ class EmailTemplateUpdateParameters(msrest.serialization.Model):
         self.description = kwargs.get('description', None)
         self.body = kwargs.get('body', None)
         self.parameters = kwargs.get('parameters', None)
+
+
+class EndpointDependency(msrest.serialization.Model):
+    """A domain name that a service is reached at.
+
+    :param domain_name: The domain name of the dependency.
+    :type domain_name: str
+    :param endpoint_details: The Ports used when connecting to DomainName.
+    :type endpoint_details: list[~azure.mgmt.apimanagement.models.EndpointDetail]
+    """
+
+    _attribute_map = {
+        'domain_name': {'key': 'domainName', 'type': 'str'},
+        'endpoint_details': {'key': 'endpointDetails', 'type': '[EndpointDetail]'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(EndpointDependency, self).__init__(**kwargs)
+        self.domain_name = kwargs.get('domain_name', None)
+        self.endpoint_details = kwargs.get('endpoint_details', None)
+
+
+class EndpointDetail(msrest.serialization.Model):
+    """Current TCP connectivity information from the Api Management Service to a single endpoint.
+
+    :param port: The port an endpoint is connected to.
+    :type port: int
+    :param region: The region of the dependency.
+    :type region: str
+    """
+
+    _attribute_map = {
+        'port': {'key': 'port', 'type': 'int'},
+        'region': {'key': 'region', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(EndpointDetail, self).__init__(**kwargs)
+        self.port = kwargs.get('port', None)
+        self.region = kwargs.get('region', None)
 
 
 class ErrorFieldContract(msrest.serialization.Model):
@@ -6105,6 +6429,12 @@ class HostnameConfiguration(msrest.serialization.Model):
     :type negotiate_client_certificate: bool
     :param certificate: Certificate information.
     :type certificate: ~azure.mgmt.apimanagement.models.CertificateInformation
+    :param certificate_source: Certificate Source. Possible values include: "Managed", "KeyVault",
+     "Custom", "BuiltIn".
+    :type certificate_source: str or ~azure.mgmt.apimanagement.models.CertificateSource
+    :param certificate_status: Certificate Status. Possible values include: "Completed", "Failed",
+     "InProgress".
+    :type certificate_status: str or ~azure.mgmt.apimanagement.models.CertificateStatus
     """
 
     _validation = {
@@ -6122,6 +6452,8 @@ class HostnameConfiguration(msrest.serialization.Model):
         'default_ssl_binding': {'key': 'defaultSslBinding', 'type': 'bool'},
         'negotiate_client_certificate': {'key': 'negotiateClientCertificate', 'type': 'bool'},
         'certificate': {'key': 'certificate', 'type': 'CertificateInformation'},
+        'certificate_source': {'key': 'certificateSource', 'type': 'str'},
+        'certificate_status': {'key': 'certificateStatus', 'type': 'str'},
     }
 
     def __init__(
@@ -6138,6 +6470,8 @@ class HostnameConfiguration(msrest.serialization.Model):
         self.default_ssl_binding = kwargs.get('default_ssl_binding', False)
         self.negotiate_client_certificate = kwargs.get('negotiate_client_certificate', False)
         self.certificate = kwargs.get('certificate', None)
+        self.certificate_source = kwargs.get('certificate_source', None)
+        self.certificate_status = kwargs.get('certificate_status', None)
 
 
 class HttpMessageDiagnostic(msrest.serialization.Model):
@@ -7092,7 +7426,7 @@ class KeyVaultContractCreateProperties(msrest.serialization.Model):
     """Create keyVault contract details.
 
     :param secret_identifier: Key vault secret identifier for fetching secret. Providing a
-     versioned secret will prevent auto-refresh. This requires Api Management service to be
+     versioned secret will prevent auto-refresh. This requires API Management service to be
      configured with aka.ms/apimmsi.
     :type secret_identifier: str
     :param identity_client_id: SystemAssignedIdentity or UserAssignedIdentity Client Id which will
@@ -7118,7 +7452,7 @@ class KeyVaultContractProperties(KeyVaultContractCreateProperties):
     """KeyVault contract details.
 
     :param secret_identifier: Key vault secret identifier for fetching secret. Providing a
-     versioned secret will prevent auto-refresh. This requires Api Management service to be
+     versioned secret will prevent auto-refresh. This requires API Management service to be
      configured with aka.ms/apimmsi.
     :type secret_identifier: str
     :param identity_client_id: SystemAssignedIdentity or UserAssignedIdentity Client Id which will
@@ -7969,7 +8303,7 @@ class Operation(msrest.serialization.Model):
     :param origin: The operation origin.
     :type origin: str
     :param properties: The operation properties.
-    :type properties: object
+    :type properties: any
     """
 
     _attribute_map = {
@@ -8025,7 +8359,7 @@ class OperationCollection(msrest.serialization.Model):
 
 
 class OperationContract(Resource):
-    """Api Operation details.
+    """API Operation details.
 
     Variables are only populated by the server, and will be ignored when sending a request.
 
@@ -8094,7 +8428,7 @@ class OperationContract(Resource):
 
 
 class OperationEntityBaseContract(msrest.serialization.Model):
-    """Api Operation Entity Base Contract details.
+    """API Operation Entity Base Contract details.
 
     :param template_parameters: Collection of URL template parameters.
     :type template_parameters: list[~azure.mgmt.apimanagement.models.ParameterContract]
@@ -8239,13 +8573,19 @@ class OperationListResult(msrest.serialization.Model):
         self.next_link = kwargs.get('next_link', None)
 
 
-class OperationResultContract(msrest.serialization.Model):
-    """Operation Result.
+class OperationResultContract(Resource):
+    """Long Running Git Operation Results.
 
     Variables are only populated by the server, and will be ignored when sending a request.
 
-    :param id: Operation result identifier.
-    :type id: str
+    :ivar id: Resource ID.
+    :vartype id: str
+    :ivar name: Resource name.
+    :vartype name: str
+    :ivar type: Resource type for API Management resource.
+    :vartype type: str
+    :param id_properties_id: Operation result identifier.
+    :type id_properties_id: str
     :param status: Status of an async operation. Possible values include: "Started", "InProgress",
      "Succeeded", "Failed".
     :type status: str or ~azure.mgmt.apimanagement.models.AsyncOperationStatus
@@ -8266,17 +8606,23 @@ class OperationResultContract(msrest.serialization.Model):
     """
 
     _validation = {
+        'id': {'readonly': True},
+        'name': {'readonly': True},
+        'type': {'readonly': True},
         'action_log': {'readonly': True},
     }
 
     _attribute_map = {
         'id': {'key': 'id', 'type': 'str'},
-        'status': {'key': 'status', 'type': 'str'},
-        'started': {'key': 'started', 'type': 'iso-8601'},
-        'updated': {'key': 'updated', 'type': 'iso-8601'},
-        'result_info': {'key': 'resultInfo', 'type': 'str'},
-        'error': {'key': 'error', 'type': 'ErrorResponseBody'},
-        'action_log': {'key': 'actionLog', 'type': '[OperationResultLogItemContract]'},
+        'name': {'key': 'name', 'type': 'str'},
+        'type': {'key': 'type', 'type': 'str'},
+        'id_properties_id': {'key': 'properties.id', 'type': 'str'},
+        'status': {'key': 'properties.status', 'type': 'str'},
+        'started': {'key': 'properties.started', 'type': 'iso-8601'},
+        'updated': {'key': 'properties.updated', 'type': 'iso-8601'},
+        'result_info': {'key': 'properties.resultInfo', 'type': 'str'},
+        'error': {'key': 'properties.error', 'type': 'ErrorResponseBody'},
+        'action_log': {'key': 'properties.actionLog', 'type': '[OperationResultLogItemContract]'},
     }
 
     def __init__(
@@ -8284,7 +8630,7 @@ class OperationResultContract(msrest.serialization.Model):
         **kwargs
     ):
         super(OperationResultContract, self).__init__(**kwargs)
-        self.id = kwargs.get('id', None)
+        self.id_properties_id = kwargs.get('id_properties_id', None)
         self.status = kwargs.get('status', None)
         self.started = kwargs.get('started', None)
         self.updated = kwargs.get('updated', None)
@@ -8329,11 +8675,11 @@ class OperationTagResourceContractProperties(msrest.serialization.Model):
     :type id: str
     :ivar name: Operation name.
     :vartype name: str
-    :ivar api_name: Api Name.
+    :ivar api_name: API Name.
     :vartype api_name: str
-    :ivar api_revision: Api Revision.
+    :ivar api_revision: API Revision.
     :vartype api_revision: str
-    :ivar api_version: Api Version.
+    :ivar api_version: API Version.
     :vartype api_version: str
     :ivar description: Operation Description.
     :vartype description: str
@@ -8382,7 +8728,7 @@ class OperationTagResourceContractProperties(msrest.serialization.Model):
 
 
 class OperationUpdateContract(msrest.serialization.Model):
-    """Api Operation Update Contract details.
+    """API Operation Update Contract details.
 
     :param template_parameters: Collection of URL template parameters.
     :type template_parameters: list[~azure.mgmt.apimanagement.models.ParameterContract]
@@ -8486,6 +8832,62 @@ class OperationUpdateContractProperties(OperationEntityBaseContract):
         self.url_template = kwargs.get('url_template', None)
 
 
+class OutboundEnvironmentEndpoint(msrest.serialization.Model):
+    """Endpoints accessed for a common purpose that the Api Management Service requires outbound network access to.
+
+    :param category: The type of service accessed by the Api Management Service, e.g., Azure
+     Storage, Azure SQL Database, and Azure Active Directory.
+    :type category: str
+    :param endpoints: The endpoints that the Api Management Service reaches the service at.
+    :type endpoints: list[~azure.mgmt.apimanagement.models.EndpointDependency]
+    """
+
+    _attribute_map = {
+        'category': {'key': 'category', 'type': 'str'},
+        'endpoints': {'key': 'endpoints', 'type': '[EndpointDependency]'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(OutboundEnvironmentEndpoint, self).__init__(**kwargs)
+        self.category = kwargs.get('category', None)
+        self.endpoints = kwargs.get('endpoints', None)
+
+
+class OutboundEnvironmentEndpointList(msrest.serialization.Model):
+    """Collection of Outbound Environment Endpoints.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param value: Required. Collection of resources.
+    :type value: list[~azure.mgmt.apimanagement.models.OutboundEnvironmentEndpoint]
+    :ivar next_link: Link to next page of resources.
+    :vartype next_link: str
+    """
+
+    _validation = {
+        'value': {'required': True},
+        'next_link': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'value': {'key': 'value', 'type': '[OutboundEnvironmentEndpoint]'},
+        'next_link': {'key': 'nextLink', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(OutboundEnvironmentEndpointList, self).__init__(**kwargs)
+        self.value = kwargs['value']
+        self.next_link = None
+
+
 class ParameterContract(msrest.serialization.Model):
     """Operation parameters details.
 
@@ -8503,6 +8905,10 @@ class ParameterContract(msrest.serialization.Model):
     :type required: bool
     :param values: Parameter values.
     :type values: list[str]
+    :param schema_id: Schema identifier.
+    :type schema_id: str
+    :param type_name: Type name defined by the schema.
+    :type type_name: str
     """
 
     _validation = {
@@ -8517,6 +8923,8 @@ class ParameterContract(msrest.serialization.Model):
         'default_value': {'key': 'defaultValue', 'type': 'str'},
         'required': {'key': 'required', 'type': 'bool'},
         'values': {'key': 'values', 'type': '[str]'},
+        'schema_id': {'key': 'schemaId', 'type': 'str'},
+        'type_name': {'key': 'typeName', 'type': 'str'},
     }
 
     def __init__(
@@ -8530,6 +8938,8 @@ class ParameterContract(msrest.serialization.Model):
         self.default_value = kwargs.get('default_value', None)
         self.required = kwargs.get('required', None)
         self.values = kwargs.get('values', None)
+        self.schema_id = kwargs.get('schema_id', None)
+        self.type_name = kwargs.get('type_name', None)
 
 
 class PipelineDiagnosticSettings(msrest.serialization.Model):
@@ -8769,7 +9179,7 @@ class PortalRevisionCollection(msrest.serialization.Model):
 
 
 class PortalRevisionContract(Resource):
-    """Portal revisions contract details.
+    """Portal Revision's contract details.
 
     Variables are only populated by the server, and will be ignored when sending a request.
 
@@ -8783,12 +9193,12 @@ class PortalRevisionContract(Resource):
     :type description: str
     :ivar status_details: Portal revision publishing status details.
     :vartype status_details: str
-    :ivar status: Portal revision publishing status. Possible values include: "pending",
+    :ivar status: Status of the portal's revision. Possible values include: "pending",
      "publishing", "completed", "failed".
     :vartype status: str or ~azure.mgmt.apimanagement.models.PortalRevisionStatus
-    :param is_current: Indicates if the Portal Revision is public.
+    :param is_current: Indicates if the portal's revision is public.
     :type is_current: bool
-    :ivar created_date_time: Portal revision creation date and time.
+    :ivar created_date_time: Portal's revision creation date and time.
     :vartype created_date_time: ~datetime.datetime
     :ivar updated_date_time: Last updated date and time.
     :vartype updated_date_time: ~datetime.datetime
@@ -9004,6 +9414,323 @@ class PortalSignupSettings(Resource):
         super(PortalSignupSettings, self).__init__(**kwargs)
         self.enabled = kwargs.get('enabled', None)
         self.terms_of_service = kwargs.get('terms_of_service', None)
+
+
+class PrivateEndpointConnectionCollection(msrest.serialization.Model):
+    """PrivateEndpointConnectionCollection.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param value: Required. Collection of private endpoint connection resources.
+    :type value: list[~azure.mgmt.apimanagement.models.RemotePrivateEndpointConnectionWrapper]
+    :param count: Total record count number across all pages.
+    :type count: long
+    :ivar next_link: Link to next page of resources.
+    :vartype next_link: str
+    """
+
+    _validation = {
+        'value': {'required': True},
+        'next_link': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'value': {'key': 'value', 'type': '[RemotePrivateEndpointConnectionWrapper]'},
+        'count': {'key': 'count', 'type': 'long'},
+        'next_link': {'key': 'nextLink', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(PrivateEndpointConnectionCollection, self).__init__(**kwargs)
+        self.value = kwargs['value']
+        self.count = kwargs.get('count', None)
+        self.next_link = None
+
+
+class PrivateEndpointConnectionRequest(msrest.serialization.Model):
+    """A request to approve or reject a private endpoint connection.
+
+    :param id: Private Endpoint Connection Resource Id.
+    :type id: str
+    :param properties: The connection state of the private endpoint connection.
+    :type properties: ~azure.mgmt.apimanagement.models.PrivateEndpointConnectionRequestProperties
+    """
+
+    _attribute_map = {
+        'id': {'key': 'Id', 'type': 'str'},
+        'properties': {'key': 'properties', 'type': 'PrivateEndpointConnectionRequestProperties'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(PrivateEndpointConnectionRequest, self).__init__(**kwargs)
+        self.id = kwargs.get('id', None)
+        self.properties = kwargs.get('properties', None)
+
+
+class PrivateEndpointConnectionRequestProperties(msrest.serialization.Model):
+    """The connection state of the private endpoint connection.
+
+    :param status: Status of a private endpoint connection.
+    :type status: str
+    :param description: The description of this private endpoint connection request.
+    :type description: str
+    """
+
+    _attribute_map = {
+        'status': {'key': 'status', 'type': 'str'},
+        'description': {'key': 'description', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(PrivateEndpointConnectionRequestProperties, self).__init__(**kwargs)
+        self.status = kwargs.get('status', None)
+        self.description = kwargs.get('description', None)
+
+
+class PrivateEndpointConnectionRequestProperty(msrest.serialization.Model):
+    """Private Endpoint Connection Request Property.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    :ivar provisioning_state: The provisioning state of the private endpoint connection resource.
+    :vartype provisioning_state: str
+    :param private_endpoint: The Arm Resource Id of a private endpoint.
+    :type private_endpoint: str
+    :param private_link_service_connection_state: The connection state of the private endpoint
+     connection.
+    :type private_link_service_connection_state:
+     ~azure.mgmt.apimanagement.models.PrivateEndpointConnectionRequestPropertyPrivateLinkServiceConnectionState
+    """
+
+    _validation = {
+        'provisioning_state': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'provisioning_state': {'key': 'provisioningState', 'type': 'str'},
+        'private_endpoint': {'key': 'privateEndpoint', 'type': 'str'},
+        'private_link_service_connection_state': {'key': 'privateLinkServiceConnectionState', 'type': 'PrivateEndpointConnectionRequestPropertyPrivateLinkServiceConnectionState'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(PrivateEndpointConnectionRequestProperty, self).__init__(**kwargs)
+        self.provisioning_state = None
+        self.private_endpoint = kwargs.get('private_endpoint', None)
+        self.private_link_service_connection_state = kwargs.get('private_link_service_connection_state', None)
+
+
+class PrivateEndpointConnectionRequestPropertyPrivateLinkServiceConnectionState(msrest.serialization.Model):
+    """The connection state of the private endpoint connection.
+
+    :param status: Status of a private endpoint connection.
+    :type status: str
+    :param description: The description of this private endpoint connection request.
+    :type description: str
+    """
+
+    _attribute_map = {
+        'status': {'key': 'status', 'type': 'str'},
+        'description': {'key': 'description', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(PrivateEndpointConnectionRequestPropertyPrivateLinkServiceConnectionState, self).__init__(**kwargs)
+        self.status = kwargs.get('status', None)
+        self.description = kwargs.get('description', None)
+
+
+class PrivateEndpointConnectionRequestResponse(msrest.serialization.Model):
+    """A request to approve or reject a private endpoint connection.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    :ivar private_endpoint_connection_name: Private Endpoint Connection Name.
+    :vartype private_endpoint_connection_name: str
+    :ivar id:
+    :vartype id: str
+    :ivar type:
+    :vartype type: str
+    :param properties: Private Endpoint Connection Request Property.
+    :type properties: ~azure.mgmt.apimanagement.models.PrivateEndpointConnectionRequestProperty
+    """
+
+    _validation = {
+        'private_endpoint_connection_name': {'readonly': True},
+        'id': {'readonly': True},
+        'type': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'private_endpoint_connection_name': {'key': 'privateEndpointConnectionName', 'type': 'str'},
+        'id': {'key': 'id', 'type': 'str'},
+        'type': {'key': 'type', 'type': 'str'},
+        'properties': {'key': 'properties', 'type': 'PrivateEndpointConnectionRequestProperty'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(PrivateEndpointConnectionRequestResponse, self).__init__(**kwargs)
+        self.private_endpoint_connection_name = None
+        self.id = None
+        self.type = None
+        self.properties = kwargs.get('properties', None)
+
+
+class PrivateLinkConnectionState(msrest.serialization.Model):
+    """The state of a private link connection.
+
+    :param status: Status of a private link connection.
+    :type status: str
+    :param description: Description of a private link connection.
+    :type description: str
+    :param actions_required: ActionsRequired for a private link connection.
+    :type actions_required: str
+    """
+
+    _attribute_map = {
+        'status': {'key': 'status', 'type': 'str'},
+        'description': {'key': 'description', 'type': 'str'},
+        'actions_required': {'key': 'actionsRequired', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(PrivateLinkConnectionState, self).__init__(**kwargs)
+        self.status = kwargs.get('status', None)
+        self.description = kwargs.get('description', None)
+        self.actions_required = kwargs.get('actions_required', None)
+
+
+class PrivateLinkGroupResource(msrest.serialization.Model):
+    """A private link resource.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param id: Required.
+    :type id: str
+    :param name: Required. Name of a private link resource.
+    :type name: str
+    :param type: Required.
+    :type type: str
+    :param properties: Required. Properties of a private link resource.
+    :type properties: ~azure.mgmt.apimanagement.models.PrivateLinkGroupResourceProperty
+    """
+
+    _validation = {
+        'id': {'required': True},
+        'name': {'required': True},
+        'type': {'required': True},
+        'properties': {'required': True},
+    }
+
+    _attribute_map = {
+        'id': {'key': 'id', 'type': 'str'},
+        'name': {'key': 'name', 'type': 'str'},
+        'type': {'key': 'type', 'type': 'str'},
+        'properties': {'key': 'properties', 'type': 'PrivateLinkGroupResourceProperty'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(PrivateLinkGroupResource, self).__init__(**kwargs)
+        self.id = kwargs['id']
+        self.name = kwargs['name']
+        self.type = kwargs['type']
+        self.properties = kwargs['properties']
+
+
+class PrivateLinkGroupResourceProperty(msrest.serialization.Model):
+    """Properties of a private link resource.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    :ivar group_id: GroupId of a private link resource.
+    :vartype group_id: str
+    :ivar required_members: RequiredMembers of a private link resource.
+    :vartype required_members: list[str]
+    :ivar required_zone_names: RequiredZoneNames of a private link resource.
+    :vartype required_zone_names: list[str]
+    """
+
+    _validation = {
+        'group_id': {'readonly': True},
+        'required_members': {'readonly': True},
+        'required_zone_names': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'group_id': {'key': 'groupId', 'type': 'str'},
+        'required_members': {'key': 'requiredMembers', 'type': '[str]'},
+        'required_zone_names': {'key': 'requiredZoneNames', 'type': '[str]'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(PrivateLinkGroupResourceProperty, self).__init__(**kwargs)
+        self.group_id = None
+        self.required_members = None
+        self.required_zone_names = None
+
+
+class PrivateLinkGroupResources(msrest.serialization.Model):
+    """Wrapper for a collection of private link resources.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param value: Required.
+    :type value: list[~azure.mgmt.apimanagement.models.PrivateLinkGroupResource]
+    :param count: Total record count number across all pages.
+    :type count: long
+    :ivar next_link: Next page link if any.
+    :vartype next_link: str
+    """
+
+    _validation = {
+        'value': {'required': True},
+        'next_link': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'value': {'key': 'value', 'type': '[PrivateLinkGroupResource]'},
+        'count': {'key': 'count', 'type': 'long'},
+        'next_link': {'key': 'nextLink', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(PrivateLinkGroupResources, self).__init__(**kwargs)
+        self.value = kwargs['value']
+        self.count = kwargs.get('count', None)
+        self.next_link = None
 
 
 class ProductCollection(msrest.serialization.Model):
@@ -9775,6 +10502,58 @@ class RegistrationDelegationSettingsProperties(msrest.serialization.Model):
         self.enabled = kwargs.get('enabled', None)
 
 
+class RemotePrivateEndpointConnectionWrapper(Resource):
+    """Remote Private Endpoint Connection resource.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    :ivar id: Resource ID.
+    :vartype id: str
+    :ivar name: Resource name.
+    :vartype name: str
+    :ivar type: Resource type for API Management resource.
+    :vartype type: str
+    :param private_endpoint: The resource of private end point.
+    :type private_endpoint: ~azure.mgmt.apimanagement.models.ArmIdWrapper
+    :param private_link_service_connection_state: A collection of information about the state of
+     the connection between service consumer and provider.
+    :type private_link_service_connection_state:
+     ~azure.mgmt.apimanagement.models.PrivateLinkConnectionState
+    :ivar provisioning_state: The provisioning state of the private endpoint connection resource.
+    :vartype provisioning_state: str
+    :ivar group_ids: All the Group ids.
+    :vartype group_ids: list[str]
+    """
+
+    _validation = {
+        'id': {'readonly': True},
+        'name': {'readonly': True},
+        'type': {'readonly': True},
+        'provisioning_state': {'readonly': True},
+        'group_ids': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'id': {'key': 'id', 'type': 'str'},
+        'name': {'key': 'name', 'type': 'str'},
+        'type': {'key': 'type', 'type': 'str'},
+        'private_endpoint': {'key': 'properties.privateEndpoint', 'type': 'ArmIdWrapper'},
+        'private_link_service_connection_state': {'key': 'properties.privateLinkServiceConnectionState', 'type': 'PrivateLinkConnectionState'},
+        'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
+        'group_ids': {'key': 'properties.groupIds', 'type': '[str]'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(RemotePrivateEndpointConnectionWrapper, self).__init__(**kwargs)
+        self.private_endpoint = kwargs.get('private_endpoint', None)
+        self.private_link_service_connection_state = kwargs.get('private_link_service_connection_state', None)
+        self.provisioning_state = None
+        self.group_ids = None
+
+
 class ReportCollection(msrest.serialization.Model):
     """Paged Report records list representation.
 
@@ -10395,7 +11174,7 @@ class SchemaCollection(msrest.serialization.Model):
 
     Variables are only populated by the server, and will be ignored when sending a request.
 
-    :ivar value: Api Schema Contract value.
+    :ivar value: API Schema Contract value.
     :vartype value: list[~azure.mgmt.apimanagement.models.SchemaContract]
     :param count: Total record count number.
     :type count: long
@@ -10442,11 +11221,8 @@ class SchemaContract(Resource):
      ``application/vnd.oai.openapi.components+json`` </br> - ``WADL Schema`` use
      ``application/vnd.ms-azure-apim.wadl.grammars+xml``.
     :type content_type: str
-    :param value: Json escaped string defining the document representing the Schema. Used for
-     schemas other than Swagger/OpenAPI.
-    :type value: str
-    :param definitions: Types definitions. Used for Swagger/OpenAPI schemas only, null otherwise.
-    :type definitions: object
+    :param document: Create or update Properties of the Schema Document.
+    :type document: any
     """
 
     _validation = {
@@ -10460,8 +11236,7 @@ class SchemaContract(Resource):
         'name': {'key': 'name', 'type': 'str'},
         'type': {'key': 'type', 'type': 'str'},
         'content_type': {'key': 'properties.contentType', 'type': 'str'},
-        'value': {'key': 'properties.document.value', 'type': 'str'},
-        'definitions': {'key': 'properties.document.definitions', 'type': 'object'},
+        'document': {'key': 'properties.document', 'type': 'object'},
     }
 
     def __init__(
@@ -10470,8 +11245,7 @@ class SchemaContract(Resource):
     ):
         super(SchemaContract, self).__init__(**kwargs)
         self.content_type = kwargs.get('content_type', None)
-        self.value = kwargs.get('value', None)
-        self.definitions = kwargs.get('definitions', None)
+        self.document = kwargs.get('document', None)
 
 
 class SubscriptionCollection(msrest.serialization.Model):
@@ -10538,8 +11312,8 @@ class SubscriptionContract(Resource):
     :type start_date: ~datetime.datetime
     :param expiration_date: Subscription expiration date. The setting is for audit purposes only
      and the subscription is not automatically expired. The subscription lifecycle can be managed by
-     using the ``state`` property. The date conforms to the following format: ``yyyy-MM-
-     ddTHH:mm:ssZ`` as specified by the ISO 8601 standard.
+     using the ``state`` property. The date conforms to the following format:
+     ``yyyy-MM-ddTHH:mm:ssZ`` as specified by the ISO 8601 standard.
     :type expiration_date: ~datetime.datetime
     :param end_date: Date when subscription was cancelled or expired. The setting is for audit
      purposes only and the subscription is not automatically cancelled. The subscription lifecycle
@@ -10750,8 +11524,8 @@ class SubscriptionUpdateParameters(msrest.serialization.Model):
     :type scope: str
     :param expiration_date: Subscription expiration date. The setting is for audit purposes only
      and the subscription is not automatically expired. The subscription lifecycle can be managed by
-     using the ``state`` property. The date conforms to the following format: ``yyyy-MM-
-     ddTHH:mm:ssZ`` as specified by the ISO 8601 standard.
+     using the ``state`` property. The date conforms to the following format:
+     ``yyyy-MM-ddTHH:mm:ssZ`` as specified by the ISO 8601 standard.
     :type expiration_date: ~datetime.datetime
     :param display_name: Subscription name.
     :type display_name: str
@@ -10806,6 +11580,47 @@ class SubscriptionUpdateParameters(msrest.serialization.Model):
         self.state = kwargs.get('state', None)
         self.state_comment = kwargs.get('state_comment', None)
         self.allow_tracing = kwargs.get('allow_tracing', None)
+
+
+class SystemData(msrest.serialization.Model):
+    """Metadata pertaining to creation and last modification of the resource.
+
+    :param created_by: The identity that created the resource.
+    :type created_by: str
+    :param created_by_type: The type of identity that created the resource. Possible values
+     include: "User", "Application", "ManagedIdentity", "Key".
+    :type created_by_type: str or ~azure.mgmt.apimanagement.models.CreatedByType
+    :param created_at: The timestamp of resource creation (UTC).
+    :type created_at: ~datetime.datetime
+    :param last_modified_by: The identity that last modified the resource.
+    :type last_modified_by: str
+    :param last_modified_by_type: The type of identity that last modified the resource. Possible
+     values include: "User", "Application", "ManagedIdentity", "Key".
+    :type last_modified_by_type: str or ~azure.mgmt.apimanagement.models.CreatedByType
+    :param last_modified_at: The timestamp of resource last modification (UTC).
+    :type last_modified_at: ~datetime.datetime
+    """
+
+    _attribute_map = {
+        'created_by': {'key': 'createdBy', 'type': 'str'},
+        'created_by_type': {'key': 'createdByType', 'type': 'str'},
+        'created_at': {'key': 'createdAt', 'type': 'iso-8601'},
+        'last_modified_by': {'key': 'lastModifiedBy', 'type': 'str'},
+        'last_modified_by_type': {'key': 'lastModifiedByType', 'type': 'str'},
+        'last_modified_at': {'key': 'lastModifiedAt', 'type': 'iso-8601'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(SystemData, self).__init__(**kwargs)
+        self.created_by = kwargs.get('created_by', None)
+        self.created_by_type = kwargs.get('created_by_type', None)
+        self.created_at = kwargs.get('created_at', None)
+        self.last_modified_by = kwargs.get('last_modified_by', None)
+        self.last_modified_by_type = kwargs.get('last_modified_by_type', None)
+        self.last_modified_at = kwargs.get('last_modified_at', None)
 
 
 class TagCollection(msrest.serialization.Model):
@@ -11109,7 +11924,7 @@ class TagResourceContract(msrest.serialization.Model):
 
     :param tag: Required. Tag associated with the resource.
     :type tag: ~azure.mgmt.apimanagement.models.TagResourceContractProperties
-    :param api: Api associated with the tag.
+    :param api: API associated with the tag.
     :type api: ~azure.mgmt.apimanagement.models.ApiTagResourceContractProperties
     :param operation: Operation associated with the tag.
     :type operation: ~azure.mgmt.apimanagement.models.OperationTagResourceContractProperties
@@ -11167,7 +11982,7 @@ class TagResourceContractProperties(msrest.serialization.Model):
 
 
 class TenantConfigurationSyncStateContract(msrest.serialization.Model):
-    """Tenant Configuration Synchronization State.
+    """Result of Tenant Configuration Sync State.
 
     :param branch: The name of Git branch.
     :type branch: str
@@ -11187,16 +12002,19 @@ class TenantConfigurationSyncStateContract(msrest.serialization.Model):
      conforms to the following format: ``yyyy-MM-ddTHH:mm:ssZ`` as specified by the ISO 8601
      standard.
     :type configuration_change_date: ~datetime.datetime
+    :param last_operation_id: Most recent tenant configuration operation identifier.
+    :type last_operation_id: str
     """
 
     _attribute_map = {
-        'branch': {'key': 'branch', 'type': 'str'},
-        'commit_id': {'key': 'commitId', 'type': 'str'},
-        'is_export': {'key': 'isExport', 'type': 'bool'},
-        'is_synced': {'key': 'isSynced', 'type': 'bool'},
-        'is_git_enabled': {'key': 'isGitEnabled', 'type': 'bool'},
-        'sync_date': {'key': 'syncDate', 'type': 'iso-8601'},
-        'configuration_change_date': {'key': 'configurationChangeDate', 'type': 'iso-8601'},
+        'branch': {'key': 'properties.branch', 'type': 'str'},
+        'commit_id': {'key': 'properties.commitId', 'type': 'str'},
+        'is_export': {'key': 'properties.isExport', 'type': 'bool'},
+        'is_synced': {'key': 'properties.isSynced', 'type': 'bool'},
+        'is_git_enabled': {'key': 'properties.isGitEnabled', 'type': 'bool'},
+        'sync_date': {'key': 'properties.syncDate', 'type': 'iso-8601'},
+        'configuration_change_date': {'key': 'properties.configurationChangeDate', 'type': 'iso-8601'},
+        'last_operation_id': {'key': 'properties.lastOperationId', 'type': 'str'},
     }
 
     def __init__(
@@ -11211,6 +12029,7 @@ class TenantConfigurationSyncStateContract(msrest.serialization.Model):
         self.is_git_enabled = kwargs.get('is_git_enabled', None)
         self.sync_date = kwargs.get('sync_date', None)
         self.configuration_change_date = kwargs.get('configuration_change_date', None)
+        self.last_operation_id = kwargs.get('last_operation_id', None)
 
 
 class TenantSettingsCollection(msrest.serialization.Model):

@@ -12,7 +12,9 @@ from azure.core.exceptions import ClientAuthenticationError, HttpResponseError, 
 from azure.core.paging import ItemPaged
 from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import HttpRequest, HttpResponse
+from azure.core.polling import LROPoller, NoPolling, PollingMethod
 from azure.mgmt.core.exceptions import ARMErrorFormat
+from azure.mgmt.core.polling.arm_polling import ARMPolling
 
 from .. import models as _models
 
@@ -23,8 +25,8 @@ if TYPE_CHECKING:
     T = TypeVar('T')
     ClsType = Optional[Callable[[PipelineResponse[HttpRequest, HttpResponse], T, Dict[str, Any]], Any]]
 
-class TenantAccessOperations(object):
-    """TenantAccessOperations operations.
+class PrivateEndpointConnectionOperations(object):
+    """PrivateEndpointConnectionOperations operations.
 
     You should not instantiate this class directly. Instead, you should create a Client instance that
     instantiates it for you and attaches it as an attribute.
@@ -49,24 +51,21 @@ class TenantAccessOperations(object):
         self,
         resource_group_name,  # type: str
         service_name,  # type: str
-        filter=None,  # type: Optional[str]
         **kwargs  # type: Any
     ):
-        # type: (...) -> Iterable["_models.AccessInformationCollection"]
-        """Returns list of access infos - for Git and Management endpoints.
+        # type: (...) -> Iterable["_models.PrivateEndpointConnectionCollection"]
+        """Lists all private endpoint connections of the API Management service instance.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
         :param service_name: The name of the API Management service.
         :type service_name: str
-        :param filter: Not used.
-        :type filter: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either AccessInformationCollection or the result of cls(response)
-        :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.apimanagement.models.AccessInformationCollection]
+        :return: An iterator like instance of either PrivateEndpointConnectionCollection or the result of cls(response)
+        :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.apimanagement.models.PrivateEndpointConnectionCollection]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.AccessInformationCollection"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.PrivateEndpointConnectionCollection"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -83,15 +82,13 @@ class TenantAccessOperations(object):
                 # Construct URL
                 url = self.list_by_service.metadata['url']  # type: ignore
                 path_format_arguments = {
+                    'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
                     'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
                     'serviceName': self._serialize.url("service_name", service_name, 'str', max_length=50, min_length=1, pattern=r'^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$'),
-                    'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
                 }
                 url = self._client.format_url(url, **path_format_arguments)
                 # Construct parameters
                 query_parameters = {}  # type: Dict[str, Any]
-                if filter is not None:
-                    query_parameters['$filter'] = self._serialize.query("filter", filter, 'str')
                 query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
 
                 request = self._client.get(url, query_parameters, header_parameters)
@@ -102,7 +99,7 @@ class TenantAccessOperations(object):
             return request
 
         def extract_data(pipeline_response):
-            deserialized = self._deserialize('AccessInformationCollection', pipeline_response)
+            deserialized = self._deserialize('PrivateEndpointConnectionCollection', pipeline_response)
             list_of_elem = deserialized.value
             if cls:
                 list_of_elem = cls(list_of_elem)
@@ -124,30 +121,30 @@ class TenantAccessOperations(object):
         return ItemPaged(
             get_next, extract_data
         )
-    list_by_service.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant'}  # type: ignore
+    list_by_service.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/privateEndpointConnections'}  # type: ignore
 
-    def get_entity_tag(
+    def get_by_name(
         self,
         resource_group_name,  # type: str
         service_name,  # type: str
-        access_name,  # type: Union[str, "_models.AccessIdName"]
+        private_endpoint_connection_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> bool
-        """Tenant access metadata.
+        # type: (...) -> "_models.RemotePrivateEndpointConnectionWrapper"
+        """Gets the details of the Private Endpoint Connection specified by its identifier.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
         :param service_name: The name of the API Management service.
         :type service_name: str
-        :param access_name: The identifier of the Access configuration.
-        :type access_name: str or ~azure.mgmt.apimanagement.models.AccessIdName
+        :param private_endpoint_connection_name: Name of the private endpoint connection.
+        :type private_endpoint_connection_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: bool, or the result of cls(response)
-        :rtype: bool
+        :return: RemotePrivateEndpointConnectionWrapper, or the result of cls(response)
+        :rtype: ~azure.mgmt.apimanagement.models.RemotePrivateEndpointConnectionWrapper
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[None]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.RemotePrivateEndpointConnectionWrapper"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -156,77 +153,12 @@ class TenantAccessOperations(object):
         accept = "application/json"
 
         # Construct URL
-        url = self.get_entity_tag.metadata['url']  # type: ignore
+        url = self.get_by_name.metadata['url']  # type: ignore
         path_format_arguments = {
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
             'serviceName': self._serialize.url("service_name", service_name, 'str', max_length=50, min_length=1, pattern=r'^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$'),
+            'privateEndpointConnectionName': self._serialize.url("private_endpoint_connection_name", private_endpoint_connection_name, 'str'),
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
-            'accessName': self._serialize.url("access_name", access_name, 'str'),
-        }
-        url = self._client.format_url(url, **path_format_arguments)
-
-        # Construct parameters
-        query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
-
-        # Construct headers
-        header_parameters = {}  # type: Dict[str, Any]
-        header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
-
-        request = self._client.head(url, query_parameters, header_parameters)
-        pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
-        response = pipeline_response.http_response
-
-        if response.status_code not in [200]:
-            map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, response)
-            raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
-
-        response_headers = {}
-        response_headers['ETag']=self._deserialize('str', response.headers.get('ETag'))
-
-        if cls:
-            return cls(pipeline_response, None, response_headers)
-
-        return 200 <= response.status_code <= 299
-    get_entity_tag.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant/{accessName}'}  # type: ignore
-
-    def get(
-        self,
-        resource_group_name,  # type: str
-        service_name,  # type: str
-        access_name,  # type: Union[str, "_models.AccessIdName"]
-        **kwargs  # type: Any
-    ):
-        # type: (...) -> "_models.AccessInformationContract"
-        """Get tenant access information details without secrets.
-
-        :param resource_group_name: The name of the resource group.
-        :type resource_group_name: str
-        :param service_name: The name of the API Management service.
-        :type service_name: str
-        :param access_name: The identifier of the Access configuration.
-        :type access_name: str or ~azure.mgmt.apimanagement.models.AccessIdName
-        :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: AccessInformationContract, or the result of cls(response)
-        :rtype: ~azure.mgmt.apimanagement.models.AccessInformationContract
-        :raises: ~azure.core.exceptions.HttpResponseError
-        """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.AccessInformationContract"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2021-04-01-preview"
-        accept = "application/json"
-
-        # Construct URL
-        url = self.get.metadata['url']  # type: ignore
-        path_format_arguments = {
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
-            'serviceName': self._serialize.url("service_name", service_name, 'str', max_length=50, min_length=1, pattern=r'^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$'),
-            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
-            'accessName': self._serialize.url("access_name", access_name, 'str'),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
@@ -247,45 +179,24 @@ class TenantAccessOperations(object):
             error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
-        response_headers = {}
-        response_headers['ETag']=self._deserialize('str', response.headers.get('ETag'))
-        deserialized = self._deserialize('AccessInformationContract', pipeline_response)
+        deserialized = self._deserialize('RemotePrivateEndpointConnectionWrapper', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, response_headers)
+            return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant/{accessName}'}  # type: ignore
+    get_by_name.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/privateEndpointConnections/{privateEndpointConnectionName}'}  # type: ignore
 
-    def create(
+    def _create_or_update_initial(
         self,
         resource_group_name,  # type: str
         service_name,  # type: str
-        access_name,  # type: Union[str, "_models.AccessIdName"]
-        if_match,  # type: str
-        parameters,  # type: "_models.AccessInformationCreateParameters"
+        private_endpoint_connection_name,  # type: str
+        private_endpoint_connection_request,  # type: "_models.PrivateEndpointConnectionRequest"
         **kwargs  # type: Any
     ):
-        # type: (...) -> "_models.AccessInformationContract"
-        """Update tenant access information details.
-
-        :param resource_group_name: The name of the resource group.
-        :type resource_group_name: str
-        :param service_name: The name of the API Management service.
-        :type service_name: str
-        :param access_name: The identifier of the Access configuration.
-        :type access_name: str or ~azure.mgmt.apimanagement.models.AccessIdName
-        :param if_match: ETag of the Entity. ETag should match the current entity state from the header
-         response of the GET request or it should be * for unconditional update.
-        :type if_match: str
-        :param parameters: Parameters supplied to retrieve the Tenant Access Information.
-        :type parameters: ~azure.mgmt.apimanagement.models.AccessInformationCreateParameters
-        :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: AccessInformationContract, or the result of cls(response)
-        :rtype: ~azure.mgmt.apimanagement.models.AccessInformationContract
-        :raises: ~azure.core.exceptions.HttpResponseError
-        """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.AccessInformationContract"]
+        # type: (...) -> Optional["_models.PrivateEndpointConnectionRequestResponse"]
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.PrivateEndpointConnectionRequestResponse"]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -295,11 +206,11 @@ class TenantAccessOperations(object):
         accept = "application/json"
 
         # Construct URL
-        url = self.create.metadata['url']  # type: ignore
+        url = self._create_or_update_initial.metadata['url']  # type: ignore
         path_format_arguments = {
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
             'serviceName': self._serialize.url("service_name", service_name, 'str', max_length=50, min_length=1, pattern=r'^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$'),
-            'accessName': self._serialize.url("access_name", access_name, 'str'),
+            'privateEndpointConnectionName': self._serialize.url("private_endpoint_connection_name", private_endpoint_connection_name, 'str'),
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
         }
         url = self._client.format_url(url, **path_format_arguments)
@@ -310,132 +221,116 @@ class TenantAccessOperations(object):
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
-        header_parameters['If-Match'] = self._serialize.header("if_match", if_match, 'str')
         header_parameters['Content-Type'] = self._serialize.header("content_type", content_type, 'str')
         header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
 
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(parameters, 'AccessInformationCreateParameters')
+        body_content = self._serialize.body(private_endpoint_connection_request, 'PrivateEndpointConnectionRequest')
         body_content_kwargs['content'] = body_content
         request = self._client.put(url, query_parameters, header_parameters, **body_content_kwargs)
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
-        if response.status_code not in [200]:
+        if response.status_code not in [200, 201]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
             error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
-        response_headers = {}
-        response_headers['ETag']=self._deserialize('str', response.headers.get('ETag'))
-        deserialized = self._deserialize('AccessInformationContract', pipeline_response)
+        deserialized = None
+        if response.status_code == 200:
+            deserialized = self._deserialize('PrivateEndpointConnectionRequestResponse', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, response_headers)
+            return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    create.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant/{accessName}'}  # type: ignore
+    _create_or_update_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/privateEndpointConnections/{privateEndpointConnectionName}'}  # type: ignore
 
-    def update(
+    def begin_create_or_update(
         self,
         resource_group_name,  # type: str
         service_name,  # type: str
-        access_name,  # type: Union[str, "_models.AccessIdName"]
-        if_match,  # type: str
-        parameters,  # type: "_models.AccessInformationUpdateParameters"
+        private_endpoint_connection_name,  # type: str
+        private_endpoint_connection_request,  # type: "_models.PrivateEndpointConnectionRequest"
         **kwargs  # type: Any
     ):
-        # type: (...) -> "_models.AccessInformationContract"
-        """Update tenant access information details.
+        # type: (...) -> LROPoller["_models.PrivateEndpointConnectionRequestResponse"]
+        """Creates a new Private Endpoint Connection or updates an existing one.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
         :param service_name: The name of the API Management service.
         :type service_name: str
-        :param access_name: The identifier of the Access configuration.
-        :type access_name: str or ~azure.mgmt.apimanagement.models.AccessIdName
-        :param if_match: ETag of the Entity. ETag should match the current entity state from the header
-         response of the GET request or it should be * for unconditional update.
-        :type if_match: str
-        :param parameters: Parameters supplied to retrieve the Tenant Access Information.
-        :type parameters: ~azure.mgmt.apimanagement.models.AccessInformationUpdateParameters
+        :param private_endpoint_connection_name: Name of the private endpoint connection.
+        :type private_endpoint_connection_name: str
+        :param private_endpoint_connection_request:
+        :type private_endpoint_connection_request: ~azure.mgmt.apimanagement.models.PrivateEndpointConnectionRequest
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: AccessInformationContract, or the result of cls(response)
-        :rtype: ~azure.mgmt.apimanagement.models.AccessInformationContract
-        :raises: ~azure.core.exceptions.HttpResponseError
+        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
+        :keyword polling: By default, your polling method will be ARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
+        :paramtype polling: bool or ~azure.core.polling.PollingMethod
+        :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
+        :return: An instance of LROPoller that returns either PrivateEndpointConnectionRequestResponse or the result of cls(response)
+        :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.apimanagement.models.PrivateEndpointConnectionRequestResponse]
+        :raises ~azure.core.exceptions.HttpResponseError:
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.AccessInformationContract"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2021-04-01-preview"
-        content_type = kwargs.pop("content_type", "application/json")
-        accept = "application/json"
+        polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.PrivateEndpointConnectionRequestResponse"]
+        lro_delay = kwargs.pop(
+            'polling_interval',
+            self._config.polling_interval
+        )
+        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
+        if cont_token is None:
+            raw_result = self._create_or_update_initial(
+                resource_group_name=resource_group_name,
+                service_name=service_name,
+                private_endpoint_connection_name=private_endpoint_connection_name,
+                private_endpoint_connection_request=private_endpoint_connection_request,
+                cls=lambda x,y,z: x,
+                **kwargs
+            )
 
-        # Construct URL
-        url = self.update.metadata['url']  # type: ignore
+        kwargs.pop('error_map', None)
+        kwargs.pop('content_type', None)
+
+        def get_long_running_output(pipeline_response):
+            deserialized = self._deserialize('PrivateEndpointConnectionRequestResponse', pipeline_response)
+
+            if cls:
+                return cls(pipeline_response, deserialized, {})
+            return deserialized
+
         path_format_arguments = {
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
             'serviceName': self._serialize.url("service_name", service_name, 'str', max_length=50, min_length=1, pattern=r'^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$'),
-            'accessName': self._serialize.url("access_name", access_name, 'str'),
+            'privateEndpointConnectionName': self._serialize.url("private_endpoint_connection_name", private_endpoint_connection_name, 'str'),
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
         }
-        url = self._client.format_url(url, **path_format_arguments)
 
-        # Construct parameters
-        query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+        if polling is True: polling_method = ARMPolling(lro_delay, path_format_arguments=path_format_arguments,  **kwargs)
+        elif polling is False: polling_method = NoPolling()
+        else: polling_method = polling
+        if cont_token:
+            return LROPoller.from_continuation_token(
+                polling_method=polling_method,
+                continuation_token=cont_token,
+                client=self._client,
+                deserialization_callback=get_long_running_output
+            )
+        else:
+            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+    begin_create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/privateEndpointConnections/{privateEndpointConnectionName}'}  # type: ignore
 
-        # Construct headers
-        header_parameters = {}  # type: Dict[str, Any]
-        header_parameters['If-Match'] = self._serialize.header("if_match", if_match, 'str')
-        header_parameters['Content-Type'] = self._serialize.header("content_type", content_type, 'str')
-        header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
-
-        body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(parameters, 'AccessInformationUpdateParameters')
-        body_content_kwargs['content'] = body_content
-        request = self._client.patch(url, query_parameters, header_parameters, **body_content_kwargs)
-        pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
-        response = pipeline_response.http_response
-
-        if response.status_code not in [200]:
-            map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, response)
-            raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
-
-        response_headers = {}
-        response_headers['ETag']=self._deserialize('str', response.headers.get('ETag'))
-        deserialized = self._deserialize('AccessInformationContract', pipeline_response)
-
-        if cls:
-            return cls(pipeline_response, deserialized, response_headers)
-
-        return deserialized
-    update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant/{accessName}'}  # type: ignore
-
-    def regenerate_primary_key(
+    def _delete_initial(
         self,
         resource_group_name,  # type: str
         service_name,  # type: str
-        access_name,  # type: Union[str, "_models.AccessIdName"]
+        private_endpoint_connection_name,  # type: str
         **kwargs  # type: Any
     ):
         # type: (...) -> None
-        """Regenerate primary access key.
-
-        :param resource_group_name: The name of the resource group.
-        :type resource_group_name: str
-        :param service_name: The name of the API Management service.
-        :type service_name: str
-        :param access_name: The identifier of the Access configuration.
-        :type access_name: str or ~azure.mgmt.apimanagement.models.AccessIdName
-        :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: None, or the result of cls(response)
-        :rtype: None
-        :raises: ~azure.core.exceptions.HttpResponseError
-        """
         cls = kwargs.pop('cls', None)  # type: ClsType[None]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
@@ -445,12 +340,12 @@ class TenantAccessOperations(object):
         accept = "application/json"
 
         # Construct URL
-        url = self.regenerate_primary_key.metadata['url']  # type: ignore
+        url = self._delete_initial.metadata['url']  # type: ignore
         path_format_arguments = {
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
             'serviceName': self._serialize.url("service_name", service_name, 'str', max_length=50, min_length=1, pattern=r'^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$'),
+            'privateEndpointConnectionName': self._serialize.url("private_endpoint_connection_name", private_endpoint_connection_name, 'str'),
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
-            'accessName': self._serialize.url("access_name", access_name, 'str'),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
@@ -462,11 +357,11 @@ class TenantAccessOperations(object):
         header_parameters = {}  # type: Dict[str, Any]
         header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
 
-        request = self._client.post(url, query_parameters, header_parameters)
+        request = self._client.delete(url, query_parameters, header_parameters)
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
-        if response.status_code not in [204]:
+        if response.status_code not in [200, 201]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
             error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
@@ -474,91 +369,97 @@ class TenantAccessOperations(object):
         if cls:
             return cls(pipeline_response, None, {})
 
-    regenerate_primary_key.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant/{accessName}/regeneratePrimaryKey'}  # type: ignore
+    _delete_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/privateEndpointConnections/{privateEndpointConnectionName}'}  # type: ignore
 
-    def regenerate_secondary_key(
+    def begin_delete(
         self,
         resource_group_name,  # type: str
         service_name,  # type: str
-        access_name,  # type: Union[str, "_models.AccessIdName"]
+        private_endpoint_connection_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> None
-        """Regenerate secondary access key.
+        # type: (...) -> LROPoller[None]
+        """Deletes the specified Private Endpoint Connection.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
         :param service_name: The name of the API Management service.
         :type service_name: str
-        :param access_name: The identifier of the Access configuration.
-        :type access_name: str or ~azure.mgmt.apimanagement.models.AccessIdName
+        :param private_endpoint_connection_name: Name of the private endpoint connection.
+        :type private_endpoint_connection_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: None, or the result of cls(response)
-        :rtype: None
-        :raises: ~azure.core.exceptions.HttpResponseError
+        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
+        :keyword polling: By default, your polling method will be ARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
+        :paramtype polling: bool or ~azure.core.polling.PollingMethod
+        :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
+        :return: An instance of LROPoller that returns either None or the result of cls(response)
+        :rtype: ~azure.core.polling.LROPoller[None]
+        :raises ~azure.core.exceptions.HttpResponseError:
         """
+        polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
         cls = kwargs.pop('cls', None)  # type: ClsType[None]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2021-04-01-preview"
-        accept = "application/json"
+        lro_delay = kwargs.pop(
+            'polling_interval',
+            self._config.polling_interval
+        )
+        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
+        if cont_token is None:
+            raw_result = self._delete_initial(
+                resource_group_name=resource_group_name,
+                service_name=service_name,
+                private_endpoint_connection_name=private_endpoint_connection_name,
+                cls=lambda x,y,z: x,
+                **kwargs
+            )
 
-        # Construct URL
-        url = self.regenerate_secondary_key.metadata['url']  # type: ignore
+        kwargs.pop('error_map', None)
+        kwargs.pop('content_type', None)
+
+        def get_long_running_output(pipeline_response):
+            if cls:
+                return cls(pipeline_response, None, {})
+
         path_format_arguments = {
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
             'serviceName': self._serialize.url("service_name", service_name, 'str', max_length=50, min_length=1, pattern=r'^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$'),
+            'privateEndpointConnectionName': self._serialize.url("private_endpoint_connection_name", private_endpoint_connection_name, 'str'),
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
-            'accessName': self._serialize.url("access_name", access_name, 'str'),
         }
-        url = self._client.format_url(url, **path_format_arguments)
 
-        # Construct parameters
-        query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+        if polling is True: polling_method = ARMPolling(lro_delay, path_format_arguments=path_format_arguments,  **kwargs)
+        elif polling is False: polling_method = NoPolling()
+        else: polling_method = polling
+        if cont_token:
+            return LROPoller.from_continuation_token(
+                polling_method=polling_method,
+                continuation_token=cont_token,
+                client=self._client,
+                deserialization_callback=get_long_running_output
+            )
+        else:
+            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+    begin_delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/privateEndpointConnections/{privateEndpointConnectionName}'}  # type: ignore
 
-        # Construct headers
-        header_parameters = {}  # type: Dict[str, Any]
-        header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
-
-        request = self._client.post(url, query_parameters, header_parameters)
-        pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
-        response = pipeline_response.http_response
-
-        if response.status_code not in [204]:
-            map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, response)
-            raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
-
-        if cls:
-            return cls(pipeline_response, None, {})
-
-    regenerate_secondary_key.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant/{accessName}/regenerateSecondaryKey'}  # type: ignore
-
-    def list_secrets(
+    def list_private_link_resources(
         self,
         resource_group_name,  # type: str
         service_name,  # type: str
-        access_name,  # type: Union[str, "_models.AccessIdName"]
         **kwargs  # type: Any
     ):
-        # type: (...) -> "_models.AccessInformationSecretsContract"
-        """Get tenant access information details.
+        # type: (...) -> "_models.PrivateLinkGroupResources"
+        """Description for Gets the private link resources.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
         :param service_name: The name of the API Management service.
         :type service_name: str
-        :param access_name: The identifier of the Access configuration.
-        :type access_name: str or ~azure.mgmt.apimanagement.models.AccessIdName
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: AccessInformationSecretsContract, or the result of cls(response)
-        :rtype: ~azure.mgmt.apimanagement.models.AccessInformationSecretsContract
+        :return: PrivateLinkGroupResources, or the result of cls(response)
+        :rtype: ~azure.mgmt.apimanagement.models.PrivateLinkGroupResources
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.AccessInformationSecretsContract"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.PrivateLinkGroupResources"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -567,12 +468,11 @@ class TenantAccessOperations(object):
         accept = "application/json"
 
         # Construct URL
-        url = self.list_secrets.metadata['url']  # type: ignore
+        url = self.list_private_link_resources.metadata['url']  # type: ignore
         path_format_arguments = {
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
-            'serviceName': self._serialize.url("service_name", service_name, 'str', max_length=50, min_length=1, pattern=r'^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$'),
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
-            'accessName': self._serialize.url("access_name", access_name, 'str'),
+            'serviceName': self._serialize.url("service_name", service_name, 'str', max_length=50, min_length=1, pattern=r'^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$'),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
@@ -584,7 +484,7 @@ class TenantAccessOperations(object):
         header_parameters = {}  # type: Dict[str, Any]
         header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
 
-        request = self._client.post(url, query_parameters, header_parameters)
+        request = self._client.get(url, query_parameters, header_parameters)
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
@@ -593,12 +493,74 @@ class TenantAccessOperations(object):
             error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
-        response_headers = {}
-        response_headers['ETag']=self._deserialize('str', response.headers.get('ETag'))
-        deserialized = self._deserialize('AccessInformationSecretsContract', pipeline_response)
+        deserialized = self._deserialize('PrivateLinkGroupResources', pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, response_headers)
+            return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    list_secrets.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant/{accessName}/listSecrets'}  # type: ignore
+    list_private_link_resources.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/privateLinkResources'}  # type: ignore
+
+    def get_private_link_resource(
+        self,
+        resource_group_name,  # type: str
+        service_name,  # type: str
+        private_link_sub_resource_name,  # type: str
+        **kwargs  # type: Any
+    ):
+        # type: (...) -> "_models.PrivateLinkGroupResource"
+        """Description for Gets the private link resources.
+
+        :param resource_group_name: The name of the resource group.
+        :type resource_group_name: str
+        :param service_name: The name of the API Management service.
+        :type service_name: str
+        :param private_link_sub_resource_name: Name of the private link resource.
+        :type private_link_sub_resource_name: str
+        :keyword callable cls: A custom type or function that will be passed the direct response
+        :return: PrivateLinkGroupResource, or the result of cls(response)
+        :rtype: ~azure.mgmt.apimanagement.models.PrivateLinkGroupResource
+        :raises: ~azure.core.exceptions.HttpResponseError
+        """
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.PrivateLinkGroupResource"]
+        error_map = {
+            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
+        }
+        error_map.update(kwargs.pop('error_map', {}))
+        api_version = "2021-04-01-preview"
+        accept = "application/json"
+
+        # Construct URL
+        url = self.get_private_link_resource.metadata['url']  # type: ignore
+        path_format_arguments = {
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
+            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
+            'serviceName': self._serialize.url("service_name", service_name, 'str', max_length=50, min_length=1, pattern=r'^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$'),
+            'privateLinkSubResourceName': self._serialize.url("private_link_sub_resource_name", private_link_sub_resource_name, 'str'),
+        }
+        url = self._client.format_url(url, **path_format_arguments)
+
+        # Construct parameters
+        query_parameters = {}  # type: Dict[str, Any]
+        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+
+        # Construct headers
+        header_parameters = {}  # type: Dict[str, Any]
+        header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
+
+        request = self._client.get(url, query_parameters, header_parameters)
+        pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
+        response = pipeline_response.http_response
+
+        if response.status_code not in [200]:
+            map_error(status_code=response.status_code, response=response, error_map=error_map)
+            error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, response)
+            raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
+
+        deserialized = self._deserialize('PrivateLinkGroupResource', pipeline_response)
+
+        if cls:
+            return cls(pipeline_response, deserialized, {})
+
+        return deserialized
+    get_private_link_resource.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/privateLinkResources/{privateLinkSubResourceName}'}  # type: ignore

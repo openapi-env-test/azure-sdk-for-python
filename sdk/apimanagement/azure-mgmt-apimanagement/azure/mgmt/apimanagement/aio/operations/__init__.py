@@ -50,6 +50,7 @@ from ._notification_operations import NotificationOperations
 from ._notification_recipient_user_operations import NotificationRecipientUserOperations
 from ._notification_recipient_email_operations import NotificationRecipientEmailOperations
 from ._open_id_connect_provider_operations import OpenIdConnectProviderOperations
+from ._outbound_network_dependencies_endpoints_operations import OutboundNetworkDependenciesEndpointsOperations
 from ._policy_operations import PolicyOperations
 from ._policy_description_operations import PolicyDescriptionOperations
 from ._portal_revision_operations import PortalRevisionOperations
@@ -57,6 +58,7 @@ from ._portal_settings_operations import PortalSettingsOperations
 from ._sign_in_settings_operations import SignInSettingsOperations
 from ._sign_up_settings_operations import SignUpSettingsOperations
 from ._delegation_settings_operations import DelegationSettingsOperations
+from ._private_endpoint_connection_operations import PrivateEndpointConnectionOperations
 from ._product_operations import ProductOperations
 from ._product_api_operations import ProductApiOperations
 from ._product_group_operations import ProductGroupOperations
@@ -124,6 +126,7 @@ __all__ = [
     'NotificationRecipientUserOperations',
     'NotificationRecipientEmailOperations',
     'OpenIdConnectProviderOperations',
+    'OutboundNetworkDependenciesEndpointsOperations',
     'PolicyOperations',
     'PolicyDescriptionOperations',
     'PortalRevisionOperations',
@@ -131,6 +134,7 @@ __all__ = [
     'SignInSettingsOperations',
     'SignUpSettingsOperations',
     'DelegationSettingsOperations',
+    'PrivateEndpointConnectionOperations',
     'ProductOperations',
     'ProductApiOperations',
     'ProductGroupOperations',
