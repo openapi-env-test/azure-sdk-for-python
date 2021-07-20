@@ -26,7 +26,7 @@ class ApiSchemaOperations(object):
     :param config: Configuration of service client.
     :param serializer: An object model serializer.
     :param deserializer: An object model deserializer.
-    :ivar api_version: Version of the API to be used with the client request. Constant value: "2019-12-01".
+    :ivar api_version: Version of the API to be used with the client request. Constant value: "2021-04-01-preview".
     """
 
     models = models
@@ -36,7 +36,7 @@ class ApiSchemaOperations(object):
         self._client = client
         self._serialize = serializer
         self._deserialize = deserializer
-        self.api_version = "2019-12-01"
+        self.api_version = "2021-04-01-preview"
 
         self.config = config
 
@@ -52,11 +52,11 @@ class ApiSchemaOperations(object):
          API Management service instance. Non-current revision has ;rev=n as a
          suffix where n is the revision number.
         :type api_id: str
-        :param filter: |   Field     |     Usage     |     Supported operators
-         |     Supported functions
+        :param filter: |     Field     |     Usage     |     Supported
+         operators     |     Supported functions
          |</br>|-------------|-------------|-------------|-------------|</br>|
          contentType | filter | ge, le, eq, ne, gt, lt | substringof, contains,
-         startswith, endswith | </br>
+         startswith, endswith |</br>
         :type filter: str
         :param top: Number of records to return.
         :type top: int
@@ -273,7 +273,9 @@ class ApiSchemaOperations(object):
 
 
     def _create_or_update_initial(
-            self, resource_group_name, service_name, api_id, schema_id, parameters, if_match=None, custom_headers=None, raw=False, **operation_config):
+            self, resource_group_name, service_name, api_id, schema_id, content_type, if_match=None, document=None, custom_headers=None, raw=False, **operation_config):
+        parameters = models.SchemaContract(content_type=content_type, document=document)
+
         # Construct URL
         url = self.create_or_update.metadata['url']
         path_format_arguments = {
@@ -334,7 +336,7 @@ class ApiSchemaOperations(object):
         return deserialized
 
     def create_or_update(
-            self, resource_group_name, service_name, api_id, schema_id, parameters, if_match=None, custom_headers=None, raw=False, polling=True, **operation_config):
+            self, resource_group_name, service_name, api_id, schema_id, content_type, if_match=None, document=None, custom_headers=None, raw=False, polling=True, **operation_config):
         """Creates or updates schema configuration for the API.
 
         :param resource_group_name: The name of the resource group.
@@ -348,11 +350,21 @@ class ApiSchemaOperations(object):
         :param schema_id: Schema identifier within an API. Must be unique in
          the current API Management service instance.
         :type schema_id: str
-        :param parameters: The schema contents to apply.
-        :type parameters: ~azure.mgmt.apimanagement.models.SchemaContract
+        :param content_type: Must be a valid a media type used in a
+         Content-Type header as defined in the RFC 2616. Media type of the
+         schema document (e.g. application/json, application/xml). </br> -
+         `Swagger` Schema use
+         `application/vnd.ms-azure-apim.swagger.definitions+json` </br> -
+         `WSDL` Schema use `application/vnd.ms-azure-apim.xsd+xml` </br> -
+         `OpenApi` Schema use `application/vnd.oai.openapi.components+json`
+         </br> - `WADL Schema` use
+         `application/vnd.ms-azure-apim.wadl.grammars+xml`.
+        :type content_type: str
         :param if_match: ETag of the Entity. Not required when creating an
          entity, but required when updating an entity.
         :type if_match: str
+        :param document: Create or update Properties of the Schema Document.
+        :type document: object
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: The poller return type is ClientRawResponse, the
          direct response alongside the deserialized response
@@ -372,8 +384,9 @@ class ApiSchemaOperations(object):
             service_name=service_name,
             api_id=api_id,
             schema_id=schema_id,
-            parameters=parameters,
+            content_type=content_type,
             if_match=if_match,
+            document=document,
             custom_headers=custom_headers,
             raw=True,
             **operation_config

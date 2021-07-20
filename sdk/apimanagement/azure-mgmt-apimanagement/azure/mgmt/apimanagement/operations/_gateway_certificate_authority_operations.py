@@ -15,8 +15,8 @@ from msrest.pipeline import ClientRawResponse
 from .. import models
 
 
-class GatewayHostnameConfigurationOperations(object):
-    """GatewayHostnameConfigurationOperations operations.
+class GatewayCertificateAuthorityOperations(object):
+    """GatewayCertificateAuthorityOperations operations.
 
     You should not instantiate directly this class, but create a Client instance that will create it for you and attach it as attribute.
 
@@ -40,8 +40,8 @@ class GatewayHostnameConfigurationOperations(object):
 
     def list_by_service(
             self, resource_group_name, service_name, gateway_id, filter=None, top=None, skip=None, custom_headers=None, raw=False, **operation_config):
-        """Lists the collection of hostname configurations for the specified
-        gateway.
+        """Lists the collection of Certificate Authorities for the specified
+        Gateway entity.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
@@ -53,9 +53,7 @@ class GatewayHostnameConfigurationOperations(object):
         :param filter: |     Field     |     Usage     |     Supported
          operators     |     Supported functions
          |</br>|-------------|-------------|-------------|-------------|</br>|
-         name | filter | ge, le, eq, ne, gt, lt | substringof, contains,
-         startswith, endswith |</br>| hostname | filter | ge, le, eq, ne, gt,
-         lt | substringof, contains, startswith, endswith |</br>
+         name | filter | eq, ne |  |</br>
         :type filter: str
         :param top: Number of records to return.
         :type top: int
@@ -67,9 +65,9 @@ class GatewayHostnameConfigurationOperations(object):
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
         :return: An iterator like instance of
-         GatewayHostnameConfigurationContract
+         GatewayCertificateAuthorityContract
         :rtype:
-         ~azure.mgmt.apimanagement.models.GatewayHostnameConfigurationContractPaged[~azure.mgmt.apimanagement.models.GatewayHostnameConfigurationContract]
+         ~azure.mgmt.apimanagement.models.GatewayCertificateAuthorityContractPaged[~azure.mgmt.apimanagement.models.GatewayCertificateAuthorityContract]
         :raises:
          :class:`ErrorResponseException<azure.mgmt.apimanagement.models.ErrorResponseException>`
         """
@@ -127,15 +125,15 @@ class GatewayHostnameConfigurationOperations(object):
         header_dict = None
         if raw:
             header_dict = {}
-        deserialized = models.GatewayHostnameConfigurationContractPaged(internal_paging, self._deserialize.dependencies, header_dict)
+        deserialized = models.GatewayCertificateAuthorityContractPaged(internal_paging, self._deserialize.dependencies, header_dict)
 
         return deserialized
-    list_by_service.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways/{gatewayId}/hostnameConfigurations'}
+    list_by_service.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways/{gatewayId}/certificateAuthorities'}
 
     def get_entity_tag(
-            self, resource_group_name, service_name, gateway_id, hc_id, custom_headers=None, raw=False, **operation_config):
-        """Checks that hostname configuration entity specified by identifier
-        exists for specified Gateway entity.
+            self, resource_group_name, service_name, gateway_id, certificate_id, custom_headers=None, raw=False, **operation_config):
+        """Checks if Certificate entity is assigned to Gateway entity as
+        Certificate Authority.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
@@ -144,9 +142,9 @@ class GatewayHostnameConfigurationOperations(object):
         :param gateway_id: Gateway entity identifier. Must be unique in the
          current API Management service instance. Must not have value 'managed'
         :type gateway_id: str
-        :param hc_id: Gateway hostname configuration identifier. Must be
-         unique in the scope of parent Gateway entity.
-        :type hc_id: str
+        :param certificate_id: Identifier of the certificate entity. Must be
+         unique in the current API Management service instance.
+        :type certificate_id: str
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
@@ -163,7 +161,7 @@ class GatewayHostnameConfigurationOperations(object):
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
             'serviceName': self._serialize.url("service_name", service_name, 'str', max_length=50, min_length=1, pattern=r'^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$'),
             'gatewayId': self._serialize.url("gateway_id", gateway_id, 'str', max_length=80, min_length=1),
-            'hcId': self._serialize.url("hc_id", hc_id, 'str', max_length=80, min_length=1),
+            'certificateId': self._serialize.url("certificate_id", certificate_id, 'str', max_length=80, min_length=1, pattern=r'^[^*#&+:<>?]+$'),
             'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str')
         }
         url = self._client.format_url(url, **path_format_arguments)
@@ -194,11 +192,11 @@ class GatewayHostnameConfigurationOperations(object):
                 'ETag': 'str',
             })
             return client_raw_response
-    get_entity_tag.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways/{gatewayId}/hostnameConfigurations/{hcId}'}
+    get_entity_tag.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways/{gatewayId}/certificateAuthorities/{certificateId}'}
 
     def get(
-            self, resource_group_name, service_name, gateway_id, hc_id, custom_headers=None, raw=False, **operation_config):
-        """Get details of a hostname configuration.
+            self, resource_group_name, service_name, gateway_id, certificate_id, custom_headers=None, raw=False, **operation_config):
+        """Get assigned Gateway Certificate Authority details.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
@@ -207,18 +205,18 @@ class GatewayHostnameConfigurationOperations(object):
         :param gateway_id: Gateway entity identifier. Must be unique in the
          current API Management service instance. Must not have value 'managed'
         :type gateway_id: str
-        :param hc_id: Gateway hostname configuration identifier. Must be
-         unique in the scope of parent Gateway entity.
-        :type hc_id: str
+        :param certificate_id: Identifier of the certificate entity. Must be
+         unique in the current API Management service instance.
+        :type certificate_id: str
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :return: GatewayHostnameConfigurationContract or ClientRawResponse if
+        :return: GatewayCertificateAuthorityContract or ClientRawResponse if
          raw=true
         :rtype:
-         ~azure.mgmt.apimanagement.models.GatewayHostnameConfigurationContract
+         ~azure.mgmt.apimanagement.models.GatewayCertificateAuthorityContract
          or ~msrest.pipeline.ClientRawResponse
         :raises:
          :class:`ErrorResponseException<azure.mgmt.apimanagement.models.ErrorResponseException>`
@@ -229,7 +227,7 @@ class GatewayHostnameConfigurationOperations(object):
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
             'serviceName': self._serialize.url("service_name", service_name, 'str', max_length=50, min_length=1, pattern=r'^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$'),
             'gatewayId': self._serialize.url("gateway_id", gateway_id, 'str', max_length=80, min_length=1),
-            'hcId': self._serialize.url("hc_id", hc_id, 'str', max_length=80, min_length=1),
+            'certificateId': self._serialize.url("certificate_id", certificate_id, 'str', max_length=80, min_length=1, pattern=r'^[^*#&+:<>?]+$'),
             'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str')
         }
         url = self._client.format_url(url, **path_format_arguments)
@@ -258,7 +256,7 @@ class GatewayHostnameConfigurationOperations(object):
         header_dict = {}
         deserialized = None
         if response.status_code == 200:
-            deserialized = self._deserialize('GatewayHostnameConfigurationContract', response)
+            deserialized = self._deserialize('GatewayCertificateAuthorityContract', response)
             header_dict = {
                 'ETag': 'str',
             }
@@ -269,11 +267,11 @@ class GatewayHostnameConfigurationOperations(object):
             return client_raw_response
 
         return deserialized
-    get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways/{gatewayId}/hostnameConfigurations/{hcId}'}
+    get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways/{gatewayId}/certificateAuthorities/{certificateId}'}
 
     def create_or_update(
-            self, resource_group_name, service_name, gateway_id, hc_id, parameters, if_match=None, custom_headers=None, raw=False, **operation_config):
-        """Creates of updates hostname configuration for a Gateway.
+            self, resource_group_name, service_name, gateway_id, certificate_id, if_match=None, is_trusted=None, custom_headers=None, raw=False, **operation_config):
+        """Assign Certificate entity to Gateway entity as Certificate Authority.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
@@ -282,35 +280,37 @@ class GatewayHostnameConfigurationOperations(object):
         :param gateway_id: Gateway entity identifier. Must be unique in the
          current API Management service instance. Must not have value 'managed'
         :type gateway_id: str
-        :param hc_id: Gateway hostname configuration identifier. Must be
-         unique in the scope of parent Gateway entity.
-        :type hc_id: str
-        :param parameters:
-        :type parameters:
-         ~azure.mgmt.apimanagement.models.GatewayHostnameConfigurationContract
+        :param certificate_id: Identifier of the certificate entity. Must be
+         unique in the current API Management service instance.
+        :type certificate_id: str
         :param if_match: ETag of the Entity. Not required when creating an
          entity, but required when updating an entity.
         :type if_match: str
+        :param is_trusted: Determines whether certificate authority is
+         trusted.
+        :type is_trusted: bool
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :return: GatewayHostnameConfigurationContract or ClientRawResponse if
+        :return: GatewayCertificateAuthorityContract or ClientRawResponse if
          raw=true
         :rtype:
-         ~azure.mgmt.apimanagement.models.GatewayHostnameConfigurationContract
+         ~azure.mgmt.apimanagement.models.GatewayCertificateAuthorityContract
          or ~msrest.pipeline.ClientRawResponse
         :raises:
          :class:`ErrorResponseException<azure.mgmt.apimanagement.models.ErrorResponseException>`
         """
+        parameters = models.GatewayCertificateAuthorityContract(is_trusted=is_trusted)
+
         # Construct URL
         url = self.create_or_update.metadata['url']
         path_format_arguments = {
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
             'serviceName': self._serialize.url("service_name", service_name, 'str', max_length=50, min_length=1, pattern=r'^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$'),
             'gatewayId': self._serialize.url("gateway_id", gateway_id, 'str', max_length=80, min_length=1),
-            'hcId': self._serialize.url("hc_id", hc_id, 'str', max_length=80, min_length=1),
+            'certificateId': self._serialize.url("certificate_id", certificate_id, 'str', max_length=80, min_length=1, pattern=r'^[^*#&+:<>?]+$'),
             'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str')
         }
         url = self._client.format_url(url, **path_format_arguments)
@@ -333,7 +333,7 @@ class GatewayHostnameConfigurationOperations(object):
             header_parameters['accept-language'] = self._serialize.header("self.config.accept_language", self.config.accept_language, 'str')
 
         # Construct body
-        body_content = self._serialize.body(parameters, 'GatewayHostnameConfigurationContract')
+        body_content = self._serialize.body(parameters, 'GatewayCertificateAuthorityContract')
 
         # Construct and send request
         request = self._client.put(url, query_parameters, header_parameters, body_content)
@@ -345,12 +345,12 @@ class GatewayHostnameConfigurationOperations(object):
         header_dict = {}
         deserialized = None
         if response.status_code == 200:
-            deserialized = self._deserialize('GatewayHostnameConfigurationContract', response)
+            deserialized = self._deserialize('GatewayCertificateAuthorityContract', response)
             header_dict = {
                 'ETag': 'str',
             }
         if response.status_code == 201:
-            deserialized = self._deserialize('GatewayHostnameConfigurationContract', response)
+            deserialized = self._deserialize('GatewayCertificateAuthorityContract', response)
             header_dict = {
                 'ETag': 'str',
             }
@@ -361,12 +361,11 @@ class GatewayHostnameConfigurationOperations(object):
             return client_raw_response
 
         return deserialized
-    create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways/{gatewayId}/hostnameConfigurations/{hcId}'}
+    create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways/{gatewayId}/certificateAuthorities/{certificateId}'}
 
     def delete(
-            self, resource_group_name, service_name, gateway_id, hc_id, if_match, custom_headers=None, raw=False, **operation_config):
-        """Deletes the specified hostname configuration from the specified
-        Gateway.
+            self, resource_group_name, service_name, gateway_id, certificate_id, if_match, custom_headers=None, raw=False, **operation_config):
+        """Remove relationship between Certificate Authority and Gateway entity.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
@@ -375,9 +374,9 @@ class GatewayHostnameConfigurationOperations(object):
         :param gateway_id: Gateway entity identifier. Must be unique in the
          current API Management service instance. Must not have value 'managed'
         :type gateway_id: str
-        :param hc_id: Gateway hostname configuration identifier. Must be
-         unique in the scope of parent Gateway entity.
-        :type hc_id: str
+        :param certificate_id: Identifier of the certificate entity. Must be
+         unique in the current API Management service instance.
+        :type certificate_id: str
         :param if_match: ETag of the Entity. ETag should match the current
          entity state from the header response of the GET request or it should
          be * for unconditional update.
@@ -398,7 +397,7 @@ class GatewayHostnameConfigurationOperations(object):
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
             'serviceName': self._serialize.url("service_name", service_name, 'str', max_length=50, min_length=1, pattern=r'^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$'),
             'gatewayId': self._serialize.url("gateway_id", gateway_id, 'str', max_length=80, min_length=1),
-            'hcId': self._serialize.url("hc_id", hc_id, 'str', max_length=80, min_length=1),
+            'certificateId': self._serialize.url("certificate_id", certificate_id, 'str', max_length=80, min_length=1, pattern=r'^[^*#&+:<>?]+$'),
             'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str')
         }
         url = self._client.format_url(url, **path_format_arguments)
@@ -427,4 +426,4 @@ class GatewayHostnameConfigurationOperations(object):
         if raw:
             client_raw_response = ClientRawResponse(None, response)
             return client_raw_response
-    delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways/{gatewayId}/hostnameConfigurations/{hcId}'}
+    delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways/{gatewayId}/certificateAuthorities/{certificateId}'}

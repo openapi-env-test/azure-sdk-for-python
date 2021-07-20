@@ -33,6 +33,9 @@ from .operations import AuthorizationServerOperations
 from .operations import BackendOperations
 from .operations import CacheOperations
 from .operations import CertificateOperations
+from .operations import ContentTypeOperations
+from .operations import ContentItemOperations
+from .operations import DeletedServicesOperations
 from .operations import ApiManagementOperations
 from .operations import ApiManagementServiceSkusOperations
 from .operations import ApiManagementServiceOperations
@@ -41,6 +44,7 @@ from .operations import EmailTemplateOperations
 from .operations import GatewayOperations
 from .operations import GatewayHostnameConfigurationOperations
 from .operations import GatewayApiOperations
+from .operations import GatewayCertificateAuthorityOperations
 from .operations import GroupOperations
 from .operations import GroupUserOperations
 from .operations import IdentityProviderOperations
@@ -52,11 +56,15 @@ from .operations import NotificationOperations
 from .operations import NotificationRecipientUserOperations
 from .operations import NotificationRecipientEmailOperations
 from .operations import OpenIdConnectProviderOperations
+from .operations import OutboundNetworkDependenciesEndpointsOperations
 from .operations import PolicyOperations
 from .operations import PolicyDescriptionOperations
+from .operations import PortalRevisionOperations
+from .operations import PortalSettingsOperations
 from .operations import SignInSettingsOperations
 from .operations import SignUpSettingsOperations
 from .operations import DelegationSettingsOperations
+from .operations import PrivateEndpointConnectionOperations
 from .operations import ProductOperations
 from .operations import ProductApiOperations
 from .operations import ProductGroupOperations
@@ -66,6 +74,8 @@ from .operations import QuotaByCounterKeysOperations
 from .operations import QuotaByPeriodKeysOperations
 from .operations import RegionOperations
 from .operations import ReportsOperations
+from .operations import TenantSettingsOperations
+from .operations import ApiManagementSkusOperations
 from .operations import SubscriptionOperations
 from .operations import TagResourceOperations
 from .operations import TenantAccessOperations
@@ -126,6 +136,12 @@ class ApiManagementClient(SDKClient):
     :vartype cache: azure.mgmt.apimanagement.operations.CacheOperations
     :ivar certificate: Certificate operations
     :vartype certificate: azure.mgmt.apimanagement.operations.CertificateOperations
+    :ivar content_type: ContentType operations
+    :vartype content_type: azure.mgmt.apimanagement.operations.ContentTypeOperations
+    :ivar content_item: ContentItem operations
+    :vartype content_item: azure.mgmt.apimanagement.operations.ContentItemOperations
+    :ivar deleted_services: DeletedServices operations
+    :vartype deleted_services: azure.mgmt.apimanagement.operations.DeletedServicesOperations
     :ivar api_management_operations: ApiManagementOperations operations
     :vartype api_management_operations: azure.mgmt.apimanagement.operations.ApiManagementOperations
     :ivar api_management_service_skus: ApiManagementServiceSkus operations
@@ -142,6 +158,8 @@ class ApiManagementClient(SDKClient):
     :vartype gateway_hostname_configuration: azure.mgmt.apimanagement.operations.GatewayHostnameConfigurationOperations
     :ivar gateway_api: GatewayApi operations
     :vartype gateway_api: azure.mgmt.apimanagement.operations.GatewayApiOperations
+    :ivar gateway_certificate_authority: GatewayCertificateAuthority operations
+    :vartype gateway_certificate_authority: azure.mgmt.apimanagement.operations.GatewayCertificateAuthorityOperations
     :ivar group: Group operations
     :vartype group: azure.mgmt.apimanagement.operations.GroupOperations
     :ivar group_user: GroupUser operations
@@ -164,16 +182,24 @@ class ApiManagementClient(SDKClient):
     :vartype notification_recipient_email: azure.mgmt.apimanagement.operations.NotificationRecipientEmailOperations
     :ivar open_id_connect_provider: OpenIdConnectProvider operations
     :vartype open_id_connect_provider: azure.mgmt.apimanagement.operations.OpenIdConnectProviderOperations
+    :ivar outbound_network_dependencies_endpoints: OutboundNetworkDependenciesEndpoints operations
+    :vartype outbound_network_dependencies_endpoints: azure.mgmt.apimanagement.operations.OutboundNetworkDependenciesEndpointsOperations
     :ivar policy: Policy operations
     :vartype policy: azure.mgmt.apimanagement.operations.PolicyOperations
     :ivar policy_description: PolicyDescription operations
     :vartype policy_description: azure.mgmt.apimanagement.operations.PolicyDescriptionOperations
+    :ivar portal_revision: PortalRevision operations
+    :vartype portal_revision: azure.mgmt.apimanagement.operations.PortalRevisionOperations
+    :ivar portal_settings: PortalSettings operations
+    :vartype portal_settings: azure.mgmt.apimanagement.operations.PortalSettingsOperations
     :ivar sign_in_settings: SignInSettings operations
     :vartype sign_in_settings: azure.mgmt.apimanagement.operations.SignInSettingsOperations
     :ivar sign_up_settings: SignUpSettings operations
     :vartype sign_up_settings: azure.mgmt.apimanagement.operations.SignUpSettingsOperations
     :ivar delegation_settings: DelegationSettings operations
     :vartype delegation_settings: azure.mgmt.apimanagement.operations.DelegationSettingsOperations
+    :ivar private_endpoint_connection: PrivateEndpointConnection operations
+    :vartype private_endpoint_connection: azure.mgmt.apimanagement.operations.PrivateEndpointConnectionOperations
     :ivar product: Product operations
     :vartype product: azure.mgmt.apimanagement.operations.ProductOperations
     :ivar product_api: ProductApi operations
@@ -192,6 +218,10 @@ class ApiManagementClient(SDKClient):
     :vartype region: azure.mgmt.apimanagement.operations.RegionOperations
     :ivar reports: Reports operations
     :vartype reports: azure.mgmt.apimanagement.operations.ReportsOperations
+    :ivar tenant_settings: TenantSettings operations
+    :vartype tenant_settings: azure.mgmt.apimanagement.operations.TenantSettingsOperations
+    :ivar api_management_skus: ApiManagementSkus operations
+    :vartype api_management_skus: azure.mgmt.apimanagement.operations.ApiManagementSkusOperations
     :ivar subscription: Subscription operations
     :vartype subscription: azure.mgmt.apimanagement.operations.SubscriptionOperations
     :ivar tag_resource: TagResource operations
@@ -232,7 +262,7 @@ class ApiManagementClient(SDKClient):
         super(ApiManagementClient, self).__init__(self.config.credentials, self.config)
 
         client_models = {k: v for k, v in models.__dict__.items() if isinstance(v, type)}
-        self.api_version = '2019-12-01'
+        self.api_version = '2021-04-01-preview'
         self._serialize = Serializer(client_models)
         self._deserialize = Deserializer(client_models)
 
@@ -276,6 +306,12 @@ class ApiManagementClient(SDKClient):
             self._client, self.config, self._serialize, self._deserialize)
         self.certificate = CertificateOperations(
             self._client, self.config, self._serialize, self._deserialize)
+        self.content_type = ContentTypeOperations(
+            self._client, self.config, self._serialize, self._deserialize)
+        self.content_item = ContentItemOperations(
+            self._client, self.config, self._serialize, self._deserialize)
+        self.deleted_services = DeletedServicesOperations(
+            self._client, self.config, self._serialize, self._deserialize)
         self.api_management_operations = ApiManagementOperations(
             self._client, self.config, self._serialize, self._deserialize)
         self.api_management_service_skus = ApiManagementServiceSkusOperations(
@@ -291,6 +327,8 @@ class ApiManagementClient(SDKClient):
         self.gateway_hostname_configuration = GatewayHostnameConfigurationOperations(
             self._client, self.config, self._serialize, self._deserialize)
         self.gateway_api = GatewayApiOperations(
+            self._client, self.config, self._serialize, self._deserialize)
+        self.gateway_certificate_authority = GatewayCertificateAuthorityOperations(
             self._client, self.config, self._serialize, self._deserialize)
         self.group = GroupOperations(
             self._client, self.config, self._serialize, self._deserialize)
@@ -314,15 +352,23 @@ class ApiManagementClient(SDKClient):
             self._client, self.config, self._serialize, self._deserialize)
         self.open_id_connect_provider = OpenIdConnectProviderOperations(
             self._client, self.config, self._serialize, self._deserialize)
+        self.outbound_network_dependencies_endpoints = OutboundNetworkDependenciesEndpointsOperations(
+            self._client, self.config, self._serialize, self._deserialize)
         self.policy = PolicyOperations(
             self._client, self.config, self._serialize, self._deserialize)
         self.policy_description = PolicyDescriptionOperations(
+            self._client, self.config, self._serialize, self._deserialize)
+        self.portal_revision = PortalRevisionOperations(
+            self._client, self.config, self._serialize, self._deserialize)
+        self.portal_settings = PortalSettingsOperations(
             self._client, self.config, self._serialize, self._deserialize)
         self.sign_in_settings = SignInSettingsOperations(
             self._client, self.config, self._serialize, self._deserialize)
         self.sign_up_settings = SignUpSettingsOperations(
             self._client, self.config, self._serialize, self._deserialize)
         self.delegation_settings = DelegationSettingsOperations(
+            self._client, self.config, self._serialize, self._deserialize)
+        self.private_endpoint_connection = PrivateEndpointConnectionOperations(
             self._client, self.config, self._serialize, self._deserialize)
         self.product = ProductOperations(
             self._client, self.config, self._serialize, self._deserialize)
@@ -341,6 +387,10 @@ class ApiManagementClient(SDKClient):
         self.region = RegionOperations(
             self._client, self.config, self._serialize, self._deserialize)
         self.reports = ReportsOperations(
+            self._client, self.config, self._serialize, self._deserialize)
+        self.tenant_settings = TenantSettingsOperations(
+            self._client, self.config, self._serialize, self._deserialize)
+        self.api_management_skus = ApiManagementSkusOperations(
             self._client, self.config, self._serialize, self._deserialize)
         self.subscription = SubscriptionOperations(
             self._client, self.config, self._serialize, self._deserialize)

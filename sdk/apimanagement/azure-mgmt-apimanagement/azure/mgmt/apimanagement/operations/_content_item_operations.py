@@ -15,8 +15,8 @@ from msrest.pipeline import ClientRawResponse
 from .. import models
 
 
-class GatewayHostnameConfigurationOperations(object):
-    """GatewayHostnameConfigurationOperations operations.
+class ContentItemOperations(object):
+    """ContentItemOperations operations.
 
     You should not instantiate directly this class, but create a Client instance that will create it for you and attach it as attribute.
 
@@ -39,37 +39,24 @@ class GatewayHostnameConfigurationOperations(object):
         self.config = config
 
     def list_by_service(
-            self, resource_group_name, service_name, gateway_id, filter=None, top=None, skip=None, custom_headers=None, raw=False, **operation_config):
-        """Lists the collection of hostname configurations for the specified
-        gateway.
+            self, resource_group_name, service_name, content_type_id, custom_headers=None, raw=False, **operation_config):
+        """Lists developer portal's content items specified by the provided
+        content type.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
         :param service_name: The name of the API Management service.
         :type service_name: str
-        :param gateway_id: Gateway entity identifier. Must be unique in the
-         current API Management service instance. Must not have value 'managed'
-        :type gateway_id: str
-        :param filter: |     Field     |     Usage     |     Supported
-         operators     |     Supported functions
-         |</br>|-------------|-------------|-------------|-------------|</br>|
-         name | filter | ge, le, eq, ne, gt, lt | substringof, contains,
-         startswith, endswith |</br>| hostname | filter | ge, le, eq, ne, gt,
-         lt | substringof, contains, startswith, endswith |</br>
-        :type filter: str
-        :param top: Number of records to return.
-        :type top: int
-        :param skip: Number of records to skip.
-        :type skip: int
+        :param content_type_id: Content type identifier.
+        :type content_type_id: str
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :return: An iterator like instance of
-         GatewayHostnameConfigurationContract
+        :return: An iterator like instance of ContentItemContract
         :rtype:
-         ~azure.mgmt.apimanagement.models.GatewayHostnameConfigurationContractPaged[~azure.mgmt.apimanagement.models.GatewayHostnameConfigurationContract]
+         ~azure.mgmt.apimanagement.models.ContentItemContractPaged[~azure.mgmt.apimanagement.models.ContentItemContract]
         :raises:
          :class:`ErrorResponseException<azure.mgmt.apimanagement.models.ErrorResponseException>`
         """
@@ -80,19 +67,13 @@ class GatewayHostnameConfigurationOperations(object):
                 path_format_arguments = {
                     'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
                     'serviceName': self._serialize.url("service_name", service_name, 'str', max_length=50, min_length=1, pattern=r'^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$'),
-                    'gatewayId': self._serialize.url("gateway_id", gateway_id, 'str', max_length=80, min_length=1),
+                    'contentTypeId': self._serialize.url("content_type_id", content_type_id, 'str', max_length=80, min_length=1),
                     'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str')
                 }
                 url = self._client.format_url(url, **path_format_arguments)
 
                 # Construct parameters
                 query_parameters = {}
-                if filter is not None:
-                    query_parameters['$filter'] = self._serialize.query("filter", filter, 'str')
-                if top is not None:
-                    query_parameters['$top'] = self._serialize.query("top", top, 'int', minimum=1)
-                if skip is not None:
-                    query_parameters['$skip'] = self._serialize.query("skip", skip, 'int', minimum=0)
                 query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
 
             else:
@@ -127,26 +108,24 @@ class GatewayHostnameConfigurationOperations(object):
         header_dict = None
         if raw:
             header_dict = {}
-        deserialized = models.GatewayHostnameConfigurationContractPaged(internal_paging, self._deserialize.dependencies, header_dict)
+        deserialized = models.ContentItemContractPaged(internal_paging, self._deserialize.dependencies, header_dict)
 
         return deserialized
-    list_by_service.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways/{gatewayId}/hostnameConfigurations'}
+    list_by_service.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}/contentItems'}
 
     def get_entity_tag(
-            self, resource_group_name, service_name, gateway_id, hc_id, custom_headers=None, raw=False, **operation_config):
-        """Checks that hostname configuration entity specified by identifier
-        exists for specified Gateway entity.
+            self, resource_group_name, service_name, content_type_id, content_item_id, custom_headers=None, raw=False, **operation_config):
+        """Returns the entity state (ETag) version of the developer portal's
+        content item specified by its identifier.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
         :param service_name: The name of the API Management service.
         :type service_name: str
-        :param gateway_id: Gateway entity identifier. Must be unique in the
-         current API Management service instance. Must not have value 'managed'
-        :type gateway_id: str
-        :param hc_id: Gateway hostname configuration identifier. Must be
-         unique in the scope of parent Gateway entity.
-        :type hc_id: str
+        :param content_type_id: Content type identifier.
+        :type content_type_id: str
+        :param content_item_id: Content item identifier.
+        :type content_item_id: str
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
@@ -162,8 +141,8 @@ class GatewayHostnameConfigurationOperations(object):
         path_format_arguments = {
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
             'serviceName': self._serialize.url("service_name", service_name, 'str', max_length=50, min_length=1, pattern=r'^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$'),
-            'gatewayId': self._serialize.url("gateway_id", gateway_id, 'str', max_length=80, min_length=1),
-            'hcId': self._serialize.url("hc_id", hc_id, 'str', max_length=80, min_length=1),
+            'contentTypeId': self._serialize.url("content_type_id", content_type_id, 'str', max_length=80, min_length=1),
+            'contentItemId': self._serialize.url("content_item_id", content_item_id, 'str', max_length=80, min_length=1),
             'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str')
         }
         url = self._client.format_url(url, **path_format_arguments)
@@ -194,32 +173,29 @@ class GatewayHostnameConfigurationOperations(object):
                 'ETag': 'str',
             })
             return client_raw_response
-    get_entity_tag.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways/{gatewayId}/hostnameConfigurations/{hcId}'}
+    get_entity_tag.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}/contentItems/{contentItemId}'}
 
     def get(
-            self, resource_group_name, service_name, gateway_id, hc_id, custom_headers=None, raw=False, **operation_config):
-        """Get details of a hostname configuration.
+            self, resource_group_name, service_name, content_type_id, content_item_id, custom_headers=None, raw=False, **operation_config):
+        """Returns the developer portal's content item specified by its
+        identifier.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
         :param service_name: The name of the API Management service.
         :type service_name: str
-        :param gateway_id: Gateway entity identifier. Must be unique in the
-         current API Management service instance. Must not have value 'managed'
-        :type gateway_id: str
-        :param hc_id: Gateway hostname configuration identifier. Must be
-         unique in the scope of parent Gateway entity.
-        :type hc_id: str
+        :param content_type_id: Content type identifier.
+        :type content_type_id: str
+        :param content_item_id: Content item identifier.
+        :type content_item_id: str
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :return: GatewayHostnameConfigurationContract or ClientRawResponse if
-         raw=true
-        :rtype:
-         ~azure.mgmt.apimanagement.models.GatewayHostnameConfigurationContract
-         or ~msrest.pipeline.ClientRawResponse
+        :return: ContentItemContract or ClientRawResponse if raw=true
+        :rtype: ~azure.mgmt.apimanagement.models.ContentItemContract or
+         ~msrest.pipeline.ClientRawResponse
         :raises:
          :class:`ErrorResponseException<azure.mgmt.apimanagement.models.ErrorResponseException>`
         """
@@ -228,8 +204,8 @@ class GatewayHostnameConfigurationOperations(object):
         path_format_arguments = {
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
             'serviceName': self._serialize.url("service_name", service_name, 'str', max_length=50, min_length=1, pattern=r'^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$'),
-            'gatewayId': self._serialize.url("gateway_id", gateway_id, 'str', max_length=80, min_length=1),
-            'hcId': self._serialize.url("hc_id", hc_id, 'str', max_length=80, min_length=1),
+            'contentTypeId': self._serialize.url("content_type_id", content_type_id, 'str', max_length=80, min_length=1),
+            'contentItemId': self._serialize.url("content_item_id", content_item_id, 'str', max_length=80, min_length=1),
             'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str')
         }
         url = self._client.format_url(url, **path_format_arguments)
@@ -258,7 +234,7 @@ class GatewayHostnameConfigurationOperations(object):
         header_dict = {}
         deserialized = None
         if response.status_code == 200:
-            deserialized = self._deserialize('GatewayHostnameConfigurationContract', response)
+            deserialized = self._deserialize('ContentItemContract', response)
             header_dict = {
                 'ETag': 'str',
             }
@@ -269,25 +245,21 @@ class GatewayHostnameConfigurationOperations(object):
             return client_raw_response
 
         return deserialized
-    get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways/{gatewayId}/hostnameConfigurations/{hcId}'}
+    get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}/contentItems/{contentItemId}'}
 
     def create_or_update(
-            self, resource_group_name, service_name, gateway_id, hc_id, parameters, if_match=None, custom_headers=None, raw=False, **operation_config):
-        """Creates of updates hostname configuration for a Gateway.
+            self, resource_group_name, service_name, content_type_id, content_item_id, if_match=None, custom_headers=None, raw=False, **operation_config):
+        """Creates a new developer portal's content item specified by the provided
+        content type.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
         :param service_name: The name of the API Management service.
         :type service_name: str
-        :param gateway_id: Gateway entity identifier. Must be unique in the
-         current API Management service instance. Must not have value 'managed'
-        :type gateway_id: str
-        :param hc_id: Gateway hostname configuration identifier. Must be
-         unique in the scope of parent Gateway entity.
-        :type hc_id: str
-        :param parameters:
-        :type parameters:
-         ~azure.mgmt.apimanagement.models.GatewayHostnameConfigurationContract
+        :param content_type_id: Content type identifier.
+        :type content_type_id: str
+        :param content_item_id: Content item identifier.
+        :type content_item_id: str
         :param if_match: ETag of the Entity. Not required when creating an
          entity, but required when updating an entity.
         :type if_match: str
@@ -296,11 +268,9 @@ class GatewayHostnameConfigurationOperations(object):
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :return: GatewayHostnameConfigurationContract or ClientRawResponse if
-         raw=true
-        :rtype:
-         ~azure.mgmt.apimanagement.models.GatewayHostnameConfigurationContract
-         or ~msrest.pipeline.ClientRawResponse
+        :return: ContentItemContract or ClientRawResponse if raw=true
+        :rtype: ~azure.mgmt.apimanagement.models.ContentItemContract or
+         ~msrest.pipeline.ClientRawResponse
         :raises:
          :class:`ErrorResponseException<azure.mgmt.apimanagement.models.ErrorResponseException>`
         """
@@ -309,8 +279,8 @@ class GatewayHostnameConfigurationOperations(object):
         path_format_arguments = {
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
             'serviceName': self._serialize.url("service_name", service_name, 'str', max_length=50, min_length=1, pattern=r'^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$'),
-            'gatewayId': self._serialize.url("gateway_id", gateway_id, 'str', max_length=80, min_length=1),
-            'hcId': self._serialize.url("hc_id", hc_id, 'str', max_length=80, min_length=1),
+            'contentTypeId': self._serialize.url("content_type_id", content_type_id, 'str', max_length=80, min_length=1),
+            'contentItemId': self._serialize.url("content_item_id", content_item_id, 'str', max_length=80, min_length=1),
             'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str')
         }
         url = self._client.format_url(url, **path_format_arguments)
@@ -322,7 +292,6 @@ class GatewayHostnameConfigurationOperations(object):
         # Construct headers
         header_parameters = {}
         header_parameters['Accept'] = 'application/json'
-        header_parameters['Content-Type'] = 'application/json; charset=utf-8'
         if self.config.generate_client_request_id:
             header_parameters['x-ms-client-request-id'] = str(uuid.uuid1())
         if custom_headers:
@@ -332,11 +301,8 @@ class GatewayHostnameConfigurationOperations(object):
         if self.config.accept_language is not None:
             header_parameters['accept-language'] = self._serialize.header("self.config.accept_language", self.config.accept_language, 'str')
 
-        # Construct body
-        body_content = self._serialize.body(parameters, 'GatewayHostnameConfigurationContract')
-
         # Construct and send request
-        request = self._client.put(url, query_parameters, header_parameters, body_content)
+        request = self._client.put(url, query_parameters, header_parameters)
         response = self._client.send(request, stream=False, **operation_config)
 
         if response.status_code not in [200, 201]:
@@ -345,12 +311,12 @@ class GatewayHostnameConfigurationOperations(object):
         header_dict = {}
         deserialized = None
         if response.status_code == 200:
-            deserialized = self._deserialize('GatewayHostnameConfigurationContract', response)
+            deserialized = self._deserialize('ContentItemContract', response)
             header_dict = {
                 'ETag': 'str',
             }
         if response.status_code == 201:
-            deserialized = self._deserialize('GatewayHostnameConfigurationContract', response)
+            deserialized = self._deserialize('ContentItemContract', response)
             header_dict = {
                 'ETag': 'str',
             }
@@ -361,23 +327,20 @@ class GatewayHostnameConfigurationOperations(object):
             return client_raw_response
 
         return deserialized
-    create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways/{gatewayId}/hostnameConfigurations/{hcId}'}
+    create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}/contentItems/{contentItemId}'}
 
     def delete(
-            self, resource_group_name, service_name, gateway_id, hc_id, if_match, custom_headers=None, raw=False, **operation_config):
-        """Deletes the specified hostname configuration from the specified
-        Gateway.
+            self, resource_group_name, service_name, content_type_id, content_item_id, if_match, custom_headers=None, raw=False, **operation_config):
+        """Removes the specified developer portal's content item.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
         :param service_name: The name of the API Management service.
         :type service_name: str
-        :param gateway_id: Gateway entity identifier. Must be unique in the
-         current API Management service instance. Must not have value 'managed'
-        :type gateway_id: str
-        :param hc_id: Gateway hostname configuration identifier. Must be
-         unique in the scope of parent Gateway entity.
-        :type hc_id: str
+        :param content_type_id: Content type identifier.
+        :type content_type_id: str
+        :param content_item_id: Content item identifier.
+        :type content_item_id: str
         :param if_match: ETag of the Entity. ETag should match the current
          entity state from the header response of the GET request or it should
          be * for unconditional update.
@@ -397,8 +360,8 @@ class GatewayHostnameConfigurationOperations(object):
         path_format_arguments = {
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
             'serviceName': self._serialize.url("service_name", service_name, 'str', max_length=50, min_length=1, pattern=r'^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$'),
-            'gatewayId': self._serialize.url("gateway_id", gateway_id, 'str', max_length=80, min_length=1),
-            'hcId': self._serialize.url("hc_id", hc_id, 'str', max_length=80, min_length=1),
+            'contentTypeId': self._serialize.url("content_type_id", content_type_id, 'str', max_length=80, min_length=1),
+            'contentItemId': self._serialize.url("content_item_id", content_item_id, 'str', max_length=80, min_length=1),
             'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str')
         }
         url = self._client.format_url(url, **path_format_arguments)
@@ -427,4 +390,4 @@ class GatewayHostnameConfigurationOperations(object):
         if raw:
             client_raw_response = ClientRawResponse(None, response)
             return client_raw_response
-    delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways/{gatewayId}/hostnameConfigurations/{hcId}'}
+    delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}/contentItems/{contentItemId}'}

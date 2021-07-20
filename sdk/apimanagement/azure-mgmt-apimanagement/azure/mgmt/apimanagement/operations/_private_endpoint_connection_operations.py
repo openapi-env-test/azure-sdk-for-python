@@ -11,12 +11,14 @@
 
 import uuid
 from msrest.pipeline import ClientRawResponse
+from msrest.polling import LROPoller, NoPolling
+from msrestazure.polling.arm_polling import ARMPolling
 
 from .. import models
 
 
-class ApiReleaseOperations(object):
-    """ApiReleaseOperations operations.
+class PrivateEndpointConnectionOperations(object):
+    """PrivateEndpointConnectionOperations operations.
 
     You should not instantiate directly this class, but create a Client instance that will create it for you and attach it as attribute.
 
@@ -39,37 +41,23 @@ class ApiReleaseOperations(object):
         self.config = config
 
     def list_by_service(
-            self, resource_group_name, service_name, api_id, filter=None, top=None, skip=None, custom_headers=None, raw=False, **operation_config):
-        """Lists all releases of an API. An API release is created when making an
-        API Revision current. Releases are also used to rollback to previous
-        revisions. Results will be paged and can be constrained by the $top and
-        $skip parameters.
+            self, resource_group_name, service_name, custom_headers=None, raw=False, **operation_config):
+        """Lists all private endpoint connections of the API Management service
+        instance.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
         :param service_name: The name of the API Management service.
         :type service_name: str
-        :param api_id: API identifier. Must be unique in the current API
-         Management service instance.
-        :type api_id: str
-        :param filter: |     Field     |     Usage     |     Supported
-         operators     |     Supported functions
-         |</br>|-------------|-------------|-------------|-------------|</br>|
-         notes | filter | ge, le, eq, ne, gt, lt | substringof, contains,
-         startswith, endswith |</br>
-        :type filter: str
-        :param top: Number of records to return.
-        :type top: int
-        :param skip: Number of records to skip.
-        :type skip: int
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :return: An iterator like instance of ApiReleaseContract
+        :return: An iterator like instance of
+         RemotePrivateEndpointConnectionWrapper
         :rtype:
-         ~azure.mgmt.apimanagement.models.ApiReleaseContractPaged[~azure.mgmt.apimanagement.models.ApiReleaseContract]
+         ~azure.mgmt.apimanagement.models.RemotePrivateEndpointConnectionWrapperPaged[~azure.mgmt.apimanagement.models.RemotePrivateEndpointConnectionWrapper]
         :raises:
          :class:`ErrorResponseException<azure.mgmt.apimanagement.models.ErrorResponseException>`
         """
@@ -78,21 +66,14 @@ class ApiReleaseOperations(object):
                 # Construct URL
                 url = self.list_by_service.metadata['url']
                 path_format_arguments = {
+                    'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str'),
                     'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
-                    'serviceName': self._serialize.url("service_name", service_name, 'str', max_length=50, min_length=1, pattern=r'^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$'),
-                    'apiId': self._serialize.url("api_id", api_id, 'str', max_length=80, min_length=1),
-                    'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str')
+                    'serviceName': self._serialize.url("service_name", service_name, 'str', max_length=50, min_length=1, pattern=r'^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$')
                 }
                 url = self._client.format_url(url, **path_format_arguments)
 
                 # Construct parameters
                 query_parameters = {}
-                if filter is not None:
-                    query_parameters['$filter'] = self._serialize.query("filter", filter, 'str')
-                if top is not None:
-                    query_parameters['$top'] = self._serialize.query("top", top, 'int', minimum=1)
-                if skip is not None:
-                    query_parameters['$skip'] = self._serialize.query("skip", skip, 'int', minimum=0)
                 query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
 
             else:
@@ -127,106 +108,42 @@ class ApiReleaseOperations(object):
         header_dict = None
         if raw:
             header_dict = {}
-        deserialized = models.ApiReleaseContractPaged(internal_paging, self._deserialize.dependencies, header_dict)
+        deserialized = models.RemotePrivateEndpointConnectionWrapperPaged(internal_paging, self._deserialize.dependencies, header_dict)
 
         return deserialized
-    list_by_service.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/releases'}
+    list_by_service.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/privateEndpointConnections'}
 
-    def get_entity_tag(
-            self, resource_group_name, service_name, api_id, release_id, custom_headers=None, raw=False, **operation_config):
-        """Returns the etag of an API release.
-
-        :param resource_group_name: The name of the resource group.
-        :type resource_group_name: str
-        :param service_name: The name of the API Management service.
-        :type service_name: str
-        :param api_id: API identifier. Must be unique in the current API
-         Management service instance.
-        :type api_id: str
-        :param release_id: Release identifier within an API. Must be unique in
-         the current API Management service instance.
-        :type release_id: str
-        :param dict custom_headers: headers that will be added to the request
-        :param bool raw: returns the direct response alongside the
-         deserialized response
-        :param operation_config: :ref:`Operation configuration
-         overrides<msrest:optionsforoperations>`.
-        :return: None or ClientRawResponse if raw=true
-        :rtype: None or ~msrest.pipeline.ClientRawResponse
-        :raises:
-         :class:`ErrorResponseException<azure.mgmt.apimanagement.models.ErrorResponseException>`
-        """
-        # Construct URL
-        url = self.get_entity_tag.metadata['url']
-        path_format_arguments = {
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
-            'serviceName': self._serialize.url("service_name", service_name, 'str', max_length=50, min_length=1, pattern=r'^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$'),
-            'apiId': self._serialize.url("api_id", api_id, 'str', max_length=80, min_length=1),
-            'releaseId': self._serialize.url("release_id", release_id, 'str', max_length=80, min_length=1, pattern=r'^[^*#&+:<>?]+$'),
-            'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str')
-        }
-        url = self._client.format_url(url, **path_format_arguments)
-
-        # Construct parameters
-        query_parameters = {}
-        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
-
-        # Construct headers
-        header_parameters = {}
-        if self.config.generate_client_request_id:
-            header_parameters['x-ms-client-request-id'] = str(uuid.uuid1())
-        if custom_headers:
-            header_parameters.update(custom_headers)
-        if self.config.accept_language is not None:
-            header_parameters['accept-language'] = self._serialize.header("self.config.accept_language", self.config.accept_language, 'str')
-
-        # Construct and send request
-        request = self._client.head(url, query_parameters, header_parameters)
-        response = self._client.send(request, stream=False, **operation_config)
-
-        if response.status_code not in [200]:
-            raise models.ErrorResponseException(self._deserialize, response)
-
-        if raw:
-            client_raw_response = ClientRawResponse(None, response)
-            client_raw_response.add_headers({
-                'ETag': 'str',
-            })
-            return client_raw_response
-    get_entity_tag.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/releases/{releaseId}'}
-
-    def get(
-            self, resource_group_name, service_name, api_id, release_id, custom_headers=None, raw=False, **operation_config):
-        """Returns the details of an API release.
+    def get_by_name(
+            self, resource_group_name, service_name, private_endpoint_connection_name, custom_headers=None, raw=False, **operation_config):
+        """Gets the details of the Private Endpoint Connection specified by its
+        identifier.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
         :param service_name: The name of the API Management service.
         :type service_name: str
-        :param api_id: API identifier. Must be unique in the current API
-         Management service instance.
-        :type api_id: str
-        :param release_id: Release identifier within an API. Must be unique in
-         the current API Management service instance.
-        :type release_id: str
+        :param private_endpoint_connection_name: Name of the private endpoint
+         connection.
+        :type private_endpoint_connection_name: str
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :return: ApiReleaseContract or ClientRawResponse if raw=true
-        :rtype: ~azure.mgmt.apimanagement.models.ApiReleaseContract or
-         ~msrest.pipeline.ClientRawResponse
+        :return: RemotePrivateEndpointConnectionWrapper or ClientRawResponse
+         if raw=true
+        :rtype:
+         ~azure.mgmt.apimanagement.models.RemotePrivateEndpointConnectionWrapper
+         or ~msrest.pipeline.ClientRawResponse
         :raises:
          :class:`ErrorResponseException<azure.mgmt.apimanagement.models.ErrorResponseException>`
         """
         # Construct URL
-        url = self.get.metadata['url']
+        url = self.get_by_name.metadata['url']
         path_format_arguments = {
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
             'serviceName': self._serialize.url("service_name", service_name, 'str', max_length=50, min_length=1, pattern=r'^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$'),
-            'apiId': self._serialize.url("api_id", api_id, 'str', max_length=80, min_length=1),
-            'releaseId': self._serialize.url("release_id", release_id, 'str', max_length=80, min_length=1, pattern=r'^[^*#&+:<>?]+$'),
+            'privateEndpointConnectionName': self._serialize.url("private_endpoint_connection_name", private_endpoint_connection_name, 'str'),
             'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str')
         }
         url = self._client.format_url(url, **path_format_arguments)
@@ -252,63 +169,28 @@ class ApiReleaseOperations(object):
         if response.status_code not in [200]:
             raise models.ErrorResponseException(self._deserialize, response)
 
-        header_dict = {}
         deserialized = None
         if response.status_code == 200:
-            deserialized = self._deserialize('ApiReleaseContract', response)
-            header_dict = {
-                'ETag': 'str',
-            }
+            deserialized = self._deserialize('RemotePrivateEndpointConnectionWrapper', response)
 
         if raw:
             client_raw_response = ClientRawResponse(deserialized, response)
-            client_raw_response.add_headers(header_dict)
             return client_raw_response
 
         return deserialized
-    get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/releases/{releaseId}'}
+    get_by_name.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/privateEndpointConnections/{privateEndpointConnectionName}'}
 
-    def create_or_update(
-            self, resource_group_name, service_name, api_id, release_id, if_match=None, api_id1=None, notes=None, custom_headers=None, raw=False, **operation_config):
-        """Creates a new Release for the API.
 
-        :param resource_group_name: The name of the resource group.
-        :type resource_group_name: str
-        :param service_name: The name of the API Management service.
-        :type service_name: str
-        :param api_id: API identifier. Must be unique in the current API
-         Management service instance.
-        :type api_id: str
-        :param release_id: Release identifier within an API. Must be unique in
-         the current API Management service instance.
-        :type release_id: str
-        :param if_match: ETag of the Entity. Not required when creating an
-         entity, but required when updating an entity.
-        :type if_match: str
-        :param api_id1: Identifier of the API the release belongs to.
-        :type api_id1: str
-        :param notes: Release Notes
-        :type notes: str
-        :param dict custom_headers: headers that will be added to the request
-        :param bool raw: returns the direct response alongside the
-         deserialized response
-        :param operation_config: :ref:`Operation configuration
-         overrides<msrest:optionsforoperations>`.
-        :return: ApiReleaseContract or ClientRawResponse if raw=true
-        :rtype: ~azure.mgmt.apimanagement.models.ApiReleaseContract or
-         ~msrest.pipeline.ClientRawResponse
-        :raises:
-         :class:`ErrorResponseException<azure.mgmt.apimanagement.models.ErrorResponseException>`
-        """
-        parameters = models.ApiReleaseContract(api_id=api_id1, notes=notes)
+    def _create_or_update_initial(
+            self, resource_group_name, service_name, private_endpoint_connection_name, id=None, properties=None, custom_headers=None, raw=False, **operation_config):
+        private_endpoint_connection_request = models.PrivateEndpointConnectionRequest(id=id, properties=properties)
 
         # Construct URL
         url = self.create_or_update.metadata['url']
         path_format_arguments = {
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
             'serviceName': self._serialize.url("service_name", service_name, 'str', max_length=50, min_length=1, pattern=r'^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$'),
-            'apiId': self._serialize.url("api_id", api_id, 'str', max_length=80, min_length=1),
-            'releaseId': self._serialize.url("release_id", release_id, 'str', max_length=80, min_length=1, pattern=r'^[^*#&+:<>?]+$'),
+            'privateEndpointConnectionName': self._serialize.url("private_endpoint_connection_name", private_endpoint_connection_name, 'str'),
             'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str')
         }
         url = self._client.format_url(url, **path_format_arguments)
@@ -325,13 +207,11 @@ class ApiReleaseOperations(object):
             header_parameters['x-ms-client-request-id'] = str(uuid.uuid1())
         if custom_headers:
             header_parameters.update(custom_headers)
-        if if_match is not None:
-            header_parameters['If-Match'] = self._serialize.header("if_match", if_match, 'str')
         if self.config.accept_language is not None:
             header_parameters['accept-language'] = self._serialize.header("self.config.accept_language", self.config.accept_language, 'str')
 
         # Construct body
-        body_content = self._serialize.body(parameters, 'ApiReleaseContract')
+        body_content = self._serialize.body(private_endpoint_connection_request, 'PrivateEndpointConnectionRequest')
 
         # Construct and send request
         request = self._client.put(url, query_parameters, header_parameters, body_content)
@@ -340,71 +220,187 @@ class ApiReleaseOperations(object):
         if response.status_code not in [200, 201]:
             raise models.ErrorResponseException(self._deserialize, response)
 
-        header_dict = {}
         deserialized = None
+
         if response.status_code == 200:
-            deserialized = self._deserialize('ApiReleaseContract', response)
-            header_dict = {
-                'ETag': 'str',
-            }
-        if response.status_code == 201:
-            deserialized = self._deserialize('ApiReleaseContract', response)
-            header_dict = {
-                'ETag': 'str',
-            }
+            deserialized = self._deserialize('PrivateEndpointConnectionRequestResponse', response)
 
         if raw:
             client_raw_response = ClientRawResponse(deserialized, response)
-            client_raw_response.add_headers(header_dict)
             return client_raw_response
 
         return deserialized
-    create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/releases/{releaseId}'}
 
-    def update(
-            self, resource_group_name, service_name, api_id, release_id, if_match, api_id1=None, notes=None, custom_headers=None, raw=False, **operation_config):
-        """Updates the details of the release of the API specified by its
-        identifier.
+    def create_or_update(
+            self, resource_group_name, service_name, private_endpoint_connection_name, id=None, properties=None, custom_headers=None, raw=False, polling=True, **operation_config):
+        """Creates a new Private Endpoint Connection or updates an existing one.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
         :param service_name: The name of the API Management service.
         :type service_name: str
-        :param api_id: API identifier. Must be unique in the current API
-         Management service instance.
-        :type api_id: str
-        :param release_id: Release identifier within an API. Must be unique in
-         the current API Management service instance.
-        :type release_id: str
-        :param if_match: ETag of the Entity. ETag should match the current
-         entity state from the header response of the GET request or it should
-         be * for unconditional update.
-        :type if_match: str
-        :param api_id1: Identifier of the API the release belongs to.
-        :type api_id1: str
-        :param notes: Release Notes
-        :type notes: str
+        :param private_endpoint_connection_name: Name of the private endpoint
+         connection.
+        :type private_endpoint_connection_name: str
+        :param id: Private Endpoint Connection Resource Id.
+        :type id: str
+        :param properties: The connection state of the private endpoint
+         connection.
+        :type properties:
+         ~azure.mgmt.apimanagement.models.PrivateEndpointConnectionRequestProperties
+        :param dict custom_headers: headers that will be added to the request
+        :param bool raw: The poller return type is ClientRawResponse, the
+         direct response alongside the deserialized response
+        :param polling: True for ARMPolling, False for no polling, or a
+         polling object for personal polling strategy
+        :return: An instance of LROPoller that returns
+         PrivateEndpointConnectionRequestResponse or
+         ClientRawResponse<PrivateEndpointConnectionRequestResponse> if
+         raw==True
+        :rtype:
+         ~msrestazure.azure_operation.AzureOperationPoller[~azure.mgmt.apimanagement.models.PrivateEndpointConnectionRequestResponse]
+         or
+         ~msrestazure.azure_operation.AzureOperationPoller[~msrest.pipeline.ClientRawResponse[~azure.mgmt.apimanagement.models.PrivateEndpointConnectionRequestResponse]]
+        :raises:
+         :class:`ErrorResponseException<azure.mgmt.apimanagement.models.ErrorResponseException>`
+        """
+        raw_result = self._create_or_update_initial(
+            resource_group_name=resource_group_name,
+            service_name=service_name,
+            private_endpoint_connection_name=private_endpoint_connection_name,
+            id=id,
+            properties=properties,
+            custom_headers=custom_headers,
+            raw=True,
+            **operation_config
+        )
+
+        def get_long_running_output(response):
+            deserialized = self._deserialize('PrivateEndpointConnectionRequestResponse', response)
+
+            if raw:
+                client_raw_response = ClientRawResponse(deserialized, response)
+                return client_raw_response
+
+            return deserialized
+
+        lro_delay = operation_config.get(
+            'long_running_operation_timeout',
+            self.config.long_running_operation_timeout)
+        if polling is True: polling_method = ARMPolling(lro_delay, **operation_config)
+        elif polling is False: polling_method = NoPolling()
+        else: polling_method = polling
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+    create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/privateEndpointConnections/{privateEndpointConnectionName}'}
+
+
+    def _delete_initial(
+            self, resource_group_name, service_name, private_endpoint_connection_name, custom_headers=None, raw=False, **operation_config):
+        # Construct URL
+        url = self.delete.metadata['url']
+        path_format_arguments = {
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
+            'serviceName': self._serialize.url("service_name", service_name, 'str', max_length=50, min_length=1, pattern=r'^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$'),
+            'privateEndpointConnectionName': self._serialize.url("private_endpoint_connection_name", private_endpoint_connection_name, 'str'),
+            'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str')
+        }
+        url = self._client.format_url(url, **path_format_arguments)
+
+        # Construct parameters
+        query_parameters = {}
+        query_parameters['api-version'] = self._serialize.query("self.api_version", self.api_version, 'str')
+
+        # Construct headers
+        header_parameters = {}
+        if self.config.generate_client_request_id:
+            header_parameters['x-ms-client-request-id'] = str(uuid.uuid1())
+        if custom_headers:
+            header_parameters.update(custom_headers)
+        if self.config.accept_language is not None:
+            header_parameters['accept-language'] = self._serialize.header("self.config.accept_language", self.config.accept_language, 'str')
+
+        # Construct and send request
+        request = self._client.delete(url, query_parameters, header_parameters)
+        response = self._client.send(request, stream=False, **operation_config)
+
+        if response.status_code not in [200, 201]:
+            raise models.ErrorResponseException(self._deserialize, response)
+
+        if raw:
+            client_raw_response = ClientRawResponse(None, response)
+            return client_raw_response
+
+    def delete(
+            self, resource_group_name, service_name, private_endpoint_connection_name, custom_headers=None, raw=False, polling=True, **operation_config):
+        """Deletes the specified Private Endpoint Connection.
+
+        :param resource_group_name: The name of the resource group.
+        :type resource_group_name: str
+        :param service_name: The name of the API Management service.
+        :type service_name: str
+        :param private_endpoint_connection_name: Name of the private endpoint
+         connection.
+        :type private_endpoint_connection_name: str
+        :param dict custom_headers: headers that will be added to the request
+        :param bool raw: The poller return type is ClientRawResponse, the
+         direct response alongside the deserialized response
+        :param polling: True for ARMPolling, False for no polling, or a
+         polling object for personal polling strategy
+        :return: An instance of LROPoller that returns None or
+         ClientRawResponse<None> if raw==True
+        :rtype: ~msrestazure.azure_operation.AzureOperationPoller[None] or
+         ~msrestazure.azure_operation.AzureOperationPoller[~msrest.pipeline.ClientRawResponse[None]]
+        :raises:
+         :class:`ErrorResponseException<azure.mgmt.apimanagement.models.ErrorResponseException>`
+        """
+        raw_result = self._delete_initial(
+            resource_group_name=resource_group_name,
+            service_name=service_name,
+            private_endpoint_connection_name=private_endpoint_connection_name,
+            custom_headers=custom_headers,
+            raw=True,
+            **operation_config
+        )
+
+        def get_long_running_output(response):
+            if raw:
+                client_raw_response = ClientRawResponse(None, response)
+                return client_raw_response
+
+        lro_delay = operation_config.get(
+            'long_running_operation_timeout',
+            self.config.long_running_operation_timeout)
+        if polling is True: polling_method = ARMPolling(lro_delay, **operation_config)
+        elif polling is False: polling_method = NoPolling()
+        else: polling_method = polling
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+    delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/privateEndpointConnections/{privateEndpointConnectionName}'}
+
+    def list_private_link_resources(
+            self, resource_group_name, service_name, custom_headers=None, raw=False, **operation_config):
+        """Description for Gets the private link resources.
+
+        :param resource_group_name: The name of the resource group.
+        :type resource_group_name: str
+        :param service_name: The name of the API Management service.
+        :type service_name: str
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :return: ApiReleaseContract or ClientRawResponse if raw=true
-        :rtype: ~azure.mgmt.apimanagement.models.ApiReleaseContract or
+        :return: PrivateLinkGroupResources or ClientRawResponse if raw=true
+        :rtype: ~azure.mgmt.apimanagement.models.PrivateLinkGroupResources or
          ~msrest.pipeline.ClientRawResponse
         :raises:
          :class:`ErrorResponseException<azure.mgmt.apimanagement.models.ErrorResponseException>`
         """
-        parameters = models.ApiReleaseContract(api_id=api_id1, notes=notes)
-
         # Construct URL
-        url = self.update.metadata['url']
+        url = self.list_private_link_resources.metadata['url']
         path_format_arguments = {
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
-            'serviceName': self._serialize.url("service_name", service_name, 'str', max_length=50, min_length=1, pattern=r'^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$'),
-            'apiId': self._serialize.url("api_id", api_id, 'str', max_length=80, min_length=1),
-            'releaseId': self._serialize.url("release_id", release_id, 'str', max_length=80, min_length=1, pattern=r'^[^*#&+:<>?]+$'),
-            'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str')
+            'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str'),
+            'serviceName': self._serialize.url("service_name", service_name, 'str', max_length=50, min_length=1, pattern=r'^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$')
         }
         url = self._client.format_url(url, **path_format_arguments)
 
@@ -415,77 +411,60 @@ class ApiReleaseOperations(object):
         # Construct headers
         header_parameters = {}
         header_parameters['Accept'] = 'application/json'
-        header_parameters['Content-Type'] = 'application/json; charset=utf-8'
         if self.config.generate_client_request_id:
             header_parameters['x-ms-client-request-id'] = str(uuid.uuid1())
         if custom_headers:
             header_parameters.update(custom_headers)
-        header_parameters['If-Match'] = self._serialize.header("if_match", if_match, 'str')
         if self.config.accept_language is not None:
             header_parameters['accept-language'] = self._serialize.header("self.config.accept_language", self.config.accept_language, 'str')
 
-        # Construct body
-        body_content = self._serialize.body(parameters, 'ApiReleaseContract')
-
         # Construct and send request
-        request = self._client.patch(url, query_parameters, header_parameters, body_content)
+        request = self._client.get(url, query_parameters, header_parameters)
         response = self._client.send(request, stream=False, **operation_config)
 
         if response.status_code not in [200]:
             raise models.ErrorResponseException(self._deserialize, response)
 
-        header_dict = {}
         deserialized = None
         if response.status_code == 200:
-            deserialized = self._deserialize('ApiReleaseContract', response)
-            header_dict = {
-                'ETag': 'str',
-            }
+            deserialized = self._deserialize('PrivateLinkGroupResources', response)
 
         if raw:
             client_raw_response = ClientRawResponse(deserialized, response)
-            client_raw_response.add_headers(header_dict)
             return client_raw_response
 
         return deserialized
-    update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/releases/{releaseId}'}
+    list_private_link_resources.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/privateLinkResources'}
 
-    def delete(
-            self, resource_group_name, service_name, api_id, release_id, if_match, custom_headers=None, raw=False, **operation_config):
-        """Deletes the specified release in the API.
+    def get_private_link_resource(
+            self, resource_group_name, service_name, private_link_sub_resource_name, custom_headers=None, raw=False, **operation_config):
+        """Description for Gets the private link resources.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
         :param service_name: The name of the API Management service.
         :type service_name: str
-        :param api_id: API identifier. Must be unique in the current API
-         Management service instance.
-        :type api_id: str
-        :param release_id: Release identifier within an API. Must be unique in
-         the current API Management service instance.
-        :type release_id: str
-        :param if_match: ETag of the Entity. ETag should match the current
-         entity state from the header response of the GET request or it should
-         be * for unconditional update.
-        :type if_match: str
+        :param private_link_sub_resource_name: Name of the private link
+         resource.
+        :type private_link_sub_resource_name: str
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :return: None or ClientRawResponse if raw=true
-        :rtype: None or ~msrest.pipeline.ClientRawResponse
+        :return: PrivateLinkGroupResource or ClientRawResponse if raw=true
+        :rtype: ~azure.mgmt.apimanagement.models.PrivateLinkGroupResource or
+         ~msrest.pipeline.ClientRawResponse
         :raises:
          :class:`ErrorResponseException<azure.mgmt.apimanagement.models.ErrorResponseException>`
         """
         # Construct URL
-        url = self.delete.metadata['url']
+        url = self.get_private_link_resource.metadata['url']
         path_format_arguments = {
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
+            'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str'),
             'serviceName': self._serialize.url("service_name", service_name, 'str', max_length=50, min_length=1, pattern=r'^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$'),
-            'apiId': self._serialize.url("api_id", api_id, 'str', max_length=80, min_length=1),
-            'releaseId': self._serialize.url("release_id", release_id, 'str', max_length=80, min_length=1, pattern=r'^[^*#&+:<>?]+$'),
-            'subscriptionId': self._serialize.url("self.config.subscription_id", self.config.subscription_id, 'str')
+            'privateLinkSubResourceName': self._serialize.url("private_link_sub_resource_name", private_link_sub_resource_name, 'str')
         }
         url = self._client.format_url(url, **path_format_arguments)
 
@@ -495,22 +474,28 @@ class ApiReleaseOperations(object):
 
         # Construct headers
         header_parameters = {}
+        header_parameters['Accept'] = 'application/json'
         if self.config.generate_client_request_id:
             header_parameters['x-ms-client-request-id'] = str(uuid.uuid1())
         if custom_headers:
             header_parameters.update(custom_headers)
-        header_parameters['If-Match'] = self._serialize.header("if_match", if_match, 'str')
         if self.config.accept_language is not None:
             header_parameters['accept-language'] = self._serialize.header("self.config.accept_language", self.config.accept_language, 'str')
 
         # Construct and send request
-        request = self._client.delete(url, query_parameters, header_parameters)
+        request = self._client.get(url, query_parameters, header_parameters)
         response = self._client.send(request, stream=False, **operation_config)
 
-        if response.status_code not in [200, 204]:
+        if response.status_code not in [200]:
             raise models.ErrorResponseException(self._deserialize, response)
 
+        deserialized = None
+        if response.status_code == 200:
+            deserialized = self._deserialize('PrivateLinkGroupResource', response)
+
         if raw:
-            client_raw_response = ClientRawResponse(None, response)
+            client_raw_response = ClientRawResponse(deserialized, response)
             return client_raw_response
-    delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/releases/{releaseId}'}
+
+        return deserialized
+    get_private_link_resource.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/privateLinkResources/{privateLinkSubResourceName}'}

@@ -14,10 +14,10 @@ from enum import Enum
 
 class ExportResultFormat(str, Enum):
 
-    swagger = "swagger-link-json"  #: The Api Definition is exported in OpenApi Specification 2.0 format to the Storage Blob.
-    wsdl = "wsdl-link+xml"  #: The Api Definition is exported in WSDL Schema to Storage Blob. This is only supported for APIs of Type `soap`
-    wadl = "wadl-link-json"  #: Export the Api Definition in WADL Schema to Storage Blob.
-    open_api = "openapi-link"  #: Export the Api Definition in OpenApi Specification 3.0 to Storage Blob.
+    swagger = "swagger-link-json"  #: The API Definition is exported in OpenAPI Specification 2.0 format to the Storage Blob.
+    wsdl = "wsdl-link+xml"  #: The API Definition is exported in WSDL Schema to Storage Blob. This is only supported for APIs of Type `soap`
+    wadl = "wadl-link-json"  #: Export the API Definition in WADL Schema to Storage Blob.
+    open_api = "openapi-link"  #: Export the API Definition in OpenAPI Specification 3.0 to Storage Blob.
 
 
 class ProductState(str, Enum):
@@ -36,32 +36,39 @@ class Protocol(str, Enum):
 
     http = "http"
     https = "https"
+    ws = "ws"
+    wss = "wss"
 
 
 class ContentFormat(str, Enum):
 
     wadl_xml = "wadl-xml"  #: The contents are inline and Content type is a WADL document.
     wadl_link_json = "wadl-link-json"  #: The WADL document is hosted on a publicly accessible internet address.
-    swagger_json = "swagger-json"  #: The contents are inline and Content Type is a OpenApi 2.0 Document.
-    swagger_link_json = "swagger-link-json"  #: The Open Api 2.0 document is hosted on a publicly accessible internet address.
+    swagger_json = "swagger-json"  #: The contents are inline and Content Type is a OpenAPI 2.0 JSON Document.
+    swagger_link_json = "swagger-link-json"  #: The OpenAPI 2.0 JSON document is hosted on a publicly accessible internet address.
     wsdl = "wsdl"  #: The contents are inline and the document is a WSDL/Soap document.
     wsdl_link = "wsdl-link"  #: The WSDL document is hosted on a publicly accessible internet address.
-    openapi = "openapi"  #: The contents are inline and Content Type is a OpenApi 3.0 Document in YAML format.
-    openapijson = "openapi+json"  #: The contents are inline and Content Type is a OpenApi 3.0 Document in JSON format.
-    openapi_link = "openapi-link"  #: The Open Api 3.0 document is hosted on a publicly accessible internet address.
-    openapijson_link = "openapi+json-link"  #: The Open Api 3.0 Json document is hosted on a publicly accessible internet address.
+    openapi = "openapi"  #: The contents are inline and Content Type is a OpenAPI 3.0 YAML Document.
+    openapijson = "openapi+json"  #: The contents are inline and Content Type is a OpenAPI 3.0 JSON Document.
+    openapi_link = "openapi-link"  #: The OpenAPI 3.0 YAML document is hosted on a publicly accessible internet address.
+    openapijson_link = "openapi+json-link"  #: The OpenAPI 3.0 JSON document is hosted on a publicly accessible internet address.
+    graphql_link = "graphql-link"  #: The GraphQL API endpoint hosted on a publicly accessible internet address.
 
 
 class SoapApiType(str, Enum):
 
     soap_to_rest = "http"  #: Imports a SOAP API having a RESTful front end.
-    soap_pass_through = "soap"  #: Imports the Soap API having a SOAP front end.
+    soap_pass_through = "soap"  #: Imports the SOAP API having a SOAP front end.
+    web_socket = "websocket"  #: Imports the API having a Websocket front end.
+    graph_ql = "graphql"  #: Imports the API having a GraphQL front end.
 
 
 class ApiType(str, Enum):
 
     http = "http"
     soap = "soap"
+    websocket = "websocket"
+    graphql = "graphql"
 
 
 class State(str, Enum):
@@ -71,6 +78,12 @@ class State(str, Enum):
     removed = "removed"  #: The issue was removed.
     resolved = "resolved"  #: The issue is now resolved.
     closed = "closed"  #: The issue was closed.
+
+
+class DataMaskingMode(str, Enum):
+
+    mask = "Mask"  #: Mask the value of an entity.
+    hide = "Hide"  #: Hide the presence of an entity.
 
 
 class SamplingType(str, Enum):
@@ -95,6 +108,12 @@ class Verbosity(str, Enum):
     verbose = "verbose"  #: All the traces emitted by trace policies will be sent to the logger attached to this diagnostic instance.
     information = "information"  #: Traces with 'severity' set to 'information' and 'error' will be sent to the logger attached to this diagnostic instance.
     error = "error"  #: Only traces with 'severity' set to 'error' will be sent to the logger attached to this diagnostic instance.
+
+
+class OperationNameFormat(str, Enum):
+
+    name = "Name"  #: API_NAME;rev=API_REVISION - OPERATION_NAME
+    url = "Url"  #: HTTP_VERB URL
 
 
 class PolicyContentFormat(str, Enum):
@@ -157,6 +176,7 @@ class SkuType(str, Enum):
     premium = "Premium"  #: Premium SKU of Api Management.
     basic = "Basic"  #: Basic SKU of Api Management.
     consumption = "Consumption"  #: Consumption SKU of Api Management.
+    isolated = "Isolated"  #: Isolated SKU of Api Management.
 
 
 class ResourceSkuCapacityScaleType(str, Enum):
@@ -175,6 +195,34 @@ class HostnameType(str, Enum):
     developer_portal = "DeveloperPortal"
 
 
+class CertificateSource(str, Enum):
+
+    managed = "Managed"
+    key_vault = "KeyVault"
+    custom = "Custom"
+    built_in = "BuiltIn"
+
+
+class CertificateStatus(str, Enum):
+
+    completed = "Completed"
+    failed = "Failed"
+    in_progress = "InProgress"
+
+
+class AccessType(str, Enum):
+
+    access_key = "AccessKey"  #: Use access key.
+    system_assigned_managed_identity = "SystemAssignedManagedIdentity"  #: Use system assigned managed identity.
+    user_assigned_managed_identity = "UserAssignedManagedIdentity"  #: Use user assigned managed identity.
+
+
+class PublicNetworkAccess(str, Enum):
+
+    enabled = "Enabled"
+    disabled = "Disabled"
+
+
 class VirtualNetworkType(str, Enum):
 
     none = "None"  #: The service is not part of any Virtual Network.
@@ -188,6 +236,14 @@ class ApimIdentityType(str, Enum):
     user_assigned = "UserAssigned"
     system_assigned_user_assigned = "SystemAssigned, UserAssigned"
     none = "None"
+
+
+class CreatedByType(str, Enum):
+
+    user = "User"
+    application = "Application"
+    managed_identity = "ManagedIdentity"
+    key = "Key"
 
 
 class NameAvailabilityReason(str, Enum):
@@ -210,6 +266,7 @@ class KeyType(str, Enum):
 
 class AppType(str, Enum):
 
+    portal = "portal"  #: User create request was sent by legacy developer portal.
     developer_portal = "developerPortal"  #: User create request was sent by new developer portal.
 
 
@@ -248,6 +305,7 @@ class LoggerType(str, Enum):
 
     azure_event_hub = "azureEventHub"  #: Azure Event Hub as log destination.
     application_insights = "applicationInsights"  #: Azure Application Insights as log destination.
+    azure_monitor = "azureMonitor"  #: Azure Monitor
 
 
 class ConnectivityStatusType(str, Enum):
@@ -255,6 +313,14 @@ class ConnectivityStatusType(str, Enum):
     initializing = "initializing"
     success = "success"
     failure = "failure"
+
+
+class PortalRevisionStatus(str, Enum):
+
+    pending = "pending"  #: Portal's revision has been queued.
+    publishing = "publishing"  #: Portal's revision is being published.
+    completed = "completed"  #: Portal's revision publishing completed.
+    failed = "failed"  #: Portal's revision publishing failed.
 
 
 class SubscriptionState(str, Enum):
@@ -267,12 +333,37 @@ class SubscriptionState(str, Enum):
     cancelled = "cancelled"
 
 
+class ApiManagementSkuCapacityScaleType(str, Enum):
+
+    automatic = "Automatic"
+    manual = "Manual"
+    none = "None"
+
+
+class ApiManagementSkuRestrictionsType(str, Enum):
+
+    location = "Location"
+    zone = "Zone"
+
+
+class ApiManagementSkuRestrictionsReasonCode(str, Enum):
+
+    quota_id = "QuotaId"
+    not_available_for_subscription = "NotAvailableForSubscription"
+
+
 class AsyncOperationStatus(str, Enum):
 
     started = "Started"
     in_progress = "InProgress"
     succeeded = "Succeeded"
     failed = "Failed"
+
+
+class AccessIdName(str, Enum):
+
+    access = "access"
+    git_access = "gitAccess"
 
 
 class NotificationName(str, Enum):
@@ -321,8 +412,8 @@ class PolicyScopeContract(str, Enum):
 
 class ExportFormat(str, Enum):
 
-    swagger = "swagger-link"  #: Export the Api Definition in OpenApi Specification 2.0 format to the Storage Blob.
+    swagger = "swagger-link"  #: Export the Api Definition in OpenAPI 2.0 Specification as JSON document to the Storage Blob.
     wsdl = "wsdl-link"  #: Export the Api Definition in WSDL Schema to Storage Blob. This is only supported for APIs of Type `soap`
     wadl = "wadl-link"  #: Export the Api Definition in WADL Schema to Storage Blob.
-    openapi = "openapi-link"  #: Export the Api Definition in OpenApi Specification 3.0 to Storage Blob.
-    openapi_json = "openapi+json-link"  #: Export the Api Definition in OpenApi Specification 3.0 as JSON document to Storage Blob.
+    openapi = "openapi-link"  #: Export the Api Definition in OpenAPI 3.0 Specification as YAML document to Storage Blob.
+    openapi_json = "openapi+json-link"  #: Export the Api Definition in OpenAPI 3.0 Specification as JSON document to Storage Blob.
