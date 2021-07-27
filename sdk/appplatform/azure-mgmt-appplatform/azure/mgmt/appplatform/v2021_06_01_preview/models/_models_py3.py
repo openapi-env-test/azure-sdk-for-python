@@ -234,10 +234,10 @@ class AppResourceProperties(msrest.serialization.Model):
         public: Optional[bool] = None,
         active_deployment_name: Optional[str] = None,
         fqdn: Optional[str] = None,
-        https_only: Optional[bool] = None,
+        https_only: Optional[bool] = False,
         temporary_disk: Optional["TemporaryDisk"] = None,
         persistent_disk: Optional["PersistentDisk"] = None,
-        enable_end_to_end_tls: Optional[bool] = None,
+        enable_end_to_end_tls: Optional[bool] = False,
         **kwargs
     ):
         super(AppResourceProperties, self).__init__(**kwargs)
@@ -1285,7 +1285,7 @@ class DeploymentSettings(msrest.serialization.Model):
     :param environment_variables: Collection of environment variables.
     :type environment_variables: dict[str, str]
     :param runtime_version: Runtime version. Possible values include: "Java_8", "Java_11",
-     "NetCore_31".
+     "NetCore_31". Default value: "Java_8".
     :type runtime_version: str or ~azure.mgmt.appplatform.v2021_06_01_preview.models.RuntimeVersion
     """
 
@@ -1308,7 +1308,7 @@ class DeploymentSettings(msrest.serialization.Model):
         jvm_options: Optional[str] = None,
         net_core_main_entry_path: Optional[str] = None,
         environment_variables: Optional[Dict[str, str]] = None,
-        runtime_version: Optional[Union[str, "RuntimeVersion"]] = None,
+        runtime_version: Optional[Union[str, "RuntimeVersion"]] = "Java_8",
         **kwargs
     ):
         super(DeploymentSettings, self).__init__(**kwargs)
@@ -2675,7 +2675,7 @@ class TemporaryDisk(msrest.serialization.Model):
         self,
         *,
         size_in_gb: Optional[int] = None,
-        mount_path: Optional[str] = None,
+        mount_path: Optional[str] = "/tmp",
         **kwargs
     ):
         super(TemporaryDisk, self).__init__(**kwargs)
