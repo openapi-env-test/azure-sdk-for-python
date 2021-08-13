@@ -4,7 +4,7 @@
     "client": {
         "name": "AzureAgriFoodRPService",
         "filename": "_azure_agri_food_rp_service",
-        "description": "APIs documentation for Azure AgriFood Resource Provider Service.",
+        "description": "APIs documentation for Azure AgriFood Resource Provider Service. Change For Test.",
         "base_url": "\u0027https://management.azure.com\u0027",
         "custom_base_url": null,
         "azure_arm": true,
