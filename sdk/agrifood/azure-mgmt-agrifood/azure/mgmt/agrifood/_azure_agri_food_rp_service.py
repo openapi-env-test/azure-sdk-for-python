@@ -28,7 +28,7 @@ from . import models
 
 
 class AzureAgriFoodRPService(object):
-    """APIs documentation for Azure AgriFood Resource Provider Service.
+    """APIs documentation for Azure AgriFood Resource Provider Service. Test.
 
     :ivar extensions: ExtensionsOperations operations
     :vartype extensions: azure.mgmt.agrifood.operations.ExtensionsOperations
