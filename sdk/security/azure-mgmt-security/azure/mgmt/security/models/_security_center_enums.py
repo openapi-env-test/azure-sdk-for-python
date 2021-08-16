@@ -80,48 +80,28 @@ class UnmaskedIpLoggingStatus(str, Enum):
     enabled = "Enabled"  #: Unmasked IP logging is enabled
 
 
+class AdditionalWorkspaceType(str, Enum):
+
+    sentinel = "Sentinel"
+
+
+class AdditionalWorkspaceDataType(str, Enum):
+
+    alerts = "Alerts"
+    raw_events = "RawEvents"
+
+
+class CreatedByType(str, Enum):
+
+    user = "User"
+    application = "Application"
+    managed_identity = "ManagedIdentity"
+    key = "Key"
+
+
 class ReportedSeverity(str, Enum):
 
     informational = "Informational"
-    low = "Low"
-    medium = "Medium"
-    high = "High"
-
-
-class AlertSeverity(str, Enum):
-
-    informational = "Informational"
-    low = "Low"
-    medium = "Medium"
-    high = "High"
-
-
-class AlertIntent(str, Enum):
-
-    unknown = "Unknown"
-    pre_attack = "PreAttack"
-    initial_access = "InitialAccess"
-    persistence = "Persistence"
-    privilege_escalation = "PrivilegeEscalation"
-    defense_evasion = "DefenseEvasion"
-    credential_access = "CredentialAccess"
-    discovery = "Discovery"
-    lateral_movement = "LateralMovement"
-    execution = "Execution"
-    collection = "Collection"
-    exfiltration = "Exfiltration"
-    command_and_control = "CommandAndControl"
-    impact = "Impact"
-    probing = "Probing"
-    exploitation = "Exploitation"
-
-
-class RecommendationSeverity(str, Enum):
-
-    unknown = "Unknown"
-    not_applicable = "NotApplicable"
-    healthy = "Healthy"
-    off_by_policy = "OffByPolicy"
     low = "Low"
     medium = "Medium"
     high = "High"
@@ -181,6 +161,12 @@ class EventSource(str, Enum):
     assessments = "Assessments"
     sub_assessments = "SubAssessments"
     alerts = "Alerts"
+    secure_scores = "SecureScores"
+    secure_scores_snapshot = "SecureScoresSnapshot"
+    secure_score_controls = "SecureScoreControls"
+    secure_score_controls_snapshot = "SecureScoreControlsSnapshot"
+    regulatory_compliance_assessment = "RegulatoryComplianceAssessment"
+    regulatory_compliance_assessment_snapshot = "RegulatoryComplianceAssessmentSnapshot"
 
 
 class PropertyType(str, Enum):
@@ -193,15 +179,15 @@ class PropertyType(str, Enum):
 
 class Operator(str, Enum):
 
-    equals = "Equals"
-    greater_than = "GreaterThan"
-    greater_than_or_equal_to = "GreaterThanOrEqualTo"
-    lesser_than = "LesserThan"
-    lesser_than_or_equal_to = "LesserThanOrEqualTo"
-    not_equals = "NotEquals"
-    contains = "Contains"
-    starts_with = "StartsWith"
-    ends_with = "EndsWith"
+    equals = "Equals"  #: Applies for decimal and non-decimal operands
+    greater_than = "GreaterThan"  #: Applies only for decimal operands
+    greater_than_or_equal_to = "GreaterThanOrEqualTo"  #: Applies only for decimal operands
+    lesser_than = "LesserThan"  #: Applies only for decimal operands
+    lesser_than_or_equal_to = "LesserThanOrEqualTo"  #: Applies only for decimal operands
+    not_equals = "NotEquals"  #: Applies  for decimal and non-decimal operands
+    contains = "Contains"  #: Applies only for non-decimal operands
+    starts_with = "StartsWith"  #: Applies only for non-decimal operands
+    ends_with = "EndsWith"  #: Applies only for non-decimal operands
 
 
 class RuleState(str, Enum):
@@ -211,7 +197,7 @@ class RuleState(str, Enum):
     expired = "Expired"
 
 
-class Category(str, Enum):
+class Categories(str, Enum):
 
     compute = "Compute"
     networking = "Networking"
@@ -271,33 +257,6 @@ class TransportProtocol(str, Enum):
 
     tcp = "TCP"
     udp = "UDP"
-
-
-class Intent(str, Enum):
-
-    unknown = "Unknown"  #: Unknown
-    pre_attack = "PreAttack"  #: PreAttack could be either an attempt to access a certain resource regardless of a malicious intent, or a failed attempt to gain access to a target system to gather information prior to exploitation. This step is usually detected as an attempt, originating from outside the network, to scan the target system and find a way in.  Further details on the PreAttack stage can be read in [MITRE Pre-Att&ck matrix](https://attack.mitre.org/matrices/pre/).
-    initial_access = "InitialAccess"  #: InitialAccess is the stage where an attacker manages to get foothold on the attacked resource.
-    persistence = "Persistence"  #: Persistence is any access, action, or configuration change to a system that gives a threat actor a persistent presence on that system.
-    privilege_escalation = "PrivilegeEscalation"  #: Privilege escalation is the result of actions that allow an adversary to obtain a higher level of permissions on a system or network.
-    defense_evasion = "DefenseEvasion"  #: Defense evasion consists of techniques an adversary may use to evade detection or avoid other defenses.
-    credential_access = "CredentialAccess"  #: Credential access represents techniques resulting in access to or control over system, domain, or service credentials that are used within an enterprise environment.
-    discovery = "Discovery"  #: Discovery consists of techniques that allow the adversary to gain knowledge about the system and internal network.
-    lateral_movement = "LateralMovement"  #: Lateral movement consists of techniques that enable an adversary to access and control remote systems on a network and could, but does not necessarily, include execution of tools on remote systems.
-    execution = "Execution"  #: The execution tactic represents techniques that result in execution of adversary-controlled code on a local or remote system.
-    collection = "Collection"  #: Collection consists of techniques used to identify and gather information, such as sensitive files, from a target network prior to exfiltration.
-    exfiltration = "Exfiltration"  #: Exfiltration refers to techniques and attributes that result or aid in the adversary removing files and information from a target network.
-    command_and_control = "CommandAndControl"  #: The command and control tactic represents how adversaries communicate with systems under their control within a target network.
-    impact = "Impact"  #: Impact events primarily try to directly reduce the availability or integrity of a system, service, or network; including manipulation of data to impact a business or operational process.
-    probing = "Probing"  #: Probing could be either an attempt to access a certain resource regardless of a malicious intent, or a failed attempt to gain access to a target system to gather information prior to exploitation.
-    exploitation = "Exploitation"  #: Exploitation is the stage where an attacker manages to get a foothold on the attacked resource. This stage is relevant for compute hosts and resources such as user accounts, certificates etc.
-
-
-class AlertStatus(str, Enum):
-
-    active = "Active"  #: An alert which doesn't specify a value is assigned the status 'Active'
-    resolved = "Resolved"  #: Alert closed after handling
-    dismissed = "Dismissed"  #: Alert dismissed as false positive
 
 
 class Protocol(str, Enum):
@@ -416,66 +375,60 @@ class RuleType(str, Enum):
     negative_list = "NegativeList"  #: NegativeList
 
 
-class VersionKind(str, Enum):
+class AlertSeverity(str, Enum):
 
-    latest = "Latest"
-    previous = "Previous"
-    preview = "Preview"
-
-
-class MacSignificance(str, Enum):
-
-    primary = "Primary"
-    secondary = "Secondary"
+    informational = "Informational"  #: Informational
+    low = "Low"  #: Low
+    medium = "Medium"  #: Medium
+    high = "High"  #: High
 
 
-class RelationToIpStatus(str, Enum):
+class Intent(str, Enum):
 
-    guess = "Guess"
-    certain = "Certain"
-
-
-class ManagementState(str, Enum):
-
-    managed = "Managed"
-    unmanaged = "Unmanaged"
-
-
-class AuthorizationState(str, Enum):
-
-    authorized = "Authorized"
-    unauthorized = "Unauthorized"
-
-
-class DeviceCriticality(str, Enum):
-
-    important = "Important"
-    standard = "Standard"
+    unknown = "Unknown"  #: Unknown
+    pre_attack = "PreAttack"  #: PreAttack could be either an attempt to access a certain resource regardless of a malicious intent, or a failed attempt to gain access to a target system to gather information prior to exploitation. This step is usually detected as an attempt, originating from outside the network, to scan the target system and find a way in.  Further details on the PreAttack stage can be read in [MITRE Pre-Att&ck matrix](https://attack.mitre.org/matrices/pre/).
+    initial_access = "InitialAccess"  #: InitialAccess is the stage where an attacker manages to get foothold on the attacked resource.
+    persistence = "Persistence"  #: Persistence is any access, action, or configuration change to a system that gives a threat actor a persistent presence on that system.
+    privilege_escalation = "PrivilegeEscalation"  #: Privilege escalation is the result of actions that allow an adversary to obtain a higher level of permissions on a system or network.
+    defense_evasion = "DefenseEvasion"  #: Defense evasion consists of techniques an adversary may use to evade detection or avoid other defenses.
+    credential_access = "CredentialAccess"  #: Credential access represents techniques resulting in access to or control over system, domain, or service credentials that are used within an enterprise environment.
+    discovery = "Discovery"  #: Discovery consists of techniques that allow the adversary to gain knowledge about the system and internal network.
+    lateral_movement = "LateralMovement"  #: Lateral movement consists of techniques that enable an adversary to access and control remote systems on a network and could, but does not necessarily, include execution of tools on remote systems.
+    execution = "Execution"  #: The execution tactic represents techniques that result in execution of adversary-controlled code on a local or remote system.
+    collection = "Collection"  #: Collection consists of techniques used to identify and gather information, such as sensitive files, from a target network prior to exfiltration.
+    exfiltration = "Exfiltration"  #: Exfiltration refers to techniques and attributes that result or aid in the adversary removing files and information from a target network.
+    command_and_control = "CommandAndControl"  #: The command and control tactic represents how adversaries communicate with systems under their control within a target network.
+    impact = "Impact"  #: Impact events primarily try to directly reduce the availability or integrity of a system, service, or network; including manipulation of data to impact a business or operational process.
+    probing = "Probing"  #: Probing could be either an attempt to access a certain resource regardless of a malicious intent, or a failed attempt to gain access to a target system to gather information prior to exploitation.
+    exploitation = "Exploitation"  #: Exploitation is the stage where an attacker manages to get a foothold on the attacked resource. This stage is relevant for compute hosts and resources such as user accounts, certificates etc.
 
 
-class PurdueLevel(str, Enum):
+class AlertStatus(str, Enum):
 
-    process_control = "ProcessControl"
-    supervisory = "Supervisory"
-    enterprise = "Enterprise"
-
-
-class ProgrammingState(str, Enum):
-
-    programming_device = "ProgrammingDevice"
-    not_programming_device = "NotProgrammingDevice"
+    active = "Active"  #: An alert which doesn't specify a value is assigned the status 'Active'
+    resolved = "Resolved"  #: Alert closed after handling
+    dismissed = "Dismissed"  #: Alert dismissed as false positive
 
 
-class ScanningFunctionality(str, Enum):
+class BundleType(str, Enum):
 
-    scanner_device = "ScannerDevice"
-    not_scanner_device = "NotScannerDevice"
+    app_services = "AppServices"
+    dns = "DNS"
+    key_vaults = "KeyVaults"
+    kubernetes_service = "KubernetesService"
+    resource_manager = "ResourceManager"
+    sql_servers = "SqlServers"
+    storage_accounts = "StorageAccounts"
+    virtual_machines = "VirtualMachines"
 
 
-class DeviceStatus(str, Enum):
+class EndOfSupportStatus(str, Enum):
 
-    active = "Active"
-    removed = "Removed"
+    none = "None"
+    no_longer_supported = "noLongerSupported"
+    version_no_longer_supported = "versionNoLongerSupported"
+    upcoming_no_longer_supported = "upcomingNoLongerSupported"
+    upcoming_version_no_longer_supported = "upcomingVersionNoLongerSupported"
 
 
 class ExpandEnum(str, Enum):

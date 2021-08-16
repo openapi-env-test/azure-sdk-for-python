@@ -25,7 +25,7 @@ class SettingsOperations(object):
     :param config: Configuration of service client.
     :param serializer: An object model serializer.
     :param deserializer: An object model deserializer.
-    :ivar api_version: API version for the operation. Constant value: "2019-01-01".
+    :ivar api_version: API version for the operation. Constant value: "2021-07-01".
     """
 
     models = models
@@ -35,7 +35,7 @@ class SettingsOperations(object):
         self._client = client
         self._serialize = serializer
         self._deserialize = deserializer
-        self.api_version = "2019-01-01"
+        self.api_version = "2021-07-01"
 
         self.config = config
 
@@ -109,8 +109,8 @@ class SettingsOperations(object):
             self, setting_name, custom_headers=None, raw=False, **operation_config):
         """Settings of different configurations in security center.
 
-        :param setting_name: Name of setting: (MCAS/WDATP). Possible values
-         include: 'MCAS', 'WDATP'
+        :param setting_name: The name of the setting. Possible values include:
+         'MCAS', 'WDATP', 'WDATP_EXCLUDE_LINUX_PUBLIC_PREVIEW', 'Sentinel'
         :type setting_name: str
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
@@ -168,8 +168,8 @@ class SettingsOperations(object):
             self, setting_name, setting, custom_headers=None, raw=False, **operation_config):
         """updating settings about different configurations in security center.
 
-        :param setting_name: Name of setting: (MCAS/WDATP). Possible values
-         include: 'MCAS', 'WDATP'
+        :param setting_name: The name of the setting. Possible values include:
+         'MCAS', 'WDATP', 'WDATP_EXCLUDE_LINUX_PUBLIC_PREVIEW', 'Sentinel'
         :type setting_name: str
         :param setting: Setting object
         :type setting: ~azure.mgmt.security.models.Setting

@@ -20,10 +20,15 @@ try:
     from ._models_py3 import AdaptiveNetworkHardening
     from ._models_py3 import AdaptiveNetworkHardeningEnforceRequest
     from ._models_py3 import AdditionalData
+    from ._models_py3 import AdditionalWorkspacesProperties
     from ._models_py3 import AdvancedThreatProtectionSetting
     from ._models_py3 import Alert
     from ._models_py3 import AlertEntity
+    from ._models_py3 import AlertSimulatorBundlesRequestProperties
+    from ._models_py3 import AlertSimulatorRequestBody
+    from ._models_py3 import AlertSimulatorRequestProperties
     from ._models_py3 import AlertsSuppressionRule
+    from ._models_py3 import AlertSyncSettings
     from ._models_py3 import AllowedConnectionsResource
     from ._models_py3 import AllowlistCustomAlertRule
     from ._models_py3 import AmqpC2DMessagesNotInAllowedRange
@@ -63,6 +68,8 @@ try:
     from ._models_py3 import ConnectableResource
     from ._models_py3 import ConnectedResource
     from ._models_py3 import ConnectedWorkspace
+    from ._models_py3 import ConnectionFromIpNotAllowed
+    from ._models_py3 import ConnectionStrings
     from ._models_py3 import ConnectionToIpNotAllowed
     from ._models_py3 import ConnectorSetting
     from ._models_py3 import ContainerRegistryVulnerabilityProperties
@@ -71,18 +78,17 @@ try:
     from ._models_py3 import CVSS
     from ._models_py3 import DataExportSettings
     from ._models_py3 import DenylistCustomAlertRule
-    from ._models_py3 import Device
     from ._models_py3 import DeviceSecurityGroup
     from ._models_py3 import DirectMethodInvokesNotInAllowedRange
     from ._models_py3 import DiscoveredSecuritySolution
     from ._models_py3 import EffectiveNetworkSecurityGroups
+    from ._models_py3 import ErrorAdditionalInfo
     from ._models_py3 import ETag
     from ._models_py3 import ExternalSecuritySolution
     from ._models_py3 import ExternalSecuritySolutionKind1
     from ._models_py3 import ExternalSecuritySolutionProperties
     from ._models_py3 import FailedLocalLoginsNotInAllowedRange
     from ._models_py3 import FileUploadsNotInAllowedRange
-    from ._models_py3 import Firmware
     from ._models_py3 import GcpCredentialsDetailsProperties
     from ._models_py3 import HttpC2DMessagesNotInAllowedRange
     from ._models_py3 import HttpC2DRejectedMessagesNotInAllowedRange
@@ -91,16 +97,9 @@ try:
     from ._models_py3 import InformationProtectionKeyword
     from ._models_py3 import InformationProtectionPolicy
     from ._models_py3 import InformationType
-    from ._models_py3 import IotAlert
-    from ._models_py3 import IotAlertModel
-    from ._models_py3 import IotAlertType
-    from ._models_py3 import IotAlertTypeList
-    from ._models_py3 import IotDefenderSettingsList
-    from ._models_py3 import IotDefenderSettingsModel
-    from ._models_py3 import IotRecommendation
-    from ._models_py3 import IotRecommendationModel
-    from ._models_py3 import IotRecommendationType
-    from ._models_py3 import IotRecommendationTypeList
+    from ._models_py3 import IngestionConnectionString
+    from ._models_py3 import IngestionSetting
+    from ._models_py3 import IngestionSettingToken
     from ._models_py3 import IoTSecurityAggregatedAlert
     from ._models_py3 import IoTSecurityAggregatedAlertPropertiesTopDevicesListItem
     from ._models_py3 import IoTSecurityAggregatedRecommendation
@@ -111,10 +110,7 @@ try:
     from ._models_py3 import IoTSecuritySolutionAnalyticsModelList
     from ._models_py3 import IoTSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem
     from ._models_py3 import IoTSecuritySolutionModel
-    from ._models_py3 import IotSensor
-    from ._models_py3 import IotSensorsList
     from ._models_py3 import IoTSeverityMetrics
-    from ._models_py3 import IpAddress
     from ._models_py3 import JitNetworkAccessPolicy
     from ._models_py3 import JitNetworkAccessPolicyInitiatePort
     from ._models_py3 import JitNetworkAccessPolicyInitiateRequest
@@ -129,32 +125,18 @@ try:
     from ._models_py3 import LocalUserNotAllowed
     from ._models_py3 import Location
     from ._models_py3 import LogAnalyticsIdentifier
-    from ._models_py3 import MacAddress
     from ._models_py3 import MqttC2DMessagesNotInAllowedRange
     from ._models_py3 import MqttC2DRejectedMessagesNotInAllowedRange
     from ._models_py3 import MqttD2CMessagesNotInAllowedRange
-    from ._models_py3 import NetworkInterface
-    from ._models_py3 import OnPremiseIotSensor
-    from ._models_py3 import OnPremiseIotSensorsList
     from ._models_py3 import OnPremiseResourceDetails
     from ._models_py3 import OnPremiseSqlResourceDetails
     from ._models_py3 import Operation
     from ._models_py3 import OperationDisplay
-    from ._models_py3 import PackageDownloadInfo
-    from ._models_py3 import PackageDownloads
-    from ._models_py3 import PackageDownloadsCentralManager
-    from ._models_py3 import PackageDownloadsCentralManagerFull
-    from ._models_py3 import PackageDownloadsCentralManagerFullOvf
-    from ._models_py3 import PackageDownloadsSensor
-    from ._models_py3 import PackageDownloadsSensorFull
-    from ._models_py3 import PackageDownloadsSensorFullOvf
-    from ._models_py3 import PackageDownloadsThreatIntelligence
     from ._models_py3 import PathRecommendation
     from ._models_py3 import Pricing
     from ._models_py3 import PricingList
     from ._models_py3 import ProcessNotAllowed
     from ._models_py3 import ProtectionMode
-    from ._models_py3 import Protocol1
     from ._models_py3 import ProxyServerProperties
     from ._models_py3 import PublisherInfo
     from ._models_py3 import QueryCheck
@@ -198,17 +180,16 @@ try:
     from ._models_py3 import SecurityTask
     from ._models_py3 import SecurityTaskParameters
     from ._models_py3 import SensitivityLabel
-    from ._models_py3 import Sensor
     from ._models_py3 import ServerVulnerabilityAssessment
     from ._models_py3 import ServerVulnerabilityAssessmentsList
     from ._models_py3 import ServerVulnerabilityProperties
     from ._models_py3 import ServicePrincipalProperties
     from ._models_py3 import Setting
-    from ._models_py3 import SettingResource
-    from ._models_py3 import Site
+    from ._models_py3 import Software
     from ._models_py3 import SqlServerVulnerabilityProperties
     from ._models_py3 import SubAssessmentStatus
     from ._models_py3 import SuppressionAlertsScope
+    from ._models_py3 import SystemData
     from ._models_py3 import Tags
     from ._models_py3 import TagsResource
     from ._models_py3 import ThresholdCustomAlertRule
@@ -238,10 +219,15 @@ except (SyntaxError, ImportError):
     from ._models import AdaptiveNetworkHardening
     from ._models import AdaptiveNetworkHardeningEnforceRequest
     from ._models import AdditionalData
+    from ._models import AdditionalWorkspacesProperties
     from ._models import AdvancedThreatProtectionSetting
     from ._models import Alert
     from ._models import AlertEntity
+    from ._models import AlertSimulatorBundlesRequestProperties
+    from ._models import AlertSimulatorRequestBody
+    from ._models import AlertSimulatorRequestProperties
     from ._models import AlertsSuppressionRule
+    from ._models import AlertSyncSettings
     from ._models import AllowedConnectionsResource
     from ._models import AllowlistCustomAlertRule
     from ._models import AmqpC2DMessagesNotInAllowedRange
@@ -281,6 +267,8 @@ except (SyntaxError, ImportError):
     from ._models import ConnectableResource
     from ._models import ConnectedResource
     from ._models import ConnectedWorkspace
+    from ._models import ConnectionFromIpNotAllowed
+    from ._models import ConnectionStrings
     from ._models import ConnectionToIpNotAllowed
     from ._models import ConnectorSetting
     from ._models import ContainerRegistryVulnerabilityProperties
@@ -289,18 +277,17 @@ except (SyntaxError, ImportError):
     from ._models import CVSS
     from ._models import DataExportSettings
     from ._models import DenylistCustomAlertRule
-    from ._models import Device
     from ._models import DeviceSecurityGroup
     from ._models import DirectMethodInvokesNotInAllowedRange
     from ._models import DiscoveredSecuritySolution
     from ._models import EffectiveNetworkSecurityGroups
+    from ._models import ErrorAdditionalInfo
     from ._models import ETag
     from ._models import ExternalSecuritySolution
     from ._models import ExternalSecuritySolutionKind1
     from ._models import ExternalSecuritySolutionProperties
     from ._models import FailedLocalLoginsNotInAllowedRange
     from ._models import FileUploadsNotInAllowedRange
-    from ._models import Firmware
     from ._models import GcpCredentialsDetailsProperties
     from ._models import HttpC2DMessagesNotInAllowedRange
     from ._models import HttpC2DRejectedMessagesNotInAllowedRange
@@ -309,16 +296,9 @@ except (SyntaxError, ImportError):
     from ._models import InformationProtectionKeyword
     from ._models import InformationProtectionPolicy
     from ._models import InformationType
-    from ._models import IotAlert
-    from ._models import IotAlertModel
-    from ._models import IotAlertType
-    from ._models import IotAlertTypeList
-    from ._models import IotDefenderSettingsList
-    from ._models import IotDefenderSettingsModel
-    from ._models import IotRecommendation
-    from ._models import IotRecommendationModel
-    from ._models import IotRecommendationType
-    from ._models import IotRecommendationTypeList
+    from ._models import IngestionConnectionString
+    from ._models import IngestionSetting
+    from ._models import IngestionSettingToken
     from ._models import IoTSecurityAggregatedAlert
     from ._models import IoTSecurityAggregatedAlertPropertiesTopDevicesListItem
     from ._models import IoTSecurityAggregatedRecommendation
@@ -329,10 +309,7 @@ except (SyntaxError, ImportError):
     from ._models import IoTSecuritySolutionAnalyticsModelList
     from ._models import IoTSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem
     from ._models import IoTSecuritySolutionModel
-    from ._models import IotSensor
-    from ._models import IotSensorsList
     from ._models import IoTSeverityMetrics
-    from ._models import IpAddress
     from ._models import JitNetworkAccessPolicy
     from ._models import JitNetworkAccessPolicyInitiatePort
     from ._models import JitNetworkAccessPolicyInitiateRequest
@@ -347,32 +324,18 @@ except (SyntaxError, ImportError):
     from ._models import LocalUserNotAllowed
     from ._models import Location
     from ._models import LogAnalyticsIdentifier
-    from ._models import MacAddress
     from ._models import MqttC2DMessagesNotInAllowedRange
     from ._models import MqttC2DRejectedMessagesNotInAllowedRange
     from ._models import MqttD2CMessagesNotInAllowedRange
-    from ._models import NetworkInterface
-    from ._models import OnPremiseIotSensor
-    from ._models import OnPremiseIotSensorsList
     from ._models import OnPremiseResourceDetails
     from ._models import OnPremiseSqlResourceDetails
     from ._models import Operation
     from ._models import OperationDisplay
-    from ._models import PackageDownloadInfo
-    from ._models import PackageDownloads
-    from ._models import PackageDownloadsCentralManager
-    from ._models import PackageDownloadsCentralManagerFull
-    from ._models import PackageDownloadsCentralManagerFullOvf
-    from ._models import PackageDownloadsSensor
-    from ._models import PackageDownloadsSensorFull
-    from ._models import PackageDownloadsSensorFullOvf
-    from ._models import PackageDownloadsThreatIntelligence
     from ._models import PathRecommendation
     from ._models import Pricing
     from ._models import PricingList
     from ._models import ProcessNotAllowed
     from ._models import ProtectionMode
-    from ._models import Protocol1
     from ._models import ProxyServerProperties
     from ._models import PublisherInfo
     from ._models import QueryCheck
@@ -416,17 +379,16 @@ except (SyntaxError, ImportError):
     from ._models import SecurityTask
     from ._models import SecurityTaskParameters
     from ._models import SensitivityLabel
-    from ._models import Sensor
     from ._models import ServerVulnerabilityAssessment
     from ._models import ServerVulnerabilityAssessmentsList
     from ._models import ServerVulnerabilityProperties
     from ._models import ServicePrincipalProperties
     from ._models import Setting
-    from ._models import SettingResource
-    from ._models import Site
+    from ._models import Software
     from ._models import SqlServerVulnerabilityProperties
     from ._models import SubAssessmentStatus
     from ._models import SuppressionAlertsScope
+    from ._models import SystemData
     from ._models import Tags
     from ._models import TagsResource
     from ._models import ThresholdCustomAlertRule
@@ -455,15 +417,11 @@ from ._paged_models import AutoProvisioningSettingPaged
 from ._paged_models import CompliancePaged
 from ._paged_models import ComplianceResultPaged
 from ._paged_models import ConnectorSettingPaged
-from ._paged_models import DevicePaged
 from ._paged_models import DeviceSecurityGroupPaged
 from ._paged_models import DiscoveredSecuritySolutionPaged
 from ._paged_models import ExternalSecuritySolutionPaged
 from ._paged_models import InformationProtectionPolicyPaged
-from ._paged_models import IotAlertModelPaged
-from ._paged_models import IotAlertPaged
-from ._paged_models import IotRecommendationModelPaged
-from ._paged_models import IotRecommendationPaged
+from ._paged_models import IngestionSettingPaged
 from ._paged_models import IoTSecurityAggregatedAlertPaged
 from ._paged_models import IoTSecurityAggregatedRecommendationPaged
 from ._paged_models import IoTSecuritySolutionModelPaged
@@ -482,6 +440,7 @@ from ._paged_models import SecuritySolutionPaged
 from ._paged_models import SecuritySubAssessmentPaged
 from ._paged_models import SecurityTaskPaged
 from ._paged_models import SettingPaged
+from ._paged_models import SoftwarePaged
 from ._paged_models import TopologyResourcePaged
 from ._paged_models import WorkspaceSettingPaged
 from ._security_center_enums import (
@@ -494,10 +453,10 @@ from ._security_center_enums import (
     RecommendationType,
     RecommendationConfigStatus,
     UnmaskedIpLoggingStatus,
+    AdditionalWorkspaceType,
+    AdditionalWorkspaceDataType,
+    CreatedByType,
     ReportedSeverity,
-    AlertSeverity,
-    AlertIntent,
-    RecommendationSeverity,
     AutoProvision,
     Rank,
     AlertNotifications,
@@ -509,7 +468,7 @@ from ._security_center_enums import (
     PropertyType,
     Operator,
     RuleState,
-    Category,
+    Categories,
     UserImpact,
     ImplementationEffort,
     Threats,
@@ -517,8 +476,6 @@ from ._security_center_enums import (
     AssessmentStatusCode,
     Direction,
     TransportProtocol,
-    Intent,
-    AlertStatus,
     Protocol,
     Status,
     StatusReason,
@@ -535,16 +492,11 @@ from ._security_center_enums import (
     RuleStatus,
     RuleSeverity,
     RuleType,
-    VersionKind,
-    MacSignificance,
-    RelationToIpStatus,
-    ManagementState,
-    AuthorizationState,
-    DeviceCriticality,
-    PurdueLevel,
-    ProgrammingState,
-    ScanningFunctionality,
-    DeviceStatus,
+    AlertSeverity,
+    Intent,
+    AlertStatus,
+    BundleType,
+    EndOfSupportStatus,
     ExpandEnum,
     ConnectionType,
     ExpandControlsEnum,
@@ -561,10 +513,15 @@ __all__ = [
     'AdaptiveNetworkHardening',
     'AdaptiveNetworkHardeningEnforceRequest',
     'AdditionalData',
+    'AdditionalWorkspacesProperties',
     'AdvancedThreatProtectionSetting',
     'Alert',
     'AlertEntity',
+    'AlertSimulatorBundlesRequestProperties',
+    'AlertSimulatorRequestBody',
+    'AlertSimulatorRequestProperties',
     'AlertsSuppressionRule',
+    'AlertSyncSettings',
     'AllowedConnectionsResource',
     'AllowlistCustomAlertRule',
     'AmqpC2DMessagesNotInAllowedRange',
@@ -604,6 +561,8 @@ __all__ = [
     'ConnectableResource',
     'ConnectedResource',
     'ConnectedWorkspace',
+    'ConnectionFromIpNotAllowed',
+    'ConnectionStrings',
     'ConnectionToIpNotAllowed',
     'ConnectorSetting',
     'ContainerRegistryVulnerabilityProperties',
@@ -612,18 +571,17 @@ __all__ = [
     'CVSS',
     'DataExportSettings',
     'DenylistCustomAlertRule',
-    'Device',
     'DeviceSecurityGroup',
     'DirectMethodInvokesNotInAllowedRange',
     'DiscoveredSecuritySolution',
     'EffectiveNetworkSecurityGroups',
+    'ErrorAdditionalInfo',
     'ETag',
     'ExternalSecuritySolution',
     'ExternalSecuritySolutionKind1',
     'ExternalSecuritySolutionProperties',
     'FailedLocalLoginsNotInAllowedRange',
     'FileUploadsNotInAllowedRange',
-    'Firmware',
     'GcpCredentialsDetailsProperties',
     'HttpC2DMessagesNotInAllowedRange',
     'HttpC2DRejectedMessagesNotInAllowedRange',
@@ -632,16 +590,9 @@ __all__ = [
     'InformationProtectionKeyword',
     'InformationProtectionPolicy',
     'InformationType',
-    'IotAlert',
-    'IotAlertModel',
-    'IotAlertType',
-    'IotAlertTypeList',
-    'IotDefenderSettingsList',
-    'IotDefenderSettingsModel',
-    'IotRecommendation',
-    'IotRecommendationModel',
-    'IotRecommendationType',
-    'IotRecommendationTypeList',
+    'IngestionConnectionString',
+    'IngestionSetting',
+    'IngestionSettingToken',
     'IoTSecurityAggregatedAlert',
     'IoTSecurityAggregatedAlertPropertiesTopDevicesListItem',
     'IoTSecurityAggregatedRecommendation',
@@ -652,10 +603,7 @@ __all__ = [
     'IoTSecuritySolutionAnalyticsModelList',
     'IoTSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem',
     'IoTSecuritySolutionModel',
-    'IotSensor',
-    'IotSensorsList',
     'IoTSeverityMetrics',
-    'IpAddress',
     'JitNetworkAccessPolicy',
     'JitNetworkAccessPolicyInitiatePort',
     'JitNetworkAccessPolicyInitiateRequest',
@@ -670,32 +618,18 @@ __all__ = [
     'LocalUserNotAllowed',
     'Location',
     'LogAnalyticsIdentifier',
-    'MacAddress',
     'MqttC2DMessagesNotInAllowedRange',
     'MqttC2DRejectedMessagesNotInAllowedRange',
     'MqttD2CMessagesNotInAllowedRange',
-    'NetworkInterface',
-    'OnPremiseIotSensor',
-    'OnPremiseIotSensorsList',
     'OnPremiseResourceDetails',
     'OnPremiseSqlResourceDetails',
     'Operation',
     'OperationDisplay',
-    'PackageDownloadInfo',
-    'PackageDownloads',
-    'PackageDownloadsCentralManager',
-    'PackageDownloadsCentralManagerFull',
-    'PackageDownloadsCentralManagerFullOvf',
-    'PackageDownloadsSensor',
-    'PackageDownloadsSensorFull',
-    'PackageDownloadsSensorFullOvf',
-    'PackageDownloadsThreatIntelligence',
     'PathRecommendation',
     'Pricing',
     'PricingList',
     'ProcessNotAllowed',
     'ProtectionMode',
-    'Protocol1',
     'ProxyServerProperties',
     'PublisherInfo',
     'QueryCheck',
@@ -739,17 +673,16 @@ __all__ = [
     'SecurityTask',
     'SecurityTaskParameters',
     'SensitivityLabel',
-    'Sensor',
     'ServerVulnerabilityAssessment',
     'ServerVulnerabilityAssessmentsList',
     'ServerVulnerabilityProperties',
     'ServicePrincipalProperties',
     'Setting',
-    'SettingResource',
-    'Site',
+    'Software',
     'SqlServerVulnerabilityProperties',
     'SubAssessmentStatus',
     'SuppressionAlertsScope',
+    'SystemData',
     'Tags',
     'TagsResource',
     'ThresholdCustomAlertRule',
@@ -769,15 +702,10 @@ __all__ = [
     'VmRecommendation',
     'WorkspaceSetting',
     'ComplianceResultPaged',
-    'SettingPaged',
     'DeviceSecurityGroupPaged',
     'IoTSecuritySolutionModelPaged',
     'IoTSecurityAggregatedAlertPaged',
     'IoTSecurityAggregatedRecommendationPaged',
-    'IotAlertPaged',
-    'IotAlertModelPaged',
-    'IotRecommendationPaged',
-    'IotRecommendationModelPaged',
     'AscLocationPaged',
     'OperationPaged',
     'SecurityTaskPaged',
@@ -797,7 +725,6 @@ __all__ = [
     'AdaptiveNetworkHardeningPaged',
     'AllowedConnectionsResourcePaged',
     'TopologyResourcePaged',
-    'AlertPaged',
     'JitNetworkAccessPolicyPaged',
     'DiscoveredSecuritySolutionPaged',
     'ExternalSecuritySolutionPaged',
@@ -806,7 +733,10 @@ __all__ = [
     'SecureScoreControlDefinitionItemPaged',
     'SecuritySolutionPaged',
     'ConnectorSettingPaged',
-    'DevicePaged',
+    'AlertPaged',
+    'SettingPaged',
+    'IngestionSettingPaged',
+    'SoftwarePaged',
     'ResourceStatus',
     'PricingTier',
     'ValueType',
@@ -816,10 +746,10 @@ __all__ = [
     'RecommendationType',
     'RecommendationConfigStatus',
     'UnmaskedIpLoggingStatus',
+    'AdditionalWorkspaceType',
+    'AdditionalWorkspaceDataType',
+    'CreatedByType',
     'ReportedSeverity',
-    'AlertSeverity',
-    'AlertIntent',
-    'RecommendationSeverity',
     'AutoProvision',
     'Rank',
     'AlertNotifications',
@@ -831,7 +761,7 @@ __all__ = [
     'PropertyType',
     'Operator',
     'RuleState',
-    'Category',
+    'Categories',
     'UserImpact',
     'ImplementationEffort',
     'Threats',
@@ -839,8 +769,6 @@ __all__ = [
     'AssessmentStatusCode',
     'Direction',
     'TransportProtocol',
-    'Intent',
-    'AlertStatus',
     'Protocol',
     'Status',
     'StatusReason',
@@ -857,16 +785,11 @@ __all__ = [
     'RuleStatus',
     'RuleSeverity',
     'RuleType',
-    'VersionKind',
-    'MacSignificance',
-    'RelationToIpStatus',
-    'ManagementState',
-    'AuthorizationState',
-    'DeviceCriticality',
-    'PurdueLevel',
-    'ProgrammingState',
-    'ScanningFunctionality',
-    'DeviceStatus',
+    'AlertSeverity',
+    'Intent',
+    'AlertStatus',
+    'BundleType',
+    'EndOfSupportStatus',
     'ExpandEnum',
     'ConnectionType',
     'ExpandControlsEnum',

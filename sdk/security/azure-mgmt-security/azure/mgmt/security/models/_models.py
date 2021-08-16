@@ -643,6 +643,32 @@ class AdditionalData(Model):
         self.assessed_resource_type = None
 
 
+class AdditionalWorkspacesProperties(Model):
+    """Properties of the additional workspaces.
+
+    :param workspace: Workspace resource id
+    :type workspace: str
+    :param type: Workspace type. Possible values include: 'Sentinel'. Default
+     value: "Sentinel" .
+    :type type: str or ~azure.mgmt.security.models.AdditionalWorkspaceType
+    :param data_types: List of data types sent to workspace
+    :type data_types: list[str or
+     ~azure.mgmt.security.models.AdditionalWorkspaceDataType]
+    """
+
+    _attribute_map = {
+        'workspace': {'key': 'workspace', 'type': 'str'},
+        'type': {'key': 'type', 'type': 'str'},
+        'data_types': {'key': 'dataTypes', 'type': '[str]'},
+    }
+
+    def __init__(self, **kwargs):
+        super(AdditionalWorkspacesProperties, self).__init__(**kwargs)
+        self.workspace = kwargs.get('workspace', None)
+        self.type = kwargs.get('type', "Sentinel")
+        self.data_types = kwargs.get('data_types', None)
+
+
 class AdvancedThreatProtectionSetting(Resource):
     """The Advanced Threat Protection resource.
 
@@ -878,6 +904,87 @@ class AlertEntity(Model):
         self.type = None
 
 
+class AlertSimulatorRequestProperties(Model):
+    """Describes properties of an alert simulation request.
+
+    You probably want to use the sub-classes and not this class directly. Known
+    sub-classes are: AlertSimulatorBundlesRequestProperties
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param additional_properties: Unmatched properties from the message are
+     deserialized this collection
+    :type additional_properties: dict[str, object]
+    :param kind: Required. Constant filled by server.
+    :type kind: str
+    """
+
+    _validation = {
+        'kind': {'required': True},
+    }
+
+    _attribute_map = {
+        'additional_properties': {'key': '', 'type': '{object}'},
+        'kind': {'key': 'kind', 'type': 'str'},
+    }
+
+    _subtype_map = {
+        'kind': {'Bundles': 'AlertSimulatorBundlesRequestProperties'}
+    }
+
+    def __init__(self, **kwargs):
+        super(AlertSimulatorRequestProperties, self).__init__(**kwargs)
+        self.additional_properties = kwargs.get('additional_properties', None)
+        self.kind = None
+
+
+class AlertSimulatorBundlesRequestProperties(AlertSimulatorRequestProperties):
+    """Simulate alerts according to this bundles.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param additional_properties: Unmatched properties from the message are
+     deserialized this collection
+    :type additional_properties: dict[str, object]
+    :param kind: Required. Constant filled by server.
+    :type kind: str
+    :param bundles: Bundles list.
+    :type bundles: list[str or ~azure.mgmt.security.models.BundleType]
+    """
+
+    _validation = {
+        'kind': {'required': True},
+    }
+
+    _attribute_map = {
+        'additional_properties': {'key': '', 'type': '{object}'},
+        'kind': {'key': 'kind', 'type': 'str'},
+        'bundles': {'key': 'bundles', 'type': '[str]'},
+    }
+
+    def __init__(self, **kwargs):
+        super(AlertSimulatorBundlesRequestProperties, self).__init__(**kwargs)
+        self.bundles = kwargs.get('bundles', None)
+        self.kind = 'Bundles'
+
+
+class AlertSimulatorRequestBody(Model):
+    """Alert Simulator request body.
+
+    :param properties: Alert Simulator request body data.
+    :type properties:
+     ~azure.mgmt.security.models.AlertSimulatorRequestProperties
+    """
+
+    _attribute_map = {
+        'properties': {'key': 'properties', 'type': 'AlertSimulatorRequestProperties'},
+    }
+
+    def __init__(self, **kwargs):
+        super(AlertSimulatorRequestBody, self).__init__(**kwargs)
+        self.properties = kwargs.get('properties', None)
+
+
 class AlertsSuppressionRule(Resource):
     """Describes the suppression rule.
 
@@ -945,6 +1052,93 @@ class AlertsSuppressionRule(Resource):
         self.state = kwargs.get('state', None)
         self.comment = kwargs.get('comment', None)
         self.suppression_alerts_scope = kwargs.get('suppression_alerts_scope', None)
+
+
+class Setting(Resource):
+    """The kind of the security setting.
+
+    You probably want to use the sub-classes and not this class directly. Known
+    sub-classes are: DataExportSettings, AlertSyncSettings
+
+    Variables are only populated by the server, and will be ignored when
+    sending a request.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :ivar id: Resource Id
+    :vartype id: str
+    :ivar name: Resource name
+    :vartype name: str
+    :ivar type: Resource type
+    :vartype type: str
+    :param kind: Required. Constant filled by server.
+    :type kind: str
+    """
+
+    _validation = {
+        'id': {'readonly': True},
+        'name': {'readonly': True},
+        'type': {'readonly': True},
+        'kind': {'required': True},
+    }
+
+    _attribute_map = {
+        'id': {'key': 'id', 'type': 'str'},
+        'name': {'key': 'name', 'type': 'str'},
+        'type': {'key': 'type', 'type': 'str'},
+        'kind': {'key': 'kind', 'type': 'str'},
+    }
+
+    _subtype_map = {
+        'kind': {'DataExportSettings': 'DataExportSettings', 'AlertSyncSettings': 'AlertSyncSettings'}
+    }
+
+    def __init__(self, **kwargs):
+        super(Setting, self).__init__(**kwargs)
+        self.kind = None
+        self.kind = 'Setting'
+
+
+class AlertSyncSettings(Setting):
+    """Represents an alert sync setting.
+
+    Variables are only populated by the server, and will be ignored when
+    sending a request.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :ivar id: Resource Id
+    :vartype id: str
+    :ivar name: Resource name
+    :vartype name: str
+    :ivar type: Resource type
+    :vartype type: str
+    :param kind: Required. Constant filled by server.
+    :type kind: str
+    :param enabled: Required. Is the alert sync setting enabled
+    :type enabled: bool
+    """
+
+    _validation = {
+        'id': {'readonly': True},
+        'name': {'readonly': True},
+        'type': {'readonly': True},
+        'kind': {'required': True},
+        'enabled': {'required': True},
+    }
+
+    _attribute_map = {
+        'id': {'key': 'id', 'type': 'str'},
+        'name': {'key': 'name', 'type': 'str'},
+        'type': {'key': 'type', 'type': 'str'},
+        'kind': {'key': 'kind', 'type': 'str'},
+        'enabled': {'key': 'properties.enabled', 'type': 'bool'},
+    }
+
+    def __init__(self, **kwargs):
+        super(AlertSyncSettings, self).__init__(**kwargs)
+        self.enabled = kwargs.get('enabled', None)
+        self.kind = 'AlertSyncSettings'
 
 
 class AllowedConnectionsResource(Model):
@@ -1053,8 +1247,8 @@ class AllowlistCustomAlertRule(ListCustomAlertRule):
     type) is allowed.
 
     You probably want to use the sub-classes and not this class directly. Known
-    sub-classes are: ConnectionToIpNotAllowed, LocalUserNotAllowed,
-    ProcessNotAllowed
+    sub-classes are: ConnectionToIpNotAllowed, ConnectionFromIpNotAllowed,
+    LocalUserNotAllowed, ProcessNotAllowed
 
     Variables are only populated by the server, and will be ignored when
     sending a request.
@@ -1096,7 +1290,7 @@ class AllowlistCustomAlertRule(ListCustomAlertRule):
     }
 
     _subtype_map = {
-        'rule_type': {'ConnectionToIpNotAllowed': 'ConnectionToIpNotAllowed', 'LocalUserNotAllowed': 'LocalUserNotAllowed', 'ProcessNotAllowed': 'ProcessNotAllowed'}
+        'rule_type': {'ConnectionToIpNotAllowed': 'ConnectionToIpNotAllowed', 'ConnectionFromIpNotAllowed': 'ConnectionFromIpNotAllowed', 'LocalUserNotAllowed': 'LocalUserNotAllowed', 'ProcessNotAllowed': 'ProcessNotAllowed'}
     }
 
     def __init__(self, **kwargs):
@@ -1797,7 +1991,10 @@ class AutomationSource(Model):
     https://aka.ms/ASCAutomationSchemas.
 
     :param event_source: A valid event source type. Possible values include:
-     'Assessments', 'SubAssessments', 'Alerts'
+     'Assessments', 'SubAssessments', 'Alerts', 'SecureScores',
+     'SecureScoresSnapshot', 'SecureScoreControls',
+     'SecureScoreControlsSnapshot', 'RegulatoryComplianceAssessment',
+     'RegulatoryComplianceAssessmentSnapshot'
     :type event_source: str or ~azure.mgmt.security.models.EventSource
     :param rule_sets: A set of rules which evaluate upon event interception. A
      logical disjunction is applied between defined rule sets (logical 'or').
@@ -2335,33 +2532,49 @@ class CefSolutionProperties(ExternalSecuritySolutionProperties):
 
 
 class CloudError(Model):
-    """Error response structure.
+    """Common error response for all Azure Resource Manager APIs to return error
+    details for failed operations. (This also follows the OData error response
+    format.).
 
     Variables are only populated by the server, and will be ignored when
     sending a request.
 
-    :ivar code: An identifier for the error. Codes are invariant and are
-     intended to be consumed programmatically.
+    :ivar code: The error code.
     :vartype code: str
-    :ivar message: A message describing the error, intended to be suitable for
-     display in a user interface.
+    :ivar message: The error message.
     :vartype message: str
+    :ivar target: The error target.
+    :vartype target: str
+    :ivar details: The error details.
+    :vartype details: list[~azure.mgmt.security.models.CloudErrorBody]
+    :ivar additional_info: The error additional info.
+    :vartype additional_info:
+     list[~azure.mgmt.security.models.ErrorAdditionalInfo]
     """
 
     _validation = {
         'code': {'readonly': True},
         'message': {'readonly': True},
+        'target': {'readonly': True},
+        'details': {'readonly': True},
+        'additional_info': {'readonly': True},
     }
 
     _attribute_map = {
         'code': {'key': 'error.code', 'type': 'str'},
         'message': {'key': 'error.message', 'type': 'str'},
+        'target': {'key': 'error.target', 'type': 'str'},
+        'details': {'key': 'error.details', 'type': '[CloudErrorBody]'},
+        'additional_info': {'key': 'error.additionalInfo', 'type': '[ErrorAdditionalInfo]'},
     }
 
     def __init__(self, **kwargs):
         super(CloudError, self).__init__(**kwargs)
         self.code = None
         self.message = None
+        self.target = None
+        self.details = None
+        self.additional_info = None
 
 
 class CloudErrorException(HttpOperationError):
@@ -2374,6 +2587,50 @@ class CloudErrorException(HttpOperationError):
     def __init__(self, deserialize, response, *args):
 
         super(CloudErrorException, self).__init__(deserialize, response, 'CloudError', *args)
+
+
+class CloudErrorBody(Model):
+    """The error detail.
+
+    Variables are only populated by the server, and will be ignored when
+    sending a request.
+
+    :ivar code: The error code.
+    :vartype code: str
+    :ivar message: The error message.
+    :vartype message: str
+    :ivar target: The error target.
+    :vartype target: str
+    :ivar details: The error details.
+    :vartype details: list[~azure.mgmt.security.models.CloudErrorBody]
+    :ivar additional_info: The error additional info.
+    :vartype additional_info:
+     list[~azure.mgmt.security.models.ErrorAdditionalInfo]
+    """
+
+    _validation = {
+        'code': {'readonly': True},
+        'message': {'readonly': True},
+        'target': {'readonly': True},
+        'details': {'readonly': True},
+        'additional_info': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'code': {'key': 'code', 'type': 'str'},
+        'message': {'key': 'message', 'type': 'str'},
+        'target': {'key': 'target', 'type': 'str'},
+        'details': {'key': 'details', 'type': '[CloudErrorBody]'},
+        'additional_info': {'key': 'additionalInfo', 'type': '[ErrorAdditionalInfo]'},
+    }
+
+    def __init__(self, **kwargs):
+        super(CloudErrorBody, self).__init__(**kwargs)
+        self.code = None
+        self.message = None
+        self.target = None
+        self.details = None
+        self.additional_info = None
 
 
 class Compliance(Resource):
@@ -2578,6 +2835,76 @@ class ConnectedWorkspace(Model):
     def __init__(self, **kwargs):
         super(ConnectedWorkspace, self).__init__(**kwargs)
         self.id = kwargs.get('id', None)
+
+
+class ConnectionFromIpNotAllowed(AllowlistCustomAlertRule):
+    """Inbound connection from an ip that isn't allowed. Allow list consists of
+    ipv4 or ipv6 range in CIDR notation.
+
+    Variables are only populated by the server, and will be ignored when
+    sending a request.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :ivar display_name: The display name of the custom alert.
+    :vartype display_name: str
+    :ivar description: The description of the custom alert.
+    :vartype description: str
+    :param is_enabled: Required. Status of the custom alert.
+    :type is_enabled: bool
+    :param rule_type: Required. Constant filled by server.
+    :type rule_type: str
+    :ivar value_type: The value type of the items in the list. Possible values
+     include: 'IpCidr', 'String'
+    :vartype value_type: str or ~azure.mgmt.security.models.ValueType
+    :param allowlist_values: Required. The values to allow. The format of the
+     values depends on the rule type.
+    :type allowlist_values: list[str]
+    """
+
+    _validation = {
+        'display_name': {'readonly': True},
+        'description': {'readonly': True},
+        'is_enabled': {'required': True},
+        'rule_type': {'required': True},
+        'value_type': {'readonly': True},
+        'allowlist_values': {'required': True},
+    }
+
+    _attribute_map = {
+        'display_name': {'key': 'displayName', 'type': 'str'},
+        'description': {'key': 'description', 'type': 'str'},
+        'is_enabled': {'key': 'isEnabled', 'type': 'bool'},
+        'rule_type': {'key': 'ruleType', 'type': 'str'},
+        'value_type': {'key': 'valueType', 'type': 'str'},
+        'allowlist_values': {'key': 'allowlistValues', 'type': '[str]'},
+    }
+
+    def __init__(self, **kwargs):
+        super(ConnectionFromIpNotAllowed, self).__init__(**kwargs)
+        self.rule_type = 'ConnectionFromIpNotAllowed'
+
+
+class ConnectionStrings(Model):
+    """Connection string for ingesting security data and logs.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :param value: Required. Connection strings
+    :type value: list[~azure.mgmt.security.models.IngestionConnectionString]
+    """
+
+    _validation = {
+        'value': {'required': True},
+    }
+
+    _attribute_map = {
+        'value': {'key': 'value', 'type': '[IngestionConnectionString]'},
+    }
+
+    def __init__(self, **kwargs):
+        super(ConnectionStrings, self).__init__(**kwargs)
+        self.value = kwargs.get('value', None)
 
 
 class ConnectionToIpNotAllowed(AllowlistCustomAlertRule):
@@ -2789,95 +3116,6 @@ class CVSS(Model):
         self.base = None
 
 
-class SettingResource(Resource):
-    """The kind of the security setting.
-
-    You probably want to use the sub-classes and not this class directly. Known
-    sub-classes are: Setting
-
-    Variables are only populated by the server, and will be ignored when
-    sending a request.
-
-    All required parameters must be populated in order to send to Azure.
-
-    :ivar id: Resource Id
-    :vartype id: str
-    :ivar name: Resource name
-    :vartype name: str
-    :ivar type: Resource type
-    :vartype type: str
-    :param kind: Required. Constant filled by server.
-    :type kind: str
-    """
-
-    _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'kind': {'required': True},
-    }
-
-    _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'kind': {'key': 'kind', 'type': 'str'},
-    }
-
-    _subtype_map = {
-        'kind': {'Setting': 'Setting'}
-    }
-
-    def __init__(self, **kwargs):
-        super(SettingResource, self).__init__(**kwargs)
-        self.kind = None
-        self.kind = 'SettingResource'
-
-
-class Setting(SettingResource):
-    """Represents a security setting in Azure Security Center.
-
-    You probably want to use the sub-classes and not this class directly. Known
-    sub-classes are: DataExportSettings
-
-    Variables are only populated by the server, and will be ignored when
-    sending a request.
-
-    All required parameters must be populated in order to send to Azure.
-
-    :ivar id: Resource Id
-    :vartype id: str
-    :ivar name: Resource name
-    :vartype name: str
-    :ivar type: Resource type
-    :vartype type: str
-    :param kind: Required. Constant filled by server.
-    :type kind: str
-    """
-
-    _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'kind': {'required': True},
-    }
-
-    _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'kind': {'key': 'kind', 'type': 'str'},
-    }
-
-    _subtype_map = {
-        'kind': {'DataExportSettings': 'DataExportSettings'}
-    }
-
-    def __init__(self, **kwargs):
-        super(Setting, self).__init__(**kwargs)
-        self.kind = 'Setting'
-
-
 class DataExportSettings(Setting):
     """Represents a data export setting.
 
@@ -2894,7 +3132,7 @@ class DataExportSettings(Setting):
     :vartype type: str
     :param kind: Required. Constant filled by server.
     :type kind: str
-    :param enabled: Required. Is the data export setting is enabled
+    :param enabled: Required. Is the data export setting enabled
     :type enabled: bool
     """
 
@@ -2967,165 +3205,6 @@ class DenylistCustomAlertRule(ListCustomAlertRule):
         super(DenylistCustomAlertRule, self).__init__(**kwargs)
         self.denylist_values = kwargs.get('denylist_values', None)
         self.rule_type = 'DenylistCustomAlertRule'
-
-
-class Device(Resource):
-    """Device model.
-
-    Variables are only populated by the server, and will be ignored when
-    sending a request.
-
-    :ivar id: Resource Id
-    :vartype id: str
-    :ivar name: Resource name
-    :vartype name: str
-    :ivar type: Resource type
-    :vartype type: str
-    :param display_name: Device display name given by the collector
-    :type display_name: str
-    :param device_type: Device type.
-    :type device_type: str
-    :ivar source_name: The source that created the device
-    :vartype source_name: str
-    :ivar network_interfaces: List of network interfaces.
-    :vartype network_interfaces:
-     list[~azure.mgmt.security.models.NetworkInterface]
-    :ivar vendor: Device vendor
-    :vartype vendor: str
-    :param os_name: Device operating system name.
-    :type os_name: str
-    :ivar protocols: List of protocols.
-    :vartype protocols: list[~azure.mgmt.security.models.Protocol1]
-    :ivar last_active_time: last time the device was active in the network
-    :vartype last_active_time: datetime
-    :ivar last_update_time: last time the device was updated
-    :vartype last_update_time: datetime
-    :ivar management_state: Managed state of the device. Possible values
-     include: 'Managed', 'Unmanaged'
-    :vartype management_state: str or
-     ~azure.mgmt.security.models.ManagementState
-    :param authorization_state: Authorized state of the device. Possible
-     values include: 'Authorized', 'Unauthorized'. Default value:
-     "Unauthorized" .
-    :type authorization_state: str or
-     ~azure.mgmt.security.models.AuthorizationState
-    :param device_criticality: Device criticality. Possible values include:
-     'Important', 'Standard'. Default value: "Standard" .
-    :type device_criticality: str or
-     ~azure.mgmt.security.models.DeviceCriticality
-    :param purdue_level: Purdue level of the device. Possible values include:
-     'ProcessControl', 'Supervisory', 'Enterprise'. Default value:
-     "ProcessControl" .
-    :type purdue_level: str or ~azure.mgmt.security.models.PurdueLevel
-    :param notes: user notes for the device, up to 300 characters.
-    :type notes: str
-    :ivar firmwares: List of device firmwares.
-    :vartype firmwares: list[~azure.mgmt.security.models.Firmware]
-    :ivar discovery_time: Discovered time of the device.
-    :vartype discovery_time: datetime
-    :ivar programming_state: Indicates whether this device is programming.
-     Possible values include: 'ProgrammingDevice', 'NotProgrammingDevice'
-    :vartype programming_state: str or
-     ~azure.mgmt.security.models.ProgrammingState
-    :ivar last_programming_time: last time the device was programming or
-     programed.
-    :vartype last_programming_time: datetime
-    :ivar scanning_functionality: Indicates whether the device is a scanner.
-     Possible values include: 'ScannerDevice', 'NotScannerDevice'
-    :vartype scanning_functionality: str or
-     ~azure.mgmt.security.models.ScanningFunctionality
-    :ivar last_scan_time: last time the device was scanning.
-    :vartype last_scan_time: datetime
-    :ivar risk_score: risk score of the device.
-    :vartype risk_score: int
-    :ivar sensors: List of sensors that scanned this device.
-    :vartype sensors: list[~azure.mgmt.security.models.Sensor]
-    :ivar site:
-    :vartype site: ~azure.mgmt.security.models.Site
-    :ivar device_status: Device status. Possible values include: 'Active',
-     'Removed'
-    :vartype device_status: str or ~azure.mgmt.security.models.DeviceStatus
-    """
-
-    _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'source_name': {'readonly': True},
-        'network_interfaces': {'readonly': True},
-        'vendor': {'readonly': True},
-        'protocols': {'readonly': True},
-        'last_active_time': {'readonly': True},
-        'last_update_time': {'readonly': True},
-        'management_state': {'readonly': True},
-        'firmwares': {'readonly': True},
-        'discovery_time': {'readonly': True},
-        'programming_state': {'readonly': True},
-        'last_programming_time': {'readonly': True},
-        'scanning_functionality': {'readonly': True},
-        'last_scan_time': {'readonly': True},
-        'risk_score': {'readonly': True, 'maximum': 100, 'minimum': 0},
-        'sensors': {'readonly': True},
-        'site': {'readonly': True},
-        'device_status': {'readonly': True},
-    }
-
-    _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'display_name': {'key': 'properties.displayName', 'type': 'str'},
-        'device_type': {'key': 'properties.deviceType', 'type': 'str'},
-        'source_name': {'key': 'properties.sourceName', 'type': 'str'},
-        'network_interfaces': {'key': 'properties.networkInterfaces', 'type': '[NetworkInterface]'},
-        'vendor': {'key': 'properties.vendor', 'type': 'str'},
-        'os_name': {'key': 'properties.osName', 'type': 'str'},
-        'protocols': {'key': 'properties.protocols', 'type': '[Protocol1]'},
-        'last_active_time': {'key': 'properties.lastActiveTime', 'type': 'iso-8601'},
-        'last_update_time': {'key': 'properties.lastUpdateTime', 'type': 'iso-8601'},
-        'management_state': {'key': 'properties.managementState', 'type': 'str'},
-        'authorization_state': {'key': 'properties.authorizationState', 'type': 'str'},
-        'device_criticality': {'key': 'properties.deviceCriticality', 'type': 'str'},
-        'purdue_level': {'key': 'properties.purdueLevel', 'type': 'str'},
-        'notes': {'key': 'properties.notes', 'type': 'str'},
-        'firmwares': {'key': 'properties.firmwares', 'type': '[Firmware]'},
-        'discovery_time': {'key': 'properties.discoveryTime', 'type': 'iso-8601'},
-        'programming_state': {'key': 'properties.programmingState', 'type': 'str'},
-        'last_programming_time': {'key': 'properties.lastProgrammingTime', 'type': 'iso-8601'},
-        'scanning_functionality': {'key': 'properties.scanningFunctionality', 'type': 'str'},
-        'last_scan_time': {'key': 'properties.lastScanTime', 'type': 'iso-8601'},
-        'risk_score': {'key': 'properties.riskScore', 'type': 'int'},
-        'sensors': {'key': 'properties.sensors', 'type': '[Sensor]'},
-        'site': {'key': 'properties.site', 'type': 'Site'},
-        'device_status': {'key': 'properties.deviceStatus', 'type': 'str'},
-    }
-
-    def __init__(self, **kwargs):
-        super(Device, self).__init__(**kwargs)
-        self.display_name = kwargs.get('display_name', None)
-        self.device_type = kwargs.get('device_type', None)
-        self.source_name = None
-        self.network_interfaces = None
-        self.vendor = None
-        self.os_name = kwargs.get('os_name', None)
-        self.protocols = None
-        self.last_active_time = None
-        self.last_update_time = None
-        self.management_state = None
-        self.authorization_state = kwargs.get('authorization_state', "Unauthorized")
-        self.device_criticality = kwargs.get('device_criticality', "Standard")
-        self.purdue_level = kwargs.get('purdue_level', "ProcessControl")
-        self.notes = kwargs.get('notes', None)
-        self.firmwares = None
-        self.discovery_time = None
-        self.programming_state = None
-        self.last_programming_time = None
-        self.scanning_functionality = None
-        self.last_scan_time = None
-        self.risk_score = None
-        self.sensors = None
-        self.site = None
-        self.device_status = None
 
 
 class DeviceSecurityGroup(Resource):
@@ -3309,6 +3388,34 @@ class EffectiveNetworkSecurityGroups(Model):
         self.network_security_groups = kwargs.get('network_security_groups', None)
 
 
+class ErrorAdditionalInfo(Model):
+    """The resource management error additional info.
+
+    Variables are only populated by the server, and will be ignored when
+    sending a request.
+
+    :ivar type: The additional info type.
+    :vartype type: str
+    :ivar info: The additional info.
+    :vartype info: object
+    """
+
+    _validation = {
+        'type': {'readonly': True},
+        'info': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'type': {'key': 'type', 'type': 'str'},
+        'info': {'key': 'info', 'type': 'object'},
+    }
+
+    def __init__(self, **kwargs):
+        super(ErrorAdditionalInfo, self).__init__(**kwargs)
+        self.type = None
+        self.info = None
+
+
 class ETag(Model):
     """Entity tag is used for comparing two or more entities from the same
     requested resource.
@@ -3441,61 +3548,6 @@ class FileUploadsNotInAllowedRange(TimeWindowCustomAlertRule):
     def __init__(self, **kwargs):
         super(FileUploadsNotInAllowedRange, self).__init__(**kwargs)
         self.rule_type = 'FileUploadsNotInAllowedRange'
-
-
-class Firmware(Model):
-    """Firmware information.
-
-    Variables are only populated by the server, and will be ignored when
-    sending a request.
-
-    :ivar module_address: Address of the specific module a firmware is related
-     to
-    :vartype module_address: str
-    :ivar rack: Rack number of the module a firmware is related to.
-    :vartype rack: str
-    :ivar slot: Slot number in the rack of the module a firmware is related to
-    :vartype slot: str
-    :ivar serial: Serial of the firmware
-    :vartype serial: str
-    :ivar model: Firmware model
-    :vartype model: str
-    :ivar version: Firmware version
-    :vartype version: str
-    :ivar additional_data:  A bag of fields which extends the firmware
-     information.
-    :vartype additional_data: object
-    """
-
-    _validation = {
-        'module_address': {'readonly': True},
-        'rack': {'readonly': True},
-        'slot': {'readonly': True},
-        'serial': {'readonly': True},
-        'model': {'readonly': True},
-        'version': {'readonly': True},
-        'additional_data': {'readonly': True},
-    }
-
-    _attribute_map = {
-        'module_address': {'key': 'moduleAddress', 'type': 'str'},
-        'rack': {'key': 'rack', 'type': 'str'},
-        'slot': {'key': 'slot', 'type': 'str'},
-        'serial': {'key': 'serial', 'type': 'str'},
-        'model': {'key': 'model', 'type': 'str'},
-        'version': {'key': 'version', 'type': 'str'},
-        'additional_data': {'key': 'additionalData', 'type': 'object'},
-    }
-
-    def __init__(self, **kwargs):
-        super(Firmware, self).__init__(**kwargs)
-        self.module_address = None
-        self.rack = None
-        self.slot = None
-        self.serial = None
-        self.model = None
-        self.version = None
-        self.additional_data = None
 
 
 class GcpCredentialsDetailsProperties(AuthenticationDetailsProperties):
@@ -3922,287 +3974,37 @@ class InformationType(Model):
         self.keywords = kwargs.get('keywords', None)
 
 
-class IotAlert(Model):
-    """IoT alert.
+class IngestionConnectionString(Model):
+    """Connection string for ingesting security data and logs.
 
     Variables are only populated by the server, and will be ignored when
     sending a request.
 
-    :ivar system_alert_id: Holds the product canonical identifier of the alert
-     within the scope of a product
-    :vartype system_alert_id: str
-    :ivar compromised_entity: Display name of the main entity being reported
-     on
-    :vartype compromised_entity: str
-    :ivar alert_type: The type name of the alert
-    :vartype alert_type: str
-    :ivar start_time_utc: The impact start time of the alert (the time of the
-     first event or activity included in the alert)
-    :vartype start_time_utc: str
-    :ivar end_time_utc: The impact end time of the alert (the time of the last
-     event or activity included in the alert)
-    :vartype end_time_utc: str
-    :param entities: A list of entities related to the alert
-    :type entities: list[object]
-    :param extended_properties: A bag of fields which extends the alert
-     information
-    :type extended_properties: object
+    :ivar location: The region where ingested logs and data resides
+    :vartype location: str
+    :ivar value: Connection string value
+    :vartype value: str
     """
 
     _validation = {
-        'system_alert_id': {'readonly': True},
-        'compromised_entity': {'readonly': True},
-        'alert_type': {'readonly': True},
-        'start_time_utc': {'readonly': True},
-        'end_time_utc': {'readonly': True},
-    }
-
-    _attribute_map = {
-        'system_alert_id': {'key': 'properties.systemAlertId', 'type': 'str'},
-        'compromised_entity': {'key': 'properties.compromisedEntity', 'type': 'str'},
-        'alert_type': {'key': 'properties.alertType', 'type': 'str'},
-        'start_time_utc': {'key': 'properties.startTimeUtc', 'type': 'str'},
-        'end_time_utc': {'key': 'properties.endTimeUtc', 'type': 'str'},
-        'entities': {'key': 'properties.entities', 'type': '[object]'},
-        'extended_properties': {'key': 'properties.extendedProperties', 'type': 'object'},
-    }
-
-    def __init__(self, **kwargs):
-        super(IotAlert, self).__init__(**kwargs)
-        self.system_alert_id = None
-        self.compromised_entity = None
-        self.alert_type = None
-        self.start_time_utc = None
-        self.end_time_utc = None
-        self.entities = kwargs.get('entities', None)
-        self.extended_properties = kwargs.get('extended_properties', None)
-
-
-class IotAlertModel(Model):
-    """IoT alert.
-
-    Variables are only populated by the server, and will be ignored when
-    sending a request.
-
-    :ivar system_alert_id: Holds the product canonical identifier of the alert
-     within the scope of a product
-    :vartype system_alert_id: str
-    :ivar compromised_entity: Display name of the main entity being reported
-     on
-    :vartype compromised_entity: str
-    :ivar alert_type: The type name of the alert
-    :vartype alert_type: str
-    :ivar start_time_utc: The impact start time of the alert (the time of the
-     first event or activity included in the alert)
-    :vartype start_time_utc: str
-    :ivar end_time_utc: The impact end time of the alert (the time of the last
-     event or activity included in the alert)
-    :vartype end_time_utc: str
-    :param entities: A list of entities related to the alert
-    :type entities: list[object]
-    :param extended_properties: A bag of fields which extends the alert
-     information
-    :type extended_properties: object
-    """
-
-    _validation = {
-        'system_alert_id': {'readonly': True},
-        'compromised_entity': {'readonly': True},
-        'alert_type': {'readonly': True},
-        'start_time_utc': {'readonly': True},
-        'end_time_utc': {'readonly': True},
-    }
-
-    _attribute_map = {
-        'system_alert_id': {'key': 'properties.systemAlertId', 'type': 'str'},
-        'compromised_entity': {'key': 'properties.compromisedEntity', 'type': 'str'},
-        'alert_type': {'key': 'properties.alertType', 'type': 'str'},
-        'start_time_utc': {'key': 'properties.startTimeUtc', 'type': 'str'},
-        'end_time_utc': {'key': 'properties.endTimeUtc', 'type': 'str'},
-        'entities': {'key': 'properties.entities', 'type': '[object]'},
-        'extended_properties': {'key': 'properties.extendedProperties', 'type': 'object'},
-    }
-
-    def __init__(self, **kwargs):
-        super(IotAlertModel, self).__init__(**kwargs)
-        self.system_alert_id = None
-        self.compromised_entity = None
-        self.alert_type = None
-        self.start_time_utc = None
-        self.end_time_utc = None
-        self.entities = kwargs.get('entities', None)
-        self.extended_properties = kwargs.get('extended_properties', None)
-
-
-class IotAlertType(Resource):
-    """IoT alert type.
-
-    Variables are only populated by the server, and will be ignored when
-    sending a request.
-
-    :ivar id: Resource Id
-    :vartype id: str
-    :ivar name: Resource name
-    :vartype name: str
-    :ivar type: Resource type
-    :vartype type: str
-    :ivar alert_display_name: The display name of the alert
-    :vartype alert_display_name: str
-    :ivar severity: The severity of the alert. Possible values include:
-     'Informational', 'Low', 'Medium', 'High'
-    :vartype severity: str or ~azure.mgmt.security.models.AlertSeverity
-    :ivar description: Description of the suspected vulnerability and meaning.
-    :vartype description: str
-    :ivar provider_name: The name of the alert provider or internal partner
-    :vartype provider_name: str
-    :ivar product_name: The name of the product which published this alert
-    :vartype product_name: str
-    :ivar product_component_name: The name of a component inside the product
-     which generated the alert
-    :vartype product_component_name: str
-    :ivar vendor_name: The name of the vendor that raise the alert
-    :vartype vendor_name: str
-    :ivar intent: Kill chain related intent behind the alert. Could contain
-     multiple enum values (separated by commas). Possible values include:
-     'Unknown', 'PreAttack', 'InitialAccess', 'Persistence',
-     'PrivilegeEscalation', 'DefenseEvasion', 'CredentialAccess', 'Discovery',
-     'LateralMovement', 'Execution', 'Collection', 'Exfiltration',
-     'CommandAndControl', 'Impact', 'Probing', 'Exploitation'
-    :vartype intent: str or ~azure.mgmt.security.models.AlertIntent
-    :ivar remediation_steps: Manual action items to take to remediate the
-     alert
-    :vartype remediation_steps: list[str]
-    """
-
-    _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'alert_display_name': {'readonly': True},
-        'severity': {'readonly': True},
-        'description': {'readonly': True},
-        'provider_name': {'readonly': True},
-        'product_name': {'readonly': True},
-        'product_component_name': {'readonly': True},
-        'vendor_name': {'readonly': True},
-        'intent': {'readonly': True},
-        'remediation_steps': {'readonly': True},
-    }
-
-    _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'alert_display_name': {'key': 'properties.alertDisplayName', 'type': 'str'},
-        'severity': {'key': 'properties.severity', 'type': 'str'},
-        'description': {'key': 'properties.description', 'type': 'str'},
-        'provider_name': {'key': 'properties.providerName', 'type': 'str'},
-        'product_name': {'key': 'properties.productName', 'type': 'str'},
-        'product_component_name': {'key': 'properties.productComponentName', 'type': 'str'},
-        'vendor_name': {'key': 'properties.vendorName', 'type': 'str'},
-        'intent': {'key': 'properties.intent', 'type': 'str'},
-        'remediation_steps': {'key': 'properties.remediationSteps', 'type': '[str]'},
-    }
-
-    def __init__(self, **kwargs):
-        super(IotAlertType, self).__init__(**kwargs)
-        self.alert_display_name = None
-        self.severity = None
-        self.description = None
-        self.provider_name = None
-        self.product_name = None
-        self.product_component_name = None
-        self.vendor_name = None
-        self.intent = None
-        self.remediation_steps = None
-
-
-class IotAlertTypeList(Model):
-    """List of alert types.
-
-    :param value: List data
-    :type value: list[~azure.mgmt.security.models.IotAlertType]
-    """
-
-    _attribute_map = {
-        'value': {'key': 'value', 'type': '[IotAlertType]'},
-    }
-
-    def __init__(self, **kwargs):
-        super(IotAlertTypeList, self).__init__(**kwargs)
-        self.value = kwargs.get('value', None)
-
-
-class IotDefenderSettingsList(Model):
-    """List of IoT Defender settings.
-
-    Variables are only populated by the server, and will be ignored when
-    sending a request.
-
-    :ivar value: List data
-    :vartype value: list[~azure.mgmt.security.models.IotDefenderSettingsModel]
-    """
-
-    _validation = {
+        'location': {'readonly': True},
         'value': {'readonly': True},
     }
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[IotDefenderSettingsModel]'},
+        'location': {'key': 'location', 'type': 'str'},
+        'value': {'key': 'value', 'type': 'str'},
     }
 
     def __init__(self, **kwargs):
-        super(IotDefenderSettingsList, self).__init__(**kwargs)
+        super(IngestionConnectionString, self).__init__(**kwargs)
+        self.location = None
         self.value = None
 
 
-class IotDefenderSettingsModel(Resource):
-    """IoT Defender settings.
-
-    Variables are only populated by the server, and will be ignored when
-    sending a request.
-
-    All required parameters must be populated in order to send to Azure.
-
-    :ivar id: Resource Id
-    :vartype id: str
-    :ivar name: Resource name
-    :vartype name: str
-    :ivar type: Resource type
-    :vartype type: str
-    :param device_quota: Required. Size of the device quota (as a opposed to a
-     Pay as You Go billing model). Value is required to be in multiples of
-     1000.
-    :type device_quota: int
-    :param sentinel_workspace_resource_ids: Required. Sentinel Workspace
-     Resource Ids
-    :type sentinel_workspace_resource_ids: list[str]
-    """
-
-    _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'device_quota': {'required': True, 'minimum': 1000},
-        'sentinel_workspace_resource_ids': {'required': True},
-    }
-
-    _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'device_quota': {'key': 'properties.deviceQuota', 'type': 'int'},
-        'sentinel_workspace_resource_ids': {'key': 'properties.sentinelWorkspaceResourceIds', 'type': '[str]'},
-    }
-
-    def __init__(self, **kwargs):
-        super(IotDefenderSettingsModel, self).__init__(**kwargs)
-        self.device_quota = kwargs.get('device_quota', None)
-        self.sentinel_workspace_resource_ids = kwargs.get('sentinel_workspace_resource_ids', None)
-
-
-class IotRecommendation(Resource):
-    """IoT recommendation.
+class IngestionSetting(Resource):
+    """Configures how to correlate scan data and logs with resources associated
+    with the subscription.
 
     Variables are only populated by the server, and will be ignored when
     sending a request.
@@ -4213,189 +4015,51 @@ class IotRecommendation(Resource):
     :vartype name: str
     :ivar type: Resource type
     :vartype type: str
-    :ivar device_id: Identifier of the device being reported on
-    :vartype device_id: str
-    :ivar recommendation_type: The type name of the recommendation
-    :vartype recommendation_type: str
-    :ivar discovered_time_utc: The discovery time of the recommendation
-    :vartype discovered_time_utc: str
-    :param recommendation_additional_data: A bag of fields which extends the
-     recommendation information
-    :type recommendation_additional_data: object
+    :param properties: Ingestion setting data
+    :type properties: object
     """
 
     _validation = {
         'id': {'readonly': True},
         'name': {'readonly': True},
         'type': {'readonly': True},
-        'device_id': {'readonly': True},
-        'recommendation_type': {'readonly': True},
-        'discovered_time_utc': {'readonly': True},
     }
 
     _attribute_map = {
         'id': {'key': 'id', 'type': 'str'},
         'name': {'key': 'name', 'type': 'str'},
         'type': {'key': 'type', 'type': 'str'},
-        'device_id': {'key': 'properties.deviceId', 'type': 'str'},
-        'recommendation_type': {'key': 'properties.recommendationType', 'type': 'str'},
-        'discovered_time_utc': {'key': 'properties.discoveredTimeUtc', 'type': 'str'},
-        'recommendation_additional_data': {'key': 'properties.recommendationAdditionalData', 'type': 'object'},
+        'properties': {'key': 'properties', 'type': 'object'},
     }
 
     def __init__(self, **kwargs):
-        super(IotRecommendation, self).__init__(**kwargs)
-        self.device_id = None
-        self.recommendation_type = None
-        self.discovered_time_utc = None
-        self.recommendation_additional_data = kwargs.get('recommendation_additional_data', None)
+        super(IngestionSetting, self).__init__(**kwargs)
+        self.properties = kwargs.get('properties', None)
 
 
-class IotRecommendationModel(Resource):
-    """IoT recommendation.
+class IngestionSettingToken(Model):
+    """Configures how to correlate scan data and logs with resources associated
+    with the subscription.
 
     Variables are only populated by the server, and will be ignored when
     sending a request.
 
-    :ivar id: Resource Id
-    :vartype id: str
-    :ivar name: Resource name
-    :vartype name: str
-    :ivar type: Resource type
-    :vartype type: str
-    :ivar device_id: Identifier of the device being reported on
-    :vartype device_id: str
-    :ivar recommendation_type: The type name of the recommendation
-    :vartype recommendation_type: str
-    :ivar discovered_time_utc: The discovery time of the recommendation
-    :vartype discovered_time_utc: str
-    :param recommendation_additional_data: A bag of fields which extends the
-     recommendation information
-    :type recommendation_additional_data: object
+    :ivar token: The token is used for correlating security data and logs with
+     the resources in the subscription.
+    :vartype token: str
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'device_id': {'readonly': True},
-        'recommendation_type': {'readonly': True},
-        'discovered_time_utc': {'readonly': True},
+        'token': {'readonly': True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'device_id': {'key': 'properties.deviceId', 'type': 'str'},
-        'recommendation_type': {'key': 'properties.recommendationType', 'type': 'str'},
-        'discovered_time_utc': {'key': 'properties.discoveredTimeUtc', 'type': 'str'},
-        'recommendation_additional_data': {'key': 'properties.recommendationAdditionalData', 'type': 'object'},
+        'token': {'key': 'token', 'type': 'str'},
     }
 
     def __init__(self, **kwargs):
-        super(IotRecommendationModel, self).__init__(**kwargs)
-        self.device_id = None
-        self.recommendation_type = None
-        self.discovered_time_utc = None
-        self.recommendation_additional_data = kwargs.get('recommendation_additional_data', None)
-
-
-class IotRecommendationType(Resource):
-    """IoT recommendation type.
-
-    Variables are only populated by the server, and will be ignored when
-    sending a request.
-
-    :ivar id: Resource Id
-    :vartype id: str
-    :ivar name: Resource name
-    :vartype name: str
-    :ivar type: Resource type
-    :vartype type: str
-    :ivar recommendation_display_name: The display name of the recommendation
-    :vartype recommendation_display_name: str
-    :ivar severity: The severity of the recommendation. Possible values
-     include: 'Unknown', 'NotApplicable', 'Healthy', 'OffByPolicy', 'Low',
-     'Medium', 'High'
-    :vartype severity: str or
-     ~azure.mgmt.security.models.RecommendationSeverity
-    :ivar description: Description of the suspected vulnerability and meaning.
-    :vartype description: str
-    :ivar product_name: The name of the product which published this
-     recommendation
-    :vartype product_name: str
-    :ivar product_component_name: The name of a component inside the product
-     which generated the recommendation
-    :vartype product_component_name: str
-    :ivar vendor_name: The name of the vendor that raised the recommendation
-    :vartype vendor_name: str
-    :ivar control: The name of the recommendation's control category
-    :vartype control: str
-    :ivar remediation_steps: Manual action items to take to resolve the
-     recommendation
-    :vartype remediation_steps: list[str]
-    :ivar data_source: The alert's data source
-    :vartype data_source: str
-    """
-
-    _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'recommendation_display_name': {'readonly': True},
-        'severity': {'readonly': True},
-        'description': {'readonly': True},
-        'product_name': {'readonly': True},
-        'product_component_name': {'readonly': True},
-        'vendor_name': {'readonly': True},
-        'control': {'readonly': True},
-        'remediation_steps': {'readonly': True},
-        'data_source': {'readonly': True},
-    }
-
-    _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'recommendation_display_name': {'key': 'properties.recommendationDisplayName', 'type': 'str'},
-        'severity': {'key': 'properties.severity', 'type': 'str'},
-        'description': {'key': 'properties.description', 'type': 'str'},
-        'product_name': {'key': 'properties.productName', 'type': 'str'},
-        'product_component_name': {'key': 'properties.productComponentName', 'type': 'str'},
-        'vendor_name': {'key': 'properties.vendorName', 'type': 'str'},
-        'control': {'key': 'properties.control', 'type': 'str'},
-        'remediation_steps': {'key': 'properties.remediationSteps', 'type': '[str]'},
-        'data_source': {'key': 'properties.dataSource', 'type': 'str'},
-    }
-
-    def __init__(self, **kwargs):
-        super(IotRecommendationType, self).__init__(**kwargs)
-        self.recommendation_display_name = None
-        self.severity = None
-        self.description = None
-        self.product_name = None
-        self.product_component_name = None
-        self.vendor_name = None
-        self.control = None
-        self.remediation_steps = None
-        self.data_source = None
-
-
-class IotRecommendationTypeList(Model):
-    """List of recommendation types.
-
-    :param value: List data
-    :type value: list[~azure.mgmt.security.models.IotRecommendationType]
-    """
-
-    _attribute_map = {
-        'value': {'key': 'value', 'type': '[IotRecommendationType]'},
-    }
-
-    def __init__(self, **kwargs):
-        super(IotRecommendationTypeList, self).__init__(**kwargs)
-        self.value = kwargs.get('value', None)
+        super(IngestionSettingToken, self).__init__(**kwargs)
+        self.token = None
 
 
 class IoTSecurityAggregatedAlert(Model):
@@ -4430,7 +4094,7 @@ class IoTSecurityAggregatedAlert(Model):
     :vartype description: str
     :ivar count: Number of alerts occurrences within the aggregated time
      window.
-    :vartype count: int
+    :vartype count: long
     :ivar effected_resource_type: Azure resource ID of the resource that
      received the alerts.
     :vartype effected_resource_type: str
@@ -4478,7 +4142,7 @@ class IoTSecurityAggregatedAlert(Model):
         'reported_severity': {'key': 'properties.reportedSeverity', 'type': 'str'},
         'remediation_steps': {'key': 'properties.remediationSteps', 'type': 'str'},
         'description': {'key': 'properties.description', 'type': 'str'},
-        'count': {'key': 'properties.count', 'type': 'int'},
+        'count': {'key': 'properties.count', 'type': 'long'},
         'effected_resource_type': {'key': 'properties.effectedResourceType', 'type': 'str'},
         'system_source': {'key': 'properties.systemSource', 'type': 'str'},
         'action_taken': {'key': 'properties.actionTaken', 'type': 'str'},
@@ -4516,7 +4180,7 @@ class IoTSecurityAggregatedAlertPropertiesTopDevicesListItem(Model):
     :ivar device_id: Name of the device.
     :vartype device_id: str
     :ivar alerts_count: Number of alerts raised for this device.
-    :vartype alerts_count: int
+    :vartype alerts_count: long
     :ivar last_occurrence: Most recent time this alert was raised for this
      device, on this day.
     :vartype last_occurrence: str
@@ -4530,7 +4194,7 @@ class IoTSecurityAggregatedAlertPropertiesTopDevicesListItem(Model):
 
     _attribute_map = {
         'device_id': {'key': 'deviceId', 'type': 'str'},
-        'alerts_count': {'key': 'alertsCount', 'type': 'int'},
+        'alerts_count': {'key': 'alertsCount', 'type': 'long'},
         'last_occurrence': {'key': 'lastOccurrence', 'type': 'str'},
     }
 
@@ -4574,10 +4238,10 @@ class IoTSecurityAggregatedRecommendation(Model):
      ~azure.mgmt.security.models.ReportedSeverity
     :ivar healthy_devices: Number of healthy devices within the IoT Security
      solution.
-    :vartype healthy_devices: int
+    :vartype healthy_devices: long
     :ivar unhealthy_device_count: Number of unhealthy devices within the IoT
      Security solution.
-    :vartype unhealthy_device_count: int
+    :vartype unhealthy_device_count: long
     :ivar log_analytics_query: Log analytics query for getting the list of
      affected devices/alerts.
     :vartype log_analytics_query: str
@@ -4610,8 +4274,8 @@ class IoTSecurityAggregatedRecommendation(Model):
         'detected_by': {'key': 'properties.detectedBy', 'type': 'str'},
         'remediation_steps': {'key': 'properties.remediationSteps', 'type': 'str'},
         'reported_severity': {'key': 'properties.reportedSeverity', 'type': 'str'},
-        'healthy_devices': {'key': 'properties.healthyDevices', 'type': 'int'},
-        'unhealthy_device_count': {'key': 'properties.unhealthyDeviceCount', 'type': 'int'},
+        'healthy_devices': {'key': 'properties.healthyDevices', 'type': 'long'},
+        'unhealthy_device_count': {'key': 'properties.unhealthyDeviceCount', 'type': 'long'},
         'log_analytics_query': {'key': 'properties.logAnalyticsQuery', 'type': 'str'},
     }
 
@@ -4643,7 +4307,7 @@ class IoTSecurityAlertedDevice(Model):
     :ivar device_id: Device identifier.
     :vartype device_id: str
     :ivar alerts_count: Number of alerts raised for this device.
-    :vartype alerts_count: int
+    :vartype alerts_count: long
     """
 
     _validation = {
@@ -4653,7 +4317,7 @@ class IoTSecurityAlertedDevice(Model):
 
     _attribute_map = {
         'device_id': {'key': 'deviceId', 'type': 'str'},
-        'alerts_count': {'key': 'alertsCount', 'type': 'int'},
+        'alerts_count': {'key': 'alertsCount', 'type': 'long'},
     }
 
     def __init__(self, **kwargs):
@@ -4676,7 +4340,7 @@ class IoTSecurityDeviceAlert(Model):
     :vartype reported_severity: str or
      ~azure.mgmt.security.models.ReportedSeverity
     :ivar alerts_count: Number of alerts raised for this alert type.
-    :vartype alerts_count: int
+    :vartype alerts_count: long
     """
 
     _validation = {
@@ -4688,7 +4352,7 @@ class IoTSecurityDeviceAlert(Model):
     _attribute_map = {
         'alert_display_name': {'key': 'alertDisplayName', 'type': 'str'},
         'reported_severity': {'key': 'reportedSeverity', 'type': 'str'},
-        'alerts_count': {'key': 'alertsCount', 'type': 'int'},
+        'alerts_count': {'key': 'alertsCount', 'type': 'long'},
     }
 
     def __init__(self, **kwargs):
@@ -4712,7 +4376,7 @@ class IoTSecurityDeviceRecommendation(Model):
     :vartype reported_severity: str or
      ~azure.mgmt.security.models.ReportedSeverity
     :ivar devices_count: Number of devices with this recommendation.
-    :vartype devices_count: int
+    :vartype devices_count: long
     """
 
     _validation = {
@@ -4724,7 +4388,7 @@ class IoTSecurityDeviceRecommendation(Model):
     _attribute_map = {
         'recommendation_display_name': {'key': 'recommendationDisplayName', 'type': 'str'},
         'reported_severity': {'key': 'reportedSeverity', 'type': 'str'},
-        'devices_count': {'key': 'devicesCount', 'type': 'int'},
+        'devices_count': {'key': 'devicesCount', 'type': 'long'},
     }
 
     def __init__(self, **kwargs):
@@ -4750,7 +4414,7 @@ class IoTSecuritySolutionAnalyticsModel(Resource):
     :vartype metrics: ~azure.mgmt.security.models.IoTSeverityMetrics
     :ivar unhealthy_device_count: Number of unhealthy devices within your IoT
      Security solution.
-    :vartype unhealthy_device_count: int
+    :vartype unhealthy_device_count: long
     :ivar devices_metrics: List of device metrics by the aggregation date.
     :vartype devices_metrics:
      list[~azure.mgmt.security.models.IoTSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem]
@@ -4781,7 +4445,7 @@ class IoTSecuritySolutionAnalyticsModel(Resource):
         'name': {'key': 'name', 'type': 'str'},
         'type': {'key': 'type', 'type': 'str'},
         'metrics': {'key': 'properties.metrics', 'type': 'IoTSeverityMetrics'},
-        'unhealthy_device_count': {'key': 'properties.unhealthyDeviceCount', 'type': 'int'},
+        'unhealthy_device_count': {'key': 'properties.unhealthyDeviceCount', 'type': 'long'},
         'devices_metrics': {'key': 'properties.devicesMetrics', 'type': '[IoTSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem]'},
         'top_alerted_devices': {'key': 'properties.topAlertedDevices', 'type': '[IoTSecurityAlertedDevice]'},
         'most_prevalent_device_alerts': {'key': 'properties.mostPrevalentDeviceAlerts', 'type': '[IoTSecurityDeviceAlert]'},
@@ -4899,6 +4563,12 @@ class IoTSecuritySolutionModel(Model):
      .
     :type unmasked_ip_logging_status: str or
      ~azure.mgmt.security.models.UnmaskedIpLoggingStatus
+    :param additional_workspaces: List of additional workspaces
+    :type additional_workspaces:
+     list[~azure.mgmt.security.models.AdditionalWorkspacesProperties]
+    :ivar system_data: Azure Resource Manager metadata containing createdBy
+     and modifiedBy information.
+    :vartype system_data: ~azure.mgmt.security.models.SystemData
     """
 
     _validation = {
@@ -4908,6 +4578,7 @@ class IoTSecuritySolutionModel(Model):
         'display_name': {'required': True},
         'iot_hubs': {'required': True},
         'auto_discovered_resources': {'readonly': True},
+        'system_data': {'readonly': True},
     }
 
     _attribute_map = {
@@ -4926,6 +4597,8 @@ class IoTSecuritySolutionModel(Model):
         'auto_discovered_resources': {'key': 'properties.autoDiscoveredResources', 'type': '[str]'},
         'recommendations_configuration': {'key': 'properties.recommendationsConfiguration', 'type': '[RecommendationConfigurationProperties]'},
         'unmasked_ip_logging_status': {'key': 'properties.unmaskedIpLoggingStatus', 'type': 'str'},
+        'additional_workspaces': {'key': 'properties.additionalWorkspaces', 'type': '[AdditionalWorkspacesProperties]'},
+        'system_data': {'key': 'systemData', 'type': 'SystemData'},
     }
 
     def __init__(self, **kwargs):
@@ -4945,80 +4618,25 @@ class IoTSecuritySolutionModel(Model):
         self.auto_discovered_resources = None
         self.recommendations_configuration = kwargs.get('recommendations_configuration', None)
         self.unmasked_ip_logging_status = kwargs.get('unmasked_ip_logging_status', "Disabled")
-
-
-class IotSensor(Resource):
-    """IoT sensor.
-
-    Variables are only populated by the server, and will be ignored when
-    sending a request.
-
-    :ivar id: Resource Id
-    :vartype id: str
-    :ivar name: Resource name
-    :vartype name: str
-    :ivar type: Resource type
-    :vartype type: str
-    :param properties: IoT sensor properties
-    :type properties: object
-    """
-
-    _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-    }
-
-    _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'properties': {'key': 'properties', 'type': 'object'},
-    }
-
-    def __init__(self, **kwargs):
-        super(IotSensor, self).__init__(**kwargs)
-        self.properties = kwargs.get('properties', None)
-
-
-class IotSensorsList(Model):
-    """List of IoT sensors.
-
-    Variables are only populated by the server, and will be ignored when
-    sending a request.
-
-    :ivar value: List data
-    :vartype value: list[~azure.mgmt.security.models.IotSensor]
-    """
-
-    _validation = {
-        'value': {'readonly': True},
-    }
-
-    _attribute_map = {
-        'value': {'key': 'value', 'type': '[IotSensor]'},
-    }
-
-    def __init__(self, **kwargs):
-        super(IotSensorsList, self).__init__(**kwargs)
-        self.value = None
+        self.additional_workspaces = kwargs.get('additional_workspaces', None)
+        self.system_data = None
 
 
 class IoTSeverityMetrics(Model):
     """IoT Security solution analytics severity metrics.
 
     :param high: Count of high severity alerts/recommendations.
-    :type high: int
+    :type high: long
     :param medium: Count of medium severity alerts/recommendations.
-    :type medium: int
+    :type medium: long
     :param low: Count of low severity alerts/recommendations.
-    :type low: int
+    :type low: long
     """
 
     _attribute_map = {
-        'high': {'key': 'high', 'type': 'int'},
-        'medium': {'key': 'medium', 'type': 'int'},
-        'low': {'key': 'low', 'type': 'int'},
+        'high': {'key': 'high', 'type': 'long'},
+        'medium': {'key': 'medium', 'type': 'long'},
+        'low': {'key': 'low', 'type': 'long'},
     }
 
     def __init__(self, **kwargs):
@@ -5026,49 +4644,6 @@ class IoTSeverityMetrics(Model):
         self.high = kwargs.get('high', None)
         self.medium = kwargs.get('medium', None)
         self.low = kwargs.get('low', None)
-
-
-class IpAddress(Model):
-    """IP Address information.
-
-    Variables are only populated by the server, and will be ignored when
-    sending a request.
-
-    :ivar v4_address: IPV4 address
-    :vartype v4_address: str
-    :ivar detection_time: Detection time of the ip address.
-    :vartype detection_time: datetime
-    :ivar subnet_cidr: Subnet Classless Inter-Domain Routing
-    :vartype subnet_cidr: str
-    :ivar fqdn: Fully qualified domain name
-    :vartype fqdn: str
-    :ivar fqdn_last_lookup_time: FQDN last lookup time.
-    :vartype fqdn_last_lookup_time: datetime
-    """
-
-    _validation = {
-        'v4_address': {'readonly': True},
-        'detection_time': {'readonly': True},
-        'subnet_cidr': {'readonly': True},
-        'fqdn': {'readonly': True},
-        'fqdn_last_lookup_time': {'readonly': True},
-    }
-
-    _attribute_map = {
-        'v4_address': {'key': 'v4Address', 'type': 'str'},
-        'detection_time': {'key': 'detectionTime', 'type': 'iso-8601'},
-        'subnet_cidr': {'key': 'subnetCidr', 'type': 'str'},
-        'fqdn': {'key': 'fqdn', 'type': 'str'},
-        'fqdn_last_lookup_time': {'key': 'fqdnLastLookupTime', 'type': 'iso-8601'},
-    }
-
-    def __init__(self, **kwargs):
-        super(IpAddress, self).__init__(**kwargs)
-        self.v4_address = None
-        self.detection_time = None
-        self.subnet_cidr = None
-        self.fqdn = None
-        self.fqdn_last_lookup_time = None
 
 
 class JitNetworkAccessPolicy(Model):
@@ -5558,48 +5133,6 @@ class LogAnalyticsIdentifier(ResourceIdentifier):
         self.type = 'LogAnalytics'
 
 
-class MacAddress(Model):
-    """MAC Address information.
-
-    Variables are only populated by the server, and will be ignored when
-    sending a request.
-
-    :ivar address: MAC address
-    :vartype address: str
-    :ivar detection_time: Detection time of the mac address.
-    :vartype detection_time: datetime
-    :ivar significance: Indicates whether this is the primary secondary MAC
-     address of the device. Possible values include: 'Primary', 'Secondary'
-    :vartype significance: str or ~azure.mgmt.security.models.MacSignificance
-    :ivar relation_to_ip_status: Indicates whether the relation of the mac to
-     the ip address is certain or a guess. Possible values include: 'Guess',
-     'Certain'
-    :vartype relation_to_ip_status: str or
-     ~azure.mgmt.security.models.RelationToIpStatus
-    """
-
-    _validation = {
-        'address': {'readonly': True},
-        'detection_time': {'readonly': True},
-        'significance': {'readonly': True},
-        'relation_to_ip_status': {'readonly': True},
-    }
-
-    _attribute_map = {
-        'address': {'key': 'address', 'type': 'str'},
-        'detection_time': {'key': 'detectionTime', 'type': 'iso-8601'},
-        'significance': {'key': 'significance', 'type': 'str'},
-        'relation_to_ip_status': {'key': 'relationToIpStatus', 'type': 'str'},
-    }
-
-    def __init__(self, **kwargs):
-        super(MacAddress, self).__init__(**kwargs)
-        self.address = None
-        self.detection_time = None
-        self.significance = None
-        self.relation_to_ip_status = None
-
-
 class MqttC2DMessagesNotInAllowedRange(TimeWindowCustomAlertRule):
     """Number of cloud to device messages (MQTT protocol) is not in allowed range.
 
@@ -5746,94 +5279,6 @@ class MqttD2CMessagesNotInAllowedRange(TimeWindowCustomAlertRule):
     def __init__(self, **kwargs):
         super(MqttD2CMessagesNotInAllowedRange, self).__init__(**kwargs)
         self.rule_type = 'MqttD2CMessagesNotInAllowedRange'
-
-
-class NetworkInterface(Model):
-    """Network interface.
-
-    Variables are only populated by the server, and will be ignored when
-    sending a request.
-
-    :param ip_address:
-    :type ip_address: ~azure.mgmt.security.models.IpAddress
-    :param mac_address:
-    :type mac_address: ~azure.mgmt.security.models.MacAddress
-    :ivar vlans: List of device vlans.
-    :vartype vlans: list[str]
-    """
-
-    _validation = {
-        'vlans': {'readonly': True},
-    }
-
-    _attribute_map = {
-        'ip_address': {'key': 'ipAddress', 'type': 'IpAddress'},
-        'mac_address': {'key': 'macAddress', 'type': 'MacAddress'},
-        'vlans': {'key': 'vlans', 'type': '[str]'},
-    }
-
-    def __init__(self, **kwargs):
-        super(NetworkInterface, self).__init__(**kwargs)
-        self.ip_address = kwargs.get('ip_address', None)
-        self.mac_address = kwargs.get('mac_address', None)
-        self.vlans = None
-
-
-class OnPremiseIotSensor(Resource):
-    """On-premise IoT sensor.
-
-    Variables are only populated by the server, and will be ignored when
-    sending a request.
-
-    :ivar id: Resource Id
-    :vartype id: str
-    :ivar name: Resource name
-    :vartype name: str
-    :ivar type: Resource type
-    :vartype type: str
-    :param properties: On-premise IoT sensor properties
-    :type properties: object
-    """
-
-    _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-    }
-
-    _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'properties': {'key': 'properties', 'type': 'object'},
-    }
-
-    def __init__(self, **kwargs):
-        super(OnPremiseIotSensor, self).__init__(**kwargs)
-        self.properties = kwargs.get('properties', None)
-
-
-class OnPremiseIotSensorsList(Model):
-    """List of on-premise IoT sensors.
-
-    Variables are only populated by the server, and will be ignored when
-    sending a request.
-
-    :ivar value: List data
-    :vartype value: list[~azure.mgmt.security.models.OnPremiseIotSensor]
-    """
-
-    _validation = {
-        'value': {'readonly': True},
-    }
-
-    _attribute_map = {
-        'value': {'key': 'value', 'type': '[OnPremiseIotSensor]'},
-    }
-
-    def __init__(self, **kwargs):
-        super(OnPremiseIotSensorsList, self).__init__(**kwargs)
-        self.value = None
 
 
 class OnPremiseResourceDetails(ResourceDetails):
@@ -6006,280 +5451,6 @@ class OperationDisplay(Model):
         self.resource = None
         self.operation = None
         self.description = None
-
-
-class PackageDownloadInfo(Model):
-    """Information on a specific package download.
-
-    Variables are only populated by the server, and will be ignored when
-    sending a request.
-
-    :ivar version: Version number
-    :vartype version: str
-    :param link: Download link
-    :type link: str
-    :ivar version_kind: Kind of the version. Possible values include:
-     'Latest', 'Previous', 'Preview'
-    :vartype version_kind: str or ~azure.mgmt.security.models.VersionKind
-    """
-
-    _validation = {
-        'version': {'readonly': True},
-        'version_kind': {'readonly': True},
-    }
-
-    _attribute_map = {
-        'version': {'key': 'version', 'type': 'str'},
-        'link': {'key': 'link', 'type': 'str'},
-        'version_kind': {'key': 'versionKind', 'type': 'str'},
-    }
-
-    def __init__(self, **kwargs):
-        super(PackageDownloadInfo, self).__init__(**kwargs)
-        self.version = None
-        self.link = kwargs.get('link', None)
-        self.version_kind = None
-
-
-class PackageDownloads(Model):
-    """Information about package downloads.
-
-    Variables are only populated by the server, and will be ignored when
-    sending a request.
-
-    :ivar sensor: Contains all Sensor binary downloads
-    :vartype sensor: ~azure.mgmt.security.models.PackageDownloadsSensor
-    :ivar central_manager: All downloads for Central Manager
-    :vartype central_manager:
-     ~azure.mgmt.security.models.PackageDownloadsCentralManager
-    :ivar threat_intelligence: All downloads for threat intelligence
-    :vartype threat_intelligence:
-     ~azure.mgmt.security.models.PackageDownloadsThreatIntelligence
-    """
-
-    _validation = {
-        'sensor': {'readonly': True},
-        'central_manager': {'readonly': True},
-        'threat_intelligence': {'readonly': True},
-    }
-
-    _attribute_map = {
-        'sensor': {'key': 'sensor', 'type': 'PackageDownloadsSensor'},
-        'central_manager': {'key': 'centralManager', 'type': 'PackageDownloadsCentralManager'},
-        'threat_intelligence': {'key': 'threatIntelligence', 'type': 'PackageDownloadsThreatIntelligence'},
-    }
-
-    def __init__(self, **kwargs):
-        super(PackageDownloads, self).__init__(**kwargs)
-        self.sensor = None
-        self.central_manager = None
-        self.threat_intelligence = None
-
-
-class PackageDownloadsCentralManager(Model):
-    """All downloads for Central Manager.
-
-    Variables are only populated by the server, and will be ignored when
-    sending a request.
-
-    :ivar full: Contains full package downloads
-    :vartype full:
-     ~azure.mgmt.security.models.PackageDownloadsCentralManagerFull
-    :ivar upgrade: Central Manager upgrade package downloads (on existing
-     installations)
-    :vartype upgrade: list[~azure.mgmt.security.models.PackageDownloadInfo]
-    """
-
-    _validation = {
-        'full': {'readonly': True},
-        'upgrade': {'readonly': True},
-    }
-
-    _attribute_map = {
-        'full': {'key': 'full', 'type': 'PackageDownloadsCentralManagerFull'},
-        'upgrade': {'key': 'upgrade', 'type': '[PackageDownloadInfo]'},
-    }
-
-    def __init__(self, **kwargs):
-        super(PackageDownloadsCentralManager, self).__init__(**kwargs)
-        self.full = None
-        self.upgrade = None
-
-
-class PackageDownloadsCentralManagerFull(Model):
-    """Contains full package downloads.
-
-    Variables are only populated by the server, and will be ignored when
-    sending a request.
-
-    :ivar iso: Contains all ISO full versions of the Central Manager
-    :vartype iso: list[~azure.mgmt.security.models.PackageDownloadInfo]
-    :ivar ovf: Contains all OVF (virtual machine) full versions of the Central
-     Manager
-    :vartype ovf:
-     ~azure.mgmt.security.models.PackageDownloadsCentralManagerFullOvf
-    """
-
-    _validation = {
-        'iso': {'readonly': True},
-        'ovf': {'readonly': True},
-    }
-
-    _attribute_map = {
-        'iso': {'key': 'iso', 'type': '[PackageDownloadInfo]'},
-        'ovf': {'key': 'ovf', 'type': 'PackageDownloadsCentralManagerFullOvf'},
-    }
-
-    def __init__(self, **kwargs):
-        super(PackageDownloadsCentralManagerFull, self).__init__(**kwargs)
-        self.iso = None
-        self.ovf = None
-
-
-class PackageDownloadsCentralManagerFullOvf(Model):
-    """Contains all OVF (virtual machine) full versions of the Central Manager.
-
-    Variables are only populated by the server, and will be ignored when
-    sending a request.
-
-    :ivar enterprise: The Enterprise package type
-    :vartype enterprise: list[~azure.mgmt.security.models.PackageDownloadInfo]
-    :ivar enterprise_high_availability: The EnterpriseHighAvailability package
-     type
-    :vartype enterprise_high_availability:
-     list[~azure.mgmt.security.models.PackageDownloadInfo]
-    :ivar medium: The Medium package type
-    :vartype medium: list[~azure.mgmt.security.models.PackageDownloadInfo]
-    :ivar medium_high_availability: The MediumHighAvailability package type
-    :vartype medium_high_availability:
-     list[~azure.mgmt.security.models.PackageDownloadInfo]
-    """
-
-    _validation = {
-        'enterprise': {'readonly': True},
-        'enterprise_high_availability': {'readonly': True},
-        'medium': {'readonly': True},
-        'medium_high_availability': {'readonly': True},
-    }
-
-    _attribute_map = {
-        'enterprise': {'key': 'enterprise', 'type': '[PackageDownloadInfo]'},
-        'enterprise_high_availability': {'key': 'enterpriseHighAvailability', 'type': '[PackageDownloadInfo]'},
-        'medium': {'key': 'medium', 'type': '[PackageDownloadInfo]'},
-        'medium_high_availability': {'key': 'mediumHighAvailability', 'type': '[PackageDownloadInfo]'},
-    }
-
-    def __init__(self, **kwargs):
-        super(PackageDownloadsCentralManagerFullOvf, self).__init__(**kwargs)
-        self.enterprise = None
-        self.enterprise_high_availability = None
-        self.medium = None
-        self.medium_high_availability = None
-
-
-class PackageDownloadsSensor(Model):
-    """Contains all Sensor binary downloads.
-
-    Variables are only populated by the server, and will be ignored when
-    sending a request.
-
-    :ivar full: Contains full package downloads
-    :vartype full: ~azure.mgmt.security.models.PackageDownloadsSensorFull
-    :param upgrade: Sensor upgrade package downloads (on existing
-     installations)
-    :type upgrade: list[~azure.mgmt.security.models.PackageDownloadInfo]
-    """
-
-    _validation = {
-        'full': {'readonly': True},
-    }
-
-    _attribute_map = {
-        'full': {'key': 'full', 'type': 'PackageDownloadsSensorFull'},
-        'upgrade': {'key': 'upgrade', 'type': '[PackageDownloadInfo]'},
-    }
-
-    def __init__(self, **kwargs):
-        super(PackageDownloadsSensor, self).__init__(**kwargs)
-        self.full = None
-        self.upgrade = kwargs.get('upgrade', None)
-
-
-class PackageDownloadsSensorFull(Model):
-    """Contains full package downloads.
-
-    Variables are only populated by the server, and will be ignored when
-    sending a request.
-
-    :ivar iso: Contains all ISO full versions for the sensor
-    :vartype iso: list[~azure.mgmt.security.models.PackageDownloadInfo]
-    :param ovf: Contains all OVF (virtual machine) full versions for the
-     sensor
-    :type ovf: ~azure.mgmt.security.models.PackageDownloadsSensorFullOvf
-    """
-
-    _validation = {
-        'iso': {'readonly': True},
-    }
-
-    _attribute_map = {
-        'iso': {'key': 'iso', 'type': '[PackageDownloadInfo]'},
-        'ovf': {'key': 'ovf', 'type': 'PackageDownloadsSensorFullOvf'},
-    }
-
-    def __init__(self, **kwargs):
-        super(PackageDownloadsSensorFull, self).__init__(**kwargs)
-        self.iso = None
-        self.ovf = kwargs.get('ovf', None)
-
-
-class PackageDownloadsSensorFullOvf(Model):
-    """Contains all OVF (virtual machine) full versions for the sensor.
-
-    Variables are only populated by the server, and will be ignored when
-    sending a request.
-
-    :ivar enterprise: Enterprise package type
-    :vartype enterprise: list[~azure.mgmt.security.models.PackageDownloadInfo]
-    :ivar medium: Medium package type
-    :vartype medium: list[~azure.mgmt.security.models.PackageDownloadInfo]
-    :ivar line: Line package type
-    :vartype line: list[~azure.mgmt.security.models.PackageDownloadInfo]
-    """
-
-    _validation = {
-        'enterprise': {'readonly': True},
-        'medium': {'readonly': True},
-        'line': {'readonly': True},
-    }
-
-    _attribute_map = {
-        'enterprise': {'key': 'enterprise', 'type': '[PackageDownloadInfo]'},
-        'medium': {'key': 'medium', 'type': '[PackageDownloadInfo]'},
-        'line': {'key': 'line', 'type': '[PackageDownloadInfo]'},
-    }
-
-    def __init__(self, **kwargs):
-        super(PackageDownloadsSensorFullOvf, self).__init__(**kwargs)
-        self.enterprise = None
-        self.medium = None
-        self.line = None
-
-
-class PackageDownloadsThreatIntelligence(Model):
-    """All downloads for threat intelligence.
-
-    :param link: Download link
-    :type link: str
-    """
-
-    _attribute_map = {
-        'link': {'key': 'link', 'type': 'str'},
-    }
-
-    def __init__(self, **kwargs):
-        super(PackageDownloadsThreatIntelligence, self).__init__(**kwargs)
-        self.link = kwargs.get('link', None)
 
 
 class PathRecommendation(Model):
@@ -6482,33 +5653,6 @@ class ProtectionMode(Model):
         self.msi = kwargs.get('msi', None)
         self.script = kwargs.get('script', None)
         self.executable = kwargs.get('executable', None)
-
-
-class Protocol1(Model):
-    """Protocol data.
-
-    Variables are only populated by the server, and will be ignored when
-    sending a request.
-
-    :ivar name: Protocol name
-    :vartype name: str
-    :param identifiers: list of protocol identifiers.
-    :type identifiers: str
-    """
-
-    _validation = {
-        'name': {'readonly': True},
-    }
-
-    _attribute_map = {
-        'name': {'key': 'name', 'type': 'str'},
-        'identifiers': {'key': 'identifiers', 'type': 'str'},
-    }
-
-    def __init__(self, **kwargs):
-        super(Protocol1, self).__init__(**kwargs)
-        self.name = None
-        self.identifiers = kwargs.get('identifiers', None)
 
 
 class ProxyServerProperties(Model):
@@ -7630,8 +6774,8 @@ class SecurityAssessmentMetadata(Resource):
     :param remediation_description: Human readable description of what you
      should do to mitigate this security issue
     :type remediation_description: str
-    :param category:
-    :type category: list[str or ~azure.mgmt.security.models.Category]
+    :param categories:
+    :type categories: list[str or ~azure.mgmt.security.models.Categories]
     :param severity: Required. The severity level of the assessment. Possible
      values include: 'Low', 'Medium', 'High'
     :type severity: str or ~azure.mgmt.security.models.Severity
@@ -7675,7 +6819,7 @@ class SecurityAssessmentMetadata(Resource):
         'policy_definition_id': {'key': 'properties.policyDefinitionId', 'type': 'str'},
         'description': {'key': 'properties.description', 'type': 'str'},
         'remediation_description': {'key': 'properties.remediationDescription', 'type': 'str'},
-        'category': {'key': 'properties.category', 'type': '[str]'},
+        'categories': {'key': 'properties.categories', 'type': '[str]'},
         'severity': {'key': 'properties.severity', 'type': 'str'},
         'user_impact': {'key': 'properties.userImpact', 'type': 'str'},
         'implementation_effort': {'key': 'properties.implementationEffort', 'type': 'str'},
@@ -7691,7 +6835,7 @@ class SecurityAssessmentMetadata(Resource):
         self.policy_definition_id = None
         self.description = kwargs.get('description', None)
         self.remediation_description = kwargs.get('remediation_description', None)
-        self.category = kwargs.get('category', None)
+        self.categories = kwargs.get('categories', None)
         self.severity = kwargs.get('severity', None)
         self.user_impact = kwargs.get('user_impact', None)
         self.implementation_effort = kwargs.get('implementation_effort', None)
@@ -7753,8 +6897,8 @@ class SecurityAssessmentMetadataProperties(Model):
     :param remediation_description: Human readable description of what you
      should do to mitigate this security issue
     :type remediation_description: str
-    :param category:
-    :type category: list[str or ~azure.mgmt.security.models.Category]
+    :param categories:
+    :type categories: list[str or ~azure.mgmt.security.models.Categories]
     :param severity: Required. The severity level of the assessment. Possible
      values include: 'Low', 'Medium', 'High'
     :type severity: str or ~azure.mgmt.security.models.Severity
@@ -7792,7 +6936,7 @@ class SecurityAssessmentMetadataProperties(Model):
         'policy_definition_id': {'key': 'policyDefinitionId', 'type': 'str'},
         'description': {'key': 'description', 'type': 'str'},
         'remediation_description': {'key': 'remediationDescription', 'type': 'str'},
-        'category': {'key': 'category', 'type': '[str]'},
+        'categories': {'key': 'categories', 'type': '[str]'},
         'severity': {'key': 'severity', 'type': 'str'},
         'user_impact': {'key': 'userImpact', 'type': 'str'},
         'implementation_effort': {'key': 'implementationEffort', 'type': 'str'},
@@ -7808,7 +6952,7 @@ class SecurityAssessmentMetadataProperties(Model):
         self.policy_definition_id = None
         self.description = kwargs.get('description', None)
         self.remediation_description = kwargs.get('remediation_description', None)
-        self.category = kwargs.get('category', None)
+        self.categories = kwargs.get('categories', None)
         self.severity = kwargs.get('severity', None)
         self.user_impact = kwargs.get('user_impact', None)
         self.implementation_effort = kwargs.get('implementation_effort', None)
@@ -8253,34 +7397,6 @@ class SensitivityLabel(Model):
         self.enabled = kwargs.get('enabled', None)
 
 
-class Sensor(Model):
-    """Sensor data.
-
-    Variables are only populated by the server, and will be ignored when
-    sending a request.
-
-    :ivar name: Sensor name
-    :vartype name: str
-    :ivar zone: Zone Name.
-    :vartype zone: str
-    """
-
-    _validation = {
-        'name': {'readonly': True},
-        'zone': {'readonly': True},
-    }
-
-    _attribute_map = {
-        'name': {'key': 'name', 'type': 'str'},
-        'zone': {'key': 'zone', 'type': 'str'},
-    }
-
-    def __init__(self, **kwargs):
-        super(Sensor, self).__init__(**kwargs)
-        self.name = None
-        self.zone = None
-
-
 class ServerVulnerabilityAssessment(Resource):
     """Describes the server vulnerability assessment details on a resource.
 
@@ -8418,27 +7534,76 @@ class ServicePrincipalProperties(Model):
         self.secret = kwargs.get('secret', None)
 
 
-class Site(Model):
-    """Site data.
+class Software(Resource):
+    """Represents a software data.
 
     Variables are only populated by the server, and will be ignored when
     sending a request.
 
-    :ivar display_name: Site display name
-    :vartype display_name: str
+    :ivar id: Resource Id
+    :vartype id: str
+    :ivar name: Resource name
+    :vartype name: str
+    :ivar type: Resource type
+    :vartype type: str
+    :param device_id: Unique identifier for the virtual machine in the
+     service.
+    :type device_id: str
+    :param os_platform: Platform of the operating system running on the
+     device.
+    :type os_platform: str
+    :param vendor: Name of the software vendor.
+    :type vendor: str
+    :param software_name: Name of the software product.
+    :type software_name: str
+    :param version: Version number of the software product.
+    :type version: str
+    :param end_of_support_status: End of support status. Possible values
+     include: 'None', 'noLongerSupported', 'versionNoLongerSupported',
+     'upcomingNoLongerSupported', 'upcomingVersionNoLongerSupported'
+    :type end_of_support_status: str or
+     ~azure.mgmt.security.models.EndOfSupportStatus
+    :param end_of_support_date: The end of support date in case the product is
+     upcoming end of support.
+    :type end_of_support_date: str
+    :param number_of_known_vulnerabilities: Number of weaknesses.
+    :type number_of_known_vulnerabilities: int
+    :param first_seen_at: First time that the software was seen in the device.
+    :type first_seen_at: str
     """
 
     _validation = {
-        'display_name': {'readonly': True},
+        'id': {'readonly': True},
+        'name': {'readonly': True},
+        'type': {'readonly': True},
     }
 
     _attribute_map = {
-        'display_name': {'key': 'displayName', 'type': 'str'},
+        'id': {'key': 'id', 'type': 'str'},
+        'name': {'key': 'name', 'type': 'str'},
+        'type': {'key': 'type', 'type': 'str'},
+        'device_id': {'key': 'properties.deviceId', 'type': 'str'},
+        'os_platform': {'key': 'properties.osPlatform', 'type': 'str'},
+        'vendor': {'key': 'properties.vendor', 'type': 'str'},
+        'software_name': {'key': 'properties.softwareName', 'type': 'str'},
+        'version': {'key': 'properties.version', 'type': 'str'},
+        'end_of_support_status': {'key': 'properties.endOfSupportStatus', 'type': 'str'},
+        'end_of_support_date': {'key': 'properties.endOfSupportDate', 'type': 'str'},
+        'number_of_known_vulnerabilities': {'key': 'properties.numberOfKnownVulnerabilities', 'type': 'int'},
+        'first_seen_at': {'key': 'properties.firstSeenAt', 'type': 'str'},
     }
 
     def __init__(self, **kwargs):
-        super(Site, self).__init__(**kwargs)
-        self.display_name = None
+        super(Software, self).__init__(**kwargs)
+        self.device_id = kwargs.get('device_id', None)
+        self.os_platform = kwargs.get('os_platform', None)
+        self.vendor = kwargs.get('vendor', None)
+        self.software_name = kwargs.get('software_name', None)
+        self.version = kwargs.get('version', None)
+        self.end_of_support_status = kwargs.get('end_of_support_status', None)
+        self.end_of_support_date = kwargs.get('end_of_support_date', None)
+        self.number_of_known_vulnerabilities = kwargs.get('number_of_known_vulnerabilities', None)
+        self.first_seen_at = kwargs.get('first_seen_at', None)
 
 
 class SqlServerVulnerabilityProperties(AdditionalData):
@@ -8539,6 +7704,46 @@ class SuppressionAlertsScope(Model):
     def __init__(self, **kwargs):
         super(SuppressionAlertsScope, self).__init__(**kwargs)
         self.all_of = kwargs.get('all_of', None)
+
+
+class SystemData(Model):
+    """Metadata pertaining to creation and last modification of the resource.
+
+    :param created_by: The identity that created the resource.
+    :type created_by: str
+    :param created_by_type: The type of identity that created the resource.
+     Possible values include: 'User', 'Application', 'ManagedIdentity', 'Key'
+    :type created_by_type: str or ~azure.mgmt.security.models.CreatedByType
+    :param created_at: The timestamp of resource creation (UTC).
+    :type created_at: datetime
+    :param last_modified_by: The identity that last modified the resource.
+    :type last_modified_by: str
+    :param last_modified_by_type: The type of identity that last modified the
+     resource. Possible values include: 'User', 'Application',
+     'ManagedIdentity', 'Key'
+    :type last_modified_by_type: str or
+     ~azure.mgmt.security.models.CreatedByType
+    :param last_modified_at: The timestamp of resource last modification (UTC)
+    :type last_modified_at: datetime
+    """
+
+    _attribute_map = {
+        'created_by': {'key': 'createdBy', 'type': 'str'},
+        'created_by_type': {'key': 'createdByType', 'type': 'str'},
+        'created_at': {'key': 'createdAt', 'type': 'iso-8601'},
+        'last_modified_by': {'key': 'lastModifiedBy', 'type': 'str'},
+        'last_modified_by_type': {'key': 'lastModifiedByType', 'type': 'str'},
+        'last_modified_at': {'key': 'lastModifiedAt', 'type': 'iso-8601'},
+    }
+
+    def __init__(self, **kwargs):
+        super(SystemData, self).__init__(**kwargs)
+        self.created_by = kwargs.get('created_by', None)
+        self.created_by_type = kwargs.get('created_by_type', None)
+        self.created_at = kwargs.get('created_at', None)
+        self.last_modified_by = kwargs.get('last_modified_by', None)
+        self.last_modified_by_type = kwargs.get('last_modified_by_type', None)
+        self.last_modified_at = kwargs.get('last_modified_at', None)
 
 
 class Tags(Model):
