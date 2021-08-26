@@ -25,14 +25,14 @@ if TYPE_CHECKING:
     T = TypeVar('T')
     ClsType = Optional[Callable[[PipelineResponse[HttpRequest, HttpResponse], T, Dict[str, Any]], Any]]
 
-class ServicesOperations(object):
-    """ServicesOperations operations.
+class AppsOperations(object):
+    """AppsOperations operations.
 
     You should not instantiate this class directly. Instead, you should create a Client instance that
     instantiates it for you and attaches it as an attribute.
 
     :ivar models: Alias to model classes used in this operation group.
-    :type models: ~azure.mgmt.appplatform.v2020_07_01.models
+    :type models: ~azure.mgmt.appplatform.v2021_09_01_preview.models
     :param client: Client for service requests.
     :param config: Configuration of service client.
     :param serializer: An object model serializer.
@@ -51,27 +51,33 @@ class ServicesOperations(object):
         self,
         resource_group_name,  # type: str
         service_name,  # type: str
+        app_name,  # type: str
+        sync_status=None,  # type: Optional[str]
         **kwargs  # type: Any
     ):
-        # type: (...) -> "_models.ServiceResource"
-        """Get a Service and its properties. Test. Test2.
+        # type: (...) -> "_models.AppResource"
+        """Get an App and its properties.
 
         :param resource_group_name: The name of the resource group that contains the resource. You can
          obtain this value from the Azure Resource Manager API or the portal.
         :type resource_group_name: str
         :param service_name: The name of the Service resource.
         :type service_name: str
+        :param app_name: The name of the App resource.
+        :type app_name: str
+        :param sync_status: Indicates whether sync status.
+        :type sync_status: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ServiceResource, or the result of cls(response)
-        :rtype: ~azure.mgmt.appplatform.v2020_07_01.models.ServiceResource
+        :return: AppResource, or the result of cls(response)
+        :rtype: ~azure.mgmt.appplatform.v2021_09_01_preview.models.AppResource
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ServiceResource"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.AppResource"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2020-07-01"
+        api_version = "2021-09-01-preview"
         accept = "application/json"
 
         # Construct URL
@@ -80,12 +86,15 @@ class ServicesOperations(object):
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
             'serviceName': self._serialize.url("service_name", service_name, 'str'),
+            'appName': self._serialize.url("app_name", app_name, 'str'),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}  # type: Dict[str, Any]
         query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+        if sync_status is not None:
+            query_parameters['syncStatus'] = self._serialize.query("sync_status", sync_status, 'str')
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
@@ -99,28 +108,29 @@ class ServicesOperations(object):
             map_error(status_code=response.status_code, response=response, error_map=error_map)
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize('ServiceResource', pipeline_response)
+        deserialized = self._deserialize('AppResource', pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}'}  # type: ignore
+    get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}'}  # type: ignore
 
     def _create_or_update_initial(
         self,
         resource_group_name,  # type: str
         service_name,  # type: str
-        resource,  # type: "_models.ServiceResource"
+        app_name,  # type: str
+        app_resource,  # type: "_models.AppResource"
         **kwargs  # type: Any
     ):
-        # type: (...) -> "_models.ServiceResource"
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ServiceResource"]
+        # type: (...) -> "_models.AppResource"
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.AppResource"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2020-07-01"
+        api_version = "2021-09-01-preview"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"
 
@@ -130,6 +140,7 @@ class ServicesOperations(object):
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
             'serviceName': self._serialize.url("service_name", service_name, 'str'),
+            'appName': self._serialize.url("app_name", app_name, 'str'),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
@@ -143,7 +154,7 @@ class ServicesOperations(object):
         header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
 
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(resource, 'ServiceResource')
+        body_content = self._serialize.body(app_resource, 'AppResource')
         body_content_kwargs['content'] = body_content
         request = self._client.put(url, query_parameters, header_parameters, **body_content_kwargs)
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
@@ -154,49 +165,52 @@ class ServicesOperations(object):
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
         if response.status_code == 200:
-            deserialized = self._deserialize('ServiceResource', pipeline_response)
+            deserialized = self._deserialize('AppResource', pipeline_response)
 
         if response.status_code == 201:
-            deserialized = self._deserialize('ServiceResource', pipeline_response)
+            deserialized = self._deserialize('AppResource', pipeline_response)
 
         if response.status_code == 202:
-            deserialized = self._deserialize('ServiceResource', pipeline_response)
+            deserialized = self._deserialize('AppResource', pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    _create_or_update_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}'}  # type: ignore
+    _create_or_update_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}'}  # type: ignore
 
     def begin_create_or_update(
         self,
         resource_group_name,  # type: str
         service_name,  # type: str
-        resource,  # type: "_models.ServiceResource"
+        app_name,  # type: str
+        app_resource,  # type: "_models.AppResource"
         **kwargs  # type: Any
     ):
-        # type: (...) -> LROPoller["_models.ServiceResource"]
-        """Create a new Service or update an exiting Service.
+        # type: (...) -> LROPoller["_models.AppResource"]
+        """Create a new App or update an exiting App.
 
         :param resource_group_name: The name of the resource group that contains the resource. You can
          obtain this value from the Azure Resource Manager API or the portal.
         :type resource_group_name: str
         :param service_name: The name of the Service resource.
         :type service_name: str
-        :param resource: Parameters for the create or update operation.
-        :type resource: ~azure.mgmt.appplatform.v2020_07_01.models.ServiceResource
+        :param app_name: The name of the App resource.
+        :type app_name: str
+        :param app_resource: Parameters for the create or update operation.
+        :type app_resource: ~azure.mgmt.appplatform.v2021_09_01_preview.models.AppResource
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: By default, your polling method will be ARMPolling.
          Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either ServiceResource or the result of cls(response)
-        :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.appplatform.v2020_07_01.models.ServiceResource]
+        :return: An instance of LROPoller that returns either AppResource or the result of cls(response)
+        :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.appplatform.v2021_09_01_preview.models.AppResource]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ServiceResource"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.AppResource"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -206,7 +220,8 @@ class ServicesOperations(object):
             raw_result = self._create_or_update_initial(
                 resource_group_name=resource_group_name,
                 service_name=service_name,
-                resource=resource,
+                app_name=app_name,
+                app_resource=app_resource,
                 cls=lambda x,y,z: x,
                 **kwargs
             )
@@ -215,7 +230,7 @@ class ServicesOperations(object):
         kwargs.pop('content_type', None)
 
         def get_long_running_output(pipeline_response):
-            deserialized = self._deserialize('ServiceResource', pipeline_response)
+            deserialized = self._deserialize('AppResource', pipeline_response)
 
             if cls:
                 return cls(pipeline_response, deserialized, {})
@@ -225,6 +240,7 @@ class ServicesOperations(object):
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
             'serviceName': self._serialize.url("service_name", service_name, 'str'),
+            'appName': self._serialize.url("app_name", app_name, 'str'),
         }
 
         if polling is True: polling_method = ARMPolling(lro_delay, lro_options={'final-state-via': 'azure-async-operation'}, path_format_arguments=path_format_arguments,  **kwargs)
@@ -239,12 +255,13 @@ class ServicesOperations(object):
             )
         else:
             return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
-    begin_create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}'}  # type: ignore
+    begin_create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}'}  # type: ignore
 
     def _delete_initial(
         self,
         resource_group_name,  # type: str
         service_name,  # type: str
+        app_name,  # type: str
         **kwargs  # type: Any
     ):
         # type: (...) -> None
@@ -253,7 +270,7 @@ class ServicesOperations(object):
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2020-07-01"
+        api_version = "2021-09-01-preview"
         accept = "application/json"
 
         # Construct URL
@@ -262,6 +279,7 @@ class ServicesOperations(object):
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
             'serviceName': self._serialize.url("service_name", service_name, 'str'),
+            'appName': self._serialize.url("app_name", app_name, 'str'),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
@@ -277,29 +295,32 @@ class ServicesOperations(object):
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
-        if response.status_code not in [202, 204]:
+        if response.status_code not in [200, 202, 204]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
         if cls:
             return cls(pipeline_response, None, {})
 
-    _delete_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}'}  # type: ignore
+    _delete_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}'}  # type: ignore
 
     def begin_delete(
         self,
         resource_group_name,  # type: str
         service_name,  # type: str
+        app_name,  # type: str
         **kwargs  # type: Any
     ):
         # type: (...) -> LROPoller[None]
-        """Operation to delete a Service.
+        """Operation to delete an App.
 
         :param resource_group_name: The name of the resource group that contains the resource. You can
          obtain this value from the Azure Resource Manager API or the portal.
         :type resource_group_name: str
         :param service_name: The name of the Service resource.
         :type service_name: str
+        :param app_name: The name of the App resource.
+        :type app_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: By default, your polling method will be ARMPolling.
@@ -321,6 +342,7 @@ class ServicesOperations(object):
             raw_result = self._delete_initial(
                 resource_group_name=resource_group_name,
                 service_name=service_name,
+                app_name=app_name,
                 cls=lambda x,y,z: x,
                 **kwargs
             )
@@ -336,6 +358,7 @@ class ServicesOperations(object):
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
             'serviceName': self._serialize.url("service_name", service_name, 'str'),
+            'appName': self._serialize.url("app_name", app_name, 'str'),
         }
 
         if polling is True: polling_method = ARMPolling(lro_delay, lro_options={'final-state-via': 'azure-async-operation'}, path_format_arguments=path_format_arguments,  **kwargs)
@@ -350,22 +373,23 @@ class ServicesOperations(object):
             )
         else:
             return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
-    begin_delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}'}  # type: ignore
+    begin_delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}'}  # type: ignore
 
     def _update_initial(
         self,
         resource_group_name,  # type: str
         service_name,  # type: str
-        resource,  # type: "_models.ServiceResource"
+        app_name,  # type: str
+        app_resource,  # type: "_models.AppResource"
         **kwargs  # type: Any
     ):
-        # type: (...) -> "_models.ServiceResource"
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ServiceResource"]
+        # type: (...) -> "_models.AppResource"
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.AppResource"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2020-07-01"
+        api_version = "2021-09-01-preview"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"
 
@@ -375,6 +399,7 @@ class ServicesOperations(object):
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
             'serviceName': self._serialize.url("service_name", service_name, 'str'),
+            'appName': self._serialize.url("app_name", app_name, 'str'),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
@@ -388,7 +413,7 @@ class ServicesOperations(object):
         header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
 
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(resource, 'ServiceResource')
+        body_content = self._serialize.body(app_resource, 'AppResource')
         body_content_kwargs['content'] = body_content
         request = self._client.patch(url, query_parameters, header_parameters, **body_content_kwargs)
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
@@ -399,46 +424,49 @@ class ServicesOperations(object):
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
         if response.status_code == 200:
-            deserialized = self._deserialize('ServiceResource', pipeline_response)
+            deserialized = self._deserialize('AppResource', pipeline_response)
 
         if response.status_code == 202:
-            deserialized = self._deserialize('ServiceResource', pipeline_response)
+            deserialized = self._deserialize('AppResource', pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    _update_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}'}  # type: ignore
+    _update_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}'}  # type: ignore
 
     def begin_update(
         self,
         resource_group_name,  # type: str
         service_name,  # type: str
-        resource,  # type: "_models.ServiceResource"
+        app_name,  # type: str
+        app_resource,  # type: "_models.AppResource"
         **kwargs  # type: Any
     ):
-        # type: (...) -> LROPoller["_models.ServiceResource"]
-        """Operation to update an exiting Service.
+        # type: (...) -> LROPoller["_models.AppResource"]
+        """Operation to update an exiting App.
 
         :param resource_group_name: The name of the resource group that contains the resource. You can
          obtain this value from the Azure Resource Manager API or the portal.
         :type resource_group_name: str
         :param service_name: The name of the Service resource.
         :type service_name: str
-        :param resource: Parameters for the update operation.
-        :type resource: ~azure.mgmt.appplatform.v2020_07_01.models.ServiceResource
+        :param app_name: The name of the App resource.
+        :type app_name: str
+        :param app_resource: Parameters for the update operation.
+        :type app_resource: ~azure.mgmt.appplatform.v2021_09_01_preview.models.AppResource
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: By default, your polling method will be ARMPolling.
          Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either ServiceResource or the result of cls(response)
-        :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.appplatform.v2020_07_01.models.ServiceResource]
+        :return: An instance of LROPoller that returns either AppResource or the result of cls(response)
+        :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.appplatform.v2021_09_01_preview.models.AppResource]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ServiceResource"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.AppResource"]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -448,7 +476,8 @@ class ServicesOperations(object):
             raw_result = self._update_initial(
                 resource_group_name=resource_group_name,
                 service_name=service_name,
-                resource=resource,
+                app_name=app_name,
+                app_resource=app_resource,
                 cls=lambda x,y,z: x,
                 **kwargs
             )
@@ -457,7 +486,7 @@ class ServicesOperations(object):
         kwargs.pop('content_type', None)
 
         def get_long_running_output(pipeline_response):
-            deserialized = self._deserialize('ServiceResource', pipeline_response)
+            deserialized = self._deserialize('AppResource', pipeline_response)
 
             if cls:
                 return cls(pipeline_response, deserialized, {})
@@ -467,6 +496,7 @@ class ServicesOperations(object):
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
             'serviceName': self._serialize.url("service_name", service_name, 'str'),
+            'appName': self._serialize.url("app_name", app_name, 'str'),
         }
 
         if polling is True: polling_method = ARMPolling(lro_delay, lro_options={'final-state-via': 'azure-async-operation'}, path_format_arguments=path_format_arguments,  **kwargs)
@@ -481,405 +511,33 @@ class ServicesOperations(object):
             )
         else:
             return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
-    begin_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}'}  # type: ignore
-
-    def list_test_keys(
-        self,
-        resource_group_name,  # type: str
-        service_name,  # type: str
-        **kwargs  # type: Any
-    ):
-        # type: (...) -> "_models.TestKeys"
-        """List test keys for a Service.
-
-        :param resource_group_name: The name of the resource group that contains the resource. You can
-         obtain this value from the Azure Resource Manager API or the portal.
-        :type resource_group_name: str
-        :param service_name: The name of the Service resource.
-        :type service_name: str
-        :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: TestKeys, or the result of cls(response)
-        :rtype: ~azure.mgmt.appplatform.v2020_07_01.models.TestKeys
-        :raises: ~azure.core.exceptions.HttpResponseError
-        """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.TestKeys"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2020-07-01"
-        accept = "application/json"
-
-        # Construct URL
-        url = self.list_test_keys.metadata['url']  # type: ignore
-        path_format_arguments = {
-            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
-            'serviceName': self._serialize.url("service_name", service_name, 'str'),
-        }
-        url = self._client.format_url(url, **path_format_arguments)
-
-        # Construct parameters
-        query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
-
-        # Construct headers
-        header_parameters = {}  # type: Dict[str, Any]
-        header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
-
-        request = self._client.post(url, query_parameters, header_parameters)
-        pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
-        response = pipeline_response.http_response
-
-        if response.status_code not in [200]:
-            map_error(status_code=response.status_code, response=response, error_map=error_map)
-            raise HttpResponseError(response=response, error_format=ARMErrorFormat)
-
-        deserialized = self._deserialize('TestKeys', pipeline_response)
-
-        if cls:
-            return cls(pipeline_response, deserialized, {})
-
-        return deserialized
-    list_test_keys.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/listTestKeys'}  # type: ignore
-
-    def regenerate_test_key(
-        self,
-        resource_group_name,  # type: str
-        service_name,  # type: str
-        regenerate_test_key_request,  # type: "_models.RegenerateTestKeyRequestPayload"
-        **kwargs  # type: Any
-    ):
-        # type: (...) -> "_models.TestKeys"
-        """Regenerate a test key for a Service.
-
-        :param resource_group_name: The name of the resource group that contains the resource. You can
-         obtain this value from the Azure Resource Manager API or the portal.
-        :type resource_group_name: str
-        :param service_name: The name of the Service resource.
-        :type service_name: str
-        :param regenerate_test_key_request: Parameters for the operation.
-        :type regenerate_test_key_request: ~azure.mgmt.appplatform.v2020_07_01.models.RegenerateTestKeyRequestPayload
-        :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: TestKeys, or the result of cls(response)
-        :rtype: ~azure.mgmt.appplatform.v2020_07_01.models.TestKeys
-        :raises: ~azure.core.exceptions.HttpResponseError
-        """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.TestKeys"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2020-07-01"
-        content_type = kwargs.pop("content_type", "application/json")
-        accept = "application/json"
-
-        # Construct URL
-        url = self.regenerate_test_key.metadata['url']  # type: ignore
-        path_format_arguments = {
-            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
-            'serviceName': self._serialize.url("service_name", service_name, 'str'),
-        }
-        url = self._client.format_url(url, **path_format_arguments)
-
-        # Construct parameters
-        query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
-
-        # Construct headers
-        header_parameters = {}  # type: Dict[str, Any]
-        header_parameters['Content-Type'] = self._serialize.header("content_type", content_type, 'str')
-        header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
-
-        body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(regenerate_test_key_request, 'RegenerateTestKeyRequestPayload')
-        body_content_kwargs['content'] = body_content
-        request = self._client.post(url, query_parameters, header_parameters, **body_content_kwargs)
-        pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
-        response = pipeline_response.http_response
-
-        if response.status_code not in [200]:
-            map_error(status_code=response.status_code, response=response, error_map=error_map)
-            raise HttpResponseError(response=response, error_format=ARMErrorFormat)
-
-        deserialized = self._deserialize('TestKeys', pipeline_response)
-
-        if cls:
-            return cls(pipeline_response, deserialized, {})
-
-        return deserialized
-    regenerate_test_key.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/regenerateTestKey'}  # type: ignore
-
-    def disable_test_endpoint(
-        self,
-        resource_group_name,  # type: str
-        service_name,  # type: str
-        **kwargs  # type: Any
-    ):
-        # type: (...) -> None
-        """Disable test endpoint functionality for a Service.
-
-        :param resource_group_name: The name of the resource group that contains the resource. You can
-         obtain this value from the Azure Resource Manager API or the portal.
-        :type resource_group_name: str
-        :param service_name: The name of the Service resource.
-        :type service_name: str
-        :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: None, or the result of cls(response)
-        :rtype: None
-        :raises: ~azure.core.exceptions.HttpResponseError
-        """
-        cls = kwargs.pop('cls', None)  # type: ClsType[None]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2020-07-01"
-        accept = "application/json"
-
-        # Construct URL
-        url = self.disable_test_endpoint.metadata['url']  # type: ignore
-        path_format_arguments = {
-            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
-            'serviceName': self._serialize.url("service_name", service_name, 'str'),
-        }
-        url = self._client.format_url(url, **path_format_arguments)
-
-        # Construct parameters
-        query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
-
-        # Construct headers
-        header_parameters = {}  # type: Dict[str, Any]
-        header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
-
-        request = self._client.post(url, query_parameters, header_parameters)
-        pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
-        response = pipeline_response.http_response
-
-        if response.status_code not in [200]:
-            map_error(status_code=response.status_code, response=response, error_map=error_map)
-            raise HttpResponseError(response=response, error_format=ARMErrorFormat)
-
-        if cls:
-            return cls(pipeline_response, None, {})
-
-    disable_test_endpoint.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/disableTestEndpoint'}  # type: ignore
-
-    def enable_test_endpoint(
-        self,
-        resource_group_name,  # type: str
-        service_name,  # type: str
-        **kwargs  # type: Any
-    ):
-        # type: (...) -> "_models.TestKeys"
-        """Enable test endpoint functionality for a Service.
-
-        :param resource_group_name: The name of the resource group that contains the resource. You can
-         obtain this value from the Azure Resource Manager API or the portal.
-        :type resource_group_name: str
-        :param service_name: The name of the Service resource.
-        :type service_name: str
-        :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: TestKeys, or the result of cls(response)
-        :rtype: ~azure.mgmt.appplatform.v2020_07_01.models.TestKeys
-        :raises: ~azure.core.exceptions.HttpResponseError
-        """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.TestKeys"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2020-07-01"
-        accept = "application/json"
-
-        # Construct URL
-        url = self.enable_test_endpoint.metadata['url']  # type: ignore
-        path_format_arguments = {
-            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
-            'serviceName': self._serialize.url("service_name", service_name, 'str'),
-        }
-        url = self._client.format_url(url, **path_format_arguments)
-
-        # Construct parameters
-        query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
-
-        # Construct headers
-        header_parameters = {}  # type: Dict[str, Any]
-        header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
-
-        request = self._client.post(url, query_parameters, header_parameters)
-        pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
-        response = pipeline_response.http_response
-
-        if response.status_code not in [200]:
-            map_error(status_code=response.status_code, response=response, error_map=error_map)
-            raise HttpResponseError(response=response, error_format=ARMErrorFormat)
-
-        deserialized = self._deserialize('TestKeys', pipeline_response)
-
-        if cls:
-            return cls(pipeline_response, deserialized, {})
-
-        return deserialized
-    enable_test_endpoint.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/enableTestEndpoint'}  # type: ignore
-
-    def check_name_availability(
-        self,
-        location,  # type: str
-        availability_parameters,  # type: "_models.NameAvailabilityParameters"
-        **kwargs  # type: Any
-    ):
-        # type: (...) -> "_models.NameAvailability"
-        """Checks that the resource name is valid and is not already in use.
-
-        :param location: the region.
-        :type location: str
-        :param availability_parameters: Parameters supplied to the operation.
-        :type availability_parameters: ~azure.mgmt.appplatform.v2020_07_01.models.NameAvailabilityParameters
-        :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: NameAvailability, or the result of cls(response)
-        :rtype: ~azure.mgmt.appplatform.v2020_07_01.models.NameAvailability
-        :raises: ~azure.core.exceptions.HttpResponseError
-        """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.NameAvailability"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2020-07-01"
-        content_type = kwargs.pop("content_type", "application/json")
-        accept = "application/json"
-
-        # Construct URL
-        url = self.check_name_availability.metadata['url']  # type: ignore
-        path_format_arguments = {
-            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
-            'location': self._serialize.url("location", location, 'str'),
-        }
-        url = self._client.format_url(url, **path_format_arguments)
-
-        # Construct parameters
-        query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
-
-        # Construct headers
-        header_parameters = {}  # type: Dict[str, Any]
-        header_parameters['Content-Type'] = self._serialize.header("content_type", content_type, 'str')
-        header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
-
-        body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(availability_parameters, 'NameAvailabilityParameters')
-        body_content_kwargs['content'] = body_content
-        request = self._client.post(url, query_parameters, header_parameters, **body_content_kwargs)
-        pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
-        response = pipeline_response.http_response
-
-        if response.status_code not in [200]:
-            map_error(status_code=response.status_code, response=response, error_map=error_map)
-            raise HttpResponseError(response=response, error_format=ARMErrorFormat)
-
-        deserialized = self._deserialize('NameAvailability', pipeline_response)
-
-        if cls:
-            return cls(pipeline_response, deserialized, {})
-
-        return deserialized
-    check_name_availability.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.AppPlatform/locations/{location}/checkNameAvailability'}  # type: ignore
-
-    def list_by_subscription(
-        self,
-        **kwargs  # type: Any
-    ):
-        # type: (...) -> Iterable["_models.ServiceResourceList"]
-        """Handles requests to list all resources in a subscription.
-
-        :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either ServiceResourceList or the result of cls(response)
-        :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.appplatform.v2020_07_01.models.ServiceResourceList]
-        :raises: ~azure.core.exceptions.HttpResponseError
-        """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ServiceResourceList"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2020-07-01"
-        accept = "application/json"
-
-        def prepare_request(next_link=None):
-            # Construct headers
-            header_parameters = {}  # type: Dict[str, Any]
-            header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
-
-            if not next_link:
-                # Construct URL
-                url = self.list_by_subscription.metadata['url']  # type: ignore
-                path_format_arguments = {
-                    'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
-                }
-                url = self._client.format_url(url, **path_format_arguments)
-                # Construct parameters
-                query_parameters = {}  # type: Dict[str, Any]
-                query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
-
-                request = self._client.get(url, query_parameters, header_parameters)
-            else:
-                url = next_link
-                query_parameters = {}  # type: Dict[str, Any]
-                request = self._client.get(url, query_parameters, header_parameters)
-            return request
-
-        def extract_data(pipeline_response):
-            deserialized = self._deserialize('ServiceResourceList', pipeline_response)
-            list_of_elem = deserialized.value
-            if cls:
-                list_of_elem = cls(list_of_elem)
-            return deserialized.next_link or None, iter(list_of_elem)
-
-        def get_next(next_link=None):
-            request = prepare_request(next_link)
-
-            pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
-            response = pipeline_response.http_response
-
-            if response.status_code not in [200]:
-                map_error(status_code=response.status_code, response=response, error_map=error_map)
-                raise HttpResponseError(response=response, error_format=ARMErrorFormat)
-
-            return pipeline_response
-
-        return ItemPaged(
-            get_next, extract_data
-        )
-    list_by_subscription.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.AppPlatform/Spring'}  # type: ignore
+    begin_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}'}  # type: ignore
 
     def list(
         self,
         resource_group_name,  # type: str
+        service_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> Iterable["_models.ServiceResourceList"]
-        """Handles requests to list all resources in a resource group.
+        # type: (...) -> Iterable["_models.AppResourceCollection"]
+        """Handles requests to list all resources in a Service.
 
         :param resource_group_name: The name of the resource group that contains the resource. You can
          obtain this value from the Azure Resource Manager API or the portal.
         :type resource_group_name: str
+        :param service_name: The name of the Service resource.
+        :type service_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either ServiceResourceList or the result of cls(response)
-        :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.appplatform.v2020_07_01.models.ServiceResourceList]
+        :return: An iterator like instance of either AppResourceCollection or the result of cls(response)
+        :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.appplatform.v2021_09_01_preview.models.AppResourceCollection]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ServiceResourceList"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.AppResourceCollection"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2020-07-01"
+        api_version = "2021-09-01-preview"
         accept = "application/json"
 
         def prepare_request(next_link=None):
@@ -893,6 +551,7 @@ class ServicesOperations(object):
                 path_format_arguments = {
                     'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
                     'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
+                    'serviceName': self._serialize.url("service_name", service_name, 'str'),
                 }
                 url = self._client.format_url(url, **path_format_arguments)
                 # Construct parameters
@@ -907,7 +566,7 @@ class ServicesOperations(object):
             return request
 
         def extract_data(pipeline_response):
-            deserialized = self._deserialize('ServiceResourceList', pipeline_response)
+            deserialized = self._deserialize('AppResourceCollection', pipeline_response)
             list_of_elem = deserialized.value
             if cls:
                 list_of_elem = cls(list_of_elem)
@@ -928,4 +587,140 @@ class ServicesOperations(object):
         return ItemPaged(
             get_next, extract_data
         )
-    list.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring'}  # type: ignore
+    list.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps'}  # type: ignore
+
+    def get_resource_upload_url(
+        self,
+        resource_group_name,  # type: str
+        service_name,  # type: str
+        app_name,  # type: str
+        **kwargs  # type: Any
+    ):
+        # type: (...) -> "_models.ResourceUploadDefinition"
+        """Get an resource upload URL for an App, which may be artifacts or source archive.
+
+        :param resource_group_name: The name of the resource group that contains the resource. You can
+         obtain this value from the Azure Resource Manager API or the portal.
+        :type resource_group_name: str
+        :param service_name: The name of the Service resource.
+        :type service_name: str
+        :param app_name: The name of the App resource.
+        :type app_name: str
+        :keyword callable cls: A custom type or function that will be passed the direct response
+        :return: ResourceUploadDefinition, or the result of cls(response)
+        :rtype: ~azure.mgmt.appplatform.v2021_09_01_preview.models.ResourceUploadDefinition
+        :raises: ~azure.core.exceptions.HttpResponseError
+        """
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ResourceUploadDefinition"]
+        error_map = {
+            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
+        }
+        error_map.update(kwargs.pop('error_map', {}))
+        api_version = "2021-09-01-preview"
+        accept = "application/json"
+
+        # Construct URL
+        url = self.get_resource_upload_url.metadata['url']  # type: ignore
+        path_format_arguments = {
+            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
+            'serviceName': self._serialize.url("service_name", service_name, 'str'),
+            'appName': self._serialize.url("app_name", app_name, 'str'),
+        }
+        url = self._client.format_url(url, **path_format_arguments)
+
+        # Construct parameters
+        query_parameters = {}  # type: Dict[str, Any]
+        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+
+        # Construct headers
+        header_parameters = {}  # type: Dict[str, Any]
+        header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
+
+        request = self._client.post(url, query_parameters, header_parameters)
+        pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
+        response = pipeline_response.http_response
+
+        if response.status_code not in [200]:
+            map_error(status_code=response.status_code, response=response, error_map=error_map)
+            raise HttpResponseError(response=response, error_format=ARMErrorFormat)
+
+        deserialized = self._deserialize('ResourceUploadDefinition', pipeline_response)
+
+        if cls:
+            return cls(pipeline_response, deserialized, {})
+
+        return deserialized
+    get_resource_upload_url.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/getResourceUploadUrl'}  # type: ignore
+
+    def validate_domain(
+        self,
+        resource_group_name,  # type: str
+        service_name,  # type: str
+        app_name,  # type: str
+        validate_payload,  # type: "_models.CustomDomainValidatePayload"
+        **kwargs  # type: Any
+    ):
+        # type: (...) -> "_models.CustomDomainValidateResult"
+        """Check the resource name is valid as well as not in use.
+
+        :param resource_group_name: The name of the resource group that contains the resource. You can
+         obtain this value from the Azure Resource Manager API or the portal.
+        :type resource_group_name: str
+        :param service_name: The name of the Service resource.
+        :type service_name: str
+        :param app_name: The name of the App resource.
+        :type app_name: str
+        :param validate_payload: Custom domain payload to be validated.
+        :type validate_payload: ~azure.mgmt.appplatform.v2021_09_01_preview.models.CustomDomainValidatePayload
+        :keyword callable cls: A custom type or function that will be passed the direct response
+        :return: CustomDomainValidateResult, or the result of cls(response)
+        :rtype: ~azure.mgmt.appplatform.v2021_09_01_preview.models.CustomDomainValidateResult
+        :raises: ~azure.core.exceptions.HttpResponseError
+        """
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.CustomDomainValidateResult"]
+        error_map = {
+            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
+        }
+        error_map.update(kwargs.pop('error_map', {}))
+        api_version = "2021-09-01-preview"
+        content_type = kwargs.pop("content_type", "application/json")
+        accept = "application/json"
+
+        # Construct URL
+        url = self.validate_domain.metadata['url']  # type: ignore
+        path_format_arguments = {
+            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
+            'serviceName': self._serialize.url("service_name", service_name, 'str'),
+            'appName': self._serialize.url("app_name", app_name, 'str'),
+        }
+        url = self._client.format_url(url, **path_format_arguments)
+
+        # Construct parameters
+        query_parameters = {}  # type: Dict[str, Any]
+        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+
+        # Construct headers
+        header_parameters = {}  # type: Dict[str, Any]
+        header_parameters['Content-Type'] = self._serialize.header("content_type", content_type, 'str')
+        header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
+
+        body_content_kwargs = {}  # type: Dict[str, Any]
+        body_content = self._serialize.body(validate_payload, 'CustomDomainValidatePayload')
+        body_content_kwargs['content'] = body_content
+        request = self._client.post(url, query_parameters, header_parameters, **body_content_kwargs)
+        pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
+        response = pipeline_response.http_response
+
+        if response.status_code not in [200]:
+            map_error(status_code=response.status_code, response=response, error_map=error_map)
+            raise HttpResponseError(response=response, error_format=ARMErrorFormat)
+
+        deserialized = self._deserialize('CustomDomainValidateResult', pipeline_response)
+
+        if cls:
+            return cls(pipeline_response, deserialized, {})
+
+        return deserialized
+    validate_domain.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}/validateDomain'}  # type: ignore

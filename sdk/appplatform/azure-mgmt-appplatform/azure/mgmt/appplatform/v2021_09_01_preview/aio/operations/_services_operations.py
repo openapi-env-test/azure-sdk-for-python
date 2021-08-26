@@ -28,7 +28,7 @@ class ServicesOperations:
     instantiates it for you and attaches it as an attribute.
 
     :ivar models: Alias to model classes used in this operation group.
-    :type models: ~azure.mgmt.appplatform.v2020_07_01.models
+    :type models: ~azure.mgmt.appplatform.v2021_09_01_preview.models
     :param client: Client for service requests.
     :param config: Configuration of service client.
     :param serializer: An object model serializer.
@@ -49,7 +49,7 @@ class ServicesOperations:
         service_name: str,
         **kwargs: Any
     ) -> "_models.ServiceResource":
-        """Get a Service and its properties. Test. Test2.
+        """Get a Service and its properties.
 
         :param resource_group_name: The name of the resource group that contains the resource. You can
          obtain this value from the Azure Resource Manager API or the portal.
@@ -58,7 +58,7 @@ class ServicesOperations:
         :type service_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: ServiceResource, or the result of cls(response)
-        :rtype: ~azure.mgmt.appplatform.v2020_07_01.models.ServiceResource
+        :rtype: ~azure.mgmt.appplatform.v2021_09_01_preview.models.ServiceResource
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.ServiceResource"]
@@ -66,7 +66,7 @@ class ServicesOperations:
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2020-07-01"
+        api_version = "2021-09-01-preview"
         accept = "application/json"
 
         # Construct URL
@@ -114,7 +114,7 @@ class ServicesOperations:
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2020-07-01"
+        api_version = "2021-09-01-preview"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"
 
@@ -177,7 +177,7 @@ class ServicesOperations:
         :param service_name: The name of the Service resource.
         :type service_name: str
         :param resource: Parameters for the create or update operation.
-        :type resource: ~azure.mgmt.appplatform.v2020_07_01.models.ServiceResource
+        :type resource: ~azure.mgmt.appplatform.v2021_09_01_preview.models.ServiceResource
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: By default, your polling method will be AsyncARMPolling.
@@ -185,7 +185,7 @@ class ServicesOperations:
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either ServiceResource or the result of cls(response)
-        :rtype: ~azure.core.polling.AsyncLROPoller[~azure.mgmt.appplatform.v2020_07_01.models.ServiceResource]
+        :rtype: ~azure.core.polling.AsyncLROPoller[~azure.mgmt.appplatform.v2021_09_01_preview.models.ServiceResource]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
@@ -245,7 +245,7 @@ class ServicesOperations:
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2020-07-01"
+        api_version = "2021-09-01-preview"
         accept = "application/json"
 
         # Construct URL
@@ -355,7 +355,7 @@ class ServicesOperations:
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2020-07-01"
+        api_version = "2021-09-01-preview"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"
 
@@ -415,7 +415,7 @@ class ServicesOperations:
         :param service_name: The name of the Service resource.
         :type service_name: str
         :param resource: Parameters for the update operation.
-        :type resource: ~azure.mgmt.appplatform.v2020_07_01.models.ServiceResource
+        :type resource: ~azure.mgmt.appplatform.v2021_09_01_preview.models.ServiceResource
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: By default, your polling method will be AsyncARMPolling.
@@ -423,7 +423,7 @@ class ServicesOperations:
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns either ServiceResource or the result of cls(response)
-        :rtype: ~azure.core.polling.AsyncLROPoller[~azure.mgmt.appplatform.v2020_07_01.models.ServiceResource]
+        :rtype: ~azure.core.polling.AsyncLROPoller[~azure.mgmt.appplatform.v2021_09_01_preview.models.ServiceResource]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
@@ -487,7 +487,7 @@ class ServicesOperations:
         :type service_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: TestKeys, or the result of cls(response)
-        :rtype: ~azure.mgmt.appplatform.v2020_07_01.models.TestKeys
+        :rtype: ~azure.mgmt.appplatform.v2021_09_01_preview.models.TestKeys
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.TestKeys"]
@@ -495,7 +495,7 @@ class ServicesOperations:
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2020-07-01"
+        api_version = "2021-09-01-preview"
         accept = "application/json"
 
         # Construct URL
@@ -546,10 +546,10 @@ class ServicesOperations:
         :param service_name: The name of the Service resource.
         :type service_name: str
         :param regenerate_test_key_request: Parameters for the operation.
-        :type regenerate_test_key_request: ~azure.mgmt.appplatform.v2020_07_01.models.RegenerateTestKeyRequestPayload
+        :type regenerate_test_key_request: ~azure.mgmt.appplatform.v2021_09_01_preview.models.RegenerateTestKeyRequestPayload
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: TestKeys, or the result of cls(response)
-        :rtype: ~azure.mgmt.appplatform.v2020_07_01.models.TestKeys
+        :rtype: ~azure.mgmt.appplatform.v2021_09_01_preview.models.TestKeys
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.TestKeys"]
@@ -557,7 +557,7 @@ class ServicesOperations:
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2020-07-01"
+        api_version = "2021-09-01-preview"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"
 
@@ -621,7 +621,7 @@ class ServicesOperations:
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2020-07-01"
+        api_version = "2021-09-01-preview"
         accept = "application/json"
 
         # Construct URL
@@ -669,7 +669,7 @@ class ServicesOperations:
         :type service_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: TestKeys, or the result of cls(response)
-        :rtype: ~azure.mgmt.appplatform.v2020_07_01.models.TestKeys
+        :rtype: ~azure.mgmt.appplatform.v2021_09_01_preview.models.TestKeys
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.TestKeys"]
@@ -677,7 +677,7 @@ class ServicesOperations:
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2020-07-01"
+        api_version = "2021-09-01-preview"
         accept = "application/json"
 
         # Construct URL
@@ -724,10 +724,10 @@ class ServicesOperations:
         :param location: the region.
         :type location: str
         :param availability_parameters: Parameters supplied to the operation.
-        :type availability_parameters: ~azure.mgmt.appplatform.v2020_07_01.models.NameAvailabilityParameters
+        :type availability_parameters: ~azure.mgmt.appplatform.v2021_09_01_preview.models.NameAvailabilityParameters
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: NameAvailability, or the result of cls(response)
-        :rtype: ~azure.mgmt.appplatform.v2020_07_01.models.NameAvailability
+        :rtype: ~azure.mgmt.appplatform.v2021_09_01_preview.models.NameAvailability
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.NameAvailability"]
@@ -735,7 +735,7 @@ class ServicesOperations:
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2020-07-01"
+        api_version = "2021-09-01-preview"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"
 
@@ -783,7 +783,7 @@ class ServicesOperations:
 
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: An iterator like instance of either ServiceResourceList or the result of cls(response)
-        :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.appplatform.v2020_07_01.models.ServiceResourceList]
+        :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.appplatform.v2021_09_01_preview.models.ServiceResourceList]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.ServiceResourceList"]
@@ -791,7 +791,7 @@ class ServicesOperations:
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2020-07-01"
+        api_version = "2021-09-01-preview"
         accept = "application/json"
 
         def prepare_request(next_link=None):
@@ -853,7 +853,7 @@ class ServicesOperations:
         :type resource_group_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: An iterator like instance of either ServiceResourceList or the result of cls(response)
-        :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.appplatform.v2020_07_01.models.ServiceResourceList]
+        :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.appplatform.v2021_09_01_preview.models.ServiceResourceList]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.ServiceResourceList"]
@@ -861,7 +861,7 @@ class ServicesOperations:
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2020-07-01"
+        api_version = "2021-09-01-preview"
         accept = "application/json"
 
         def prepare_request(next_link=None):
