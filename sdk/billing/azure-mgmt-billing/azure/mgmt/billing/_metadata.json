@@ -4,7 +4,7 @@
     "client": {
         "name": "BillingManagementClient",
         "filename": "_billing_management_client",
-        "description": "Billing client provides access to billing resources for Azure subscriptions.",
+        "description": "Billing client provides access to billing resources for Azure subscriptions x x.",
         "base_url": "\u0027https://management.azure.com\u0027",
         "custom_base_url": null,
         "azure_arm": true,

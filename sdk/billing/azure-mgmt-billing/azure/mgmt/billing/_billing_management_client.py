@@ -44,7 +44,7 @@ from . import models
 
 
 class BillingManagementClient(object):
-    """Billing client provides access to billing resources for Azure subscriptions.
+    """Billing client provides access to billing resources for Azure subscriptions x x.
 
     :ivar billing_accounts: BillingAccountsOperations operations
     :vartype billing_accounts: azure.mgmt.billing.operations.BillingAccountsOperations

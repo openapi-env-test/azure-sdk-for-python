@@ -1223,6 +1223,9 @@ class BillingSubscription(Resource):
     :type sku_id: str
     :ivar sku_description: The sku description of the Azure plan for the subscription.
     :vartype sku_description: str
+    :ivar suspension_reasons: The suspension reason for a subscription. Applies only to
+     subscriptions in Microsoft Online Services Program billing accounts.
+    :vartype suspension_reasons: list[str]
     """
 
     _validation = {
@@ -1241,6 +1244,7 @@ class BillingSubscription(Resource):
         'invoice_section_display_name': {'readonly': True},
         'reseller': {'readonly': True},
         'sku_description': {'readonly': True},
+        'suspension_reasons': {'readonly': True},
     }
 
     _attribute_map = {
@@ -1262,6 +1266,7 @@ class BillingSubscription(Resource):
         'reseller': {'key': 'properties.reseller', 'type': 'Reseller'},
         'sku_id': {'key': 'properties.skuId', 'type': 'str'},
         'sku_description': {'key': 'properties.skuDescription', 'type': 'str'},
+        'suspension_reasons': {'key': 'properties.suspensionReasons', 'type': '[str]'},
     }
 
     def __init__(
@@ -1284,6 +1289,7 @@ class BillingSubscription(Resource):
         self.reseller = None
         self.sku_id = kwargs.get('sku_id', None)
         self.sku_description = None
+        self.suspension_reasons = None
 
 
 class BillingSubscriptionsListResult(msrest.serialization.Model):
@@ -2258,6 +2264,10 @@ class InvoiceSection(Resource):
     :vartype state: str or ~azure.mgmt.billing.models.InvoiceSectionState
     :ivar system_id: The system generated unique identifier for an invoice section.
     :vartype system_id: str
+    :param tags: A set of tags. Dictionary of metadata associated with the invoice section. Maximum
+     key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys
+     can not contain < > % & ? /.
+    :type tags: dict[str, str]
     :ivar target_cloud: Identifies the cloud environments that are associated with an invoice
      section. This is a system managed optional field and gets updated as the invoice section gets
      associated with accounts in various clouds. Possible values include: "USGov", "USNat", "USSec".
@@ -2281,6 +2291,7 @@ class InvoiceSection(Resource):
         'labels': {'key': 'properties.labels', 'type': '{str}'},
         'state': {'key': 'properties.state', 'type': 'str'},
         'system_id': {'key': 'properties.systemId', 'type': 'str'},
+        'tags': {'key': 'properties.tags', 'type': '{str}'},
         'target_cloud': {'key': 'properties.targetCloud', 'type': 'str'},
     }
 
@@ -2293,6 +2304,7 @@ class InvoiceSection(Resource):
         self.labels = kwargs.get('labels', None)
         self.state = None
         self.system_id = None
+        self.tags = kwargs.get('tags', None)
         self.target_cloud = None
 
 
@@ -2871,17 +2883,21 @@ class ProductsListResult(msrest.serialization.Model):
 
     :ivar value: The list of products.
     :vartype value: list[~azure.mgmt.billing.models.Product]
+    :ivar total_count: Total number of records.
+    :vartype total_count: int
     :ivar next_link: The link (url) to the next page of results.
     :vartype next_link: str
     """
 
     _validation = {
         'value': {'readonly': True},
+        'total_count': {'readonly': True},
         'next_link': {'readonly': True},
     }
 
     _attribute_map = {
         'value': {'key': 'value', 'type': '[Product]'},
+        'total_count': {'key': 'totalCount', 'type': 'int'},
         'next_link': {'key': 'nextLink', 'type': 'str'},
     }
 
@@ -2891,6 +2907,7 @@ class ProductsListResult(msrest.serialization.Model):
     ):
         super(ProductsListResult, self).__init__(**kwargs)
         self.value = None
+        self.total_count = None
         self.next_link = None
 
 
@@ -3505,17 +3522,21 @@ class TransactionListResult(msrest.serialization.Model):
 
     :ivar value: The list of transactions.
     :vartype value: list[~azure.mgmt.billing.models.Transaction]
+    :ivar total_count: Total number of records.
+    :vartype total_count: int
     :ivar next_link: The link (url) to the next page of results.
     :vartype next_link: str
     """
 
     _validation = {
         'value': {'readonly': True},
+        'total_count': {'readonly': True},
         'next_link': {'readonly': True},
     }
 
     _attribute_map = {
         'value': {'key': 'value', 'type': '[Transaction]'},
+        'total_count': {'key': 'totalCount', 'type': 'int'},
         'next_link': {'key': 'nextLink', 'type': 'str'},
     }
 
@@ -3525,6 +3546,7 @@ class TransactionListResult(msrest.serialization.Model):
     ):
         super(TransactionListResult, self).__init__(**kwargs)
         self.value = None
+        self.total_count = None
         self.next_link = None
 
 
