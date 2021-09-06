@@ -90,11 +90,23 @@ class CacheBehavior(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     OVERRIDE = "Override"
     SET_IF_MISSING = "SetIfMissing"
 
+class CacheExpirationActionParametersOdataType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
+
+    _MICROSOFT_AZURE_CDN_MODELS_DELIVERY_RULE_CACHE_EXPIRATION_ACTION_PARAMETERS = "#Microsoft.Azure.Cdn.Models.DeliveryRuleCacheExpirationActionParameters"
+
+class CacheKeyQueryStringActionParametersOdataType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
+
+    _MICROSOFT_AZURE_CDN_MODELS_DELIVERY_RULE_CACHE_KEY_QUERY_STRING_BEHAVIOR_ACTION_PARAMETERS = "#Microsoft.Azure.Cdn.Models.DeliveryRuleCacheKeyQueryStringBehaviorActionParameters"
+
 class CacheType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """The level at which the content needs to be cached.
     """
 
     ALL = "All"
+
+class CdnCertificateSourceParametersOdataType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
+
+    _MICROSOFT_AZURE_CDN_MODELS_CDN_CERTIFICATE_SOURCE_PARAMETERS = "#Microsoft.Azure.Cdn.Models.CdnCertificateSourceParameters"
 
 class CertificateSource(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """Defines the source of the SSL certificate.
@@ -109,6 +121,10 @@ class CertificateType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
 
     SHARED = "Shared"
     DEDICATED = "Dedicated"
+
+class CookiesMatchConditionParametersOdataType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
+
+    _MICROSOFT_AZURE_CDN_MODELS_DELIVERY_RULE_COOKIES_CONDITION_PARAMETERS = "#Microsoft.Azure.Cdn.Models.DeliveryRuleCookiesConditionParameters"
 
 class CookiesOperator(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """Describes operator to be matched
@@ -231,17 +247,6 @@ class EndpointResourceState(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum))
     STOPPED = "Stopped"
     STOPPING = "Stopping"
 
-class Enum46(with_metaclass(_CaseInsensitiveEnumMeta, int, Enum)):
-    """If the action type is block, this field defines the default customer overridable http response
-    status code.
-    """
-
-    TWO_HUNDRED = 200
-    FOUR_HUNDRED_THREE = 403
-    FOUR_HUNDRED_FIVE = 405
-    FOUR_HUNDRED_SIX = 406
-    FOUR_HUNDRED_TWENTY_NINE = 429
-
 class ForwardingProtocol(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """Protocol this rule will use when forwarding traffic to backends.
     """
@@ -265,6 +270,10 @@ class HeaderAction(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     OVERWRITE = "Overwrite"
     DELETE = "Delete"
 
+class HeaderActionParametersOdataType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
+
+    _MICROSOFT_AZURE_CDN_MODELS_DELIVERY_RULE_HEADER_ACTION_PARAMETERS = "#Microsoft.Azure.Cdn.Models.DeliveryRuleHeaderActionParameters"
+
 class HealthProbeRequestType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """The type of health probe request that is made.
     """
@@ -280,6 +289,10 @@ class HttpsRedirect(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
 
     ENABLED = "Enabled"
     DISABLED = "Disabled"
+
+class HttpVersionMatchConditionParametersOdataType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
+
+    _MICROSOFT_AZURE_CDN_MODELS_DELIVERY_RULE_HTTP_VERSION_CONDITION_PARAMETERS = "#Microsoft.Azure.Cdn.Models.DeliveryRuleHttpVersionConditionParameters"
 
 class HttpVersionOperator(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """Describes operator to be matched
@@ -301,11 +314,23 @@ class IsDeviceMatchConditionParametersMatchValuesItem(with_metaclass(_CaseInsens
     MOBILE = "Mobile"
     DESKTOP = "Desktop"
 
+class IsDeviceMatchConditionParametersOdataType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
+
+    _MICROSOFT_AZURE_CDN_MODELS_DELIVERY_RULE_IS_DEVICE_CONDITION_PARAMETERS = "#Microsoft.Azure.Cdn.Models.DeliveryRuleIsDeviceConditionParameters"
+
 class IsDeviceOperator(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """Describes operator to be matched
     """
 
     EQUAL = "Equal"
+
+class KeyVaultCertificateSourceParametersOdataType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
+
+    _MICROSOFT_AZURE_CDN_MODELS_KEY_VAULT_CERTIFICATE_SOURCE_PARAMETERS = "#Microsoft.Azure.Cdn.Models.KeyVaultCertificateSourceParameters"
+
+class KeyVaultSigningKeyParametersOdataType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
+
+    _MICROSOFT_AZURE_CDN_MODELS_KEY_VAULT_SIGNING_KEY_PARAMETERS = "#Microsoft.Azure.Cdn.Models.KeyVaultSigningKeyParameters"
 
 class LinkToDefaultDomain(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """whether this route will be linked to the default endpoint domain.
@@ -439,6 +464,10 @@ class OptimizationType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     LARGE_FILE_DOWNLOAD = "LargeFileDownload"
     DYNAMIC_SITE_ACCELERATION = "DynamicSiteAcceleration"
 
+class OriginGroupOverrideActionParametersOdataType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
+
+    _MICROSOFT_AZURE_CDN_MODELS_DELIVERY_RULE_ORIGIN_GROUP_OVERRIDE_ACTION_PARAMETERS = "#Microsoft.Azure.Cdn.Models.DeliveryRuleOriginGroupOverrideActionParameters"
+
 class OriginGroupResourceState(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """Resource status of the origin group.
     """
@@ -487,6 +516,21 @@ class PolicyResourceState(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     DISABLING = "Disabling"
     DISABLED = "Disabled"
     DELETING = "Deleting"
+
+class PolicySettingsDefaultCustomBlockResponseStatusCode(with_metaclass(_CaseInsensitiveEnumMeta, int, Enum)):
+    """If the action type is block, this field defines the default customer overridable http response
+    status code.
+    """
+
+    TWO_HUNDRED = 200
+    FOUR_HUNDRED_THREE = 403
+    FOUR_HUNDRED_FIVE = 405
+    FOUR_HUNDRED_SIX = 406
+    FOUR_HUNDRED_TWENTY_NINE = 429
+
+class PostArgsMatchConditionParametersOdataType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
+
+    _MICROSOFT_AZURE_CDN_MODELS_DELIVERY_RULE_POST_ARGS_CONDITION_PARAMETERS = "#Microsoft.Azure.Cdn.Models.DeliveryRulePostArgsConditionParameters"
 
 class PostArgsOperator(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """Describes operator to be matched
@@ -565,6 +609,10 @@ class QueryStringCachingBehavior(with_metaclass(_CaseInsensitiveEnumMeta, str, E
     USE_QUERY_STRING = "UseQueryString"
     NOT_SET = "NotSet"
 
+class QueryStringMatchConditionParametersOdataType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
+
+    _MICROSOFT_AZURE_CDN_MODELS_DELIVERY_RULE_QUERY_STRING_CONDITION_PARAMETERS = "#Microsoft.Azure.Cdn.Models.DeliveryRuleQueryStringConditionParameters"
+
 class QueryStringOperator(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """Describes operator to be matched
     """
@@ -589,6 +637,10 @@ class RedirectType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     TEMPORARY_REDIRECT = "TemporaryRedirect"
     PERMANENT_REDIRECT = "PermanentRedirect"
 
+class RemoteAddressMatchConditionParametersOdataType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
+
+    _MICROSOFT_AZURE_CDN_MODELS_DELIVERY_RULE_REMOTE_ADDRESS_CONDITION_PARAMETERS = "#Microsoft.Azure.Cdn.Models.DeliveryRuleRemoteAddressConditionParameters"
+
 class RemoteAddressOperator(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """Describes operator to be matched
     """
@@ -596,6 +648,10 @@ class RemoteAddressOperator(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum))
     ANY = "Any"
     IP_MATCH = "IPMatch"
     GEO_MATCH = "GeoMatch"
+
+class RequestBodyMatchConditionParametersOdataType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
+
+    _MICROSOFT_AZURE_CDN_MODELS_DELIVERY_RULE_REQUEST_BODY_CONDITION_PARAMETERS = "#Microsoft.Azure.Cdn.Models.DeliveryRuleRequestBodyConditionParameters"
 
 class RequestBodyOperator(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """Describes operator to be matched
@@ -611,6 +667,10 @@ class RequestBodyOperator(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     GREATER_THAN = "GreaterThan"
     GREATER_THAN_OR_EQUAL = "GreaterThanOrEqual"
     REG_EX = "RegEx"
+
+class RequestHeaderMatchConditionParametersOdataType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
+
+    _MICROSOFT_AZURE_CDN_MODELS_DELIVERY_RULE_REQUEST_HEADER_CONDITION_PARAMETERS = "#Microsoft.Azure.Cdn.Models.DeliveryRuleRequestHeaderConditionParameters"
 
 class RequestHeaderOperator(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """Describes operator to be matched
@@ -637,6 +697,10 @@ class RequestMethodMatchConditionParametersMatchValuesItem(with_metaclass(_CaseI
     OPTIONS = "OPTIONS"
     TRACE = "TRACE"
 
+class RequestMethodMatchConditionParametersOdataType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
+
+    _MICROSOFT_AZURE_CDN_MODELS_DELIVERY_RULE_REQUEST_METHOD_CONDITION_PARAMETERS = "#Microsoft.Azure.Cdn.Models.DeliveryRuleRequestMethodConditionParameters"
+
 class RequestMethodOperator(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """Describes operator to be matched
     """
@@ -647,6 +711,20 @@ class RequestSchemeMatchConditionParametersMatchValuesItem(with_metaclass(_CaseI
 
     HTTP = "HTTP"
     HTTPS = "HTTPS"
+
+class RequestSchemeMatchConditionParametersOdataType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
+
+    _MICROSOFT_AZURE_CDN_MODELS_DELIVERY_RULE_REQUEST_SCHEME_CONDITION_PARAMETERS = "#Microsoft.Azure.Cdn.Models.DeliveryRuleRequestSchemeConditionParameters"
+
+class RequestSchemeMatchConditionParametersOperator(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
+    """Describes operator to be matched
+    """
+
+    EQUAL = "Equal"
+
+class RequestUriMatchConditionParametersOdataType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
+
+    _MICROSOFT_AZURE_CDN_MODELS_DELIVERY_RULE_REQUEST_URI_CONDITION_PARAMETERS = "#Microsoft.Azure.Cdn.Models.DeliveryRuleRequestUriConditionParameters"
 
 class RequestUriOperator(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """Describes operator to be matched
@@ -748,6 +826,10 @@ class UpdateRule(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
 
     NO_ACTION = "NoAction"
 
+class UrlFileExtensionMatchConditionParametersOdataType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
+
+    _MICROSOFT_AZURE_CDN_MODELS_DELIVERY_RULE_URL_FILE_EXTENSION_MATCH_CONDITION_PARAMETERS = "#Microsoft.Azure.Cdn.Models.DeliveryRuleUrlFileExtensionMatchConditionParameters"
+
 class UrlFileExtensionOperator(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """Describes operator to be matched
     """
@@ -762,6 +844,10 @@ class UrlFileExtensionOperator(with_metaclass(_CaseInsensitiveEnumMeta, str, Enu
     GREATER_THAN = "GreaterThan"
     GREATER_THAN_OR_EQUAL = "GreaterThanOrEqual"
     REG_EX = "RegEx"
+
+class UrlFileNameMatchConditionParametersOdataType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
+
+    _MICROSOFT_AZURE_CDN_MODELS_DELIVERY_RULE_URL_FILENAME_CONDITION_PARAMETERS = "#Microsoft.Azure.Cdn.Models.DeliveryRuleUrlFilenameConditionParameters"
 
 class UrlFileNameOperator(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """Describes operator to be matched
@@ -778,6 +864,10 @@ class UrlFileNameOperator(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     GREATER_THAN_OR_EQUAL = "GreaterThanOrEqual"
     REG_EX = "RegEx"
 
+class UrlPathMatchConditionParametersOdataType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
+
+    _MICROSOFT_AZURE_CDN_MODELS_DELIVERY_RULE_URL_PATH_MATCH_CONDITION_PARAMETERS = "#Microsoft.Azure.Cdn.Models.DeliveryRuleUrlPathMatchConditionParameters"
+
 class UrlPathOperator(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """Describes operator to be matched
     """
@@ -793,6 +883,18 @@ class UrlPathOperator(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     GREATER_THAN_OR_EQUAL = "GreaterThanOrEqual"
     WILDCARD = "Wildcard"
     REG_EX = "RegEx"
+
+class UrlRedirectActionParametersOdataType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
+
+    _MICROSOFT_AZURE_CDN_MODELS_DELIVERY_RULE_URL_REDIRECT_ACTION_PARAMETERS = "#Microsoft.Azure.Cdn.Models.DeliveryRuleUrlRedirectActionParameters"
+
+class UrlRewriteActionParametersOdataType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
+
+    _MICROSOFT_AZURE_CDN_MODELS_DELIVERY_RULE_URL_REWRITE_ACTION_PARAMETERS = "#Microsoft.Azure.Cdn.Models.DeliveryRuleUrlRewriteActionParameters"
+
+class UrlSigningActionParametersOdataType(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
+
+    _MICROSOFT_AZURE_CDN_MODELS_DELIVERY_RULE_URL_SIGNING_ACTION_PARAMETERS = "#Microsoft.Azure.Cdn.Models.DeliveryRuleUrlSigningActionParameters"
 
 class UsageUnit(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     """An enum describing the unit of measurement.
@@ -830,6 +932,10 @@ class WafMetricsResponseGranularity(with_metaclass(_CaseInsensitiveEnumMeta, str
     PT5_M = "PT5M"
     PT1_H = "PT1H"
     P1_D = "P1D"
+
+class WafMetricsResponseSeriesItemUnit(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
+
+    COUNT = "count"
 
 class WafRankingGroupBy(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
 

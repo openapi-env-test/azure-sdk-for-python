@@ -50,7 +50,43 @@ class Resource(msrest.serialization.Model):
         self.system_data = None
 
 
-class AFDDomain(Resource):
+class ProxyResource(Resource):
+    """The resource model definition for a ARM proxy resource. It will have everything other than required location and tags.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    :ivar id: Resource ID.
+    :vartype id: str
+    :ivar name: Resource name.
+    :vartype name: str
+    :ivar type: Resource type.
+    :vartype type: str
+    :ivar system_data: Read only system data.
+    :vartype system_data: ~azure.mgmt.cdn.models.SystemData
+    """
+
+    _validation = {
+        'id': {'readonly': True},
+        'name': {'readonly': True},
+        'type': {'readonly': True},
+        'system_data': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'id': {'key': 'id', 'type': 'str'},
+        'name': {'key': 'name', 'type': 'str'},
+        'type': {'key': 'type', 'type': 'str'},
+        'system_data': {'key': 'systemData', 'type': 'SystemData'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(ProxyResource, self).__init__(**kwargs)
+
+
+class AFDDomain(ProxyResource):
     """Friendly domain name mapping to the endpoint hostname that the customer provides for branding purposes, e.g. www.contoso.com.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -617,7 +653,7 @@ class AfdErrorResponse(msrest.serialization.Model):
         self.error = kwargs.get('error', None)
 
 
-class AFDOrigin(Resource):
+class AFDOrigin(ProxyResource):
     """CDN origin is the source of the content being delivered via CDN. When the edge nodes represented by an endpoint do not have the requested content cached, they attempt to fetch it from one or more of the configured origins.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -653,7 +689,7 @@ class AFDOrigin(Resource):
     :type weight: int
     :param shared_private_link_resource: The properties of the private link resource for private
      origin.
-    :type shared_private_link_resource: object
+    :type shared_private_link_resource: any
     :param enabled_state: Whether to enable health probes to be made against backends defined under
      backendPools. Health probes can only be disabled if there is a single enabled backend in single
      enabled backend pool. Possible values include: "Enabled", "Disabled".
@@ -715,7 +751,7 @@ class AFDOrigin(Resource):
         self.deployment_status = None
 
 
-class AFDOriginGroup(Resource):
+class AFDOriginGroup(ProxyResource):
     """AFDOrigin group comprising of origins is used for load balancing to origins when the content cannot be served from CDN.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -1027,7 +1063,7 @@ class AFDOriginUpdatePropertiesParameters(msrest.serialization.Model):
     :type weight: int
     :param shared_private_link_resource: The properties of the private link resource for private
      origin.
-    :type shared_private_link_resource: object
+    :type shared_private_link_resource: any
     :param enabled_state: Whether to enable health probes to be made against backends defined under
      backendPools. Health probes can only be disabled if there is a single enabled backend in single
      enabled backend pool. Possible values include: "Enabled", "Disabled".
@@ -1097,7 +1133,7 @@ class AFDOriginProperties(AFDStateProperties, AFDOriginUpdatePropertiesParameter
     :type weight: int
     :param shared_private_link_resource: The properties of the private link resource for private
      origin.
-    :type shared_private_link_resource: object
+    :type shared_private_link_resource: any
     :param enabled_state: Whether to enable health probes to be made against backends defined under
      backendPools. Health probes can only be disabled if there is a single enabled backend in single
      enabled backend pool. Possible values include: "Enabled", "Disabled".
@@ -1177,7 +1213,7 @@ class AFDOriginUpdateParameters(msrest.serialization.Model):
     :type weight: int
     :param shared_private_link_resource: The properties of the private link resource for private
      origin.
-    :type shared_private_link_resource: object
+    :type shared_private_link_resource: any
     :param enabled_state: Whether to enable health probes to be made against backends defined under
      backendPools. Health probes can only be disabled if there is a single enabled backend in single
      enabled backend pool. Possible values include: "Enabled", "Disabled".
@@ -1252,13 +1288,11 @@ class AfdPurgeParameters(msrest.serialization.Model):
 class CacheExpirationActionParameters(msrest.serialization.Model):
     """Defines the parameters for the cache expiration action.
 
-    Variables are only populated by the server, and will be ignored when sending a request.
-
     All required parameters must be populated in order to send to Azure.
 
-    :ivar odata_type: Required.  Default value:
+    :param odata_type: Required.  Possible values include:
      "#Microsoft.Azure.Cdn.Models.DeliveryRuleCacheExpirationActionParameters".
-    :vartype odata_type: str
+    :type odata_type: str or ~azure.mgmt.cdn.models.CacheExpirationActionParametersOdataType
     :param cache_behavior: Required. Caching behavior for the requests. Possible values include:
      "BypassCache", "Override", "SetIfMissing".
     :type cache_behavior: str or ~azure.mgmt.cdn.models.CacheBehavior
@@ -1271,7 +1305,7 @@ class CacheExpirationActionParameters(msrest.serialization.Model):
     """
 
     _validation = {
-        'odata_type': {'required': True, 'constant': True},
+        'odata_type': {'required': True},
         'cache_behavior': {'required': True},
         'cache_type': {'required': True},
     }
@@ -1283,13 +1317,12 @@ class CacheExpirationActionParameters(msrest.serialization.Model):
         'cache_duration': {'key': 'cacheDuration', 'type': 'str'},
     }
 
-    odata_type = "#Microsoft.Azure.Cdn.Models.DeliveryRuleCacheExpirationActionParameters"
-
     def __init__(
         self,
         **kwargs
     ):
         super(CacheExpirationActionParameters, self).__init__(**kwargs)
+        self.odata_type = kwargs['odata_type']
         self.cache_behavior = kwargs['cache_behavior']
         self.cache_type = kwargs['cache_type']
         self.cache_duration = kwargs.get('cache_duration', None)
@@ -1298,13 +1331,11 @@ class CacheExpirationActionParameters(msrest.serialization.Model):
 class CacheKeyQueryStringActionParameters(msrest.serialization.Model):
     """Defines the parameters for the cache-key query string action.
 
-    Variables are only populated by the server, and will be ignored when sending a request.
-
     All required parameters must be populated in order to send to Azure.
 
-    :ivar odata_type: Required.  Default value:
+    :param odata_type: Required.  Possible values include:
      "#Microsoft.Azure.Cdn.Models.DeliveryRuleCacheKeyQueryStringBehaviorActionParameters".
-    :vartype odata_type: str
+    :type odata_type: str or ~azure.mgmt.cdn.models.CacheKeyQueryStringActionParametersOdataType
     :param query_string_behavior: Required. Caching behavior for the requests. Possible values
      include: "Include", "IncludeAll", "Exclude", "ExcludeAll".
     :type query_string_behavior: str or ~azure.mgmt.cdn.models.QueryStringBehavior
@@ -1313,7 +1344,7 @@ class CacheKeyQueryStringActionParameters(msrest.serialization.Model):
     """
 
     _validation = {
-        'odata_type': {'required': True, 'constant': True},
+        'odata_type': {'required': True},
         'query_string_behavior': {'required': True},
     }
 
@@ -1323,13 +1354,12 @@ class CacheKeyQueryStringActionParameters(msrest.serialization.Model):
         'query_parameters': {'key': 'queryParameters', 'type': 'str'},
     }
 
-    odata_type = "#Microsoft.Azure.Cdn.Models.DeliveryRuleCacheKeyQueryStringBehaviorActionParameters"
-
     def __init__(
         self,
         **kwargs
     ):
         super(CacheKeyQueryStringActionParameters, self).__init__(**kwargs)
+        self.odata_type = kwargs['odata_type']
         self.query_string_behavior = kwargs['query_string_behavior']
         self.query_parameters = kwargs.get('query_parameters', None)
 
@@ -1337,20 +1367,18 @@ class CacheKeyQueryStringActionParameters(msrest.serialization.Model):
 class CdnCertificateSourceParameters(msrest.serialization.Model):
     """Defines the parameters for using CDN managed certificate for securing custom domain.
 
-    Variables are only populated by the server, and will be ignored when sending a request.
-
     All required parameters must be populated in order to send to Azure.
 
-    :ivar odata_type: Required.  Default value:
+    :param odata_type: Required.  Possible values include:
      "#Microsoft.Azure.Cdn.Models.CdnCertificateSourceParameters".
-    :vartype odata_type: str
+    :type odata_type: str or ~azure.mgmt.cdn.models.CdnCertificateSourceParametersOdataType
     :param certificate_type: Required. Type of certificate used. Possible values include: "Shared",
      "Dedicated".
     :type certificate_type: str or ~azure.mgmt.cdn.models.CertificateType
     """
 
     _validation = {
-        'odata_type': {'required': True, 'constant': True},
+        'odata_type': {'required': True},
         'certificate_type': {'required': True},
     }
 
@@ -1359,13 +1387,12 @@ class CdnCertificateSourceParameters(msrest.serialization.Model):
         'certificate_type': {'key': 'certificateType', 'type': 'str'},
     }
 
-    odata_type = "#Microsoft.Azure.Cdn.Models.CdnCertificateSourceParameters"
-
     def __init__(
         self,
         **kwargs
     ):
         super(CdnCertificateSourceParameters, self).__init__(**kwargs)
+        self.odata_type = kwargs['odata_type']
         self.certificate_type = kwargs['certificate_type']
 
 
@@ -1647,7 +1674,7 @@ class CheckNameAvailabilityInput(msrest.serialization.Model):
 
     :param name: Required. The resource name to validate.
     :type name: str
-    :ivar type: Required. The type of the resource whose name is to be validated. Default value:
+    :ivar type: The type of the resource whose name is to be validated. Has constant value:
      "Microsoft.Cdn/Profiles/Endpoints".
     :vartype type: str
     """
@@ -1898,13 +1925,11 @@ class ContinentsResponseCountryOrRegionsItem(msrest.serialization.Model):
 class CookiesMatchConditionParameters(msrest.serialization.Model):
     """Defines the parameters for Cookies match conditions.
 
-    Variables are only populated by the server, and will be ignored when sending a request.
-
     All required parameters must be populated in order to send to Azure.
 
-    :ivar odata_type: Required.  Default value:
+    :param odata_type: Required.  Possible values include:
      "#Microsoft.Azure.Cdn.Models.DeliveryRuleCookiesConditionParameters".
-    :vartype odata_type: str
+    :type odata_type: str or ~azure.mgmt.cdn.models.CookiesMatchConditionParametersOdataType
     :param selector: Name of Cookies to be matched.
     :type selector: str
     :param operator: Required. Describes operator to be matched. Possible values include: "Any",
@@ -1920,7 +1945,7 @@ class CookiesMatchConditionParameters(msrest.serialization.Model):
     """
 
     _validation = {
-        'odata_type': {'required': True, 'constant': True},
+        'odata_type': {'required': True},
         'operator': {'required': True},
     }
 
@@ -1933,13 +1958,12 @@ class CookiesMatchConditionParameters(msrest.serialization.Model):
         'transforms': {'key': 'transforms', 'type': '[str]'},
     }
 
-    odata_type = "#Microsoft.Azure.Cdn.Models.DeliveryRuleCookiesConditionParameters"
-
     def __init__(
         self,
         **kwargs
     ):
         super(CookiesMatchConditionParameters, self).__init__(**kwargs)
+        self.odata_type = kwargs['odata_type']
         self.selector = kwargs.get('selector', None)
         self.operator = kwargs['operator']
         self.negate_condition = kwargs.get('negate_condition', None)
@@ -1947,7 +1971,7 @@ class CookiesMatchConditionParameters(msrest.serialization.Model):
         self.transforms = kwargs.get('transforms', None)
 
 
-class CustomDomain(Resource):
+class CustomDomain(ProxyResource):
     """Friendly domain name mapping to the endpoint hostname that the customer provides for branding purposes, e.g. www.contoso.com.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -3130,7 +3154,7 @@ class DomainValidationProperties(msrest.serialization.Model):
         self.expiration_date = None
 
 
-class EdgeNode(Resource):
+class EdgeNode(ProxyResource):
     """Edgenode is a global Point of Presence (POP) location used to deliver CDN content to end users.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -3803,13 +3827,11 @@ class GeoFilter(msrest.serialization.Model):
 class HeaderActionParameters(msrest.serialization.Model):
     """Defines the parameters for the request header action.
 
-    Variables are only populated by the server, and will be ignored when sending a request.
-
     All required parameters must be populated in order to send to Azure.
 
-    :ivar odata_type: Required.  Default value:
+    :param odata_type: Required.  Possible values include:
      "#Microsoft.Azure.Cdn.Models.DeliveryRuleHeaderActionParameters".
-    :vartype odata_type: str
+    :type odata_type: str or ~azure.mgmt.cdn.models.HeaderActionParametersOdataType
     :param header_action: Required. Action to perform. Possible values include: "Append",
      "Overwrite", "Delete".
     :type header_action: str or ~azure.mgmt.cdn.models.HeaderAction
@@ -3820,7 +3842,7 @@ class HeaderActionParameters(msrest.serialization.Model):
     """
 
     _validation = {
-        'odata_type': {'required': True, 'constant': True},
+        'odata_type': {'required': True},
         'header_action': {'required': True},
         'header_name': {'required': True},
     }
@@ -3832,13 +3854,12 @@ class HeaderActionParameters(msrest.serialization.Model):
         'value': {'key': 'value', 'type': 'str'},
     }
 
-    odata_type = "#Microsoft.Azure.Cdn.Models.DeliveryRuleHeaderActionParameters"
-
     def __init__(
         self,
         **kwargs
     ):
         super(HeaderActionParameters, self).__init__(**kwargs)
+        self.odata_type = kwargs['odata_type']
         self.header_action = kwargs['header_action']
         self.header_name = kwargs['header_name']
         self.value = kwargs.get('value', None)
@@ -3914,13 +3935,11 @@ class HttpErrorRangeParameters(msrest.serialization.Model):
 class HttpVersionMatchConditionParameters(msrest.serialization.Model):
     """Defines the parameters for HttpVersion match conditions.
 
-    Variables are only populated by the server, and will be ignored when sending a request.
-
     All required parameters must be populated in order to send to Azure.
 
-    :ivar odata_type: Required.  Default value:
+    :param odata_type: Required.  Possible values include:
      "#Microsoft.Azure.Cdn.Models.DeliveryRuleHttpVersionConditionParameters".
-    :vartype odata_type: str
+    :type odata_type: str or ~azure.mgmt.cdn.models.HttpVersionMatchConditionParametersOdataType
     :param operator: Required. Describes operator to be matched. Possible values include: "Equal".
     :type operator: str or ~azure.mgmt.cdn.models.HttpVersionOperator
     :param negate_condition: Describes if this is negate condition or not.
@@ -3930,7 +3949,7 @@ class HttpVersionMatchConditionParameters(msrest.serialization.Model):
     """
 
     _validation = {
-        'odata_type': {'required': True, 'constant': True},
+        'odata_type': {'required': True},
         'operator': {'required': True},
     }
 
@@ -3941,13 +3960,12 @@ class HttpVersionMatchConditionParameters(msrest.serialization.Model):
         'match_values': {'key': 'matchValues', 'type': '[str]'},
     }
 
-    odata_type = "#Microsoft.Azure.Cdn.Models.DeliveryRuleHttpVersionConditionParameters"
-
     def __init__(
         self,
         **kwargs
     ):
         super(HttpVersionMatchConditionParameters, self).__init__(**kwargs)
+        self.odata_type = kwargs['odata_type']
         self.operator = kwargs['operator']
         self.negate_condition = kwargs.get('negate_condition', None)
         self.match_values = kwargs.get('match_values', None)
@@ -3983,13 +4001,11 @@ class IpAddressGroup(msrest.serialization.Model):
 class IsDeviceMatchConditionParameters(msrest.serialization.Model):
     """Defines the parameters for IsDevice match conditions.
 
-    Variables are only populated by the server, and will be ignored when sending a request.
-
     All required parameters must be populated in order to send to Azure.
 
-    :ivar odata_type: Required.  Default value:
+    :param odata_type: Required.  Possible values include:
      "#Microsoft.Azure.Cdn.Models.DeliveryRuleIsDeviceConditionParameters".
-    :vartype odata_type: str
+    :type odata_type: str or ~azure.mgmt.cdn.models.IsDeviceMatchConditionParametersOdataType
     :param operator: Required. Describes operator to be matched. Possible values include: "Equal".
     :type operator: str or ~azure.mgmt.cdn.models.IsDeviceOperator
     :param negate_condition: Describes if this is negate condition or not.
@@ -4002,7 +4018,7 @@ class IsDeviceMatchConditionParameters(msrest.serialization.Model):
     """
 
     _validation = {
-        'odata_type': {'required': True, 'constant': True},
+        'odata_type': {'required': True},
         'operator': {'required': True},
     }
 
@@ -4014,13 +4030,12 @@ class IsDeviceMatchConditionParameters(msrest.serialization.Model):
         'transforms': {'key': 'transforms', 'type': '[str]'},
     }
 
-    odata_type = "#Microsoft.Azure.Cdn.Models.DeliveryRuleIsDeviceConditionParameters"
-
     def __init__(
         self,
         **kwargs
     ):
         super(IsDeviceMatchConditionParameters, self).__init__(**kwargs)
+        self.odata_type = kwargs['odata_type']
         self.operator = kwargs['operator']
         self.negate_condition = kwargs.get('negate_condition', None)
         self.match_values = kwargs.get('match_values', None)
@@ -4030,13 +4045,11 @@ class IsDeviceMatchConditionParameters(msrest.serialization.Model):
 class KeyVaultCertificateSourceParameters(msrest.serialization.Model):
     """Describes the parameters for using a user's KeyVault certificate for securing custom domain.
 
-    Variables are only populated by the server, and will be ignored when sending a request.
-
     All required parameters must be populated in order to send to Azure.
 
-    :ivar odata_type: Required.  Default value:
+    :param odata_type: Required.  Possible values include:
      "#Microsoft.Azure.Cdn.Models.KeyVaultCertificateSourceParameters".
-    :vartype odata_type: str
+    :type odata_type: str or ~azure.mgmt.cdn.models.KeyVaultCertificateSourceParametersOdataType
     :param subscription_id: Required. Subscription Id of the user's Key Vault containing the SSL
      certificate.
     :type subscription_id: str
@@ -4059,7 +4072,7 @@ class KeyVaultCertificateSourceParameters(msrest.serialization.Model):
     """
 
     _validation = {
-        'odata_type': {'required': True, 'constant': True},
+        'odata_type': {'required': True},
         'subscription_id': {'required': True},
         'resource_group_name': {'required': True},
         'vault_name': {'required': True},
@@ -4079,13 +4092,12 @@ class KeyVaultCertificateSourceParameters(msrest.serialization.Model):
         'delete_rule': {'key': 'deleteRule', 'type': 'str'},
     }
 
-    odata_type = "#Microsoft.Azure.Cdn.Models.KeyVaultCertificateSourceParameters"
-
     def __init__(
         self,
         **kwargs
     ):
         super(KeyVaultCertificateSourceParameters, self).__init__(**kwargs)
+        self.odata_type = kwargs['odata_type']
         self.subscription_id = kwargs['subscription_id']
         self.resource_group_name = kwargs['resource_group_name']
         self.vault_name = kwargs['vault_name']
@@ -4098,13 +4110,11 @@ class KeyVaultCertificateSourceParameters(msrest.serialization.Model):
 class KeyVaultSigningKeyParameters(msrest.serialization.Model):
     """Describes the parameters for using a user's KeyVault for URL Signing Key.
 
-    Variables are only populated by the server, and will be ignored when sending a request.
-
     All required parameters must be populated in order to send to Azure.
 
-    :ivar odata_type: Required.  Default value:
+    :param odata_type: Required.  Possible values include:
      "#Microsoft.Azure.Cdn.Models.KeyVaultSigningKeyParameters".
-    :vartype odata_type: str
+    :type odata_type: str or ~azure.mgmt.cdn.models.KeyVaultSigningKeyParametersOdataType
     :param subscription_id: Required. Subscription Id of the user's Key Vault containing the
      secret.
     :type subscription_id: str
@@ -4120,7 +4130,7 @@ class KeyVaultSigningKeyParameters(msrest.serialization.Model):
     """
 
     _validation = {
-        'odata_type': {'required': True, 'constant': True},
+        'odata_type': {'required': True},
         'subscription_id': {'required': True},
         'resource_group_name': {'required': True},
         'vault_name': {'required': True},
@@ -4137,13 +4147,12 @@ class KeyVaultSigningKeyParameters(msrest.serialization.Model):
         'secret_version': {'key': 'secretVersion', 'type': 'str'},
     }
 
-    odata_type = "#Microsoft.Azure.Cdn.Models.KeyVaultSigningKeyParameters"
-
     def __init__(
         self,
         **kwargs
     ):
         super(KeyVaultSigningKeyParameters, self).__init__(**kwargs)
+        self.odata_type = kwargs['odata_type']
         self.subscription_id = kwargs['subscription_id']
         self.resource_group_name = kwargs['resource_group_name']
         self.vault_name = kwargs['vault_name']
@@ -4768,7 +4777,7 @@ class OperationsListResult(msrest.serialization.Model):
         self.next_link = kwargs.get('next_link', None)
 
 
-class Origin(Resource):
+class Origin(ProxyResource):
     """CDN origin is the source of the content being delivered via CDN. When the edge nodes represented by an endpoint do not have the requested content cached, they attempt to fetch it from one or more of the configured origins.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -4880,7 +4889,7 @@ class Origin(Resource):
         self.private_endpoint_status = None
 
 
-class OriginGroup(Resource):
+class OriginGroup(ProxyResource):
     """Origin group comprising of origins is used for load balancing to origins when the content cannot be served from CDN.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -5014,20 +5023,18 @@ class OriginGroupOverrideAction(DeliveryRuleAction):
 class OriginGroupOverrideActionParameters(msrest.serialization.Model):
     """Defines the parameters for the origin group override action.
 
-    Variables are only populated by the server, and will be ignored when sending a request.
-
     All required parameters must be populated in order to send to Azure.
 
-    :ivar odata_type: Required.  Default value:
+    :param odata_type: Required.  Possible values include:
      "#Microsoft.Azure.Cdn.Models.DeliveryRuleOriginGroupOverrideActionParameters".
-    :vartype odata_type: str
+    :type odata_type: str or ~azure.mgmt.cdn.models.OriginGroupOverrideActionParametersOdataType
     :param origin_group: Required. defines the OriginGroup that would override the
      DefaultOriginGroup.
     :type origin_group: ~azure.mgmt.cdn.models.ResourceReference
     """
 
     _validation = {
-        'odata_type': {'required': True, 'constant': True},
+        'odata_type': {'required': True},
         'origin_group': {'required': True},
     }
 
@@ -5036,13 +5043,12 @@ class OriginGroupOverrideActionParameters(msrest.serialization.Model):
         'origin_group': {'key': 'originGroup', 'type': 'ResourceReference'},
     }
 
-    odata_type = "#Microsoft.Azure.Cdn.Models.DeliveryRuleOriginGroupOverrideActionParameters"
-
     def __init__(
         self,
         **kwargs
     ):
         super(OriginGroupOverrideActionParameters, self).__init__(**kwargs)
+        self.odata_type = kwargs['odata_type']
         self.origin_group = kwargs['origin_group']
 
 
@@ -5461,7 +5467,8 @@ class PolicySettings(msrest.serialization.Model):
     :param default_custom_block_response_status_code: If the action type is block, this field
      defines the default customer overridable http response status code. Possible values include:
      200, 403, 405, 406, 429.
-    :type default_custom_block_response_status_code: str or ~azure.mgmt.cdn.models.Enum46
+    :type default_custom_block_response_status_code: str or
+     ~azure.mgmt.cdn.models.PolicySettingsDefaultCustomBlockResponseStatusCode
     :param default_custom_block_response_body: If the action type is block, customer can override
      the response body. The body must be specified in base64 encoding.
     :type default_custom_block_response_body: str
@@ -5494,13 +5501,11 @@ class PolicySettings(msrest.serialization.Model):
 class PostArgsMatchConditionParameters(msrest.serialization.Model):
     """Defines the parameters for PostArgs match conditions.
 
-    Variables are only populated by the server, and will be ignored when sending a request.
-
     All required parameters must be populated in order to send to Azure.
 
-    :ivar odata_type: Required.  Default value:
+    :param odata_type: Required.  Possible values include:
      "#Microsoft.Azure.Cdn.Models.DeliveryRulePostArgsConditionParameters".
-    :vartype odata_type: str
+    :type odata_type: str or ~azure.mgmt.cdn.models.PostArgsMatchConditionParametersOdataType
     :param selector: Name of PostArg to be matched.
     :type selector: str
     :param operator: Required. Describes operator to be matched. Possible values include: "Any",
@@ -5516,7 +5521,7 @@ class PostArgsMatchConditionParameters(msrest.serialization.Model):
     """
 
     _validation = {
-        'odata_type': {'required': True, 'constant': True},
+        'odata_type': {'required': True},
         'operator': {'required': True},
     }
 
@@ -5529,13 +5534,12 @@ class PostArgsMatchConditionParameters(msrest.serialization.Model):
         'transforms': {'key': 'transforms', 'type': '[str]'},
     }
 
-    odata_type = "#Microsoft.Azure.Cdn.Models.DeliveryRulePostArgsConditionParameters"
-
     def __init__(
         self,
         **kwargs
     ):
         super(PostArgsMatchConditionParameters, self).__init__(**kwargs)
+        self.odata_type = kwargs['odata_type']
         self.selector = kwargs.get('selector', None)
         self.operator = kwargs['operator']
         self.negate_condition = kwargs.get('negate_condition', None)
@@ -5658,42 +5662,6 @@ class ProfileUpdateParameters(msrest.serialization.Model):
         self.tags = kwargs.get('tags', None)
 
 
-class ProxyResource(Resource):
-    """The resource model definition for a ARM proxy resource. It will have everything other than required location and tags.
-
-    Variables are only populated by the server, and will be ignored when sending a request.
-
-    :ivar id: Resource ID.
-    :vartype id: str
-    :ivar name: Resource name.
-    :vartype name: str
-    :ivar type: Resource type.
-    :vartype type: str
-    :ivar system_data: Read only system data.
-    :vartype system_data: ~azure.mgmt.cdn.models.SystemData
-    """
-
-    _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'system_data': {'readonly': True},
-    }
-
-    _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'system_data': {'key': 'systemData', 'type': 'SystemData'},
-    }
-
-    def __init__(
-        self,
-        **kwargs
-    ):
-        super(ProxyResource, self).__init__(**kwargs)
-
-
 class PurgeParameters(msrest.serialization.Model):
     """Parameters required for content purge.
 
@@ -5723,13 +5691,11 @@ class PurgeParameters(msrest.serialization.Model):
 class QueryStringMatchConditionParameters(msrest.serialization.Model):
     """Defines the parameters for QueryString match conditions.
 
-    Variables are only populated by the server, and will be ignored when sending a request.
-
     All required parameters must be populated in order to send to Azure.
 
-    :ivar odata_type: Required.  Default value:
+    :param odata_type: Required.  Possible values include:
      "#Microsoft.Azure.Cdn.Models.DeliveryRuleQueryStringConditionParameters".
-    :vartype odata_type: str
+    :type odata_type: str or ~azure.mgmt.cdn.models.QueryStringMatchConditionParametersOdataType
     :param operator: Required. Describes operator to be matched. Possible values include: "Any",
      "Equal", "Contains", "BeginsWith", "EndsWith", "LessThan", "LessThanOrEqual", "GreaterThan",
      "GreaterThanOrEqual", "RegEx".
@@ -5743,7 +5709,7 @@ class QueryStringMatchConditionParameters(msrest.serialization.Model):
     """
 
     _validation = {
-        'odata_type': {'required': True, 'constant': True},
+        'odata_type': {'required': True},
         'operator': {'required': True},
     }
 
@@ -5755,13 +5721,12 @@ class QueryStringMatchConditionParameters(msrest.serialization.Model):
         'transforms': {'key': 'transforms', 'type': '[str]'},
     }
 
-    odata_type = "#Microsoft.Azure.Cdn.Models.DeliveryRuleQueryStringConditionParameters"
-
     def __init__(
         self,
         **kwargs
     ):
         super(QueryStringMatchConditionParameters, self).__init__(**kwargs)
+        self.odata_type = kwargs['odata_type']
         self.operator = kwargs['operator']
         self.negate_condition = kwargs.get('negate_condition', None)
         self.match_values = kwargs.get('match_values', None)
@@ -5943,13 +5908,11 @@ class RateLimitRuleList(msrest.serialization.Model):
 class RemoteAddressMatchConditionParameters(msrest.serialization.Model):
     """Defines the parameters for RemoteAddress match conditions.
 
-    Variables are only populated by the server, and will be ignored when sending a request.
-
     All required parameters must be populated in order to send to Azure.
 
-    :ivar odata_type: Required.  Default value:
+    :param odata_type: Required.  Possible values include:
      "#Microsoft.Azure.Cdn.Models.DeliveryRuleRemoteAddressConditionParameters".
-    :vartype odata_type: str
+    :type odata_type: str or ~azure.mgmt.cdn.models.RemoteAddressMatchConditionParametersOdataType
     :param operator: Required. Describes operator to be matched. Possible values include: "Any",
      "IPMatch", "GeoMatch".
     :type operator: str or ~azure.mgmt.cdn.models.RemoteAddressOperator
@@ -5964,7 +5927,7 @@ class RemoteAddressMatchConditionParameters(msrest.serialization.Model):
     """
 
     _validation = {
-        'odata_type': {'required': True, 'constant': True},
+        'odata_type': {'required': True},
         'operator': {'required': True},
     }
 
@@ -5976,13 +5939,12 @@ class RemoteAddressMatchConditionParameters(msrest.serialization.Model):
         'transforms': {'key': 'transforms', 'type': '[str]'},
     }
 
-    odata_type = "#Microsoft.Azure.Cdn.Models.DeliveryRuleRemoteAddressConditionParameters"
-
     def __init__(
         self,
         **kwargs
     ):
         super(RemoteAddressMatchConditionParameters, self).__init__(**kwargs)
+        self.odata_type = kwargs['odata_type']
         self.operator = kwargs['operator']
         self.negate_condition = kwargs.get('negate_condition', None)
         self.match_values = kwargs.get('match_values', None)
@@ -5992,13 +5954,11 @@ class RemoteAddressMatchConditionParameters(msrest.serialization.Model):
 class RequestBodyMatchConditionParameters(msrest.serialization.Model):
     """Defines the parameters for RequestBody match conditions.
 
-    Variables are only populated by the server, and will be ignored when sending a request.
-
     All required parameters must be populated in order to send to Azure.
 
-    :ivar odata_type: Required.  Default value:
+    :param odata_type: Required.  Possible values include:
      "#Microsoft.Azure.Cdn.Models.DeliveryRuleRequestBodyConditionParameters".
-    :vartype odata_type: str
+    :type odata_type: str or ~azure.mgmt.cdn.models.RequestBodyMatchConditionParametersOdataType
     :param operator: Required. Describes operator to be matched. Possible values include: "Any",
      "Equal", "Contains", "BeginsWith", "EndsWith", "LessThan", "LessThanOrEqual", "GreaterThan",
      "GreaterThanOrEqual", "RegEx".
@@ -6012,7 +5972,7 @@ class RequestBodyMatchConditionParameters(msrest.serialization.Model):
     """
 
     _validation = {
-        'odata_type': {'required': True, 'constant': True},
+        'odata_type': {'required': True},
         'operator': {'required': True},
     }
 
@@ -6024,13 +5984,12 @@ class RequestBodyMatchConditionParameters(msrest.serialization.Model):
         'transforms': {'key': 'transforms', 'type': '[str]'},
     }
 
-    odata_type = "#Microsoft.Azure.Cdn.Models.DeliveryRuleRequestBodyConditionParameters"
-
     def __init__(
         self,
         **kwargs
     ):
         super(RequestBodyMatchConditionParameters, self).__init__(**kwargs)
+        self.odata_type = kwargs['odata_type']
         self.operator = kwargs['operator']
         self.negate_condition = kwargs.get('negate_condition', None)
         self.match_values = kwargs.get('match_values', None)
@@ -6040,13 +5999,11 @@ class RequestBodyMatchConditionParameters(msrest.serialization.Model):
 class RequestHeaderMatchConditionParameters(msrest.serialization.Model):
     """Defines the parameters for RequestHeader match conditions.
 
-    Variables are only populated by the server, and will be ignored when sending a request.
-
     All required parameters must be populated in order to send to Azure.
 
-    :ivar odata_type: Required.  Default value:
+    :param odata_type: Required.  Possible values include:
      "#Microsoft.Azure.Cdn.Models.DeliveryRuleRequestHeaderConditionParameters".
-    :vartype odata_type: str
+    :type odata_type: str or ~azure.mgmt.cdn.models.RequestHeaderMatchConditionParametersOdataType
     :param selector: Name of Header to be matched.
     :type selector: str
     :param operator: Required. Describes operator to be matched. Possible values include: "Any",
@@ -6062,7 +6019,7 @@ class RequestHeaderMatchConditionParameters(msrest.serialization.Model):
     """
 
     _validation = {
-        'odata_type': {'required': True, 'constant': True},
+        'odata_type': {'required': True},
         'operator': {'required': True},
     }
 
@@ -6075,13 +6032,12 @@ class RequestHeaderMatchConditionParameters(msrest.serialization.Model):
         'transforms': {'key': 'transforms', 'type': '[str]'},
     }
 
-    odata_type = "#Microsoft.Azure.Cdn.Models.DeliveryRuleRequestHeaderConditionParameters"
-
     def __init__(
         self,
         **kwargs
     ):
         super(RequestHeaderMatchConditionParameters, self).__init__(**kwargs)
+        self.odata_type = kwargs['odata_type']
         self.selector = kwargs.get('selector', None)
         self.operator = kwargs['operator']
         self.negate_condition = kwargs.get('negate_condition', None)
@@ -6092,13 +6048,11 @@ class RequestHeaderMatchConditionParameters(msrest.serialization.Model):
 class RequestMethodMatchConditionParameters(msrest.serialization.Model):
     """Defines the parameters for RequestMethod match conditions.
 
-    Variables are only populated by the server, and will be ignored when sending a request.
-
     All required parameters must be populated in order to send to Azure.
 
-    :ivar odata_type: Required.  Default value:
+    :param odata_type: Required.  Possible values include:
      "#Microsoft.Azure.Cdn.Models.DeliveryRuleRequestMethodConditionParameters".
-    :vartype odata_type: str
+    :type odata_type: str or ~azure.mgmt.cdn.models.RequestMethodMatchConditionParametersOdataType
     :param operator: Required. Describes operator to be matched. Possible values include: "Equal".
     :type operator: str or ~azure.mgmt.cdn.models.RequestMethodOperator
     :param negate_condition: Describes if this is negate condition or not.
@@ -6109,7 +6063,7 @@ class RequestMethodMatchConditionParameters(msrest.serialization.Model):
     """
 
     _validation = {
-        'odata_type': {'required': True, 'constant': True},
+        'odata_type': {'required': True},
         'operator': {'required': True},
     }
 
@@ -6120,13 +6074,12 @@ class RequestMethodMatchConditionParameters(msrest.serialization.Model):
         'match_values': {'key': 'matchValues', 'type': '[str]'},
     }
 
-    odata_type = "#Microsoft.Azure.Cdn.Models.DeliveryRuleRequestMethodConditionParameters"
-
     def __init__(
         self,
         **kwargs
     ):
         super(RequestMethodMatchConditionParameters, self).__init__(**kwargs)
+        self.odata_type = kwargs['odata_type']
         self.operator = kwargs['operator']
         self.negate_condition = kwargs.get('negate_condition', None)
         self.match_values = kwargs.get('match_values', None)
@@ -6135,15 +6088,13 @@ class RequestMethodMatchConditionParameters(msrest.serialization.Model):
 class RequestSchemeMatchConditionParameters(msrest.serialization.Model):
     """Defines the parameters for RequestScheme match conditions.
 
-    Variables are only populated by the server, and will be ignored when sending a request.
-
     All required parameters must be populated in order to send to Azure.
 
-    :ivar odata_type: Required.  Default value:
+    :param odata_type: Required.  Possible values include:
      "#Microsoft.Azure.Cdn.Models.DeliveryRuleRequestSchemeConditionParameters".
-    :vartype odata_type: str
-    :ivar operator: Required. Describes operator to be matched. Default value: "Equal".
-    :vartype operator: str
+    :type odata_type: str or ~azure.mgmt.cdn.models.RequestSchemeMatchConditionParametersOdataType
+    :param operator: Required. Describes operator to be matched. Possible values include: "Equal".
+    :type operator: str or ~azure.mgmt.cdn.models.RequestSchemeMatchConditionParametersOperator
     :param negate_condition: Describes if this is negate condition or not.
     :type negate_condition: bool
     :param match_values: The match value for the condition of the delivery rule.
@@ -6152,8 +6103,8 @@ class RequestSchemeMatchConditionParameters(msrest.serialization.Model):
     """
 
     _validation = {
-        'odata_type': {'required': True, 'constant': True},
-        'operator': {'required': True, 'constant': True},
+        'odata_type': {'required': True},
+        'operator': {'required': True},
     }
 
     _attribute_map = {
@@ -6163,14 +6114,13 @@ class RequestSchemeMatchConditionParameters(msrest.serialization.Model):
         'match_values': {'key': 'matchValues', 'type': '[str]'},
     }
 
-    odata_type = "#Microsoft.Azure.Cdn.Models.DeliveryRuleRequestSchemeConditionParameters"
-    operator = "Equal"
-
     def __init__(
         self,
         **kwargs
     ):
         super(RequestSchemeMatchConditionParameters, self).__init__(**kwargs)
+        self.odata_type = kwargs['odata_type']
+        self.operator = kwargs['operator']
         self.negate_condition = kwargs.get('negate_condition', None)
         self.match_values = kwargs.get('match_values', None)
 
@@ -6178,13 +6128,11 @@ class RequestSchemeMatchConditionParameters(msrest.serialization.Model):
 class RequestUriMatchConditionParameters(msrest.serialization.Model):
     """Defines the parameters for RequestUri match conditions.
 
-    Variables are only populated by the server, and will be ignored when sending a request.
-
     All required parameters must be populated in order to send to Azure.
 
-    :ivar odata_type: Required.  Default value:
+    :param odata_type: Required.  Possible values include:
      "#Microsoft.Azure.Cdn.Models.DeliveryRuleRequestUriConditionParameters".
-    :vartype odata_type: str
+    :type odata_type: str or ~azure.mgmt.cdn.models.RequestUriMatchConditionParametersOdataType
     :param operator: Required. Describes operator to be matched. Possible values include: "Any",
      "Equal", "Contains", "BeginsWith", "EndsWith", "LessThan", "LessThanOrEqual", "GreaterThan",
      "GreaterThanOrEqual", "RegEx".
@@ -6198,7 +6146,7 @@ class RequestUriMatchConditionParameters(msrest.serialization.Model):
     """
 
     _validation = {
-        'odata_type': {'required': True, 'constant': True},
+        'odata_type': {'required': True},
         'operator': {'required': True},
     }
 
@@ -6210,13 +6158,12 @@ class RequestUriMatchConditionParameters(msrest.serialization.Model):
         'transforms': {'key': 'transforms', 'type': '[str]'},
     }
 
-    odata_type = "#Microsoft.Azure.Cdn.Models.DeliveryRuleRequestUriConditionParameters"
-
     def __init__(
         self,
         **kwargs
     ):
         super(RequestUriMatchConditionParameters, self).__init__(**kwargs)
+        self.odata_type = kwargs['odata_type']
         self.operator = kwargs['operator']
         self.negate_condition = kwargs.get('negate_condition', None)
         self.match_values = kwargs.get('match_values', None)
@@ -6464,7 +6411,7 @@ class ResponseBasedOriginErrorDetectionParameters(msrest.serialization.Model):
         self.http_error_ranges = kwargs.get('http_error_ranges', None)
 
 
-class Route(Resource):
+class Route(ProxyResource):
     """Friendly Routes name mapping to the any Routes or secret related information.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -6491,7 +6438,7 @@ class Route(Resource):
     :param patterns_to_match: The route patterns of the rule.
     :type patterns_to_match: list[str]
     :param compression_settings: compression settings.
-    :type compression_settings: object
+    :type compression_settings: any
     :param query_string_caching_behavior: Defines how CDN caches requests that include query
      strings. You can ignore any query strings when caching, bypass caching to prevent requests that
      contain query strings from being cached, or cache every request with a unique URL. Possible
@@ -6616,7 +6563,7 @@ class RouteUpdatePropertiesParameters(msrest.serialization.Model):
     :param patterns_to_match: The route patterns of the rule.
     :type patterns_to_match: list[str]
     :param compression_settings: compression settings.
-    :type compression_settings: object
+    :type compression_settings: any
     :param query_string_caching_behavior: Defines how CDN caches requests that include query
      strings. You can ignore any query strings when caching, bypass caching to prevent requests that
      contain query strings from being cached, or cache every request with a unique URL. Possible
@@ -6691,7 +6638,7 @@ class RouteProperties(AFDStateProperties, RouteUpdatePropertiesParameters):
     :param patterns_to_match: The route patterns of the rule.
     :type patterns_to_match: list[str]
     :param compression_settings: compression settings.
-    :type compression_settings: object
+    :type compression_settings: any
     :param query_string_caching_behavior: Defines how CDN caches requests that include query
      strings. You can ignore any query strings when caching, bypass caching to prevent requests that
      contain query strings from being cached, or cache every request with a unique URL. Possible
@@ -6779,7 +6726,7 @@ class RouteUpdateParameters(msrest.serialization.Model):
     :param patterns_to_match: The route patterns of the rule.
     :type patterns_to_match: list[str]
     :param compression_settings: compression settings.
-    :type compression_settings: object
+    :type compression_settings: any
     :param query_string_caching_behavior: Defines how CDN caches requests that include query
      strings. You can ignore any query strings when caching, bypass caching to prevent requests that
      contain query strings from being cached, or cache every request with a unique URL. Possible
@@ -6835,7 +6782,7 @@ class RouteUpdateParameters(msrest.serialization.Model):
         self.enabled_state = kwargs.get('enabled_state', None)
 
 
-class Rule(Resource):
+class Rule(ProxyResource):
     """Friendly Rules name mapping to the any Rules or secret related information.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -7025,7 +6972,7 @@ class RuleProperties(AFDStateProperties, RuleUpdatePropertiesParameters):
         self.deployment_status = None
 
 
-class RuleSet(Resource):
+class RuleSet(ProxyResource):
     """Friendly RuleSet name mapping to the any RuleSet or secret related information.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -7169,7 +7116,7 @@ class RuleUpdateParameters(msrest.serialization.Model):
         self.match_processing_behavior = kwargs.get('match_processing_behavior', None)
 
 
-class Secret(Resource):
+class Secret(ProxyResource):
     """Friendly Secret name mapping to the any Secret or secret related information.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -7284,7 +7231,7 @@ class SecretProperties(AFDStateProperties):
         self.parameters = kwargs.get('parameters', None)
 
 
-class SecurityPolicy(Resource):
+class SecurityPolicy(ProxyResource):
     """SecurityPolicy association for AzureFrontDoor profile.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -7646,13 +7593,12 @@ class SystemData(msrest.serialization.Model):
 class UrlFileExtensionMatchConditionParameters(msrest.serialization.Model):
     """Defines the parameters for UrlFileExtension match conditions.
 
-    Variables are only populated by the server, and will be ignored when sending a request.
-
     All required parameters must be populated in order to send to Azure.
 
-    :ivar odata_type: Required.  Default value:
+    :param odata_type: Required.  Possible values include:
      "#Microsoft.Azure.Cdn.Models.DeliveryRuleUrlFileExtensionMatchConditionParameters".
-    :vartype odata_type: str
+    :type odata_type: str or
+     ~azure.mgmt.cdn.models.UrlFileExtensionMatchConditionParametersOdataType
     :param operator: Required. Describes operator to be matched. Possible values include: "Any",
      "Equal", "Contains", "BeginsWith", "EndsWith", "LessThan", "LessThanOrEqual", "GreaterThan",
      "GreaterThanOrEqual", "RegEx".
@@ -7666,7 +7612,7 @@ class UrlFileExtensionMatchConditionParameters(msrest.serialization.Model):
     """
 
     _validation = {
-        'odata_type': {'required': True, 'constant': True},
+        'odata_type': {'required': True},
         'operator': {'required': True},
     }
 
@@ -7678,13 +7624,12 @@ class UrlFileExtensionMatchConditionParameters(msrest.serialization.Model):
         'transforms': {'key': 'transforms', 'type': '[str]'},
     }
 
-    odata_type = "#Microsoft.Azure.Cdn.Models.DeliveryRuleUrlFileExtensionMatchConditionParameters"
-
     def __init__(
         self,
         **kwargs
     ):
         super(UrlFileExtensionMatchConditionParameters, self).__init__(**kwargs)
+        self.odata_type = kwargs['odata_type']
         self.operator = kwargs['operator']
         self.negate_condition = kwargs.get('negate_condition', None)
         self.match_values = kwargs.get('match_values', None)
@@ -7694,13 +7639,11 @@ class UrlFileExtensionMatchConditionParameters(msrest.serialization.Model):
 class UrlFileNameMatchConditionParameters(msrest.serialization.Model):
     """Defines the parameters for UrlFilename match conditions.
 
-    Variables are only populated by the server, and will be ignored when sending a request.
-
     All required parameters must be populated in order to send to Azure.
 
-    :ivar odata_type: Required.  Default value:
+    :param odata_type: Required.  Possible values include:
      "#Microsoft.Azure.Cdn.Models.DeliveryRuleUrlFilenameConditionParameters".
-    :vartype odata_type: str
+    :type odata_type: str or ~azure.mgmt.cdn.models.UrlFileNameMatchConditionParametersOdataType
     :param operator: Required. Describes operator to be matched. Possible values include: "Any",
      "Equal", "Contains", "BeginsWith", "EndsWith", "LessThan", "LessThanOrEqual", "GreaterThan",
      "GreaterThanOrEqual", "RegEx".
@@ -7714,7 +7657,7 @@ class UrlFileNameMatchConditionParameters(msrest.serialization.Model):
     """
 
     _validation = {
-        'odata_type': {'required': True, 'constant': True},
+        'odata_type': {'required': True},
         'operator': {'required': True},
     }
 
@@ -7726,13 +7669,12 @@ class UrlFileNameMatchConditionParameters(msrest.serialization.Model):
         'transforms': {'key': 'transforms', 'type': '[str]'},
     }
 
-    odata_type = "#Microsoft.Azure.Cdn.Models.DeliveryRuleUrlFilenameConditionParameters"
-
     def __init__(
         self,
         **kwargs
     ):
         super(UrlFileNameMatchConditionParameters, self).__init__(**kwargs)
+        self.odata_type = kwargs['odata_type']
         self.operator = kwargs['operator']
         self.negate_condition = kwargs.get('negate_condition', None)
         self.match_values = kwargs.get('match_values', None)
@@ -7742,13 +7684,11 @@ class UrlFileNameMatchConditionParameters(msrest.serialization.Model):
 class UrlPathMatchConditionParameters(msrest.serialization.Model):
     """Defines the parameters for UrlPath match conditions.
 
-    Variables are only populated by the server, and will be ignored when sending a request.
-
     All required parameters must be populated in order to send to Azure.
 
-    :ivar odata_type: Required.  Default value:
+    :param odata_type: Required.  Possible values include:
      "#Microsoft.Azure.Cdn.Models.DeliveryRuleUrlPathMatchConditionParameters".
-    :vartype odata_type: str
+    :type odata_type: str or ~azure.mgmt.cdn.models.UrlPathMatchConditionParametersOdataType
     :param operator: Required. Describes operator to be matched. Possible values include: "Any",
      "Equal", "Contains", "BeginsWith", "EndsWith", "LessThan", "LessThanOrEqual", "GreaterThan",
      "GreaterThanOrEqual", "Wildcard", "RegEx".
@@ -7762,7 +7702,7 @@ class UrlPathMatchConditionParameters(msrest.serialization.Model):
     """
 
     _validation = {
-        'odata_type': {'required': True, 'constant': True},
+        'odata_type': {'required': True},
         'operator': {'required': True},
     }
 
@@ -7774,13 +7714,12 @@ class UrlPathMatchConditionParameters(msrest.serialization.Model):
         'transforms': {'key': 'transforms', 'type': '[str]'},
     }
 
-    odata_type = "#Microsoft.Azure.Cdn.Models.DeliveryRuleUrlPathMatchConditionParameters"
-
     def __init__(
         self,
         **kwargs
     ):
         super(UrlPathMatchConditionParameters, self).__init__(**kwargs)
+        self.odata_type = kwargs['odata_type']
         self.operator = kwargs['operator']
         self.negate_condition = kwargs.get('negate_condition', None)
         self.match_values = kwargs.get('match_values', None)
@@ -7822,13 +7761,11 @@ class UrlRedirectAction(DeliveryRuleAction):
 class UrlRedirectActionParameters(msrest.serialization.Model):
     """Defines the parameters for the url redirect action.
 
-    Variables are only populated by the server, and will be ignored when sending a request.
-
     All required parameters must be populated in order to send to Azure.
 
-    :ivar odata_type: Required.  Default value:
+    :param odata_type: Required.  Possible values include:
      "#Microsoft.Azure.Cdn.Models.DeliveryRuleUrlRedirectActionParameters".
-    :vartype odata_type: str
+    :type odata_type: str or ~azure.mgmt.cdn.models.UrlRedirectActionParametersOdataType
     :param redirect_type: Required. The redirect type the rule will use when redirecting traffic.
      Possible values include: "Moved", "Found", "TemporaryRedirect", "PermanentRedirect".
     :type redirect_type: str or ~azure.mgmt.cdn.models.RedirectType
@@ -7852,7 +7789,7 @@ class UrlRedirectActionParameters(msrest.serialization.Model):
     """
 
     _validation = {
-        'odata_type': {'required': True, 'constant': True},
+        'odata_type': {'required': True},
         'redirect_type': {'required': True},
     }
 
@@ -7866,13 +7803,12 @@ class UrlRedirectActionParameters(msrest.serialization.Model):
         'custom_fragment': {'key': 'customFragment', 'type': 'str'},
     }
 
-    odata_type = "#Microsoft.Azure.Cdn.Models.DeliveryRuleUrlRedirectActionParameters"
-
     def __init__(
         self,
         **kwargs
     ):
         super(UrlRedirectActionParameters, self).__init__(**kwargs)
+        self.odata_type = kwargs['odata_type']
         self.redirect_type = kwargs['redirect_type']
         self.destination_protocol = kwargs.get('destination_protocol', None)
         self.custom_path = kwargs.get('custom_path', None)
@@ -7916,13 +7852,11 @@ class UrlRewriteAction(DeliveryRuleAction):
 class UrlRewriteActionParameters(msrest.serialization.Model):
     """Defines the parameters for the url rewrite action.
 
-    Variables are only populated by the server, and will be ignored when sending a request.
-
     All required parameters must be populated in order to send to Azure.
 
-    :ivar odata_type: Required.  Default value:
+    :param odata_type: Required.  Possible values include:
      "#Microsoft.Azure.Cdn.Models.DeliveryRuleUrlRewriteActionParameters".
-    :vartype odata_type: str
+    :type odata_type: str or ~azure.mgmt.cdn.models.UrlRewriteActionParametersOdataType
     :param source_pattern: Required. define a request URI pattern that identifies the type of
      requests that may be rewritten. If value is blank, all strings are matched.
     :type source_pattern: str
@@ -7934,7 +7868,7 @@ class UrlRewriteActionParameters(msrest.serialization.Model):
     """
 
     _validation = {
-        'odata_type': {'required': True, 'constant': True},
+        'odata_type': {'required': True},
         'source_pattern': {'required': True},
         'destination': {'required': True},
     }
@@ -7946,13 +7880,12 @@ class UrlRewriteActionParameters(msrest.serialization.Model):
         'preserve_unmatched_path': {'key': 'preserveUnmatchedPath', 'type': 'bool'},
     }
 
-    odata_type = "#Microsoft.Azure.Cdn.Models.DeliveryRuleUrlRewriteActionParameters"
-
     def __init__(
         self,
         **kwargs
     ):
         super(UrlRewriteActionParameters, self).__init__(**kwargs)
+        self.odata_type = kwargs['odata_type']
         self.source_pattern = kwargs['source_pattern']
         self.destination = kwargs['destination']
         self.preserve_unmatched_path = kwargs.get('preserve_unmatched_path', None)
@@ -7993,13 +7926,11 @@ class UrlSigningAction(DeliveryRuleAction):
 class UrlSigningActionParameters(msrest.serialization.Model):
     """Defines the parameters for the Url Signing action.
 
-    Variables are only populated by the server, and will be ignored when sending a request.
-
     All required parameters must be populated in order to send to Azure.
 
-    :ivar odata_type: Required.  Default value:
+    :param odata_type: Required.  Possible values include:
      "#Microsoft.Azure.Cdn.Models.DeliveryRuleUrlSigningActionParameters".
-    :vartype odata_type: str
+    :type odata_type: str or ~azure.mgmt.cdn.models.UrlSigningActionParametersOdataType
     :param algorithm: Algorithm to use for URL signing. Possible values include: "SHA256".
     :type algorithm: str or ~azure.mgmt.cdn.models.Algorithm
     :param parameter_name_override: Defines which query string parameters in the url to be
@@ -8008,7 +7939,7 @@ class UrlSigningActionParameters(msrest.serialization.Model):
     """
 
     _validation = {
-        'odata_type': {'required': True, 'constant': True},
+        'odata_type': {'required': True},
     }
 
     _attribute_map = {
@@ -8017,13 +7948,12 @@ class UrlSigningActionParameters(msrest.serialization.Model):
         'parameter_name_override': {'key': 'parameterNameOverride', 'type': '[UrlSigningParamIdentifier]'},
     }
 
-    odata_type = "#Microsoft.Azure.Cdn.Models.DeliveryRuleUrlSigningActionParameters"
-
     def __init__(
         self,
         **kwargs
     ):
         super(UrlSigningActionParameters, self).__init__(**kwargs)
+        self.odata_type = kwargs['odata_type']
         self.algorithm = kwargs.get('algorithm', None)
         self.parameter_name_override = kwargs.get('parameter_name_override', None)
 
@@ -8501,22 +8431,16 @@ class WafMetricsResponse(msrest.serialization.Model):
 class WafMetricsResponseSeriesItem(msrest.serialization.Model):
     """WafMetricsResponseSeriesItem.
 
-    Variables are only populated by the server, and will be ignored when sending a request.
-
     :param metric:
     :type metric: str
-    :ivar unit:  Default value: "count".
-    :vartype unit: str
+    :param unit:  Possible values include: "count".
+    :type unit: str or ~azure.mgmt.cdn.models.WafMetricsResponseSeriesItemUnit
     :param groups:
     :type groups: list[~azure.mgmt.cdn.models.WafMetricsResponseSeriesPropertiesItemsItem]
     :param data:
     :type data:
      list[~azure.mgmt.cdn.models.Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems]
     """
-
-    _validation = {
-        'unit': {'constant': True},
-    }
 
     _attribute_map = {
         'metric': {'key': 'metric', 'type': 'str'},
@@ -8525,14 +8449,13 @@ class WafMetricsResponseSeriesItem(msrest.serialization.Model):
         'data': {'key': 'data', 'type': '[Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems]'},
     }
 
-    unit = "count"
-
     def __init__(
         self,
         **kwargs
     ):
         super(WafMetricsResponseSeriesItem, self).__init__(**kwargs)
         self.metric = kwargs.get('metric', None)
+        self.unit = kwargs.get('unit', None)
         self.groups = kwargs.get('groups', None)
         self.data = kwargs.get('data', None)
 
