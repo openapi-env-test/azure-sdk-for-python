@@ -7277,7 +7277,9 @@ class VirtualMachineScaleSet(Resource):
      false. However, if singlePlacementGroup is false, it may not be modified to true.
     :type single_placement_group: bool
     :param zone_balance: Whether to force strictly even Virtual Machine distribution cross x-zones
-     in case there is zone outage.
+     in case there is zone outage. zoneBalance property can only be set if the zones property of the
+     scale set contains more than one zone. If there are no zones or only one zone specified, then
+     zoneBalance property should not be set.
     :type zone_balance: bool
     :param platform_fault_domain_count: Fault Domain count for each placement group.
     :type platform_fault_domain_count: int
