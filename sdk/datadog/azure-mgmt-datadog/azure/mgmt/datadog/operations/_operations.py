@@ -50,9 +50,9 @@ class Operations(object):
         **kwargs  # type: Any
     ):
         # type: (...) -> Iterable["_models.OperationListResult"]
-        """List all operations provided by Microsoft.Datadog for the 2021-03-01 api version.
+        """List all operations provided by Microsoft.DatadogNew for the 2021-03-01 api version.
 
-        List all operations provided by Microsoft.Datadog for the 2021-03-01 api version.
+        List all operations provided by Microsoft.DatadogNew for the 2021-03-01 api version.
 
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: An iterator like instance of either OperationListResult or the result of cls(response)
@@ -109,4 +109,4 @@ class Operations(object):
         return ItemPaged(
             get_next, extract_data
         )
-    list.metadata = {'url': '/providers/Microsoft.Datadog/operations'}  # type: ignore
+    list.metadata = {'url': '/providers/Microsoft.DatadogNew/operations'}  # type: ignore

@@ -108,7 +108,7 @@ class MarketplaceAgreementsOperations:
         return AsyncItemPaged(
             get_next, extract_data
         )
-    list.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Datadog/agreements'}  # type: ignore
+    list.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.DatadogNew/agreements'}  # type: ignore
 
     async def create_or_update(
         self,
@@ -172,4 +172,4 @@ class MarketplaceAgreementsOperations:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Datadog/agreements/default'}  # type: ignore
+    create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.DatadogNew/agreements/default'}  # type: ignore
