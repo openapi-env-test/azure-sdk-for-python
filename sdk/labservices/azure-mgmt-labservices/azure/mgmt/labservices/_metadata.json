@@ -1,17 +1,17 @@
 {
-    "chosen_version": "2018-10-15",
-    "total_api_version_list": ["2018-10-15"],
+    "chosen_version": "2021-10-01-preview",
+    "total_api_version_list": ["2021-10-01-preview"],
     "client": {
-        "name": "ManagedLabsClient",
-        "filename": "_managed_labs_client",
-        "description": "The Managed Labs Client.",
+        "name": "LabServicesClient",
+        "filename": "_lab_services_client",
+        "description": "Azure Lab Services REST API.",
         "base_url": "\u0027https://management.azure.com\u0027",
         "custom_base_url": null,
         "azure_arm": true,
         "has_lro_operations": true,
         "client_side_validation": false,
-        "sync_imports": "{\"typing\": {\"azurecore\": {\"azure.core.credentials\": [\"TokenCredential\"]}}, \"regular\": {\"azurecore\": {\"azure.profiles\": [\"KnownProfiles\", \"ProfileDefinition\"], \"azure.profiles.multiapiclient\": [\"MultiApiClientMixin\"], \"msrest\": [\"Deserializer\", \"Serializer\"], \"azure.mgmt.core\": [\"ARMPipelineClient\"]}, \"local\": {\"._configuration\": [\"ManagedLabsClientConfiguration\"]}}, \"conditional\": {\"stdlib\": {\"typing\": [\"Any\", \"Optional\"]}}}",
-        "async_imports": "{\"typing\": {\"azurecore\": {\"azure.core.credentials_async\": [\"AsyncTokenCredential\"]}}, \"regular\": {\"azurecore\": {\"azure.profiles\": [\"KnownProfiles\", \"ProfileDefinition\"], \"azure.profiles.multiapiclient\": [\"MultiApiClientMixin\"], \"msrest\": [\"Deserializer\", \"Serializer\"], \"azure.mgmt.core\": [\"AsyncARMPipelineClient\"]}, \"local\": {\"._configuration\": [\"ManagedLabsClientConfiguration\"]}}, \"conditional\": {\"stdlib\": {\"typing\": [\"Any\", \"Optional\"]}}}"
+        "sync_imports": "{\"typing\": {\"azurecore\": {\"azure.core.credentials\": [\"TokenCredential\"]}}, \"regular\": {\"azurecore\": {\"azure.profiles\": [\"KnownProfiles\", \"ProfileDefinition\"], \"azure.profiles.multiapiclient\": [\"MultiApiClientMixin\"], \"msrest\": [\"Deserializer\", \"Serializer\"], \"azure.mgmt.core\": [\"ARMPipelineClient\"]}, \"local\": {\"._configuration\": [\"LabServicesClientConfiguration\"]}}, \"conditional\": {\"stdlib\": {\"typing\": [\"Any\", \"Optional\"]}, \"azurecore\": {\"azure.core.pipeline.transport\": [\"HttpRequest\", \"HttpResponse\"]}}}",
+        "async_imports": "{\"typing\": {\"azurecore\": {\"azure.core.credentials_async\": [\"AsyncTokenCredential\"]}}, \"regular\": {\"azurecore\": {\"azure.profiles\": [\"KnownProfiles\", \"ProfileDefinition\"], \"azure.profiles.multiapiclient\": [\"MultiApiClientMixin\"], \"msrest\": [\"Deserializer\", \"Serializer\"], \"azure.mgmt.core\": [\"AsyncARMPipelineClient\"]}, \"local\": {\"._configuration\": [\"LabServicesClientConfiguration\"]}}, \"conditional\": {\"stdlib\": {\"typing\": [\"Any\", \"Optional\"]}, \"azurecore\": {\"azure.core.pipeline.transport\": [\"AsyncHttpResponse\", \"HttpRequest\"]}}}"
     },
     "global_parameters": {
         "sync": {
@@ -23,7 +23,7 @@
             },
             "subscription_id": {
                 "signature": "subscription_id,  # type: str",
-                "description": "The subscription ID.",
+                "description": "The ID of the target subscription.",
                 "docstring_type": "str",
                 "required": true
             }
@@ -37,7 +37,7 @@
             },
             "subscription_id": {
                 "signature": "subscription_id: str,",
-                "description": "The subscription ID.",
+                "description": "The ID of the target subscription.",
                 "docstring_type": "str",
                 "required": true
             }
@@ -98,20 +98,13 @@
         "async_imports": "{\"regular\": {\"azurecore\": {\"azure.core.configuration\": [\"Configuration\"], \"azure.core.pipeline\": [\"policies\"], \"azure.mgmt.core.policies\": [\"ARMHttpLoggingPolicy\"]}, \"local\": {\".._version\": [\"VERSION\"]}}, \"conditional\": {\"stdlib\": {\"typing\": [\"Any\"]}}, \"typing\": {\"azurecore\": {\"azure.core.credentials_async\": [\"AsyncTokenCredential\"]}}}"
     },
     "operation_groups": {
-        "provider_operations": "ProviderOperationsOperations",
-        "global_users": "GlobalUsersOperations",
-        "lab_accounts": "LabAccountsOperations",
         "operations": "Operations",
-        "gallery_images": "GalleryImagesOperations",
+        "operation_results": "OperationResultsOperations",
+        "lab_plans": "LabPlansOperations",
+        "images": "ImagesOperations",
         "labs": "LabsOperations",
-        "environment_settings": "EnvironmentSettingsOperations",
-        "environments": "EnvironmentsOperations",
-        "users": "UsersOperations"
-    },
-    "operation_mixins": {
-        "sync_imports": "None",
-        "async_imports": "None",
-        "operations": {
-        }
+        "users": "UsersOperations",
+        "virtual_machines": "VirtualMachinesOperations",
+        "schedules": "SchedulesOperations"
     }
 }

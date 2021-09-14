@@ -25,8 +25,8 @@ if TYPE_CHECKING:
     T = TypeVar('T')
     ClsType = Optional[Callable[[PipelineResponse[HttpRequest, HttpResponse], T, Dict[str, Any]], Any]]
 
-class LabsOperations(object):
-    """LabsOperations operations.
+class VirtualMachinesOperations(object):
+    """VirtualMachinesOperations operations.
 
     You should not instantiate this class directly. Instead, you should create a Client instance that
     instantiates it for you and attaches it as an attribute.
@@ -47,24 +47,31 @@ class LabsOperations(object):
         self._deserialize = deserializer
         self._config = config
 
-    def list_by_subscription(
+    def list_by_lab(
         self,
+        resource_group_name,  # type: str
+        lab_name,  # type: str
         filter=None,  # type: Optional[str]
         **kwargs  # type: Any
     ):
-        # type: (...) -> Iterable["_models.PagedLabs"]
-        """Get all labs for a subscription.
+        # type: (...) -> Iterable["_models.PagedVirtualMachines"]
+        """Get all virtual machines for a lab.
 
-        Returns a list of all labs for a subscription.
+        Returns a list of all virtual machines for a lab.
 
+        :param resource_group_name: The name of the resource group. The name is case insensitive.
+        :type resource_group_name: str
+        :param lab_name: The name of the lab that uniquely identifies it within containing lab account.
+         Used in resource URIs.
+        :type lab_name: str
         :param filter: The filter to apply to the operation.
         :type filter: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either PagedLabs or the result of cls(response)
-        :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.labservices.models.PagedLabs]
+        :return: An iterator like instance of either PagedVirtualMachines or the result of cls(response)
+        :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.labservices.models.PagedVirtualMachines]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.PagedLabs"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.PagedVirtualMachines"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -79,9 +86,11 @@ class LabsOperations(object):
 
             if not next_link:
                 # Construct URL
-                url = self.list_by_subscription.metadata['url']  # type: ignore
+                url = self.list_by_lab.metadata['url']  # type: ignore
                 path_format_arguments = {
                     'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
+                    'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
+                    'labName': self._serialize.url("lab_name", lab_name, 'str', max_length=100, min_length=1),
                 }
                 url = self._client.format_url(url, **path_format_arguments)
                 # Construct parameters
@@ -98,7 +107,7 @@ class LabsOperations(object):
             return request
 
         def extract_data(pipeline_response):
-            deserialized = self._deserialize('PagedLabs', pipeline_response)
+            deserialized = self._deserialize('PagedVirtualMachines', pipeline_response)
             list_of_elem = deserialized.value
             if cls:
                 list_of_elem = cls(list_of_elem)
@@ -120,104 +129,34 @@ class LabsOperations(object):
         return ItemPaged(
             get_next, extract_data
         )
-    list_by_subscription.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.LabServices/labs'}  # type: ignore
-
-    def list_by_resource_group(
-        self,
-        resource_group_name,  # type: str
-        **kwargs  # type: Any
-    ):
-        # type: (...) -> Iterable["_models.PagedLabs"]
-        """Get all labs for a subscription and resource group.
-
-        Returns a list of all labs in a resource group.
-
-        :param resource_group_name: The name of the resource group. The name is case insensitive.
-        :type resource_group_name: str
-        :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either PagedLabs or the result of cls(response)
-        :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.labservices.models.PagedLabs]
-        :raises: ~azure.core.exceptions.HttpResponseError
-        """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.PagedLabs"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2021-10-01-preview"
-        accept = "application/json"
-
-        def prepare_request(next_link=None):
-            # Construct headers
-            header_parameters = {}  # type: Dict[str, Any]
-            header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
-
-            if not next_link:
-                # Construct URL
-                url = self.list_by_resource_group.metadata['url']  # type: ignore
-                path_format_arguments = {
-                    'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
-                    'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
-                }
-                url = self._client.format_url(url, **path_format_arguments)
-                # Construct parameters
-                query_parameters = {}  # type: Dict[str, Any]
-                query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
-
-                request = self._client.get(url, query_parameters, header_parameters)
-            else:
-                url = next_link
-                query_parameters = {}  # type: Dict[str, Any]
-                request = self._client.get(url, query_parameters, header_parameters)
-            return request
-
-        def extract_data(pipeline_response):
-            deserialized = self._deserialize('PagedLabs', pipeline_response)
-            list_of_elem = deserialized.value
-            if cls:
-                list_of_elem = cls(list_of_elem)
-            return deserialized.next_link or None, iter(list_of_elem)
-
-        def get_next(next_link=None):
-            request = prepare_request(next_link)
-
-            pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
-            response = pipeline_response.http_response
-
-            if response.status_code not in [200]:
-                error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, response)
-                map_error(status_code=response.status_code, response=response, error_map=error_map)
-                raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
-
-            return pipeline_response
-
-        return ItemPaged(
-            get_next, extract_data
-        )
-    list_by_resource_group.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs'}  # type: ignore
+    list_by_lab.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/virtualMachines'}  # type: ignore
 
     def get(
         self,
         resource_group_name,  # type: str
         lab_name,  # type: str
+        virtual_machine_name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> "_models.Lab"
-        """Get a lab resource.
+        # type: (...) -> "_models.VirtualMachine"
+        """Get a lab virtual machine.
 
-        Returns the properties of a lab resource.
+        Returns the properties for a lab virtual machine.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
         :type resource_group_name: str
         :param lab_name: The name of the lab that uniquely identifies it within containing lab account.
          Used in resource URIs.
         :type lab_name: str
+        :param virtual_machine_name: The ID of the virtual machine that uniquely identifies it within
+         the containing lab. Used in resource URIs.
+        :type virtual_machine_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: Lab, or the result of cls(response)
-        :rtype: ~azure.mgmt.labservices.models.Lab
+        :return: VirtualMachine, or the result of cls(response)
+        :rtype: ~azure.mgmt.labservices.models.VirtualMachine
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.Lab"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.VirtualMachine"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -231,6 +170,7 @@ class LabsOperations(object):
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
             'labName': self._serialize.url("lab_name", lab_name, 'str', max_length=100, min_length=1),
+            'virtualMachineName': self._serialize.url("virtual_machine_name", virtual_machine_name, 'str', max_length=100, min_length=1, pattern=r'^[-\w\\._\\(\\)]+$'),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
@@ -251,289 +191,19 @@ class LabsOperations(object):
             error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize('Lab', pipeline_response)
+        deserialized = self._deserialize('VirtualMachine', pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}'}  # type: ignore
+    get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/virtualMachines/{virtualMachineName}'}  # type: ignore
 
-    def _create_or_update_initial(
+    def _start_initial(
         self,
         resource_group_name,  # type: str
         lab_name,  # type: str
-        body,  # type: "_models.Lab"
-        **kwargs  # type: Any
-    ):
-        # type: (...) -> "_models.Lab"
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.Lab"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2021-10-01-preview"
-        content_type = kwargs.pop("content_type", "application/json")
-        accept = "application/json"
-
-        # Construct URL
-        url = self._create_or_update_initial.metadata['url']  # type: ignore
-        path_format_arguments = {
-            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
-            'labName': self._serialize.url("lab_name", lab_name, 'str', max_length=100, min_length=1),
-        }
-        url = self._client.format_url(url, **path_format_arguments)
-
-        # Construct parameters
-        query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
-
-        # Construct headers
-        header_parameters = {}  # type: Dict[str, Any]
-        header_parameters['Content-Type'] = self._serialize.header("content_type", content_type, 'str')
-        header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
-
-        body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(body, 'Lab')
-        body_content_kwargs['content'] = body_content
-        request = self._client.put(url, query_parameters, header_parameters, **body_content_kwargs)
-        pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
-        response = pipeline_response.http_response
-
-        if response.status_code not in [200, 201, 202]:
-            map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, response)
-            raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
-
-        if response.status_code == 200:
-            deserialized = self._deserialize('Lab', pipeline_response)
-
-        if response.status_code == 201:
-            deserialized = self._deserialize('Lab', pipeline_response)
-
-        if response.status_code == 202:
-            deserialized = self._deserialize('Lab', pipeline_response)
-
-        if cls:
-            return cls(pipeline_response, deserialized, {})
-
-        return deserialized
-    _create_or_update_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}'}  # type: ignore
-
-    def begin_create_or_update(
-        self,
-        resource_group_name,  # type: str
-        lab_name,  # type: str
-        body,  # type: "_models.Lab"
-        **kwargs  # type: Any
-    ):
-        # type: (...) -> LROPoller["_models.Lab"]
-        """Create or update a lab resource.
-
-        Operation to create or update a lab resource.
-
-        :param resource_group_name: The name of the resource group. The name is case insensitive.
-        :type resource_group_name: str
-        :param lab_name: The name of the lab that uniquely identifies it within containing lab account.
-         Used in resource URIs.
-        :type lab_name: str
-        :param body: The request body.
-        :type body: ~azure.mgmt.labservices.models.Lab
-        :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: By default, your polling method will be ARMPolling.
-         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
-        :paramtype polling: bool or ~azure.core.polling.PollingMethod
-        :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either Lab or the result of cls(response)
-        :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.labservices.models.Lab]
-        :raises ~azure.core.exceptions.HttpResponseError:
-        """
-        polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.Lab"]
-        lro_delay = kwargs.pop(
-            'polling_interval',
-            self._config.polling_interval
-        )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._create_or_update_initial(
-                resource_group_name=resource_group_name,
-                lab_name=lab_name,
-                body=body,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
-
-        def get_long_running_output(pipeline_response):
-            deserialized = self._deserialize('Lab', pipeline_response)
-
-            if cls:
-                return cls(pipeline_response, deserialized, {})
-            return deserialized
-
-        path_format_arguments = {
-            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
-            'labName': self._serialize.url("lab_name", lab_name, 'str', max_length=100, min_length=1),
-        }
-
-        if polling is True: polling_method = ARMPolling(lro_delay, lro_options={'final-state-via': 'original-uri'}, path_format_arguments=path_format_arguments,  **kwargs)
-        elif polling is False: polling_method = NoPolling()
-        else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
-    begin_create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}'}  # type: ignore
-
-    def _update_initial(
-        self,
-        resource_group_name,  # type: str
-        lab_name,  # type: str
-        body,  # type: "_models.LabUpdate"
-        **kwargs  # type: Any
-    ):
-        # type: (...) -> "_models.Lab"
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.Lab"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2021-10-01-preview"
-        content_type = kwargs.pop("content_type", "application/json")
-        accept = "application/json"
-
-        # Construct URL
-        url = self._update_initial.metadata['url']  # type: ignore
-        path_format_arguments = {
-            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
-            'labName': self._serialize.url("lab_name", lab_name, 'str', max_length=100, min_length=1),
-        }
-        url = self._client.format_url(url, **path_format_arguments)
-
-        # Construct parameters
-        query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
-
-        # Construct headers
-        header_parameters = {}  # type: Dict[str, Any]
-        header_parameters['Content-Type'] = self._serialize.header("content_type", content_type, 'str')
-        header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
-
-        body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(body, 'LabUpdate')
-        body_content_kwargs['content'] = body_content
-        request = self._client.patch(url, query_parameters, header_parameters, **body_content_kwargs)
-        pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
-        response = pipeline_response.http_response
-
-        if response.status_code not in [200, 202]:
-            map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, response)
-            raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
-
-        if response.status_code == 200:
-            deserialized = self._deserialize('Lab', pipeline_response)
-
-        if response.status_code == 202:
-            deserialized = self._deserialize('Lab', pipeline_response)
-
-        if cls:
-            return cls(pipeline_response, deserialized, {})
-
-        return deserialized
-    _update_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}'}  # type: ignore
-
-    def begin_update(
-        self,
-        resource_group_name,  # type: str
-        lab_name,  # type: str
-        body,  # type: "_models.LabUpdate"
-        **kwargs  # type: Any
-    ):
-        # type: (...) -> LROPoller["_models.Lab"]
-        """Update a lab resource.
-
-        Operation to update a lab resource.
-
-        :param resource_group_name: The name of the resource group. The name is case insensitive.
-        :type resource_group_name: str
-        :param lab_name: The name of the lab that uniquely identifies it within containing lab account.
-         Used in resource URIs.
-        :type lab_name: str
-        :param body: The request body.
-        :type body: ~azure.mgmt.labservices.models.LabUpdate
-        :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: By default, your polling method will be ARMPolling.
-         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
-        :paramtype polling: bool or ~azure.core.polling.PollingMethod
-        :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either Lab or the result of cls(response)
-        :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.labservices.models.Lab]
-        :raises ~azure.core.exceptions.HttpResponseError:
-        """
-        polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.Lab"]
-        lro_delay = kwargs.pop(
-            'polling_interval',
-            self._config.polling_interval
-        )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._update_initial(
-                resource_group_name=resource_group_name,
-                lab_name=lab_name,
-                body=body,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
-
-        def get_long_running_output(pipeline_response):
-            deserialized = self._deserialize('Lab', pipeline_response)
-
-            if cls:
-                return cls(pipeline_response, deserialized, {})
-            return deserialized
-
-        path_format_arguments = {
-            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
-            'labName': self._serialize.url("lab_name", lab_name, 'str', max_length=100, min_length=1),
-        }
-
-        if polling is True: polling_method = ARMPolling(lro_delay, lro_options={'final-state-via': 'location'}, path_format_arguments=path_format_arguments,  **kwargs)
-        elif polling is False: polling_method = NoPolling()
-        else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
-    begin_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}'}  # type: ignore
-
-    def _delete_initial(
-        self,
-        resource_group_name,  # type: str
-        lab_name,  # type: str
+        virtual_machine_name,  # type: str
         **kwargs  # type: Any
     ):
         # type: (...) -> None
@@ -546,125 +216,12 @@ class LabsOperations(object):
         accept = "application/json"
 
         # Construct URL
-        url = self._delete_initial.metadata['url']  # type: ignore
+        url = self._start_initial.metadata['url']  # type: ignore
         path_format_arguments = {
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
             'labName': self._serialize.url("lab_name", lab_name, 'str', max_length=100, min_length=1),
-        }
-        url = self._client.format_url(url, **path_format_arguments)
-
-        # Construct parameters
-        query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
-
-        # Construct headers
-        header_parameters = {}  # type: Dict[str, Any]
-        header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
-
-        request = self._client.delete(url, query_parameters, header_parameters)
-        pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
-        response = pipeline_response.http_response
-
-        if response.status_code not in [200, 202, 204]:
-            map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, response)
-            raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
-
-        if cls:
-            return cls(pipeline_response, None, {})
-
-    _delete_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}'}  # type: ignore
-
-    def begin_delete(
-        self,
-        resource_group_name,  # type: str
-        lab_name,  # type: str
-        **kwargs  # type: Any
-    ):
-        # type: (...) -> LROPoller[None]
-        """Deletes a lab resource.
-
-        Operation to delete a lab resource.
-
-        :param resource_group_name: The name of the resource group. The name is case insensitive.
-        :type resource_group_name: str
-        :param lab_name: The name of the lab that uniquely identifies it within containing lab account.
-         Used in resource URIs.
-        :type lab_name: str
-        :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: By default, your polling method will be ARMPolling.
-         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
-        :paramtype polling: bool or ~azure.core.polling.PollingMethod
-        :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
-        :return: An instance of LROPoller that returns either None or the result of cls(response)
-        :rtype: ~azure.core.polling.LROPoller[None]
-        :raises ~azure.core.exceptions.HttpResponseError:
-        """
-        polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType[None]
-        lro_delay = kwargs.pop(
-            'polling_interval',
-            self._config.polling_interval
-        )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
-        if cont_token is None:
-            raw_result = self._delete_initial(
-                resource_group_name=resource_group_name,
-                lab_name=lab_name,
-                cls=lambda x,y,z: x,
-                **kwargs
-            )
-
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
-
-        def get_long_running_output(pipeline_response):
-            if cls:
-                return cls(pipeline_response, None, {})
-
-        path_format_arguments = {
-            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
-            'labName': self._serialize.url("lab_name", lab_name, 'str', max_length=100, min_length=1),
-        }
-
-        if polling is True: polling_method = ARMPolling(lro_delay, lro_options={'final-state-via': 'location'}, path_format_arguments=path_format_arguments,  **kwargs)
-        elif polling is False: polling_method = NoPolling()
-        else: polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output
-            )
-        else:
-            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
-    begin_delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}'}  # type: ignore
-
-    def _publish_initial(
-        self,
-        resource_group_name,  # type: str
-        lab_name,  # type: str
-        **kwargs  # type: Any
-    ):
-        # type: (...) -> None
-        cls = kwargs.pop('cls', None)  # type: ClsType[None]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2021-10-01-preview"
-        accept = "application/json"
-
-        # Construct URL
-        url = self._publish_initial.metadata['url']  # type: ignore
-        path_format_arguments = {
-            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
-            'labName': self._serialize.url("lab_name", lab_name, 'str', max_length=100, min_length=1),
+            'virtualMachineName': self._serialize.url("virtual_machine_name", virtual_machine_name, 'str', max_length=100, min_length=1, pattern=r'^[-\w\\._\\(\\)]+$'),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
@@ -688,25 +245,28 @@ class LabsOperations(object):
         if cls:
             return cls(pipeline_response, None, {})
 
-    _publish_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/publish'}  # type: ignore
+    _start_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/virtualMachines/{virtualMachineName}/start'}  # type: ignore
 
-    def begin_publish(
+    def begin_start(
         self,
         resource_group_name,  # type: str
         lab_name,  # type: str
+        virtual_machine_name,  # type: str
         **kwargs  # type: Any
     ):
         # type: (...) -> LROPoller[None]
-        """Publish or re-publish a lab.
+        """Start a lab virtual machine.
 
-        Publish or re-publish a lab. This will create or update all lab resources, such as virtual
-        machines.
+        Action to start a lab virtual machine.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
         :type resource_group_name: str
         :param lab_name: The name of the lab that uniquely identifies it within containing lab account.
          Used in resource URIs.
         :type lab_name: str
+        :param virtual_machine_name: The ID of the virtual machine that uniquely identifies it within
+         the containing lab. Used in resource URIs.
+        :type virtual_machine_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: By default, your polling method will be ARMPolling.
@@ -725,9 +285,10 @@ class LabsOperations(object):
         )
         cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
         if cont_token is None:
-            raw_result = self._publish_initial(
+            raw_result = self._start_initial(
                 resource_group_name=resource_group_name,
                 lab_name=lab_name,
+                virtual_machine_name=virtual_machine_name,
                 cls=lambda x,y,z: x,
                 **kwargs
             )
@@ -743,6 +304,7 @@ class LabsOperations(object):
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
             'labName': self._serialize.url("lab_name", lab_name, 'str', max_length=100, min_length=1),
+            'virtualMachineName': self._serialize.url("virtual_machine_name", virtual_machine_name, 'str', max_length=100, min_length=1, pattern=r'^[-\w\\._\\(\\)]+$'),
         }
 
         if polling is True: polling_method = ARMPolling(lro_delay, lro_options={'final-state-via': 'location'}, path_format_arguments=path_format_arguments,  **kwargs)
@@ -757,12 +319,13 @@ class LabsOperations(object):
             )
         else:
             return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
-    begin_publish.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/publish'}  # type: ignore
+    begin_start.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/virtualMachines/{virtualMachineName}/start'}  # type: ignore
 
-    def _sync_group_initial(
+    def _stop_initial(
         self,
         resource_group_name,  # type: str
         lab_name,  # type: str
+        virtual_machine_name,  # type: str
         **kwargs  # type: Any
     ):
         # type: (...) -> None
@@ -775,11 +338,12 @@ class LabsOperations(object):
         accept = "application/json"
 
         # Construct URL
-        url = self._sync_group_initial.metadata['url']  # type: ignore
+        url = self._stop_initial.metadata['url']  # type: ignore
         path_format_arguments = {
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
             'labName': self._serialize.url("lab_name", lab_name, 'str', max_length=100, min_length=1),
+            'virtualMachineName': self._serialize.url("virtual_machine_name", virtual_machine_name, 'str', max_length=100, min_length=1, pattern=r'^[-\w\\._\\(\\)]+$'),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
@@ -803,24 +367,28 @@ class LabsOperations(object):
         if cls:
             return cls(pipeline_response, None, {})
 
-    _sync_group_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/syncGroup'}  # type: ignore
+    _stop_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/virtualMachines/{virtualMachineName}/stop'}  # type: ignore
 
-    def begin_sync_group(
+    def begin_stop(
         self,
         resource_group_name,  # type: str
         lab_name,  # type: str
+        virtual_machine_name,  # type: str
         **kwargs  # type: Any
     ):
         # type: (...) -> LROPoller[None]
-        """Manually sync the lab group.
+        """Stop a lab virtual machine.
 
-        Action used to manually kick off an AAD group sync job.
+        Action to stop a lab virtual machine.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
         :type resource_group_name: str
         :param lab_name: The name of the lab that uniquely identifies it within containing lab account.
          Used in resource URIs.
         :type lab_name: str
+        :param virtual_machine_name: The ID of the virtual machine that uniquely identifies it within
+         the containing lab. Used in resource URIs.
+        :type virtual_machine_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: By default, your polling method will be ARMPolling.
@@ -839,9 +407,10 @@ class LabsOperations(object):
         )
         cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
         if cont_token is None:
-            raw_result = self._sync_group_initial(
+            raw_result = self._stop_initial(
                 resource_group_name=resource_group_name,
                 lab_name=lab_name,
+                virtual_machine_name=virtual_machine_name,
                 cls=lambda x,y,z: x,
                 **kwargs
             )
@@ -857,6 +426,7 @@ class LabsOperations(object):
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
             'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
             'labName': self._serialize.url("lab_name", lab_name, 'str', max_length=100, min_length=1),
+            'virtualMachineName': self._serialize.url("virtual_machine_name", virtual_machine_name, 'str', max_length=100, min_length=1, pattern=r'^[-\w\\._\\(\\)]+$'),
         }
 
         if polling is True: polling_method = ARMPolling(lro_delay, lro_options={'final-state-via': 'location'}, path_format_arguments=path_format_arguments,  **kwargs)
@@ -871,4 +441,382 @@ class LabsOperations(object):
             )
         else:
             return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
-    begin_sync_group.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/syncGroup'}  # type: ignore
+    begin_stop.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/virtualMachines/{virtualMachineName}/stop'}  # type: ignore
+
+    def _reimage_initial(
+        self,
+        resource_group_name,  # type: str
+        lab_name,  # type: str
+        virtual_machine_name,  # type: str
+        **kwargs  # type: Any
+    ):
+        # type: (...) -> None
+        cls = kwargs.pop('cls', None)  # type: ClsType[None]
+        error_map = {
+            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
+        }
+        error_map.update(kwargs.pop('error_map', {}))
+        api_version = "2021-10-01-preview"
+        accept = "application/json"
+
+        # Construct URL
+        url = self._reimage_initial.metadata['url']  # type: ignore
+        path_format_arguments = {
+            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
+            'labName': self._serialize.url("lab_name", lab_name, 'str', max_length=100, min_length=1),
+            'virtualMachineName': self._serialize.url("virtual_machine_name", virtual_machine_name, 'str', max_length=100, min_length=1, pattern=r'^[-\w\\._\\(\\)]+$'),
+        }
+        url = self._client.format_url(url, **path_format_arguments)
+
+        # Construct parameters
+        query_parameters = {}  # type: Dict[str, Any]
+        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+
+        # Construct headers
+        header_parameters = {}  # type: Dict[str, Any]
+        header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
+
+        request = self._client.post(url, query_parameters, header_parameters)
+        pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
+        response = pipeline_response.http_response
+
+        if response.status_code not in [200, 202]:
+            map_error(status_code=response.status_code, response=response, error_map=error_map)
+            error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, response)
+            raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
+
+        if cls:
+            return cls(pipeline_response, None, {})
+
+    _reimage_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/virtualMachines/{virtualMachineName}/reimage'}  # type: ignore
+
+    def begin_reimage(
+        self,
+        resource_group_name,  # type: str
+        lab_name,  # type: str
+        virtual_machine_name,  # type: str
+        **kwargs  # type: Any
+    ):
+        # type: (...) -> LROPoller[None]
+        """Re-image a lab virtual machine.
+
+        Re-image a lab virtual machine. The virtual machine will be deleted and recreated using the
+        latest published snapshot of the reference environment of the lab.
+
+        :param resource_group_name: The name of the resource group. The name is case insensitive.
+        :type resource_group_name: str
+        :param lab_name: The name of the lab that uniquely identifies it within containing lab account.
+         Used in resource URIs.
+        :type lab_name: str
+        :param virtual_machine_name: The ID of the virtual machine that uniquely identifies it within
+         the containing lab. Used in resource URIs.
+        :type virtual_machine_name: str
+        :keyword callable cls: A custom type or function that will be passed the direct response
+        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
+        :keyword polling: By default, your polling method will be ARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
+        :paramtype polling: bool or ~azure.core.polling.PollingMethod
+        :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
+        :return: An instance of LROPoller that returns either None or the result of cls(response)
+        :rtype: ~azure.core.polling.LROPoller[None]
+        :raises ~azure.core.exceptions.HttpResponseError:
+        """
+        polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
+        cls = kwargs.pop('cls', None)  # type: ClsType[None]
+        lro_delay = kwargs.pop(
+            'polling_interval',
+            self._config.polling_interval
+        )
+        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
+        if cont_token is None:
+            raw_result = self._reimage_initial(
+                resource_group_name=resource_group_name,
+                lab_name=lab_name,
+                virtual_machine_name=virtual_machine_name,
+                cls=lambda x,y,z: x,
+                **kwargs
+            )
+
+        kwargs.pop('error_map', None)
+        kwargs.pop('content_type', None)
+
+        def get_long_running_output(pipeline_response):
+            if cls:
+                return cls(pipeline_response, None, {})
+
+        path_format_arguments = {
+            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
+            'labName': self._serialize.url("lab_name", lab_name, 'str', max_length=100, min_length=1),
+            'virtualMachineName': self._serialize.url("virtual_machine_name", virtual_machine_name, 'str', max_length=100, min_length=1, pattern=r'^[-\w\\._\\(\\)]+$'),
+        }
+
+        if polling is True: polling_method = ARMPolling(lro_delay, lro_options={'final-state-via': 'location'}, path_format_arguments=path_format_arguments,  **kwargs)
+        elif polling is False: polling_method = NoPolling()
+        else: polling_method = polling
+        if cont_token:
+            return LROPoller.from_continuation_token(
+                polling_method=polling_method,
+                continuation_token=cont_token,
+                client=self._client,
+                deserialization_callback=get_long_running_output
+            )
+        else:
+            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+    begin_reimage.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/virtualMachines/{virtualMachineName}/reimage'}  # type: ignore
+
+    def _redeploy_initial(
+        self,
+        resource_group_name,  # type: str
+        lab_name,  # type: str
+        virtual_machine_name,  # type: str
+        **kwargs  # type: Any
+    ):
+        # type: (...) -> None
+        cls = kwargs.pop('cls', None)  # type: ClsType[None]
+        error_map = {
+            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
+        }
+        error_map.update(kwargs.pop('error_map', {}))
+        api_version = "2021-10-01-preview"
+        accept = "application/json"
+
+        # Construct URL
+        url = self._redeploy_initial.metadata['url']  # type: ignore
+        path_format_arguments = {
+            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
+            'labName': self._serialize.url("lab_name", lab_name, 'str', max_length=100, min_length=1),
+            'virtualMachineName': self._serialize.url("virtual_machine_name", virtual_machine_name, 'str', max_length=100, min_length=1, pattern=r'^[-\w\\._\\(\\)]+$'),
+        }
+        url = self._client.format_url(url, **path_format_arguments)
+
+        # Construct parameters
+        query_parameters = {}  # type: Dict[str, Any]
+        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+
+        # Construct headers
+        header_parameters = {}  # type: Dict[str, Any]
+        header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
+
+        request = self._client.post(url, query_parameters, header_parameters)
+        pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
+        response = pipeline_response.http_response
+
+        if response.status_code not in [200, 202]:
+            map_error(status_code=response.status_code, response=response, error_map=error_map)
+            error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, response)
+            raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
+
+        if cls:
+            return cls(pipeline_response, None, {})
+
+    _redeploy_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/virtualMachines/{virtualMachineName}/redeploy'}  # type: ignore
+
+    def begin_redeploy(
+        self,
+        resource_group_name,  # type: str
+        lab_name,  # type: str
+        virtual_machine_name,  # type: str
+        **kwargs  # type: Any
+    ):
+        # type: (...) -> LROPoller[None]
+        """Redeploy a lab virtual machine to a different compute node. For troubleshooting connectivity.
+
+        Action to redeploy a lab virtual machine to a different compute node. For troubleshooting
+        connectivity.
+
+        :param resource_group_name: The name of the resource group. The name is case insensitive.
+        :type resource_group_name: str
+        :param lab_name: The name of the lab that uniquely identifies it within containing lab account.
+         Used in resource URIs.
+        :type lab_name: str
+        :param virtual_machine_name: The ID of the virtual machine that uniquely identifies it within
+         the containing lab. Used in resource URIs.
+        :type virtual_machine_name: str
+        :keyword callable cls: A custom type or function that will be passed the direct response
+        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
+        :keyword polling: By default, your polling method will be ARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
+        :paramtype polling: bool or ~azure.core.polling.PollingMethod
+        :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
+        :return: An instance of LROPoller that returns either None or the result of cls(response)
+        :rtype: ~azure.core.polling.LROPoller[None]
+        :raises ~azure.core.exceptions.HttpResponseError:
+        """
+        polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
+        cls = kwargs.pop('cls', None)  # type: ClsType[None]
+        lro_delay = kwargs.pop(
+            'polling_interval',
+            self._config.polling_interval
+        )
+        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
+        if cont_token is None:
+            raw_result = self._redeploy_initial(
+                resource_group_name=resource_group_name,
+                lab_name=lab_name,
+                virtual_machine_name=virtual_machine_name,
+                cls=lambda x,y,z: x,
+                **kwargs
+            )
+
+        kwargs.pop('error_map', None)
+        kwargs.pop('content_type', None)
+
+        def get_long_running_output(pipeline_response):
+            if cls:
+                return cls(pipeline_response, None, {})
+
+        path_format_arguments = {
+            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
+            'labName': self._serialize.url("lab_name", lab_name, 'str', max_length=100, min_length=1),
+            'virtualMachineName': self._serialize.url("virtual_machine_name", virtual_machine_name, 'str', max_length=100, min_length=1, pattern=r'^[-\w\\._\\(\\)]+$'),
+        }
+
+        if polling is True: polling_method = ARMPolling(lro_delay, lro_options={'final-state-via': 'location'}, path_format_arguments=path_format_arguments,  **kwargs)
+        elif polling is False: polling_method = NoPolling()
+        else: polling_method = polling
+        if cont_token:
+            return LROPoller.from_continuation_token(
+                polling_method=polling_method,
+                continuation_token=cont_token,
+                client=self._client,
+                deserialization_callback=get_long_running_output
+            )
+        else:
+            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+    begin_redeploy.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/virtualMachines/{virtualMachineName}/redeploy'}  # type: ignore
+
+    def _reset_password_initial(
+        self,
+        resource_group_name,  # type: str
+        lab_name,  # type: str
+        virtual_machine_name,  # type: str
+        body,  # type: "_models.ResetPasswordBody"
+        **kwargs  # type: Any
+    ):
+        # type: (...) -> None
+        cls = kwargs.pop('cls', None)  # type: ClsType[None]
+        error_map = {
+            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
+        }
+        error_map.update(kwargs.pop('error_map', {}))
+        api_version = "2021-10-01-preview"
+        content_type = kwargs.pop("content_type", "application/json")
+        accept = "application/json"
+
+        # Construct URL
+        url = self._reset_password_initial.metadata['url']  # type: ignore
+        path_format_arguments = {
+            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
+            'labName': self._serialize.url("lab_name", lab_name, 'str', max_length=100, min_length=1),
+            'virtualMachineName': self._serialize.url("virtual_machine_name", virtual_machine_name, 'str', max_length=100, min_length=1, pattern=r'^[-\w\\._\\(\\)]+$'),
+        }
+        url = self._client.format_url(url, **path_format_arguments)
+
+        # Construct parameters
+        query_parameters = {}  # type: Dict[str, Any]
+        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+
+        # Construct headers
+        header_parameters = {}  # type: Dict[str, Any]
+        header_parameters['Content-Type'] = self._serialize.header("content_type", content_type, 'str')
+        header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
+
+        body_content_kwargs = {}  # type: Dict[str, Any]
+        body_content = self._serialize.body(body, 'ResetPasswordBody')
+        body_content_kwargs['content'] = body_content
+        request = self._client.post(url, query_parameters, header_parameters, **body_content_kwargs)
+        pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
+        response = pipeline_response.http_response
+
+        if response.status_code not in [200, 202]:
+            map_error(status_code=response.status_code, response=response, error_map=error_map)
+            error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, response)
+            raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
+
+        if cls:
+            return cls(pipeline_response, None, {})
+
+    _reset_password_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/virtualMachines/{virtualMachineName}/resetPassword'}  # type: ignore
+
+    def begin_reset_password(
+        self,
+        resource_group_name,  # type: str
+        lab_name,  # type: str
+        virtual_machine_name,  # type: str
+        body,  # type: "_models.ResetPasswordBody"
+        **kwargs  # type: Any
+    ):
+        # type: (...) -> LROPoller[None]
+        """Reset a lab virtual machine password.
+
+        Resets a lab virtual machine password.
+
+        :param resource_group_name: The name of the resource group. The name is case insensitive.
+        :type resource_group_name: str
+        :param lab_name: The name of the lab that uniquely identifies it within containing lab account.
+         Used in resource URIs.
+        :type lab_name: str
+        :param virtual_machine_name: The ID of the virtual machine that uniquely identifies it within
+         the containing lab. Used in resource URIs.
+        :type virtual_machine_name: str
+        :param body: The request body.
+        :type body: ~azure.mgmt.labservices.models.ResetPasswordBody
+        :keyword callable cls: A custom type or function that will be passed the direct response
+        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
+        :keyword polling: By default, your polling method will be ARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
+        :paramtype polling: bool or ~azure.core.polling.PollingMethod
+        :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
+        :return: An instance of LROPoller that returns either None or the result of cls(response)
+        :rtype: ~azure.core.polling.LROPoller[None]
+        :raises ~azure.core.exceptions.HttpResponseError:
+        """
+        polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
+        cls = kwargs.pop('cls', None)  # type: ClsType[None]
+        lro_delay = kwargs.pop(
+            'polling_interval',
+            self._config.polling_interval
+        )
+        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
+        if cont_token is None:
+            raw_result = self._reset_password_initial(
+                resource_group_name=resource_group_name,
+                lab_name=lab_name,
+                virtual_machine_name=virtual_machine_name,
+                body=body,
+                cls=lambda x,y,z: x,
+                **kwargs
+            )
+
+        kwargs.pop('error_map', None)
+        kwargs.pop('content_type', None)
+
+        def get_long_running_output(pipeline_response):
+            if cls:
+                return cls(pipeline_response, None, {})
+
+        path_format_arguments = {
+            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
+            'labName': self._serialize.url("lab_name", lab_name, 'str', max_length=100, min_length=1),
+            'virtualMachineName': self._serialize.url("virtual_machine_name", virtual_machine_name, 'str', max_length=100, min_length=1, pattern=r'^[-\w\\._\\(\\)]+$'),
+        }
+
+        if polling is True: polling_method = ARMPolling(lro_delay, lro_options={'final-state-via': 'location'}, path_format_arguments=path_format_arguments,  **kwargs)
+        elif polling is False: polling_method = NoPolling()
+        else: polling_method = polling
+        if cont_token:
+            return LROPoller.from_continuation_token(
+                polling_method=polling_method,
+                continuation_token=cont_token,
+                client=self._client,
+                deserialization_callback=get_long_running_output
+            )
+        else:
+            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+    begin_reset_password.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/virtualMachines/{virtualMachineName}/resetPassword'}  # type: ignore

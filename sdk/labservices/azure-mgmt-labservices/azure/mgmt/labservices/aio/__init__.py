@@ -6,5 +6,5 @@
 # Changes may cause incorrect behavior and will be lost if the code is regenerated.
 # --------------------------------------------------------------------------
 
-from ._managed_labs_client import ManagedLabsClient
-__all__ = ['ManagedLabsClient']
+from ._lab_services_client import LabServicesClient
+__all__ = ['LabServicesClient']

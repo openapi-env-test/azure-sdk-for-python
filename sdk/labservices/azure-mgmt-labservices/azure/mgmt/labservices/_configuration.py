@@ -21,15 +21,15 @@ if TYPE_CHECKING:
     from azure.core.credentials import TokenCredential
 
 
-class ManagedLabsClientConfiguration(Configuration):
-    """Configuration for ManagedLabsClient.
+class LabServicesClientConfiguration(Configuration):
+    """Configuration for LabServicesClient.
 
     Note that all parameters used to create this instance are saved as instance
     attributes.
 
     :param credential: Credential needed for the client to connect to Azure.
     :type credential: ~azure.core.credentials.TokenCredential
-    :param subscription_id: The subscription ID.
+    :param subscription_id: The ID of the target subscription.
     :type subscription_id: str
     """
 
@@ -44,11 +44,11 @@ class ManagedLabsClientConfiguration(Configuration):
             raise ValueError("Parameter 'credential' must not be None.")
         if subscription_id is None:
             raise ValueError("Parameter 'subscription_id' must not be None.")
-        super(ManagedLabsClientConfiguration, self).__init__(**kwargs)
+        super(LabServicesClientConfiguration, self).__init__(**kwargs)
 
         self.credential = credential
         self.subscription_id = subscription_id
-        self.api_version = "2018-10-15"
+        self.api_version = "2021-10-01-preview"
         self.credential_scopes = kwargs.pop('credential_scopes', ['https://management.azure.com/.default'])
         kwargs.setdefault('sdk_moniker', 'mgmt-labservices/{}'.format(VERSION))
         self._configure(**kwargs)

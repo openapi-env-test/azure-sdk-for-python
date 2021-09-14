@@ -47,45 +47,36 @@ class UsersOperations(object):
         self._deserialize = deserializer
         self._config = config
 
-    def list(
+    def list_by_lab(
         self,
         resource_group_name,  # type: str
-        lab_account_name,  # type: str
         lab_name,  # type: str
-        expand=None,  # type: Optional[str]
         filter=None,  # type: Optional[str]
-        top=None,  # type: Optional[int]
-        orderby=None,  # type: Optional[str]
         **kwargs  # type: Any
     ):
-        # type: (...) -> Iterable["_models.ResponseWithContinuationUser"]
-        """List users in a given lab.
+        # type: (...) -> Iterable["_models.PagedUsers"]
+        """Get all users for a lab.
 
-        :param resource_group_name: The name of the resource group.
+        Returns a list of all users for a lab.
+
+        :param resource_group_name: The name of the resource group. The name is case insensitive.
         :type resource_group_name: str
-        :param lab_account_name: The name of the lab Account.
-        :type lab_account_name: str
-        :param lab_name: The name of the lab.
+        :param lab_name: The name of the lab that uniquely identifies it within containing lab account.
+         Used in resource URIs.
         :type lab_name: str
-        :param expand: Specify the $expand query. Example: 'properties($select=email)'.
-        :type expand: str
         :param filter: The filter to apply to the operation.
         :type filter: str
-        :param top: The maximum number of resources to return from the operation.
-        :type top: int
-        :param orderby: The ordering expression for the results, using OData notation.
-        :type orderby: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either ResponseWithContinuationUser or the result of cls(response)
-        :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.labservices.models.ResponseWithContinuationUser]
+        :return: An iterator like instance of either PagedUsers or the result of cls(response)
+        :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.labservices.models.PagedUsers]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ResponseWithContinuationUser"]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.PagedUsers"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2018-10-15"
+        api_version = "2021-10-01-preview"
         accept = "application/json"
 
         def prepare_request(next_link=None):
@@ -95,25 +86,18 @@ class UsersOperations(object):
 
             if not next_link:
                 # Construct URL
-                url = self.list.metadata['url']  # type: ignore
+                url = self.list_by_lab.metadata['url']  # type: ignore
                 path_format_arguments = {
-                    'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
-                    'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
-                    'labAccountName': self._serialize.url("lab_account_name", lab_account_name, 'str'),
-                    'labName': self._serialize.url("lab_name", lab_name, 'str'),
+                    'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
+                    'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
+                    'labName': self._serialize.url("lab_name", lab_name, 'str', max_length=100, min_length=1),
                 }
                 url = self._client.format_url(url, **path_format_arguments)
                 # Construct parameters
                 query_parameters = {}  # type: Dict[str, Any]
-                if expand is not None:
-                    query_parameters['$expand'] = self._serialize.query("expand", expand, 'str')
+                query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
                 if filter is not None:
                     query_parameters['$filter'] = self._serialize.query("filter", filter, 'str')
-                if top is not None:
-                    query_parameters['$top'] = self._serialize.query("top", top, 'int')
-                if orderby is not None:
-                    query_parameters['$orderby'] = self._serialize.query("orderby", orderby, 'str')
-                query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
 
                 request = self._client.get(url, query_parameters, header_parameters)
             else:
@@ -123,7 +107,7 @@ class UsersOperations(object):
             return request
 
         def extract_data(pipeline_response):
-            deserialized = self._deserialize('ResponseWithContinuationUser', pipeline_response)
+            deserialized = self._deserialize('PagedUsers', pipeline_response)
             list_of_elem = deserialized.value
             if cls:
                 list_of_elem = cls(list_of_elem)
@@ -136,38 +120,37 @@ class UsersOperations(object):
             response = pipeline_response.http_response
 
             if response.status_code not in [200]:
+                error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, response)
                 map_error(status_code=response.status_code, response=response, error_map=error_map)
-                raise HttpResponseError(response=response, error_format=ARMErrorFormat)
+                raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
             return pipeline_response
 
         return ItemPaged(
             get_next, extract_data
         )
-    list.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labaccounts/{labAccountName}/labs/{labName}/users'}  # type: ignore
+    list_by_lab.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/users'}  # type: ignore
 
     def get(
         self,
         resource_group_name,  # type: str
-        lab_account_name,  # type: str
         lab_name,  # type: str
         user_name,  # type: str
-        expand=None,  # type: Optional[str]
         **kwargs  # type: Any
     ):
         # type: (...) -> "_models.User"
-        """Get user.
+        """Get a lab user.
 
-        :param resource_group_name: The name of the resource group.
+        Returns the properties of a lab user.
+
+        :param resource_group_name: The name of the resource group. The name is case insensitive.
         :type resource_group_name: str
-        :param lab_account_name: The name of the lab Account.
-        :type lab_account_name: str
-        :param lab_name: The name of the lab.
+        :param lab_name: The name of the lab that uniquely identifies it within containing lab account.
+         Used in resource URIs.
         :type lab_name: str
-        :param user_name: The name of the user.
+        :param user_name: The name of the user that uniquely identifies it within containing lab. Used
+         in resource URIs.
         :type user_name: str
-        :param expand: Specify the $expand query. Example: 'properties($select=email)'.
-        :type expand: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: User, or the result of cls(response)
         :rtype: ~azure.mgmt.labservices.models.User
@@ -178,24 +161,21 @@ class UsersOperations(object):
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2018-10-15"
+        api_version = "2021-10-01-preview"
         accept = "application/json"
 
         # Construct URL
         url = self.get.metadata['url']  # type: ignore
         path_format_arguments = {
-            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
-            'labAccountName': self._serialize.url("lab_account_name", lab_account_name, 'str'),
-            'labName': self._serialize.url("lab_name", lab_name, 'str'),
-            'userName': self._serialize.url("user_name", user_name, 'str'),
+            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
+            'labName': self._serialize.url("lab_name", lab_name, 'str', max_length=100, min_length=1),
+            'userName': self._serialize.url("user_name", user_name, 'str', max_length=100, min_length=1, pattern=r'^[-\w\\._\\(\\)]+$'),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}  # type: Dict[str, Any]
-        if expand is not None:
-            query_parameters['$expand'] = self._serialize.query("expand", expand, 'str')
         query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
 
         # Construct headers
@@ -208,7 +188,8 @@ class UsersOperations(object):
 
         if response.status_code not in [200]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            raise HttpResponseError(response=response, error_format=ARMErrorFormat)
+            error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, response)
+            raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         deserialized = self._deserialize('User', pipeline_response)
 
@@ -216,52 +197,33 @@ class UsersOperations(object):
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labaccounts/{labAccountName}/labs/{labName}/users/{userName}'}  # type: ignore
+    get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/users/{userName}'}  # type: ignore
 
-    def create_or_update(
+    def _create_or_update_initial(
         self,
         resource_group_name,  # type: str
-        lab_account_name,  # type: str
         lab_name,  # type: str
         user_name,  # type: str
-        user,  # type: "_models.User"
+        body,  # type: "_models.User"
         **kwargs  # type: Any
     ):
         # type: (...) -> "_models.User"
-        """Create or replace an existing User.
-
-        :param resource_group_name: The name of the resource group.
-        :type resource_group_name: str
-        :param lab_account_name: The name of the lab Account.
-        :type lab_account_name: str
-        :param lab_name: The name of the lab.
-        :type lab_name: str
-        :param user_name: The name of the user.
-        :type user_name: str
-        :param user: The User registered to a lab.
-        :type user: ~azure.mgmt.labservices.models.User
-        :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: User, or the result of cls(response)
-        :rtype: ~azure.mgmt.labservices.models.User
-        :raises: ~azure.core.exceptions.HttpResponseError
-        """
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.User"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2018-10-15"
+        api_version = "2021-10-01-preview"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"
 
         # Construct URL
-        url = self.create_or_update.metadata['url']  # type: ignore
+        url = self._create_or_update_initial.metadata['url']  # type: ignore
         path_format_arguments = {
-            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
-            'labAccountName': self._serialize.url("lab_account_name", lab_account_name, 'str'),
-            'labName': self._serialize.url("lab_name", lab_name, 'str'),
-            'userName': self._serialize.url("user_name", user_name, 'str'),
+            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
+            'labName': self._serialize.url("lab_name", lab_name, 'str', max_length=100, min_length=1),
+            'userName': self._serialize.url("user_name", user_name, 'str', max_length=100, min_length=1, pattern=r'^[-\w\\._\\(\\)]+$'),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
@@ -275,15 +237,16 @@ class UsersOperations(object):
         header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
 
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(user, 'User')
+        body_content = self._serialize.body(body, 'User')
         body_content_kwargs['content'] = body_content
         request = self._client.put(url, query_parameters, header_parameters, **body_content_kwargs)
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
-        if response.status_code not in [200, 201]:
+        if response.status_code not in [200, 201, 202]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            raise HttpResponseError(response=response, error_format=ARMErrorFormat)
+            error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, response)
+            raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         if response.status_code == 200:
             deserialized = self._deserialize('User', pipeline_response)
@@ -291,16 +254,241 @@ class UsersOperations(object):
         if response.status_code == 201:
             deserialized = self._deserialize('User', pipeline_response)
 
+        if response.status_code == 202:
+            deserialized = self._deserialize('User', pipeline_response)
+
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labaccounts/{labAccountName}/labs/{labName}/users/{userName}'}  # type: ignore
+    _create_or_update_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/users/{userName}'}  # type: ignore
+
+    def begin_create_or_update(
+        self,
+        resource_group_name,  # type: str
+        lab_name,  # type: str
+        user_name,  # type: str
+        body,  # type: "_models.User"
+        **kwargs  # type: Any
+    ):
+        # type: (...) -> LROPoller["_models.User"]
+        """Create or update a lab user.
+
+        Operation to create or update a lab user.
+
+        :param resource_group_name: The name of the resource group. The name is case insensitive.
+        :type resource_group_name: str
+        :param lab_name: The name of the lab that uniquely identifies it within containing lab account.
+         Used in resource URIs.
+        :type lab_name: str
+        :param user_name: The name of the user that uniquely identifies it within containing lab. Used
+         in resource URIs.
+        :type user_name: str
+        :param body: The request body.
+        :type body: ~azure.mgmt.labservices.models.User
+        :keyword callable cls: A custom type or function that will be passed the direct response
+        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
+        :keyword polling: By default, your polling method will be ARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
+        :paramtype polling: bool or ~azure.core.polling.PollingMethod
+        :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
+        :return: An instance of LROPoller that returns either User or the result of cls(response)
+        :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.labservices.models.User]
+        :raises ~azure.core.exceptions.HttpResponseError:
+        """
+        polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.User"]
+        lro_delay = kwargs.pop(
+            'polling_interval',
+            self._config.polling_interval
+        )
+        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
+        if cont_token is None:
+            raw_result = self._create_or_update_initial(
+                resource_group_name=resource_group_name,
+                lab_name=lab_name,
+                user_name=user_name,
+                body=body,
+                cls=lambda x,y,z: x,
+                **kwargs
+            )
+
+        kwargs.pop('error_map', None)
+        kwargs.pop('content_type', None)
+
+        def get_long_running_output(pipeline_response):
+            deserialized = self._deserialize('User', pipeline_response)
+
+            if cls:
+                return cls(pipeline_response, deserialized, {})
+            return deserialized
+
+        path_format_arguments = {
+            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
+            'labName': self._serialize.url("lab_name", lab_name, 'str', max_length=100, min_length=1),
+            'userName': self._serialize.url("user_name", user_name, 'str', max_length=100, min_length=1, pattern=r'^[-\w\\._\\(\\)]+$'),
+        }
+
+        if polling is True: polling_method = ARMPolling(lro_delay, lro_options={'final-state-via': 'original-uri'}, path_format_arguments=path_format_arguments,  **kwargs)
+        elif polling is False: polling_method = NoPolling()
+        else: polling_method = polling
+        if cont_token:
+            return LROPoller.from_continuation_token(
+                polling_method=polling_method,
+                continuation_token=cont_token,
+                client=self._client,
+                deserialization_callback=get_long_running_output
+            )
+        else:
+            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+    begin_create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/users/{userName}'}  # type: ignore
+
+    def _update_initial(
+        self,
+        resource_group_name,  # type: str
+        lab_name,  # type: str
+        user_name,  # type: str
+        body,  # type: "_models.UserUpdate"
+        **kwargs  # type: Any
+    ):
+        # type: (...) -> "_models.User"
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.User"]
+        error_map = {
+            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
+        }
+        error_map.update(kwargs.pop('error_map', {}))
+        api_version = "2021-10-01-preview"
+        content_type = kwargs.pop("content_type", "application/json")
+        accept = "application/json"
+
+        # Construct URL
+        url = self._update_initial.metadata['url']  # type: ignore
+        path_format_arguments = {
+            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
+            'labName': self._serialize.url("lab_name", lab_name, 'str', max_length=100, min_length=1),
+            'userName': self._serialize.url("user_name", user_name, 'str', max_length=100, min_length=1, pattern=r'^[-\w\\._\\(\\)]+$'),
+        }
+        url = self._client.format_url(url, **path_format_arguments)
+
+        # Construct parameters
+        query_parameters = {}  # type: Dict[str, Any]
+        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+
+        # Construct headers
+        header_parameters = {}  # type: Dict[str, Any]
+        header_parameters['Content-Type'] = self._serialize.header("content_type", content_type, 'str')
+        header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
+
+        body_content_kwargs = {}  # type: Dict[str, Any]
+        body_content = self._serialize.body(body, 'UserUpdate')
+        body_content_kwargs['content'] = body_content
+        request = self._client.patch(url, query_parameters, header_parameters, **body_content_kwargs)
+        pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
+        response = pipeline_response.http_response
+
+        if response.status_code not in [200, 202]:
+            map_error(status_code=response.status_code, response=response, error_map=error_map)
+            error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, response)
+            raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
+
+        if response.status_code == 200:
+            deserialized = self._deserialize('User', pipeline_response)
+
+        if response.status_code == 202:
+            deserialized = self._deserialize('User', pipeline_response)
+
+        if cls:
+            return cls(pipeline_response, deserialized, {})
+
+        return deserialized
+    _update_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/users/{userName}'}  # type: ignore
+
+    def begin_update(
+        self,
+        resource_group_name,  # type: str
+        lab_name,  # type: str
+        user_name,  # type: str
+        body,  # type: "_models.UserUpdate"
+        **kwargs  # type: Any
+    ):
+        # type: (...) -> LROPoller["_models.User"]
+        """Update a lab user.
+
+        Operation to update a lab user.
+
+        :param resource_group_name: The name of the resource group. The name is case insensitive.
+        :type resource_group_name: str
+        :param lab_name: The name of the lab that uniquely identifies it within containing lab account.
+         Used in resource URIs.
+        :type lab_name: str
+        :param user_name: The name of the user that uniquely identifies it within containing lab. Used
+         in resource URIs.
+        :type user_name: str
+        :param body: The request body.
+        :type body: ~azure.mgmt.labservices.models.UserUpdate
+        :keyword callable cls: A custom type or function that will be passed the direct response
+        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
+        :keyword polling: By default, your polling method will be ARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
+        :paramtype polling: bool or ~azure.core.polling.PollingMethod
+        :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
+        :return: An instance of LROPoller that returns either User or the result of cls(response)
+        :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.labservices.models.User]
+        :raises ~azure.core.exceptions.HttpResponseError:
+        """
+        polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.User"]
+        lro_delay = kwargs.pop(
+            'polling_interval',
+            self._config.polling_interval
+        )
+        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
+        if cont_token is None:
+            raw_result = self._update_initial(
+                resource_group_name=resource_group_name,
+                lab_name=lab_name,
+                user_name=user_name,
+                body=body,
+                cls=lambda x,y,z: x,
+                **kwargs
+            )
+
+        kwargs.pop('error_map', None)
+        kwargs.pop('content_type', None)
+
+        def get_long_running_output(pipeline_response):
+            deserialized = self._deserialize('User', pipeline_response)
+
+            if cls:
+                return cls(pipeline_response, deserialized, {})
+            return deserialized
+
+        path_format_arguments = {
+            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
+            'labName': self._serialize.url("lab_name", lab_name, 'str', max_length=100, min_length=1),
+            'userName': self._serialize.url("user_name", user_name, 'str', max_length=100, min_length=1, pattern=r'^[-\w\\._\\(\\)]+$'),
+        }
+
+        if polling is True: polling_method = ARMPolling(lro_delay, lro_options={'final-state-via': 'location'}, path_format_arguments=path_format_arguments,  **kwargs)
+        elif polling is False: polling_method = NoPolling()
+        else: polling_method = polling
+        if cont_token:
+            return LROPoller.from_continuation_token(
+                polling_method=polling_method,
+                continuation_token=cont_token,
+                client=self._client,
+                deserialization_callback=get_long_running_output
+            )
+        else:
+            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+    begin_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/users/{userName}'}  # type: ignore
 
     def _delete_initial(
         self,
         resource_group_name,  # type: str
-        lab_account_name,  # type: str
         lab_name,  # type: str
         user_name,  # type: str
         **kwargs  # type: Any
@@ -311,17 +499,16 @@ class UsersOperations(object):
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2018-10-15"
+        api_version = "2021-10-01-preview"
         accept = "application/json"
 
         # Construct URL
         url = self._delete_initial.metadata['url']  # type: ignore
         path_format_arguments = {
-            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
-            'labAccountName': self._serialize.url("lab_account_name", lab_account_name, 'str'),
-            'labName': self._serialize.url("lab_name", lab_name, 'str'),
-            'userName': self._serialize.url("user_name", user_name, 'str'),
+            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
+            'labName': self._serialize.url("lab_name", lab_name, 'str', max_length=100, min_length=1),
+            'userName': self._serialize.url("user_name", user_name, 'str', max_length=100, min_length=1, pattern=r'^[-\w\\._\\(\\)]+$'),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
@@ -337,38 +524,40 @@ class UsersOperations(object):
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
-        if response.status_code not in [202, 204]:
+        if response.status_code not in [200, 202, 204]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            raise HttpResponseError(response=response, error_format=ARMErrorFormat)
+            error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, response)
+            raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         if cls:
             return cls(pipeline_response, None, {})
 
-    _delete_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labaccounts/{labAccountName}/labs/{labName}/users/{userName}'}  # type: ignore
+    _delete_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/users/{userName}'}  # type: ignore
 
     def begin_delete(
         self,
         resource_group_name,  # type: str
-        lab_account_name,  # type: str
         lab_name,  # type: str
         user_name,  # type: str
         **kwargs  # type: Any
     ):
         # type: (...) -> LROPoller[None]
-        """Delete user. This operation can take a while to complete.
+        """Deletes a user resource.
 
-        :param resource_group_name: The name of the resource group.
+        Operation to delete a user resource.
+
+        :param resource_group_name: The name of the resource group. The name is case insensitive.
         :type resource_group_name: str
-        :param lab_account_name: The name of the lab Account.
-        :type lab_account_name: str
-        :param lab_name: The name of the lab.
+        :param lab_name: The name of the lab that uniquely identifies it within containing lab account.
+         Used in resource URIs.
         :type lab_name: str
-        :param user_name: The name of the user.
+        :param user_name: The name of the user that uniquely identifies it within containing lab. Used
+         in resource URIs.
         :type user_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: Pass in True if you'd like the ARMPolling polling method,
-         False for no polling, or your own initialized polling object for a personal polling strategy.
+        :keyword polling: By default, your polling method will be ARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
         :return: An instance of LROPoller that returns either None or the result of cls(response)
@@ -385,7 +574,6 @@ class UsersOperations(object):
         if cont_token is None:
             raw_result = self._delete_initial(
                 resource_group_name=resource_group_name,
-                lab_account_name=lab_account_name,
                 lab_name=lab_name,
                 user_name=user_name,
                 cls=lambda x,y,z: x,
@@ -400,14 +588,13 @@ class UsersOperations(object):
                 return cls(pipeline_response, None, {})
 
         path_format_arguments = {
-            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
-            'labAccountName': self._serialize.url("lab_account_name", lab_account_name, 'str'),
-            'labName': self._serialize.url("lab_name", lab_name, 'str'),
-            'userName': self._serialize.url("user_name", user_name, 'str'),
+            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
+            'labName': self._serialize.url("lab_name", lab_name, 'str', max_length=100, min_length=1),
+            'userName': self._serialize.url("user_name", user_name, 'str', max_length=100, min_length=1, pattern=r'^[-\w\\._\\(\\)]+$'),
         }
 
-        if polling is True: polling_method = ARMPolling(lro_delay, path_format_arguments=path_format_arguments,  **kwargs)
+        if polling is True: polling_method = ARMPolling(lro_delay, lro_options={'final-state-via': 'location'}, path_format_arguments=path_format_arguments,  **kwargs)
         elif polling is False: polling_method = NoPolling()
         else: polling_method = polling
         if cont_token:
@@ -419,52 +606,33 @@ class UsersOperations(object):
             )
         else:
             return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
-    begin_delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labaccounts/{labAccountName}/labs/{labName}/users/{userName}'}  # type: ignore
+    begin_delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/users/{userName}'}  # type: ignore
 
-    def update(
+    def _invite_initial(
         self,
         resource_group_name,  # type: str
-        lab_account_name,  # type: str
         lab_name,  # type: str
         user_name,  # type: str
-        user,  # type: "_models.UserFragment"
+        body,  # type: "_models.InviteBody"
         **kwargs  # type: Any
     ):
-        # type: (...) -> "_models.User"
-        """Modify properties of users.
-
-        :param resource_group_name: The name of the resource group.
-        :type resource_group_name: str
-        :param lab_account_name: The name of the lab Account.
-        :type lab_account_name: str
-        :param lab_name: The name of the lab.
-        :type lab_name: str
-        :param user_name: The name of the user.
-        :type user_name: str
-        :param user: The User registered to a lab.
-        :type user: ~azure.mgmt.labservices.models.UserFragment
-        :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: User, or the result of cls(response)
-        :rtype: ~azure.mgmt.labservices.models.User
-        :raises: ~azure.core.exceptions.HttpResponseError
-        """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.User"]
+        # type: (...) -> None
+        cls = kwargs.pop('cls', None)  # type: ClsType[None]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2018-10-15"
+        api_version = "2021-10-01-preview"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"
 
         # Construct URL
-        url = self.update.metadata['url']  # type: ignore
+        url = self._invite_initial.metadata['url']  # type: ignore
         path_format_arguments = {
-            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str'),
-            'labAccountName': self._serialize.url("lab_account_name", lab_account_name, 'str'),
-            'labName': self._serialize.url("lab_name", lab_name, 'str'),
-            'userName': self._serialize.url("user_name", user_name, 'str'),
+            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
+            'labName': self._serialize.url("lab_name", lab_name, 'str', max_length=100, min_length=1),
+            'userName': self._serialize.url("user_name", user_name, 'str', max_length=100, min_length=1, pattern=r'^[-\w\\._\\(\\)]+$'),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
@@ -478,20 +646,96 @@ class UsersOperations(object):
         header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
 
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(user, 'UserFragment')
+        body_content = self._serialize.body(body, 'InviteBody')
         body_content_kwargs['content'] = body_content
-        request = self._client.patch(url, query_parameters, header_parameters, **body_content_kwargs)
+        request = self._client.post(url, query_parameters, header_parameters, **body_content_kwargs)
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
-        if response.status_code not in [200]:
+        if response.status_code not in [200, 202]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            raise HttpResponseError(response=response, error_format=ARMErrorFormat)
-
-        deserialized = self._deserialize('User', pipeline_response)
+            error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, response)
+            raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+            return cls(pipeline_response, None, {})
 
-        return deserialized
-    update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labaccounts/{labAccountName}/labs/{labName}/users/{userName}'}  # type: ignore
+    _invite_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/users/{userName}/invite'}  # type: ignore
+
+    def begin_invite(
+        self,
+        resource_group_name,  # type: str
+        lab_name,  # type: str
+        user_name,  # type: str
+        body,  # type: "_models.InviteBody"
+        **kwargs  # type: Any
+    ):
+        # type: (...) -> LROPoller[None]
+        """Invite a user to a lab.
+
+        Operation to invite a user to a lab.
+
+        :param resource_group_name: The name of the resource group. The name is case insensitive.
+        :type resource_group_name: str
+        :param lab_name: The name of the lab that uniquely identifies it within containing lab account.
+         Used in resource URIs.
+        :type lab_name: str
+        :param user_name: The name of the user that uniquely identifies it within containing lab. Used
+         in resource URIs.
+        :type user_name: str
+        :param body: The request body.
+        :type body: ~azure.mgmt.labservices.models.InviteBody
+        :keyword callable cls: A custom type or function that will be passed the direct response
+        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
+        :keyword polling: By default, your polling method will be ARMPolling.
+         Pass in False for this operation to not poll, or pass in your own initialized polling object for a personal polling strategy.
+        :paramtype polling: bool or ~azure.core.polling.PollingMethod
+        :keyword int polling_interval: Default waiting time between two polls for LRO operations if no Retry-After header is present.
+        :return: An instance of LROPoller that returns either None or the result of cls(response)
+        :rtype: ~azure.core.polling.LROPoller[None]
+        :raises ~azure.core.exceptions.HttpResponseError:
+        """
+        polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
+        cls = kwargs.pop('cls', None)  # type: ClsType[None]
+        lro_delay = kwargs.pop(
+            'polling_interval',
+            self._config.polling_interval
+        )
+        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
+        if cont_token is None:
+            raw_result = self._invite_initial(
+                resource_group_name=resource_group_name,
+                lab_name=lab_name,
+                user_name=user_name,
+                body=body,
+                cls=lambda x,y,z: x,
+                **kwargs
+            )
+
+        kwargs.pop('error_map', None)
+        kwargs.pop('content_type', None)
+
+        def get_long_running_output(pipeline_response):
+            if cls:
+                return cls(pipeline_response, None, {})
+
+        path_format_arguments = {
+            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
+            'labName': self._serialize.url("lab_name", lab_name, 'str', max_length=100, min_length=1),
+            'userName': self._serialize.url("user_name", user_name, 'str', max_length=100, min_length=1, pattern=r'^[-\w\\._\\(\\)]+$'),
+        }
+
+        if polling is True: polling_method = ARMPolling(lro_delay, lro_options={'final-state-via': 'location'}, path_format_arguments=path_format_arguments,  **kwargs)
+        elif polling is False: polling_method = NoPolling()
+        else: polling_method = polling
+        if cont_token:
+            return LROPoller.from_continuation_token(
+                polling_method=polling_method,
+                continuation_token=cont_token,
+                client=self._client,
+                deserialization_callback=get_long_running_output
+            )
+        else:
+            return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+    begin_invite.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/users/{userName}/invite'}  # type: ignore

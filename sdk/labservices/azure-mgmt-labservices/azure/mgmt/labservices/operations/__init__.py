@@ -6,24 +6,22 @@
 # Changes may cause incorrect behavior and will be lost if the code is regenerated.
 # --------------------------------------------------------------------------
 
-from ._provider_operations_operations import ProviderOperationsOperations
-from ._global_users_operations import GlobalUsersOperations
-from ._lab_accounts_operations import LabAccountsOperations
 from ._operations import Operations
-from ._gallery_images_operations import GalleryImagesOperations
+from ._operation_results_operations import OperationResultsOperations
+from ._lab_plans_operations import LabPlansOperations
+from ._images_operations import ImagesOperations
 from ._labs_operations import LabsOperations
-from ._environment_settings_operations import EnvironmentSettingsOperations
-from ._environments_operations import EnvironmentsOperations
 from ._users_operations import UsersOperations
+from ._virtual_machines_operations import VirtualMachinesOperations
+from ._schedules_operations import SchedulesOperations
 
 __all__ = [
-    'ProviderOperationsOperations',
-    'GlobalUsersOperations',
-    'LabAccountsOperations',
     'Operations',
-    'GalleryImagesOperations',
+    'OperationResultsOperations',
+    'LabPlansOperations',
+    'ImagesOperations',
     'LabsOperations',
-    'EnvironmentSettingsOperations',
-    'EnvironmentsOperations',
     'UsersOperations',
+    'VirtualMachinesOperations',
+    'SchedulesOperations',
 ]
