@@ -78,7 +78,7 @@ class TagRulesOperations:
                 url = self.list.metadata['url']  # type: ignore
                 path_format_arguments = {
                     'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
-                    'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
+                    'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
                     'monitorName': self._serialize.url("monitor_name", monitor_name, 'str'),
                 }
                 url = self._client.format_url(url, **path_format_arguments)
@@ -116,7 +116,7 @@ class TagRulesOperations:
         return AsyncItemPaged(
             get_next, extract_data
         )
-    list.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/tagRules'}  # type: ignore
+    list.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatadogNew/monitors/{monitorName}/tagRules'}  # type: ignore
 
     async def create_or_update(
         self,
@@ -156,7 +156,7 @@ class TagRulesOperations:
         url = self.create_or_update.metadata['url']  # type: ignore
         path_format_arguments = {
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
             'monitorName': self._serialize.url("monitor_name", monitor_name, 'str'),
             'ruleSetName': self._serialize.url("rule_set_name", rule_set_name, 'str'),
         }
@@ -192,7 +192,7 @@ class TagRulesOperations:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/tagRules/{ruleSetName}'}  # type: ignore
+    create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatadogNew/monitors/{monitorName}/tagRules/{ruleSetName}'}  # type: ignore
 
     async def get(
         self,
@@ -228,7 +228,7 @@ class TagRulesOperations:
         url = self.get.metadata['url']  # type: ignore
         path_format_arguments = {
             'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
+            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1),
             'monitorName': self._serialize.url("monitor_name", monitor_name, 'str'),
             'ruleSetName': self._serialize.url("rule_set_name", rule_set_name, 'str'),
         }
@@ -257,4 +257,4 @@ class TagRulesOperations:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/tagRules/{ruleSetName}'}  # type: ignore
+    get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatadogNew/monitors/{monitorName}/tagRules/{ruleSetName}'}  # type: ignore

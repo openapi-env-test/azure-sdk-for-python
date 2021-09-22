@@ -1106,7 +1106,7 @@ class MonitorUpdateProperties(msrest.serialization.Model):
 class OperationDisplay(msrest.serialization.Model):
     """The object that represents the operation.
 
-    :param provider: Service provider, i.e., Microsoft.Datadog.
+    :param provider: Service provider, i.e., Microsoft.DatadogNew.
     :type provider: str
     :param resource: Type on which the operation is performed, e.g., 'monitors'.
     :type resource: str
@@ -1135,9 +1135,9 @@ class OperationDisplay(msrest.serialization.Model):
 
 
 class OperationListResult(msrest.serialization.Model):
-    """Result of GET request to list the Microsoft.Datadog operations.
+    """Result of GET request to list the Microsoft.DatadogNew operations.
 
-    :param value: List of operations supported by the Microsoft.Datadog provider.
+    :param value: List of operations supported by the Microsoft.DatadogNew provider.
     :type value: list[~microsoft_datadog_client.models.OperationResult]
     :param next_link: URL to get the next set of operation list results if there are any.
     :type next_link: str
@@ -1158,7 +1158,7 @@ class OperationListResult(msrest.serialization.Model):
 
 
 class OperationResult(msrest.serialization.Model):
-    """A Microsoft.Datadog REST API operation.
+    """A Microsoft.DatadogNew REST API operation.
 
     :param name: Operation name, i.e., {provider}/{resource}/{operation}.
     :type name: str
