@@ -12542,8 +12542,8 @@ class WebAppsOperations:
         :param name: Unique name of the app to create or update. To create or update a deployment slot,
          use the {slot} parameter.
         :type name: str
-        :param slot: Name of the deployment slot to create or update. By default, this API attempts to
-         create or modify the production slot.
+        :param slot: Name of the deployment slot to create or update. The name 'production' is
+         reserved.
         :type slot: str
         :param site_envelope: A JSON representation of the app properties. See example.
         :type site_envelope: ~azure.mgmt.web.v2021_01_15.models.Site
@@ -12697,8 +12697,8 @@ class WebAppsOperations:
         :param name: Unique name of the app to create or update. To create or update a deployment slot,
          use the {slot} parameter.
         :type name: str
-        :param slot: Name of the deployment slot to create or update. By default, this API attempts to
-         create or modify the production slot.
+        :param slot: Name of the deployment slot to create or update. The name 'production' is
+         reserved.
         :type slot: str
         :param site_envelope: A JSON representation of the app properties. See example.
         :type site_envelope: ~azure.mgmt.web.v2021_01_15.models.SitePatchResource
