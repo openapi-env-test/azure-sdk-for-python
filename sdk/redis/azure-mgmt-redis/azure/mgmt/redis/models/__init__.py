@@ -26,6 +26,7 @@ try:
     from ._models_py3 import ProxyResource
     from ._models_py3 import RedisAccessKeys
     from ._models_py3 import RedisCommonProperties
+    from ._models_py3 import RedisCommonPropertiesRedisConfiguration
     from ._models_py3 import RedisCreateParameters
     from ._models_py3 import RedisCreateProperties
     from ._models_py3 import RedisFirewallRule
@@ -73,6 +74,7 @@ except (SyntaxError, ImportError):
     from ._models import ProxyResource  # type: ignore
     from ._models import RedisAccessKeys  # type: ignore
     from ._models import RedisCommonProperties  # type: ignore
+    from ._models import RedisCommonPropertiesRedisConfiguration  # type: ignore
     from ._models import RedisCreateParameters  # type: ignore
     from ._models import RedisCreateProperties  # type: ignore
     from ._models import RedisFirewallRule  # type: ignore
@@ -136,6 +138,7 @@ __all__ = [
     'ProxyResource',
     'RedisAccessKeys',
     'RedisCommonProperties',
+    'RedisCommonPropertiesRedisConfiguration',
     'RedisCreateParameters',
     'RedisCreateProperties',
     'RedisFirewallRule',
