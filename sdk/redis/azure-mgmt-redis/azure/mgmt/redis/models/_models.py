@@ -610,7 +610,7 @@ class RedisCommonProperties(msrest.serialization.Model):
     :param redis_configuration: All Redis Settings. Few possible keys:
      rdb-backup-enabled,rdb-storage-connection-string,rdb-backup-frequency,maxmemory-delta,maxmemory-policy,notify-keyspace-events,maxmemory-samples,slowlog-log-slower-than,slowlog-max-len,list-max-ziplist-entries,list-max-ziplist-value,hash-max-ziplist-entries,hash-max-ziplist-value,set-max-intset-entries,zset-max-ziplist-entries,zset-max-ziplist-value
      etc.
-    :type redis_configuration: dict[str, str]
+    :type redis_configuration: ~azure.mgmt.redis.models.RedisCommonPropertiesRedisConfiguration
     :param redis_version: Redis version. Only major version will be used in PUT/PATCH request with
      current valid values: (4, 6).
     :type redis_version: str
@@ -630,12 +630,12 @@ class RedisCommonProperties(msrest.serialization.Model):
     :param public_network_access: Whether or not public endpoint access is allowed for this cache.
      Value is optional but if passed in, must be 'Enabled' or 'Disabled'. If 'Disabled', private
      endpoints are the exclusive access method. Default value is 'Enabled'. Possible values include:
-     "Enabled", "Disabled".
+     "Enabled", "Disabled". Default value: "Enabled".
     :type public_network_access: str or ~azure.mgmt.redis.models.PublicNetworkAccess
     """
 
     _attribute_map = {
-        'redis_configuration': {'key': 'redisConfiguration', 'type': '{str}'},
+        'redis_configuration': {'key': 'redisConfiguration', 'type': 'RedisCommonPropertiesRedisConfiguration'},
         'redis_version': {'key': 'redisVersion', 'type': 'str'},
         'enable_non_ssl_port': {'key': 'enableNonSslPort', 'type': 'bool'},
         'replicas_per_master': {'key': 'replicasPerMaster', 'type': 'int'},
@@ -653,13 +653,88 @@ class RedisCommonProperties(msrest.serialization.Model):
         super(RedisCommonProperties, self).__init__(**kwargs)
         self.redis_configuration = kwargs.get('redis_configuration', None)
         self.redis_version = kwargs.get('redis_version', None)
-        self.enable_non_ssl_port = kwargs.get('enable_non_ssl_port', None)
+        self.enable_non_ssl_port = kwargs.get('enable_non_ssl_port', False)
         self.replicas_per_master = kwargs.get('replicas_per_master', None)
         self.replicas_per_primary = kwargs.get('replicas_per_primary', None)
         self.tenant_settings = kwargs.get('tenant_settings', None)
         self.shard_count = kwargs.get('shard_count', None)
         self.minimum_tls_version = kwargs.get('minimum_tls_version', None)
-        self.public_network_access = kwargs.get('public_network_access', None)
+        self.public_network_access = kwargs.get('public_network_access', "Enabled")
+
+
+class RedisCommonPropertiesRedisConfiguration(msrest.serialization.Model):
+    """All Redis Settings. Few possible keys: rdb-backup-enabled,rdb-storage-connection-string,rdb-backup-frequency,maxmemory-delta,maxmemory-policy,notify-keyspace-events,maxmemory-samples,slowlog-log-slower-than,slowlog-max-len,list-max-ziplist-entries,list-max-ziplist-value,hash-max-ziplist-entries,hash-max-ziplist-value,set-max-intset-entries,zset-max-ziplist-entries,zset-max-ziplist-value etc.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    :param additional_properties: Unmatched properties from the message are deserialized to this
+     collection.
+    :type additional_properties: dict[str, str]
+    :param rdb_backup_enabled: Specifies whether the rdb backup is enabled.
+    :type rdb_backup_enabled: str
+    :param rdb_backup_frequency: Specifies the frequency for creating rdb backup.
+    :type rdb_backup_frequency: str
+    :param rdb_backup_max_snapshot_count: Specifies the maximum number of snapshots for rdb backup.
+    :type rdb_backup_max_snapshot_count: str
+    :param rdb_storage_connection_string: The storage account connection string for storing rdb
+     file.
+    :type rdb_storage_connection_string: str
+    :param aof_storage_connection_string0: First storage account connection string.
+    :type aof_storage_connection_string0: str
+    :param aof_storage_connection_string1: Second storage account connection string.
+    :type aof_storage_connection_string1: str
+    :param maxfragmentationmemory_reserved: Value in megabytes reserved for fragmentation per
+     shard.
+    :type maxfragmentationmemory_reserved: str
+    :param maxmemory_policy: The eviction strategy used when your data won't fit within its memory
+     limit.
+    :type maxmemory_policy: str
+    :param maxmemory_reserved: Value in megabytes reserved for non-cache usage per shard e.g.
+     failover.
+    :type maxmemory_reserved: str
+    :param maxmemory_delta: Value in megabytes reserved for non-cache usage per shard e.g.
+     failover.
+    :type maxmemory_delta: str
+    :ivar maxclients: The max clients config.
+    :vartype maxclients: str
+    """
+
+    _validation = {
+        'maxclients': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'additional_properties': {'key': '', 'type': '{str}'},
+        'rdb_backup_enabled': {'key': 'rdb-backup-enabled', 'type': 'str'},
+        'rdb_backup_frequency': {'key': 'rdb-backup-frequency', 'type': 'str'},
+        'rdb_backup_max_snapshot_count': {'key': 'rdb-backup-max-snapshot-count', 'type': 'str'},
+        'rdb_storage_connection_string': {'key': 'rdb-storage-connection-string', 'type': 'str'},
+        'aof_storage_connection_string0': {'key': 'aof-storage-connection-string-0', 'type': 'str'},
+        'aof_storage_connection_string1': {'key': 'aof-storage-connection-string-1', 'type': 'str'},
+        'maxfragmentationmemory_reserved': {'key': 'maxfragmentationmemory-reserved', 'type': 'str'},
+        'maxmemory_policy': {'key': 'maxmemory-policy', 'type': 'str'},
+        'maxmemory_reserved': {'key': 'maxmemory-reserved', 'type': 'str'},
+        'maxmemory_delta': {'key': 'maxmemory-delta', 'type': 'str'},
+        'maxclients': {'key': 'maxclients', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        super(RedisCommonPropertiesRedisConfiguration, self).__init__(**kwargs)
+        self.additional_properties = kwargs.get('additional_properties', None)
+        self.rdb_backup_enabled = kwargs.get('rdb_backup_enabled', None)
+        self.rdb_backup_frequency = kwargs.get('rdb_backup_frequency', None)
+        self.rdb_backup_max_snapshot_count = kwargs.get('rdb_backup_max_snapshot_count', None)
+        self.rdb_storage_connection_string = kwargs.get('rdb_storage_connection_string', None)
+        self.aof_storage_connection_string0 = kwargs.get('aof_storage_connection_string0', None)
+        self.aof_storage_connection_string1 = kwargs.get('aof_storage_connection_string1', None)
+        self.maxfragmentationmemory_reserved = kwargs.get('maxfragmentationmemory_reserved', None)
+        self.maxmemory_policy = kwargs.get('maxmemory_policy', None)
+        self.maxmemory_reserved = kwargs.get('maxmemory_reserved', None)
+        self.maxmemory_delta = kwargs.get('maxmemory_delta', None)
+        self.maxclients = None
 
 
 class RedisCreateParameters(msrest.serialization.Model):
@@ -676,7 +751,7 @@ class RedisCreateParameters(msrest.serialization.Model):
     :param redis_configuration: All Redis Settings. Few possible keys:
      rdb-backup-enabled,rdb-storage-connection-string,rdb-backup-frequency,maxmemory-delta,maxmemory-policy,notify-keyspace-events,maxmemory-samples,slowlog-log-slower-than,slowlog-max-len,list-max-ziplist-entries,list-max-ziplist-value,hash-max-ziplist-entries,hash-max-ziplist-value,set-max-intset-entries,zset-max-ziplist-entries,zset-max-ziplist-value
      etc.
-    :type redis_configuration: dict[str, str]
+    :type redis_configuration: ~azure.mgmt.redis.models.RedisCommonPropertiesRedisConfiguration
     :param redis_version: Redis version. Only major version will be used in PUT/PATCH request with
      current valid values: (4, 6).
     :type redis_version: str
@@ -696,7 +771,7 @@ class RedisCreateParameters(msrest.serialization.Model):
     :param public_network_access: Whether or not public endpoint access is allowed for this cache.
      Value is optional but if passed in, must be 'Enabled' or 'Disabled'. If 'Disabled', private
      endpoints are the exclusive access method. Default value is 'Enabled'. Possible values include:
-     "Enabled", "Disabled".
+     "Enabled", "Disabled". Default value: "Enabled".
     :type public_network_access: str or ~azure.mgmt.redis.models.PublicNetworkAccess
     :param sku: Required. The SKU of the Redis cache to deploy.
     :type sku: ~azure.mgmt.redis.models.Sku
@@ -704,8 +779,8 @@ class RedisCreateParameters(msrest.serialization.Model):
      cache in. Example format:
      /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/Microsoft.{Network|ClassicNetwork}/VirtualNetworks/vnet1/subnets/subnet1.
     :type subnet_id: str
-    :param static_ip: Static IP address. Required when deploying a Redis cache inside an existing
-     Azure Virtual Network.
+    :param static_ip: Static IP address. Optionally, may be specified when deploying a Redis cache
+     inside an existing Azure Virtual Network; auto assigned by default.
     :type static_ip: str
     """
 
@@ -720,7 +795,7 @@ class RedisCreateParameters(msrest.serialization.Model):
         'zones': {'key': 'zones', 'type': '[str]'},
         'location': {'key': 'location', 'type': 'str'},
         'tags': {'key': 'tags', 'type': '{str}'},
-        'redis_configuration': {'key': 'properties.redisConfiguration', 'type': '{str}'},
+        'redis_configuration': {'key': 'properties.redisConfiguration', 'type': 'RedisCommonPropertiesRedisConfiguration'},
         'redis_version': {'key': 'properties.redisVersion', 'type': 'str'},
         'enable_non_ssl_port': {'key': 'properties.enableNonSslPort', 'type': 'bool'},
         'replicas_per_master': {'key': 'properties.replicasPerMaster', 'type': 'int'},
@@ -744,13 +819,13 @@ class RedisCreateParameters(msrest.serialization.Model):
         self.tags = kwargs.get('tags', None)
         self.redis_configuration = kwargs.get('redis_configuration', None)
         self.redis_version = kwargs.get('redis_version', None)
-        self.enable_non_ssl_port = kwargs.get('enable_non_ssl_port', None)
+        self.enable_non_ssl_port = kwargs.get('enable_non_ssl_port', False)
         self.replicas_per_master = kwargs.get('replicas_per_master', None)
         self.replicas_per_primary = kwargs.get('replicas_per_primary', None)
         self.tenant_settings = kwargs.get('tenant_settings', None)
         self.shard_count = kwargs.get('shard_count', None)
         self.minimum_tls_version = kwargs.get('minimum_tls_version', None)
-        self.public_network_access = kwargs.get('public_network_access', None)
+        self.public_network_access = kwargs.get('public_network_access', "Enabled")
         self.sku = kwargs['sku']
         self.subnet_id = kwargs.get('subnet_id', None)
         self.static_ip = kwargs.get('static_ip', None)
@@ -764,7 +839,7 @@ class RedisCreateProperties(RedisCommonProperties):
     :param redis_configuration: All Redis Settings. Few possible keys:
      rdb-backup-enabled,rdb-storage-connection-string,rdb-backup-frequency,maxmemory-delta,maxmemory-policy,notify-keyspace-events,maxmemory-samples,slowlog-log-slower-than,slowlog-max-len,list-max-ziplist-entries,list-max-ziplist-value,hash-max-ziplist-entries,hash-max-ziplist-value,set-max-intset-entries,zset-max-ziplist-entries,zset-max-ziplist-value
      etc.
-    :type redis_configuration: dict[str, str]
+    :type redis_configuration: ~azure.mgmt.redis.models.RedisCommonPropertiesRedisConfiguration
     :param redis_version: Redis version. Only major version will be used in PUT/PATCH request with
      current valid values: (4, 6).
     :type redis_version: str
@@ -784,7 +859,7 @@ class RedisCreateProperties(RedisCommonProperties):
     :param public_network_access: Whether or not public endpoint access is allowed for this cache.
      Value is optional but if passed in, must be 'Enabled' or 'Disabled'. If 'Disabled', private
      endpoints are the exclusive access method. Default value is 'Enabled'. Possible values include:
-     "Enabled", "Disabled".
+     "Enabled", "Disabled". Default value: "Enabled".
     :type public_network_access: str or ~azure.mgmt.redis.models.PublicNetworkAccess
     :param sku: Required. The SKU of the Redis cache to deploy.
     :type sku: ~azure.mgmt.redis.models.Sku
@@ -792,8 +867,8 @@ class RedisCreateProperties(RedisCommonProperties):
      cache in. Example format:
      /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/Microsoft.{Network|ClassicNetwork}/VirtualNetworks/vnet1/subnets/subnet1.
     :type subnet_id: str
-    :param static_ip: Static IP address. Required when deploying a Redis cache inside an existing
-     Azure Virtual Network.
+    :param static_ip: Static IP address. Optionally, may be specified when deploying a Redis cache
+     inside an existing Azure Virtual Network; auto assigned by default.
     :type static_ip: str
     """
 
@@ -804,7 +879,7 @@ class RedisCreateProperties(RedisCommonProperties):
     }
 
     _attribute_map = {
-        'redis_configuration': {'key': 'redisConfiguration', 'type': '{str}'},
+        'redis_configuration': {'key': 'redisConfiguration', 'type': 'RedisCommonPropertiesRedisConfiguration'},
         'redis_version': {'key': 'redisVersion', 'type': 'str'},
         'enable_non_ssl_port': {'key': 'enableNonSslPort', 'type': 'bool'},
         'replicas_per_master': {'key': 'replicasPerMaster', 'type': 'int'},
@@ -1349,7 +1424,7 @@ class RedisProperties(RedisCreateProperties):
     :param redis_configuration: All Redis Settings. Few possible keys:
      rdb-backup-enabled,rdb-storage-connection-string,rdb-backup-frequency,maxmemory-delta,maxmemory-policy,notify-keyspace-events,maxmemory-samples,slowlog-log-slower-than,slowlog-max-len,list-max-ziplist-entries,list-max-ziplist-value,hash-max-ziplist-entries,hash-max-ziplist-value,set-max-intset-entries,zset-max-ziplist-entries,zset-max-ziplist-value
      etc.
-    :type redis_configuration: dict[str, str]
+    :type redis_configuration: ~azure.mgmt.redis.models.RedisCommonPropertiesRedisConfiguration
     :param redis_version: Redis version. Only major version will be used in PUT/PATCH request with
      current valid values: (4, 6).
     :type redis_version: str
@@ -1369,7 +1444,7 @@ class RedisProperties(RedisCreateProperties):
     :param public_network_access: Whether or not public endpoint access is allowed for this cache.
      Value is optional but if passed in, must be 'Enabled' or 'Disabled'. If 'Disabled', private
      endpoints are the exclusive access method. Default value is 'Enabled'. Possible values include:
-     "Enabled", "Disabled".
+     "Enabled", "Disabled". Default value: "Enabled".
     :type public_network_access: str or ~azure.mgmt.redis.models.PublicNetworkAccess
     :param sku: Required. The SKU of the Redis cache to deploy.
     :type sku: ~azure.mgmt.redis.models.Sku
@@ -1377,8 +1452,8 @@ class RedisProperties(RedisCreateProperties):
      cache in. Example format:
      /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/Microsoft.{Network|ClassicNetwork}/VirtualNetworks/vnet1/subnets/subnet1.
     :type subnet_id: str
-    :param static_ip: Static IP address. Required when deploying a Redis cache inside an existing
-     Azure Virtual Network.
+    :param static_ip: Static IP address. Optionally, may be specified when deploying a Redis cache
+     inside an existing Azure Virtual Network; auto assigned by default.
     :type static_ip: str
     :ivar provisioning_state: Redis instance provisioning status. Possible values include:
      "Creating", "Deleting", "Disabled", "Failed", "Linking", "Provisioning",
@@ -1417,7 +1492,7 @@ class RedisProperties(RedisCreateProperties):
     }
 
     _attribute_map = {
-        'redis_configuration': {'key': 'redisConfiguration', 'type': '{str}'},
+        'redis_configuration': {'key': 'redisConfiguration', 'type': 'RedisCommonPropertiesRedisConfiguration'},
         'redis_version': {'key': 'redisVersion', 'type': 'str'},
         'enable_non_ssl_port': {'key': 'enableNonSslPort', 'type': 'bool'},
         'replicas_per_master': {'key': 'replicasPerMaster', 'type': 'int'},
@@ -1578,7 +1653,7 @@ class RedisResource(TrackedResource):
     :param redis_configuration: All Redis Settings. Few possible keys:
      rdb-backup-enabled,rdb-storage-connection-string,rdb-backup-frequency,maxmemory-delta,maxmemory-policy,notify-keyspace-events,maxmemory-samples,slowlog-log-slower-than,slowlog-max-len,list-max-ziplist-entries,list-max-ziplist-value,hash-max-ziplist-entries,hash-max-ziplist-value,set-max-intset-entries,zset-max-ziplist-entries,zset-max-ziplist-value
      etc.
-    :type redis_configuration: dict[str, str]
+    :type redis_configuration: ~azure.mgmt.redis.models.RedisCommonPropertiesRedisConfiguration
     :param redis_version: Redis version. Only major version will be used in PUT/PATCH request with
      current valid values: (4, 6).
     :type redis_version: str
@@ -1598,7 +1673,7 @@ class RedisResource(TrackedResource):
     :param public_network_access: Whether or not public endpoint access is allowed for this cache.
      Value is optional but if passed in, must be 'Enabled' or 'Disabled'. If 'Disabled', private
      endpoints are the exclusive access method. Default value is 'Enabled'. Possible values include:
-     "Enabled", "Disabled".
+     "Enabled", "Disabled". Default value: "Enabled".
     :type public_network_access: str or ~azure.mgmt.redis.models.PublicNetworkAccess
     :param sku: Required. The SKU of the Redis cache to deploy.
     :type sku: ~azure.mgmt.redis.models.Sku
@@ -1606,8 +1681,8 @@ class RedisResource(TrackedResource):
      cache in. Example format:
      /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/Microsoft.{Network|ClassicNetwork}/VirtualNetworks/vnet1/subnets/subnet1.
     :type subnet_id: str
-    :param static_ip: Static IP address. Required when deploying a Redis cache inside an existing
-     Azure Virtual Network.
+    :param static_ip: Static IP address. Optionally, may be specified when deploying a Redis cache
+     inside an existing Azure Virtual Network; auto assigned by default.
     :type static_ip: str
     :ivar provisioning_state: Redis instance provisioning status. Possible values include:
      "Creating", "Deleting", "Disabled", "Failed", "Linking", "Provisioning",
@@ -1656,7 +1731,7 @@ class RedisResource(TrackedResource):
         'tags': {'key': 'tags', 'type': '{str}'},
         'location': {'key': 'location', 'type': 'str'},
         'zones': {'key': 'zones', 'type': '[str]'},
-        'redis_configuration': {'key': 'properties.redisConfiguration', 'type': '{str}'},
+        'redis_configuration': {'key': 'properties.redisConfiguration', 'type': 'RedisCommonPropertiesRedisConfiguration'},
         'redis_version': {'key': 'properties.redisVersion', 'type': 'str'},
         'enable_non_ssl_port': {'key': 'properties.enableNonSslPort', 'type': 'bool'},
         'replicas_per_master': {'key': 'properties.replicasPerMaster', 'type': 'int'},
@@ -1686,13 +1761,13 @@ class RedisResource(TrackedResource):
         self.zones = kwargs.get('zones', None)
         self.redis_configuration = kwargs.get('redis_configuration', None)
         self.redis_version = kwargs.get('redis_version', None)
-        self.enable_non_ssl_port = kwargs.get('enable_non_ssl_port', None)
+        self.enable_non_ssl_port = kwargs.get('enable_non_ssl_port', False)
         self.replicas_per_master = kwargs.get('replicas_per_master', None)
         self.replicas_per_primary = kwargs.get('replicas_per_primary', None)
         self.tenant_settings = kwargs.get('tenant_settings', None)
         self.shard_count = kwargs.get('shard_count', None)
         self.minimum_tls_version = kwargs.get('minimum_tls_version', None)
-        self.public_network_access = kwargs.get('public_network_access', None)
+        self.public_network_access = kwargs.get('public_network_access', "Enabled")
         self.sku = kwargs['sku']
         self.subnet_id = kwargs.get('subnet_id', None)
         self.static_ip = kwargs.get('static_ip', None)
@@ -1714,7 +1789,7 @@ class RedisUpdateParameters(msrest.serialization.Model):
     :param redis_configuration: All Redis Settings. Few possible keys:
      rdb-backup-enabled,rdb-storage-connection-string,rdb-backup-frequency,maxmemory-delta,maxmemory-policy,notify-keyspace-events,maxmemory-samples,slowlog-log-slower-than,slowlog-max-len,list-max-ziplist-entries,list-max-ziplist-value,hash-max-ziplist-entries,hash-max-ziplist-value,set-max-intset-entries,zset-max-ziplist-entries,zset-max-ziplist-value
      etc.
-    :type redis_configuration: dict[str, str]
+    :type redis_configuration: ~azure.mgmt.redis.models.RedisCommonPropertiesRedisConfiguration
     :param redis_version: Redis version. Only major version will be used in PUT/PATCH request with
      current valid values: (4, 6).
     :type redis_version: str
@@ -1734,7 +1809,7 @@ class RedisUpdateParameters(msrest.serialization.Model):
     :param public_network_access: Whether or not public endpoint access is allowed for this cache.
      Value is optional but if passed in, must be 'Enabled' or 'Disabled'. If 'Disabled', private
      endpoints are the exclusive access method. Default value is 'Enabled'. Possible values include:
-     "Enabled", "Disabled".
+     "Enabled", "Disabled". Default value: "Enabled".
     :type public_network_access: str or ~azure.mgmt.redis.models.PublicNetworkAccess
     :param sku: The SKU of the Redis cache to deploy.
     :type sku: ~azure.mgmt.redis.models.Sku
@@ -1742,7 +1817,7 @@ class RedisUpdateParameters(msrest.serialization.Model):
 
     _attribute_map = {
         'tags': {'key': 'tags', 'type': '{str}'},
-        'redis_configuration': {'key': 'properties.redisConfiguration', 'type': '{str}'},
+        'redis_configuration': {'key': 'properties.redisConfiguration', 'type': 'RedisCommonPropertiesRedisConfiguration'},
         'redis_version': {'key': 'properties.redisVersion', 'type': 'str'},
         'enable_non_ssl_port': {'key': 'properties.enableNonSslPort', 'type': 'bool'},
         'replicas_per_master': {'key': 'properties.replicasPerMaster', 'type': 'int'},
@@ -1762,13 +1837,13 @@ class RedisUpdateParameters(msrest.serialization.Model):
         self.tags = kwargs.get('tags', None)
         self.redis_configuration = kwargs.get('redis_configuration', None)
         self.redis_version = kwargs.get('redis_version', None)
-        self.enable_non_ssl_port = kwargs.get('enable_non_ssl_port', None)
+        self.enable_non_ssl_port = kwargs.get('enable_non_ssl_port', False)
         self.replicas_per_master = kwargs.get('replicas_per_master', None)
         self.replicas_per_primary = kwargs.get('replicas_per_primary', None)
         self.tenant_settings = kwargs.get('tenant_settings', None)
         self.shard_count = kwargs.get('shard_count', None)
         self.minimum_tls_version = kwargs.get('minimum_tls_version', None)
-        self.public_network_access = kwargs.get('public_network_access', None)
+        self.public_network_access = kwargs.get('public_network_access', "Enabled")
         self.sku = kwargs.get('sku', None)
 
 
@@ -1778,7 +1853,7 @@ class RedisUpdateProperties(RedisCommonProperties):
     :param redis_configuration: All Redis Settings. Few possible keys:
      rdb-backup-enabled,rdb-storage-connection-string,rdb-backup-frequency,maxmemory-delta,maxmemory-policy,notify-keyspace-events,maxmemory-samples,slowlog-log-slower-than,slowlog-max-len,list-max-ziplist-entries,list-max-ziplist-value,hash-max-ziplist-entries,hash-max-ziplist-value,set-max-intset-entries,zset-max-ziplist-entries,zset-max-ziplist-value
      etc.
-    :type redis_configuration: dict[str, str]
+    :type redis_configuration: ~azure.mgmt.redis.models.RedisCommonPropertiesRedisConfiguration
     :param redis_version: Redis version. Only major version will be used in PUT/PATCH request with
      current valid values: (4, 6).
     :type redis_version: str
@@ -1798,14 +1873,14 @@ class RedisUpdateProperties(RedisCommonProperties):
     :param public_network_access: Whether or not public endpoint access is allowed for this cache.
      Value is optional but if passed in, must be 'Enabled' or 'Disabled'. If 'Disabled', private
      endpoints are the exclusive access method. Default value is 'Enabled'. Possible values include:
-     "Enabled", "Disabled".
+     "Enabled", "Disabled". Default value: "Enabled".
     :type public_network_access: str or ~azure.mgmt.redis.models.PublicNetworkAccess
     :param sku: The SKU of the Redis cache to deploy.
     :type sku: ~azure.mgmt.redis.models.Sku
     """
 
     _attribute_map = {
-        'redis_configuration': {'key': 'redisConfiguration', 'type': '{str}'},
+        'redis_configuration': {'key': 'redisConfiguration', 'type': 'RedisCommonPropertiesRedisConfiguration'},
         'redis_version': {'key': 'redisVersion', 'type': 'str'},
         'enable_non_ssl_port': {'key': 'enableNonSslPort', 'type': 'bool'},
         'replicas_per_master': {'key': 'replicasPerMaster', 'type': 'int'},
