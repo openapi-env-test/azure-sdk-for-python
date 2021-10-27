@@ -207,10 +207,3 @@ class StoragePermissions(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
     LISTSAS = "listsas"
     GETSAS = "getsas"
     DELETESAS = "deletesas"
-
-class VaultProvisioningState(with_metaclass(_CaseInsensitiveEnumMeta, str, Enum)):
-    """Provisioning state of the vault.
-    """
-
-    SUCCEEDED = "Succeeded"
-    REGISTERING_DNS = "RegisteringDns"

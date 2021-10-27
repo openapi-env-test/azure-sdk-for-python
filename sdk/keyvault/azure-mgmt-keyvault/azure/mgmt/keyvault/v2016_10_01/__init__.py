@@ -7,9 +7,6 @@
 # --------------------------------------------------------------------------
 
 from ._key_vault_management_client import KeyVaultManagementClient
-from ._version import VERSION
-
-__version__ = VERSION
 __all__ = ['KeyVaultManagementClient']
 
 try:

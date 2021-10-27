@@ -426,7 +426,7 @@ class ManagedHsmsOperations(object):
         name,  # type: str
         **kwargs  # type: Any
     ):
-        # type: (...) -> Optional["_models.ManagedHsm"]
+        # type: (...) -> "_models.ManagedHsm"
         """Gets the specified managed HSM Pool.
 
         :param resource_group_name: Name of the resource group that contains the managed HSM pool.
@@ -435,10 +435,10 @@ class ManagedHsmsOperations(object):
         :type name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: ManagedHsm, or the result of cls(response)
-        :rtype: ~azure.mgmt.keyvault.v2020_04_01_preview.models.ManagedHsm or None
+        :rtype: ~azure.mgmt.keyvault.v2020_04_01_preview.models.ManagedHsm
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.ManagedHsm"]]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ManagedHsm"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -467,14 +467,12 @@ class ManagedHsmsOperations(object):
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
-        if response.status_code not in [200, 202, 204]:
+        if response.status_code not in [200]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
             error = self._deserialize.failsafe_deserialize(_models.ManagedHsmError, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
-        deserialized = None
-        if response.status_code == 200:
-            deserialized = self._deserialize('ManagedHsm', pipeline_response)
+        deserialized = self._deserialize('ManagedHsm', pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})

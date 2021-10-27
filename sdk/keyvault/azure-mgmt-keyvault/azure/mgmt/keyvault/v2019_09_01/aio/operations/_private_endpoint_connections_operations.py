@@ -48,7 +48,7 @@ class PrivateEndpointConnectionsOperations:
         vault_name: str,
         private_endpoint_connection_name: str,
         **kwargs: Any
-    ) -> Optional["_models.PrivateEndpointConnection"]:
+    ) -> "_models.PrivateEndpointConnection":
         """Gets the specified private endpoint connection associated with the key vault.
 
         :param resource_group_name: Name of the resource group that contains the key vault.
@@ -60,10 +60,10 @@ class PrivateEndpointConnectionsOperations:
         :type private_endpoint_connection_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: PrivateEndpointConnection, or the result of cls(response)
-        :rtype: ~azure.mgmt.keyvault.v2019_09_01.models.PrivateEndpointConnection or None
+        :rtype: ~azure.mgmt.keyvault.v2019_09_01.models.PrivateEndpointConnection
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.PrivateEndpointConnection"]]
+        cls = kwargs.pop('cls', None)  # type: ClsType["_models.PrivateEndpointConnection"]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -93,13 +93,11 @@ class PrivateEndpointConnectionsOperations:
         pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
-        if response.status_code not in [200, 204]:
+        if response.status_code not in [200]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
-        deserialized = None
-        if response.status_code == 200:
-            deserialized = self._deserialize('PrivateEndpointConnection', pipeline_response)
+        deserialized = self._deserialize('PrivateEndpointConnection', pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})

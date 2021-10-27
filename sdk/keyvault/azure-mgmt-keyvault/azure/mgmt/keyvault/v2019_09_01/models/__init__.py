@@ -14,7 +14,6 @@ try:
     from ._models_py3 import DeletedVault
     from ._models_py3 import DeletedVaultListResult
     from ._models_py3 import DeletedVaultProperties
-    from ._models_py3 import DimensionProperties
     from ._models_py3 import IPRule
     from ._models_py3 import Key
     from ._models_py3 import KeyAttributes
@@ -22,7 +21,6 @@ try:
     from ._models_py3 import KeyListResult
     from ._models_py3 import KeyProperties
     from ._models_py3 import LogSpecification
-    from ._models_py3 import MetricSpecification
     from ._models_py3 import NetworkRuleSet
     from ._models_py3 import Operation
     from ._models_py3 import OperationDisplay
@@ -56,7 +54,6 @@ except (SyntaxError, ImportError):
     from ._models import DeletedVault  # type: ignore
     from ._models import DeletedVaultListResult  # type: ignore
     from ._models import DeletedVaultProperties  # type: ignore
-    from ._models import DimensionProperties  # type: ignore
     from ._models import IPRule  # type: ignore
     from ._models import Key  # type: ignore
     from ._models import KeyAttributes  # type: ignore
@@ -64,7 +61,6 @@ except (SyntaxError, ImportError):
     from ._models import KeyListResult  # type: ignore
     from ._models import KeyProperties  # type: ignore
     from ._models import LogSpecification  # type: ignore
-    from ._models import MetricSpecification  # type: ignore
     from ._models import NetworkRuleSet  # type: ignore
     from ._models import Operation  # type: ignore
     from ._models import OperationDisplay  # type: ignore
@@ -109,7 +105,6 @@ from ._key_vault_management_client_enums import (
     SkuFamily,
     SkuName,
     StoragePermissions,
-    VaultProvisioningState,
 )
 
 __all__ = [
@@ -120,7 +115,6 @@ __all__ = [
     'DeletedVault',
     'DeletedVaultListResult',
     'DeletedVaultProperties',
-    'DimensionProperties',
     'IPRule',
     'Key',
     'KeyAttributes',
@@ -128,7 +122,6 @@ __all__ = [
     'KeyListResult',
     'KeyProperties',
     'LogSpecification',
-    'MetricSpecification',
     'NetworkRuleSet',
     'Operation',
     'OperationDisplay',
@@ -171,5 +164,4 @@ __all__ = [
     'SkuFamily',
     'SkuName',
     'StoragePermissions',
-    'VaultProvisioningState',
 ]

@@ -55,7 +55,7 @@ class VaultsOperations:
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2020-04-01-preview"
+        api_version = "2019-09-01"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"
 
@@ -196,7 +196,7 @@ class VaultsOperations:
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2020-04-01-preview"
+        api_version = "2019-09-01"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"
 
@@ -263,8 +263,7 @@ class VaultsOperations:
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2020-04-01-preview"
-        accept = "application/json"
+        api_version = "2019-09-01"
 
         # Construct URL
         url = self.delete.metadata['url']  # type: ignore
@@ -281,7 +280,6 @@ class VaultsOperations:
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
-        header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
 
         request = self._client.delete(url, query_parameters, header_parameters)
         pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
@@ -318,7 +316,7 @@ class VaultsOperations:
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2020-04-01-preview"
+        api_version = "2019-09-01"
         accept = "application/json"
 
         # Construct URL
@@ -382,7 +380,7 @@ class VaultsOperations:
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2020-04-01-preview"
+        api_version = "2019-09-01"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"
 
@@ -451,7 +449,7 @@ class VaultsOperations:
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2020-04-01-preview"
+        api_version = "2019-09-01"
         accept = "application/json"
 
         def prepare_request(next_link=None):
@@ -523,7 +521,7 @@ class VaultsOperations:
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2020-04-01-preview"
+        api_version = "2019-09-01"
         accept = "application/json"
 
         def prepare_request(next_link=None):
@@ -591,7 +589,7 @@ class VaultsOperations:
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2020-04-01-preview"
+        api_version = "2019-09-01"
         accept = "application/json"
 
         def prepare_request(next_link=None):
@@ -663,7 +661,7 @@ class VaultsOperations:
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2020-04-01-preview"
+        api_version = "2019-09-01"
         accept = "application/json"
 
         # Construct URL
@@ -710,8 +708,7 @@ class VaultsOperations:
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2020-04-01-preview"
-        accept = "application/json"
+        api_version = "2019-09-01"
 
         # Construct URL
         url = self._purge_deleted_initial.metadata['url']  # type: ignore
@@ -728,7 +725,6 @@ class VaultsOperations:
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
-        header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
 
         request = self._client.post(url, query_parameters, header_parameters)
         pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
@@ -899,7 +895,7 @@ class VaultsOperations:
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
-        api_version = "2020-04-01-preview"
+        api_version = "2019-09-01"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"
 
