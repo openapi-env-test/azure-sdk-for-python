@@ -30,6 +30,8 @@ class AccessUri(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        """
         super(AccessUri, self).__init__(**kwargs)
         self.access_sas = None
 
@@ -39,21 +41,21 @@ class CreationData(msrest.serialization.Model):
 
     All required parameters must be populated in order to send to Azure.
 
-    :param create_option: Required. This enumerates the possible sources of a disk's creation.
+    :ivar create_option: Required. This enumerates the possible sources of a disk's creation.
      Possible values include: "Empty", "Attach", "FromImage", "Import", "Copy", "Restore", "Upload".
-    :type create_option: str or ~azure.mgmt.compute.v2018_09_30.models.DiskCreateOption
-    :param storage_account_id: If createOption is Import, the Azure Resource Manager identifier of
+    :vartype create_option: str or ~azure.mgmt.compute.v2018_09_30.models.DiskCreateOption
+    :ivar storage_account_id: If createOption is Import, the Azure Resource Manager identifier of
      the storage account containing the blob to import as a disk. Required only if the blob is in a
      different subscription.
-    :type storage_account_id: str
-    :param image_reference: Disk source information.
-    :type image_reference: ~azure.mgmt.compute.v2018_09_30.models.ImageDiskReference
-    :param source_uri: If createOption is Import, this is the URI of a blob to be imported into a
+    :vartype storage_account_id: str
+    :ivar image_reference: Disk source information.
+    :vartype image_reference: ~azure.mgmt.compute.v2018_09_30.models.ImageDiskReference
+    :ivar source_uri: If createOption is Import, this is the URI of a blob to be imported into a
      managed disk.
-    :type source_uri: str
-    :param source_resource_id: If createOption is Copy, this is the ARM id of the source snapshot
-     or disk.
-    :type source_resource_id: str
+    :vartype source_uri: str
+    :ivar source_resource_id: If createOption is Copy, this is the ARM id of the source snapshot or
+     disk.
+    :vartype source_resource_id: str
     """
 
     _validation = {
@@ -72,6 +74,23 @@ class CreationData(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword create_option: Required. This enumerates the possible sources of a disk's creation.
+         Possible values include: "Empty", "Attach", "FromImage", "Import", "Copy", "Restore", "Upload".
+        :paramtype create_option: str or ~azure.mgmt.compute.v2018_09_30.models.DiskCreateOption
+        :keyword storage_account_id: If createOption is Import, the Azure Resource Manager identifier
+         of the storage account containing the blob to import as a disk. Required only if the blob is in
+         a different subscription.
+        :paramtype storage_account_id: str
+        :keyword image_reference: Disk source information.
+        :paramtype image_reference: ~azure.mgmt.compute.v2018_09_30.models.ImageDiskReference
+        :keyword source_uri: If createOption is Import, this is the URI of a blob to be imported into a
+         managed disk.
+        :paramtype source_uri: str
+        :keyword source_resource_id: If createOption is Copy, this is the ARM id of the source snapshot
+         or disk.
+        :paramtype source_resource_id: str
+        """
         super(CreationData, self).__init__(**kwargs)
         self.create_option = kwargs['create_option']
         self.storage_account_id = kwargs.get('storage_account_id', None)
@@ -93,10 +112,10 @@ class Resource(msrest.serialization.Model):
     :vartype name: str
     :ivar type: Resource type.
     :vartype type: str
-    :param location: Required. Resource location.
-    :type location: str
-    :param tags: A set of tags. Resource tags.
-    :type tags: dict[str, str]
+    :ivar location: Required. Resource location.
+    :vartype location: str
+    :ivar tags: A set of tags. Resource tags.
+    :vartype tags: dict[str, str]
     """
 
     _validation = {
@@ -118,6 +137,12 @@ class Resource(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword location: Required. Resource location.
+        :paramtype location: str
+        :keyword tags: A set of tags. Resource tags.
+        :paramtype tags: dict[str, str]
+        """
         super(Resource, self).__init__(**kwargs)
         self.id = None
         self.name = None
@@ -139,45 +164,45 @@ class Disk(Resource):
     :vartype name: str
     :ivar type: Resource type.
     :vartype type: str
-    :param location: Required. Resource location.
-    :type location: str
-    :param tags: A set of tags. Resource tags.
-    :type tags: dict[str, str]
+    :ivar location: Required. Resource location.
+    :vartype location: str
+    :ivar tags: A set of tags. Resource tags.
+    :vartype tags: dict[str, str]
     :ivar managed_by: A relative URI containing the ID of the VM that has the disk attached.
     :vartype managed_by: str
-    :param sku: The disks sku name. Can be Standard_LRS, Premium_LRS, StandardSSD_LRS, or
+    :ivar sku: The disks sku name. Can be Standard_LRS, Premium_LRS, StandardSSD_LRS, or
      UltraSSD_LRS.
-    :type sku: ~azure.mgmt.compute.v2018_09_30.models.DiskSku
-    :param zones: The Logical zone list for Disk.
-    :type zones: list[str]
+    :vartype sku: ~azure.mgmt.compute.v2018_09_30.models.DiskSku
+    :ivar zones: The Logical zone list for Disk.
+    :vartype zones: list[str]
     :ivar time_created: The time when the disk was created.
     :vartype time_created: ~datetime.datetime
-    :param os_type: The Operating System type. Possible values include: "Windows", "Linux".
-    :type os_type: str or ~azure.mgmt.compute.v2018_09_30.models.OperatingSystemTypes
-    :param hyper_v_generation: The hypervisor generation of the Virtual Machine. Applicable to OS
+    :ivar os_type: The Operating System type. Possible values include: "Windows", "Linux".
+    :vartype os_type: str or ~azure.mgmt.compute.v2018_09_30.models.OperatingSystemTypes
+    :ivar hyper_v_generation: The hypervisor generation of the Virtual Machine. Applicable to OS
      disks only. Possible values include: "V1", "V2".
-    :type hyper_v_generation: str or ~azure.mgmt.compute.v2018_09_30.models.HyperVGeneration
-    :param creation_data: Disk source information. CreationData information cannot be changed after
+    :vartype hyper_v_generation: str or ~azure.mgmt.compute.v2018_09_30.models.HyperVGeneration
+    :ivar creation_data: Disk source information. CreationData information cannot be changed after
      the disk has been created.
-    :type creation_data: ~azure.mgmt.compute.v2018_09_30.models.CreationData
-    :param disk_size_gb: If creationData.createOption is Empty, this field is mandatory and it
+    :vartype creation_data: ~azure.mgmt.compute.v2018_09_30.models.CreationData
+    :ivar disk_size_gb: If creationData.createOption is Empty, this field is mandatory and it
      indicates the size of the VHD to create. If this field is present for updates or creation with
      other options, it indicates a resize. Resizes are only allowed if the disk is not attached to a
      running VM, and can only increase the disk's size.
-    :type disk_size_gb: int
-    :param encryption_settings_collection: Encryption settings collection used for Azure Disk
+    :vartype disk_size_gb: int
+    :ivar encryption_settings_collection: Encryption settings collection used for Azure Disk
      Encryption, can contain multiple encryption settings per disk or snapshot.
-    :type encryption_settings_collection:
+    :vartype encryption_settings_collection:
      ~azure.mgmt.compute.v2018_09_30.models.EncryptionSettingsCollection
     :ivar provisioning_state: The disk provisioning state.
     :vartype provisioning_state: str
-    :param disk_iops_read_write: The number of IOPS allowed for this disk; only settable for
+    :ivar disk_iops_read_write: The number of IOPS allowed for this disk; only settable for
      UltraSSD disks. One operation can transfer between 4k and 256k bytes.
-    :type disk_iops_read_write: long
-    :param disk_m_bps_read_write: The bandwidth allowed for this disk; only settable for UltraSSD
+    :vartype disk_iops_read_write: long
+    :ivar disk_m_bps_read_write: The bandwidth allowed for this disk; only settable for UltraSSD
      disks. MBps means millions of bytes per second - MB here uses the ISO notation, of powers of
      10.
-    :type disk_m_bps_read_write: int
+    :vartype disk_m_bps_read_write: int
     :ivar disk_state: The state of the disk. Possible values include: "Unattached", "Attached",
      "Reserved", "ActiveSAS", "ReadyToUpload", "ActiveUpload".
     :vartype disk_state: str or ~azure.mgmt.compute.v2018_09_30.models.DiskState
@@ -219,6 +244,41 @@ class Disk(Resource):
         self,
         **kwargs
     ):
+        """
+        :keyword location: Required. Resource location.
+        :paramtype location: str
+        :keyword tags: A set of tags. Resource tags.
+        :paramtype tags: dict[str, str]
+        :keyword sku: The disks sku name. Can be Standard_LRS, Premium_LRS, StandardSSD_LRS, or
+         UltraSSD_LRS.
+        :paramtype sku: ~azure.mgmt.compute.v2018_09_30.models.DiskSku
+        :keyword zones: The Logical zone list for Disk.
+        :paramtype zones: list[str]
+        :keyword os_type: The Operating System type. Possible values include: "Windows", "Linux".
+        :paramtype os_type: str or ~azure.mgmt.compute.v2018_09_30.models.OperatingSystemTypes
+        :keyword hyper_v_generation: The hypervisor generation of the Virtual Machine. Applicable to OS
+         disks only. Possible values include: "V1", "V2".
+        :paramtype hyper_v_generation: str or ~azure.mgmt.compute.v2018_09_30.models.HyperVGeneration
+        :keyword creation_data: Disk source information. CreationData information cannot be changed
+         after the disk has been created.
+        :paramtype creation_data: ~azure.mgmt.compute.v2018_09_30.models.CreationData
+        :keyword disk_size_gb: If creationData.createOption is Empty, this field is mandatory and it
+         indicates the size of the VHD to create. If this field is present for updates or creation with
+         other options, it indicates a resize. Resizes are only allowed if the disk is not attached to a
+         running VM, and can only increase the disk's size.
+        :paramtype disk_size_gb: int
+        :keyword encryption_settings_collection: Encryption settings collection used for Azure Disk
+         Encryption, can contain multiple encryption settings per disk or snapshot.
+        :paramtype encryption_settings_collection:
+         ~azure.mgmt.compute.v2018_09_30.models.EncryptionSettingsCollection
+        :keyword disk_iops_read_write: The number of IOPS allowed for this disk; only settable for
+         UltraSSD disks. One operation can transfer between 4k and 256k bytes.
+        :paramtype disk_iops_read_write: long
+        :keyword disk_m_bps_read_write: The bandwidth allowed for this disk; only settable for UltraSSD
+         disks. MBps means millions of bytes per second - MB here uses the ISO notation, of powers of
+         10.
+        :paramtype disk_m_bps_read_write: int
+        """
         super(Disk, self).__init__(**kwargs)
         self.managed_by = None
         self.sku = kwargs.get('sku', None)
@@ -240,11 +300,11 @@ class DiskList(msrest.serialization.Model):
 
     All required parameters must be populated in order to send to Azure.
 
-    :param value: Required. A list of disks.
-    :type value: list[~azure.mgmt.compute.v2018_09_30.models.Disk]
-    :param next_link: The uri to fetch the next page of disks. Call ListNext() with this to fetch
+    :ivar value: Required. A list of disks.
+    :vartype value: list[~azure.mgmt.compute.v2018_09_30.models.Disk]
+    :ivar next_link: The uri to fetch the next page of disks. Call ListNext() with this to fetch
      the next page of disks.
-    :type next_link: str
+    :vartype next_link: str
     """
 
     _validation = {
@@ -260,6 +320,13 @@ class DiskList(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword value: Required. A list of disks.
+        :paramtype value: list[~azure.mgmt.compute.v2018_09_30.models.Disk]
+        :keyword next_link: The uri to fetch the next page of disks. Call ListNext() with this to fetch
+         the next page of disks.
+        :paramtype next_link: str
+        """
         super(DiskList, self).__init__(**kwargs)
         self.value = kwargs['value']
         self.next_link = kwargs.get('next_link', None)
@@ -270,9 +337,9 @@ class DiskSku(msrest.serialization.Model):
 
     Variables are only populated by the server, and will be ignored when sending a request.
 
-    :param name: The sku name. Possible values include: "Standard_LRS", "Premium_LRS",
+    :ivar name: The sku name. Possible values include: "Standard_LRS", "Premium_LRS",
      "StandardSSD_LRS", "UltraSSD_LRS".
-    :type name: str or ~azure.mgmt.compute.v2018_09_30.models.DiskStorageAccountTypes
+    :vartype name: str or ~azure.mgmt.compute.v2018_09_30.models.DiskStorageAccountTypes
     :ivar tier: The sku tier.
     :vartype tier: str
     """
@@ -290,6 +357,11 @@ class DiskSku(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword name: The sku name. Possible values include: "Standard_LRS", "Premium_LRS",
+         "StandardSSD_LRS", "UltraSSD_LRS".
+        :paramtype name: str or ~azure.mgmt.compute.v2018_09_30.models.DiskStorageAccountTypes
+        """
         super(DiskSku, self).__init__(**kwargs)
         self.name = kwargs.get('name', None)
         self.tier = None
@@ -298,29 +370,29 @@ class DiskSku(msrest.serialization.Model):
 class DiskUpdate(msrest.serialization.Model):
     """Disk update resource.
 
-    :param tags: A set of tags. Resource tags.
-    :type tags: dict[str, str]
-    :param sku: The disks sku name. Can be Standard_LRS, Premium_LRS, StandardSSD_LRS, or
+    :ivar tags: A set of tags. Resource tags.
+    :vartype tags: dict[str, str]
+    :ivar sku: The disks sku name. Can be Standard_LRS, Premium_LRS, StandardSSD_LRS, or
      UltraSSD_LRS.
-    :type sku: ~azure.mgmt.compute.v2018_09_30.models.DiskSku
-    :param os_type: the Operating System type. Possible values include: "Windows", "Linux".
-    :type os_type: str or ~azure.mgmt.compute.v2018_09_30.models.OperatingSystemTypes
-    :param disk_size_gb: If creationData.createOption is Empty, this field is mandatory and it
+    :vartype sku: ~azure.mgmt.compute.v2018_09_30.models.DiskSku
+    :ivar os_type: the Operating System type. Possible values include: "Windows", "Linux".
+    :vartype os_type: str or ~azure.mgmt.compute.v2018_09_30.models.OperatingSystemTypes
+    :ivar disk_size_gb: If creationData.createOption is Empty, this field is mandatory and it
      indicates the size of the VHD to create. If this field is present for updates or creation with
      other options, it indicates a resize. Resizes are only allowed if the disk is not attached to a
      running VM, and can only increase the disk's size.
-    :type disk_size_gb: int
-    :param encryption_settings_collection: Encryption settings collection used be Azure Disk
+    :vartype disk_size_gb: int
+    :ivar encryption_settings_collection: Encryption settings collection used be Azure Disk
      Encryption, can contain multiple encryption settings per disk or snapshot.
-    :type encryption_settings_collection:
+    :vartype encryption_settings_collection:
      ~azure.mgmt.compute.v2018_09_30.models.EncryptionSettingsCollection
-    :param disk_iops_read_write: The number of IOPS allowed for this disk; only settable for
+    :ivar disk_iops_read_write: The number of IOPS allowed for this disk; only settable for
      UltraSSD disks. One operation can transfer between 4k and 256k bytes.
-    :type disk_iops_read_write: long
-    :param disk_m_bps_read_write: The bandwidth allowed for this disk; only settable for UltraSSD
+    :vartype disk_iops_read_write: long
+    :ivar disk_m_bps_read_write: The bandwidth allowed for this disk; only settable for UltraSSD
      disks. MBps means millions of bytes per second - MB here uses the ISO notation, of powers of
      10.
-    :type disk_m_bps_read_write: int
+    :vartype disk_m_bps_read_write: int
     """
 
     _attribute_map = {
@@ -337,6 +409,31 @@ class DiskUpdate(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword tags: A set of tags. Resource tags.
+        :paramtype tags: dict[str, str]
+        :keyword sku: The disks sku name. Can be Standard_LRS, Premium_LRS, StandardSSD_LRS, or
+         UltraSSD_LRS.
+        :paramtype sku: ~azure.mgmt.compute.v2018_09_30.models.DiskSku
+        :keyword os_type: the Operating System type. Possible values include: "Windows", "Linux".
+        :paramtype os_type: str or ~azure.mgmt.compute.v2018_09_30.models.OperatingSystemTypes
+        :keyword disk_size_gb: If creationData.createOption is Empty, this field is mandatory and it
+         indicates the size of the VHD to create. If this field is present for updates or creation with
+         other options, it indicates a resize. Resizes are only allowed if the disk is not attached to a
+         running VM, and can only increase the disk's size.
+        :paramtype disk_size_gb: int
+        :keyword encryption_settings_collection: Encryption settings collection used be Azure Disk
+         Encryption, can contain multiple encryption settings per disk or snapshot.
+        :paramtype encryption_settings_collection:
+         ~azure.mgmt.compute.v2018_09_30.models.EncryptionSettingsCollection
+        :keyword disk_iops_read_write: The number of IOPS allowed for this disk; only settable for
+         UltraSSD disks. One operation can transfer between 4k and 256k bytes.
+        :paramtype disk_iops_read_write: long
+        :keyword disk_m_bps_read_write: The bandwidth allowed for this disk; only settable for UltraSSD
+         disks. MBps means millions of bytes per second - MB here uses the ISO notation, of powers of
+         10.
+        :paramtype disk_m_bps_read_write: int
+        """
         super(DiskUpdate, self).__init__(**kwargs)
         self.tags = kwargs.get('tags', None)
         self.sku = kwargs.get('sku', None)
@@ -352,13 +449,13 @@ class EncryptionSettingsCollection(msrest.serialization.Model):
 
     All required parameters must be populated in order to send to Azure.
 
-    :param enabled: Required. Set this flag to true and provide DiskEncryptionKey and optional
+    :ivar enabled: Required. Set this flag to true and provide DiskEncryptionKey and optional
      KeyEncryptionKey to enable encryption. Set this flag to false and remove DiskEncryptionKey and
      KeyEncryptionKey to disable encryption. If EncryptionSettings is null in the request object,
      the existing settings remain unchanged.
-    :type enabled: bool
-    :param encryption_settings: A collection of encryption settings, one for each disk volume.
-    :type encryption_settings:
+    :vartype enabled: bool
+    :ivar encryption_settings: A collection of encryption settings, one for each disk volume.
+    :vartype encryption_settings:
      list[~azure.mgmt.compute.v2018_09_30.models.EncryptionSettingsElement]
     """
 
@@ -375,6 +472,16 @@ class EncryptionSettingsCollection(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword enabled: Required. Set this flag to true and provide DiskEncryptionKey and optional
+         KeyEncryptionKey to enable encryption. Set this flag to false and remove DiskEncryptionKey and
+         KeyEncryptionKey to disable encryption. If EncryptionSettings is null in the request object,
+         the existing settings remain unchanged.
+        :paramtype enabled: bool
+        :keyword encryption_settings: A collection of encryption settings, one for each disk volume.
+        :paramtype encryption_settings:
+         list[~azure.mgmt.compute.v2018_09_30.models.EncryptionSettingsElement]
+        """
         super(EncryptionSettingsCollection, self).__init__(**kwargs)
         self.enabled = kwargs['enabled']
         self.encryption_settings = kwargs.get('encryption_settings', None)
@@ -383,11 +490,11 @@ class EncryptionSettingsCollection(msrest.serialization.Model):
 class EncryptionSettingsElement(msrest.serialization.Model):
     """Encryption settings for one disk volume.
 
-    :param disk_encryption_key: Key Vault Secret Url and vault id of the disk encryption key.
-    :type disk_encryption_key: ~azure.mgmt.compute.v2018_09_30.models.KeyVaultAndSecretReference
-    :param key_encryption_key: Key Vault Key Url and vault id of the key encryption key.
+    :ivar disk_encryption_key: Key Vault Secret Url and vault id of the disk encryption key.
+    :vartype disk_encryption_key: ~azure.mgmt.compute.v2018_09_30.models.KeyVaultAndSecretReference
+    :ivar key_encryption_key: Key Vault Key Url and vault id of the key encryption key.
      KeyEncryptionKey is optional and when provided is used to unwrap the disk encryption key.
-    :type key_encryption_key: ~azure.mgmt.compute.v2018_09_30.models.KeyVaultAndKeyReference
+    :vartype key_encryption_key: ~azure.mgmt.compute.v2018_09_30.models.KeyVaultAndKeyReference
     """
 
     _attribute_map = {
@@ -399,6 +506,14 @@ class EncryptionSettingsElement(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword disk_encryption_key: Key Vault Secret Url and vault id of the disk encryption key.
+        :paramtype disk_encryption_key:
+         ~azure.mgmt.compute.v2018_09_30.models.KeyVaultAndSecretReference
+        :keyword key_encryption_key: Key Vault Key Url and vault id of the key encryption key.
+         KeyEncryptionKey is optional and when provided is used to unwrap the disk encryption key.
+        :paramtype key_encryption_key: ~azure.mgmt.compute.v2018_09_30.models.KeyVaultAndKeyReference
+        """
         super(EncryptionSettingsElement, self).__init__(**kwargs)
         self.disk_encryption_key = kwargs.get('disk_encryption_key', None)
         self.key_encryption_key = kwargs.get('key_encryption_key', None)
@@ -409,10 +524,10 @@ class GrantAccessData(msrest.serialization.Model):
 
     All required parameters must be populated in order to send to Azure.
 
-    :param access: Required.  Possible values include: "None", "Read", "Write".
-    :type access: str or ~azure.mgmt.compute.v2018_09_30.models.AccessLevel
-    :param duration_in_seconds: Required. Time duration in seconds until the SAS access expires.
-    :type duration_in_seconds: int
+    :ivar access: Required. Possible values include: "None", "Read", "Write".
+    :vartype access: str or ~azure.mgmt.compute.v2018_09_30.models.AccessLevel
+    :ivar duration_in_seconds: Required. Time duration in seconds until the SAS access expires.
+    :vartype duration_in_seconds: int
     """
 
     _validation = {
@@ -429,6 +544,12 @@ class GrantAccessData(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword access: Required. Possible values include: "None", "Read", "Write".
+        :paramtype access: str or ~azure.mgmt.compute.v2018_09_30.models.AccessLevel
+        :keyword duration_in_seconds: Required. Time duration in seconds until the SAS access expires.
+        :paramtype duration_in_seconds: int
+        """
         super(GrantAccessData, self).__init__(**kwargs)
         self.access = kwargs['access']
         self.duration_in_seconds = kwargs['duration_in_seconds']
@@ -439,12 +560,12 @@ class ImageDiskReference(msrest.serialization.Model):
 
     All required parameters must be populated in order to send to Azure.
 
-    :param id: Required. A relative uri containing either a Platform Image Repository or user image
+    :ivar id: Required. A relative uri containing either a Platform Image Repository or user image
      reference.
-    :type id: str
-    :param lun: If the disk is created from an image's data disk, this is an index that indicates
+    :vartype id: str
+    :ivar lun: If the disk is created from an image's data disk, this is an index that indicates
      which of the data disks in the image to use. For OS disks, this field is null.
-    :type lun: int
+    :vartype lun: int
     """
 
     _validation = {
@@ -460,6 +581,14 @@ class ImageDiskReference(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword id: Required. A relative uri containing either a Platform Image Repository or user
+         image reference.
+        :paramtype id: str
+        :keyword lun: If the disk is created from an image's data disk, this is an index that indicates
+         which of the data disks in the image to use. For OS disks, this field is null.
+        :paramtype lun: int
+        """
         super(ImageDiskReference, self).__init__(**kwargs)
         self.id = kwargs['id']
         self.lun = kwargs.get('lun', None)
@@ -470,10 +599,10 @@ class KeyVaultAndKeyReference(msrest.serialization.Model):
 
     All required parameters must be populated in order to send to Azure.
 
-    :param source_vault: Required. Resource id of the KeyVault containing the key or secret.
-    :type source_vault: ~azure.mgmt.compute.v2018_09_30.models.SourceVault
-    :param key_url: Required. Url pointing to a key or secret in KeyVault.
-    :type key_url: str
+    :ivar source_vault: Required. Resource id of the KeyVault containing the key or secret.
+    :vartype source_vault: ~azure.mgmt.compute.v2018_09_30.models.SourceVault
+    :ivar key_url: Required. Url pointing to a key or secret in KeyVault.
+    :vartype key_url: str
     """
 
     _validation = {
@@ -490,6 +619,12 @@ class KeyVaultAndKeyReference(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword source_vault: Required. Resource id of the KeyVault containing the key or secret.
+        :paramtype source_vault: ~azure.mgmt.compute.v2018_09_30.models.SourceVault
+        :keyword key_url: Required. Url pointing to a key or secret in KeyVault.
+        :paramtype key_url: str
+        """
         super(KeyVaultAndKeyReference, self).__init__(**kwargs)
         self.source_vault = kwargs['source_vault']
         self.key_url = kwargs['key_url']
@@ -500,10 +635,10 @@ class KeyVaultAndSecretReference(msrest.serialization.Model):
 
     All required parameters must be populated in order to send to Azure.
 
-    :param source_vault: Required. Resource id of the KeyVault containing the key or secret.
-    :type source_vault: ~azure.mgmt.compute.v2018_09_30.models.SourceVault
-    :param secret_url: Required. Url pointing to a key or secret in KeyVault.
-    :type secret_url: str
+    :ivar source_vault: Required. Resource id of the KeyVault containing the key or secret.
+    :vartype source_vault: ~azure.mgmt.compute.v2018_09_30.models.SourceVault
+    :ivar secret_url: Required. Url pointing to a key or secret in KeyVault.
+    :vartype secret_url: str
     """
 
     _validation = {
@@ -520,6 +655,12 @@ class KeyVaultAndSecretReference(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword source_vault: Required. Resource id of the KeyVault containing the key or secret.
+        :paramtype source_vault: ~azure.mgmt.compute.v2018_09_30.models.SourceVault
+        :keyword secret_url: Required. Url pointing to a key or secret in KeyVault.
+        :paramtype secret_url: str
+        """
         super(KeyVaultAndSecretReference, self).__init__(**kwargs)
         self.source_vault = kwargs['source_vault']
         self.secret_url = kwargs['secret_url']
@@ -538,32 +679,32 @@ class Snapshot(Resource):
     :vartype name: str
     :ivar type: Resource type.
     :vartype type: str
-    :param location: Required. Resource location.
-    :type location: str
-    :param tags: A set of tags. Resource tags.
-    :type tags: dict[str, str]
+    :ivar location: Required. Resource location.
+    :vartype location: str
+    :ivar tags: A set of tags. Resource tags.
+    :vartype tags: dict[str, str]
     :ivar managed_by: Unused. Always Null.
     :vartype managed_by: str
-    :param sku: The snapshots sku name. Can be Standard_LRS, Premium_LRS, or Standard_ZRS.
-    :type sku: ~azure.mgmt.compute.v2018_09_30.models.SnapshotSku
+    :ivar sku: The snapshots sku name. Can be Standard_LRS, Premium_LRS, or Standard_ZRS.
+    :vartype sku: ~azure.mgmt.compute.v2018_09_30.models.SnapshotSku
     :ivar time_created: The time when the disk was created.
     :vartype time_created: ~datetime.datetime
-    :param os_type: The Operating System type. Possible values include: "Windows", "Linux".
-    :type os_type: str or ~azure.mgmt.compute.v2018_09_30.models.OperatingSystemTypes
-    :param hyper_v_generation: The hypervisor generation of the Virtual Machine. Applicable to OS
+    :ivar os_type: The Operating System type. Possible values include: "Windows", "Linux".
+    :vartype os_type: str or ~azure.mgmt.compute.v2018_09_30.models.OperatingSystemTypes
+    :ivar hyper_v_generation: The hypervisor generation of the Virtual Machine. Applicable to OS
      disks only. Possible values include: "V1", "V2".
-    :type hyper_v_generation: str or ~azure.mgmt.compute.v2018_09_30.models.HyperVGeneration
-    :param creation_data: Disk source information. CreationData information cannot be changed after
+    :vartype hyper_v_generation: str or ~azure.mgmt.compute.v2018_09_30.models.HyperVGeneration
+    :ivar creation_data: Disk source information. CreationData information cannot be changed after
      the disk has been created.
-    :type creation_data: ~azure.mgmt.compute.v2018_09_30.models.CreationData
-    :param disk_size_gb: If creationData.createOption is Empty, this field is mandatory and it
+    :vartype creation_data: ~azure.mgmt.compute.v2018_09_30.models.CreationData
+    :ivar disk_size_gb: If creationData.createOption is Empty, this field is mandatory and it
      indicates the size of the VHD to create. If this field is present for updates or creation with
      other options, it indicates a resize. Resizes are only allowed if the disk is not attached to a
      running VM, and can only increase the disk's size.
-    :type disk_size_gb: int
-    :param encryption_settings_collection: Encryption settings collection used be Azure Disk
+    :vartype disk_size_gb: int
+    :ivar encryption_settings_collection: Encryption settings collection used be Azure Disk
      Encryption, can contain multiple encryption settings per disk or snapshot.
-    :type encryption_settings_collection:
+    :vartype encryption_settings_collection:
      ~azure.mgmt.compute.v2018_09_30.models.EncryptionSettingsCollection
     :ivar provisioning_state: The disk provisioning state.
     :vartype provisioning_state: str
@@ -600,6 +741,31 @@ class Snapshot(Resource):
         self,
         **kwargs
     ):
+        """
+        :keyword location: Required. Resource location.
+        :paramtype location: str
+        :keyword tags: A set of tags. Resource tags.
+        :paramtype tags: dict[str, str]
+        :keyword sku: The snapshots sku name. Can be Standard_LRS, Premium_LRS, or Standard_ZRS.
+        :paramtype sku: ~azure.mgmt.compute.v2018_09_30.models.SnapshotSku
+        :keyword os_type: The Operating System type. Possible values include: "Windows", "Linux".
+        :paramtype os_type: str or ~azure.mgmt.compute.v2018_09_30.models.OperatingSystemTypes
+        :keyword hyper_v_generation: The hypervisor generation of the Virtual Machine. Applicable to OS
+         disks only. Possible values include: "V1", "V2".
+        :paramtype hyper_v_generation: str or ~azure.mgmt.compute.v2018_09_30.models.HyperVGeneration
+        :keyword creation_data: Disk source information. CreationData information cannot be changed
+         after the disk has been created.
+        :paramtype creation_data: ~azure.mgmt.compute.v2018_09_30.models.CreationData
+        :keyword disk_size_gb: If creationData.createOption is Empty, this field is mandatory and it
+         indicates the size of the VHD to create. If this field is present for updates or creation with
+         other options, it indicates a resize. Resizes are only allowed if the disk is not attached to a
+         running VM, and can only increase the disk's size.
+        :paramtype disk_size_gb: int
+        :keyword encryption_settings_collection: Encryption settings collection used be Azure Disk
+         Encryption, can contain multiple encryption settings per disk or snapshot.
+        :paramtype encryption_settings_collection:
+         ~azure.mgmt.compute.v2018_09_30.models.EncryptionSettingsCollection
+        """
         super(Snapshot, self).__init__(**kwargs)
         self.managed_by = None
         self.sku = kwargs.get('sku', None)
@@ -617,11 +783,11 @@ class SnapshotList(msrest.serialization.Model):
 
     All required parameters must be populated in order to send to Azure.
 
-    :param value: Required. A list of snapshots.
-    :type value: list[~azure.mgmt.compute.v2018_09_30.models.Snapshot]
-    :param next_link: The uri to fetch the next page of snapshots. Call ListNext() with this to
+    :ivar value: Required. A list of snapshots.
+    :vartype value: list[~azure.mgmt.compute.v2018_09_30.models.Snapshot]
+    :ivar next_link: The uri to fetch the next page of snapshots. Call ListNext() with this to
      fetch the next page of snapshots.
-    :type next_link: str
+    :vartype next_link: str
     """
 
     _validation = {
@@ -637,6 +803,13 @@ class SnapshotList(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword value: Required. A list of snapshots.
+        :paramtype value: list[~azure.mgmt.compute.v2018_09_30.models.Snapshot]
+        :keyword next_link: The uri to fetch the next page of snapshots. Call ListNext() with this to
+         fetch the next page of snapshots.
+        :paramtype next_link: str
+        """
         super(SnapshotList, self).__init__(**kwargs)
         self.value = kwargs['value']
         self.next_link = kwargs.get('next_link', None)
@@ -647,9 +820,9 @@ class SnapshotSku(msrest.serialization.Model):
 
     Variables are only populated by the server, and will be ignored when sending a request.
 
-    :param name: The sku name. Possible values include: "Standard_LRS", "Premium_LRS",
+    :ivar name: The sku name. Possible values include: "Standard_LRS", "Premium_LRS",
      "Standard_ZRS".
-    :type name: str or ~azure.mgmt.compute.v2018_09_30.models.SnapshotStorageAccountTypes
+    :vartype name: str or ~azure.mgmt.compute.v2018_09_30.models.SnapshotStorageAccountTypes
     :ivar tier: The sku tier.
     :vartype tier: str
     """
@@ -667,6 +840,11 @@ class SnapshotSku(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword name: The sku name. Possible values include: "Standard_LRS", "Premium_LRS",
+         "Standard_ZRS".
+        :paramtype name: str or ~azure.mgmt.compute.v2018_09_30.models.SnapshotStorageAccountTypes
+        """
         super(SnapshotSku, self).__init__(**kwargs)
         self.name = kwargs.get('name', None)
         self.tier = None
@@ -675,20 +853,20 @@ class SnapshotSku(msrest.serialization.Model):
 class SnapshotUpdate(msrest.serialization.Model):
     """Snapshot update resource.
 
-    :param tags: A set of tags. Resource tags.
-    :type tags: dict[str, str]
-    :param sku: The snapshots sku name. Can be Standard_LRS, Premium_LRS, or Standard_ZRS.
-    :type sku: ~azure.mgmt.compute.v2018_09_30.models.SnapshotSku
-    :param os_type: the Operating System type. Possible values include: "Windows", "Linux".
-    :type os_type: str or ~azure.mgmt.compute.v2018_09_30.models.OperatingSystemTypes
-    :param disk_size_gb: If creationData.createOption is Empty, this field is mandatory and it
+    :ivar tags: A set of tags. Resource tags.
+    :vartype tags: dict[str, str]
+    :ivar sku: The snapshots sku name. Can be Standard_LRS, Premium_LRS, or Standard_ZRS.
+    :vartype sku: ~azure.mgmt.compute.v2018_09_30.models.SnapshotSku
+    :ivar os_type: the Operating System type. Possible values include: "Windows", "Linux".
+    :vartype os_type: str or ~azure.mgmt.compute.v2018_09_30.models.OperatingSystemTypes
+    :ivar disk_size_gb: If creationData.createOption is Empty, this field is mandatory and it
      indicates the size of the VHD to create. If this field is present for updates or creation with
      other options, it indicates a resize. Resizes are only allowed if the disk is not attached to a
      running VM, and can only increase the disk's size.
-    :type disk_size_gb: int
-    :param encryption_settings_collection: Encryption settings collection used be Azure Disk
+    :vartype disk_size_gb: int
+    :ivar encryption_settings_collection: Encryption settings collection used be Azure Disk
      Encryption, can contain multiple encryption settings per disk or snapshot.
-    :type encryption_settings_collection:
+    :vartype encryption_settings_collection:
      ~azure.mgmt.compute.v2018_09_30.models.EncryptionSettingsCollection
     """
 
@@ -704,6 +882,23 @@ class SnapshotUpdate(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword tags: A set of tags. Resource tags.
+        :paramtype tags: dict[str, str]
+        :keyword sku: The snapshots sku name. Can be Standard_LRS, Premium_LRS, or Standard_ZRS.
+        :paramtype sku: ~azure.mgmt.compute.v2018_09_30.models.SnapshotSku
+        :keyword os_type: the Operating System type. Possible values include: "Windows", "Linux".
+        :paramtype os_type: str or ~azure.mgmt.compute.v2018_09_30.models.OperatingSystemTypes
+        :keyword disk_size_gb: If creationData.createOption is Empty, this field is mandatory and it
+         indicates the size of the VHD to create. If this field is present for updates or creation with
+         other options, it indicates a resize. Resizes are only allowed if the disk is not attached to a
+         running VM, and can only increase the disk's size.
+        :paramtype disk_size_gb: int
+        :keyword encryption_settings_collection: Encryption settings collection used be Azure Disk
+         Encryption, can contain multiple encryption settings per disk or snapshot.
+        :paramtype encryption_settings_collection:
+         ~azure.mgmt.compute.v2018_09_30.models.EncryptionSettingsCollection
+        """
         super(SnapshotUpdate, self).__init__(**kwargs)
         self.tags = kwargs.get('tags', None)
         self.sku = kwargs.get('sku', None)
@@ -715,8 +910,8 @@ class SnapshotUpdate(msrest.serialization.Model):
 class SourceVault(msrest.serialization.Model):
     """The vault id is an Azure Resource Manager Resource id in the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}.
 
-    :param id: Resource Id.
-    :type id: str
+    :ivar id: Resource Id.
+    :vartype id: str
     """
 
     _attribute_map = {
@@ -727,5 +922,9 @@ class SourceVault(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword id: Resource Id.
+        :paramtype id: str
+        """
         super(SourceVault, self).__init__(**kwargs)
         self.id = kwargs.get('id', None)
