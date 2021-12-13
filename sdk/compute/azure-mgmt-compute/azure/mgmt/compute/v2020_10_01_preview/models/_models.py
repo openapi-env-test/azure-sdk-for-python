@@ -12,16 +12,16 @@ import msrest.serialization
 class ApiError(msrest.serialization.Model):
     """Api error.
 
-    :param details: The Api error details.
-    :type details: list[~azure.mgmt.compute.v2020_10_01_preview.models.ApiErrorBase]
-    :param innererror: The Api inner error.
-    :type innererror: ~azure.mgmt.compute.v2020_10_01_preview.models.InnerError
-    :param code: The error code.
-    :type code: str
-    :param message: The error message.
-    :type message: str
-    :param target: The target of the particular error.
-    :type target: str
+    :ivar details: The Api error details.
+    :vartype details: list[~azure.mgmt.compute.v2020_10_01_preview.models.ApiErrorBase]
+    :ivar innererror: The Api inner error.
+    :vartype innererror: ~azure.mgmt.compute.v2020_10_01_preview.models.InnerError
+    :ivar code: The error code.
+    :vartype code: str
+    :ivar message: The error message.
+    :vartype message: str
+    :ivar target: The target of the particular error.
+    :vartype target: str
     """
 
     _attribute_map = {
@@ -36,6 +36,18 @@ class ApiError(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword details: The Api error details.
+        :paramtype details: list[~azure.mgmt.compute.v2020_10_01_preview.models.ApiErrorBase]
+        :keyword innererror: The Api inner error.
+        :paramtype innererror: ~azure.mgmt.compute.v2020_10_01_preview.models.InnerError
+        :keyword code: The error code.
+        :paramtype code: str
+        :keyword message: The error message.
+        :paramtype message: str
+        :keyword target: The target of the particular error.
+        :paramtype target: str
+        """
         super(ApiError, self).__init__(**kwargs)
         self.details = kwargs.get('details', None)
         self.innererror = kwargs.get('innererror', None)
@@ -47,12 +59,12 @@ class ApiError(msrest.serialization.Model):
 class ApiErrorBase(msrest.serialization.Model):
     """Api error base.
 
-    :param code: The error code.
-    :type code: str
-    :param message: The error message.
-    :type message: str
-    :param target: The target of the particular error.
-    :type target: str
+    :ivar code: The error code.
+    :vartype code: str
+    :ivar message: The error message.
+    :vartype message: str
+    :ivar target: The target of the particular error.
+    :vartype target: str
     """
 
     _attribute_map = {
@@ -65,6 +77,14 @@ class ApiErrorBase(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword code: The error code.
+        :paramtype code: str
+        :keyword message: The error message.
+        :paramtype message: str
+        :keyword target: The target of the particular error.
+        :paramtype target: str
+        """
         super(ApiErrorBase, self).__init__(**kwargs)
         self.code = kwargs.get('code', None)
         self.message = kwargs.get('message', None)
@@ -84,12 +104,12 @@ class CloudService(msrest.serialization.Model):
     :vartype name: str
     :ivar type: Resource type.
     :vartype type: str
-    :param location: Required. Resource location.
-    :type location: str
-    :param tags: A set of tags. Resource tags.
-    :type tags: dict[str, str]
-    :param properties: Cloud service properties.
-    :type properties: ~azure.mgmt.compute.v2020_10_01_preview.models.CloudServiceProperties
+    :ivar location: Required. Resource location.
+    :vartype location: str
+    :ivar tags: A set of tags. Resource tags.
+    :vartype tags: dict[str, str]
+    :ivar properties: Cloud service properties.
+    :vartype properties: ~azure.mgmt.compute.v2020_10_01_preview.models.CloudServiceProperties
     """
 
     _validation = {
@@ -112,6 +132,14 @@ class CloudService(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword location: Required. Resource location.
+        :paramtype location: str
+        :keyword tags: A set of tags. Resource tags.
+        :paramtype tags: dict[str, str]
+        :keyword properties: Cloud service properties.
+        :paramtype properties: ~azure.mgmt.compute.v2020_10_01_preview.models.CloudServiceProperties
+        """
         super(CloudService, self).__init__(**kwargs)
         self.id = None
         self.name = None
@@ -124,8 +152,8 @@ class CloudService(msrest.serialization.Model):
 class CloudServiceExtensionProfile(msrest.serialization.Model):
     """Describes a cloud service extension profile.
 
-    :param extensions: List of extensions for the cloud service.
-    :type extensions: list[~azure.mgmt.compute.v2020_10_01_preview.models.Extension]
+    :ivar extensions: List of extensions for the cloud service.
+    :vartype extensions: list[~azure.mgmt.compute.v2020_10_01_preview.models.Extension]
     """
 
     _attribute_map = {
@@ -136,6 +164,10 @@ class CloudServiceExtensionProfile(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword extensions: List of extensions for the cloud service.
+        :paramtype extensions: list[~azure.mgmt.compute.v2020_10_01_preview.models.Extension]
+        """
         super(CloudServiceExtensionProfile, self).__init__(**kwargs)
         self.extensions = kwargs.get('extensions', None)
 
@@ -145,32 +177,32 @@ class CloudServiceExtensionProperties(msrest.serialization.Model):
 
     Variables are only populated by the server, and will be ignored when sending a request.
 
-    :param publisher: The name of the extension handler publisher.
-    :type publisher: str
-    :param type: Specifies the type of the extension.
-    :type type: str
-    :param type_handler_version: Specifies the version of the extension. Specifies the version of
+    :ivar publisher: The name of the extension handler publisher.
+    :vartype publisher: str
+    :ivar type: Specifies the type of the extension.
+    :vartype type: str
+    :ivar type_handler_version: Specifies the version of the extension. Specifies the version of
      the extension. If this element is not specified or an asterisk (*) is used as the value, the
      latest version of the extension is used. If the value is specified with a major version number
      and an asterisk as the minor version number (X.), the latest minor version of the specified
      major version is selected. If a major version number and a minor version number are specified
      (X.Y), the specific extension version is selected. If a version is specified, an auto-upgrade
      is performed on the role instance.
-    :type type_handler_version: str
-    :param auto_upgrade_minor_version: Explicitly specify whether platform can automatically
-     upgrade typeHandlerVersion to higher minor versions when they become available.
-    :type auto_upgrade_minor_version: bool
-    :param settings: Public settings for the extension. For JSON extensions, this is the JSON
+    :vartype type_handler_version: str
+    :ivar auto_upgrade_minor_version: Explicitly specify whether platform can automatically upgrade
+     typeHandlerVersion to higher minor versions when they become available.
+    :vartype auto_upgrade_minor_version: bool
+    :ivar settings: Public settings for the extension. For JSON extensions, this is the JSON
      settings for the extension. For XML Extension (like RDP), this is the XML setting for the
      extension.
-    :type settings: str
-    :param protected_settings: Protected settings for the extension which are encrypted before sent
+    :vartype settings: str
+    :ivar protected_settings: Protected settings for the extension which are encrypted before sent
      to the role instance.
-    :type protected_settings: str
-    :param protected_settings_from_key_vault:
-    :type protected_settings_from_key_vault:
+    :vartype protected_settings: str
+    :ivar protected_settings_from_key_vault:
+    :vartype protected_settings_from_key_vault:
      ~azure.mgmt.compute.v2020_10_01_preview.models.CloudServiceVaultAndSecretReference
-    :param force_update_tag: Tag to force apply the provided public and protected settings.
+    :ivar force_update_tag: Tag to force apply the provided public and protected settings.
      Changing the tag value allows for re-running the extension without changing any of the public
      or protected settings.
      If forceUpdateTag is not changed, updates to public or protected settings would still be
@@ -178,12 +210,12 @@ class CloudServiceExtensionProperties(msrest.serialization.Model):
      If neither forceUpdateTag nor any of public or protected settings change, extension would flow
      to the role instance with the same sequence-number, and
      it is up to handler implementation whether to re-run it or not.
-    :type force_update_tag: str
+    :vartype force_update_tag: str
     :ivar provisioning_state: The provisioning state, which only appears in the response.
     :vartype provisioning_state: str
-    :param roles_applied_to: Optional list of roles to apply this extension. If property is not
+    :ivar roles_applied_to: Optional list of roles to apply this extension. If property is not
      specified or '*' is specified, extension is applied to all roles in the cloud service.
-    :type roles_applied_to: list[str]
+    :vartype roles_applied_to: list[str]
     """
 
     _validation = {
@@ -207,6 +239,45 @@ class CloudServiceExtensionProperties(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword publisher: The name of the extension handler publisher.
+        :paramtype publisher: str
+        :keyword type: Specifies the type of the extension.
+        :paramtype type: str
+        :keyword type_handler_version: Specifies the version of the extension. Specifies the version of
+         the extension. If this element is not specified or an asterisk (*) is used as the value, the
+         latest version of the extension is used. If the value is specified with a major version number
+         and an asterisk as the minor version number (X.), the latest minor version of the specified
+         major version is selected. If a major version number and a minor version number are specified
+         (X.Y), the specific extension version is selected. If a version is specified, an auto-upgrade
+         is performed on the role instance.
+        :paramtype type_handler_version: str
+        :keyword auto_upgrade_minor_version: Explicitly specify whether platform can automatically
+         upgrade typeHandlerVersion to higher minor versions when they become available.
+        :paramtype auto_upgrade_minor_version: bool
+        :keyword settings: Public settings for the extension. For JSON extensions, this is the JSON
+         settings for the extension. For XML Extension (like RDP), this is the XML setting for the
+         extension.
+        :paramtype settings: str
+        :keyword protected_settings: Protected settings for the extension which are encrypted before
+         sent to the role instance.
+        :paramtype protected_settings: str
+        :keyword protected_settings_from_key_vault:
+        :paramtype protected_settings_from_key_vault:
+         ~azure.mgmt.compute.v2020_10_01_preview.models.CloudServiceVaultAndSecretReference
+        :keyword force_update_tag: Tag to force apply the provided public and protected settings.
+         Changing the tag value allows for re-running the extension without changing any of the public
+         or protected settings.
+         If forceUpdateTag is not changed, updates to public or protected settings would still be
+         applied by the handler.
+         If neither forceUpdateTag nor any of public or protected settings change, extension would flow
+         to the role instance with the same sequence-number, and
+         it is up to handler implementation whether to re-run it or not.
+        :paramtype force_update_tag: str
+        :keyword roles_applied_to: Optional list of roles to apply this extension. If property is not
+         specified or '*' is specified, extension is applied to all roles in the cloud service.
+        :paramtype roles_applied_to: list[str]
+        """
         super(CloudServiceExtensionProperties, self).__init__(**kwargs)
         self.publisher = kwargs.get('publisher', None)
         self.type = kwargs.get('type', None)
@@ -225,8 +296,9 @@ class CloudServiceInstanceView(msrest.serialization.Model):
 
     Variables are only populated by the server, and will be ignored when sending a request.
 
-    :param role_instance: Instance view statuses.
-    :type role_instance: ~azure.mgmt.compute.v2020_10_01_preview.models.InstanceViewStatusesSummary
+    :ivar role_instance: Instance view statuses.
+    :vartype role_instance:
+     ~azure.mgmt.compute.v2020_10_01_preview.models.InstanceViewStatusesSummary
     :ivar sdk_version: The version of the SDK that was used to generate the package for the cloud
      service.
     :vartype sdk_version: str
@@ -250,6 +322,11 @@ class CloudServiceInstanceView(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword role_instance: Instance view statuses.
+        :paramtype role_instance:
+         ~azure.mgmt.compute.v2020_10_01_preview.models.InstanceViewStatusesSummary
+        """
         super(CloudServiceInstanceView, self).__init__(**kwargs)
         self.role_instance = kwargs.get('role_instance', None)
         self.sdk_version = None
@@ -261,10 +338,10 @@ class CloudServiceListResult(msrest.serialization.Model):
 
     All required parameters must be populated in order to send to Azure.
 
-    :param value: Required.
-    :type value: list[~azure.mgmt.compute.v2020_10_01_preview.models.CloudService]
-    :param next_link:
-    :type next_link: str
+    :ivar value: Required.
+    :vartype value: list[~azure.mgmt.compute.v2020_10_01_preview.models.CloudService]
+    :ivar next_link:
+    :vartype next_link: str
     """
 
     _validation = {
@@ -280,6 +357,12 @@ class CloudServiceListResult(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword value: Required.
+        :paramtype value: list[~azure.mgmt.compute.v2020_10_01_preview.models.CloudService]
+        :keyword next_link:
+        :paramtype next_link: str
+        """
         super(CloudServiceListResult, self).__init__(**kwargs)
         self.value = kwargs['value']
         self.next_link = kwargs.get('next_link', None)
@@ -288,12 +371,12 @@ class CloudServiceListResult(msrest.serialization.Model):
 class CloudServiceNetworkProfile(msrest.serialization.Model):
     """Network Profile for the cloud service.
 
-    :param load_balancer_configurations: The list of load balancer configurations for the cloud
+    :ivar load_balancer_configurations: The list of load balancer configurations for the cloud
      service.
-    :type load_balancer_configurations:
+    :vartype load_balancer_configurations:
      list[~azure.mgmt.compute.v2020_10_01_preview.models.LoadBalancerConfiguration]
-    :param swappable_cloud_service:
-    :type swappable_cloud_service: ~azure.mgmt.compute.v2020_10_01_preview.models.SubResource
+    :ivar swappable_cloud_service:
+    :vartype swappable_cloud_service: ~azure.mgmt.compute.v2020_10_01_preview.models.SubResource
     """
 
     _attribute_map = {
@@ -305,6 +388,14 @@ class CloudServiceNetworkProfile(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword load_balancer_configurations: The list of load balancer configurations for the cloud
+         service.
+        :paramtype load_balancer_configurations:
+         list[~azure.mgmt.compute.v2020_10_01_preview.models.LoadBalancerConfiguration]
+        :keyword swappable_cloud_service:
+        :paramtype swappable_cloud_service: ~azure.mgmt.compute.v2020_10_01_preview.models.SubResource
+        """
         super(CloudServiceNetworkProfile, self).__init__(**kwargs)
         self.load_balancer_configurations = kwargs.get('load_balancer_configurations', None)
         self.swappable_cloud_service = kwargs.get('swappable_cloud_service', None)
@@ -313,8 +404,8 @@ class CloudServiceNetworkProfile(msrest.serialization.Model):
 class CloudServiceOsProfile(msrest.serialization.Model):
     """Describes the OS profile for the cloud service.
 
-    :param secrets: Specifies set of certificates that should be installed onto the role instances.
-    :type secrets:
+    :ivar secrets: Specifies set of certificates that should be installed onto the role instances.
+    :vartype secrets:
      list[~azure.mgmt.compute.v2020_10_01_preview.models.CloudServiceVaultSecretGroup]
     """
 
@@ -326,6 +417,12 @@ class CloudServiceOsProfile(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword secrets: Specifies set of certificates that should be installed onto the role
+         instances.
+        :paramtype secrets:
+         list[~azure.mgmt.compute.v2020_10_01_preview.models.CloudServiceVaultSecretGroup]
+        """
         super(CloudServiceOsProfile, self).__init__(**kwargs)
         self.secrets = kwargs.get('secrets', None)
 
@@ -335,25 +432,25 @@ class CloudServiceProperties(msrest.serialization.Model):
 
     Variables are only populated by the server, and will be ignored when sending a request.
 
-    :param package_url: Specifies a URL that refers to the location of the service package in the
+    :ivar package_url: Specifies a URL that refers to the location of the service package in the
      Blob service. The service package URL can be Shared Access Signature (SAS) URI from any storage
      account.
      This is a write-only property and is not returned in GET calls.
-    :type package_url: str
-    :param configuration: Specifies the XML service configuration (.cscfg) for the cloud service.
-    :type configuration: str
-    :param configuration_url: Specifies a URL that refers to the location of the service
+    :vartype package_url: str
+    :ivar configuration: Specifies the XML service configuration (.cscfg) for the cloud service.
+    :vartype configuration: str
+    :ivar configuration_url: Specifies a URL that refers to the location of the service
      configuration in the Blob service. The service package URL  can be Shared Access Signature
      (SAS) URI from any storage account.
      This is a write-only property and is not returned in GET calls.
-    :type configuration_url: str
-    :param start_cloud_service: (Optional) Indicates whether to start the cloud service immediately
+    :vartype configuration_url: str
+    :ivar start_cloud_service: (Optional) Indicates whether to start the cloud service immediately
      after it is created. The default value is ``true``.
      If false, the service model is still deployed, but the code is not run immediately. Instead,
      the service is PoweredOff until you call Start, at which time the service will be started. A
      deployed service still incurs charges, even if it is poweredoff.
-    :type start_cloud_service: bool
-    :param upgrade_mode: Update mode for the cloud service. Role instances are allocated to update
+    :vartype start_cloud_service: bool
+    :ivar upgrade_mode: Update mode for the cloud service. Role instances are allocated to update
      domains when the service is deployed. Updates can be initiated manually in each update domain
      or initiated automatically in all update domains.
      Possible Values are :code:`<br />`:code:`<br />`\ **Auto**\ :code:`<br />`:code:`<br />`\
@@ -361,17 +458,17 @@ class CloudServiceProperties(msrest.serialization.Model):
      If not specified, the default value is Auto. If set to Manual, PUT UpdateDomain must be called
      to apply the update. If set to Auto, the update is automatically applied to each update domain
      in sequence. Possible values include: "Auto", "Manual", "Simultaneous".
-    :type upgrade_mode: str or
+    :vartype upgrade_mode: str or
      ~azure.mgmt.compute.v2020_10_01_preview.models.CloudServiceUpgradeMode
-    :param role_profile: Describes the role profile for the cloud service.
-    :type role_profile: ~azure.mgmt.compute.v2020_10_01_preview.models.CloudServiceRoleProfile
-    :param os_profile: Describes the OS profile for the cloud service.
-    :type os_profile: ~azure.mgmt.compute.v2020_10_01_preview.models.CloudServiceOsProfile
-    :param network_profile: Network Profile for the cloud service.
-    :type network_profile:
+    :ivar role_profile: Describes the role profile for the cloud service.
+    :vartype role_profile: ~azure.mgmt.compute.v2020_10_01_preview.models.CloudServiceRoleProfile
+    :ivar os_profile: Describes the OS profile for the cloud service.
+    :vartype os_profile: ~azure.mgmt.compute.v2020_10_01_preview.models.CloudServiceOsProfile
+    :ivar network_profile: Network Profile for the cloud service.
+    :vartype network_profile:
      ~azure.mgmt.compute.v2020_10_01_preview.models.CloudServiceNetworkProfile
-    :param extension_profile: Describes a cloud service extension profile.
-    :type extension_profile:
+    :ivar extension_profile: Describes a cloud service extension profile.
+    :vartype extension_profile:
      ~azure.mgmt.compute.v2020_10_01_preview.models.CloudServiceExtensionProfile
     :ivar provisioning_state: The provisioning state, which only appears in the response.
     :vartype provisioning_state: str
@@ -402,6 +499,46 @@ class CloudServiceProperties(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword package_url: Specifies a URL that refers to the location of the service package in the
+         Blob service. The service package URL can be Shared Access Signature (SAS) URI from any storage
+         account.
+         This is a write-only property and is not returned in GET calls.
+        :paramtype package_url: str
+        :keyword configuration: Specifies the XML service configuration (.cscfg) for the cloud service.
+        :paramtype configuration: str
+        :keyword configuration_url: Specifies a URL that refers to the location of the service
+         configuration in the Blob service. The service package URL  can be Shared Access Signature
+         (SAS) URI from any storage account.
+         This is a write-only property and is not returned in GET calls.
+        :paramtype configuration_url: str
+        :keyword start_cloud_service: (Optional) Indicates whether to start the cloud service
+         immediately after it is created. The default value is ``true``.
+         If false, the service model is still deployed, but the code is not run immediately. Instead,
+         the service is PoweredOff until you call Start, at which time the service will be started. A
+         deployed service still incurs charges, even if it is poweredoff.
+        :paramtype start_cloud_service: bool
+        :keyword upgrade_mode: Update mode for the cloud service. Role instances are allocated to
+         update domains when the service is deployed. Updates can be initiated manually in each update
+         domain or initiated automatically in all update domains.
+         Possible Values are :code:`<br />`:code:`<br />`\ **Auto**\ :code:`<br />`:code:`<br />`\
+         **Manual** :code:`<br />`:code:`<br />`\ **Simultaneous**\ :code:`<br />`:code:`<br />`
+         If not specified, the default value is Auto. If set to Manual, PUT UpdateDomain must be called
+         to apply the update. If set to Auto, the update is automatically applied to each update domain
+         in sequence. Possible values include: "Auto", "Manual", "Simultaneous".
+        :paramtype upgrade_mode: str or
+         ~azure.mgmt.compute.v2020_10_01_preview.models.CloudServiceUpgradeMode
+        :keyword role_profile: Describes the role profile for the cloud service.
+        :paramtype role_profile: ~azure.mgmt.compute.v2020_10_01_preview.models.CloudServiceRoleProfile
+        :keyword os_profile: Describes the OS profile for the cloud service.
+        :paramtype os_profile: ~azure.mgmt.compute.v2020_10_01_preview.models.CloudServiceOsProfile
+        :keyword network_profile: Network Profile for the cloud service.
+        :paramtype network_profile:
+         ~azure.mgmt.compute.v2020_10_01_preview.models.CloudServiceNetworkProfile
+        :keyword extension_profile: Describes a cloud service extension profile.
+        :paramtype extension_profile:
+         ~azure.mgmt.compute.v2020_10_01_preview.models.CloudServiceExtensionProfile
+        """
         super(CloudServiceProperties, self).__init__(**kwargs)
         self.package_url = kwargs.get('package_url', None)
         self.configuration = kwargs.get('configuration', None)
@@ -429,10 +566,10 @@ class CloudServiceRole(msrest.serialization.Model):
     :vartype type: str
     :ivar location: Resource location.
     :vartype location: str
-    :param sku: Describes the cloud service role sku.
-    :type sku: ~azure.mgmt.compute.v2020_10_01_preview.models.CloudServiceRoleSku
-    :param properties:
-    :type properties: ~azure.mgmt.compute.v2020_10_01_preview.models.CloudServiceRoleProperties
+    :ivar sku: Describes the cloud service role sku.
+    :vartype sku: ~azure.mgmt.compute.v2020_10_01_preview.models.CloudServiceRoleSku
+    :ivar properties:
+    :vartype properties: ~azure.mgmt.compute.v2020_10_01_preview.models.CloudServiceRoleProperties
     """
 
     _validation = {
@@ -455,6 +592,13 @@ class CloudServiceRole(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword sku: Describes the cloud service role sku.
+        :paramtype sku: ~azure.mgmt.compute.v2020_10_01_preview.models.CloudServiceRoleSku
+        :keyword properties:
+        :paramtype properties:
+         ~azure.mgmt.compute.v2020_10_01_preview.models.CloudServiceRoleProperties
+        """
         super(CloudServiceRole, self).__init__(**kwargs)
         self.id = None
         self.name = None
@@ -469,10 +613,10 @@ class CloudServiceRoleListResult(msrest.serialization.Model):
 
     All required parameters must be populated in order to send to Azure.
 
-    :param value: Required.
-    :type value: list[~azure.mgmt.compute.v2020_10_01_preview.models.CloudServiceRole]
-    :param next_link:
-    :type next_link: str
+    :ivar value: Required.
+    :vartype value: list[~azure.mgmt.compute.v2020_10_01_preview.models.CloudServiceRole]
+    :ivar next_link:
+    :vartype next_link: str
     """
 
     _validation = {
@@ -488,6 +632,12 @@ class CloudServiceRoleListResult(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword value: Required.
+        :paramtype value: list[~azure.mgmt.compute.v2020_10_01_preview.models.CloudServiceRole]
+        :keyword next_link:
+        :paramtype next_link: str
+        """
         super(CloudServiceRoleListResult, self).__init__(**kwargs)
         self.value = kwargs['value']
         self.next_link = kwargs.get('next_link', None)
@@ -496,8 +646,8 @@ class CloudServiceRoleListResult(msrest.serialization.Model):
 class CloudServiceRoleProfile(msrest.serialization.Model):
     """Describes the role profile for the cloud service.
 
-    :param roles: List of roles for the cloud service.
-    :type roles:
+    :ivar roles: List of roles for the cloud service.
+    :vartype roles:
      list[~azure.mgmt.compute.v2020_10_01_preview.models.CloudServiceRoleProfileProperties]
     """
 
@@ -509,6 +659,11 @@ class CloudServiceRoleProfile(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword roles: List of roles for the cloud service.
+        :paramtype roles:
+         list[~azure.mgmt.compute.v2020_10_01_preview.models.CloudServiceRoleProfileProperties]
+        """
         super(CloudServiceRoleProfile, self).__init__(**kwargs)
         self.roles = kwargs.get('roles', None)
 
@@ -516,10 +671,10 @@ class CloudServiceRoleProfile(msrest.serialization.Model):
 class CloudServiceRoleProfileProperties(msrest.serialization.Model):
     """Describes the role properties.
 
-    :param name: Resource name.
-    :type name: str
-    :param sku: Describes the cloud service role sku.
-    :type sku: ~azure.mgmt.compute.v2020_10_01_preview.models.CloudServiceRoleSku
+    :ivar name: Resource name.
+    :vartype name: str
+    :ivar sku: Describes the cloud service role sku.
+    :vartype sku: ~azure.mgmt.compute.v2020_10_01_preview.models.CloudServiceRoleSku
     """
 
     _attribute_map = {
@@ -531,6 +686,12 @@ class CloudServiceRoleProfileProperties(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword name: Resource name.
+        :paramtype name: str
+        :keyword sku: Describes the cloud service role sku.
+        :paramtype sku: ~azure.mgmt.compute.v2020_10_01_preview.models.CloudServiceRoleSku
+        """
         super(CloudServiceRoleProfileProperties, self).__init__(**kwargs)
         self.name = kwargs.get('name', None)
         self.sku = kwargs.get('sku', None)
@@ -557,6 +718,8 @@ class CloudServiceRoleProperties(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        """
         super(CloudServiceRoleProperties, self).__init__(**kwargs)
         self.unique_id = None
 
@@ -564,15 +727,15 @@ class CloudServiceRoleProperties(msrest.serialization.Model):
 class CloudServiceRoleSku(msrest.serialization.Model):
     """Describes the cloud service role sku.
 
-    :param name: The sku name. NOTE: If the new SKU is not supported on the hardware the cloud
+    :ivar name: The sku name. NOTE: If the new SKU is not supported on the hardware the cloud
      service is currently on, you need to delete and recreate the cloud service or move back to the
      old sku.
-    :type name: str
-    :param tier: Specifies the tier of the cloud service. Possible Values are :code:`<br
+    :vartype name: str
+    :ivar tier: Specifies the tier of the cloud service. Possible Values are :code:`<br
      />`:code:`<br />` **Standard** :code:`<br />`:code:`<br />` **Basic**.
-    :type tier: str
-    :param capacity: Specifies the number of role instances in the cloud service.
-    :type capacity: long
+    :vartype tier: str
+    :ivar capacity: Specifies the number of role instances in the cloud service.
+    :vartype capacity: long
     """
 
     _attribute_map = {
@@ -585,6 +748,17 @@ class CloudServiceRoleSku(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword name: The sku name. NOTE: If the new SKU is not supported on the hardware the cloud
+         service is currently on, you need to delete and recreate the cloud service or move back to the
+         old sku.
+        :paramtype name: str
+        :keyword tier: Specifies the tier of the cloud service. Possible Values are :code:`<br
+         />`:code:`<br />` **Standard** :code:`<br />`:code:`<br />` **Basic**.
+        :paramtype tier: str
+        :keyword capacity: Specifies the number of role instances in the cloud service.
+        :paramtype capacity: long
+        """
         super(CloudServiceRoleSku, self).__init__(**kwargs)
         self.name = kwargs.get('name', None)
         self.tier = kwargs.get('tier', None)
@@ -594,8 +768,8 @@ class CloudServiceRoleSku(msrest.serialization.Model):
 class CloudServiceUpdate(msrest.serialization.Model):
     """CloudServiceUpdate.
 
-    :param tags: A set of tags. Resource tags.
-    :type tags: dict[str, str]
+    :ivar tags: A set of tags. Resource tags.
+    :vartype tags: dict[str, str]
     """
 
     _attribute_map = {
@@ -606,6 +780,10 @@ class CloudServiceUpdate(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword tags: A set of tags. Resource tags.
+        :paramtype tags: dict[str, str]
+        """
         super(CloudServiceUpdate, self).__init__(**kwargs)
         self.tags = kwargs.get('tags', None)
 
@@ -613,10 +791,10 @@ class CloudServiceUpdate(msrest.serialization.Model):
 class CloudServiceVaultAndSecretReference(msrest.serialization.Model):
     """CloudServiceVaultAndSecretReference.
 
-    :param source_vault:
-    :type source_vault: ~azure.mgmt.compute.v2020_10_01_preview.models.SubResource
-    :param secret_url:
-    :type secret_url: str
+    :ivar source_vault:
+    :vartype source_vault: ~azure.mgmt.compute.v2020_10_01_preview.models.SubResource
+    :ivar secret_url:
+    :vartype secret_url: str
     """
 
     _attribute_map = {
@@ -628,6 +806,12 @@ class CloudServiceVaultAndSecretReference(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword source_vault:
+        :paramtype source_vault: ~azure.mgmt.compute.v2020_10_01_preview.models.SubResource
+        :keyword secret_url:
+        :paramtype secret_url: str
+        """
         super(CloudServiceVaultAndSecretReference, self).__init__(**kwargs)
         self.source_vault = kwargs.get('source_vault', None)
         self.secret_url = kwargs.get('secret_url', None)
@@ -636,9 +820,9 @@ class CloudServiceVaultAndSecretReference(msrest.serialization.Model):
 class CloudServiceVaultCertificate(msrest.serialization.Model):
     """Describes a single certificate reference in a Key Vault, and where the certificate should reside on the role instance.
 
-    :param certificate_url: This is the URL of a certificate that has been uploaded to Key Vault as
+    :ivar certificate_url: This is the URL of a certificate that has been uploaded to Key Vault as
      a secret.
-    :type certificate_url: str
+    :vartype certificate_url: str
     """
 
     _attribute_map = {
@@ -649,6 +833,11 @@ class CloudServiceVaultCertificate(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword certificate_url: This is the URL of a certificate that has been uploaded to Key Vault
+         as a secret.
+        :paramtype certificate_url: str
+        """
         super(CloudServiceVaultCertificate, self).__init__(**kwargs)
         self.certificate_url = kwargs.get('certificate_url', None)
 
@@ -656,12 +845,12 @@ class CloudServiceVaultCertificate(msrest.serialization.Model):
 class CloudServiceVaultSecretGroup(msrest.serialization.Model):
     """Describes a set of certificates which are all in the same Key Vault.
 
-    :param source_vault: The relative URL of the Key Vault containing all of the certificates in
+    :ivar source_vault: The relative URL of the Key Vault containing all of the certificates in
      VaultCertificates.
-    :type source_vault: ~azure.mgmt.compute.v2020_10_01_preview.models.SubResource
-    :param vault_certificates: The list of key vault references in SourceVault which contain
+    :vartype source_vault: ~azure.mgmt.compute.v2020_10_01_preview.models.SubResource
+    :ivar vault_certificates: The list of key vault references in SourceVault which contain
      certificates.
-    :type vault_certificates:
+    :vartype vault_certificates:
      list[~azure.mgmt.compute.v2020_10_01_preview.models.CloudServiceVaultCertificate]
     """
 
@@ -674,6 +863,15 @@ class CloudServiceVaultSecretGroup(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword source_vault: The relative URL of the Key Vault containing all of the certificates in
+         VaultCertificates.
+        :paramtype source_vault: ~azure.mgmt.compute.v2020_10_01_preview.models.SubResource
+        :keyword vault_certificates: The list of key vault references in SourceVault which contain
+         certificates.
+        :paramtype vault_certificates:
+         list[~azure.mgmt.compute.v2020_10_01_preview.models.CloudServiceVaultCertificate]
+        """
         super(CloudServiceVaultSecretGroup, self).__init__(**kwargs)
         self.source_vault = kwargs.get('source_vault', None)
         self.vault_certificates = kwargs.get('vault_certificates', None)
@@ -682,10 +880,10 @@ class CloudServiceVaultSecretGroup(msrest.serialization.Model):
 class Extension(msrest.serialization.Model):
     """Describes a cloud service Extension.
 
-    :param name: The name of the extension.
-    :type name: str
-    :param properties: Extension Properties.
-    :type properties:
+    :ivar name: The name of the extension.
+    :vartype name: str
+    :ivar properties: Extension Properties.
+    :vartype properties:
      ~azure.mgmt.compute.v2020_10_01_preview.models.CloudServiceExtensionProperties
     """
 
@@ -698,6 +896,13 @@ class Extension(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword name: The name of the extension.
+        :paramtype name: str
+        :keyword properties: Extension Properties.
+        :paramtype properties:
+         ~azure.mgmt.compute.v2020_10_01_preview.models.CloudServiceExtensionProperties
+        """
         super(Extension, self).__init__(**kwargs)
         self.name = kwargs.get('name', None)
         self.properties = kwargs.get('properties', None)
@@ -706,10 +911,10 @@ class Extension(msrest.serialization.Model):
 class InnerError(msrest.serialization.Model):
     """Inner error details.
 
-    :param exceptiontype: The exception type.
-    :type exceptiontype: str
-    :param errordetail: The internal error message or exception dump.
-    :type errordetail: str
+    :ivar exceptiontype: The exception type.
+    :vartype exceptiontype: str
+    :ivar errordetail: The internal error message or exception dump.
+    :vartype errordetail: str
     """
 
     _attribute_map = {
@@ -721,6 +926,12 @@ class InnerError(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword exceptiontype: The exception type.
+        :paramtype exceptiontype: str
+        :keyword errordetail: The internal error message or exception dump.
+        :paramtype errordetail: str
+        """
         super(InnerError, self).__init__(**kwargs)
         self.exceptiontype = kwargs.get('exceptiontype', None)
         self.errordetail = kwargs.get('errordetail', None)
@@ -751,6 +962,8 @@ class InstanceSku(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        """
         super(InstanceSku, self).__init__(**kwargs)
         self.name = None
         self.tier = None
@@ -777,6 +990,8 @@ class InstanceViewStatusesSummary(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        """
         super(InstanceViewStatusesSummary, self).__init__(**kwargs)
         self.statuses_summary = None
 
@@ -784,10 +999,10 @@ class InstanceViewStatusesSummary(msrest.serialization.Model):
 class LoadBalancerConfiguration(msrest.serialization.Model):
     """Describes the load balancer configuration.
 
-    :param name: Resource Name.
-    :type name: str
-    :param properties:
-    :type properties:
+    :ivar name: Resource Name.
+    :vartype name: str
+    :ivar properties:
+    :vartype properties:
      ~azure.mgmt.compute.v2020_10_01_preview.models.LoadBalancerConfigurationProperties
     """
 
@@ -800,6 +1015,13 @@ class LoadBalancerConfiguration(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword name: Resource Name.
+        :paramtype name: str
+        :keyword properties:
+        :paramtype properties:
+         ~azure.mgmt.compute.v2020_10_01_preview.models.LoadBalancerConfigurationProperties
+        """
         super(LoadBalancerConfiguration, self).__init__(**kwargs)
         self.name = kwargs.get('name', None)
         self.properties = kwargs.get('properties', None)
@@ -808,8 +1030,8 @@ class LoadBalancerConfiguration(msrest.serialization.Model):
 class LoadBalancerConfigurationProperties(msrest.serialization.Model):
     """LoadBalancerConfigurationProperties.
 
-    :param frontend_ip_configurations: List of IP.
-    :type frontend_ip_configurations:
+    :ivar frontend_ip_configurations: List of IP.
+    :vartype frontend_ip_configurations:
      list[~azure.mgmt.compute.v2020_10_01_preview.models.LoadBalancerFrontendIPConfiguration]
     """
 
@@ -821,6 +1043,11 @@ class LoadBalancerConfigurationProperties(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword frontend_ip_configurations: List of IP.
+        :paramtype frontend_ip_configurations:
+         list[~azure.mgmt.compute.v2020_10_01_preview.models.LoadBalancerFrontendIPConfiguration]
+        """
         super(LoadBalancerConfigurationProperties, self).__init__(**kwargs)
         self.frontend_ip_configurations = kwargs.get('frontend_ip_configurations', None)
 
@@ -828,10 +1055,10 @@ class LoadBalancerConfigurationProperties(msrest.serialization.Model):
 class LoadBalancerFrontendIPConfiguration(msrest.serialization.Model):
     """LoadBalancerFrontendIPConfiguration.
 
-    :param name:
-    :type name: str
-    :param properties: Describes a cloud service IP Configuration.
-    :type properties:
+    :ivar name:
+    :vartype name: str
+    :ivar properties: Describes a cloud service IP Configuration.
+    :vartype properties:
      ~azure.mgmt.compute.v2020_10_01_preview.models.LoadBalancerFrontendIPConfigurationProperties
     """
 
@@ -844,6 +1071,13 @@ class LoadBalancerFrontendIPConfiguration(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword name:
+        :paramtype name: str
+        :keyword properties: Describes a cloud service IP Configuration.
+        :paramtype properties:
+         ~azure.mgmt.compute.v2020_10_01_preview.models.LoadBalancerFrontendIPConfigurationProperties
+        """
         super(LoadBalancerFrontendIPConfiguration, self).__init__(**kwargs)
         self.name = kwargs.get('name', None)
         self.properties = kwargs.get('properties', None)
@@ -852,12 +1086,12 @@ class LoadBalancerFrontendIPConfiguration(msrest.serialization.Model):
 class LoadBalancerFrontendIPConfigurationProperties(msrest.serialization.Model):
     """Describes a cloud service IP Configuration.
 
-    :param public_ip_address:
-    :type public_ip_address: ~azure.mgmt.compute.v2020_10_01_preview.models.SubResource
-    :param subnet:
-    :type subnet: ~azure.mgmt.compute.v2020_10_01_preview.models.SubResource
-    :param private_ip_address: The private IP address referenced by the cloud service.
-    :type private_ip_address: str
+    :ivar public_ip_address:
+    :vartype public_ip_address: ~azure.mgmt.compute.v2020_10_01_preview.models.SubResource
+    :ivar subnet:
+    :vartype subnet: ~azure.mgmt.compute.v2020_10_01_preview.models.SubResource
+    :ivar private_ip_address: The private IP address referenced by the cloud service.
+    :vartype private_ip_address: str
     """
 
     _attribute_map = {
@@ -870,6 +1104,14 @@ class LoadBalancerFrontendIPConfigurationProperties(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword public_ip_address:
+        :paramtype public_ip_address: ~azure.mgmt.compute.v2020_10_01_preview.models.SubResource
+        :keyword subnet:
+        :paramtype subnet: ~azure.mgmt.compute.v2020_10_01_preview.models.SubResource
+        :keyword private_ip_address: The private IP address referenced by the cloud service.
+        :paramtype private_ip_address: str
+        """
         super(LoadBalancerFrontendIPConfigurationProperties, self).__init__(**kwargs)
         self.public_ip_address = kwargs.get('public_ip_address', None)
         self.subnet = kwargs.get('subnet', None)
@@ -889,8 +1131,8 @@ class ResourceInstanceViewStatus(msrest.serialization.Model):
     :vartype message: str
     :ivar time: The time of the status.
     :vartype time: ~datetime.datetime
-    :param level: The level code. Possible values include: "Info", "Warning", "Error".
-    :type level: str or ~azure.mgmt.compute.v2020_10_01_preview.models.StatusLevelTypes
+    :ivar level: The level code. Possible values include: "Info", "Warning", "Error".
+    :vartype level: str or ~azure.mgmt.compute.v2020_10_01_preview.models.StatusLevelTypes
     """
 
     _validation = {
@@ -912,6 +1154,10 @@ class ResourceInstanceViewStatus(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword level: The level code. Possible values include: "Info", "Warning", "Error".
+        :paramtype level: str or ~azure.mgmt.compute.v2020_10_01_preview.models.StatusLevelTypes
+        """
         super(ResourceInstanceViewStatus, self).__init__(**kwargs)
         self.code = None
         self.display_status = None
@@ -935,10 +1181,10 @@ class RoleInstance(msrest.serialization.Model):
     :vartype location: str
     :ivar tags: A set of tags. Resource tags.
     :vartype tags: dict[str, str]
-    :param sku:
-    :type sku: ~azure.mgmt.compute.v2020_10_01_preview.models.InstanceSku
-    :param properties:
-    :type properties: ~azure.mgmt.compute.v2020_10_01_preview.models.RoleInstanceProperties
+    :ivar sku:
+    :vartype sku: ~azure.mgmt.compute.v2020_10_01_preview.models.InstanceSku
+    :ivar properties:
+    :vartype properties: ~azure.mgmt.compute.v2020_10_01_preview.models.RoleInstanceProperties
     """
 
     _validation = {
@@ -963,6 +1209,12 @@ class RoleInstance(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword sku:
+        :paramtype sku: ~azure.mgmt.compute.v2020_10_01_preview.models.InstanceSku
+        :keyword properties:
+        :paramtype properties: ~azure.mgmt.compute.v2020_10_01_preview.models.RoleInstanceProperties
+        """
         super(RoleInstance, self).__init__(**kwargs)
         self.id = None
         self.name = None
@@ -978,10 +1230,10 @@ class RoleInstanceListResult(msrest.serialization.Model):
 
     All required parameters must be populated in order to send to Azure.
 
-    :param value: Required.
-    :type value: list[~azure.mgmt.compute.v2020_10_01_preview.models.RoleInstance]
-    :param next_link:
-    :type next_link: str
+    :ivar value: Required.
+    :vartype value: list[~azure.mgmt.compute.v2020_10_01_preview.models.RoleInstance]
+    :ivar next_link:
+    :vartype next_link: str
     """
 
     _validation = {
@@ -997,6 +1249,12 @@ class RoleInstanceListResult(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword value: Required.
+        :paramtype value: list[~azure.mgmt.compute.v2020_10_01_preview.models.RoleInstance]
+        :keyword next_link:
+        :paramtype next_link: str
+        """
         super(RoleInstanceListResult, self).__init__(**kwargs)
         self.value = kwargs['value']
         self.next_link = kwargs.get('next_link', None)
@@ -1024,6 +1282,8 @@ class RoleInstanceNetworkProfile(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        """
         super(RoleInstanceNetworkProfile, self).__init__(**kwargs)
         self.network_interfaces = None
 
@@ -1031,11 +1291,11 @@ class RoleInstanceNetworkProfile(msrest.serialization.Model):
 class RoleInstanceProperties(msrest.serialization.Model):
     """RoleInstanceProperties.
 
-    :param network_profile: Describes the network profile for the role instance.
-    :type network_profile:
+    :ivar network_profile: Describes the network profile for the role instance.
+    :vartype network_profile:
      ~azure.mgmt.compute.v2020_10_01_preview.models.RoleInstanceNetworkProfile
-    :param instance_view: The instance view of the role instance.
-    :type instance_view: ~azure.mgmt.compute.v2020_10_01_preview.models.RoleInstanceView
+    :ivar instance_view: The instance view of the role instance.
+    :vartype instance_view: ~azure.mgmt.compute.v2020_10_01_preview.models.RoleInstanceView
     """
 
     _attribute_map = {
@@ -1047,6 +1307,13 @@ class RoleInstanceProperties(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword network_profile: Describes the network profile for the role instance.
+        :paramtype network_profile:
+         ~azure.mgmt.compute.v2020_10_01_preview.models.RoleInstanceNetworkProfile
+        :keyword instance_view: The instance view of the role instance.
+        :paramtype instance_view: ~azure.mgmt.compute.v2020_10_01_preview.models.RoleInstanceView
+        """
         super(RoleInstanceProperties, self).__init__(**kwargs)
         self.network_profile = kwargs.get('network_profile', None)
         self.instance_view = kwargs.get('instance_view', None)
@@ -1057,9 +1324,9 @@ class RoleInstances(msrest.serialization.Model):
 
     All required parameters must be populated in order to send to Azure.
 
-    :param role_instances: Required. List of cloud service role instance names. Value of '*' will
+    :ivar role_instances: Required. List of cloud service role instance names. Value of '*' will
      signify all role instances of the cloud service.
-    :type role_instances: list[str]
+    :vartype role_instances: list[str]
     """
 
     _validation = {
@@ -1074,6 +1341,11 @@ class RoleInstances(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword role_instances: Required. List of cloud service role instance names. Value of '*' will
+         signify all role instances of the cloud service.
+        :paramtype role_instances: list[str]
+        """
         super(RoleInstances, self).__init__(**kwargs)
         self.role_instances = kwargs['role_instances']
 
@@ -1114,6 +1386,8 @@ class RoleInstanceView(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        """
         super(RoleInstanceView, self).__init__(**kwargs)
         self.platform_update_domain = None
         self.platform_fault_domain = None
@@ -1146,6 +1420,8 @@ class StatusCodeCount(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        """
         super(StatusCodeCount, self).__init__(**kwargs)
         self.code = None
         self.count = None
@@ -1154,8 +1430,8 @@ class StatusCodeCount(msrest.serialization.Model):
 class SubResource(msrest.serialization.Model):
     """SubResource.
 
-    :param id: Resource Id.
-    :type id: str
+    :ivar id: Resource Id.
+    :vartype id: str
     """
 
     _attribute_map = {
@@ -1166,6 +1442,10 @@ class SubResource(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword id: Resource Id.
+        :paramtype id: str
+        """
         super(SubResource, self).__init__(**kwargs)
         self.id = kwargs.get('id', None)
 
@@ -1195,6 +1475,8 @@ class UpdateDomain(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        """
         super(UpdateDomain, self).__init__(**kwargs)
         self.id = None
         self.name = None
@@ -1205,10 +1487,10 @@ class UpdateDomainListResult(msrest.serialization.Model):
 
     All required parameters must be populated in order to send to Azure.
 
-    :param value: Required.
-    :type value: list[~azure.mgmt.compute.v2020_10_01_preview.models.UpdateDomain]
-    :param next_link:
-    :type next_link: str
+    :ivar value: Required.
+    :vartype value: list[~azure.mgmt.compute.v2020_10_01_preview.models.UpdateDomain]
+    :ivar next_link:
+    :vartype next_link: str
     """
 
     _validation = {
@@ -1224,6 +1506,12 @@ class UpdateDomainListResult(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword value: Required.
+        :paramtype value: list[~azure.mgmt.compute.v2020_10_01_preview.models.UpdateDomain]
+        :keyword next_link:
+        :paramtype next_link: str
+        """
         super(UpdateDomainListResult, self).__init__(**kwargs)
         self.value = kwargs['value']
         self.next_link = kwargs.get('next_link', None)

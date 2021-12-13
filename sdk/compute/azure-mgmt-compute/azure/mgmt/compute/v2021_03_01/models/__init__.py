@@ -124,7 +124,6 @@ try:
     from ._models_py3 import RestorePointCollectionListResult
     from ._models_py3 import RestorePointCollectionSourceProperties
     from ._models_py3 import RestorePointCollectionUpdate
-    from ._models_py3 import RestorePointProvisioningDetails
     from ._models_py3 import RestorePointSourceMetadata
     from ._models_py3 import RestorePointSourceVMDataDisk
     from ._models_py3 import RestorePointSourceVMOSDisk
@@ -390,7 +389,6 @@ except (SyntaxError, ImportError):
     from ._models import RestorePointCollectionListResult  # type: ignore
     from ._models import RestorePointCollectionSourceProperties  # type: ignore
     from ._models import RestorePointCollectionUpdate  # type: ignore
-    from ._models import RestorePointProvisioningDetails  # type: ignore
     from ._models import RestorePointSourceMetadata  # type: ignore
     from ._models import RestorePointSourceVMDataDisk  # type: ignore
     from ._models import RestorePointSourceVMOSDisk  # type: ignore
@@ -723,7 +721,6 @@ __all__ = [
     'RestorePointCollectionListResult',
     'RestorePointCollectionSourceProperties',
     'RestorePointCollectionUpdate',
-    'RestorePointProvisioningDetails',
     'RestorePointSourceMetadata',
     'RestorePointSourceVMDataDisk',
     'RestorePointSourceVMOSDisk',
