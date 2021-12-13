@@ -15,12 +15,12 @@ class ActivityLogAlertActionGroup(msrest.serialization.Model):
 
     All required parameters must be populated in order to send to Azure.
 
-    :param action_group_id: Required. The resourceId of the action group. This cannot be null or
+    :ivar action_group_id: Required. The resourceId of the action group. This cannot be null or
      empty.
-    :type action_group_id: str
-    :param webhook_properties: The dictionary of custom properties to include with the post
+    :vartype action_group_id: str
+    :ivar webhook_properties: The dictionary of custom properties to include with the post
      operation. These data are appended to the webhook payload.
-    :type webhook_properties: dict[str, str]
+    :vartype webhook_properties: dict[str, str]
     """
 
     _validation = {
@@ -36,6 +36,14 @@ class ActivityLogAlertActionGroup(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword action_group_id: Required. The resourceId of the action group. This cannot be null or
+         empty.
+        :paramtype action_group_id: str
+        :keyword webhook_properties: The dictionary of custom properties to include with the post
+         operation. These data are appended to the webhook payload.
+        :paramtype webhook_properties: dict[str, str]
+        """
         super(ActivityLogAlertActionGroup, self).__init__(**kwargs)
         self.action_group_id = kwargs['action_group_id']
         self.webhook_properties = kwargs.get('webhook_properties', None)
@@ -44,8 +52,8 @@ class ActivityLogAlertActionGroup(msrest.serialization.Model):
 class ActivityLogAlertActionList(msrest.serialization.Model):
     """A list of activity log alert actions.
 
-    :param action_groups: The list of activity log alerts.
-    :type action_groups:
+    :ivar action_groups: The list of activity log alerts.
+    :vartype action_groups:
      list[~$(python-base-namespace).v2017_03_01_preview.models.ActivityLogAlertActionGroup]
     """
 
@@ -57,6 +65,11 @@ class ActivityLogAlertActionList(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword action_groups: The list of activity log alerts.
+        :paramtype action_groups:
+         list[~$(python-base-namespace).v2017_03_01_preview.models.ActivityLogAlertActionGroup]
+        """
         super(ActivityLogAlertActionList, self).__init__(**kwargs)
         self.action_groups = kwargs.get('action_groups', None)
 
@@ -66,8 +79,8 @@ class ActivityLogAlertAllOfCondition(msrest.serialization.Model):
 
     All required parameters must be populated in order to send to Azure.
 
-    :param all_of: Required. The list of activity log alert conditions.
-    :type all_of:
+    :ivar all_of: Required. The list of activity log alert conditions.
+    :vartype all_of:
      list[~$(python-base-namespace).v2017_03_01_preview.models.ActivityLogAlertLeafCondition]
     """
 
@@ -83,6 +96,11 @@ class ActivityLogAlertAllOfCondition(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword all_of: Required. The list of activity log alert conditions.
+        :paramtype all_of:
+         list[~$(python-base-namespace).v2017_03_01_preview.models.ActivityLogAlertLeafCondition]
+        """
         super(ActivityLogAlertAllOfCondition, self).__init__(**kwargs)
         self.all_of = kwargs['all_of']
 
@@ -92,14 +110,14 @@ class ActivityLogAlertLeafCondition(msrest.serialization.Model):
 
     All required parameters must be populated in order to send to Azure.
 
-    :param field: Required. The name of the field that this condition will examine. The possible
+    :ivar field: Required. The name of the field that this condition will examine. The possible
      values for this field are (case-insensitive): 'resourceId', 'category', 'caller', 'level',
      'operationName', 'resourceGroup', 'resourceProvider', 'status', 'subStatus', 'resourceType', or
      anything beginning with 'properties.'.
-    :type field: str
-    :param equals: Required. The field value will be compared to this value (case-insensitive) to
+    :vartype field: str
+    :ivar equals: Required. The field value will be compared to this value (case-insensitive) to
      determine if the condition is met.
-    :type equals: str
+    :vartype equals: str
     """
 
     _validation = {
@@ -116,6 +134,16 @@ class ActivityLogAlertLeafCondition(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword field: Required. The name of the field that this condition will examine. The possible
+         values for this field are (case-insensitive): 'resourceId', 'category', 'caller', 'level',
+         'operationName', 'resourceGroup', 'resourceProvider', 'status', 'subStatus', 'resourceType', or
+         anything beginning with 'properties.'.
+        :paramtype field: str
+        :keyword equals: Required. The field value will be compared to this value (case-insensitive) to
+         determine if the condition is met.
+        :paramtype equals: str
+        """
         super(ActivityLogAlertLeafCondition, self).__init__(**kwargs)
         self.field = kwargs['field']
         self.equals = kwargs['equals']
@@ -124,8 +152,8 @@ class ActivityLogAlertLeafCondition(msrest.serialization.Model):
 class ActivityLogAlertList(msrest.serialization.Model):
     """A list of activity log alerts.
 
-    :param value: The list of activity log alerts.
-    :type value:
+    :ivar value: The list of activity log alerts.
+    :vartype value:
      list[~$(python-base-namespace).v2017_03_01_preview.models.ActivityLogAlertResource]
     """
 
@@ -137,6 +165,11 @@ class ActivityLogAlertList(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword value: The list of activity log alerts.
+        :paramtype value:
+         list[~$(python-base-namespace).v2017_03_01_preview.models.ActivityLogAlertResource]
+        """
         super(ActivityLogAlertList, self).__init__(**kwargs)
         self.value = kwargs.get('value', None)
 
@@ -154,10 +187,10 @@ class Resource(msrest.serialization.Model):
     :vartype name: str
     :ivar type: Azure resource type.
     :vartype type: str
-    :param location: Required. Resource location.
-    :type location: str
-    :param tags: A set of tags. Resource tags.
-    :type tags: dict[str, str]
+    :ivar location: Required. Resource location.
+    :vartype location: str
+    :ivar tags: A set of tags. Resource tags.
+    :vartype tags: dict[str, str]
     """
 
     _validation = {
@@ -179,6 +212,12 @@ class Resource(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword location: Required. Resource location.
+        :paramtype location: str
+        :keyword tags: A set of tags. Resource tags.
+        :paramtype tags: dict[str, str]
+        """
         super(Resource, self).__init__(**kwargs)
         self.id = None
         self.name = None
@@ -200,24 +239,25 @@ class ActivityLogAlertResource(Resource):
     :vartype name: str
     :ivar type: Azure resource type.
     :vartype type: str
-    :param location: Required. Resource location.
-    :type location: str
-    :param tags: A set of tags. Resource tags.
-    :type tags: dict[str, str]
-    :param scopes: A list of resourceIds that will be used as prefixes. The alert will only apply
-     to activityLogs with resourceIds that fall under one of these prefixes. This list must include
-     at least one item.
-    :type scopes: list[str]
-    :param enabled: Indicates whether this activity log alert is enabled. If an activity log alert
+    :ivar location: Required. Resource location.
+    :vartype location: str
+    :ivar tags: A set of tags. Resource tags.
+    :vartype tags: dict[str, str]
+    :ivar scopes: A list of resourceIds that will be used as prefixes. The alert will only apply to
+     activityLogs with resourceIds that fall under one of these prefixes. This list must include at
+     least one item.
+    :vartype scopes: list[str]
+    :ivar enabled: Indicates whether this activity log alert is enabled. If an activity log alert
      is not enabled, then none of its actions will be activated.
-    :type enabled: bool
-    :param condition: The condition that will cause this alert to activate.
-    :type condition:
+    :vartype enabled: bool
+    :ivar condition: The condition that will cause this alert to activate.
+    :vartype condition:
      ~$(python-base-namespace).v2017_03_01_preview.models.ActivityLogAlertAllOfCondition
-    :param actions: The actions that will activate when the condition is met.
-    :type actions: ~$(python-base-namespace).v2017_03_01_preview.models.ActivityLogAlertActionList
-    :param description: A description of this activity log alert.
-    :type description: str
+    :ivar actions: The actions that will activate when the condition is met.
+    :vartype actions:
+     ~$(python-base-namespace).v2017_03_01_preview.models.ActivityLogAlertActionList
+    :ivar description: A description of this activity log alert.
+    :vartype description: str
     """
 
     _validation = {
@@ -244,6 +284,27 @@ class ActivityLogAlertResource(Resource):
         self,
         **kwargs
     ):
+        """
+        :keyword location: Required. Resource location.
+        :paramtype location: str
+        :keyword tags: A set of tags. Resource tags.
+        :paramtype tags: dict[str, str]
+        :keyword scopes: A list of resourceIds that will be used as prefixes. The alert will only apply
+         to activityLogs with resourceIds that fall under one of these prefixes. This list must include
+         at least one item.
+        :paramtype scopes: list[str]
+        :keyword enabled: Indicates whether this activity log alert is enabled. If an activity log
+         alert is not enabled, then none of its actions will be activated.
+        :paramtype enabled: bool
+        :keyword condition: The condition that will cause this alert to activate.
+        :paramtype condition:
+         ~$(python-base-namespace).v2017_03_01_preview.models.ActivityLogAlertAllOfCondition
+        :keyword actions: The actions that will activate when the condition is met.
+        :paramtype actions:
+         ~$(python-base-namespace).v2017_03_01_preview.models.ActivityLogAlertActionList
+        :keyword description: A description of this activity log alert.
+        :paramtype description: str
+        """
         super(ActivityLogAlertResource, self).__init__(**kwargs)
         self.scopes = kwargs.get('scopes', None)
         self.enabled = kwargs.get('enabled', True)
@@ -265,13 +326,13 @@ class ActivityLogAlertResourcePatch(Resource):
     :vartype name: str
     :ivar type: Azure resource type.
     :vartype type: str
-    :param location: Required. Resource location.
-    :type location: str
-    :param tags: A set of tags. Resource tags.
-    :type tags: dict[str, str]
-    :param enabled: Indicates whether this activity log alert is enabled. If an activity log alert
+    :ivar location: Required. Resource location.
+    :vartype location: str
+    :ivar tags: A set of tags. Resource tags.
+    :vartype tags: dict[str, str]
+    :ivar enabled: Indicates whether this activity log alert is enabled. If an activity log alert
      is not enabled, then none of its actions will be activated.
-    :type enabled: bool
+    :vartype enabled: bool
     """
 
     _validation = {
@@ -294,6 +355,15 @@ class ActivityLogAlertResourcePatch(Resource):
         self,
         **kwargs
     ):
+        """
+        :keyword location: Required. Resource location.
+        :paramtype location: str
+        :keyword tags: A set of tags. Resource tags.
+        :paramtype tags: dict[str, str]
+        :keyword enabled: Indicates whether this activity log alert is enabled. If an activity log
+         alert is not enabled, then none of its actions will be activated.
+        :paramtype enabled: bool
+        """
         super(ActivityLogAlertResourcePatch, self).__init__(**kwargs)
         self.enabled = kwargs.get('enabled', True)
 
@@ -301,10 +371,10 @@ class ActivityLogAlertResourcePatch(Resource):
 class ErrorResponse(msrest.serialization.Model):
     """Describes the format of Error response.
 
-    :param code: Error code.
-    :type code: str
-    :param message: Error message indicating why the operation failed.
-    :type message: str
+    :ivar code: Error code.
+    :vartype code: str
+    :ivar message: Error message indicating why the operation failed.
+    :vartype message: str
     """
 
     _attribute_map = {
@@ -316,6 +386,12 @@ class ErrorResponse(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword code: Error code.
+        :paramtype code: str
+        :keyword message: Error message indicating why the operation failed.
+        :paramtype message: str
+        """
         super(ErrorResponse, self).__init__(**kwargs)
         self.code = kwargs.get('code', None)
         self.message = kwargs.get('message', None)
