@@ -15,15 +15,15 @@ class Baseline(msrest.serialization.Model):
 
     All required parameters must be populated in order to send to Azure.
 
-    :param sensitivity: Required. the sensitivity of the baseline. Possible values include: "Low",
+    :ivar sensitivity: Required. the sensitivity of the baseline. Possible values include: "Low",
      "Medium", "High".
-    :type sensitivity: str or ~$(python-base-namespace).v2017_11_01_preview.models.Sensitivity
-    :param low_thresholds: Required. The low thresholds of the baseline.
-    :type low_thresholds: list[float]
-    :param high_thresholds: Required. The high thresholds of the baseline.
-    :type high_thresholds: list[float]
-    :param timestamps: the array of timestamps of the baselines.
-    :type timestamps: list[~datetime.datetime]
+    :vartype sensitivity: str or ~$(python-base-namespace).v2017_11_01_preview.models.Sensitivity
+    :ivar low_thresholds: Required. The low thresholds of the baseline.
+    :vartype low_thresholds: list[float]
+    :ivar high_thresholds: Required. The high thresholds of the baseline.
+    :vartype high_thresholds: list[float]
+    :ivar timestamps: the array of timestamps of the baselines.
+    :vartype timestamps: list[~datetime.datetime]
     """
 
     _validation = {
@@ -43,6 +43,17 @@ class Baseline(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword sensitivity: Required. the sensitivity of the baseline. Possible values include:
+         "Low", "Medium", "High".
+        :paramtype sensitivity: str or ~$(python-base-namespace).v2017_11_01_preview.models.Sensitivity
+        :keyword low_thresholds: Required. The low thresholds of the baseline.
+        :paramtype low_thresholds: list[float]
+        :keyword high_thresholds: Required. The high thresholds of the baseline.
+        :paramtype high_thresholds: list[float]
+        :keyword timestamps: the array of timestamps of the baselines.
+        :paramtype timestamps: list[~datetime.datetime]
+        """
         super(Baseline, self).__init__(**kwargs)
         self.sensitivity = kwargs['sensitivity']
         self.low_thresholds = kwargs['low_thresholds']
@@ -53,10 +64,10 @@ class Baseline(msrest.serialization.Model):
 class BaselineMetadataValue(msrest.serialization.Model):
     """Represents a baseline metadata value.
 
-    :param name: the name of the metadata.
-    :type name: ~$(python-base-namespace).v2017_11_01_preview.models.LocalizableString
-    :param value: the value of the metadata.
-    :type value: str
+    :ivar name: the name of the metadata.
+    :vartype name: ~$(python-base-namespace).v2017_11_01_preview.models.LocalizableString
+    :ivar value: the value of the metadata.
+    :vartype value: str
     """
 
     _attribute_map = {
@@ -68,6 +79,12 @@ class BaselineMetadataValue(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword name: the name of the metadata.
+        :paramtype name: ~$(python-base-namespace).v2017_11_01_preview.models.LocalizableString
+        :keyword value: the value of the metadata.
+        :paramtype value: str
+        """
         super(BaselineMetadataValue, self).__init__(**kwargs)
         self.name = kwargs.get('name', None)
         self.value = kwargs.get('value', None)
@@ -84,22 +101,22 @@ class BaselineResponse(msrest.serialization.Model):
     :vartype type: str
     :ivar name: the name and the display name of the metric, i.e. it is localizable string.
     :vartype name: ~$(python-base-namespace).v2017_11_01_preview.models.LocalizableString
-    :param timespan: The timespan for which the data was retrieved. Its value consists of two
+    :ivar timespan: The timespan for which the data was retrieved. Its value consists of two
      datetimes concatenated, separated by '/'.  This may be adjusted in the future and returned back
      from what was originally requested.
-    :type timespan: str
-    :param interval: The interval (window size) for which the metric data was returned in.  This
-     may be adjusted in the future and returned back from what was originally requested.  This is
-     not present if a metadata request was made.
-    :type interval: ~datetime.timedelta
-    :param aggregation: The aggregation type of the metric.
-    :type aggregation: str
-    :param timestamps: the array of timestamps of the baselines.
-    :type timestamps: list[~datetime.datetime]
-    :param baseline: the baseline values for each sensitivity.
-    :type baseline: list[~$(python-base-namespace).v2017_11_01_preview.models.Baseline]
-    :param metadata: the baseline metadata values.
-    :type metadata:
+    :vartype timespan: str
+    :ivar interval: The interval (window size) for which the metric data was returned in.  This may
+     be adjusted in the future and returned back from what was originally requested.  This is not
+     present if a metadata request was made.
+    :vartype interval: ~datetime.timedelta
+    :ivar aggregation: The aggregation type of the metric.
+    :vartype aggregation: str
+    :ivar timestamps: the array of timestamps of the baselines.
+    :vartype timestamps: list[~datetime.datetime]
+    :ivar baseline: the baseline values for each sensitivity.
+    :vartype baseline: list[~$(python-base-namespace).v2017_11_01_preview.models.Baseline]
+    :ivar metadata: the baseline metadata values.
+    :vartype metadata:
      list[~$(python-base-namespace).v2017_11_01_preview.models.BaselineMetadataValue]
     """
 
@@ -125,6 +142,25 @@ class BaselineResponse(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword timespan: The timespan for which the data was retrieved. Its value consists of two
+         datetimes concatenated, separated by '/'.  This may be adjusted in the future and returned back
+         from what was originally requested.
+        :paramtype timespan: str
+        :keyword interval: The interval (window size) for which the metric data was returned in.  This
+         may be adjusted in the future and returned back from what was originally requested.  This is
+         not present if a metadata request was made.
+        :paramtype interval: ~datetime.timedelta
+        :keyword aggregation: The aggregation type of the metric.
+        :paramtype aggregation: str
+        :keyword timestamps: the array of timestamps of the baselines.
+        :paramtype timestamps: list[~datetime.datetime]
+        :keyword baseline: the baseline values for each sensitivity.
+        :paramtype baseline: list[~$(python-base-namespace).v2017_11_01_preview.models.Baseline]
+        :keyword metadata: the baseline metadata values.
+        :paramtype metadata:
+         list[~$(python-base-namespace).v2017_11_01_preview.models.BaselineMetadataValue]
+        """
         super(BaselineResponse, self).__init__(**kwargs)
         self.id = None
         self.type = None
@@ -142,12 +178,12 @@ class CalculateBaselineResponse(msrest.serialization.Model):
 
     All required parameters must be populated in order to send to Azure.
 
-    :param type: Required. the resource type of the baseline resource.
-    :type type: str
-    :param timestamps: the array of timestamps of the baselines.
-    :type timestamps: list[~datetime.datetime]
-    :param baseline: Required. the baseline values for each sensitivity.
-    :type baseline: list[~$(python-base-namespace).v2017_11_01_preview.models.Baseline]
+    :ivar type: Required. the resource type of the baseline resource.
+    :vartype type: str
+    :ivar timestamps: the array of timestamps of the baselines.
+    :vartype timestamps: list[~datetime.datetime]
+    :ivar baseline: Required. the baseline values for each sensitivity.
+    :vartype baseline: list[~$(python-base-namespace).v2017_11_01_preview.models.Baseline]
     """
 
     _validation = {
@@ -165,6 +201,14 @@ class CalculateBaselineResponse(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword type: Required. the resource type of the baseline resource.
+        :paramtype type: str
+        :keyword timestamps: the array of timestamps of the baselines.
+        :paramtype timestamps: list[~datetime.datetime]
+        :keyword baseline: Required. the baseline values for each sensitivity.
+        :paramtype baseline: list[~$(python-base-namespace).v2017_11_01_preview.models.Baseline]
+        """
         super(CalculateBaselineResponse, self).__init__(**kwargs)
         self.type = kwargs['type']
         self.timestamps = kwargs.get('timestamps', None)
@@ -174,10 +218,10 @@ class CalculateBaselineResponse(msrest.serialization.Model):
 class ErrorResponse(msrest.serialization.Model):
     """Describes the format of Error response.
 
-    :param code: Error code.
-    :type code: str
-    :param message: Error message indicating why the operation failed.
-    :type message: str
+    :ivar code: Error code.
+    :vartype code: str
+    :ivar message: Error message indicating why the operation failed.
+    :vartype message: str
     """
 
     _attribute_map = {
@@ -189,6 +233,12 @@ class ErrorResponse(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword code: Error code.
+        :paramtype code: str
+        :keyword message: Error message indicating why the operation failed.
+        :paramtype message: str
+        """
         super(ErrorResponse, self).__init__(**kwargs)
         self.code = kwargs.get('code', None)
         self.message = kwargs.get('message', None)
@@ -199,10 +249,10 @@ class LocalizableString(msrest.serialization.Model):
 
     All required parameters must be populated in order to send to Azure.
 
-    :param value: Required. the invariant value.
-    :type value: str
-    :param localized_value: the locale specific value.
-    :type localized_value: str
+    :ivar value: Required. the invariant value.
+    :vartype value: str
+    :ivar localized_value: the locale specific value.
+    :vartype localized_value: str
     """
 
     _validation = {
@@ -218,6 +268,12 @@ class LocalizableString(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword value: Required. the invariant value.
+        :paramtype value: str
+        :keyword localized_value: the locale specific value.
+        :paramtype localized_value: str
+        """
         super(LocalizableString, self).__init__(**kwargs)
         self.value = kwargs['value']
         self.localized_value = kwargs.get('localized_value', None)
@@ -228,12 +284,12 @@ class TimeSeriesInformation(msrest.serialization.Model):
 
     All required parameters must be populated in order to send to Azure.
 
-    :param sensitivities: Required. the list of sensitivities for calculating the baseline.
-    :type sensitivities: list[str]
-    :param values: Required. The metric values to calculate the baseline.
-    :type values: list[float]
-    :param timestamps: the array of timestamps of the baselines.
-    :type timestamps: list[~datetime.datetime]
+    :ivar sensitivities: Required. the list of sensitivities for calculating the baseline.
+    :vartype sensitivities: list[str]
+    :ivar values: Required. The metric values to calculate the baseline.
+    :vartype values: list[float]
+    :ivar timestamps: the array of timestamps of the baselines.
+    :vartype timestamps: list[~datetime.datetime]
     """
 
     _validation = {
@@ -251,6 +307,14 @@ class TimeSeriesInformation(msrest.serialization.Model):
         self,
         **kwargs
     ):
+        """
+        :keyword sensitivities: Required. the list of sensitivities for calculating the baseline.
+        :paramtype sensitivities: list[str]
+        :keyword values: Required. The metric values to calculate the baseline.
+        :paramtype values: list[float]
+        :keyword timestamps: the array of timestamps of the baselines.
+        :paramtype timestamps: list[~datetime.datetime]
+        """
         super(TimeSeriesInformation, self).__init__(**kwargs)
         self.sensitivities = kwargs['sensitivities']
         self.values = kwargs['values']
