@@ -18,10 +18,9 @@ from azure.core.rest import HttpRequest
 from azure.core.tracing.decorator import distributed_trace
 from azure.core.tracing.decorator_async import distributed_trace_async
 
-from ..._vendor import _convert_request
 from ...operations._operations import build_classification_rules_create_or_update_request, build_classification_rules_delete_request, build_classification_rules_get_request, build_classification_rules_list_all_request, build_classification_rules_list_versions_by_classification_rule_name_request, build_classification_rules_tag_classification_version_request, build_data_sources_create_or_update_request, build_data_sources_delete_request, build_data_sources_get_request, build_data_sources_list_all_request, build_filters_create_or_update_request, build_filters_get_request, build_key_vault_connections_create_request, build_key_vault_connections_delete_request, build_key_vault_connections_get_request, build_key_vault_connections_list_all_request, build_scan_result_cancel_scan_request, build_scan_result_list_scan_history_request, build_scan_result_run_scan_request, build_scan_rulesets_create_or_update_request, build_scan_rulesets_delete_request, build_scan_rulesets_get_request, build_scan_rulesets_list_all_request, build_scans_create_or_update_request, build_scans_delete_request, build_scans_get_request, build_scans_list_by_data_source_request, build_system_scan_rulesets_get_by_version_request, build_system_scan_rulesets_get_latest_request, build_system_scan_rulesets_get_request, build_system_scan_rulesets_list_all_request, build_system_scan_rulesets_list_versions_by_data_source_request, build_triggers_create_trigger_request, build_triggers_delete_trigger_request, build_triggers_get_trigger_request
-
 T = TypeVar('T')
+JSONType = Any
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
 
 class KeyVaultConnectionsOperations:
@@ -47,13 +46,16 @@ class KeyVaultConnectionsOperations:
         self,
         key_vault_name: str,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Gets key vault information.
 
         :param key_vault_name:
         :type key_vault_name: str
+        :keyword api_version: Api Version. The default value is "2018-12-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -69,23 +71,25 @@ class KeyVaultConnectionsOperations:
                     }
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
+        api_version = kwargs.pop('api_version', "2018-12-01-preview")  # type: str
+
         
         request = build_key_vault_connections_get_request(
             key_vault_name=key_vault_name,
-            template_url=self.get.metadata['url'],
+            api_version=api_version,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -109,17 +113,20 @@ class KeyVaultConnectionsOperations:
     async def create(
         self,
         key_vault_name: str,
-        body: Any,
+        body: JSONType,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Creates an instance of a key vault connection.
 
         :param key_vault_name:
         :type key_vault_name: str
         :param body:
-        :type body: Any
+        :type body: JSONType
+        :keyword api_version: Api Version. The default value is "2018-12-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -145,28 +152,29 @@ class KeyVaultConnectionsOperations:
                     }
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
+        api_version = kwargs.pop('api_version', "2018-12-01-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
-        json = body
+        _json = body
 
         request = build_key_vault_connections_create_request(
             key_vault_name=key_vault_name,
+            api_version=api_version,
             content_type=content_type,
-            json=json,
-            template_url=self.create.metadata['url'],
+            json=_json,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -191,13 +199,16 @@ class KeyVaultConnectionsOperations:
         self,
         key_vault_name: str,
         **kwargs: Any
-    ) -> Optional[Any]:
+    ) -> Optional[JSONType]:
         """Deletes the key vault connection associated with the account.
 
         :param key_vault_name:
         :type key_vault_name: str
+        :keyword api_version: Api Version. The default value is "2018-12-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :return: JSON object
-        :rtype: Any or None
+        :rtype: JSONType or None
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -213,23 +224,25 @@ class KeyVaultConnectionsOperations:
                     }
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional[Any]]
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional[JSONType]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
+        api_version = kwargs.pop('api_version', "2018-12-01-preview")  # type: str
+
         
         request = build_key_vault_connections_delete_request(
             key_vault_name=key_vault_name,
-            template_url=self.delete.metadata['url'],
+            api_version=api_version,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200, 204]:
@@ -255,11 +268,14 @@ class KeyVaultConnectionsOperations:
     def list_all(
         self,
         **kwargs: Any
-    ) -> AsyncIterable[Any]:
+    ) -> AsyncIterable[JSONType]:
         """List key vault connections in account.
 
+        :keyword api_version: Api Version. The default value is "2018-12-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :return: An iterator like instance of JSON object
-        :rtype: ~azure.core.async_paging.AsyncItemPaged[Any]
+        :rtype: ~azure.core.async_paging.AsyncItemPaged[JSONType]
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -281,7 +297,9 @@ class KeyVaultConnectionsOperations:
                     ]
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        api_version = kwargs.pop('api_version', "2018-12-01-preview")  # type: str
+
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -290,9 +308,8 @@ class KeyVaultConnectionsOperations:
             if not next_link:
                 
                 request = build_key_vault_connections_list_all_request(
-                    template_url=self.list_all.metadata['url'],
+                    api_version=api_version,
                 )
-                request = _convert_request(request)
                 path_format_arguments = {
                     "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
                 }
@@ -301,13 +318,12 @@ class KeyVaultConnectionsOperations:
             else:
                 
                 request = build_key_vault_connections_list_all_request(
-                    template_url=next_link,
+                    api_version=api_version,
                 )
-                request = _convert_request(request)
                 path_format_arguments = {
                     "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
                 }
-                request.url = self._client.format_url(request.url, **path_format_arguments)
+                request.url = self._client.format_url(next_link, **path_format_arguments)
 
                 path_format_arguments = {
                     "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
@@ -362,13 +378,16 @@ class ClassificationRulesOperations:
         self,
         classification_rule_name: str,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Get a classification rule.
 
         :param classification_rule_name:
         :type classification_rule_name: str
+        :keyword api_version: Api Version. The default value is "2018-12-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -381,23 +400,25 @@ class ClassificationRulesOperations:
                     kind: ClassificationRule
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
+        api_version = kwargs.pop('api_version', "2018-12-01-preview")  # type: str
+
         
         request = build_classification_rules_get_request(
             classification_rule_name=classification_rule_name,
-            template_url=self.get.metadata['url'],
+            api_version=api_version,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -421,17 +442,20 @@ class ClassificationRulesOperations:
     async def create_or_update(
         self,
         classification_rule_name: str,
-        body: Any = None,
+        body: JSONType = None,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Creates or Updates a classification rule.
 
         :param classification_rule_name:
         :type classification_rule_name: str
         :param body:
-        :type body: Any
+        :type body: JSONType
+        :keyword api_version: Api Version. The default value is "2018-12-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -453,31 +477,32 @@ class ClassificationRulesOperations:
                     kind: ClassificationRule
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
+        api_version = kwargs.pop('api_version', "2018-12-01-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
         if body is not None:
-            json = body
+            _json = body
         else:
-            json = None
+            _json = None
 
         request = build_classification_rules_create_or_update_request(
             classification_rule_name=classification_rule_name,
+            api_version=api_version,
             content_type=content_type,
-            json=json,
-            template_url=self.create_or_update.metadata['url'],
+            json=_json,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200, 201]:
@@ -509,13 +534,16 @@ class ClassificationRulesOperations:
         self,
         classification_rule_name: str,
         **kwargs: Any
-    ) -> Optional[Any]:
+    ) -> Optional[JSONType]:
         """Deletes a classification rule.
 
         :param classification_rule_name:
         :type classification_rule_name: str
+        :keyword api_version: Api Version. The default value is "2018-12-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :return: JSON object
-        :rtype: Any or None
+        :rtype: JSONType or None
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -528,23 +556,25 @@ class ClassificationRulesOperations:
                     kind: ClassificationRule
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional[Any]]
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional[JSONType]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
+        api_version = kwargs.pop('api_version', "2018-12-01-preview")  # type: str
+
         
         request = build_classification_rules_delete_request(
             classification_rule_name=classification_rule_name,
-            template_url=self.delete.metadata['url'],
+            api_version=api_version,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200, 204]:
@@ -570,11 +600,14 @@ class ClassificationRulesOperations:
     def list_all(
         self,
         **kwargs: Any
-    ) -> AsyncIterable[Any]:
+    ) -> AsyncIterable[JSONType]:
         """List classification rules in Account.
 
+        :keyword api_version: Api Version. The default value is "2018-12-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :return: An iterator like instance of JSON object
-        :rtype: ~azure.core.async_paging.AsyncItemPaged[Any]
+        :rtype: ~azure.core.async_paging.AsyncItemPaged[JSONType]
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -593,7 +626,9 @@ class ClassificationRulesOperations:
                     ]
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        api_version = kwargs.pop('api_version', "2018-12-01-preview")  # type: str
+
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -602,9 +637,8 @@ class ClassificationRulesOperations:
             if not next_link:
                 
                 request = build_classification_rules_list_all_request(
-                    template_url=self.list_all.metadata['url'],
+                    api_version=api_version,
                 )
-                request = _convert_request(request)
                 path_format_arguments = {
                     "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
                 }
@@ -613,13 +647,12 @@ class ClassificationRulesOperations:
             else:
                 
                 request = build_classification_rules_list_all_request(
-                    template_url=next_link,
+                    api_version=api_version,
                 )
-                request = _convert_request(request)
                 path_format_arguments = {
                     "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
                 }
-                request.url = self._client.format_url(request.url, **path_format_arguments)
+                request.url = self._client.format_url(next_link, **path_format_arguments)
 
                 path_format_arguments = {
                     "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
@@ -657,13 +690,16 @@ class ClassificationRulesOperations:
         self,
         classification_rule_name: str,
         **kwargs: Any
-    ) -> AsyncIterable[Any]:
+    ) -> AsyncIterable[JSONType]:
         """Lists the rule versions of a classification rule.
 
         :param classification_rule_name:
         :type classification_rule_name: str
+        :keyword api_version: Api Version. The default value is "2018-12-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :return: An iterator like instance of JSON object
-        :rtype: ~azure.core.async_paging.AsyncItemPaged[Any]
+        :rtype: ~azure.core.async_paging.AsyncItemPaged[JSONType]
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -682,7 +718,9 @@ class ClassificationRulesOperations:
                     ]
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        api_version = kwargs.pop('api_version', "2018-12-01-preview")  # type: str
+
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -692,9 +730,8 @@ class ClassificationRulesOperations:
                 
                 request = build_classification_rules_list_versions_by_classification_rule_name_request(
                     classification_rule_name=classification_rule_name,
-                    template_url=self.list_versions_by_classification_rule_name.metadata['url'],
+                    api_version=api_version,
                 )
-                request = _convert_request(request)
                 path_format_arguments = {
                     "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
                 }
@@ -704,13 +741,12 @@ class ClassificationRulesOperations:
                 
                 request = build_classification_rules_list_versions_by_classification_rule_name_request(
                     classification_rule_name=classification_rule_name,
-                    template_url=next_link,
+                    api_version=api_version,
                 )
-                request = _convert_request(request)
                 path_format_arguments = {
                     "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
                 }
-                request.url = self._client.format_url(request.url, **path_format_arguments)
+                request.url = self._client.format_url(next_link, **path_format_arguments)
 
                 path_format_arguments = {
                     "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
@@ -751,7 +787,7 @@ class ClassificationRulesOperations:
         *,
         action: str,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Sets Classification Action on a specific classification rule version.
 
         :param classification_rule_name:
@@ -760,8 +796,11 @@ class ClassificationRulesOperations:
         :type classification_rule_version: int
         :keyword action: Possible values are: "Keep" or "Delete".
         :paramtype action: str
+        :keyword api_version: Api Version. The default value is "2018-12-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -790,25 +829,27 @@ class ClassificationRulesOperations:
                     "status": "str"  # Optional. Possible values include: "Accepted", "InProgress", "TransientFailure", "Succeeded", "Failed", "Canceled".
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
+        api_version = kwargs.pop('api_version', "2018-12-01-preview")  # type: str
+
         
         request = build_classification_rules_tag_classification_version_request(
             classification_rule_name=classification_rule_name,
             classification_rule_version=classification_rule_version,
+            api_version=api_version,
             action=action,
-            template_url=self.tag_classification_version.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [202]:
@@ -849,17 +890,20 @@ class DataSourcesOperations:
     async def create_or_update(
         self,
         data_source_name: str,
-        body: Any = None,
+        body: JSONType = None,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Creates or Updates a data source.
 
         :param data_source_name:
         :type data_source_name: str
         :param body:
-        :type body: Any
+        :type body: JSONType
+        :keyword api_version: Api Version. The default value is "2018-12-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -987,31 +1031,32 @@ class DataSourcesOperations:
                     kind: DataSource
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
+        api_version = kwargs.pop('api_version', "2018-12-01-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
         if body is not None:
-            json = body
+            _json = body
         else:
-            json = None
+            _json = None
 
         request = build_data_sources_create_or_update_request(
             data_source_name=data_source_name,
+            api_version=api_version,
             content_type=content_type,
-            json=json,
-            template_url=self.create_or_update.metadata['url'],
+            json=_json,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200, 201]:
@@ -1043,13 +1088,16 @@ class DataSourcesOperations:
         self,
         data_source_name: str,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Get a data source.
 
         :param data_source_name:
         :type data_source_name: str
+        :keyword api_version: Api Version. The default value is "2018-12-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -1115,23 +1163,25 @@ class DataSourcesOperations:
                     kind: DataSource
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
+        api_version = kwargs.pop('api_version', "2018-12-01-preview")  # type: str
+
         
         request = build_data_sources_get_request(
             data_source_name=data_source_name,
-            template_url=self.get.metadata['url'],
+            api_version=api_version,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -1156,13 +1206,16 @@ class DataSourcesOperations:
         self,
         data_source_name: str,
         **kwargs: Any
-    ) -> Optional[Any]:
+    ) -> Optional[JSONType]:
         """Deletes a data source.
 
         :param data_source_name:
         :type data_source_name: str
+        :keyword api_version: Api Version. The default value is "2018-12-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :return: JSON object
-        :rtype: Any or None
+        :rtype: JSONType or None
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -1228,23 +1281,25 @@ class DataSourcesOperations:
                     kind: DataSource
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional[Any]]
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional[JSONType]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
+        api_version = kwargs.pop('api_version', "2018-12-01-preview")  # type: str
+
         
         request = build_data_sources_delete_request(
             data_source_name=data_source_name,
-            template_url=self.delete.metadata['url'],
+            api_version=api_version,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200, 204]:
@@ -1270,11 +1325,14 @@ class DataSourcesOperations:
     def list_all(
         self,
         **kwargs: Any
-    ) -> AsyncIterable[Any]:
+    ) -> AsyncIterable[JSONType]:
         """List data sources in Data catalog.
 
+        :keyword api_version: Api Version. The default value is "2018-12-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :return: An iterator like instance of JSON object
-        :rtype: ~azure.core.async_paging.AsyncItemPaged[Any]
+        :rtype: ~azure.core.async_paging.AsyncItemPaged[JSONType]
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -1346,7 +1404,9 @@ class DataSourcesOperations:
                     ]
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        api_version = kwargs.pop('api_version', "2018-12-01-preview")  # type: str
+
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -1355,9 +1415,8 @@ class DataSourcesOperations:
             if not next_link:
                 
                 request = build_data_sources_list_all_request(
-                    template_url=self.list_all.metadata['url'],
+                    api_version=api_version,
                 )
-                request = _convert_request(request)
                 path_format_arguments = {
                     "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
                 }
@@ -1366,13 +1425,12 @@ class DataSourcesOperations:
             else:
                 
                 request = build_data_sources_list_all_request(
-                    template_url=next_link,
+                    api_version=api_version,
                 )
-                request = _convert_request(request)
                 path_format_arguments = {
                     "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
                 }
-                request.url = self._client.format_url(request.url, **path_format_arguments)
+                request.url = self._client.format_url(next_link, **path_format_arguments)
 
                 path_format_arguments = {
                     "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
@@ -1428,15 +1486,18 @@ class FiltersOperations:
         data_source_name: str,
         scan_name: str,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Get a filter.
 
         :param data_source_name:
         :type data_source_name: str
         :param scan_name:
         :type scan_name: str
+        :keyword api_version: Api Version. The default value is "2018-12-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -1456,24 +1517,26 @@ class FiltersOperations:
                     }
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
+        api_version = kwargs.pop('api_version', "2018-12-01-preview")  # type: str
+
         
         request = build_filters_get_request(
             data_source_name=data_source_name,
             scan_name=scan_name,
-            template_url=self.get.metadata['url'],
+            api_version=api_version,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -1498,9 +1561,9 @@ class FiltersOperations:
         self,
         data_source_name: str,
         scan_name: str,
-        body: Any = None,
+        body: JSONType = None,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Creates or updates a filter.
 
         :param data_source_name:
@@ -1508,9 +1571,12 @@ class FiltersOperations:
         :param scan_name:
         :type scan_name: str
         :param body:
-        :type body: Any
+        :type body: JSONType
+        :keyword api_version: Api Version. The default value is "2018-12-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -1544,32 +1610,33 @@ class FiltersOperations:
                     }
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
+        api_version = kwargs.pop('api_version', "2018-12-01-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
         if body is not None:
-            json = body
+            _json = body
         else:
-            json = None
+            _json = None
 
         request = build_filters_create_or_update_request(
             data_source_name=data_source_name,
             scan_name=scan_name,
+            api_version=api_version,
             content_type=content_type,
-            json=json,
-            template_url=self.create_or_update.metadata['url'],
+            json=_json,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200, 201]:
@@ -1618,9 +1685,9 @@ class ScansOperations:
         self,
         data_source_name: str,
         scan_name: str,
-        body: Any,
+        body: JSONType,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Creates an instance of a scan.
 
         :param data_source_name:
@@ -1628,9 +1695,12 @@ class ScansOperations:
         :param scan_name:
         :type scan_name: str
         :param body:
-        :type body: Any
+        :type body: JSONType
+        :keyword api_version: Api Version. The default value is "2018-12-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -1744,29 +1814,30 @@ class ScansOperations:
                     kind: Scan
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
+        api_version = kwargs.pop('api_version', "2018-12-01-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
-        json = body
+        _json = body
 
         request = build_scans_create_or_update_request(
             data_source_name=data_source_name,
             scan_name=scan_name,
+            api_version=api_version,
             content_type=content_type,
-            json=json,
-            template_url=self.create_or_update.metadata['url'],
+            json=_json,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200, 201]:
@@ -1799,15 +1870,18 @@ class ScansOperations:
         data_source_name: str,
         scan_name: str,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Gets a scan information.
 
         :param data_source_name:
         :type data_source_name: str
         :param scan_name:
         :type scan_name: str
+        :keyword api_version: Api Version. The default value is "2018-12-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -1866,24 +1940,26 @@ class ScansOperations:
                     kind: Scan
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
+        api_version = kwargs.pop('api_version', "2018-12-01-preview")  # type: str
+
         
         request = build_scans_get_request(
             data_source_name=data_source_name,
             scan_name=scan_name,
-            template_url=self.get.metadata['url'],
+            api_version=api_version,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -1909,15 +1985,18 @@ class ScansOperations:
         data_source_name: str,
         scan_name: str,
         **kwargs: Any
-    ) -> Optional[Any]:
+    ) -> Optional[JSONType]:
         """Deletes the scan associated with the data source.
 
         :param data_source_name:
         :type data_source_name: str
         :param scan_name:
         :type scan_name: str
+        :keyword api_version: Api Version. The default value is "2018-12-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :return: JSON object
-        :rtype: Any or None
+        :rtype: JSONType or None
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -1976,24 +2055,26 @@ class ScansOperations:
                     kind: Scan
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional[Any]]
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional[JSONType]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
+        api_version = kwargs.pop('api_version', "2018-12-01-preview")  # type: str
+
         
         request = build_scans_delete_request(
             data_source_name=data_source_name,
             scan_name=scan_name,
-            template_url=self.delete.metadata['url'],
+            api_version=api_version,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200, 204]:
@@ -2020,13 +2101,16 @@ class ScansOperations:
         self,
         data_source_name: str,
         **kwargs: Any
-    ) -> AsyncIterable[Any]:
+    ) -> AsyncIterable[JSONType]:
         """List scans in data source.
 
         :param data_source_name:
         :type data_source_name: str
+        :keyword api_version: Api Version. The default value is "2018-12-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :return: An iterator like instance of JSON object
-        :rtype: ~azure.core.async_paging.AsyncItemPaged[Any]
+        :rtype: ~azure.core.async_paging.AsyncItemPaged[JSONType]
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -2091,7 +2175,9 @@ class ScansOperations:
                     ]
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        api_version = kwargs.pop('api_version', "2018-12-01-preview")  # type: str
+
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -2101,9 +2187,8 @@ class ScansOperations:
                 
                 request = build_scans_list_by_data_source_request(
                     data_source_name=data_source_name,
-                    template_url=self.list_by_data_source.metadata['url'],
+                    api_version=api_version,
                 )
-                request = _convert_request(request)
                 path_format_arguments = {
                     "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
                 }
@@ -2113,13 +2198,12 @@ class ScansOperations:
                 
                 request = build_scans_list_by_data_source_request(
                     data_source_name=data_source_name,
-                    template_url=next_link,
+                    api_version=api_version,
                 )
-                request = _convert_request(request)
                 path_format_arguments = {
                     "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
                 }
-                request.url = self._client.format_url(request.url, **path_format_arguments)
+                request.url = self._client.format_url(next_link, **path_format_arguments)
 
                 path_format_arguments = {
                     "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
@@ -2178,7 +2262,7 @@ class ScanResultOperations:
         *,
         scan_level: Optional[str] = None,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Runs the scan.
 
         :param data_source_name:
@@ -2189,8 +2273,11 @@ class ScanResultOperations:
         :type run_id: str
         :keyword scan_level: Possible values are: "Full" or "Incremental".
         :paramtype scan_level: str
+        :keyword api_version: Api Version. The default value is "2018-12-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -2219,26 +2306,28 @@ class ScanResultOperations:
                     "status": "str"  # Optional. Possible values include: "Accepted", "InProgress", "TransientFailure", "Succeeded", "Failed", "Canceled".
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
+
+        api_version = kwargs.pop('api_version', "2018-12-01-preview")  # type: str
 
         
         request = build_scan_result_run_scan_request(
             data_source_name=data_source_name,
             scan_name=scan_name,
             run_id=run_id,
+            api_version=api_version,
             scan_level=scan_level,
-            template_url=self.run_scan.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [202]:
@@ -2265,7 +2354,7 @@ class ScanResultOperations:
         scan_name: str,
         run_id: str,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Cancels a scan.
 
         :param data_source_name:
@@ -2274,8 +2363,11 @@ class ScanResultOperations:
         :type scan_name: str
         :param run_id:
         :type run_id: str
+        :keyword api_version: Api Version. The default value is "2018-12-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -2304,25 +2396,27 @@ class ScanResultOperations:
                     "status": "str"  # Optional. Possible values include: "Accepted", "InProgress", "TransientFailure", "Succeeded", "Failed", "Canceled".
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
+
+        api_version = kwargs.pop('api_version', "2018-12-01-preview")  # type: str
 
         
         request = build_scan_result_cancel_scan_request(
             data_source_name=data_source_name,
             scan_name=scan_name,
             run_id=run_id,
-            template_url=self.cancel_scan.metadata['url'],
+            api_version=api_version,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [202]:
@@ -2348,15 +2442,18 @@ class ScanResultOperations:
         data_source_name: str,
         scan_name: str,
         **kwargs: Any
-    ) -> AsyncIterable[Any]:
+    ) -> AsyncIterable[JSONType]:
         """Lists the scan history of a scan.
 
         :param data_source_name:
         :type data_source_name: str
         :param scan_name:
         :type scan_name: str
+        :keyword api_version: Api Version. The default value is "2018-12-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :return: An iterator like instance of JSON object
-        :rtype: ~azure.core.async_paging.AsyncItemPaged[Any]
+        :rtype: ~azure.core.async_paging.AsyncItemPaged[JSONType]
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -2414,7 +2511,9 @@ class ScanResultOperations:
                     ]
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        api_version = kwargs.pop('api_version', "2018-12-01-preview")  # type: str
+
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -2425,9 +2524,8 @@ class ScanResultOperations:
                 request = build_scan_result_list_scan_history_request(
                     data_source_name=data_source_name,
                     scan_name=scan_name,
-                    template_url=self.list_scan_history.metadata['url'],
+                    api_version=api_version,
                 )
-                request = _convert_request(request)
                 path_format_arguments = {
                     "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
                 }
@@ -2438,13 +2536,12 @@ class ScanResultOperations:
                 request = build_scan_result_list_scan_history_request(
                     data_source_name=data_source_name,
                     scan_name=scan_name,
-                    template_url=next_link,
+                    api_version=api_version,
                 )
-                request = _convert_request(request)
                 path_format_arguments = {
                     "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
                 }
-                request.url = self._client.format_url(request.url, **path_format_arguments)
+                request.url = self._client.format_url(next_link, **path_format_arguments)
 
                 path_format_arguments = {
                     "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
@@ -2499,13 +2596,16 @@ class ScanRulesetsOperations:
         self,
         scan_ruleset_name: str,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Get a scan ruleset.
 
         :param scan_ruleset_name:
         :type scan_ruleset_name: str
+        :keyword api_version: Api Version. The default value is "2018-12-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -2521,23 +2621,25 @@ class ScanRulesetsOperations:
                     kind: ScanRuleset
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
+        api_version = kwargs.pop('api_version', "2018-12-01-preview")  # type: str
+
         
         request = build_scan_rulesets_get_request(
             scan_ruleset_name=scan_ruleset_name,
-            template_url=self.get.metadata['url'],
+            api_version=api_version,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -2561,17 +2663,20 @@ class ScanRulesetsOperations:
     async def create_or_update(
         self,
         scan_ruleset_name: str,
-        body: Any = None,
+        body: JSONType = None,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Creates or Updates a scan ruleset.
 
         :param scan_ruleset_name:
         :type scan_ruleset_name: str
         :param body:
-        :type body: Any
+        :type body: JSONType
+        :keyword api_version: Api Version. The default value is "2018-12-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -2599,31 +2704,32 @@ class ScanRulesetsOperations:
                     kind: ScanRuleset
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
+        api_version = kwargs.pop('api_version', "2018-12-01-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
         if body is not None:
-            json = body
+            _json = body
         else:
-            json = None
+            _json = None
 
         request = build_scan_rulesets_create_or_update_request(
             scan_ruleset_name=scan_ruleset_name,
+            api_version=api_version,
             content_type=content_type,
-            json=json,
-            template_url=self.create_or_update.metadata['url'],
+            json=_json,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200, 201]:
@@ -2655,13 +2761,16 @@ class ScanRulesetsOperations:
         self,
         scan_ruleset_name: str,
         **kwargs: Any
-    ) -> Optional[Any]:
+    ) -> Optional[JSONType]:
         """Deletes a scan ruleset.
 
         :param scan_ruleset_name:
         :type scan_ruleset_name: str
+        :keyword api_version: Api Version. The default value is "2018-12-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :return: JSON object
-        :rtype: Any or None
+        :rtype: JSONType or None
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -2677,23 +2786,25 @@ class ScanRulesetsOperations:
                     kind: ScanRuleset
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional[Any]]
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional[JSONType]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
+        api_version = kwargs.pop('api_version', "2018-12-01-preview")  # type: str
+
         
         request = build_scan_rulesets_delete_request(
             scan_ruleset_name=scan_ruleset_name,
-            template_url=self.delete.metadata['url'],
+            api_version=api_version,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200, 204]:
@@ -2719,11 +2830,14 @@ class ScanRulesetsOperations:
     def list_all(
         self,
         **kwargs: Any
-    ) -> AsyncIterable[Any]:
+    ) -> AsyncIterable[JSONType]:
         """List scan rulesets in Data catalog.
 
+        :keyword api_version: Api Version. The default value is "2018-12-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :return: An iterator like instance of JSON object
-        :rtype: ~azure.core.async_paging.AsyncItemPaged[Any]
+        :rtype: ~azure.core.async_paging.AsyncItemPaged[JSONType]
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -2745,7 +2859,9 @@ class ScanRulesetsOperations:
                     ]
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        api_version = kwargs.pop('api_version', "2018-12-01-preview")  # type: str
+
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -2754,9 +2870,8 @@ class ScanRulesetsOperations:
             if not next_link:
                 
                 request = build_scan_rulesets_list_all_request(
-                    template_url=self.list_all.metadata['url'],
+                    api_version=api_version,
                 )
-                request = _convert_request(request)
                 path_format_arguments = {
                     "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
                 }
@@ -2765,13 +2880,12 @@ class ScanRulesetsOperations:
             else:
                 
                 request = build_scan_rulesets_list_all_request(
-                    template_url=next_link,
+                    api_version=api_version,
                 )
-                request = _convert_request(request)
                 path_format_arguments = {
                     "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
                 }
-                request.url = self._client.format_url(request.url, **path_format_arguments)
+                request.url = self._client.format_url(next_link, **path_format_arguments)
 
                 path_format_arguments = {
                     "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
@@ -2825,11 +2939,14 @@ class SystemScanRulesetsOperations:
     def list_all(
         self,
         **kwargs: Any
-    ) -> AsyncIterable[Any]:
+    ) -> AsyncIterable[JSONType]:
         """List all system scan rulesets for an account.
 
+        :keyword api_version: Api Version. The default value is "2018-12-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :return: An iterator like instance of JSON object
-        :rtype: ~azure.core.async_paging.AsyncItemPaged[Any]
+        :rtype: ~azure.core.async_paging.AsyncItemPaged[JSONType]
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -2851,7 +2968,9 @@ class SystemScanRulesetsOperations:
                     ]
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        api_version = kwargs.pop('api_version', "2018-12-01-preview")  # type: str
+
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -2860,9 +2979,8 @@ class SystemScanRulesetsOperations:
             if not next_link:
                 
                 request = build_system_scan_rulesets_list_all_request(
-                    template_url=self.list_all.metadata['url'],
+                    api_version=api_version,
                 )
-                request = _convert_request(request)
                 path_format_arguments = {
                     "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
                 }
@@ -2871,13 +2989,12 @@ class SystemScanRulesetsOperations:
             else:
                 
                 request = build_system_scan_rulesets_list_all_request(
-                    template_url=next_link,
+                    api_version=api_version,
                 )
-                request = _convert_request(request)
                 path_format_arguments = {
                     "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
                 }
-                request.url = self._client.format_url(request.url, **path_format_arguments)
+                request.url = self._client.format_url(next_link, **path_format_arguments)
 
                 path_format_arguments = {
                     "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
@@ -2915,7 +3032,7 @@ class SystemScanRulesetsOperations:
         self,
         data_source_type: str,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Get a system scan ruleset for a data source.
 
         :param data_source_type: Possible values are: "None", "AzureSubscription",
@@ -2925,8 +3042,11 @@ class SystemScanRulesetsOperations:
          "SqlServerDatabase", "AzureSqlDatabaseManagedInstance", "AzureSqlDataWarehouse", "AzureMySql",
          "AzureStorage", "Teradata", "Oracle", "SapS4Hana", "SapEcc", and "PowerBI".
         :type data_source_type: str
+        :keyword api_version: Api Version. The default value is "2018-12-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -2942,23 +3062,25 @@ class SystemScanRulesetsOperations:
                     kind: SystemScanRuleset
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
+        api_version = kwargs.pop('api_version', "2018-12-01-preview")  # type: str
+
         
         request = build_system_scan_rulesets_get_request(
             data_source_type=data_source_type,
-            template_url=self.get.metadata['url'],
+            api_version=api_version,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -2985,7 +3107,7 @@ class SystemScanRulesetsOperations:
         *,
         data_source_type: Optional[str] = None,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Get a scan ruleset by version.
 
         :param version:
@@ -2997,8 +3119,11 @@ class SystemScanRulesetsOperations:
          "SqlServerDatabase", "AzureSqlDatabaseManagedInstance", "AzureSqlDataWarehouse", "AzureMySql",
          "AzureStorage", "Teradata", "Oracle", "SapS4Hana", "SapEcc", and "PowerBI".
         :paramtype data_source_type: str
+        :keyword api_version: Api Version. The default value is "2018-12-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -3014,24 +3139,26 @@ class SystemScanRulesetsOperations:
                     kind: SystemScanRuleset
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
+        api_version = kwargs.pop('api_version', "2018-12-01-preview")  # type: str
+
         
         request = build_system_scan_rulesets_get_by_version_request(
             version=version,
+            api_version=api_version,
             data_source_type=data_source_type,
-            template_url=self.get_by_version.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -3057,7 +3184,7 @@ class SystemScanRulesetsOperations:
         *,
         data_source_type: Optional[str] = None,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Get the latest version of a system scan ruleset.
 
         :keyword data_source_type: Possible values are: "None", "AzureSubscription",
@@ -3067,8 +3194,11 @@ class SystemScanRulesetsOperations:
          "SqlServerDatabase", "AzureSqlDatabaseManagedInstance", "AzureSqlDataWarehouse", "AzureMySql",
          "AzureStorage", "Teradata", "Oracle", "SapS4Hana", "SapEcc", and "PowerBI".
         :paramtype data_source_type: str
+        :keyword api_version: Api Version. The default value is "2018-12-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -3084,23 +3214,25 @@ class SystemScanRulesetsOperations:
                     kind: SystemScanRuleset
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
+        api_version = kwargs.pop('api_version', "2018-12-01-preview")  # type: str
+
         
         request = build_system_scan_rulesets_get_latest_request(
+            api_version=api_version,
             data_source_type=data_source_type,
-            template_url=self.get_latest.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -3126,7 +3258,7 @@ class SystemScanRulesetsOperations:
         *,
         data_source_type: Optional[str] = None,
         **kwargs: Any
-    ) -> AsyncIterable[Any]:
+    ) -> AsyncIterable[JSONType]:
         """List system scan ruleset versions in Data catalog.
 
         :keyword data_source_type: Possible values are: "None", "AzureSubscription",
@@ -3136,8 +3268,11 @@ class SystemScanRulesetsOperations:
          "SqlServerDatabase", "AzureSqlDatabaseManagedInstance", "AzureSqlDataWarehouse", "AzureMySql",
          "AzureStorage", "Teradata", "Oracle", "SapS4Hana", "SapEcc", and "PowerBI".
         :paramtype data_source_type: str
+        :keyword api_version: Api Version. The default value is "2018-12-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :return: An iterator like instance of JSON object
-        :rtype: ~azure.core.async_paging.AsyncItemPaged[Any]
+        :rtype: ~azure.core.async_paging.AsyncItemPaged[JSONType]
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -3159,7 +3294,9 @@ class SystemScanRulesetsOperations:
                     ]
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        api_version = kwargs.pop('api_version', "2018-12-01-preview")  # type: str
+
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -3168,10 +3305,9 @@ class SystemScanRulesetsOperations:
             if not next_link:
                 
                 request = build_system_scan_rulesets_list_versions_by_data_source_request(
+                    api_version=api_version,
                     data_source_type=data_source_type,
-                    template_url=self.list_versions_by_data_source.metadata['url'],
                 )
-                request = _convert_request(request)
                 path_format_arguments = {
                     "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
                 }
@@ -3180,14 +3316,13 @@ class SystemScanRulesetsOperations:
             else:
                 
                 request = build_system_scan_rulesets_list_versions_by_data_source_request(
+                    api_version=api_version,
                     data_source_type=data_source_type,
-                    template_url=next_link,
                 )
-                request = _convert_request(request)
                 path_format_arguments = {
                     "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
                 }
-                request.url = self._client.format_url(request.url, **path_format_arguments)
+                request.url = self._client.format_url(next_link, **path_format_arguments)
 
                 path_format_arguments = {
                     "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
@@ -3243,15 +3378,18 @@ class TriggersOperations:
         data_source_name: str,
         scan_name: str,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Gets trigger information.
 
         :param data_source_name:
         :type data_source_name: str
         :param scan_name:
         :type scan_name: str
+        :keyword api_version: Api Version. The default value is "2018-12-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -3298,24 +3436,26 @@ class TriggersOperations:
                     }
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
+        api_version = kwargs.pop('api_version', "2018-12-01-preview")  # type: str
+
         
         request = build_triggers_get_trigger_request(
             data_source_name=data_source_name,
             scan_name=scan_name,
-            template_url=self.get_trigger.metadata['url'],
+            api_version=api_version,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -3340,9 +3480,9 @@ class TriggersOperations:
         self,
         data_source_name: str,
         scan_name: str,
-        body: Any,
+        body: JSONType,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Creates an instance of a trigger.
 
         :param data_source_name:
@@ -3350,9 +3490,12 @@ class TriggersOperations:
         :param scan_name:
         :type scan_name: str
         :param body:
-        :type body: Any
+        :type body: JSONType
+        :keyword api_version: Api Version. The default value is "2018-12-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -3440,29 +3583,30 @@ class TriggersOperations:
                     }
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
+        api_version = kwargs.pop('api_version', "2018-12-01-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
-        json = body
+        _json = body
 
         request = build_triggers_create_trigger_request(
             data_source_name=data_source_name,
             scan_name=scan_name,
+            api_version=api_version,
             content_type=content_type,
-            json=json,
-            template_url=self.create_trigger.metadata['url'],
+            json=_json,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200, 201]:
@@ -3495,15 +3639,18 @@ class TriggersOperations:
         data_source_name: str,
         scan_name: str,
         **kwargs: Any
-    ) -> Optional[Any]:
+    ) -> Optional[JSONType]:
         """Deletes the trigger associated with the scan.
 
         :param data_source_name:
         :type data_source_name: str
         :param scan_name:
         :type scan_name: str
+        :keyword api_version: Api Version. The default value is "2018-12-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :return: JSON object
-        :rtype: Any or None
+        :rtype: JSONType or None
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -3550,24 +3697,26 @@ class TriggersOperations:
                     }
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional[Any]]
+        cls = kwargs.pop('cls', None)  # type: ClsType[Optional[JSONType]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
+        api_version = kwargs.pop('api_version', "2018-12-01-preview")  # type: str
+
         
         request = build_triggers_delete_trigger_request(
             data_source_name=data_source_name,
             scan_name=scan_name,
-            template_url=self.delete_trigger.metadata['url'],
+            api_version=api_version,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200, 204]:

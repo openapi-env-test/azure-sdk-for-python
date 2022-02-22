@@ -28,6 +28,8 @@ class PurviewScanningClientConfiguration(Configuration):
     :type endpoint: str
     :param credential: Credential needed for the client to connect to Azure.
     :type credential: ~azure.core.credentials_async.AsyncTokenCredential
+    :keyword api_version: Api Version. The default value is "2018-12-01-preview". Note that overriding this default value may result in unsupported behavior.
+    :paramtype api_version: str
     """
 
     def __init__(
@@ -36,15 +38,17 @@ class PurviewScanningClientConfiguration(Configuration):
         credential: "AsyncTokenCredential",
         **kwargs: Any
     ) -> None:
+        super(PurviewScanningClientConfiguration, self).__init__(**kwargs)
+        api_version = kwargs.pop('api_version', "2018-12-01-preview")  # type: str
+
         if endpoint is None:
             raise ValueError("Parameter 'endpoint' must not be None.")
         if credential is None:
             raise ValueError("Parameter 'credential' must not be None.")
-        super(PurviewScanningClientConfiguration, self).__init__(**kwargs)
 
         self.endpoint = endpoint
         self.credential = credential
-        self.api_version = "2018-12-01-preview"
+        self.api_version = api_version
         self.credential_scopes = kwargs.pop('credential_scopes', ['https://purview.azure.net/.default'])
         kwargs.setdefault('sdk_moniker', 'purview-scanning/{}'.format(VERSION))
         self._configure(**kwargs)
