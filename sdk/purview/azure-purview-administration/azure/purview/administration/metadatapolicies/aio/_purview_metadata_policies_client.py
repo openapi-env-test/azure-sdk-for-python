@@ -36,6 +36,9 @@ class PurviewMetadataPoliciesClient:
     :type endpoint: str
     :param credential: Credential needed for the client to connect to Azure.
     :type credential: ~azure.core.credentials_async.AsyncTokenCredential
+    :keyword api_version: Api Version. The default value is "2021-07-01-preview". Note that
+     overriding this default value may result in unsupported behavior.
+    :paramtype api_version: str
     """
 
     def __init__(
@@ -45,7 +48,7 @@ class PurviewMetadataPoliciesClient:
         **kwargs: Any
     ) -> None:
         _endpoint = '{Endpoint}/policyStore'
-        self._config = PurviewMetadataPoliciesClientConfiguration(endpoint, credential, **kwargs)
+        self._config = PurviewMetadataPoliciesClientConfiguration(endpoint=endpoint, credential=credential, **kwargs)
         self._client = AsyncPipelineClient(base_url=_endpoint, config=self._config, **kwargs)
 
         self._serialize = Serializer()

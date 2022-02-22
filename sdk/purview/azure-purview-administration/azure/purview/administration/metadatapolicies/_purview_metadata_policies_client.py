@@ -7,9 +7,10 @@
 # --------------------------------------------------------------------------
 
 from copy import deepcopy
-from typing import TYPE_CHECKING
+from typing import Any, Optional, TYPE_CHECKING
 
 from azure.core import PipelineClient
+from azure.core.rest import HttpRequest, HttpResponse
 from msrest import Deserializer, Serializer
 
 from ._configuration import PurviewMetadataPoliciesClientConfiguration
@@ -17,12 +18,11 @@ from .operations import MetadataPolicyOperations, MetadataRolesOperations
 
 if TYPE_CHECKING:
     # pylint: disable=unused-import,ungrouped-imports
-    from typing import Any, Dict, Optional
+    from typing import Dict
 
     from azure.core.credentials import TokenCredential
-    from azure.core.rest import HttpRequest, HttpResponse
 
-class PurviewMetadataPoliciesClient(object):
+class PurviewMetadataPoliciesClient:
     """PurviewMetadataPoliciesClient.
 
     :ivar metadata_roles: MetadataRolesOperations operations
@@ -36,17 +36,19 @@ class PurviewMetadataPoliciesClient(object):
     :type endpoint: str
     :param credential: Credential needed for the client to connect to Azure.
     :type credential: ~azure.core.credentials.TokenCredential
+    :keyword api_version: Api Version. The default value is "2021-07-01-preview". Note that
+     overriding this default value may result in unsupported behavior.
+    :paramtype api_version: str
     """
 
     def __init__(
         self,
-        endpoint,  # type: str
-        credential,  # type: "TokenCredential"
-        **kwargs  # type: Any
-    ):
-        # type: (...) -> None
+        endpoint: str,
+        credential: "TokenCredential",
+        **kwargs: Any
+    ) -> None:
         _endpoint = '{Endpoint}/policyStore'
-        self._config = PurviewMetadataPoliciesClientConfiguration(endpoint, credential, **kwargs)
+        self._config = PurviewMetadataPoliciesClientConfiguration(endpoint=endpoint, credential=credential, **kwargs)
         self._client = PipelineClient(base_url=_endpoint, config=self._config, **kwargs)
 
         self._serialize = Serializer()
@@ -59,9 +61,8 @@ class PurviewMetadataPoliciesClient(object):
     def send_request(
         self,
         request,  # type: HttpRequest
-        **kwargs  # type: Any
-    ):
-        # type: (...) -> HttpResponse
+        **kwargs: Any
+    ) -> HttpResponse:
         """Runs the network request through the client's chained policies.
 
         >>> from azure.core.rest import HttpRequest

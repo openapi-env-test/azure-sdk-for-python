@@ -18,10 +18,9 @@ from azure.core.polling.async_base_polling import AsyncLROBasePolling
 from azure.core.rest import HttpRequest
 from azure.core.tracing.decorator_async import distributed_trace_async
 
-from ..._vendor import _convert_request
 from ...operations._operations import build_collection_create_or_update_bulk_request, build_collection_create_or_update_request, build_collection_move_entities_to_collection_request, build_discovery_auto_complete_request, build_discovery_browse_request, build_discovery_query_request, build_discovery_suggest_request, build_entity_add_classification_request, build_entity_add_classifications_by_unique_attribute_request, build_entity_add_classifications_request, build_entity_create_or_update_entities_request, build_entity_create_or_update_request, build_entity_delete_by_guid_request, build_entity_delete_by_guids_request, build_entity_delete_by_unique_attribute_request, build_entity_delete_classification_by_unique_attribute_request, build_entity_delete_classification_request, build_entity_get_by_guid_request, build_entity_get_by_unique_attributes_request, build_entity_get_classification_request, build_entity_get_classifications_request, build_entity_get_entities_by_unique_attributes_request, build_entity_get_header_request, build_entity_list_by_guids_request, build_entity_partial_update_entity_attribute_by_guid_request, build_entity_partial_update_entity_by_unique_attributes_request, build_entity_set_classifications_request, build_entity_update_classifications_by_unique_attribute_request, build_entity_update_classifications_request, build_glossary_assign_term_to_entities_request, build_glossary_create_glossary_categories_request, build_glossary_create_glossary_category_request, build_glossary_create_glossary_request, build_glossary_create_glossary_term_request, build_glossary_create_glossary_terms_request, build_glossary_delete_glossary_category_request, build_glossary_delete_glossary_request, build_glossary_delete_glossary_term_request, build_glossary_delete_term_assignment_from_entities_request, build_glossary_export_glossary_terms_as_csv_request, build_glossary_get_detailed_glossary_request, build_glossary_get_entities_assigned_with_term_request, build_glossary_get_glossary_category_request, build_glossary_get_glossary_request, build_glossary_get_glossary_term_request, build_glossary_get_import_csv_operation_status_request, build_glossary_import_glossary_terms_via_csv_by_glossary_name_request_initial, build_glossary_import_glossary_terms_via_csv_request_initial, build_glossary_list_category_terms_request, build_glossary_list_glossaries_request, build_glossary_list_glossary_categories_headers_request, build_glossary_list_glossary_categories_request, build_glossary_list_glossary_term_headers_request, build_glossary_list_glossary_terms_request, build_glossary_list_related_categories_request, build_glossary_list_related_terms_request, build_glossary_list_terms_by_glossary_name_request, build_glossary_partial_update_glossary_category_request, build_glossary_partial_update_glossary_request, build_glossary_partial_update_glossary_term_request, build_glossary_remove_term_assignment_from_entities_request, build_glossary_update_glossary_category_request, build_glossary_update_glossary_request, build_glossary_update_glossary_term_request, build_lineage_get_lineage_graph_request, build_lineage_next_page_lineage_request, build_relationship_create_request, build_relationship_delete_request, build_relationship_get_request, build_relationship_update_request, build_types_create_type_definitions_request, build_types_delete_type_by_name_request, build_types_delete_type_definitions_request, build_types_get_all_type_definitions_request, build_types_get_classification_def_by_guid_request, build_types_get_classification_def_by_name_request, build_types_get_entity_definition_by_guid_request, build_types_get_entity_definition_by_name_request, build_types_get_enum_def_by_guid_request, build_types_get_enum_def_by_name_request, build_types_get_relationship_def_by_guid_request, build_types_get_relationship_def_by_name_request, build_types_get_struct_def_by_guid_request, build_types_get_struct_def_by_name_request, build_types_get_term_template_def_by_guid_request, build_types_get_term_template_def_by_name_request, build_types_get_type_definition_by_guid_request, build_types_get_type_definition_by_name_request, build_types_list_type_definition_headers_request, build_types_update_atlas_type_definitions_request
-
 T = TypeVar('T')
+JSONType = Any
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
 
 class EntityOperations:
@@ -45,9 +44,9 @@ class EntityOperations:
     @distributed_trace_async
     async def create_or_update(
         self,
-        entity: Any,
+        entity: JSONType,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Create or update an entity in Atlas.
         Existing entity is matched using its unique guid if supplied or by its unique attributes eg:
         qualifiedName.
@@ -55,9 +54,9 @@ class EntityOperations:
         array<map<string, int>>.
 
         :param entity: Atlas entity with extended information.
-        :type entity: Any
+        :type entity: JSONType
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -326,7 +325,7 @@ class EntityOperations:
                     ]
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -334,19 +333,18 @@ class EntityOperations:
 
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
-        json = entity
+        _json = entity
 
         request = build_entity_create_or_update_request(
             content_type=content_type,
-            json=json,
-            template_url=self.create_or_update.metadata['url'],
+            json=_json,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -375,7 +373,7 @@ class EntityOperations:
         ignore_relationships: Optional[bool] = False,
         exclude_relationship_types: Optional[List[str]] = None,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """List entities in bulk identified by its GUIDs.
 
         :keyword guids: An array of GUIDs of entities to list.
@@ -388,7 +386,7 @@ class EntityOperations:
          from the response.
         :paramtype exclude_relationship_types: list[str]
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -540,7 +538,7 @@ class EntityOperations:
                     }
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -552,14 +550,13 @@ class EntityOperations:
             min_ext_info=min_ext_info,
             ignore_relationships=ignore_relationships,
             exclude_relationship_types=exclude_relationship_types,
-            template_url=self.list_by_guids.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -582,9 +579,9 @@ class EntityOperations:
     @distributed_trace_async
     async def create_or_update_entities(
         self,
-        entities: Any,
+        entities: JSONType,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Create or update entities in Atlas in bulk.
         Existing entity is matched using its unique guid if supplied or by its unique attributes eg:
         qualifiedName.
@@ -592,9 +589,9 @@ class EntityOperations:
         array<map<string, int>>.
 
         :param entities: An array of entities to create or update.
-        :type entities: Any
+        :type entities: JSONType
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -865,7 +862,7 @@ class EntityOperations:
                     ]
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -873,19 +870,18 @@ class EntityOperations:
 
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
-        json = entities
+        _json = entities
 
         request = build_entity_create_or_update_entities_request(
             content_type=content_type,
-            json=json,
-            template_url=self.create_or_update_entities.metadata['url'],
+            json=_json,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -911,13 +907,13 @@ class EntityOperations:
         *,
         guids: List[str],
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Delete a list of entities in bulk identified by their GUIDs or unique attributes.
 
         :keyword guids: An array of GUIDs of entities to delete.
         :paramtype guids: list[str]
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -1042,7 +1038,7 @@ class EntityOperations:
                     ]
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -1051,14 +1047,13 @@ class EntityOperations:
         
         request = build_entity_delete_by_guids_request(
             guids=guids,
-            template_url=self.delete_by_guids.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -1081,13 +1076,13 @@ class EntityOperations:
     @distributed_trace_async
     async def add_classification(
         self,
-        request: Any,
+        request: JSONType,
         **kwargs: Any
     ) -> None:
         """Associate a classification to multiple entities in bulk.
 
         :param request: The request to associate a classification to multiple entities.
-        :type request: Any
+        :type request: JSONType
         :return: None
         :rtype: None
         :raises: ~azure.core.exceptions.HttpResponseError
@@ -1131,19 +1126,18 @@ class EntityOperations:
 
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
-        json = request
+        _json = request
 
         request = build_entity_add_classification_request(
             content_type=content_type,
-            json=json,
-            template_url=self.add_classification.metadata['url'],
+            json=_json,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [204]:
@@ -1164,7 +1158,7 @@ class EntityOperations:
         min_ext_info: Optional[bool] = False,
         ignore_relationships: Optional[bool] = False,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Get complete definition of an entity given its GUID.
 
         :param guid: The globally unique identifier of the entity.
@@ -1174,7 +1168,7 @@ class EntityOperations:
         :keyword ignore_relationships: Whether to ignore relationship attributes.
         :paramtype ignore_relationships: bool
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -1324,7 +1318,7 @@ class EntityOperations:
                     }
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -1335,14 +1329,13 @@ class EntityOperations:
             guid=guid,
             min_ext_info=min_ext_info,
             ignore_relationships=ignore_relationships,
-            template_url=self.get_by_guid.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -1370,7 +1363,7 @@ class EntityOperations:
         *,
         name: str,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Update entity partially - create or update entity attribute identified by its GUID.
         Supports only primitive attribute type and entity references.
         It does not support updating complex types like arrays, and maps.
@@ -1383,10 +1376,10 @@ class EntityOperations:
         :keyword name: The name of the attribute.
         :paramtype name: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -1394,21 +1387,20 @@ class EntityOperations:
 
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
-        json = body
+        _json = body
 
         request = build_entity_partial_update_entity_attribute_by_guid_request(
             guid=guid,
             content_type=content_type,
             name=name,
-            json=json,
-            template_url=self.partial_update_entity_attribute_by_guid.metadata['url'],
+            json=_json,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -1433,13 +1425,13 @@ class EntityOperations:
         self,
         guid: str,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Delete an entity identified by its GUID.
 
         :param guid: The globally unique identifier of the entity.
         :type guid: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -1564,7 +1556,7 @@ class EntityOperations:
                     ]
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -1573,14 +1565,13 @@ class EntityOperations:
         
         request = build_entity_delete_by_guid_request(
             guid=guid,
-            template_url=self.delete_by_guid.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -1606,7 +1597,7 @@ class EntityOperations:
         guid: str,
         classification_name: str,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """List classifications for a given entity represented by a GUID.
 
         :param guid: The globally unique identifier of the entity.
@@ -1614,7 +1605,7 @@ class EntityOperations:
         :param classification_name: The name of the classification.
         :type classification_name: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -1643,7 +1634,7 @@ class EntityOperations:
                     ]
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -1653,14 +1644,13 @@ class EntityOperations:
         request = build_entity_get_classification_request(
             guid=guid,
             classification_name=classification_name,
-            template_url=self.get_classification.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -1707,14 +1697,13 @@ class EntityOperations:
         request = build_entity_delete_classification_request(
             guid=guid,
             classification_name=classification_name,
-            template_url=self.delete_classification.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [204]:
@@ -1732,13 +1721,13 @@ class EntityOperations:
         self,
         guid: str,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """List classifications for a given entity represented by a GUID.
 
         :param guid: The globally unique identifier of the entity.
         :type guid: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -1756,7 +1745,7 @@ class EntityOperations:
                     "totalCount": 0.0  # Optional. The total count of items.
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -1765,14 +1754,13 @@ class EntityOperations:
         
         request = build_entity_get_classifications_request(
             guid=guid,
-            template_url=self.get_classifications.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -1796,7 +1784,7 @@ class EntityOperations:
     async def add_classifications(
         self,
         guid: str,
-        classifications: List[Any],
+        classifications: List[JSONType],
         **kwargs: Any
     ) -> None:
         """Add classifications to an existing entity represented by a GUID.
@@ -1804,7 +1792,7 @@ class EntityOperations:
         :param guid: The globally unique identifier of the entity.
         :type guid: str
         :param classifications: An array of classifications to be added.
-        :type classifications: list[Any]
+        :type classifications: list[JSONType]
         :return: None
         :rtype: None
         :raises: ~azure.core.exceptions.HttpResponseError
@@ -1845,20 +1833,19 @@ class EntityOperations:
 
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
-        json = classifications
+        _json = classifications
 
         request = build_entity_add_classifications_request(
             guid=guid,
             content_type=content_type,
-            json=json,
-            template_url=self.add_classifications.metadata['url'],
+            json=_json,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [204]:
@@ -1875,7 +1862,7 @@ class EntityOperations:
     async def update_classifications(
         self,
         guid: str,
-        classifications: List[Any],
+        classifications: List[JSONType],
         **kwargs: Any
     ) -> None:
         """Update classifications to an existing entity represented by a guid.
@@ -1883,7 +1870,7 @@ class EntityOperations:
         :param guid: The globally unique identifier of the entity.
         :type guid: str
         :param classifications: An array of classifications to be updated.
-        :type classifications: list[Any]
+        :type classifications: list[JSONType]
         :return: None
         :rtype: None
         :raises: ~azure.core.exceptions.HttpResponseError
@@ -1924,20 +1911,19 @@ class EntityOperations:
 
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
-        json = classifications
+        _json = classifications
 
         request = build_entity_update_classifications_request(
             guid=guid,
             content_type=content_type,
-            json=json,
-            template_url=self.update_classifications.metadata['url'],
+            json=_json,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [204]:
@@ -1959,7 +1945,7 @@ class EntityOperations:
         ignore_relationships: Optional[bool] = False,
         attr_qualified_name: Optional[str] = None,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Get complete definition of an entity given its type and unique attribute.
         In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the
         following format:
@@ -1977,7 +1963,7 @@ class EntityOperations:
         :keyword attr_qualified_name: The qualified name of the entity.
         :paramtype attr_qualified_name: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -2127,7 +2113,7 @@ class EntityOperations:
                     }
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -2139,14 +2125,13 @@ class EntityOperations:
             min_ext_info=min_ext_info,
             ignore_relationships=ignore_relationships,
             attr_qualified_name=attr_qualified_name,
-            template_url=self.get_by_unique_attributes.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -2170,11 +2155,11 @@ class EntityOperations:
     async def partial_update_entity_by_unique_attributes(
         self,
         type_name: str,
-        atlas_entity_with_ext_info: Any,
+        atlas_entity_with_ext_info: JSONType,
         *,
         attr_qualified_name: Optional[str] = None,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Update entity partially - Allow a subset of attributes to be updated on
         an entity which is identified by its type and unique attribute  eg:
         Referenceable.qualifiedName.
@@ -2189,11 +2174,11 @@ class EntityOperations:
         :param type_name: The name of the type.
         :type type_name: str
         :param atlas_entity_with_ext_info: Atlas entity with extended information.
-        :type atlas_entity_with_ext_info: Any
+        :type atlas_entity_with_ext_info: JSONType
         :keyword attr_qualified_name: The qualified name of the entity.
         :paramtype attr_qualified_name: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -2462,7 +2447,7 @@ class EntityOperations:
                     ]
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -2470,21 +2455,20 @@ class EntityOperations:
 
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
-        json = atlas_entity_with_ext_info
+        _json = atlas_entity_with_ext_info
 
         request = build_entity_partial_update_entity_by_unique_attributes_request(
             type_name=type_name,
             content_type=content_type,
+            json=_json,
             attr_qualified_name=attr_qualified_name,
-            json=json,
-            template_url=self.partial_update_entity_by_unique_attributes.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -2511,7 +2495,7 @@ class EntityOperations:
         *,
         attr_qualified_name: Optional[str] = None,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Delete an entity identified by its type and unique attributes.
         In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the
         following format:
@@ -2525,7 +2509,7 @@ class EntityOperations:
         :keyword attr_qualified_name: The qualified name of the entity.
         :paramtype attr_qualified_name: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -2650,7 +2634,7 @@ class EntityOperations:
                     ]
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -2660,14 +2644,13 @@ class EntityOperations:
         request = build_entity_delete_by_unique_attribute_request(
             type_name=type_name,
             attr_qualified_name=attr_qualified_name,
-            template_url=self.delete_by_unique_attribute.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -2719,14 +2702,13 @@ class EntityOperations:
             type_name=type_name,
             classification_name=classification_name,
             attr_qualified_name=attr_qualified_name,
-            template_url=self.delete_classification_by_unique_attribute.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [204]:
@@ -2743,7 +2725,7 @@ class EntityOperations:
     async def add_classifications_by_unique_attribute(
         self,
         type_name: str,
-        atlas_classification_array: List[Any],
+        atlas_classification_array: List[JSONType],
         *,
         attr_qualified_name: Optional[str] = None,
         **kwargs: Any
@@ -2753,7 +2735,7 @@ class EntityOperations:
         :param type_name: The name of the type.
         :type type_name: str
         :param atlas_classification_array: An array of classification to be added.
-        :type atlas_classification_array: list[Any]
+        :type atlas_classification_array: list[JSONType]
         :keyword attr_qualified_name: The qualified name of the entity.
         :paramtype attr_qualified_name: str
         :return: None
@@ -2796,21 +2778,20 @@ class EntityOperations:
 
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
-        json = atlas_classification_array
+        _json = atlas_classification_array
 
         request = build_entity_add_classifications_by_unique_attribute_request(
             type_name=type_name,
             content_type=content_type,
+            json=_json,
             attr_qualified_name=attr_qualified_name,
-            json=json,
-            template_url=self.add_classifications_by_unique_attribute.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [204]:
@@ -2827,7 +2808,7 @@ class EntityOperations:
     async def update_classifications_by_unique_attribute(
         self,
         type_name: str,
-        atlas_classification_array: List[Any],
+        atlas_classification_array: List[JSONType],
         *,
         attr_qualified_name: Optional[str] = None,
         **kwargs: Any
@@ -2837,7 +2818,7 @@ class EntityOperations:
         :param type_name: The name of the type.
         :type type_name: str
         :param atlas_classification_array: An array of classification to be updated.
-        :type atlas_classification_array: list[Any]
+        :type atlas_classification_array: list[JSONType]
         :keyword attr_qualified_name: The qualified name of the entity.
         :paramtype attr_qualified_name: str
         :return: None
@@ -2880,21 +2861,20 @@ class EntityOperations:
 
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
-        json = atlas_classification_array
+        _json = atlas_classification_array
 
         request = build_entity_update_classifications_by_unique_attribute_request(
             type_name=type_name,
             content_type=content_type,
+            json=_json,
             attr_qualified_name=attr_qualified_name,
-            json=json,
-            template_url=self.update_classifications_by_unique_attribute.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [204]:
@@ -2910,13 +2890,13 @@ class EntityOperations:
     @distributed_trace_async
     async def set_classifications(
         self,
-        entity_headers: Any,
+        entity_headers: JSONType,
         **kwargs: Any
     ) -> List[str]:
         """Set classifications on entities in bulk.
 
         :param entity_headers: Atlas entity headers.
-        :type entity_headers: Any
+        :type entity_headers: JSONType
         :return: list of str
         :rtype: list[str]
         :raises: ~azure.core.exceptions.HttpResponseError
@@ -2996,19 +2976,18 @@ class EntityOperations:
 
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
-        json = entity_headers
+        _json = entity_headers
 
         request = build_entity_set_classifications_request(
             content_type=content_type,
-            json=json,
-            template_url=self.set_classifications.metadata['url'],
+            json=_json,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -3037,7 +3016,7 @@ class EntityOperations:
         ignore_relationships: Optional[bool] = False,
         attr_n_qualified_name: Optional[str] = None,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Bulk API to retrieve list of entities identified by its unique attributes.
 
         In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the
@@ -3062,7 +3041,7 @@ class EntityOperations:
          set attrs_0:qualifiedName=db1@cl1&attrs_2:qualifiedName=db2@cl1.
         :paramtype attr_n_qualified_name: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -3214,7 +3193,7 @@ class EntityOperations:
                     }
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -3226,14 +3205,13 @@ class EntityOperations:
             min_ext_info=min_ext_info,
             ignore_relationships=ignore_relationships,
             attr_n_qualified_name=attr_n_qualified_name,
-            template_url=self.get_entities_by_unique_attributes.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -3258,13 +3236,13 @@ class EntityOperations:
         self,
         guid: str,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Get entity header given its GUID.
 
         :param guid: The globally unique identifier of the entity.
         :type guid: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -3325,7 +3303,7 @@ class EntityOperations:
                     "typeName": "str"  # Optional. The name of the type.
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -3334,14 +3312,13 @@ class EntityOperations:
         
         request = build_entity_get_header_request(
             guid=guid,
-            template_url=self.get_header.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -3387,7 +3364,7 @@ class GlossaryOperations:
         sort: Optional[str] = "ASC",
         ignore_terms_and_categories: Optional[bool] = False,
         **kwargs: Any
-    ) -> List[Any]:
+    ) -> List[JSONType]:
         """Get all glossaries registered with Atlas.
 
         :keyword limit: The page size - by default there is no paging.
@@ -3399,7 +3376,7 @@ class GlossaryOperations:
         :keyword ignore_terms_and_categories: Whether ignore terms and categories.
         :paramtype ignore_terms_and_categories: bool
         :return: list of JSON object
-        :rtype: list[Any]
+        :rtype: list[JSONType]
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -3463,7 +3440,7 @@ class GlossaryOperations:
                     }
                 ]
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[List[Any]]
+        cls = kwargs.pop('cls', None)  # type: ClsType[List[JSONType]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -3475,14 +3452,13 @@ class GlossaryOperations:
             offset=offset,
             sort=sort,
             ignore_terms_and_categories=ignore_terms_and_categories,
-            template_url=self.list_glossaries.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -3505,16 +3481,16 @@ class GlossaryOperations:
     @distributed_trace_async
     async def create_glossary(
         self,
-        atlas_glossary: Any,
+        atlas_glossary: JSONType,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Create a glossary.
 
         :param atlas_glossary: Glossary definition, terms & categories can be anchored to a glossary.
          Using the anchor attribute when creating the Term/Category.
-        :type atlas_glossary: Any
+        :type atlas_glossary: JSONType
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -3632,7 +3608,7 @@ class GlossaryOperations:
                     "usage": "str"  # Optional. The usage of the glossary.
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -3640,19 +3616,18 @@ class GlossaryOperations:
 
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
-        json = atlas_glossary
+        _json = atlas_glossary
 
         request = build_glossary_create_glossary_request(
             content_type=content_type,
-            json=json,
-            template_url=self.create_glossary.metadata['url'],
+            json=_json,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -3675,15 +3650,15 @@ class GlossaryOperations:
     @distributed_trace_async
     async def create_glossary_categories(
         self,
-        glossary_category: List[Any],
+        glossary_category: List[JSONType],
         **kwargs: Any
-    ) -> List[Any]:
+    ) -> List[JSONType]:
         """Create glossary category in bulk.
 
         :param glossary_category: An array of glossary category definitions to be created.
-        :type glossary_category: list[Any]
+        :type glossary_category: list[JSONType]
         :return: list of JSON object
-        :rtype: list[Any]
+        :rtype: list[JSONType]
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -3825,7 +3800,7 @@ class GlossaryOperations:
                     }
                 ]
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[List[Any]]
+        cls = kwargs.pop('cls', None)  # type: ClsType[List[JSONType]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -3833,19 +3808,18 @@ class GlossaryOperations:
 
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
-        json = glossary_category
+        _json = glossary_category
 
         request = build_glossary_create_glossary_categories_request(
             content_type=content_type,
-            json=json,
-            template_url=self.create_glossary_categories.metadata['url'],
+            json=_json,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -3868,18 +3842,18 @@ class GlossaryOperations:
     @distributed_trace_async
     async def create_glossary_category(
         self,
-        glossary_category: Any,
+        glossary_category: JSONType,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Create a glossary category.
 
         :param glossary_category: The glossary category definition. A category must be anchored to a
          Glossary when creating.
          Optionally, terms belonging to the category and the hierarchy can also be defined during
          creation.
-        :type glossary_category: Any
+        :type glossary_category: JSONType
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -4017,7 +3991,7 @@ class GlossaryOperations:
                     ]
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -4025,19 +3999,18 @@ class GlossaryOperations:
 
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
-        json = glossary_category
+        _json = glossary_category
 
         request = build_glossary_create_glossary_category_request(
             content_type=content_type,
-            json=json,
-            template_url=self.create_glossary_category.metadata['url'],
+            json=_json,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -4062,13 +4035,13 @@ class GlossaryOperations:
         self,
         category_guid: str,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Get specific glossary category by its GUID.
 
         :param category_guid: The globally unique identifier of the category.
         :type category_guid: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -4140,7 +4113,7 @@ class GlossaryOperations:
                     ]
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -4149,14 +4122,13 @@ class GlossaryOperations:
         
         request = build_glossary_get_glossary_category_request(
             category_guid=category_guid,
-            template_url=self.get_glossary_category.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -4180,17 +4152,17 @@ class GlossaryOperations:
     async def update_glossary_category(
         self,
         category_guid: str,
-        glossary_category: Any,
+        glossary_category: JSONType,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Update the given glossary category by its GUID.
 
         :param category_guid: The globally unique identifier of the category.
         :type category_guid: str
         :param glossary_category: The glossary category to be updated.
-        :type glossary_category: Any
+        :type glossary_category: JSONType
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -4328,7 +4300,7 @@ class GlossaryOperations:
                     ]
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -4336,20 +4308,19 @@ class GlossaryOperations:
 
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
-        json = glossary_category
+        _json = glossary_category
 
         request = build_glossary_update_glossary_category_request(
             category_guid=category_guid,
             content_type=content_type,
-            json=json,
-            template_url=self.update_glossary_category.metadata['url'],
+            json=_json,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -4392,14 +4363,13 @@ class GlossaryOperations:
         
         request = build_glossary_delete_glossary_category_request(
             category_guid=category_guid,
-            template_url=self.delete_glossary_category.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [204]:
@@ -4418,7 +4388,7 @@ class GlossaryOperations:
         category_guid: str,
         partial_updates: Dict[str, str],
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Update the glossary category partially.
 
         :param category_guid: The globally unique identifier of the category.
@@ -4427,7 +4397,7 @@ class GlossaryOperations:
          attribute values for partial update.
         :type partial_updates: dict[str, str]
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -4504,7 +4474,7 @@ class GlossaryOperations:
                     ]
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -4512,20 +4482,19 @@ class GlossaryOperations:
 
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
-        json = partial_updates
+        _json = partial_updates
 
         request = build_glossary_partial_update_glossary_category_request(
             category_guid=category_guid,
             content_type=content_type,
-            json=json,
-            template_url=self.partial_update_glossary_category.metadata['url'],
+            json=_json,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -4554,7 +4523,7 @@ class GlossaryOperations:
         offset: Optional[int] = None,
         sort: Optional[str] = "ASC",
         **kwargs: Any
-    ) -> Dict[str, List[Any]]:
+    ) -> Dict[str, List[JSONType]]:
         """Get all related categories (parent and children). Limit, offset, and sort parameters are
         currently not being enabled and won't work even they are passed.
 
@@ -4567,7 +4536,7 @@ class GlossaryOperations:
         :keyword sort: The sort order, ASC (default) or DESC.
         :paramtype sort: str
         :return: dict mapping str to list of JSON object
-        :rtype: dict[str, list[Any]]
+        :rtype: dict[str, list[JSONType]]
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -4586,7 +4555,7 @@ class GlossaryOperations:
                     ]
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Dict[str, List[Any]]]
+        cls = kwargs.pop('cls', None)  # type: ClsType[Dict[str, List[JSONType]]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -4598,14 +4567,13 @@ class GlossaryOperations:
             limit=limit,
             offset=offset,
             sort=sort,
-            template_url=self.list_related_categories.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -4634,7 +4602,7 @@ class GlossaryOperations:
         offset: Optional[int] = None,
         sort: Optional[str] = "ASC",
         **kwargs: Any
-    ) -> List[Any]:
+    ) -> List[JSONType]:
         """Get all terms associated with the specific category.
 
         :param category_guid: The globally unique identifier of the category.
@@ -4646,7 +4614,7 @@ class GlossaryOperations:
         :keyword sort: The sort order, ASC (default) or DESC.
         :paramtype sort: str
         :return: list of JSON object
-        :rtype: list[Any]
+        :rtype: list[JSONType]
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -4666,7 +4634,7 @@ class GlossaryOperations:
                     }
                 ]
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[List[Any]]
+        cls = kwargs.pop('cls', None)  # type: ClsType[List[JSONType]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -4678,14 +4646,13 @@ class GlossaryOperations:
             limit=limit,
             offset=offset,
             sort=sort,
-            template_url=self.list_category_terms.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -4708,21 +4675,21 @@ class GlossaryOperations:
     @distributed_trace_async
     async def create_glossary_term(
         self,
-        glossary_term: Any,
+        glossary_term: JSONType,
         *,
         include_term_hierarchy: Optional[bool] = False,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Create a glossary term.
 
         :param glossary_term: The glossary term definition. A term must be anchored to a Glossary at
          the time of creation.
          Optionally it can be categorized as well.
-        :type glossary_term: Any
+        :type glossary_term: JSONType
         :keyword include_term_hierarchy: Whether include term hierarchy.
         :paramtype include_term_hierarchy: bool
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -5240,7 +5207,7 @@ class GlossaryOperations:
                     ]
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -5248,20 +5215,19 @@ class GlossaryOperations:
 
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
-        json = glossary_term
+        _json = glossary_term
 
         request = build_glossary_create_glossary_term_request(
             content_type=content_type,
+            json=_json,
             include_term_hierarchy=include_term_hierarchy,
-            json=json,
-            template_url=self.create_glossary_term.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -5288,7 +5254,7 @@ class GlossaryOperations:
         *,
         include_term_hierarchy: Optional[bool] = False,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Get a specific glossary term by its GUID.
 
         :param term_guid: The globally unique identifier for glossary term.
@@ -5296,7 +5262,7 @@ class GlossaryOperations:
         :keyword include_term_hierarchy: Whether include term hierarchy.
         :paramtype include_term_hierarchy: bool
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -5558,7 +5524,7 @@ class GlossaryOperations:
                     ]
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -5568,14 +5534,13 @@ class GlossaryOperations:
         request = build_glossary_get_glossary_term_request(
             term_guid=term_guid,
             include_term_hierarchy=include_term_hierarchy,
-            template_url=self.get_glossary_term.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -5599,17 +5564,17 @@ class GlossaryOperations:
     async def update_glossary_term(
         self,
         term_guid: str,
-        glossary_term: Any,
+        glossary_term: JSONType,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Update the given glossary term by its GUID.
 
         :param term_guid: The globally unique identifier for glossary term.
         :type term_guid: str
         :param glossary_term: The glossary term to be updated.
-        :type glossary_term: Any
+        :type glossary_term: JSONType
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -6127,7 +6092,7 @@ class GlossaryOperations:
                     ]
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -6135,20 +6100,19 @@ class GlossaryOperations:
 
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
-        json = glossary_term
+        _json = glossary_term
 
         request = build_glossary_update_glossary_term_request(
             term_guid=term_guid,
             content_type=content_type,
-            json=json,
-            template_url=self.update_glossary_term.metadata['url'],
+            json=_json,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -6191,14 +6155,13 @@ class GlossaryOperations:
         
         request = build_glossary_delete_glossary_term_request(
             term_guid=term_guid,
-            template_url=self.delete_glossary_term.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [204]:
@@ -6219,7 +6182,7 @@ class GlossaryOperations:
         *,
         include_term_hierarchy: Optional[bool] = False,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Update the glossary term partially.
 
         :param term_guid: The globally unique identifier for glossary term.
@@ -6230,7 +6193,7 @@ class GlossaryOperations:
         :keyword include_term_hierarchy: Whether include term hierarchy.
         :paramtype include_term_hierarchy: bool
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -6497,7 +6460,7 @@ class GlossaryOperations:
                     ]
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -6505,21 +6468,20 @@ class GlossaryOperations:
 
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
-        json = partial_updates
+        _json = partial_updates
 
         request = build_glossary_partial_update_glossary_term_request(
             term_guid=term_guid,
             content_type=content_type,
+            json=_json,
             include_term_hierarchy=include_term_hierarchy,
-            json=json,
-            template_url=self.partial_update_glossary_term.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -6542,19 +6504,19 @@ class GlossaryOperations:
     @distributed_trace_async
     async def create_glossary_terms(
         self,
-        glossary_term: List[Any],
+        glossary_term: List[JSONType],
         *,
         include_term_hierarchy: Optional[bool] = False,
         **kwargs: Any
-    ) -> List[Any]:
+    ) -> List[JSONType]:
         """Create glossary terms in bulk.
 
         :param glossary_term: An array of glossary term definitions to be created in bulk.
-        :type glossary_term: list[Any]
+        :type glossary_term: list[JSONType]
         :keyword include_term_hierarchy: Whether include term hierarchy.
         :paramtype include_term_hierarchy: bool
         :return: list of JSON object
-        :rtype: list[Any]
+        :rtype: list[JSONType]
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -7076,7 +7038,7 @@ class GlossaryOperations:
                     }
                 ]
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[List[Any]]
+        cls = kwargs.pop('cls', None)  # type: ClsType[List[JSONType]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -7084,20 +7046,19 @@ class GlossaryOperations:
 
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
-        json = glossary_term
+        _json = glossary_term
 
         request = build_glossary_create_glossary_terms_request(
             content_type=content_type,
+            json=_json,
             include_term_hierarchy=include_term_hierarchy,
-            json=json,
-            template_url=self.create_glossary_terms.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -7126,7 +7087,7 @@ class GlossaryOperations:
         offset: Optional[int] = None,
         sort: Optional[str] = "ASC",
         **kwargs: Any
-    ) -> List[Any]:
+    ) -> List[JSONType]:
         """Get all related objects assigned with the specified term.
 
         :param term_guid: The globally unique identifier for glossary term.
@@ -7138,7 +7099,7 @@ class GlossaryOperations:
         :keyword sort: The sort order, ASC (default) or DESC.
         :paramtype sort: str
         :return: list of JSON object
-        :rtype: list[Any]
+        :rtype: list[JSONType]
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -7167,7 +7128,7 @@ class GlossaryOperations:
                     }
                 ]
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[List[Any]]
+        cls = kwargs.pop('cls', None)  # type: ClsType[List[JSONType]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -7179,14 +7140,13 @@ class GlossaryOperations:
             limit=limit,
             offset=offset,
             sort=sort,
-            template_url=self.get_entities_assigned_with_term.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -7210,7 +7170,7 @@ class GlossaryOperations:
     async def assign_term_to_entities(
         self,
         term_guid: str,
-        related_object_ids: List[Any],
+        related_object_ids: List[JSONType],
         **kwargs: Any
     ) -> None:
         """Assign the given term to the provided list of related objects.
@@ -7219,7 +7179,7 @@ class GlossaryOperations:
         :type term_guid: str
         :param related_object_ids: An array of related object IDs to which the term has to be
          associated.
-        :type related_object_ids: list[Any]
+        :type related_object_ids: list[JSONType]
         :return: None
         :rtype: None
         :raises: ~azure.core.exceptions.HttpResponseError
@@ -7258,20 +7218,19 @@ class GlossaryOperations:
 
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
-        json = related_object_ids
+        _json = related_object_ids
 
         request = build_glossary_assign_term_to_entities_request(
             term_guid=term_guid,
             content_type=content_type,
-            json=json,
-            template_url=self.assign_term_to_entities.metadata['url'],
+            json=_json,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [204]:
@@ -7288,7 +7247,7 @@ class GlossaryOperations:
     async def remove_term_assignment_from_entities(
         self,
         term_guid: str,
-        related_object_ids: List[Any],
+        related_object_ids: List[JSONType],
         **kwargs: Any
     ) -> None:
         """Delete the term assignment for the given list of related objects.
@@ -7297,7 +7256,7 @@ class GlossaryOperations:
         :type term_guid: str
         :param related_object_ids: An array of related object IDs from which the term has to be
          dissociated.
-        :type related_object_ids: list[Any]
+        :type related_object_ids: list[JSONType]
         :return: None
         :rtype: None
         :raises: ~azure.core.exceptions.HttpResponseError
@@ -7336,20 +7295,19 @@ class GlossaryOperations:
 
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
-        json = related_object_ids
+        _json = related_object_ids
 
         request = build_glossary_remove_term_assignment_from_entities_request(
             term_guid=term_guid,
             content_type=content_type,
-            json=json,
-            template_url=self.remove_term_assignment_from_entities.metadata['url'],
+            json=_json,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [204]:
@@ -7366,7 +7324,7 @@ class GlossaryOperations:
     async def delete_term_assignment_from_entities(
         self,
         term_guid: str,
-        related_object_ids: List[Any],
+        related_object_ids: List[JSONType],
         **kwargs: Any
     ) -> None:
         """Delete the term assignment for the given list of related objects.
@@ -7375,7 +7333,7 @@ class GlossaryOperations:
         :type term_guid: str
         :param related_object_ids: An array of related object IDs from which the term has to be
          dissociated.
-        :type related_object_ids: list[Any]
+        :type related_object_ids: list[JSONType]
         :return: None
         :rtype: None
         :raises: ~azure.core.exceptions.HttpResponseError
@@ -7414,20 +7372,19 @@ class GlossaryOperations:
 
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
-        json = related_object_ids
+        _json = related_object_ids
 
         request = build_glossary_delete_term_assignment_from_entities_request(
             term_guid=term_guid,
             content_type=content_type,
-            json=json,
-            template_url=self.delete_term_assignment_from_entities.metadata['url'],
+            json=_json,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [204]:
@@ -7449,7 +7406,7 @@ class GlossaryOperations:
         offset: Optional[int] = None,
         sort: Optional[str] = "ASC",
         **kwargs: Any
-    ) -> Dict[str, List[Any]]:
+    ) -> Dict[str, List[JSONType]]:
         """Get all related terms for a specific term by its GUID. Limit, offset, and sort parameters are
         currently not being enabled and won't work even they are passed.
 
@@ -7462,7 +7419,7 @@ class GlossaryOperations:
         :keyword sort: The sort order, ASC (default) or DESC.
         :paramtype sort: str
         :return: dict mapping str to list of JSON object
-        :rtype: dict[str, list[Any]]
+        :rtype: dict[str, list[JSONType]]
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -7484,7 +7441,7 @@ class GlossaryOperations:
                     ]
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Dict[str, List[Any]]]
+        cls = kwargs.pop('cls', None)  # type: ClsType[Dict[str, List[JSONType]]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -7496,14 +7453,13 @@ class GlossaryOperations:
             limit=limit,
             offset=offset,
             sort=sort,
-            template_url=self.list_related_terms.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -7528,13 +7484,13 @@ class GlossaryOperations:
         self,
         glossary_guid: str,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Get a specific Glossary by its GUID.
 
         :param glossary_guid: The globally unique identifier for glossary.
         :type glossary_guid: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -7596,7 +7552,7 @@ class GlossaryOperations:
                     "usage": "str"  # Optional. The usage of the glossary.
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -7605,14 +7561,13 @@ class GlossaryOperations:
         
         request = build_glossary_get_glossary_request(
             glossary_guid=glossary_guid,
-            template_url=self.get_glossary.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -7636,17 +7591,17 @@ class GlossaryOperations:
     async def update_glossary(
         self,
         glossary_guid: str,
-        updated_glossary: Any,
+        updated_glossary: JSONType,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Update the given glossary.
 
         :param glossary_guid: The globally unique identifier for glossary.
         :type glossary_guid: str
         :param updated_glossary: The glossary definition to be updated.
-        :type updated_glossary: Any
+        :type updated_glossary: JSONType
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -7764,7 +7719,7 @@ class GlossaryOperations:
                     "usage": "str"  # Optional. The usage of the glossary.
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -7772,20 +7727,19 @@ class GlossaryOperations:
 
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
-        json = updated_glossary
+        _json = updated_glossary
 
         request = build_glossary_update_glossary_request(
             glossary_guid=glossary_guid,
             content_type=content_type,
-            json=json,
-            template_url=self.update_glossary.metadata['url'],
+            json=_json,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -7828,14 +7782,13 @@ class GlossaryOperations:
         
         request = build_glossary_delete_glossary_request(
             glossary_guid=glossary_guid,
-            template_url=self.delete_glossary.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [204]:
@@ -7857,7 +7810,7 @@ class GlossaryOperations:
         offset: Optional[int] = None,
         sort: Optional[str] = "ASC",
         **kwargs: Any
-    ) -> List[Any]:
+    ) -> List[JSONType]:
         """Get the categories belonging to a specific glossary.
 
         :param glossary_guid: The globally unique identifier for glossary.
@@ -7869,7 +7822,7 @@ class GlossaryOperations:
         :keyword sort: The sort order, ASC (default) or DESC.
         :paramtype sort: str
         :return: list of JSON object
-        :rtype: list[Any]
+        :rtype: list[JSONType]
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -7943,7 +7896,7 @@ class GlossaryOperations:
                     }
                 ]
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[List[Any]]
+        cls = kwargs.pop('cls', None)  # type: ClsType[List[JSONType]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -7955,14 +7908,13 @@ class GlossaryOperations:
             limit=limit,
             offset=offset,
             sort=sort,
-            template_url=self.list_glossary_categories.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -7991,7 +7943,7 @@ class GlossaryOperations:
         offset: Optional[int] = None,
         sort: Optional[str] = "ASC",
         **kwargs: Any
-    ) -> List[Any]:
+    ) -> List[JSONType]:
         """Get the category headers belonging to a specific glossary.
 
         :param glossary_guid: The globally unique identifier for glossary.
@@ -8003,7 +7955,7 @@ class GlossaryOperations:
         :keyword sort: The sort order, ASC (default) or DESC.
         :paramtype sort: str
         :return: list of JSON object
-        :rtype: list[Any]
+        :rtype: list[JSONType]
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -8020,7 +7972,7 @@ class GlossaryOperations:
                     }
                 ]
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[List[Any]]
+        cls = kwargs.pop('cls', None)  # type: ClsType[List[JSONType]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -8032,14 +7984,13 @@ class GlossaryOperations:
             limit=limit,
             offset=offset,
             sort=sort,
-            template_url=self.list_glossary_categories_headers.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -8066,7 +8017,7 @@ class GlossaryOperations:
         *,
         include_term_hierarchy: Optional[bool] = False,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Get a specific glossary with detailed information.
 
         :param glossary_guid: The globally unique identifier for glossary.
@@ -8074,7 +8025,7 @@ class GlossaryOperations:
         :keyword include_term_hierarchy: Whether include term hierarchy.
         :paramtype include_term_hierarchy: bool
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -8458,7 +8409,7 @@ class GlossaryOperations:
                     "usage": "str"  # Optional. The usage of the glossary.
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -8468,14 +8419,13 @@ class GlossaryOperations:
         request = build_glossary_get_detailed_glossary_request(
             glossary_guid=glossary_guid,
             include_term_hierarchy=include_term_hierarchy,
-            template_url=self.get_detailed_glossary.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -8503,7 +8453,7 @@ class GlossaryOperations:
         *,
         include_term_hierarchy: Optional[bool] = False,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Update the glossary partially. Some properties such as qualifiedName are not allowed to be
         updated.
 
@@ -8515,7 +8465,7 @@ class GlossaryOperations:
         :keyword include_term_hierarchy: Whether include term hierarchy.
         :paramtype include_term_hierarchy: bool
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -8582,7 +8532,7 @@ class GlossaryOperations:
                     "usage": "str"  # Optional. The usage of the glossary.
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -8590,21 +8540,20 @@ class GlossaryOperations:
 
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
-        json = partial_updates
+        _json = partial_updates
 
         request = build_glossary_partial_update_glossary_request(
             glossary_guid=glossary_guid,
             content_type=content_type,
+            json=_json,
             include_term_hierarchy=include_term_hierarchy,
-            json=json,
-            template_url=self.partial_update_glossary.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -8634,7 +8583,7 @@ class GlossaryOperations:
         offset: Optional[int] = None,
         sort: Optional[str] = "ASC",
         **kwargs: Any
-    ) -> List[Any]:
+    ) -> List[JSONType]:
         """Get terms belonging to a specific glossary.
 
         :param glossary_guid: The globally unique identifier for glossary.
@@ -8648,7 +8597,7 @@ class GlossaryOperations:
         :keyword sort: The sort order, ASC (default) or DESC.
         :paramtype sort: str
         :return: list of JSON object
-        :rtype: list[Any]
+        :rtype: list[JSONType]
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -8912,7 +8861,7 @@ class GlossaryOperations:
                     }
                 ]
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[List[Any]]
+        cls = kwargs.pop('cls', None)  # type: ClsType[List[JSONType]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -8925,14 +8874,13 @@ class GlossaryOperations:
             limit=limit,
             offset=offset,
             sort=sort,
-            template_url=self.list_glossary_terms.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -8961,7 +8909,7 @@ class GlossaryOperations:
         offset: Optional[int] = None,
         sort: Optional[str] = "ASC",
         **kwargs: Any
-    ) -> List[Any]:
+    ) -> List[JSONType]:
         """Get term headers belonging to a specific glossary.
 
         :param glossary_guid: The globally unique identifier for glossary.
@@ -8973,7 +8921,7 @@ class GlossaryOperations:
         :keyword sort: The sort order, ASC (default) or DESC.
         :paramtype sort: str
         :return: list of JSON object
-        :rtype: list[Any]
+        :rtype: list[JSONType]
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -8993,7 +8941,7 @@ class GlossaryOperations:
                     }
                 ]
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[List[Any]]
+        cls = kwargs.pop('cls', None)  # type: ClsType[List[JSONType]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -9005,14 +8953,13 @@ class GlossaryOperations:
             limit=limit,
             offset=offset,
             sort=sort,
-            template_url=self.list_glossary_term_headers.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -9039,41 +8986,38 @@ class GlossaryOperations:
         *,
         include_term_hierarchy: Optional[bool] = False,
         **kwargs: Any
-    ) -> Any:
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+    ) -> JSONType:
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
+        api_version = kwargs.pop('api_version', "2021-05-01-preview")  # type: str
         content_type = kwargs.pop('content_type', None)  # type: Optional[str]
 
-        data = None
-        # Construct form data
-
+        
         request = build_glossary_import_glossary_terms_via_csv_request_initial(
             glossary_guid=glossary_guid,
+            api_version=api_version,
             content_type=content_type,
-            include_term_hierarchy=include_term_hierarchy,
             files=files,
-            data=data,
-            template_url=self._import_glossary_terms_via_csv_initial.metadata['url'],
+            include_term_hierarchy=include_term_hierarchy,
         )
-        request = _convert_request(request, files)
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [202]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
             raise HttpResponseError(response=response)
 
-        if response.body():
-            deserialized = _loads(response.body())
+        if response.content:
+            deserialized = response.json()
         else:
             deserialized = None
 
@@ -9093,7 +9037,7 @@ class GlossaryOperations:
         *,
         include_term_hierarchy: Optional[bool] = False,
         **kwargs: Any
-    ) -> AsyncLROPoller[Any]:
+    ) -> AsyncLROPoller[JSONType]:
         """Import Glossary Terms from local csv file.
 
         :param glossary_guid: The globally unique identifier for glossary.
@@ -9103,6 +9047,9 @@ class GlossaryOperations:
         :type files: dict[str, any]
         :keyword include_term_hierarchy: Whether include term hierarchy.
         :paramtype include_term_hierarchy: bool
+        :keyword api_version: Api Version. The default value is "2021-05-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: By default, your polling method will be AsyncLROBasePolling. Pass in False
          for this operation to not poll, or pass in your own initialized polling object for a personal
@@ -9111,7 +9058,7 @@ class GlossaryOperations:
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no
          Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns JSON object
-        :rtype: ~azure.core.polling.AsyncLROPoller[Any]
+        :rtype: ~azure.core.polling.AsyncLROPoller[JSONType]
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -9119,7 +9066,7 @@ class GlossaryOperations:
 
                 # multipart input template you can fill out and use as your `files` input.
                 files = {
-                    file: b'bytes'  # The csv file to import glossary terms from.
+                    "file": b'bytes'  # The csv file to import glossary terms from.
                 }
 
                 # response body for status code(s): 202
@@ -9138,9 +9085,10 @@ class GlossaryOperations:
                     "status": "str"  # Optional. Enum of the status of import csv operation. Possible values include: "NotStarted", "Succeeded", "Failed", "Running".
                 }
         """
+        api_version = kwargs.pop('api_version', "2021-05-01-preview")  # type: str
         content_type = kwargs.pop('content_type', None)  # type: Optional[str]
         polling = kwargs.pop('polling', True)  # type: Union[bool, azure.core.polling.AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -9151,6 +9099,7 @@ class GlossaryOperations:
                 glossary_guid=glossary_guid,
                 files=files,
                 include_term_hierarchy=include_term_hierarchy,
+                api_version=api_version,
                 content_type=content_type,
                 cls=lambda x,y,z: x,
                 **kwargs
@@ -9159,8 +9108,8 @@ class GlossaryOperations:
 
         def get_long_running_output(pipeline_response):
             response = pipeline_response.http_response
-            if response.body():
-                deserialized = _loads(response.body())
+            if response.content:
+                deserialized = response.json()
             else:
                 deserialized = None
             if cls:
@@ -9194,41 +9143,38 @@ class GlossaryOperations:
         *,
         include_term_hierarchy: Optional[bool] = False,
         **kwargs: Any
-    ) -> Any:
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+    ) -> JSONType:
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
+        api_version = kwargs.pop('api_version', "2021-05-01-preview")  # type: str
         content_type = kwargs.pop('content_type', None)  # type: Optional[str]
 
-        data = None
-        # Construct form data
-
+        
         request = build_glossary_import_glossary_terms_via_csv_by_glossary_name_request_initial(
             glossary_name=glossary_name,
+            api_version=api_version,
             content_type=content_type,
-            include_term_hierarchy=include_term_hierarchy,
             files=files,
-            data=data,
-            template_url=self._import_glossary_terms_via_csv_by_glossary_name_initial.metadata['url'],
+            include_term_hierarchy=include_term_hierarchy,
         )
-        request = _convert_request(request, files)
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [202]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
             raise HttpResponseError(response=response)
 
-        if response.body():
-            deserialized = _loads(response.body())
+        if response.content:
+            deserialized = response.json()
         else:
             deserialized = None
 
@@ -9248,7 +9194,7 @@ class GlossaryOperations:
         *,
         include_term_hierarchy: Optional[bool] = False,
         **kwargs: Any
-    ) -> AsyncLROPoller[Any]:
+    ) -> AsyncLROPoller[JSONType]:
         """Import Glossary Terms from local csv file by glossaryName.
 
         :param glossary_name: The name of the glossary.
@@ -9258,6 +9204,9 @@ class GlossaryOperations:
         :type files: dict[str, any]
         :keyword include_term_hierarchy: Whether include term hierarchy.
         :paramtype include_term_hierarchy: bool
+        :keyword api_version: Api Version. The default value is "2021-05-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: By default, your polling method will be AsyncLROBasePolling. Pass in False
          for this operation to not poll, or pass in your own initialized polling object for a personal
@@ -9266,7 +9215,7 @@ class GlossaryOperations:
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no
          Retry-After header is present.
         :return: An instance of AsyncLROPoller that returns JSON object
-        :rtype: ~azure.core.polling.AsyncLROPoller[Any]
+        :rtype: ~azure.core.polling.AsyncLROPoller[JSONType]
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -9274,7 +9223,7 @@ class GlossaryOperations:
 
                 # multipart input template you can fill out and use as your `files` input.
                 files = {
-                    file: b'bytes'  # The csv file to import glossary terms from.
+                    "file": b'bytes'  # The csv file to import glossary terms from.
                 }
 
                 # response body for status code(s): 202
@@ -9293,9 +9242,10 @@ class GlossaryOperations:
                     "status": "str"  # Optional. Enum of the status of import csv operation. Possible values include: "NotStarted", "Succeeded", "Failed", "Running".
                 }
         """
+        api_version = kwargs.pop('api_version', "2021-05-01-preview")  # type: str
         content_type = kwargs.pop('content_type', None)  # type: Optional[str]
         polling = kwargs.pop('polling', True)  # type: Union[bool, azure.core.polling.AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         lro_delay = kwargs.pop(
             'polling_interval',
             self._config.polling_interval
@@ -9306,6 +9256,7 @@ class GlossaryOperations:
                 glossary_name=glossary_name,
                 files=files,
                 include_term_hierarchy=include_term_hierarchy,
+                api_version=api_version,
                 content_type=content_type,
                 cls=lambda x,y,z: x,
                 **kwargs
@@ -9314,8 +9265,8 @@ class GlossaryOperations:
 
         def get_long_running_output(pipeline_response):
             response = pipeline_response.http_response
-            if response.body():
-                deserialized = _loads(response.body())
+            if response.content:
+                deserialized = response.json()
             else:
                 deserialized = None
             if cls:
@@ -9347,13 +9298,16 @@ class GlossaryOperations:
         self,
         operation_guid: str,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Get the status of import csv operation.
 
         :param operation_guid: The globally unique identifier for async operation/job.
         :type operation_guid: str
+        :keyword api_version: Api Version. The default value is "2021-05-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -9375,23 +9329,25 @@ class GlossaryOperations:
                     "status": "str"  # Optional. Enum of the status of import csv operation. Possible values include: "NotStarted", "Succeeded", "Failed", "Running".
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
+        api_version = kwargs.pop('api_version', "2021-05-01-preview")  # type: str
+
         
         request = build_glossary_get_import_csv_operation_status_request(
             operation_guid=operation_guid,
-            template_url=self.get_import_csv_operation_status.metadata['url'],
+            api_version=api_version,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -9428,6 +9384,9 @@ class GlossaryOperations:
         :type term_guids: list[str]
         :keyword include_term_hierarchy: Whether include term hierarchy.
         :paramtype include_term_hierarchy: bool
+        :keyword api_version: Api Version. The default value is "2021-05-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :return: IO
         :rtype: IO
         :raises: ~azure.core.exceptions.HttpResponseError
@@ -9446,23 +9405,24 @@ class GlossaryOperations:
         }
         error_map.update(kwargs.pop('error_map', {}))
 
+        api_version = kwargs.pop('api_version', "2021-05-01-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
-        json = term_guids
+        _json = term_guids
 
         request = build_glossary_export_glossary_terms_as_csv_request(
             glossary_guid=glossary_guid,
+            api_version=api_version,
             content_type=content_type,
+            json=_json,
             include_term_hierarchy=include_term_hierarchy,
-            json=json,
-            template_url=self.export_glossary_terms_as_csv.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -9491,7 +9451,7 @@ class GlossaryOperations:
         offset: Optional[int] = None,
         include_term_hierarchy: Optional[bool] = False,
         **kwargs: Any
-    ) -> List[Any]:
+    ) -> List[JSONType]:
         """Get terms by glossary name.
 
         :param glossary_name: The name of the glossary.
@@ -9502,8 +9462,11 @@ class GlossaryOperations:
         :paramtype offset: int
         :keyword include_term_hierarchy: Whether include term hierarchy.
         :paramtype include_term_hierarchy: bool
+        :keyword api_version: Api Version. The default value is "2021-05-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :return: list of JSON object
-        :rtype: list[Any]
+        :rtype: list[JSONType]
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -9767,26 +9730,28 @@ class GlossaryOperations:
                     }
                 ]
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[List[Any]]
+        cls = kwargs.pop('cls', None)  # type: ClsType[List[JSONType]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
+        api_version = kwargs.pop('api_version', "2021-05-01-preview")  # type: str
+
         
         request = build_glossary_list_terms_by_glossary_name_request(
             glossary_name=glossary_name,
+            api_version=api_version,
             limit=limit,
             offset=offset,
             include_term_hierarchy=include_term_hierarchy,
-            template_url=self.list_terms_by_glossary_name.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -9826,15 +9791,18 @@ class DiscoveryOperations:
     @distributed_trace_async
     async def query(
         self,
-        search_request: Any,
+        search_request: JSONType,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Gets data using search.
 
         :param search_request: An object specifying the search criteria.
-        :type search_request: Any
+        :type search_request: JSONType
+        :keyword api_version: Api Version. The default value is "2021-05-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -9966,27 +9934,28 @@ class DiscoveryOperations:
                     ]
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
+        api_version = kwargs.pop('api_version', "2021-05-01-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
-        json = search_request
+        _json = search_request
 
         request = build_discovery_query_request(
+            api_version=api_version,
             content_type=content_type,
-            json=json,
-            template_url=self.query.metadata['url'],
+            json=_json,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -10009,15 +9978,18 @@ class DiscoveryOperations:
     @distributed_trace_async
     async def suggest(
         self,
-        suggest_request: Any,
+        suggest_request: JSONType,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Get search suggestions by query criteria.
 
         :param suggest_request: An object specifying the suggest criteria.
-        :type suggest_request: Any
+        :type suggest_request: JSONType
+        :keyword api_version: Api Version. The default value is "2021-05-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -10069,27 +10041,28 @@ class DiscoveryOperations:
                     ]
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
+        api_version = kwargs.pop('api_version', "2021-05-01-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
-        json = suggest_request
+        _json = suggest_request
 
         request = build_discovery_suggest_request(
+            api_version=api_version,
             content_type=content_type,
-            json=json,
-            template_url=self.suggest.metadata['url'],
+            json=_json,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -10112,15 +10085,18 @@ class DiscoveryOperations:
     @distributed_trace_async
     async def browse(
         self,
-        browse_request: Any,
+        browse_request: JSONType,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Browse entities by path or entity type.
 
         :param browse_request: An object specifying the browse criteria.
-        :type browse_request: Any
+        :type browse_request: JSONType
+        :keyword api_version: Api Version. The default value is "2021-05-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -10157,27 +10133,28 @@ class DiscoveryOperations:
                     ]
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
+        api_version = kwargs.pop('api_version', "2021-05-01-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
-        json = browse_request
+        _json = browse_request
 
         request = build_discovery_browse_request(
+            api_version=api_version,
             content_type=content_type,
-            json=json,
-            template_url=self.browse.metadata['url'],
+            json=_json,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -10200,15 +10177,18 @@ class DiscoveryOperations:
     @distributed_trace_async
     async def auto_complete(
         self,
-        auto_complete_request: Any,
+        auto_complete_request: JSONType,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Get auto complete options.
 
         :param auto_complete_request: An object specifying the autocomplete criteria.
-        :type auto_complete_request: Any
+        :type auto_complete_request: JSONType
+        :keyword api_version: Api Version. The default value is "2021-05-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -10231,27 +10211,28 @@ class DiscoveryOperations:
                     ]
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
+        api_version = kwargs.pop('api_version', "2021-05-01-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
-        json = auto_complete_request
+        _json = auto_complete_request
 
         request = build_discovery_auto_complete_request(
+            api_version=api_version,
             content_type=content_type,
-            json=json,
-            template_url=self.auto_complete.metadata['url'],
+            json=_json,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -10299,7 +10280,7 @@ class LineageOperations:
         include_parent: Optional[bool] = None,
         get_derived_lineage: Optional[bool] = None,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Get lineage info of the entity specified by GUID.
 
         :param guid: The globally unique identifier of the entity.
@@ -10316,7 +10297,7 @@ class LineageOperations:
         :keyword get_derived_lineage: True to include derived lineage in the response.
         :paramtype get_derived_lineage: bool
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -10406,7 +10387,7 @@ class LineageOperations:
                     }
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -10420,14 +10401,13 @@ class LineageOperations:
             width=width,
             include_parent=include_parent,
             get_derived_lineage=get_derived_lineage,
-            template_url=self.get_lineage_graph.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -10457,7 +10437,7 @@ class LineageOperations:
         offset: Optional[int] = None,
         limit: Optional[int] = None,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Return immediate next page lineage info about entity with pagination.
 
         :param guid: The globally unique identifier of the entity.
@@ -10471,8 +10451,11 @@ class LineageOperations:
         :paramtype offset: int
         :keyword limit: The page size - by default there is no paging.
         :paramtype limit: int
+        :keyword api_version: Api Version. The default value is "2021-05-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -10562,27 +10545,29 @@ class LineageOperations:
                     }
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
+        api_version = kwargs.pop('api_version', "2021-05-01-preview")  # type: str
+
         
         request = build_lineage_next_page_lineage_request(
             guid=guid,
+            api_version=api_version,
             direction=direction,
             get_derived_lineage=get_derived_lineage,
             offset=offset,
             limit=limit,
-            template_url=self.next_page_lineage.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -10622,16 +10607,16 @@ class RelationshipOperations:
     @distributed_trace_async
     async def create(
         self,
-        relationship: Any,
+        relationship: JSONType,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Create a new relationship between entities.
 
         :param relationship: The AtlasRelationship object containing the information for the
          relationship to be created.
-        :type relationship: Any
+        :type relationship: JSONType
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -10703,7 +10688,7 @@ class RelationshipOperations:
                     "version": 0.0  # Optional. The version of the relationship.
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -10711,19 +10696,18 @@ class RelationshipOperations:
 
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
-        json = relationship
+        _json = relationship
 
         request = build_relationship_create_request(
             content_type=content_type,
-            json=json,
-            template_url=self.create.metadata['url'],
+            json=_json,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -10746,16 +10730,16 @@ class RelationshipOperations:
     @distributed_trace_async
     async def update(
         self,
-        relationship: Any,
+        relationship: JSONType,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Update an existing relationship between entities.
 
         :param relationship: The AtlasRelationship object containing the information for the
          relationship to be created.
-        :type relationship: Any
+        :type relationship: JSONType
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -10827,7 +10811,7 @@ class RelationshipOperations:
                     "version": 0.0  # Optional. The version of the relationship.
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -10835,19 +10819,18 @@ class RelationshipOperations:
 
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
-        json = relationship
+        _json = relationship
 
         request = build_relationship_update_request(
             content_type=content_type,
-            json=json,
-            template_url=self.update.metadata['url'],
+            json=_json,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -10874,7 +10857,7 @@ class RelationshipOperations:
         *,
         extended_info: Optional[bool] = None,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Get relationship information between entities by its GUID.
 
         :param guid: The globally unique identifier of the relationship.
@@ -10882,7 +10865,7 @@ class RelationshipOperations:
         :keyword extended_info: Limits whether includes extended information.
         :paramtype extended_info: bool
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -10978,7 +10961,7 @@ class RelationshipOperations:
                     }
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -10988,14 +10971,13 @@ class RelationshipOperations:
         request = build_relationship_get_request(
             guid=guid,
             extended_info=extended_info,
-            template_url=self.get.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -11038,14 +11020,13 @@ class RelationshipOperations:
         
         request = build_relationship_delete_request(
             guid=guid,
-            template_url=self.delete.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [204]:
@@ -11080,13 +11061,13 @@ class TypesOperations:
         self,
         guid: str,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Get the classification definition for the given GUID.
 
         :param guid: The globally unique identifier of the classification.
         :type guid: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -11185,7 +11166,7 @@ class TypesOperations:
                     "version": 0.0  # Optional. The version of the record.
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -11194,14 +11175,13 @@ class TypesOperations:
         
         request = build_types_get_classification_def_by_guid_request(
             guid=guid,
-            template_url=self.get_classification_def_by_guid.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -11226,13 +11206,13 @@ class TypesOperations:
         self,
         name: str,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Get the classification definition by its name (unique).
 
         :param name: The name of the classification.
         :type name: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -11331,7 +11311,7 @@ class TypesOperations:
                     "version": 0.0  # Optional. The version of the record.
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -11340,14 +11320,13 @@ class TypesOperations:
         
         request = build_types_get_classification_def_by_name_request(
             name=name,
-            template_url=self.get_classification_def_by_name.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -11372,13 +11351,13 @@ class TypesOperations:
         self,
         guid: str,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Get the Entity definition for the given GUID.
 
         :param guid: The globally unique identifier of the entity.
         :type guid: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -11502,7 +11481,7 @@ class TypesOperations:
                     "version": 0.0  # Optional. The version of the record.
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -11511,14 +11490,13 @@ class TypesOperations:
         
         request = build_types_get_entity_definition_by_guid_request(
             guid=guid,
-            template_url=self.get_entity_definition_by_guid.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -11543,13 +11521,13 @@ class TypesOperations:
         self,
         name: str,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Get the entity definition by its name (unique).
 
         :param name: The name of the entity.
         :type name: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -11673,7 +11651,7 @@ class TypesOperations:
                     "version": 0.0  # Optional. The version of the record.
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -11682,14 +11660,13 @@ class TypesOperations:
         
         request = build_types_get_entity_definition_by_name_request(
             name=name,
-            template_url=self.get_entity_definition_by_name.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -11714,13 +11691,13 @@ class TypesOperations:
         self,
         guid: str,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Get the enum definition for the given GUID.
 
         :param guid: The globally unique identifier of the enum.
         :type guid: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -11792,7 +11769,7 @@ class TypesOperations:
                     "version": 0.0  # Optional. The version of the record.
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -11801,14 +11778,13 @@ class TypesOperations:
         
         request = build_types_get_enum_def_by_guid_request(
             guid=guid,
-            template_url=self.get_enum_def_by_guid.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -11833,13 +11809,13 @@ class TypesOperations:
         self,
         name: str,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Get the enum definition by its name (unique).
 
         :param name: The name of the enum.
         :type name: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -11911,7 +11887,7 @@ class TypesOperations:
                     "version": 0.0  # Optional. The version of the record.
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -11920,14 +11896,13 @@ class TypesOperations:
         
         request = build_types_get_enum_def_by_name_request(
             name=name,
-            template_url=self.get_enum_def_by_name.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -11952,13 +11927,13 @@ class TypesOperations:
         self,
         guid: str,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Get the relationship definition for the given GUID.
 
         :param guid: The globally unique identifier of the relationship.
         :type guid: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -12066,7 +12041,7 @@ class TypesOperations:
                     "version": 0.0  # Optional. The version of the record.
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -12075,14 +12050,13 @@ class TypesOperations:
         
         request = build_types_get_relationship_def_by_guid_request(
             guid=guid,
-            template_url=self.get_relationship_def_by_guid.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -12107,13 +12081,13 @@ class TypesOperations:
         self,
         name: str,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Get the relationship definition by its name (unique).
 
         :param name: The name of the relationship.
         :type name: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -12221,7 +12195,7 @@ class TypesOperations:
                     "version": 0.0  # Optional. The version of the record.
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -12230,14 +12204,13 @@ class TypesOperations:
         
         request = build_types_get_relationship_def_by_name_request(
             name=name,
-            template_url=self.get_relationship_def_by_name.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -12262,13 +12235,13 @@ class TypesOperations:
         self,
         guid: str,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Get the struct definition for the given GUID.
 
         :param guid: The globally unique identifier of the struct.
         :type guid: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -12358,7 +12331,7 @@ class TypesOperations:
                     "version": 0.0  # Optional. The version of the record.
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -12367,14 +12340,13 @@ class TypesOperations:
         
         request = build_types_get_struct_def_by_guid_request(
             guid=guid,
-            template_url=self.get_struct_def_by_guid.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -12399,13 +12371,13 @@ class TypesOperations:
         self,
         name: str,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Get the struct definition by its name (unique).
 
         :param name: The name of the struct.
         :type name: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -12495,7 +12467,7 @@ class TypesOperations:
                     "version": 0.0  # Optional. The version of the record.
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -12504,14 +12476,13 @@ class TypesOperations:
         
         request = build_types_get_struct_def_by_name_request(
             name=name,
-            template_url=self.get_struct_def_by_name.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -12536,13 +12507,13 @@ class TypesOperations:
         self,
         guid: str,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Get the type definition for the given GUID.
 
         :param guid: The globally unique identifier of the type.
         :type guid: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -12695,7 +12666,7 @@ class TypesOperations:
                     "version": 0.0  # Optional. The version of the record.
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -12704,14 +12675,13 @@ class TypesOperations:
         
         request = build_types_get_type_definition_by_guid_request(
             guid=guid,
-            template_url=self.get_type_definition_by_guid.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -12736,13 +12706,13 @@ class TypesOperations:
         self,
         name: str,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Get the type definition by its name (unique).
 
         :param name: The name of the type.
         :type name: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -12895,7 +12865,7 @@ class TypesOperations:
                     "version": 0.0  # Optional. The version of the record.
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -12904,14 +12874,13 @@ class TypesOperations:
         
         request = build_types_get_type_definition_by_name_request(
             name=name,
-            template_url=self.get_type_definition_by_name.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -12954,14 +12923,13 @@ class TypesOperations:
         
         request = build_types_delete_type_by_name_request(
             name=name,
-            template_url=self.delete_type_by_name.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [204]:
@@ -12981,7 +12949,7 @@ class TypesOperations:
         include_term_template: Optional[bool] = False,
         type: Optional[str] = None,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Get all type definitions in Atlas in bulk.
 
         :keyword include_term_template: Whether include termtemplatedef when return all typedefs.
@@ -12991,7 +12959,7 @@ class TypesOperations:
          "entity", "classification", "relationship", "struct", and "term_template".
         :paramtype type: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -13548,7 +13516,7 @@ class TypesOperations:
                     ]
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -13558,14 +13526,13 @@ class TypesOperations:
         request = build_types_get_all_type_definitions_request(
             include_term_template=include_term_template,
             type=type,
-            template_url=self.get_all_type_definitions.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -13588,16 +13555,16 @@ class TypesOperations:
     @distributed_trace_async
     async def create_type_definitions(
         self,
-        types_def: Any,
+        types_def: JSONType,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Create all atlas type definitions in bulk, only new definitions will be created.
         Any changes to the existing definitions will be discarded.
 
         :param types_def: A composite wrapper object with corresponding lists of the type definition.
-        :type types_def: Any
+        :type types_def: JSONType
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -14705,7 +14672,7 @@ class TypesOperations:
                     ]
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -14713,19 +14680,18 @@ class TypesOperations:
 
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
-        json = types_def
+        _json = types_def
 
         request = build_types_create_type_definitions_request(
             content_type=content_type,
-            json=json,
-            template_url=self.create_type_definitions.metadata['url'],
+            json=_json,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -14748,15 +14714,15 @@ class TypesOperations:
     @distributed_trace_async
     async def update_atlas_type_definitions(
         self,
-        types_def: Any,
+        types_def: JSONType,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Update all types in bulk, changes detected in the type definitions would be persisted.
 
         :param types_def: A composite object that captures all type definition changes.
-        :type types_def: Any
+        :type types_def: JSONType
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -15864,7 +15830,7 @@ class TypesOperations:
                     ]
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -15872,19 +15838,18 @@ class TypesOperations:
 
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
-        json = types_def
+        _json = types_def
 
         request = build_types_update_atlas_type_definitions_request(
             content_type=content_type,
-            json=json,
-            template_url=self.update_atlas_type_definitions.metadata['url'],
+            json=_json,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -15907,13 +15872,13 @@ class TypesOperations:
     @distributed_trace_async
     async def delete_type_definitions(
         self,
-        types_def: Any,
+        types_def: JSONType,
         **kwargs: Any
     ) -> None:
         """Delete API for all types in bulk.
 
         :param types_def: A composite object that captures all types to be deleted.
-        :type types_def: Any
+        :type types_def: JSONType
         :return: None
         :rtype: None
         :raises: ~azure.core.exceptions.HttpResponseError
@@ -16480,19 +16445,18 @@ class TypesOperations:
 
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
-        json = types_def
+        _json = types_def
 
         request = build_types_delete_type_definitions_request(
             content_type=content_type,
-            json=json,
-            template_url=self.delete_type_definitions.metadata['url'],
+            json=_json,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [204]:
@@ -16512,7 +16476,7 @@ class TypesOperations:
         include_term_template: Optional[bool] = False,
         type: Optional[str] = None,
         **kwargs: Any
-    ) -> List[Any]:
+    ) -> List[JSONType]:
         """List all type definitions returned as a list of minimal information header.
 
         :keyword include_term_template: Whether include termtemplatedef when return all typedefs.
@@ -16522,7 +16486,7 @@ class TypesOperations:
          "entity", "classification", "relationship", "struct", and "term_template".
         :paramtype type: str
         :return: list of JSON object
-        :rtype: list[Any]
+        :rtype: list[JSONType]
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -16537,7 +16501,7 @@ class TypesOperations:
                     }
                 ]
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[List[Any]]
+        cls = kwargs.pop('cls', None)  # type: ClsType[List[JSONType]]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -16547,14 +16511,13 @@ class TypesOperations:
         request = build_types_list_type_definition_headers_request(
             include_term_template=include_term_template,
             type=type,
-            template_url=self.list_type_definition_headers.metadata['url'],
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -16579,13 +16542,16 @@ class TypesOperations:
         self,
         guid: str,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Get the term template definition for the given GUID.
 
         :param guid: The globally unique identifier of the term template.
         :type guid: str
+        :keyword api_version: Api Version. The default value is "2021-05-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -16675,23 +16641,25 @@ class TypesOperations:
                     "version": 0.0  # Optional. The version of the record.
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
+        api_version = kwargs.pop('api_version', "2021-05-01-preview")  # type: str
+
         
         request = build_types_get_term_template_def_by_guid_request(
             guid=guid,
-            template_url=self.get_term_template_def_by_guid.metadata['url'],
+            api_version=api_version,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -16716,13 +16684,16 @@ class TypesOperations:
         self,
         name: str,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Get the term template definition by its name (unique).
 
         :param name: The name of the term template.
         :type name: str
+        :keyword api_version: Api Version. The default value is "2021-05-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -16812,23 +16783,25 @@ class TypesOperations:
                     "version": 0.0  # Optional. The version of the record.
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
+        api_version = kwargs.pop('api_version', "2021-05-01-preview")  # type: str
+
         
         request = build_types_get_term_template_def_by_name_request(
             name=name,
-            template_url=self.get_term_template_def_by_name.metadata['url'],
+            api_version=api_version,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -16869,9 +16842,9 @@ class CollectionOperations:
     async def create_or_update(
         self,
         collection: str,
-        entity: Any,
+        entity: JSONType,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Creates or updates an entity to a collection.
         Existing entity is matched using its unique guid if supplied or by its unique attributes eg:
         qualifiedName.
@@ -16881,9 +16854,12 @@ class CollectionOperations:
         :param collection: the collection unique name.
         :type collection: str
         :param entity: Atlas entity with extended information.
-        :type entity: Any
+        :type entity: JSONType
+        :keyword api_version: Api Version. The default value is "2021-05-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -17152,28 +17128,29 @@ class CollectionOperations:
                     ]
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
+        api_version = kwargs.pop('api_version', "2021-05-01-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
-        json = entity
+        _json = entity
 
         request = build_collection_create_or_update_request(
             collection=collection,
+            api_version=api_version,
             content_type=content_type,
-            json=json,
-            template_url=self.create_or_update.metadata['url'],
+            json=_json,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -17197,9 +17174,9 @@ class CollectionOperations:
     async def create_or_update_bulk(
         self,
         collection: str,
-        entities: Any,
+        entities: JSONType,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Creates or updates entities in bulk to a collection.
         Existing entity is matched using its unique guid if supplied or by its unique attributes eg:
         qualifiedName.
@@ -17209,9 +17186,12 @@ class CollectionOperations:
         :param collection: the collection unique name.
         :type collection: str
         :param entities: Atlas entities with extended information.
-        :type entities: Any
+        :type entities: JSONType
+        :keyword api_version: Api Version. The default value is "2021-05-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -17482,28 +17462,29 @@ class CollectionOperations:
                     ]
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
+        api_version = kwargs.pop('api_version', "2021-05-01-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
-        json = entities
+        _json = entities
 
         request = build_collection_create_or_update_bulk_request(
             collection=collection,
+            api_version=api_version,
             content_type=content_type,
-            json=json,
-            template_url=self.create_or_update_bulk.metadata['url'],
+            json=_json,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -17527,17 +17508,20 @@ class CollectionOperations:
     async def move_entities_to_collection(
         self,
         collection: str,
-        move_entities_request: Any,
+        move_entities_request: JSONType,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Move existing entities to the target collection.
 
         :param collection: the collection unique name.
         :type collection: str
         :param move_entities_request: Entity guids to be moved to target collection.
-        :type move_entities_request: Any
+        :type move_entities_request: JSONType
+        :keyword api_version: Api Version. The default value is "2021-05-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -17669,28 +17653,29 @@ class CollectionOperations:
                     ]
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
+        api_version = kwargs.pop('api_version', "2021-05-01-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
-        json = move_entities_request
+        _json = move_entities_request
 
         request = build_collection_move_entities_to_collection_request(
             collection=collection,
+            api_version=api_version,
             content_type=content_type,
-            json=json,
-            template_url=self.move_entities_to_collection.metadata['url'],
+            json=_json,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
