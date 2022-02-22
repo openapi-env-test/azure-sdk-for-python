@@ -7,9 +7,10 @@
 # --------------------------------------------------------------------------
 
 from copy import deepcopy
-from typing import TYPE_CHECKING
+from typing import Any, Optional, TYPE_CHECKING
 
 from azure.core import PipelineClient
+from azure.core.rest import HttpRequest, HttpResponse
 from msrest import Deserializer, Serializer
 
 from ._configuration import PurviewAccountClientConfiguration
@@ -17,12 +18,11 @@ from .operations import AccountsOperations, CollectionsOperations, ResourceSetRu
 
 if TYPE_CHECKING:
     # pylint: disable=unused-import,ungrouped-imports
-    from typing import Any, Dict, Optional
+    from typing import Dict
 
     from azure.core.credentials import TokenCredential
-    from azure.core.rest import HttpRequest, HttpResponse
 
-class PurviewAccountClient(object):
+class PurviewAccountClient:
     """Creates a Microsoft.Purview data plane account client.
 
     :ivar accounts: AccountsOperations operations
@@ -37,17 +37,19 @@ class PurviewAccountClient(object):
     :type endpoint: str
     :param credential: Credential needed for the client to connect to Azure.
     :type credential: ~azure.core.credentials.TokenCredential
+    :keyword api_version: Api Version. The default value is "2019-11-01-preview". Note that
+     overriding this default value may result in unsupported behavior.
+    :paramtype api_version: str
     """
 
     def __init__(
         self,
-        endpoint,  # type: str
-        credential,  # type: "TokenCredential"
-        **kwargs  # type: Any
-    ):
-        # type: (...) -> None
+        endpoint: str,
+        credential: "TokenCredential",
+        **kwargs: Any
+    ) -> None:
         _endpoint = '{endpoint}'
-        self._config = PurviewAccountClientConfiguration(endpoint, credential, **kwargs)
+        self._config = PurviewAccountClientConfiguration(endpoint=endpoint, credential=credential, **kwargs)
         self._client = PipelineClient(base_url=_endpoint, config=self._config, **kwargs)
 
         self._serialize = Serializer()
@@ -61,9 +63,8 @@ class PurviewAccountClient(object):
     def send_request(
         self,
         request,  # type: HttpRequest
-        **kwargs  # type: Any
-    ):
-        # type: (...) -> HttpResponse
+        **kwargs: Any
+    ) -> HttpResponse:
         """Runs the network request through the client's chained policies.
 
         >>> from azure.core.rest import HttpRequest

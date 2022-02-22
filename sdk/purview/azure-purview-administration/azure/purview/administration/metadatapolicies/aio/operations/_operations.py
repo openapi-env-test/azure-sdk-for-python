@@ -18,10 +18,9 @@ from azure.core.rest import HttpRequest
 from azure.core.tracing.decorator import distributed_trace
 from azure.core.tracing.decorator_async import distributed_trace_async
 
-from ..._vendor import _convert_request
 from ...operations._operations import build_metadata_policy_get_request, build_metadata_policy_list_all_request, build_metadata_policy_update_request, build_metadata_roles_list_request
-
 T = TypeVar('T')
+JSONType = Any
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
 
 class MetadataRolesOperations:
@@ -46,11 +45,14 @@ class MetadataRolesOperations:
     def list(
         self,
         **kwargs: Any
-    ) -> AsyncIterable[Any]:
+    ) -> AsyncIterable[JSONType]:
         """Lists roles for Purview Account.
 
+        :keyword api_version: Api Version. The default value is "2021-07-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :return: An iterator like instance of JSON object
-        :rtype: ~azure.core.async_paging.AsyncItemPaged[Any]
+        :rtype: ~azure.core.async_paging.AsyncItemPaged[JSONType]
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -105,7 +107,9 @@ class MetadataRolesOperations:
                     ]
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        api_version = kwargs.pop('api_version', "2021-07-01-preview")  # type: str
+
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -114,9 +118,8 @@ class MetadataRolesOperations:
             if not next_link:
                 
                 request = build_metadata_roles_list_request(
-                    template_url=self.list.metadata['url'],
+                    api_version=api_version,
                 )
-                request = _convert_request(request)
                 path_format_arguments = {
                     "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
                 }
@@ -125,13 +128,12 @@ class MetadataRolesOperations:
             else:
                 
                 request = build_metadata_roles_list_request(
-                    template_url=next_link,
+                    api_version=api_version,
                 )
-                request = _convert_request(request)
                 path_format_arguments = {
                     "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
                 }
-                request.url = self._client.format_url(request.url, **path_format_arguments)
+                request.url = self._client.format_url(next_link, **path_format_arguments)
 
                 path_format_arguments = {
                     "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
@@ -187,14 +189,17 @@ class MetadataPolicyOperations:
         *,
         collection_name: Optional[str] = None,
         **kwargs: Any
-    ) -> AsyncIterable[Any]:
+    ) -> AsyncIterable[JSONType]:
         """List or Get metadata policies.
 
         :keyword collection_name: The name of an existing collection for which one policy needs to be
          fetched.
         :paramtype collection_name: str
+        :keyword api_version: Api Version. The default value is "2021-07-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :return: An iterator like instance of JSON object
-        :rtype: ~azure.core.async_paging.AsyncItemPaged[Any]
+        :rtype: ~azure.core.async_paging.AsyncItemPaged[JSONType]
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -263,7 +268,9 @@ class MetadataPolicyOperations:
                     ]
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        api_version = kwargs.pop('api_version', "2021-07-01-preview")  # type: str
+
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
@@ -272,10 +279,9 @@ class MetadataPolicyOperations:
             if not next_link:
                 
                 request = build_metadata_policy_list_all_request(
+                    api_version=api_version,
                     collection_name=collection_name,
-                    template_url=self.list_all.metadata['url'],
                 )
-                request = _convert_request(request)
                 path_format_arguments = {
                     "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
                 }
@@ -284,14 +290,13 @@ class MetadataPolicyOperations:
             else:
                 
                 request = build_metadata_policy_list_all_request(
+                    api_version=api_version,
                     collection_name=collection_name,
-                    template_url=next_link,
                 )
-                request = _convert_request(request)
                 path_format_arguments = {
                     "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
                 }
-                request.url = self._client.format_url(request.url, **path_format_arguments)
+                request.url = self._client.format_url(next_link, **path_format_arguments)
 
                 path_format_arguments = {
                     "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
@@ -328,17 +333,20 @@ class MetadataPolicyOperations:
     async def update(
         self,
         policy_id: str,
-        body: Any = None,
+        body: JSONType = None,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Updates a metadata policy.
 
         :param policy_id: Unique policy id.
         :type policy_id: str
         :param body: Policy to be updated.
-        :type body: Any
+        :type body: JSONType
+        :keyword api_version: Api Version. The default value is "2021-07-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -460,31 +468,32 @@ class MetadataPolicyOperations:
                     "version": 0  # Optional. The version of policy.
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
+        api_version = kwargs.pop('api_version', "2021-07-01-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
         if body is not None:
-            json = body
+            _json = body
         else:
-            json = None
+            _json = None
 
         request = build_metadata_policy_update_request(
             policy_id=policy_id,
+            api_version=api_version,
             content_type=content_type,
-            json=json,
-            template_url=self.update.metadata['url'],
+            json=_json,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
@@ -509,13 +518,16 @@ class MetadataPolicyOperations:
         self,
         policy_id: str,
         **kwargs: Any
-    ) -> Any:
+    ) -> JSONType:
         """Gets a metadata policy.
 
         :param policy_id: Id of an existing policy that needs to be fetched.
         :type policy_id: str
+        :keyword api_version: Api Version. The default value is "2021-07-01-preview". Note that
+         overriding this default value may result in unsupported behavior.
+        :paramtype api_version: str
         :return: JSON object
-        :rtype: Any
+        :rtype: JSONType
         :raises: ~azure.core.exceptions.HttpResponseError
 
         Example:
@@ -579,23 +591,25 @@ class MetadataPolicyOperations:
                     "version": 0  # Optional. The version of policy.
                 }
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Any]
+        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
         error_map = {
             401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
         }
         error_map.update(kwargs.pop('error_map', {}))
 
+        api_version = kwargs.pop('api_version', "2021-07-01-preview")  # type: str
+
         
         request = build_metadata_policy_get_request(
             policy_id=policy_id,
-            template_url=self.get.metadata['url'],
+            api_version=api_version,
         )
         path_format_arguments = {
             "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)
 
-        pipeline_response = await self._client.send_request(request, stream=False, _return_pipeline_response=True, **kwargs)
+        pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
 
         if response.status_code not in [200]:
