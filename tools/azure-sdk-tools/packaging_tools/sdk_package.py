@@ -38,8 +38,9 @@ def main(generate_input, generate_output):
         dist_path = Path(sdk_folder, folder_name, package_name, "dist")
         package["artifacts"] = [str(dist_path / package_file) for package_file in os.listdir(dist_path)]
         package["result"] = "succeeded"
-        # to distinguish with track1
-        package["packageName"] = "track2_" + package["packageName"]
+        # to distinguish with track1(mgmt)
+        prefix = "track2_" if "azure-mgmt-" in package_name else ""
+        package["packageName"] = prefix + package["packageName"]
         package["packageFolder"] = package["path"][0]
         result["packages"].append(package)
 

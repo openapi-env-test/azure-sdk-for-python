@@ -10,6 +10,13 @@
       "track2": "",
       "python3-only": ""
     },
+    "autorest_options_data_plane": {
+      "version": "3.7.2",
+      "use": ["@autorest/python@5.12.0", "@autorest/modelerfour@4.19.3"],
+      "python": "",
+      "sdkrel:python-sdks-folder": "./sdk/.",
+      "version-tolerant": ""
+    },
     "advanced_options": {
       "create_sdk_pull_requests": true,
       "sdk_generation_pull_request_base": "integration_branch"
