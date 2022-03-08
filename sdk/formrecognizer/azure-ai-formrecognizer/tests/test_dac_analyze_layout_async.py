@@ -20,6 +20,9 @@ DocumentAnalysisClientPreparer = functools.partial(_GlobalClientPreparer, Docume
 
 class TestDACAnalyzeLayoutAsync(AsyncFormRecognizerTest):
 
+    def teardown(self):
+        self.sleep(4)
+
     @FormRecognizerPreparer()
     @DocumentAnalysisClientPreparer()
     @recorded_by_proxy_async
@@ -55,8 +58,6 @@ class TestDACAnalyzeLayoutAsync(AsyncFormRecognizerTest):
 
         # check page range
         assert len(raw_analyze_result.pages) == len(returned_model.pages)
-
-        return {}
 
     @FormRecognizerPreparer()
     @DocumentAnalysisClientPreparer()
@@ -94,8 +95,6 @@ class TestDACAnalyzeLayoutAsync(AsyncFormRecognizerTest):
         # check page range
         assert len(raw_analyze_result.pages) == len(returned_model.pages)
 
-        return {}
-
     @FormRecognizerPreparer()
     @DocumentAnalysisClientPreparer()
     @recorded_by_proxy_async
@@ -131,8 +130,6 @@ class TestDACAnalyzeLayoutAsync(AsyncFormRecognizerTest):
 
         # check page range
         assert len(raw_analyze_result.pages) == len(returned_model.pages)
-
-        return {}
 
     @pytest.mark.live_test_only
     @FormRecognizerPreparer()
@@ -175,5 +172,3 @@ class TestDACAnalyzeLayoutAsync(AsyncFormRecognizerTest):
             poller = await client.begin_analyze_document("prebuilt-layout", document, pages="1-2, 3")
             result = await poller.result()
             assert len(result.pages) == 3
-
-        return {}

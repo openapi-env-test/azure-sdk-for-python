@@ -20,6 +20,9 @@ DocumentAnalysisClientPreparer = functools.partial(_GlobalClientPreparer, Docume
 
 class TestDACAnalyzeLayout(FormRecognizerTest):
 
+    def teardown(self):
+        self.sleep(4)
+
     @FormRecognizerPreparer()
     @DocumentAnalysisClientPreparer()
     @recorded_by_proxy
@@ -54,8 +57,6 @@ class TestDACAnalyzeLayout(FormRecognizerTest):
 
         # check page range
         assert len(raw_analyze_result.pages) == len(returned_model.pages)
-
-        return {}
 
     @FormRecognizerPreparer()
     @DocumentAnalysisClientPreparer()
@@ -92,8 +93,6 @@ class TestDACAnalyzeLayout(FormRecognizerTest):
         # check page range
         assert len(raw_analyze_result.pages) == len(returned_model.pages)
 
-        return {}
-
     @FormRecognizerPreparer()
     @DocumentAnalysisClientPreparer()
     @recorded_by_proxy
@@ -128,8 +127,6 @@ class TestDACAnalyzeLayout(FormRecognizerTest):
 
         # check page range
         assert len(raw_analyze_result.pages) == len(returned_model.pages)
-
-        return {}
 
     @pytest.mark.live_test_only
     @FormRecognizerPreparer()
@@ -170,5 +167,3 @@ class TestDACAnalyzeLayout(FormRecognizerTest):
         poller = client.begin_analyze_document("prebuilt-layout", document, pages="1-2, 3")
         result = poller.result()
         assert len(result.pages) == 3
-
-        return {}

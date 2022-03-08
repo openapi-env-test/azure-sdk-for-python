@@ -18,6 +18,9 @@ DocumentModelAdministrationClientPreparer = functools.partial(_GlobalClientPrepa
 
 class TestDACAnalyzeCustomModel(FormRecognizerTest):
 
+    def teardown(self):
+        self.sleep(4)
+
     @FormRecognizerPreparer()
     def test_analyze_document_none_model_id(self, **kwargs):
         formrecognizer_test_endpoint = kwargs.pop("formrecognizer_test_endpoint")
@@ -80,8 +83,6 @@ class TestDACAnalyzeCustomModel(FormRecognizerTest):
         # check page range
         assert len(raw_analyze_result.pages) == len(returned_model.pages)
 
-        return {}
-
     @FormRecognizerPreparer()
     @DocumentModelAdministrationClientPreparer()
     @recorded_by_proxy
@@ -127,8 +128,6 @@ class TestDACAnalyzeCustomModel(FormRecognizerTest):
 
         # check page range
         assert len(raw_analyze_result.pages) == len(returned_model.pages)
-
-        return {}
 
     @FormRecognizerPreparer()
     @DocumentModelAdministrationClientPreparer()
@@ -176,8 +175,6 @@ class TestDACAnalyzeCustomModel(FormRecognizerTest):
         # check page range
         assert len(raw_analyze_result.pages) == len(returned_model.pages)
 
-        return {}
-
     @FormRecognizerPreparer()
     @DocumentModelAdministrationClientPreparer()
     @recorded_by_proxy
@@ -195,9 +192,6 @@ class TestDACAnalyzeCustomModel(FormRecognizerTest):
         assert '1' == poller._polling_method._initial_response.http_response.request.query['pages']
         result = poller.result()
         assert result
-
-        return {}
-
 
     @FormRecognizerPreparer()
     @DocumentModelAdministrationClientPreparer()
@@ -222,5 +216,3 @@ class TestDACAnalyzeCustomModel(FormRecognizerTest):
         assert result.documents[0].fields.get("FullSignature").value_type == "signature"
         # this will notify us of changes in the service, currently expecting to get a None content for signature type fields
         assert result.documents[0].fields.get("FullSignature").content == None
-
-        return {}

@@ -23,6 +23,9 @@ DocumentAnalysisClientPreparer = functools.partial(_GlobalClientPreparer, Docume
 
 class TestDACAnalyzePrebuiltsAsync(AsyncFormRecognizerTest):
 
+    def teardown(self):
+        self.sleep(4)
+
     @FormRecognizerPreparer()
     @DocumentAnalysisClientPreparer()
     @recorded_by_proxy_async
@@ -36,8 +39,6 @@ class TestDACAnalyzePrebuiltsAsync(AsyncFormRecognizerTest):
                 )
                 result = await poller.result()
 
-        return {}
-
     @FormRecognizerPreparer()
     @DocumentAnalysisClientPreparer()
     @recorded_by_proxy_async
@@ -50,8 +51,6 @@ class TestDACAnalyzePrebuiltsAsync(AsyncFormRecognizerTest):
                     damaged_pdf,
                 )
                 result = await poller.result()
-
-        return {}
 
     @FormRecognizerPreparer()
     @DocumentAnalysisClientPreparer()
@@ -67,8 +66,6 @@ class TestDACAnalyzePrebuiltsAsync(AsyncFormRecognizerTest):
             )
             result = await poller.result()
         assert result is not None
-
-        return {}
 
     @FormRecognizerPreparer()
     @DocumentAnalysisClientPreparer()
@@ -93,8 +90,6 @@ class TestDACAnalyzePrebuiltsAsync(AsyncFormRecognizerTest):
                     myfile,
                 )
                 result = await poller.result()
-
-        return {}
 
     @pytest.mark.live_test_only
     @FormRecognizerPreparer()
@@ -180,8 +175,6 @@ class TestDACAnalyzePrebuiltsAsync(AsyncFormRecognizerTest):
         # check page range
         assert len(raw_analyze_result.pages) == len(returned_model.pages)
 
-        return {}
-
     @pytest.mark.live_test_only
     @FormRecognizerPreparer()
     @DocumentAnalysisClientPreparer()
@@ -242,8 +235,6 @@ class TestDACAnalyzePrebuiltsAsync(AsyncFormRecognizerTest):
         assert receipt.doc_type == "receipt.retailMeal"
         assert len(result.pages) == 2
 
-        return {}
-
     @FormRecognizerPreparer()
     @DocumentAnalysisClientPreparer()
     @recorded_by_proxy_async
@@ -286,8 +277,6 @@ class TestDACAnalyzePrebuiltsAsync(AsyncFormRecognizerTest):
         # check page range
         assert len(raw_analyze_result.pages) == len(returned_model.pages)
 
-        return {}
-
     @pytest.mark.live_test_only
     @FormRecognizerPreparer()
     @DocumentAnalysisClientPreparer()
@@ -317,8 +306,6 @@ class TestDACAnalyzePrebuiltsAsync(AsyncFormRecognizerTest):
             result = await poller.result()
             assert result
 
-        return {}
-
     @FormRecognizerPreparer()
     @DocumentAnalysisClientPreparer()
     @recorded_by_proxy_async
@@ -329,8 +316,6 @@ class TestDACAnalyzePrebuiltsAsync(AsyncFormRecognizerTest):
             async with client:
                 await client.begin_analyze_document("prebuilt-receipt", receipt, locale="not a locale")
         assert "InvalidArgument" == e.value.error.code
-
-        return {}
 
     @FormRecognizerPreparer()
     @DocumentAnalysisClientPreparer()
@@ -343,8 +328,6 @@ class TestDACAnalyzePrebuiltsAsync(AsyncFormRecognizerTest):
             assert '1' == poller._polling_method._initial_response.http_response.request.query['pages']
             result = await poller.result()
             assert result
-
-        return {}
 
     @FormRecognizerPreparer()
     @DocumentAnalysisClientPreparer()
@@ -408,8 +391,6 @@ class TestDACAnalyzePrebuiltsAsync(AsyncFormRecognizerTest):
         assert len(business_card.fields.get("CompanyNames").value) == 1
         assert business_card.fields.get("CompanyNames").value[0].value == "Contoso"
 
-        return {}
-
     @FormRecognizerPreparer()
     @DocumentAnalysisClientPreparer()
     @recorded_by_proxy_async
@@ -434,8 +415,6 @@ class TestDACAnalyzePrebuiltsAsync(AsyncFormRecognizerTest):
             assert passport["Sex"].value == "F"
             assert passport["CountryRegion"].value == "CAN"
 
-        return {}
-
     @FormRecognizerPreparer()
     @DocumentAnalysisClientPreparer()
     @recorded_by_proxy_async
@@ -459,8 +438,6 @@ class TestDACAnalyzePrebuiltsAsync(AsyncFormRecognizerTest):
         assert id_document.fields.get("Address").value == "123 STREET ADDRESS YOUR CITY WA 99999-1234"
         assert id_document.fields.get("CountryRegion").value == "USA"
         assert id_document.fields.get("Region").value == "Washington"
-
-        return {}
 
     @FormRecognizerPreparer()
     @DocumentAnalysisClientPreparer()
@@ -502,8 +479,6 @@ class TestDACAnalyzePrebuiltsAsync(AsyncFormRecognizerTest):
 
         # check page range
         assert len(raw_analyze_result.pages) == len(returned_model.pages)
-
-        return {}
 
     @FormRecognizerPreparer()
     @DocumentAnalysisClientPreparer()
@@ -558,5 +533,3 @@ class TestDACAnalyzePrebuiltsAsync(AsyncFormRecognizerTest):
         assert invoice.fields.get("Items").value[0].value["Quantity"].value ==  1.0
         assert invoice.fields.get("Items").value[0].value["UnitPrice"].value.amount ==  1.0
         assert invoice.fields.get("Items").value[0].value["UnitPrice"].value.symbol ==  None
-
-        return {}
