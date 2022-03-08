@@ -6602,12 +6602,15 @@ class KeyWrapMetadata(msrest.serialization.Model):
     :vartype type: str
     :ivar value: Reference / link to the KeyEncryptionKey.
     :vartype value: str
+    :ivar algorithm: Algorithm used in wrapping and unwrapping of the data encryption key.
+    :vartype algorithm: str
     """
 
     _attribute_map = {
         'name': {'key': 'name', 'type': 'str'},
         'type': {'key': 'type', 'type': 'str'},
         'value': {'key': 'value', 'type': 'str'},
+        'algorithm': {'key': 'algorithm', 'type': 'str'},
     }
 
     def __init__(
@@ -6616,6 +6619,7 @@ class KeyWrapMetadata(msrest.serialization.Model):
         name: Optional[str] = None,
         type: Optional[str] = None,
         value: Optional[str] = None,
+        algorithm: Optional[str] = None,
         **kwargs
     ):
         """
@@ -6625,11 +6629,14 @@ class KeyWrapMetadata(msrest.serialization.Model):
         :paramtype type: str
         :keyword value: Reference / link to the KeyEncryptionKey.
         :paramtype value: str
+        :keyword algorithm: Algorithm used in wrapping and unwrapping of the data encryption key.
+        :paramtype algorithm: str
         """
         super(KeyWrapMetadata, self).__init__(**kwargs)
         self.name = name
         self.type = type
         self.value = value
+        self.algorithm = algorithm
 
 
 class ListBackups(msrest.serialization.Model):
@@ -8346,6 +8353,8 @@ class MongoUserDefinitionCreateUpdateParameters(msrest.serialization.Model):
 
     :ivar user_name: The user name for User Definition.
     :vartype user_name: str
+    :ivar display_name: The display name for User Definition.
+    :vartype display_name: str
     :ivar password: The password for User Definition. Response does not contain user password.
     :vartype password: str
     :ivar database_name: The database name for which access is being granted for this User
@@ -8362,6 +8371,7 @@ class MongoUserDefinitionCreateUpdateParameters(msrest.serialization.Model):
 
     _attribute_map = {
         'user_name': {'key': 'properties.userName', 'type': 'str'},
+        'display_name': {'key': 'properties.displayName', 'type': 'str'},
         'password': {'key': 'properties.password', 'type': 'str'},
         'database_name': {'key': 'properties.databaseName', 'type': 'str'},
         'custom_data': {'key': 'properties.customData', 'type': 'str'},
@@ -8373,6 +8383,7 @@ class MongoUserDefinitionCreateUpdateParameters(msrest.serialization.Model):
         self,
         *,
         user_name: Optional[str] = None,
+        display_name: Optional[str] = None,
         password: Optional[str] = None,
         database_name: Optional[str] = None,
         custom_data: Optional[str] = None,
@@ -8383,6 +8394,8 @@ class MongoUserDefinitionCreateUpdateParameters(msrest.serialization.Model):
         """
         :keyword user_name: The user name for User Definition.
         :paramtype user_name: str
+        :keyword display_name: The display name for User Definition.
+        :paramtype display_name: str
         :keyword password: The password for User Definition. Response does not contain user password.
         :paramtype password: str
         :keyword database_name: The database name for which access is being granted for this User
@@ -8398,6 +8411,7 @@ class MongoUserDefinitionCreateUpdateParameters(msrest.serialization.Model):
         """
         super(MongoUserDefinitionCreateUpdateParameters, self).__init__(**kwargs)
         self.user_name = user_name
+        self.display_name = display_name
         self.password = password
         self.database_name = database_name
         self.custom_data = custom_data
@@ -8418,6 +8432,8 @@ class MongoUserDefinitionGetResults(ARMProxyResource):
     :vartype type: str
     :ivar user_name: The user name for User Definition.
     :vartype user_name: str
+    :ivar display_name: The display name for User Definition.
+    :vartype display_name: str
     :ivar password: The password for User Definition. Response does not contain user password.
     :vartype password: str
     :ivar database_name: The database name for which access is being granted for this User
@@ -8443,6 +8459,7 @@ class MongoUserDefinitionGetResults(ARMProxyResource):
         'name': {'key': 'name', 'type': 'str'},
         'type': {'key': 'type', 'type': 'str'},
         'user_name': {'key': 'properties.userName', 'type': 'str'},
+        'display_name': {'key': 'properties.displayName', 'type': 'str'},
         'password': {'key': 'properties.password', 'type': 'str'},
         'database_name': {'key': 'properties.databaseName', 'type': 'str'},
         'custom_data': {'key': 'properties.customData', 'type': 'str'},
@@ -8454,6 +8471,7 @@ class MongoUserDefinitionGetResults(ARMProxyResource):
         self,
         *,
         user_name: Optional[str] = None,
+        display_name: Optional[str] = None,
         password: Optional[str] = None,
         database_name: Optional[str] = None,
         custom_data: Optional[str] = None,
@@ -8464,6 +8482,8 @@ class MongoUserDefinitionGetResults(ARMProxyResource):
         """
         :keyword user_name: The user name for User Definition.
         :paramtype user_name: str
+        :keyword display_name: The display name for User Definition.
+        :paramtype display_name: str
         :keyword password: The password for User Definition. Response does not contain user password.
         :paramtype password: str
         :keyword database_name: The database name for which access is being granted for this User
@@ -8479,6 +8499,7 @@ class MongoUserDefinitionGetResults(ARMProxyResource):
         """
         super(MongoUserDefinitionGetResults, self).__init__(**kwargs)
         self.user_name = user_name
+        self.display_name = display_name
         self.password = password
         self.database_name = database_name
         self.custom_data = custom_data
@@ -10978,6 +10999,8 @@ class RestorableTablePropertiesResource(msrest.serialization.Model):
 
     :ivar rid: A system generated property. A unique identifier.
     :vartype rid: str
+    :ivar display_name: The display name of the Table.
+    :vartype display_name: str
     :ivar operation_type: The operation type of this table event. Possible values include:
      "Create", "Replace", "Delete", "SystemOperation".
     :vartype operation_type: str or ~azure.mgmt.cosmosdb.models.OperationType
@@ -10991,6 +11014,7 @@ class RestorableTablePropertiesResource(msrest.serialization.Model):
 
     _validation = {
         'rid': {'readonly': True},
+        'display_name': {'readonly': True},
         'operation_type': {'readonly': True},
         'event_timestamp': {'readonly': True},
         'owner_id': {'readonly': True},
@@ -10999,6 +11023,7 @@ class RestorableTablePropertiesResource(msrest.serialization.Model):
 
     _attribute_map = {
         'rid': {'key': '_rid', 'type': 'str'},
+        'display_name': {'key': 'displayName', 'type': 'str'},
         'operation_type': {'key': 'operationType', 'type': 'str'},
         'event_timestamp': {'key': 'eventTimestamp', 'type': 'str'},
         'owner_id': {'key': 'ownerId', 'type': 'str'},
@@ -11013,6 +11038,7 @@ class RestorableTablePropertiesResource(msrest.serialization.Model):
         """
         super(RestorableTablePropertiesResource, self).__init__(**kwargs)
         self.rid = None
+        self.display_name = None
         self.operation_type = None
         self.event_timestamp = None
         self.owner_id = None
