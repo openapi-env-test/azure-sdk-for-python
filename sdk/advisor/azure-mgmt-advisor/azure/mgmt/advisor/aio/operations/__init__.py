@@ -6,16 +6,10 @@
 # Changes may cause incorrect behavior and will be lost if the code is regenerated.
 # --------------------------------------------------------------------------
 
-from ._recommendation_metadata_operations import RecommendationMetadataOperations
-from ._configurations_operations import ConfigurationsOperations
-from ._recommendations_operations import RecommendationsOperations
 from ._operations import Operations
-from ._suppressions_operations import SuppressionsOperations
+from ._advisor_scores_operations import AdvisorScoresOperations
 
 __all__ = [
-    'RecommendationMetadataOperations',
-    'ConfigurationsOperations',
-    'RecommendationsOperations',
     'Operations',
-    'SuppressionsOperations',
+    'AdvisorScoresOperations',
 ]
