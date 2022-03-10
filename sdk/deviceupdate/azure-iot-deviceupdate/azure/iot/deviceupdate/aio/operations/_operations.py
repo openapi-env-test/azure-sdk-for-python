@@ -20,7 +20,7 @@ from azure.core.rest import HttpRequest
 from azure.core.tracing.decorator import distributed_trace
 from azure.core.tracing.decorator_async import distributed_trace_async
 
-from ...operations._operations import build_device_management_collect_logs_request, build_device_management_create_or_update_deployment_request, build_device_management_create_or_update_group_request, build_device_management_delete_deployment_request, build_device_management_delete_group_request, build_device_management_get_deployment_request, build_device_management_get_deployment_status_request, build_device_management_get_device_class_request, build_device_management_get_device_module_request, build_device_management_get_device_request, build_device_management_get_device_tag_request, build_device_management_get_group_request, build_device_management_get_group_update_compliance_request, build_device_management_get_log_collection_operation_detailed_status_request, build_device_management_get_log_collection_operation_request, build_device_management_get_operation_request, build_device_management_get_update_compliance_request, build_device_management_import_devices_request_initial, build_device_management_list_best_updates_for_group_request, build_device_management_list_deployment_devices_request, build_device_management_list_deployments_for_group_request, build_device_management_list_device_classes_request, build_device_management_list_device_tags_request, build_device_management_list_devices_request, build_device_management_list_groups_request, build_device_management_list_installable_updates_for_device_class_request, build_device_management_list_log_collection_operations_request, build_device_management_list_operations_request, build_device_management_retry_deployment_request, build_device_management_stop_deployment_request, build_device_update_delete_update_request_initial, build_device_update_get_file_request, build_device_update_get_operation_request, build_device_update_get_update_request, build_device_update_import_update_request_initial, build_device_update_list_files_request, build_device_update_list_names_request, build_device_update_list_operations_request, build_device_update_list_providers_request, build_device_update_list_updates_request, build_device_update_list_versions_request
+from ...operations._operations import build_device_management_collect_logs_request, build_device_management_create_or_update_deployment_request, build_device_management_create_or_update_group_request, build_device_management_delete_deployment_request, build_device_management_delete_group_request, build_device_management_get_deployment_request, build_device_management_get_deployment_status_request, build_device_management_get_device_class_request, build_device_management_get_device_module_request, build_device_management_get_device_request, build_device_management_get_device_tag_request, build_device_management_get_group_request, build_device_management_get_group_update_compliance_request, build_device_management_get_log_collection_operation_detailed_status_request, build_device_management_get_log_collection_operation_request, build_device_management_get_operation_request, build_device_management_get_update_compliance_request, build_device_management_import_devices_request_initial, build_device_management_list_deployment_devices_request, build_device_management_list_deployments_for_group_request, build_device_management_list_device_classes_request, build_device_management_list_device_tags_request, build_device_management_list_devices_request, build_device_management_list_groups_request, build_device_management_list_installable_updates_for_device_class_request, build_device_management_list_log_collection_operations_request, build_device_management_list_operations_request, build_device_management_retry_deployment_request, build_device_management_stop_deployment_request, build_device_update_delete_update_request_initial, build_device_update_get_file_request, build_device_update_get_operation_request, build_device_update_get_update_request, build_device_update_import_update_request_initial, build_device_update_list_files_request, build_device_update_list_names_request, build_device_update_list_operations_request, build_device_update_list_providers_request, build_device_update_list_updates_request, build_device_update_list_versions_request
 T = TypeVar('T')
 JSONType = Any
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
@@ -2670,111 +2670,6 @@ class DeviceManagementOperations:
 
     get_group_update_compliance.metadata = {'url': '/deviceupdate/{instanceId}/management/groups/{groupId}/updateCompliance'}  # type: ignore
 
-
-    @distributed_trace
-    def list_best_updates_for_group(
-        self,
-        group_id: str,
-        *,
-        filter: Optional[str] = None,
-        **kwargs: Any
-    ) -> AsyncIterable[JSONType]:
-        """Get the best available updates for a group and a count of how many devices need each update.
-
-        :param group_id: Group identity.
-        :type group_id: str
-        :keyword filter: Restricts the set of bestUpdates returned. You can filter on update Provider,
-         Name and Version property.
-        :paramtype filter: str
-        :keyword api_version: Api Version. The default value is "2021-06-01-preview". Note that
-         overriding this default value may result in unsupported behavior.
-        :paramtype api_version: str
-        :return: An iterator like instance of JSON object
-        :rtype: ~azure.core.async_paging.AsyncItemPaged[JSONType]
-        :raises: ~azure.core.exceptions.HttpResponseError
-
-        Example:
-            .. code-block:: python
-
-                # response body for status code(s): 200
-                response.json() == {
-                    "nextLink": "str",  # Optional. The link to the next page of items.
-                    "value": [
-                        {
-                            "deviceCount": 0,  # Required. Total number of devices for which the update is applicable.
-                            "updateId": {
-                                "name": "str",  # Required. Update name.
-                                "provider": "str",  # Required. Update provider.
-                                "version": "str"  # Required. Update version.
-                            }
-                        }
-                    ]
-                }
-        """
-        api_version = kwargs.pop('api_version', "2021-06-01-preview")  # type: str
-
-        cls = kwargs.pop('cls', None)  # type: ClsType[JSONType]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
-        def prepare_request(next_link=None):
-            if not next_link:
-                
-                request = build_device_management_list_best_updates_for_group_request(
-                    instance_id=self._config.instance_id,
-                    group_id=group_id,
-                    api_version=api_version,
-                    filter=filter,
-                )
-                path_format_arguments = {
-                    "endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
-                }
-                request.url = self._client.format_url(request.url, **path_format_arguments)
-
-            else:
-                
-                request = build_device_management_list_best_updates_for_group_request(
-                    instance_id=self._config.instance_id,
-                    group_id=group_id,
-                    api_version=api_version,
-                    filter=filter,
-                )
-                path_format_arguments = {
-                    "endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
-                }
-                request.url = self._client.format_url(next_link, **path_format_arguments)
-
-                path_format_arguments = {
-                    "endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
-                }
-                request.method = "GET"
-            return request
-
-        async def extract_data(pipeline_response):
-            deserialized = _loads(pipeline_response.http_response.body())
-            list_of_elem = deserialized["value"]
-            if cls:
-                list_of_elem = cls(list_of_elem)
-            return deserialized.get("nextLink", None), AsyncList(list_of_elem)
-
-        async def get_next(next_link=None):
-            request = prepare_request(next_link)
-
-            pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
-            response = pipeline_response.http_response
-
-            if response.status_code not in [200]:
-                map_error(status_code=response.status_code, response=response, error_map=error_map)
-                raise HttpResponseError(response=response)
-
-            return pipeline_response
-
-
-        return AsyncItemPaged(
-            get_next, extract_data
-        )
-    list_best_updates_for_group.metadata = {'url': '/deviceupdate/{instanceId}/management/groups/{groupId}/bestUpdates'}  # type: ignore
 
     @distributed_trace
     def list_deployments_for_group(
