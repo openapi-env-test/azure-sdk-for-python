@@ -1522,7 +1522,7 @@ class DeviceUpdateOperations(object):
 
     def _import_update_initial(
         self,
-        update_to_import: List[JSONType],
+        update_to_import_request: List[JSONType],
         *,
         action: str,
         **kwargs: Any
@@ -1536,7 +1536,7 @@ class DeviceUpdateOperations(object):
         api_version = kwargs.pop('api_version', "2021-06-01-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
-        _json = update_to_import
+        _json = update_to_import_request
 
         request = build_device_update_import_update_request_initial(
             instance_id=self._config.instance_id,
@@ -1576,15 +1576,15 @@ class DeviceUpdateOperations(object):
     @distributed_trace
     def begin_import_update(
         self,
-        update_to_import: List[JSONType],
+        update_to_import_request: List[JSONType],
         *,
         action: str,
         **kwargs: Any
     ) -> LROPoller[JSONType]:
         """Import new update version.
 
-        :param update_to_import: The update to be imported.
-        :type update_to_import: list[JSONType]
+        :param update_to_import_request: The update to be imported.
+        :type update_to_import_request: list[JSONType]
         :keyword action: Import update action. "import"
         :paramtype action: str
         :keyword api_version: Api Version. The default value is "2021-06-01-preview". Note that
@@ -1605,7 +1605,7 @@ class DeviceUpdateOperations(object):
             .. code-block:: python
 
                 # JSON input template you can fill out and use as your body input.
-                update_to_import = [
+                update_to_import_request = [
                     {
                         "files": [
                             {
@@ -1684,7 +1684,7 @@ class DeviceUpdateOperations(object):
         cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
         if cont_token is None:
             raw_result = self._import_update_initial(
-                update_to_import=update_to_import,
+                update_to_import_request=update_to_import_request,
                 action=action,
                 api_version=api_version,
                 content_type=content_type,
