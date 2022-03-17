@@ -20,7 +20,7 @@ from azure.core.rest import HttpRequest
 from azure.core.tracing.decorator import distributed_trace
 from azure.core.tracing.decorator_async import distributed_trace_async
 
-from ...operations._operations import build_device_management_collect_logs_request, build_device_management_create_or_update_deployment_request, build_device_management_create_or_update_group_request, build_device_management_delete_deployment_request, build_device_management_delete_group_request, build_device_management_get_deployment_request, build_device_management_get_deployment_status_request, build_device_management_get_device_class_request, build_device_management_get_device_module_request, build_device_management_get_device_request, build_device_management_get_device_tag_request, build_device_management_get_group_request, build_device_management_get_group_update_compliance_request, build_device_management_get_log_collection_operation_detailed_status_request, build_device_management_get_log_collection_operation_request, build_device_management_get_operation_request, build_device_management_get_update_compliance_request, build_device_management_import_devices_request_initial, build_device_management_list_best_updates_for_group_request, build_device_management_list_deployment_devices_request, build_device_management_list_deployments_for_group_request, build_device_management_list_device_classes_request, build_device_management_list_device_tags_request, build_device_management_list_devices_request, build_device_management_list_groups_request, build_device_management_list_installable_updates_for_device_class_request, build_device_management_list_log_collection_operations_request, build_device_management_list_operations_request, build_device_management_retry_deployment_request, build_device_management_stop_deployment_request, build_device_update_delete_update_request_initial, build_device_update_get_file_request, build_device_update_get_operation_request, build_device_update_get_update_request, build_device_update_import_update_request_initial, build_device_update_list_files_request, build_device_update_list_names_request, build_device_update_list_operations_request, build_device_update_list_providers_request, build_device_update_list_updates_request, build_device_update_list_versions_request
+from ...operations._operations import build_device_management_collect_logs_request, build_device_management_create_or_update_deployment_request, build_device_management_create_or_update_group_request, build_device_management_delete_deployment_request, build_device_management_delete_group_request, build_device_management_get_deployment_request, build_device_management_get_deployment_status_request, build_device_management_get_device_class_request, build_device_management_get_device_module_request, build_device_management_get_device_request, build_device_management_get_device_tag_request, build_device_management_get_group_request, build_device_management_get_group_update_compliance_request, build_device_management_get_log_collection_operation_detailed_status_request, build_device_management_get_log_collection_operation_request, build_device_management_get_operation_request, build_device_management_get_update_compliance_request, build_device_management_import_devices_request_initial, build_device_management_list_best_updates_for_group_request, build_device_management_list_deployment_devices_request, build_device_management_list_deployments_for_group_request, build_device_management_list_device_classes_request, build_device_management_list_device_tags_request, build_device_management_list_devices_request, build_device_management_list_groups_request, build_device_management_list_installable_updates_for_device_class_request, build_device_management_list_log_collection_operations_request, build_device_management_list_operations_request, build_device_management_retry_deployment_request, build_device_management_stop_deployment_aaa_request, build_device_update_delete_update_request_initial, build_device_update_get_file_request, build_device_update_get_operation_request, build_device_update_get_update_request, build_device_update_import_update_request_initial, build_device_update_list_files_request, build_device_update_list_names_request, build_device_update_list_operations_request, build_device_update_list_providers_request, build_device_update_list_updates_request, build_device_update_list_versions_request
 T = TypeVar('T')
 JSONType = Any
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
@@ -3862,7 +3862,7 @@ class DeviceManagementOperations:
 
 
     @distributed_trace_async
-    async def stop_deployment(
+    async def stop_deployment_aaa(
         self,
         group_id: str,
         deployment_id: str,
@@ -3911,7 +3911,7 @@ class DeviceManagementOperations:
         api_version = kwargs.pop('api_version', "2021-06-01-preview")  # type: str
 
         
-        request = build_device_management_stop_deployment_request(
+        request = build_device_management_stop_deployment_aaa_request(
             instance_id=self._config.instance_id,
             group_id=group_id,
             deployment_id=deployment_id,
@@ -3940,7 +3940,7 @@ class DeviceManagementOperations:
 
         return deserialized
 
-    stop_deployment.metadata = {'url': '/deviceupdate/{instanceId}/management/groups/{groupId}/deployments/{deploymentId}'}  # type: ignore
+    stop_deployment_aaa.metadata = {'url': '/deviceupdate/{instanceId}/management/groups/{groupId}/deployments/{deploymentId}'}  # type: ignore
 
 
     @distributed_trace_async
