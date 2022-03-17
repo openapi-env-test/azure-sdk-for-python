@@ -1463,7 +1463,7 @@ def build_device_management_get_log_collection_operation_detailed_status_request
     )
 
 
-def build_device_management_stop_deployment_request(
+def build_device_management_stop_deployment_aaa_request(
     instance_id: str,
     group_id: str,
     deployment_id: str,
@@ -5377,7 +5377,7 @@ class DeviceManagementOperations(object):
 
 
     @distributed_trace
-    def stop_deployment(
+    def stop_deployment_aaa(
         self,
         group_id: str,
         deployment_id: str,
@@ -5426,7 +5426,7 @@ class DeviceManagementOperations(object):
         api_version = kwargs.pop('api_version', "2021-06-01-preview")  # type: str
 
         
-        request = build_device_management_stop_deployment_request(
+        request = build_device_management_stop_deployment_aaa_request(
             instance_id=self._config.instance_id,
             group_id=group_id,
             deployment_id=deployment_id,
@@ -5455,7 +5455,7 @@ class DeviceManagementOperations(object):
 
         return deserialized
 
-    stop_deployment.metadata = {'url': '/deviceupdate/{instanceId}/management/groups/{groupId}/deployments/{deploymentId}'}  # type: ignore
+    stop_deployment_aaa.metadata = {'url': '/deviceupdate/{instanceId}/management/groups/{groupId}/deployments/{deploymentId}'}  # type: ignore
 
 
     @distributed_trace
