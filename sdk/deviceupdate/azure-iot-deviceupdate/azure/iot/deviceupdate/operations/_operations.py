@@ -338,7 +338,7 @@ def build_device_update_get_file_request(
     provider: str,
     name: str,
     version: str,
-    file_id: str,
+    file_id_aaa: str,
     *,
     if_none_match: Optional[str] = None,
     **kwargs: Any
@@ -347,13 +347,13 @@ def build_device_update_get_file_request(
 
     accept = "application/json"
     # Construct URL
-    url = '/deviceupdate/{instanceId}/updates/providers/{provider}/names/{name}/versions/{version}/files/{fileId}'
+    url = '/deviceupdate/{instanceId}/updates/providers/{provider}/names/{name}/versions/{version}/files/{fileIdAAA}'
     path_format_arguments = {
         "instanceId": _SERIALIZER.url("instance_id", instance_id, 'str', skip_quote=True),
         "provider": _SERIALIZER.url("provider", provider, 'str'),
         "name": _SERIALIZER.url("name", name, 'str'),
         "version": _SERIALIZER.url("version", version, 'str'),
-        "fileId": _SERIALIZER.url("file_id", file_id, 'str'),
+        "fileIdAAA": _SERIALIZER.url("file_id_aaa", file_id_aaa, 'str'),
     }
 
     url = _format_url_section(url, **path_format_arguments)
@@ -2535,7 +2535,7 @@ class DeviceUpdateOperations(object):
         provider: str,
         name: str,
         version: str,
-        file_id: str,
+        file_id_aaa: str,
         *,
         if_none_match: Optional[str] = None,
         **kwargs: Any
@@ -2548,8 +2548,8 @@ class DeviceUpdateOperations(object):
         :type name: str
         :param version: Update version.
         :type version: str
-        :param file_id: File identifier.
-        :type file_id: str
+        :param file_id_aaa: File identifier.
+        :type file_id_aaa: str
         :keyword if_none_match: Defines the If-None-Match condition. The operation will be performed
          only if the ETag on the server does not match this value.
         :paramtype if_none_match: str
@@ -2591,7 +2591,7 @@ class DeviceUpdateOperations(object):
             provider=provider,
             name=name,
             version=version,
-            file_id=file_id,
+            file_id_aaa=file_id_aaa,
             api_version=api_version,
             if_none_match=if_none_match,
         )
@@ -2619,7 +2619,7 @@ class DeviceUpdateOperations(object):
 
         return deserialized
 
-    get_file.metadata = {'url': '/deviceupdate/{instanceId}/updates/providers/{provider}/names/{name}/versions/{version}/files/{fileId}'}  # type: ignore
+    get_file.metadata = {'url': '/deviceupdate/{instanceId}/updates/providers/{provider}/names/{name}/versions/{version}/files/{fileIdAAA}'}  # type: ignore
 
 
     @distributed_trace
