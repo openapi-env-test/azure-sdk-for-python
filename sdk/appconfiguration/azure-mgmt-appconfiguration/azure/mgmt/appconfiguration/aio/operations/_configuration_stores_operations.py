@@ -22,7 +22,7 @@ from azure.mgmt.core.polling.async_arm_polling import AsyncARMPolling
 
 from ... import models as _models
 from ..._vendor import _convert_request
-from ...operations._configuration_stores_operations import build_create_request_initial, build_delete_request_initial, build_get_deleted_request, build_get_request, build_list_by_resource_group_request, build_list_deleted_request, build_list_keys_request, build_list_request, build_purge_deleted_request_initial, build_regenerate_key_request, build_update_request_initial
+from ...operations._configuration_stores_operations import build_create_request_initial, build_delete_request_initial, build_get_deleted_request, build_get_request, build_list_deleted_request, build_list_keys_request, build_list_request, build_purge_deleted_request_initial, build_regenerate_key_request, build_update_request_initial
 T = TypeVar('T')
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
 
@@ -121,86 +121,6 @@ class ConfigurationStoresOperations:
             get_next, extract_data
         )
     list.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/configurationStores'}  # type: ignore
-
-    @distributed_trace
-    def list_by_resource_group(
-        self,
-        resource_group_name: str,
-        skip_token: Optional[str] = None,
-        **kwargs: Any
-    ) -> AsyncIterable["_models.ConfigurationStoreListResult"]:
-        """Lists the configuration stores for a given resource group.
-
-        :param resource_group_name: The name of the resource group to which the container registry
-         belongs.
-        :type resource_group_name: str
-        :param skip_token: A skip token is used to continue retrieving items after an operation returns
-         a partial result. If a previous response contains a nextLink element, the value of the nextLink
-         element will include a skipToken parameter that specifies a starting point to use for
-         subsequent calls.
-        :type skip_token: str
-        :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either ConfigurationStoreListResult or the result of
-         cls(response)
-        :rtype:
-         ~azure.core.async_paging.AsyncItemPaged[~app_configuration_management_client.models.ConfigurationStoreListResult]
-        :raises: ~azure.core.exceptions.HttpResponseError
-        """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ConfigurationStoreListResult"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
-        def prepare_request(next_link=None):
-            if not next_link:
-                
-                request = build_list_by_resource_group_request(
-                    subscription_id=self._config.subscription_id,
-                    resource_group_name=resource_group_name,
-                    skip_token=skip_token,
-                    template_url=self.list_by_resource_group.metadata['url'],
-                )
-                request = _convert_request(request)
-                request.url = self._client.format_url(request.url)
-
-            else:
-                
-                request = build_list_by_resource_group_request(
-                    subscription_id=self._config.subscription_id,
-                    resource_group_name=resource_group_name,
-                    skip_token=skip_token,
-                    template_url=next_link,
-                )
-                request = _convert_request(request)
-                request.url = self._client.format_url(request.url)
-                request.method = "GET"
-            return request
-
-        async def extract_data(pipeline_response):
-            deserialized = self._deserialize("ConfigurationStoreListResult", pipeline_response)
-            list_of_elem = deserialized.value
-            if cls:
-                list_of_elem = cls(list_of_elem)
-            return deserialized.next_link or None, AsyncList(list_of_elem)
-
-        async def get_next(next_link=None):
-            request = prepare_request(next_link)
-
-            pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
-            response = pipeline_response.http_response
-
-            if response.status_code not in [200]:
-                map_error(status_code=response.status_code, response=response, error_map=error_map)
-                error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, pipeline_response)
-                raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
-
-            return pipeline_response
-
-
-        return AsyncItemPaged(
-            get_next, extract_data
-        )
-    list_by_resource_group.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores'}  # type: ignore
 
     @distributed_trace_async
     async def get(

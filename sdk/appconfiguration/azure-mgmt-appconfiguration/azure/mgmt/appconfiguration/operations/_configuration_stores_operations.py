@@ -64,43 +64,6 @@ def build_list_request(
     )
 
 
-def build_list_by_resource_group_request(
-    subscription_id: str,
-    resource_group_name: str,
-    *,
-    skip_token: Optional[str] = None,
-    **kwargs: Any
-) -> HttpRequest:
-    api_version = "2021-10-01-preview"
-    accept = "application/json"
-    # Construct URL
-    url = kwargs.pop("template_url", '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores')
-    path_format_arguments = {
-        "subscriptionId": _SERIALIZER.url("subscription_id", subscription_id, 'str'),
-        "resourceGroupName": _SERIALIZER.url("resource_group_name", resource_group_name, 'str'),
-    }
-
-    url = _format_url_section(url, **path_format_arguments)
-
-    # Construct parameters
-    query_parameters = kwargs.pop("params", {})  # type: Dict[str, Any]
-    query_parameters['api-version'] = _SERIALIZER.query("api_version", api_version, 'str')
-    if skip_token is not None:
-        query_parameters['$skipToken'] = _SERIALIZER.query("skip_token", skip_token, 'str')
-
-    # Construct headers
-    header_parameters = kwargs.pop("headers", {})  # type: Dict[str, Any]
-    header_parameters['Accept'] = _SERIALIZER.header("accept", accept, 'str')
-
-    return HttpRequest(
-        method="GET",
-        url=url,
-        params=query_parameters,
-        headers=header_parameters,
-        **kwargs
-    )
-
-
 def build_get_request(
     subscription_id: str,
     resource_group_name: str,
@@ -537,86 +500,6 @@ class ConfigurationStoresOperations(object):
             get_next, extract_data
         )
     list.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.AppConfiguration/configurationStores'}  # type: ignore
-
-    @distributed_trace
-    def list_by_resource_group(
-        self,
-        resource_group_name: str,
-        skip_token: Optional[str] = None,
-        **kwargs: Any
-    ) -> Iterable["_models.ConfigurationStoreListResult"]:
-        """Lists the configuration stores for a given resource group.
-
-        :param resource_group_name: The name of the resource group to which the container registry
-         belongs.
-        :type resource_group_name: str
-        :param skip_token: A skip token is used to continue retrieving items after an operation returns
-         a partial result. If a previous response contains a nextLink element, the value of the nextLink
-         element will include a skipToken parameter that specifies a starting point to use for
-         subsequent calls.
-        :type skip_token: str
-        :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either ConfigurationStoreListResult or the result of
-         cls(response)
-        :rtype:
-         ~azure.core.paging.ItemPaged[~app_configuration_management_client.models.ConfigurationStoreListResult]
-        :raises: ~azure.core.exceptions.HttpResponseError
-        """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ConfigurationStoreListResult"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
-        def prepare_request(next_link=None):
-            if not next_link:
-                
-                request = build_list_by_resource_group_request(
-                    subscription_id=self._config.subscription_id,
-                    resource_group_name=resource_group_name,
-                    skip_token=skip_token,
-                    template_url=self.list_by_resource_group.metadata['url'],
-                )
-                request = _convert_request(request)
-                request.url = self._client.format_url(request.url)
-
-            else:
-                
-                request = build_list_by_resource_group_request(
-                    subscription_id=self._config.subscription_id,
-                    resource_group_name=resource_group_name,
-                    skip_token=skip_token,
-                    template_url=next_link,
-                )
-                request = _convert_request(request)
-                request.url = self._client.format_url(request.url)
-                request.method = "GET"
-            return request
-
-        def extract_data(pipeline_response):
-            deserialized = self._deserialize("ConfigurationStoreListResult", pipeline_response)
-            list_of_elem = deserialized.value
-            if cls:
-                list_of_elem = cls(list_of_elem)
-            return deserialized.next_link or None, iter(list_of_elem)
-
-        def get_next(next_link=None):
-            request = prepare_request(next_link)
-
-            pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
-            response = pipeline_response.http_response
-
-            if response.status_code not in [200]:
-                map_error(status_code=response.status_code, response=response, error_map=error_map)
-                error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, pipeline_response)
-                raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
-
-            return pipeline_response
-
-
-        return ItemPaged(
-            get_next, extract_data
-        )
-    list_by_resource_group.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores'}  # type: ignore
 
     @distributed_trace
     def get(
