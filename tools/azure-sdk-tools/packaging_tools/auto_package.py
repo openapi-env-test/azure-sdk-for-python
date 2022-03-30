@@ -37,6 +37,7 @@ def main(generate_input, generate_output):
         folder_name = package["path"][0]
         dist_path = Path(sdk_folder, folder_name, package_name, "dist")
         package["artifacts"] = [str(dist_path / package_file) for package_file in os.listdir(dist_path)]
+        package["apiViewArtifact"] = [item for item in package["artifacts"] if '.whl' in item][0]
         # Installation package
         package["installInstructions"] = {
             "full": "You can install the use using pip install of the artificats.",
