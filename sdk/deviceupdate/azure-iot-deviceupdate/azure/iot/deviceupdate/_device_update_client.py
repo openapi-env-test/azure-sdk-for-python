@@ -7,19 +7,18 @@
 # --------------------------------------------------------------------------
 
 from copy import deepcopy
-from typing import Any, Optional, TYPE_CHECKING
+from typing import Any, TYPE_CHECKING
 
 from azure.core import PipelineClient
 from azure.core.rest import HttpRequest, HttpResponse
 from msrest import Deserializer, Serializer
 
+from . import models
 from ._configuration import DeviceUpdateClientConfiguration
 from .operations import DeviceManagementOperations, DeviceUpdateOperations
 
 if TYPE_CHECKING:
     # pylint: disable=unused-import,ungrouped-imports
-    from typing import Dict
-
     from azure.core.credentials import TokenCredential
 
 class DeviceUpdateClient:
@@ -29,38 +28,36 @@ class DeviceUpdateClient:
     :vartype device_update: azure.iot.deviceupdate.operations.DeviceUpdateOperations
     :ivar device_management: DeviceManagementOperations operations
     :vartype device_management: azure.iot.deviceupdate.operations.DeviceManagementOperations
+    :param credential: Credential needed for the client to connect to Azure.
+    :type credential: ~azure.core.credentials.TokenCredential
     :param endpoint: Account endpoint.
     :type endpoint: str
     :param instance_id: Account instance identifier.
     :type instance_id: str
-    :param credential: Credential needed for the client to connect to Azure.
-    :type credential: ~azure.core.credentials.TokenCredential
-    :keyword api_version: Api Version. The default value is "2021-06-01-preview". Note that
-     overriding this default value may result in unsupported behavior.
-    :paramtype api_version: str
     :keyword int polling_interval: Default waiting time between two polls for LRO operations if no
      Retry-After header is present.
     """
 
     def __init__(
         self,
+        credential: "TokenCredential",
         endpoint: str,
         instance_id: str,
-        credential: "TokenCredential",
         **kwargs: Any
     ) -> None:
-        _endpoint = 'https://{endpoint}'
-        self._config = DeviceUpdateClientConfiguration(endpoint=endpoint, instance_id=instance_id, credential=credential, **kwargs)
-        self._client = PipelineClient(base_url=_endpoint, config=self._config, **kwargs)
+        _base_url = 'https://{endpoint}'
+        self._config = DeviceUpdateClientConfiguration(credential=credential, endpoint=endpoint, instance_id=instance_id, **kwargs)
+        self._client = PipelineClient(base_url=_base_url, config=self._config, **kwargs)
 
-        self._serialize = Serializer()
-        self._deserialize = Deserializer()
+        client_models = {k: v for k, v in models.__dict__.items() if isinstance(v, type)}
+        self._serialize = Serializer(client_models)
+        self._deserialize = Deserializer(client_models)
         self._serialize.client_side_validation = False
         self.device_update = DeviceUpdateOperations(self._client, self._config, self._serialize, self._deserialize)
         self.device_management = DeviceManagementOperations(self._client, self._config, self._serialize, self._deserialize)
 
 
-    def send_request(
+    def _send_request(
         self,
         request,  # type: HttpRequest
         **kwargs: Any
@@ -70,7 +67,7 @@ class DeviceUpdateClient:
         >>> from azure.core.rest import HttpRequest
         >>> request = HttpRequest("GET", "https://www.example.org/")
         <HttpRequest [GET], url: 'https://www.example.org/'>
-        >>> response = client.send_request(request)
+        >>> response = client._send_request(request)
         <HttpResponse: 200 OK>
 
         For more information on this code flow, see https://aka.ms/azsdk/python/protocol/quickstart
