@@ -24,37 +24,33 @@ class DeviceUpdateClientConfiguration(Configuration):
     Note that all parameters used to create this instance are saved as instance
     attributes.
 
+    :param credential: Credential needed for the client to connect to Azure.
+    :type credential: ~azure.core.credentials.TokenCredential
     :param endpoint: Account endpoint.
     :type endpoint: str
     :param instance_id: Account instance identifier.
     :type instance_id: str
-    :param credential: Credential needed for the client to connect to Azure.
-    :type credential: ~azure.core.credentials.TokenCredential
-    :keyword api_version: Api Version. The default value is "2021-06-01-preview". Note that overriding this default value may result in unsupported behavior.
-    :paramtype api_version: str
     """
 
     def __init__(
         self,
+        credential: "TokenCredential",
         endpoint: str,
         instance_id: str,
-        credential: "TokenCredential",
         **kwargs: Any
     ) -> None:
         super(DeviceUpdateClientConfiguration, self).__init__(**kwargs)
-        api_version = kwargs.pop('api_version', "2021-06-01-preview")  # type: str
-
+        if credential is None:
+            raise ValueError("Parameter 'credential' must not be None.")
         if endpoint is None:
             raise ValueError("Parameter 'endpoint' must not be None.")
         if instance_id is None:
             raise ValueError("Parameter 'instance_id' must not be None.")
-        if credential is None:
-            raise ValueError("Parameter 'credential' must not be None.")
 
+        self.credential = credential
         self.endpoint = endpoint
         self.instance_id = instance_id
-        self.credential = credential
-        self.api_version = api_version
+        self.api_version = "2021-06-01-preview"
         self.credential_scopes = kwargs.pop('credential_scopes', ['https://api.adu.microsoft.com/.default'])
         kwargs.setdefault('sdk_moniker', 'iot-deviceupdate/{}'.format(VERSION))
         self._configure(**kwargs)
