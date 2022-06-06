@@ -6,8 +6,8 @@
 # Changes may cause incorrect behavior and will be lost if the code is regenerated.
 # --------------------------------------------------------------------------
 
-from ._operations import DeviceUpdateOperations
-from ._operations import DeviceManagementOperations
+from ._device_update_operations import DeviceUpdateOperations
+from ._device_management_operations import DeviceManagementOperations
 
 __all__ = [
     'DeviceUpdateOperations',
