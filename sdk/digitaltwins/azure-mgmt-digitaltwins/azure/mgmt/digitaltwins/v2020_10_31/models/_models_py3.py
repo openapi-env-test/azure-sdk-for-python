@@ -6,12 +6,14 @@
 # Changes may cause incorrect behavior and will be lost if the code is regenerated.
 # --------------------------------------------------------------------------
 
-from typing import Dict, List, Optional, Union
+from typing import Dict, List, Optional, TYPE_CHECKING, Union
 
 from azure.core.exceptions import HttpResponseError
 import msrest.serialization
 
-from ._azure_digital_twins_management_client_enums import *
+if TYPE_CHECKING:
+    # pylint: disable=unused-import,ungrouped-imports
+    import __init__ as _models
 
 
 class CheckNameRequest(msrest.serialization.Model):
@@ -62,8 +64,8 @@ class CheckNameResult(msrest.serialization.Model):
     :ivar message: Message indicating an unavailable name due to a conflict, or a description of
      the naming rules that are violated.
     :vartype message: str
-    :ivar reason: Message providing the reason why the given name is invalid. Possible values
-     include: "Invalid", "AlreadyExists".
+    :ivar reason: Message providing the reason why the given name is invalid. Known values are:
+     "Invalid", "AlreadyExists".
     :vartype reason: str or ~azure.mgmt.digitaltwins.v2020_10_31.models.Reason
     """
 
@@ -78,7 +80,7 @@ class CheckNameResult(msrest.serialization.Model):
         *,
         name_available: Optional[bool] = None,
         message: Optional[str] = None,
-        reason: Optional[Union[str, "Reason"]] = None,
+        reason: Optional[Union[str, "_models.Reason"]] = None,
         **kwargs
     ):
         """
@@ -87,8 +89,8 @@ class CheckNameResult(msrest.serialization.Model):
         :keyword message: Message indicating an unavailable name due to a conflict, or a description of
          the naming rules that are violated.
         :paramtype message: str
-        :keyword reason: Message providing the reason why the given name is invalid. Possible values
-         include: "Invalid", "AlreadyExists".
+        :keyword reason: Message providing the reason why the given name is invalid. Known values are:
+         "Invalid", "AlreadyExists".
         :paramtype reason: str or ~azure.mgmt.digitaltwins.v2020_10_31.models.Reason
         """
         super(CheckNameResult, self).__init__(**kwargs)
@@ -173,9 +175,8 @@ class DigitalTwinsDescription(DigitalTwinsResource):
     :vartype created_time: ~datetime.datetime
     :ivar last_updated_time: Time when DigitalTwinsInstance was updated.
     :vartype last_updated_time: ~datetime.datetime
-    :ivar provisioning_state: The provisioning state. Possible values include: "Provisioning",
-     "Deleting", "Succeeded", "Failed", "Canceled", "Deleted", "Warning", "Suspending", "Restoring",
-     "Moving".
+    :ivar provisioning_state: The provisioning state. Known values are: "Provisioning", "Deleting",
+     "Succeeded", "Failed", "Canceled", "Deleted", "Warning", "Suspending", "Restoring", "Moving".
     :vartype provisioning_state: str or
      ~azure.mgmt.digitaltwins.v2020_10_31.models.ProvisioningState
     :ivar host_name: Api endpoint to work with DigitalTwinsInstance.
@@ -243,7 +244,7 @@ class DigitalTwinsDescriptionListResult(msrest.serialization.Model):
         self,
         *,
         next_link: Optional[str] = None,
-        value: Optional[List["DigitalTwinsDescription"]] = None,
+        value: Optional[List["_models.DigitalTwinsDescription"]] = None,
         **kwargs
     ):
         """
@@ -329,7 +330,7 @@ class DigitalTwinsEndpointResource(ExternalResource):
     def __init__(
         self,
         *,
-        properties: "DigitalTwinsEndpointResourceProperties",
+        properties: "_models.DigitalTwinsEndpointResourceProperties",
         **kwargs
     ):
         """
@@ -359,7 +360,7 @@ class DigitalTwinsEndpointResourceListResult(msrest.serialization.Model):
         self,
         *,
         next_link: Optional[str] = None,
-        value: Optional[List["DigitalTwinsEndpointResource"]] = None,
+        value: Optional[List["_models.DigitalTwinsEndpointResource"]] = None,
         **kwargs
     ):
         """
@@ -385,11 +386,11 @@ class DigitalTwinsEndpointResourceProperties(msrest.serialization.Model):
     All required parameters must be populated in order to send to Azure.
 
     :ivar endpoint_type: Required. The type of Digital Twins endpoint.Constant filled by server.
-     Possible values include: "EventHub", "EventGrid", "ServiceBus".
+     Known values are: "EventHub", "EventGrid", "ServiceBus".
     :vartype endpoint_type: str or ~azure.mgmt.digitaltwins.v2020_10_31.models.EndpointType
-    :ivar provisioning_state: The provisioning state. Possible values include: "Provisioning",
-     "Deleting", "Succeeded", "Failed", "Canceled", "Deleted", "Warning", "Suspending", "Restoring",
-     "Moving", "Disabled".
+    :ivar provisioning_state: The provisioning state. Known values are: "Provisioning", "Deleting",
+     "Succeeded", "Failed", "Canceled", "Deleted", "Warning", "Suspending", "Restoring", "Moving",
+     "Disabled".
     :vartype provisioning_state: str or
      ~azure.mgmt.digitaltwins.v2020_10_31.models.EndpointProvisioningState
     :ivar created_time: Time when the Endpoint was added to DigitalTwinsInstance.
@@ -508,7 +509,7 @@ class ErrorResponse(msrest.serialization.Model):
     def __init__(
         self,
         *,
-        error: Optional["ErrorDefinition"] = None,
+        error: Optional["_models.ErrorDefinition"] = None,
         **kwargs
     ):
         """
@@ -527,11 +528,11 @@ class EventGrid(DigitalTwinsEndpointResourceProperties):
     All required parameters must be populated in order to send to Azure.
 
     :ivar endpoint_type: Required. The type of Digital Twins endpoint.Constant filled by server.
-     Possible values include: "EventHub", "EventGrid", "ServiceBus".
+     Known values are: "EventHub", "EventGrid", "ServiceBus".
     :vartype endpoint_type: str or ~azure.mgmt.digitaltwins.v2020_10_31.models.EndpointType
-    :ivar provisioning_state: The provisioning state. Possible values include: "Provisioning",
-     "Deleting", "Succeeded", "Failed", "Canceled", "Deleted", "Warning", "Suspending", "Restoring",
-     "Moving", "Disabled".
+    :ivar provisioning_state: The provisioning state. Known values are: "Provisioning", "Deleting",
+     "Succeeded", "Failed", "Canceled", "Deleted", "Warning", "Suspending", "Restoring", "Moving",
+     "Disabled".
     :vartype provisioning_state: str or
      ~azure.mgmt.digitaltwins.v2020_10_31.models.EndpointProvisioningState
     :ivar created_time: Time when the Endpoint was added to DigitalTwinsInstance.
@@ -598,11 +599,11 @@ class EventHub(DigitalTwinsEndpointResourceProperties):
     All required parameters must be populated in order to send to Azure.
 
     :ivar endpoint_type: Required. The type of Digital Twins endpoint.Constant filled by server.
-     Possible values include: "EventHub", "EventGrid", "ServiceBus".
+     Known values are: "EventHub", "EventGrid", "ServiceBus".
     :vartype endpoint_type: str or ~azure.mgmt.digitaltwins.v2020_10_31.models.EndpointType
-    :ivar provisioning_state: The provisioning state. Possible values include: "Provisioning",
-     "Deleting", "Succeeded", "Failed", "Canceled", "Deleted", "Warning", "Suspending", "Restoring",
-     "Moving", "Disabled".
+    :ivar provisioning_state: The provisioning state. Known values are: "Provisioning", "Deleting",
+     "Succeeded", "Failed", "Canceled", "Deleted", "Warning", "Suspending", "Restoring", "Moving",
+     "Disabled".
     :vartype provisioning_state: str or
      ~azure.mgmt.digitaltwins.v2020_10_31.models.EndpointProvisioningState
     :ivar created_time: Time when the Endpoint was added to DigitalTwinsInstance.
@@ -688,7 +689,7 @@ class Operation(msrest.serialization.Model):
     def __init__(
         self,
         *,
-        display: Optional["OperationDisplay"] = None,
+        display: Optional["_models.OperationDisplay"] = None,
         **kwargs
     ):
         """
@@ -788,11 +789,11 @@ class ServiceBus(DigitalTwinsEndpointResourceProperties):
     All required parameters must be populated in order to send to Azure.
 
     :ivar endpoint_type: Required. The type of Digital Twins endpoint.Constant filled by server.
-     Possible values include: "EventHub", "EventGrid", "ServiceBus".
+     Known values are: "EventHub", "EventGrid", "ServiceBus".
     :vartype endpoint_type: str or ~azure.mgmt.digitaltwins.v2020_10_31.models.EndpointType
-    :ivar provisioning_state: The provisioning state. Possible values include: "Provisioning",
-     "Deleting", "Succeeded", "Failed", "Canceled", "Deleted", "Warning", "Suspending", "Restoring",
-     "Moving", "Disabled".
+    :ivar provisioning_state: The provisioning state. Known values are: "Provisioning", "Deleting",
+     "Succeeded", "Failed", "Canceled", "Deleted", "Warning", "Suspending", "Restoring", "Moving",
+     "Disabled".
     :vartype provisioning_state: str or
      ~azure.mgmt.digitaltwins.v2020_10_31.models.EndpointProvisioningState
     :ivar created_time: Time when the Endpoint was added to DigitalTwinsInstance.

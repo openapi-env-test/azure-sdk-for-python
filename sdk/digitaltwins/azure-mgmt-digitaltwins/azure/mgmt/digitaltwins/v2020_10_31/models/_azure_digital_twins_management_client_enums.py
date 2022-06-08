@@ -7,11 +7,10 @@
 # --------------------------------------------------------------------------
 
 from enum import Enum
-from six import with_metaclass
 from azure.core import CaseInsensitiveEnumMeta
 
 
-class EndpointProvisioningState(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
+class EndpointProvisioningState(str, Enum, metaclass=CaseInsensitiveEnumMeta):
     """The provisioning state.
     """
 
@@ -27,7 +26,7 @@ class EndpointProvisioningState(with_metaclass(CaseInsensitiveEnumMeta, str, Enu
     MOVING = "Moving"
     DISABLED = "Disabled"
 
-class EndpointType(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
+class EndpointType(str, Enum, metaclass=CaseInsensitiveEnumMeta):
     """The type of Digital Twins endpoint
     """
 
@@ -35,7 +34,7 @@ class EndpointType(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
     EVENT_GRID = "EventGrid"
     SERVICE_BUS = "ServiceBus"
 
-class ProvisioningState(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
+class ProvisioningState(str, Enum, metaclass=CaseInsensitiveEnumMeta):
     """The provisioning state.
     """
 
@@ -50,7 +49,7 @@ class ProvisioningState(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
     RESTORING = "Restoring"
     MOVING = "Moving"
 
-class Reason(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
+class Reason(str, Enum, metaclass=CaseInsensitiveEnumMeta):
     """Message providing the reason why the given name is invalid.
     """
 

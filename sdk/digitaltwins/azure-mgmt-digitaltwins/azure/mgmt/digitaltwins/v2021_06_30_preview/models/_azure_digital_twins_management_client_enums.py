@@ -7,11 +7,10 @@
 # --------------------------------------------------------------------------
 
 from enum import Enum
-from six import with_metaclass
 from azure.core import CaseInsensitiveEnumMeta
 
 
-class AuthenticationType(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
+class AuthenticationType(str, Enum, metaclass=CaseInsensitiveEnumMeta):
     """Specifies the authentication type being used for connecting to the endpoint. Defaults to
     'KeyBased'. If 'KeyBased' is selected, a connection string must be specified (at least the
     primary connection string). If 'IdentityBased' is select, the endpointUri and entityPath
@@ -21,7 +20,7 @@ class AuthenticationType(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
     KEY_BASED = "KeyBased"
     IDENTITY_BASED = "IdentityBased"
 
-class ConnectionPropertiesProvisioningState(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
+class ConnectionPropertiesProvisioningState(str, Enum, metaclass=CaseInsensitiveEnumMeta):
     """The provisioning state.
     """
 
@@ -30,13 +29,13 @@ class ConnectionPropertiesProvisioningState(with_metaclass(CaseInsensitiveEnumMe
     REJECTED = "Rejected"
     DISCONNECTED = "Disconnected"
 
-class ConnectionType(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
+class ConnectionType(str, Enum, metaclass=CaseInsensitiveEnumMeta):
     """The type of time series connection resource.
     """
 
     AZURE_DATA_EXPLORER = "AzureDataExplorer"
 
-class CreatedByType(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
+class CreatedByType(str, Enum, metaclass=CaseInsensitiveEnumMeta):
     """The type of identity that created the resource.
     """
 
@@ -45,7 +44,7 @@ class CreatedByType(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
     MANAGED_IDENTITY = "ManagedIdentity"
     KEY = "Key"
 
-class DigitalTwinsIdentityType(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
+class DigitalTwinsIdentityType(str, Enum, metaclass=CaseInsensitiveEnumMeta):
     """The type of Managed Identity used by the DigitalTwinsInstance. Only SystemAssigned is
     supported.
     """
@@ -53,7 +52,7 @@ class DigitalTwinsIdentityType(with_metaclass(CaseInsensitiveEnumMeta, str, Enum
     NONE = "None"
     SYSTEM_ASSIGNED = "SystemAssigned"
 
-class EndpointProvisioningState(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
+class EndpointProvisioningState(str, Enum, metaclass=CaseInsensitiveEnumMeta):
     """The provisioning state.
     """
 
@@ -69,7 +68,7 @@ class EndpointProvisioningState(with_metaclass(CaseInsensitiveEnumMeta, str, Enu
     MOVING = "Moving"
     DISABLED = "Disabled"
 
-class EndpointType(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
+class EndpointType(str, Enum, metaclass=CaseInsensitiveEnumMeta):
     """The type of Digital Twins endpoint
     """
 
@@ -77,7 +76,7 @@ class EndpointType(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
     EVENT_GRID = "EventGrid"
     SERVICE_BUS = "ServiceBus"
 
-class PrivateLinkServiceConnectionStatus(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
+class PrivateLinkServiceConnectionStatus(str, Enum, metaclass=CaseInsensitiveEnumMeta):
     """The status of a private endpoint connection.
     """
 
@@ -86,7 +85,7 @@ class PrivateLinkServiceConnectionStatus(with_metaclass(CaseInsensitiveEnumMeta,
     REJECTED = "Rejected"
     DISCONNECTED = "Disconnected"
 
-class ProvisioningState(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
+class ProvisioningState(str, Enum, metaclass=CaseInsensitiveEnumMeta):
     """The provisioning state.
     """
 
@@ -102,21 +101,21 @@ class ProvisioningState(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
     RESTORING = "Restoring"
     MOVING = "Moving"
 
-class PublicNetworkAccess(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
+class PublicNetworkAccess(str, Enum, metaclass=CaseInsensitiveEnumMeta):
     """Public network access for the DigitalTwinsInstance.
     """
 
     ENABLED = "Enabled"
     DISABLED = "Disabled"
 
-class Reason(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
+class Reason(str, Enum, metaclass=CaseInsensitiveEnumMeta):
     """Message providing the reason why the given name is invalid.
     """
 
     INVALID = "Invalid"
     ALREADY_EXISTS = "AlreadyExists"
 
-class TimeSeriesDatabaseConnectionState(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
+class TimeSeriesDatabaseConnectionState(str, Enum, metaclass=CaseInsensitiveEnumMeta):
     """The provisioning state.
     """
 
