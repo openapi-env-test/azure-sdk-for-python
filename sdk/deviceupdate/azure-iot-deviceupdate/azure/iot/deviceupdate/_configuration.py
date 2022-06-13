@@ -18,19 +18,20 @@ if TYPE_CHECKING:
     from azure.core.credentials import TokenCredential
 
 
-class DeviceUpdateClientConfiguration(Configuration):
+class DeviceUpdateClientConfiguration(Configuration):  # pylint: disable=too-many-instance-attributes
     """Configuration for DeviceUpdateClient.
 
     Note that all parameters used to create this instance are saved as instance
     attributes.
 
-    :param endpoint: Account endpoint.
+    :param endpoint: Account endpoint. Required.
     :type endpoint: str
-    :param instance_id: Account instance identifier.
+    :param instance_id: Account instance identifier. Required.
     :type instance_id: str
-    :param credential: Credential needed for the client to connect to Azure.
+    :param credential: Credential needed for the client to connect to Azure. Required.
     :type credential: ~azure.core.credentials.TokenCredential
-    :keyword api_version: Api Version. The default value is "2021-06-01-preview". Note that overriding this default value may result in unsupported behavior.
+    :keyword api_version: Api Version. Default value is "2022-07-01-preview". Note that overriding
+     this default value may result in unsupported behavior.
     :paramtype api_version: str
     """
 
@@ -42,7 +43,7 @@ class DeviceUpdateClientConfiguration(Configuration):
         **kwargs: Any
     ) -> None:
         super(DeviceUpdateClientConfiguration, self).__init__(**kwargs)
-        api_version = kwargs.pop('api_version', "2021-06-01-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-07-01-preview")  # type: str
 
         if endpoint is None:
             raise ValueError("Parameter 'endpoint' must not be None.")
