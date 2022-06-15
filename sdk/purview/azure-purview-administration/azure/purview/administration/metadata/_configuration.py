@@ -18,8 +18,8 @@ if TYPE_CHECKING:
     from azure.core.credentials import TokenCredential
 
 
-class PurviewAccountClientConfiguration(Configuration):  # pylint: disable=too-many-instance-attributes
-    """Configuration for PurviewAccountClient.
+class PurviewMetadataClientConfiguration(Configuration):  # pylint: disable=too-many-instance-attributes
+    """Configuration for PurviewMetadataClient.
 
     Note that all parameters used to create this instance are saved as instance
     attributes.
@@ -41,7 +41,7 @@ class PurviewAccountClientConfiguration(Configuration):  # pylint: disable=too-m
         credential: "TokenCredential",
         **kwargs: Any
     ) -> None:
-        super(PurviewAccountClientConfiguration, self).__init__(**kwargs)
+        super(PurviewMetadataClientConfiguration, self).__init__(**kwargs)
         if endpoint is None:
             raise ValueError("Parameter 'endpoint' must not be None.")
         if endpoint is None:

@@ -595,7 +595,7 @@ class AccountsOperations:
         **DO NOT** instantiate this class directly.
 
         Instead, you should access the following operations through
-        :class:`~azure.purview.administration.account.PurviewAccountClient`'s
+        :class:`~azure.purview.administration.metadata.PurviewMetadataClient`'s
         :attr:`accounts` attribute.
     """
 
@@ -1415,7 +1415,7 @@ class CollectionsOperations:
         **DO NOT** instantiate this class directly.
 
         Instead, you should access the following operations through
-        :class:`~azure.purview.administration.account.PurviewAccountClient`'s
+        :class:`~azure.purview.administration.metadata.PurviewMetadataClient`'s
         :attr:`collections` attribute.
     """
 
@@ -2134,7 +2134,7 @@ class ResourceSetRulesOperations:
         **DO NOT** instantiate this class directly.
 
         Instead, you should access the following operations through
-        :class:`~azure.purview.administration.account.PurviewAccountClient`'s
+        :class:`~azure.purview.administration.metadata.PurviewMetadataClient`'s
         :attr:`resource_set_rules` attribute.
     """
 
@@ -3733,7 +3733,7 @@ class MetadataRolesOperations:
         **DO NOT** instantiate this class directly.
 
         Instead, you should access the following operations through
-        :class:`~azure.purview.administration.account.PurviewAccountClient`'s
+        :class:`~azure.purview.administration.metadata.PurviewMetadataClient`'s
         :attr:`metadata_roles` attribute.
     """
 
@@ -3888,7 +3888,7 @@ class MetadataPolicyOperations:
         **DO NOT** instantiate this class directly.
 
         Instead, you should access the following operations through
-        :class:`~azure.purview.administration.account.PurviewAccountClient`'s
+        :class:`~azure.purview.administration.metadata.PurviewMetadataClient`'s
         :attr:`metadata_policy` attribute.
     """
 

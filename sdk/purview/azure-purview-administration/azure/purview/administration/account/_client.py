@@ -7,22 +7,23 @@
 # --------------------------------------------------------------------------
 
 from copy import deepcopy
-from typing import TYPE_CHECKING
+from typing import Any, TYPE_CHECKING
 
-from azure.core import PipelineClient
 from msrest import Deserializer, Serializer
 
+from azure.core import PipelineClient
+from azure.core.rest import HttpRequest, HttpResponse
+
 from ._configuration import PurviewAccountClientConfiguration
-from .operations import AccountsOperations, CollectionsOperations, ResourceSetRulesOperations
+from .operations import AccountsOperations, CollectionsOperations, MetadataPolicyOperations, MetadataRolesOperations, ResourceSetRulesOperations
 
 if TYPE_CHECKING:
     # pylint: disable=unused-import,ungrouped-imports
-    from typing import Any, Dict, Optional
+    from typing import Dict
 
     from azure.core.credentials import TokenCredential
-    from azure.core.rest import HttpRequest, HttpResponse
 
-class PurviewAccountClient(object):
+class PurviewAccountClient:  # pylint: disable=client-accepts-api-version-keyword
     """Creates a Microsoft.Purview data plane account client.
 
     :ivar accounts: AccountsOperations operations
@@ -32,38 +33,58 @@ class PurviewAccountClient(object):
     :ivar resource_set_rules: ResourceSetRulesOperations operations
     :vartype resource_set_rules:
      azure.purview.administration.account.operations.ResourceSetRulesOperations
+    :ivar metadata_roles: MetadataRolesOperations operations
+    :vartype metadata_roles:
+     azure.purview.administration.account.operations.MetadataRolesOperations
+    :ivar metadata_policy: MetadataPolicyOperations operations
+    :vartype metadata_policy:
+     azure.purview.administration.account.operations.MetadataPolicyOperations
     :param endpoint: The account endpoint of your Purview account. Example:
-     https://{accountName}.purview.azure.com/account/.
+     https://{accountName}.purview.azure.com/account/. Required.
     :type endpoint: str
-    :param credential: Credential needed for the client to connect to Azure.
+    :param endpoint: The endpoint of your Purview account. Example:
+     https://{accountName}.purview.azure.com. Required.
+    :type endpoint: str
+    :param credential: Credential needed for the client to connect to Azure. Required.
     :type credential: ~azure.core.credentials.TokenCredential
     """
 
     def __init__(
         self,
-        endpoint,  # type: str
-        credential,  # type: "TokenCredential"
-        **kwargs  # type: Any
-    ):
-        # type: (...) -> None
+        endpoint: str,
+        endpoint: str,
+        credential: "TokenCredential",
+        **kwargs: Any
+    ) -> None:
         _endpoint = '{endpoint}'
-        self._config = PurviewAccountClientConfiguration(endpoint, credential, **kwargs)
+        self._config = PurviewAccountClientConfiguration(endpoint=endpoint, endpoint=endpoint, credential=credential, **kwargs)
         self._client = PipelineClient(base_url=_endpoint, config=self._config, **kwargs)
 
         self._serialize = Serializer()
         self._deserialize = Deserializer()
         self._serialize.client_side_validation = False
-        self.accounts = AccountsOperations(self._client, self._config, self._serialize, self._deserialize)
-        self.collections = CollectionsOperations(self._client, self._config, self._serialize, self._deserialize)
-        self.resource_set_rules = ResourceSetRulesOperations(self._client, self._config, self._serialize, self._deserialize)
+        self.accounts = AccountsOperations(
+            self._client, self._config, self._serialize, self._deserialize
+        )
+        self.collections = CollectionsOperations(
+            self._client, self._config, self._serialize, self._deserialize
+        )
+        self.resource_set_rules = ResourceSetRulesOperations(
+            self._client, self._config, self._serialize, self._deserialize
+        )
+        self.metadata_roles = MetadataRolesOperations(
+            self._client, self._config, self._serialize, self._deserialize
+        )
+        self.metadata_policy = MetadataPolicyOperations(
+            self._client, self._config, self._serialize, self._deserialize
+        )
 
 
     def send_request(
         self,
-        request,  # type: HttpRequest
-        **kwargs  # type: Any
-    ):
-        # type: (...) -> HttpResponse
+        request: HttpRequest,
+        **kwargs: Any
+    ) -> HttpResponse:
         """Runs the network request through the client's chained policies.
 
         >>> from azure.core.rest import HttpRequest
@@ -84,6 +105,7 @@ class PurviewAccountClient(object):
         request_copy = deepcopy(request)
         path_format_arguments = {
             "endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
+            "Endpoint": self._serialize.url("self._config.endpoint", self._config.endpoint, 'str', skip_quote=True),
         }
 
         request_copy.url = self._client.format_url(request_copy.url, **path_format_arguments)

@@ -1,0 +1,11 @@
+{
+  "autorest": "3.8.1",
+  "use": [
+    "@autorest/python@5.17.0",
+    "@autorest/modelerfour@4.23.5"
+  ],
+  "commit": "eacb3ba1d78c76dc21aa7265e71461921a4a1a91",
+  "repository_url": "https://github.com/openapi-env-test/azure-rest-api-specs",
+  "autorest_command": "autorest README.md --use=@autorest/python@5.17.0 --use=@autorest/modelerfour@4.23.5 --version=3.8.1 --version-tolerant",
+  "readme": "specification/purview/data-plane/readme.md"
+}
