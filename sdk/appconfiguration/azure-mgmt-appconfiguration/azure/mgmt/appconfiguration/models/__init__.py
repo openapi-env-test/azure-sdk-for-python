@@ -12,23 +12,15 @@ from ._models_py3 import CheckNameAvailabilityParameters
 from ._models_py3 import ConfigurationStore
 from ._models_py3 import ConfigurationStoreListResult
 from ._models_py3 import ConfigurationStoreUpdateParameters
-from ._models_py3 import DeletedConfigurationStore
-from ._models_py3 import DeletedConfigurationStoreListResult
 from ._models_py3 import EncryptionProperties
-from ._models_py3 import ErrorAdditionalInfo
-from ._models_py3 import ErrorDetails
-from ._models_py3 import ErrorResponse
+from ._models_py3 import Error
 from ._models_py3 import KeyValue
-from ._models_py3 import KeyValueListResult
 from ._models_py3 import KeyVaultProperties
-from ._models_py3 import LogSpecification
-from ._models_py3 import MetricDimension
-from ._models_py3 import MetricSpecification
+from ._models_py3 import ListKeyValueParameters
 from ._models_py3 import NameAvailabilityStatus
 from ._models_py3 import OperationDefinition
 from ._models_py3 import OperationDefinitionDisplay
 from ._models_py3 import OperationDefinitionListResult
-from ._models_py3 import OperationProperties
 from ._models_py3 import PrivateEndpoint
 from ._models_py3 import PrivateEndpointConnection
 from ._models_py3 import PrivateEndpointConnectionListResult
@@ -39,10 +31,7 @@ from ._models_py3 import PrivateLinkServiceConnectionState
 from ._models_py3 import RegenerateKeyParameters
 from ._models_py3 import Resource
 from ._models_py3 import ResourceIdentity
-from ._models_py3 import ServiceSpecification
 from ._models_py3 import Sku
-from ._models_py3 import SystemData
-from ._models_py3 import TrackedResource
 from ._models_py3 import UserIdentity
 
 
@@ -50,13 +39,13 @@ from ._app_configuration_management_client_enums import (
     ActionsRequired,
     ConfigurationResourceType,
     ConnectionStatus,
-    CreateMode,
-    CreatedByType,
     IdentityType,
     ProvisioningState,
     PublicNetworkAccess,
 )
-
+from ._patch import __all__ as _patch_all
+from ._patch import *  # type: ignore # pylint: disable=unused-wildcard-import
+from ._patch import patch_sdk as _patch_sdk
 __all__ = [
     'ApiKey',
     'ApiKeyListResult',
@@ -64,23 +53,15 @@ __all__ = [
     'ConfigurationStore',
     'ConfigurationStoreListResult',
     'ConfigurationStoreUpdateParameters',
-    'DeletedConfigurationStore',
-    'DeletedConfigurationStoreListResult',
     'EncryptionProperties',
-    'ErrorAdditionalInfo',
-    'ErrorDetails',
-    'ErrorResponse',
+    'Error',
     'KeyValue',
-    'KeyValueListResult',
     'KeyVaultProperties',
-    'LogSpecification',
-    'MetricDimension',
-    'MetricSpecification',
+    'ListKeyValueParameters',
     'NameAvailabilityStatus',
     'OperationDefinition',
     'OperationDefinitionDisplay',
     'OperationDefinitionListResult',
-    'OperationProperties',
     'PrivateEndpoint',
     'PrivateEndpointConnection',
     'PrivateEndpointConnectionListResult',
@@ -91,17 +72,14 @@ __all__ = [
     'RegenerateKeyParameters',
     'Resource',
     'ResourceIdentity',
-    'ServiceSpecification',
     'Sku',
-    'SystemData',
-    'TrackedResource',
     'UserIdentity',
     'ActionsRequired',
     'ConfigurationResourceType',
     'ConnectionStatus',
-    'CreateMode',
-    'CreatedByType',
     'IdentityType',
     'ProvisioningState',
     'PublicNetworkAccess',
 ]
+__all__.extend([p for p in _patch_all if p not in __all__])
+_patch_sdk()
