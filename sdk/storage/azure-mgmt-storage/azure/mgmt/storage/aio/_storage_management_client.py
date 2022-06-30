@@ -11,10 +11,11 @@
 
 from typing import Any, Optional, TYPE_CHECKING
 
+from msrest import Deserializer, Serializer
+
 from azure.mgmt.core import AsyncARMPipelineClient
 from azure.profiles import KnownProfiles, ProfileDefinition
 from azure.profiles.multiapiclient import MultiApiClientMixin
-from msrest import Deserializer, Serializer
 
 from ._configuration import StorageManagementClientConfiguration
 
@@ -31,7 +32,7 @@ class _SDKClient(object):
         pass
 
 class StorageManagementClient(MultiApiClientMixin, _SDKClient):
-    """The Azure Storage Management API.
+    """Azure Storage Management API.
 
     This ready contains multiple API versions, to help you deal with all of the Azure clouds
     (Azure Stack, Azure Government, Azure China, etc.).
