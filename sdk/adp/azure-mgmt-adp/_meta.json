@@ -1,0 +1,11 @@
+{
+  "autorest": "3.7.2",
+  "use": [
+    "@autorest/python@5.16.0",
+    "@autorest/modelerfour@4.19.3"
+  ],
+  "commit": "0ddb62701682f0d77ffdf3bc1b40e45877946a5a",
+  "repository_url": "https://github.com/test-repo-billy/azure-rest-api-specs",
+  "autorest_command": "autorest specification/adp/resource-manager/readme.md --multiapi --python --python-sdks-folder=/mnt/vss/_work/1/s/azure-sdk-for-python/sdk --python3-only --use=@autorest/python@5.16.0 --use=@autorest/modelerfour@4.19.3 --version=3.7.2",
+  "readme": "specification/adp/resource-manager/readme.md"
+}
