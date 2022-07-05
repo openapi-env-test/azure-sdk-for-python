@@ -9,16 +9,12 @@
 # regenerated.
 # --------------------------------------------------------------------------
 from msrest import Serializer, Deserializer
-from typing import Any, AsyncIterable, Callable, Dict, Generic, Optional, TypeVar, Union
-import warnings
+from typing import Any, AsyncIterable, Optional
 
-from azure.core.async_paging import AsyncItemPaged, AsyncList
-from azure.core.exceptions import ClientAuthenticationError, HttpResponseError, ResourceExistsError, ResourceNotFoundError, map_error
-from azure.core.pipeline import PipelineResponse
-from azure.core.pipeline.transport import AsyncHttpResponse, HttpRequest
-from azure.core.polling import AsyncLROPoller, AsyncNoPolling, AsyncPollingMethod
-from azure.mgmt.core.exceptions import ARMErrorFormat
-from azure.mgmt.core.polling.async_arm_polling import AsyncARMPolling
+from azure.core.async_paging import AsyncItemPaged
+from azure.core.polling import AsyncLROPoller
+
+from .. import models as _models
 
 
 class NetworkManagementClientOperationsMixin(object):
@@ -27,7 +23,7 @@ class NetworkManagementClientOperationsMixin(object):
         self,
         resource_group_name: str,
         bastion_host_name: str,
-        bsl_request: "_models.BastionShareableLinkListRequest",
+        bsl_request: _models.BastionShareableLinkListRequest,
         **kwargs: Any
     ) -> AsyncLROPoller[None]:
         """Deletes the Bastion Shareable Links for all the VMs specified in the request.
@@ -38,9 +34,6 @@ class NetworkManagementClientOperationsMixin(object):
         :type bastion_host_name: str
         :param bsl_request: Post request for all the Bastion Shareable Link endpoints.
         :type bsl_request: ~azure.mgmt.network.v2021_08_01.models.BastionShareableLinkListRequest
-        :keyword api_version: Api Version. Default value is "2021-08-01". Note that overriding this
-         default value may result in unsupported behavior.
-        :paramtype api_version: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: By default, your polling method will be AsyncARMPolling. Pass in False for
@@ -76,8 +69,6 @@ class NetworkManagementClientOperationsMixin(object):
             from ..v2020_11_01.aio.operations import NetworkManagementClientOperationsMixin as OperationClass
         elif api_version == '2021-02-01':
             from ..v2021_02_01.aio.operations import NetworkManagementClientOperationsMixin as OperationClass
-        elif api_version == '2021-05-01':
-            from ..v2021_05_01.aio.operations import NetworkManagementClientOperationsMixin as OperationClass
         elif api_version == '2021-08-01':
             from ..v2021_08_01.aio.operations import NetworkManagementClientOperationsMixin as OperationClass
         else:
@@ -94,9 +85,9 @@ class NetworkManagementClientOperationsMixin(object):
         self,
         resource_group_name: str,
         virtual_wan_name: str,
-        vpn_client_params: "_models.VirtualWanVpnProfileParameters",
+        vpn_client_params: _models.VirtualWanVpnProfileParameters,
         **kwargs: Any
-    ) -> AsyncLROPoller["_models.VpnProfileResponse"]:
+    ) -> AsyncLROPoller[_models.VpnProfileResponse]:
         """Generates a unique VPN profile for P2S clients for VirtualWan and associated
         VpnServerConfiguration combination in the specified resource group.
 
@@ -108,9 +99,6 @@ class NetworkManagementClientOperationsMixin(object):
         :param vpn_client_params: Parameters supplied to the generate VirtualWan VPN profile generation
          operation.
         :type vpn_client_params: ~azure.mgmt.network.v2021_08_01.models.VirtualWanVpnProfileParameters
-        :keyword api_version: Api Version. Default value is "2021-08-01". Note that overriding this
-         default value may result in unsupported behavior.
-        :paramtype api_version: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: By default, your polling method will be AsyncARMPolling. Pass in False for
@@ -150,8 +138,6 @@ class NetworkManagementClientOperationsMixin(object):
             from ..v2020_11_01.aio.operations import NetworkManagementClientOperationsMixin as OperationClass
         elif api_version == '2021-02-01':
             from ..v2021_02_01.aio.operations import NetworkManagementClientOperationsMixin as OperationClass
-        elif api_version == '2021-05-01':
-            from ..v2021_05_01.aio.operations import NetworkManagementClientOperationsMixin as OperationClass
         elif api_version == '2021-08-01':
             from ..v2021_08_01.aio.operations import NetworkManagementClientOperationsMixin as OperationClass
         else:
@@ -169,16 +155,13 @@ class NetworkManagementClientOperationsMixin(object):
         resource_group_name: str,
         bastion_host_name: str,
         **kwargs: Any
-    ) -> AsyncLROPoller[AsyncItemPaged["_models.BastionActiveSessionListResult"]]:
+    ) -> AsyncLROPoller[AsyncItemPaged[_models.BastionActiveSessionListResult]]:
         """Returns the list of currently active sessions on the Bastion.
 
         :param resource_group_name: The name of the resource group.
         :type resource_group_name: str
         :param bastion_host_name: The name of the Bastion Host.
         :type bastion_host_name: str
-        :keyword api_version: Api Version. Default value is "2021-08-01". Note that overriding this
-         default value may result in unsupported behavior.
-        :paramtype api_version: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: By default, your polling method will be AsyncARMPolling. Pass in False for
@@ -216,8 +199,6 @@ class NetworkManagementClientOperationsMixin(object):
             from ..v2020_11_01.aio.operations import NetworkManagementClientOperationsMixin as OperationClass
         elif api_version == '2021-02-01':
             from ..v2021_02_01.aio.operations import NetworkManagementClientOperationsMixin as OperationClass
-        elif api_version == '2021-05-01':
-            from ..v2021_05_01.aio.operations import NetworkManagementClientOperationsMixin as OperationClass
         elif api_version == '2021-08-01':
             from ..v2021_08_01.aio.operations import NetworkManagementClientOperationsMixin as OperationClass
         else:
@@ -234,9 +215,9 @@ class NetworkManagementClientOperationsMixin(object):
         self,
         resource_group_name: str,
         bastion_host_name: str,
-        bsl_request: "_models.BastionShareableLinkListRequest",
+        bsl_request: _models.BastionShareableLinkListRequest,
         **kwargs: Any
-    ) -> AsyncLROPoller[AsyncItemPaged["_models.BastionShareableLinkListResult"]]:
+    ) -> AsyncLROPoller[AsyncItemPaged[_models.BastionShareableLinkListResult]]:
         """Creates a Bastion Shareable Links for all the VMs specified in the request.
 
         :param resource_group_name: The name of the resource group.
@@ -245,9 +226,6 @@ class NetworkManagementClientOperationsMixin(object):
         :type bastion_host_name: str
         :param bsl_request: Post request for all the Bastion Shareable Link endpoints.
         :type bsl_request: ~azure.mgmt.network.v2021_08_01.models.BastionShareableLinkListRequest
-        :keyword api_version: Api Version. Default value is "2021-08-01". Note that overriding this
-         default value may result in unsupported behavior.
-        :paramtype api_version: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: By default, your polling method will be AsyncARMPolling. Pass in False for
@@ -285,8 +263,6 @@ class NetworkManagementClientOperationsMixin(object):
             from ..v2020_11_01.aio.operations import NetworkManagementClientOperationsMixin as OperationClass
         elif api_version == '2021-02-01':
             from ..v2021_02_01.aio.operations import NetworkManagementClientOperationsMixin as OperationClass
-        elif api_version == '2021-05-01':
-            from ..v2021_05_01.aio.operations import NetworkManagementClientOperationsMixin as OperationClass
         elif api_version == '2021-08-01':
             from ..v2021_08_01.aio.operations import NetworkManagementClientOperationsMixin as OperationClass
         else:
@@ -304,7 +280,7 @@ class NetworkManagementClientOperationsMixin(object):
         location: str,
         domain_name_label: str,
         **kwargs: Any
-    ) -> "_models.DnsNameAvailabilityResult":
+    ) -> _models.DnsNameAvailabilityResult:
         """Checks whether a domain name in the cloudapp.azure.com zone is available for use.
 
         :param location: The location of the domain name.
@@ -312,9 +288,6 @@ class NetworkManagementClientOperationsMixin(object):
         :param domain_name_label: The domain name to be verified. It must conform to the following
          regular expression: ^[a-z][a-z0-9-]{1,61}[a-z0-9]$.
         :type domain_name_label: str
-        :keyword api_version: Api Version. Default value is "2021-08-01". Note that overriding this
-         default value may result in unsupported behavior.
-        :paramtype api_version: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: DnsNameAvailabilityResult, or the result of cls(response)
         :rtype: ~azure.mgmt.network.v2021_08_01.models.DnsNameAvailabilityResult
@@ -383,8 +356,6 @@ class NetworkManagementClientOperationsMixin(object):
             from ..v2020_11_01.aio.operations import NetworkManagementClientOperationsMixin as OperationClass
         elif api_version == '2021-02-01':
             from ..v2021_02_01.aio.operations import NetworkManagementClientOperationsMixin as OperationClass
-        elif api_version == '2021-05-01':
-            from ..v2021_05_01.aio.operations import NetworkManagementClientOperationsMixin as OperationClass
         elif api_version == '2021-08-01':
             from ..v2021_08_01.aio.operations import NetworkManagementClientOperationsMixin as OperationClass
         else:
@@ -401,9 +372,9 @@ class NetworkManagementClientOperationsMixin(object):
         self,
         resource_group_name: str,
         bastion_host_name: str,
-        session_ids: "_models.SessionIds",
+        session_ids: _models.SessionIds,
         **kwargs: Any
-    ) -> AsyncIterable["_models.BastionSessionDeleteResult"]:
+    ) -> AsyncIterable[_models.BastionSessionDeleteResult]:
         """Returns the list of currently active sessions on the Bastion.
 
         :param resource_group_name: The name of the resource group.
@@ -412,9 +383,6 @@ class NetworkManagementClientOperationsMixin(object):
         :type bastion_host_name: str
         :param session_ids: The list of sessionids to disconnect.
         :type session_ids: ~azure.mgmt.network.v2021_08_01.models.SessionIds
-        :keyword api_version: Api Version. Default value is "2021-08-01". Note that overriding this
-         default value may result in unsupported behavior.
-        :paramtype api_version: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: An iterator like instance of either BastionSessionDeleteResult or the result of
          cls(response)
@@ -445,8 +413,6 @@ class NetworkManagementClientOperationsMixin(object):
             from ..v2020_11_01.aio.operations import NetworkManagementClientOperationsMixin as OperationClass
         elif api_version == '2021-02-01':
             from ..v2021_02_01.aio.operations import NetworkManagementClientOperationsMixin as OperationClass
-        elif api_version == '2021-05-01':
-            from ..v2021_05_01.aio.operations import NetworkManagementClientOperationsMixin as OperationClass
         elif api_version == '2021-08-01':
             from ..v2021_08_01.aio.operations import NetworkManagementClientOperationsMixin as OperationClass
         else:
@@ -463,9 +429,9 @@ class NetworkManagementClientOperationsMixin(object):
         self,
         resource_group_name: str,
         bastion_host_name: str,
-        bsl_request: "_models.BastionShareableLinkListRequest",
+        bsl_request: _models.BastionShareableLinkListRequest,
         **kwargs: Any
-    ) -> AsyncIterable["_models.BastionShareableLinkListResult"]:
+    ) -> AsyncIterable[_models.BastionShareableLinkListResult]:
         """Return the Bastion Shareable Links for all the VMs specified in the request.
 
         :param resource_group_name: The name of the resource group.
@@ -474,9 +440,6 @@ class NetworkManagementClientOperationsMixin(object):
         :type bastion_host_name: str
         :param bsl_request: Post request for all the Bastion Shareable Link endpoints.
         :type bsl_request: ~azure.mgmt.network.v2021_08_01.models.BastionShareableLinkListRequest
-        :keyword api_version: Api Version. Default value is "2021-08-01". Note that overriding this
-         default value may result in unsupported behavior.
-        :paramtype api_version: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: An iterator like instance of either BastionShareableLinkListResult or the result of
          cls(response)
@@ -507,8 +470,6 @@ class NetworkManagementClientOperationsMixin(object):
             from ..v2020_11_01.aio.operations import NetworkManagementClientOperationsMixin as OperationClass
         elif api_version == '2021-02-01':
             from ..v2021_02_01.aio.operations import NetworkManagementClientOperationsMixin as OperationClass
-        elif api_version == '2021-05-01':
-            from ..v2021_05_01.aio.operations import NetworkManagementClientOperationsMixin as OperationClass
         elif api_version == '2021-08-01':
             from ..v2021_08_01.aio.operations import NetworkManagementClientOperationsMixin as OperationClass
         else:
@@ -526,7 +487,7 @@ class NetworkManagementClientOperationsMixin(object):
         resource_group_name: str,
         virtual_wan_name: str,
         **kwargs: Any
-    ) -> "_models.VirtualWanSecurityProviders":
+    ) -> _models.VirtualWanSecurityProviders:
         """Gives the supported security providers for the virtual wan.
 
         :param resource_group_name: The resource group name.
@@ -534,9 +495,6 @@ class NetworkManagementClientOperationsMixin(object):
         :param virtual_wan_name: The name of the VirtualWAN for which supported security providers are
          needed.
         :type virtual_wan_name: str
-        :keyword api_version: Api Version. Default value is "2021-08-01". Note that overriding this
-         default value may result in unsupported behavior.
-        :paramtype api_version: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: VirtualWanSecurityProviders, or the result of cls(response)
         :rtype: ~azure.mgmt.network.v2021_08_01.models.VirtualWanSecurityProviders
@@ -583,8 +541,6 @@ class NetworkManagementClientOperationsMixin(object):
             from ..v2020_11_01.aio.operations import NetworkManagementClientOperationsMixin as OperationClass
         elif api_version == '2021-02-01':
             from ..v2021_02_01.aio.operations import NetworkManagementClientOperationsMixin as OperationClass
-        elif api_version == '2021-05-01':
-            from ..v2021_05_01.aio.operations import NetworkManagementClientOperationsMixin as OperationClass
         elif api_version == '2021-08-01':
             from ..v2021_08_01.aio.operations import NetworkManagementClientOperationsMixin as OperationClass
         else:
