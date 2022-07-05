@@ -190,7 +190,10 @@ from ._models_py3 import Permission
 from ._models_py3 import PhysicalPartitionId
 from ._models_py3 import PhysicalPartitionStorageInfo
 from ._models_py3 import PhysicalPartitionStorageInfoCollection
+from ._models_py3 import PhysicalPartitionThroughputInfoProperties
 from ._models_py3 import PhysicalPartitionThroughputInfoResource
+from ._models_py3 import PhysicalPartitionThroughputInfoResult
+from ._models_py3 import PhysicalPartitionThroughputInfoResultPropertiesResource
 from ._models_py3 import PrivateEndpointConnection
 from ._models_py3 import PrivateEndpointConnectionListResult
 from ._models_py3 import PrivateEndpointProperty
@@ -346,7 +349,9 @@ from ._cosmos_db_management_client_enums import (
     TriggerType,
     UnitType,
 )
-
+from ._patch import __all__ as _patch_all
+from ._patch import *  # type: ignore # pylint: disable=unused-wildcard-import
+from ._patch import patch_sdk as _patch_sdk
 __all__ = [
     'ARMProxyResource',
     'ARMResourceProperties',
@@ -532,7 +537,10 @@ __all__ = [
     'PhysicalPartitionId',
     'PhysicalPartitionStorageInfo',
     'PhysicalPartitionStorageInfoCollection',
+    'PhysicalPartitionThroughputInfoProperties',
     'PhysicalPartitionThroughputInfoResource',
+    'PhysicalPartitionThroughputInfoResult',
+    'PhysicalPartitionThroughputInfoResultPropertiesResource',
     'PrivateEndpointConnection',
     'PrivateEndpointConnectionListResult',
     'PrivateEndpointProperty',
@@ -685,3 +693,5 @@ __all__ = [
     'TriggerType',
     'UnitType',
 ]
+__all__.extend([p for p in _patch_all if p not in __all__])
+_patch_sdk()
