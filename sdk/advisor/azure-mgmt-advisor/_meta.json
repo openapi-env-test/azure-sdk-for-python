@@ -1,0 +1,11 @@
+{
+  "autorest": "3.8.1",
+  "use": [
+    "@autorest/python@6.0.1",
+    "@autorest/modelerfour@4.23.5"
+  ],
+  "commit": "6b9e359eff0b3ac55106cdf2c216ace63d68360c",
+  "repository_url": "https://github.com/openapi-env-test/azure-rest-api-specs",
+  "autorest_command": "autorest specification/advisor/resource-manager/readme.md --models-mode=msrest --python --python-sdks-folder=/mnt/vss/_work/1/s/azure-sdk-for-python/sdk --use=@autorest/python@6.0.1 --use=@autorest/modelerfour@4.23.5 --version=3.8.1 --version-tolerant=False",
+  "readme": "specification/advisor/resource-manager/readme.md"
+}
