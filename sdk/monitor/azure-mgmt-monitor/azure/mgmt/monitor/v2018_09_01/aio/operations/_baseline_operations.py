@@ -10,7 +10,13 @@ import functools
 from typing import Any, Callable, Dict, Generic, Optional, TypeVar, Union
 import warnings
 
-from azure.core.exceptions import ClientAuthenticationError, HttpResponseError, ResourceExistsError, ResourceNotFoundError, map_error
+from azure.core.exceptions import (
+    ClientAuthenticationError,
+    HttpResponseError,
+    ResourceExistsError,
+    ResourceNotFoundError,
+    map_error,
+)
 from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import AsyncHttpResponse
 from azure.core.rest import HttpRequest
@@ -20,8 +26,10 @@ from azure.mgmt.core.exceptions import ARMErrorFormat
 from ... import models as _models
 from ..._vendor import _convert_request
 from ...operations._baseline_operations import build_get_request
-T = TypeVar('T')
+
+T = TypeVar("T")
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
+
 
 class BaselineOperations:
     """BaselineOperations async operations.
@@ -92,13 +100,10 @@ class BaselineOperations:
         :rtype: ~$(python-base-namespace).v2018_09_01.models.BaselineResponse
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.BaselineResponse"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
+        cls = kwargs.pop("cls", None)  # type: ClsType["_models.BaselineResponse"]
+        error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop("error_map", {}))
 
-        
         request = build_get_request(
             resource_uri=resource_uri,
             metricnames=metricnames,
@@ -109,7 +114,7 @@ class BaselineOperations:
             result_type=result_type,
             metricnamespace=metricnamespace,
             filter=filter,
-            template_url=self.get.metadata['url'],
+            template_url=self.get.metadata["url"],
         )
         request = _convert_request(request)
         request.url = self._client.format_url(request.url)
@@ -122,12 +127,11 @@ class BaselineOperations:
             error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, pipeline_response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize('BaselineResponse', pipeline_response)
+        deserialized = self._deserialize("BaselineResponse", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
 
-    get.metadata = {'url': '/{resourceUri}/providers/Microsoft.Insights/baseline'}  # type: ignore
-
+    get.metadata = {"url": "/{resourceUri}/providers/Microsoft.Insights/baseline"}  # type: ignore

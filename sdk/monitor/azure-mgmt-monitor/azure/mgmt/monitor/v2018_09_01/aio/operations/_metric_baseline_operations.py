@@ -10,7 +10,13 @@ import functools
 from typing import Any, Callable, Dict, Generic, Optional, TypeVar, Union
 import warnings
 
-from azure.core.exceptions import ClientAuthenticationError, HttpResponseError, ResourceExistsError, ResourceNotFoundError, map_error
+from azure.core.exceptions import (
+    ClientAuthenticationError,
+    HttpResponseError,
+    ResourceExistsError,
+    ResourceNotFoundError,
+    map_error,
+)
 from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import AsyncHttpResponse
 from azure.core.rest import HttpRequest
@@ -20,8 +26,10 @@ from azure.mgmt.core.exceptions import ARMErrorFormat
 from ... import models as _models
 from ..._vendor import _convert_request
 from ...operations._metric_baseline_operations import build_calculate_baseline_request, build_get_request
-T = TypeVar('T')
+
+T = TypeVar("T")
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
+
 
 class MetricBaselineOperations:
     """MetricBaselineOperations async operations.
@@ -90,13 +98,10 @@ class MetricBaselineOperations:
         :rtype: ~$(python-base-namespace).v2018_09_01.models.BaselineResponse
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.BaselineResponse"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
+        cls = kwargs.pop("cls", None)  # type: ClsType["_models.BaselineResponse"]
+        error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop("error_map", {}))
 
-        
         request = build_get_request(
             resource_uri=resource_uri,
             metric_name=metric_name,
@@ -107,7 +112,7 @@ class MetricBaselineOperations:
             result_type=result_type,
             metricnamespace=metricnamespace,
             filter=filter,
-            template_url=self.get.metadata['url'],
+            template_url=self.get.metadata["url"],
         )
         request = _convert_request(request)
         request.url = self._client.format_url(request.url)
@@ -120,22 +125,18 @@ class MetricBaselineOperations:
             error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, pipeline_response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize('BaselineResponse', pipeline_response)
+        deserialized = self._deserialize("BaselineResponse", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
 
-    get.metadata = {'url': '/{resourceUri}/providers/Microsoft.Insights/baseline/{metricName}'}  # type: ignore
-
+    get.metadata = {"url": "/{resourceUri}/providers/Microsoft.Insights/baseline/{metricName}"}  # type: ignore
 
     @distributed_trace_async
     async def calculate_baseline(
-        self,
-        resource_uri: str,
-        time_series_information: "_models.TimeSeriesInformation",
-        **kwargs: Any
+        self, resource_uri: str, time_series_information: "_models.TimeSeriesInformation", **kwargs: Any
     ) -> "_models.CalculateBaselineResponse":
         """**Lists the baseline values for a resource**.
 
@@ -153,21 +154,19 @@ class MetricBaselineOperations:
         :rtype: ~$(python-base-namespace).v2018_09_01.models.CalculateBaselineResponse
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.CalculateBaselineResponse"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
+        cls = kwargs.pop("cls", None)  # type: ClsType["_models.CalculateBaselineResponse"]
+        error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop("error_map", {}))
 
-        content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
+        content_type = kwargs.pop("content_type", "application/json")  # type: Optional[str]
 
-        _json = self._serialize.body(time_series_information, 'TimeSeriesInformation')
+        _json = self._serialize.body(time_series_information, "TimeSeriesInformation")
 
         request = build_calculate_baseline_request(
             resource_uri=resource_uri,
             content_type=content_type,
             json=_json,
-            template_url=self.calculate_baseline.metadata['url'],
+            template_url=self.calculate_baseline.metadata["url"],
         )
         request = _convert_request(request)
         request.url = self._client.format_url(request.url)
@@ -180,12 +179,11 @@ class MetricBaselineOperations:
             error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, pipeline_response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize('CalculateBaselineResponse', pipeline_response)
+        deserialized = self._deserialize("CalculateBaselineResponse", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
 
-    calculate_baseline.metadata = {'url': '/{resourceUri}/providers/Microsoft.Insights/calculatebaseline'}  # type: ignore
-
+    calculate_baseline.metadata = {"url": "/{resourceUri}/providers/Microsoft.Insights/calculatebaseline"}  # type: ignore
