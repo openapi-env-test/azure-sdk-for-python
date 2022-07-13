@@ -9,15 +9,22 @@ from typing import Any, AsyncIterable, Callable, Dict, Generic, Optional, TypeVa
 import warnings
 
 from azure.core.async_paging import AsyncItemPaged, AsyncList
-from azure.core.exceptions import ClientAuthenticationError, HttpResponseError, ResourceExistsError, ResourceNotFoundError, map_error
+from azure.core.exceptions import (
+    ClientAuthenticationError,
+    HttpResponseError,
+    ResourceExistsError,
+    ResourceNotFoundError,
+    map_error,
+)
 from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import AsyncHttpResponse, HttpRequest
 from azure.mgmt.core.exceptions import ARMErrorFormat
 
 from ... import models as _models
 
-T = TypeVar('T')
+T = TypeVar("T")
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
+
 
 class RecommendationMetadataOperations:
     """RecommendationMetadataOperations async operations.
@@ -41,11 +48,7 @@ class RecommendationMetadataOperations:
         self._deserialize = deserializer
         self._config = config
 
-    async def get(
-        self,
-        name: str,
-        **kwargs
-    ) -> Union["_models.MetadataEntity", "_models.ARMErrorResponseBody"]:
+    async def get(self, name: str, **kwargs) -> Union["_models.MetadataEntity", "_models.ARMErrorResponseBody"]:
         """Gets the metadata entity.
 
         Gets the metadata entity.
@@ -57,28 +60,26 @@ class RecommendationMetadataOperations:
         :rtype: ~azure.mgmt.advisor.models.MetadataEntity or ~azure.mgmt.advisor.models.ARMErrorResponseBody
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Union["_models.MetadataEntity", "_models.ARMErrorResponseBody"]]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
+        cls = kwargs.pop("cls", None)  # type: ClsType[Union["_models.MetadataEntity", "_models.ARMErrorResponseBody"]]
+        error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop("error_map", {}))
         api_version = "2020-01-01"
         accept = "application/json"
 
         # Construct URL
-        url = self.get.metadata['url']  # type: ignore
+        url = self.get.metadata["url"]  # type: ignore
         path_format_arguments = {
-            'name': self._serialize.url("name", name, 'str'),
+            "name": self._serialize.url("name", name, "str"),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+        query_parameters["api-version"] = self._serialize.query("api_version", api_version, "str")
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
-        header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
+        header_parameters["Accept"] = self._serialize.header("accept", accept, "str")
 
         request = self._client.get(url, query_parameters, header_parameters)
         pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
@@ -89,21 +90,19 @@ class RecommendationMetadataOperations:
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
         if response.status_code == 200:
-            deserialized = self._deserialize('MetadataEntity', pipeline_response)
+            deserialized = self._deserialize("MetadataEntity", pipeline_response)
 
         if response.status_code == 404:
-            deserialized = self._deserialize('ARMErrorResponseBody', pipeline_response)
+            deserialized = self._deserialize("ARMErrorResponseBody", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    get.metadata = {'url': '/providers/Microsoft.Advisor/metadata/{name}'}  # type: ignore
 
-    def list(
-        self,
-        **kwargs
-    ) -> AsyncIterable["_models.MetadataEntityListResult"]:
+    get.metadata = {"url": "/providers/Microsoft.Advisor/metadata/{name}"}  # type: ignore
+
+    def list(self, **kwargs) -> AsyncIterable["_models.MetadataEntityListResult"]:
         """Gets the list of metadata entities.
 
         Gets the list of metadata entities.
@@ -113,25 +112,23 @@ class RecommendationMetadataOperations:
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.advisor.models.MetadataEntityListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.MetadataEntityListResult"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
+        cls = kwargs.pop("cls", None)  # type: ClsType["_models.MetadataEntityListResult"]
+        error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop("error_map", {}))
         api_version = "2020-01-01"
         accept = "application/json"
 
         def prepare_request(next_link=None):
             # Construct headers
             header_parameters = {}  # type: Dict[str, Any]
-            header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
+            header_parameters["Accept"] = self._serialize.header("accept", accept, "str")
 
             if not next_link:
                 # Construct URL
-                url = self.list.metadata['url']  # type: ignore
+                url = self.list.metadata["url"]  # type: ignore
                 # Construct parameters
                 query_parameters = {}  # type: Dict[str, Any]
-                query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+                query_parameters["api-version"] = self._serialize.query("api_version", api_version, "str")
 
                 request = self._client.get(url, query_parameters, header_parameters)
             else:
@@ -141,7 +138,7 @@ class RecommendationMetadataOperations:
             return request
 
         async def extract_data(pipeline_response):
-            deserialized = self._deserialize('MetadataEntityListResult', pipeline_response)
+            deserialized = self._deserialize("MetadataEntityListResult", pipeline_response)
             list_of_elem = deserialized.value
             if cls:
                 list_of_elem = cls(list_of_elem)
@@ -159,7 +156,6 @@ class RecommendationMetadataOperations:
 
             return pipeline_response
 
-        return AsyncItemPaged(
-            get_next, extract_data
-        )
-    list.metadata = {'url': '/providers/Microsoft.Advisor/metadata'}  # type: ignore
+        return AsyncItemPaged(get_next, extract_data)
+
+    list.metadata = {"url": "/providers/Microsoft.Advisor/metadata"}  # type: ignore

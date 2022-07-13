@@ -8,7 +8,13 @@
 from typing import TYPE_CHECKING
 import warnings
 
-from azure.core.exceptions import ClientAuthenticationError, HttpResponseError, ResourceExistsError, ResourceNotFoundError, map_error
+from azure.core.exceptions import (
+    ClientAuthenticationError,
+    HttpResponseError,
+    ResourceExistsError,
+    ResourceNotFoundError,
+    map_error,
+)
 from azure.core.paging import ItemPaged
 from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import HttpRequest, HttpResponse
@@ -20,8 +26,9 @@ if TYPE_CHECKING:
     # pylint: disable=unused-import,ungrouped-imports
     from typing import Any, Callable, Dict, Generic, Iterable, Optional, TypeVar, Union
 
-    T = TypeVar('T')
+    T = TypeVar("T")
     ClsType = Optional[Callable[[PipelineResponse[HttpRequest, HttpResponse], T, Dict[str, Any]], Any]]
+
 
 class RecommendationMetadataOperations(object):
     """RecommendationMetadataOperations operations.
@@ -62,28 +69,26 @@ class RecommendationMetadataOperations(object):
         :rtype: ~azure.mgmt.advisor.models.MetadataEntity or ~azure.mgmt.advisor.models.ARMErrorResponseBody
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[Union["_models.MetadataEntity", "_models.ARMErrorResponseBody"]]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
+        cls = kwargs.pop("cls", None)  # type: ClsType[Union["_models.MetadataEntity", "_models.ARMErrorResponseBody"]]
+        error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop("error_map", {}))
         api_version = "2020-01-01"
         accept = "application/json"
 
         # Construct URL
-        url = self.get.metadata['url']  # type: ignore
+        url = self.get.metadata["url"]  # type: ignore
         path_format_arguments = {
-            'name': self._serialize.url("name", name, 'str'),
+            "name": self._serialize.url("name", name, "str"),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+        query_parameters["api-version"] = self._serialize.query("api_version", api_version, "str")
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
-        header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
+        header_parameters["Accept"] = self._serialize.header("accept", accept, "str")
 
         request = self._client.get(url, query_parameters, header_parameters)
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
@@ -94,20 +99,20 @@ class RecommendationMetadataOperations(object):
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
         if response.status_code == 200:
-            deserialized = self._deserialize('MetadataEntity', pipeline_response)
+            deserialized = self._deserialize("MetadataEntity", pipeline_response)
 
         if response.status_code == 404:
-            deserialized = self._deserialize('ARMErrorResponseBody', pipeline_response)
+            deserialized = self._deserialize("ARMErrorResponseBody", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    get.metadata = {'url': '/providers/Microsoft.Advisor/metadata/{name}'}  # type: ignore
+
+    get.metadata = {"url": "/providers/Microsoft.Advisor/metadata/{name}"}  # type: ignore
 
     def list(
-        self,
-        **kwargs  # type: Any
+        self, **kwargs  # type: Any
     ):
         # type: (...) -> Iterable["_models.MetadataEntityListResult"]
         """Gets the list of metadata entities.
@@ -119,25 +124,23 @@ class RecommendationMetadataOperations(object):
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.advisor.models.MetadataEntityListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.MetadataEntityListResult"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
+        cls = kwargs.pop("cls", None)  # type: ClsType["_models.MetadataEntityListResult"]
+        error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop("error_map", {}))
         api_version = "2020-01-01"
         accept = "application/json"
 
         def prepare_request(next_link=None):
             # Construct headers
             header_parameters = {}  # type: Dict[str, Any]
-            header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
+            header_parameters["Accept"] = self._serialize.header("accept", accept, "str")
 
             if not next_link:
                 # Construct URL
-                url = self.list.metadata['url']  # type: ignore
+                url = self.list.metadata["url"]  # type: ignore
                 # Construct parameters
                 query_parameters = {}  # type: Dict[str, Any]
-                query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+                query_parameters["api-version"] = self._serialize.query("api_version", api_version, "str")
 
                 request = self._client.get(url, query_parameters, header_parameters)
             else:
@@ -147,7 +150,7 @@ class RecommendationMetadataOperations(object):
             return request
 
         def extract_data(pipeline_response):
-            deserialized = self._deserialize('MetadataEntityListResult', pipeline_response)
+            deserialized = self._deserialize("MetadataEntityListResult", pipeline_response)
             list_of_elem = deserialized.value
             if cls:
                 list_of_elem = cls(list_of_elem)
@@ -165,7 +168,6 @@ class RecommendationMetadataOperations(object):
 
             return pipeline_response
 
-        return ItemPaged(
-            get_next, extract_data
-        )
-    list.metadata = {'url': '/providers/Microsoft.Advisor/metadata'}  # type: ignore
+        return ItemPaged(get_next, extract_data)
+
+    list.metadata = {"url": "/providers/Microsoft.Advisor/metadata"}  # type: ignore
