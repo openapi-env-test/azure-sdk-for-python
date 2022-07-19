@@ -7,24 +7,26 @@
 # --------------------------------------------------------------------------
 
 from enum import Enum
-from six import with_metaclass
 from azure.core import CaseInsensitiveEnumMeta
 
 
-class AccessPolicyUpdateKind(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
+class AccessPolicyUpdateKind(str, Enum, metaclass=CaseInsensitiveEnumMeta):
+    """AccessPolicyUpdateKind."""
 
     ADD = "add"
     REPLACE = "replace"
     REMOVE = "remove"
 
-class CertificatePermissions(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
+
+class CertificatePermissions(str, Enum, metaclass=CaseInsensitiveEnumMeta):
+    """CertificatePermissions."""
 
     ALL = "all"
     GET = "get"
     LIST = "list"
     DELETE = "delete"
     CREATE = "create"
-    IMPORT_ENUM = "import"
+    IMPORT = "import"
     UPDATE = "update"
     MANAGECONTACTS = "managecontacts"
     GETISSUERS = "getissuers"
@@ -37,14 +39,15 @@ class CertificatePermissions(with_metaclass(CaseInsensitiveEnumMeta, str, Enum))
     BACKUP = "backup"
     RESTORE = "restore"
 
-class CreateMode(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
-    """The vault's create mode to indicate whether the vault need to be recovered or not.
-    """
+
+class CreateMode(str, Enum, metaclass=CaseInsensitiveEnumMeta):
+    """The vault's create mode to indicate whether the vault need to be recovered or not."""
 
     RECOVER = "recover"
     DEFAULT = "default"
 
-class DeletionRecoveryLevel(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
+
+class DeletionRecoveryLevel(str, Enum, metaclass=CaseInsensitiveEnumMeta):
     """The deletion recovery level currently in effect for the object. If it contains 'Purgeable',
     then the object can be permanently deleted by a privileged user; otherwise, only the system can
     purge the object at the end of the retention interval.
@@ -55,16 +58,29 @@ class DeletionRecoveryLevel(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
     RECOVERABLE = "Recoverable"
     RECOVERABLE_PROTECTED_SUBSCRIPTION = "Recoverable+ProtectedSubscription"
 
-class JsonWebKeyCurveName(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
-    """The elliptic curve name. For valid values, see JsonWebKeyCurveName.
-    """
+
+class Enum10(str, Enum, metaclass=CaseInsensitiveEnumMeta):
+    """Enum10."""
+
+    RESOURCE_TYPE_EQ_MICROSOFT_KEY_VAULT_VAULTS_ = "resourceType eq 'Microsoft.KeyVault/vaults'"
+
+
+class Enum11(str, Enum, metaclass=CaseInsensitiveEnumMeta):
+    """Enum11."""
+
+    TWO_THOUSAND_FIFTEEN11_01 = "2015-11-01"
+
+
+class JsonWebKeyCurveName(str, Enum, metaclass=CaseInsensitiveEnumMeta):
+    """The elliptic curve name. For valid values, see JsonWebKeyCurveName."""
 
     P256 = "P-256"
     P384 = "P-384"
     P521 = "P-521"
     P256_K = "P-256K"
 
-class JsonWebKeyOperation(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
+
+class JsonWebKeyOperation(str, Enum, metaclass=CaseInsensitiveEnumMeta):
     """The permitted JSON web key operations of the key. For more information, see
     JsonWebKeyOperation.
     """
@@ -75,18 +91,20 @@ class JsonWebKeyOperation(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
     VERIFY = "verify"
     WRAP_KEY = "wrapKey"
     UNWRAP_KEY = "unwrapKey"
-    IMPORT_ENUM = "import"
+    IMPORT = "import"
 
-class JsonWebKeyType(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
-    """The type of the key. For valid values, see JsonWebKeyType.
-    """
+
+class JsonWebKeyType(str, Enum, metaclass=CaseInsensitiveEnumMeta):
+    """The type of the key. For valid values, see JsonWebKeyType."""
 
     EC = "EC"
     EC_HSM = "EC-HSM"
     RSA = "RSA"
     RSA_HSM = "RSA-HSM"
 
-class KeyPermissions(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
+
+class KeyPermissions(str, Enum, metaclass=CaseInsensitiveEnumMeta):
+    """KeyPermissions."""
 
     ALL = "all"
     ENCRYPT = "encrypt"
@@ -99,14 +117,15 @@ class KeyPermissions(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
     LIST = "list"
     CREATE = "create"
     UPDATE = "update"
-    IMPORT_ENUM = "import"
+    IMPORT = "import"
     DELETE = "delete"
     BACKUP = "backup"
     RESTORE = "restore"
     RECOVER = "recover"
     PURGE = "purge"
 
-class NetworkRuleAction(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
+
+class NetworkRuleAction(str, Enum, metaclass=CaseInsensitiveEnumMeta):
     """The default action when no rule from ipRules and from virtualNetworkRules match. This is only
     used after the bypass property has been evaluated.
     """
@@ -114,7 +133,8 @@ class NetworkRuleAction(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
     ALLOW = "Allow"
     DENY = "Deny"
 
-class NetworkRuleBypassOptions(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
+
+class NetworkRuleBypassOptions(str, Enum, metaclass=CaseInsensitiveEnumMeta):
     """Tells what traffic can bypass network rules. This can be 'AzureServices' or 'None'.  If not
     specified the default is 'AzureServices'.
     """
@@ -122,9 +142,9 @@ class NetworkRuleBypassOptions(with_metaclass(CaseInsensitiveEnumMeta, str, Enum
     AZURE_SERVICES = "AzureServices"
     NONE = "None"
 
-class PrivateEndpointConnectionProvisioningState(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
-    """The current provisioning state.
-    """
+
+class PrivateEndpointConnectionProvisioningState(str, Enum, metaclass=CaseInsensitiveEnumMeta):
+    """The current provisioning state."""
 
     SUCCEEDED = "Succeeded"
     CREATING = "Creating"
@@ -133,16 +153,17 @@ class PrivateEndpointConnectionProvisioningState(with_metaclass(CaseInsensitiveE
     FAILED = "Failed"
     DISCONNECTED = "Disconnected"
 
-class PrivateEndpointServiceConnectionStatus(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
-    """The private endpoint connection status.
-    """
+
+class PrivateEndpointServiceConnectionStatus(str, Enum, metaclass=CaseInsensitiveEnumMeta):
+    """The private endpoint connection status."""
 
     PENDING = "Pending"
     APPROVED = "Approved"
     REJECTED = "Rejected"
     DISCONNECTED = "Disconnected"
 
-class Reason(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
+
+class Reason(str, Enum, metaclass=CaseInsensitiveEnumMeta):
     """The reason that a vault name could not be used. The Reason element is only returned if
     NameAvailable is false.
     """
@@ -150,7 +171,9 @@ class Reason(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
     ACCOUNT_NAME_INVALID = "AccountNameInvalid"
     ALREADY_EXISTS = "AlreadyExists"
 
-class SecretPermissions(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
+
+class SecretPermissions(str, Enum, metaclass=CaseInsensitiveEnumMeta):
+    """SecretPermissions."""
 
     ALL = "all"
     GET = "get"
@@ -162,20 +185,22 @@ class SecretPermissions(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
     RECOVER = "recover"
     PURGE = "purge"
 
-class SkuFamily(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
-    """SKU family name
-    """
+
+class SkuFamily(str, Enum, metaclass=CaseInsensitiveEnumMeta):
+    """SKU family name."""
 
     A = "A"
 
-class SkuName(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
-    """SKU name to specify whether the key vault is a standard vault or a premium vault.
-    """
+
+class SkuName(str, Enum, metaclass=CaseInsensitiveEnumMeta):
+    """SKU name to specify whether the key vault is a standard vault or a premium vault."""
 
     STANDARD = "standard"
     PREMIUM = "premium"
 
-class StoragePermissions(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
+
+class StoragePermissions(str, Enum, metaclass=CaseInsensitiveEnumMeta):
+    """StoragePermissions."""
 
     ALL = "all"
     GET = "get"
@@ -193,9 +218,9 @@ class StoragePermissions(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
     GETSAS = "getsas"
     DELETESAS = "deletesas"
 
-class VaultProvisioningState(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
-    """Provisioning state of the vault.
-    """
+
+class VaultProvisioningState(str, Enum, metaclass=CaseInsensitiveEnumMeta):
+    """Provisioning state of the vault."""
 
     SUCCEEDED = "Succeeded"
     REGISTERING_DNS = "RegisteringDns"
