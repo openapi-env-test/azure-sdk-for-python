@@ -29,27 +29,33 @@ from ._operations import NspAccessRulesOperations
 from ._operations import NspAssociationsOperations
 from ._operations import PerimeterAssociableResourceTypesOperations
 
+from ._patch import __all__ as _patch_all
+from ._patch import *  # type: ignore # pylint: disable=unused-wildcard-import
+from ._patch import patch_sdk as _patch_sdk
+
 __all__ = [
-    'NetworkManagersOperations',
-    'NetworkManagerCommitsOperations',
-    'NetworkManagerDeploymentStatusOperations',
-    'EffectiveVirtualNetworksOperations',
-    'ActiveConnectivityConfigurationsOperations',
-    'ActiveSecurityAdminRulesOperations',
-    'ActiveSecurityUserRulesOperations',
-    'ConnectivityConfigurationsOperations',
-    'EffectiveConnectivityConfigurationsOperations',
-    'NetworkManagerEffectiveSecurityAdminRulesOperations',
-    'NetworkGroupsOperations',
-    'SecurityUserConfigurationsOperations',
-    'UserRuleCollectionsOperations',
-    'UserRulesOperations',
-    'SecurityAdminConfigurationsOperations',
-    'AdminRuleCollectionsOperations',
-    'AdminRulesOperations',
-    'NetworkSecurityPerimetersOperations',
-    'NspProfilesOperations',
-    'NspAccessRulesOperations',
-    'NspAssociationsOperations',
-    'PerimeterAssociableResourceTypesOperations',
+    "NetworkManagersOperations",
+    "NetworkManagerCommitsOperations",
+    "NetworkManagerDeploymentStatusOperations",
+    "EffectiveVirtualNetworksOperations",
+    "ActiveConnectivityConfigurationsOperations",
+    "ActiveSecurityAdminRulesOperations",
+    "ActiveSecurityUserRulesOperations",
+    "ConnectivityConfigurationsOperations",
+    "EffectiveConnectivityConfigurationsOperations",
+    "NetworkManagerEffectiveSecurityAdminRulesOperations",
+    "NetworkGroupsOperations",
+    "SecurityUserConfigurationsOperations",
+    "UserRuleCollectionsOperations",
+    "UserRulesOperations",
+    "SecurityAdminConfigurationsOperations",
+    "AdminRuleCollectionsOperations",
+    "AdminRulesOperations",
+    "NetworkSecurityPerimetersOperations",
+    "NspProfilesOperations",
+    "NspAccessRulesOperations",
+    "NspAssociationsOperations",
+    "PerimeterAssociableResourceTypesOperations",
 ]
+__all__.extend([p for p in _patch_all if p not in __all__])
+_patch_sdk()
