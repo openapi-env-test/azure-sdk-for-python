@@ -34,32 +34,29 @@ class AzureAsyncOperationResults(msrest.serialization.Model):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'type': {'readonly': True},
-        'name': {'readonly': True},
-        'status': {'readonly': True},
+        "id": {"readonly": True},
+        "type": {"readonly": True},
+        "name": {"readonly": True},
+        "status": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'status': {'key': 'status', 'type': 'str'},
-        'tenant_id': {'key': 'properties.tenantId', 'type': 'str'},
-        'display_name': {'key': 'properties.displayName', 'type': 'str'},
+        "id": {"key": "id", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "status": {"key": "status", "type": "str"},
+        "tenant_id": {"key": "properties.tenantId", "type": "str"},
+        "display_name": {"key": "properties.displayName", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(AzureAsyncOperationResults, self).__init__(**kwargs)
         self.id = None
         self.type = None
         self.name = None
         self.status = None
-        self.tenant_id = kwargs.get('tenant_id', None)
-        self.display_name = kwargs.get('display_name', None)
+        self.tenant_id = kwargs.get("tenant_id", None)
+        self.display_name = kwargs.get("display_name", None)
 
 
 class CheckNameAvailabilityRequest(msrest.serialization.Model):
@@ -75,22 +72,19 @@ class CheckNameAvailabilityRequest(msrest.serialization.Model):
     """
 
     _validation = {
-        'type': {'constant': True},
+        "type": {"constant": True},
     }
 
     _attribute_map = {
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
     }
 
     type = "Microsoft.Management/managementGroups"
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(CheckNameAvailabilityRequest, self).__init__(**kwargs)
-        self.name = kwargs.get('name', None)
+        self.name = kwargs.get("name", None)
 
 
 class CheckNameAvailabilityResult(msrest.serialization.Model):
@@ -114,21 +108,18 @@ class CheckNameAvailabilityResult(msrest.serialization.Model):
     """
 
     _validation = {
-        'name_available': {'readonly': True},
-        'reason': {'readonly': True},
-        'message': {'readonly': True},
+        "name_available": {"readonly": True},
+        "reason": {"readonly": True},
+        "message": {"readonly": True},
     }
 
     _attribute_map = {
-        'name_available': {'key': 'nameAvailable', 'type': 'bool'},
-        'reason': {'key': 'reason', 'type': 'str'},
-        'message': {'key': 'message', 'type': 'str'},
+        "name_available": {"key": "nameAvailable", "type": "bool"},
+        "reason": {"key": "reason", "type": "str"},
+        "message": {"key": "message", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(CheckNameAvailabilityResult, self).__init__(**kwargs)
         self.name_available = None
         self.reason = None
@@ -157,25 +148,22 @@ class CreateManagementGroupChildInfo(msrest.serialization.Model):
     """
 
     _validation = {
-        'type': {'readonly': True},
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'display_name': {'readonly': True},
-        'children': {'readonly': True},
+        "type": {"readonly": True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "display_name": {"readonly": True},
+        "children": {"readonly": True},
     }
 
     _attribute_map = {
-        'type': {'key': 'type', 'type': 'str'},
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'display_name': {'key': 'displayName', 'type': 'str'},
-        'children': {'key': 'children', 'type': '[CreateManagementGroupChildInfo]'},
+        "type": {"key": "type", "type": "str"},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "display_name": {"key": "displayName", "type": "str"},
+        "children": {"key": "children", "type": "[CreateManagementGroupChildInfo]"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(CreateManagementGroupChildInfo, self).__init__(**kwargs)
         self.type = None
         self.id = None
@@ -200,27 +188,24 @@ class CreateManagementGroupDetails(msrest.serialization.Model):
     """
 
     _validation = {
-        'version': {'readonly': True},
-        'updated_time': {'readonly': True},
-        'updated_by': {'readonly': True},
+        "version": {"readonly": True},
+        "updated_time": {"readonly": True},
+        "updated_by": {"readonly": True},
     }
 
     _attribute_map = {
-        'version': {'key': 'version', 'type': 'int'},
-        'updated_time': {'key': 'updatedTime', 'type': 'iso-8601'},
-        'updated_by': {'key': 'updatedBy', 'type': 'str'},
-        'parent': {'key': 'parent', 'type': 'CreateParentGroupInfo'},
+        "version": {"key": "version", "type": "int"},
+        "updated_time": {"key": "updatedTime", "type": "iso-8601"},
+        "updated_by": {"key": "updatedBy", "type": "str"},
+        "parent": {"key": "parent", "type": "CreateParentGroupInfo"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(CreateManagementGroupDetails, self).__init__(**kwargs)
         self.version = None
         self.updated_time = None
         self.updated_by = None
-        self.parent = kwargs.get('parent', None)
+        self.parent = kwargs.get("parent", None)
 
 
 class CreateManagementGroupRequest(msrest.serialization.Model):
@@ -249,33 +234,30 @@ class CreateManagementGroupRequest(msrest.serialization.Model):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'type': {'readonly': True},
-        'tenant_id': {'readonly': True},
-        'children': {'readonly': True},
+        "id": {"readonly": True},
+        "type": {"readonly": True},
+        "tenant_id": {"readonly": True},
+        "children": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'tenant_id': {'key': 'properties.tenantId', 'type': 'str'},
-        'display_name': {'key': 'properties.displayName', 'type': 'str'},
-        'details': {'key': 'properties.details', 'type': 'CreateManagementGroupDetails'},
-        'children': {'key': 'properties.children', 'type': '[CreateManagementGroupChildInfo]'},
+        "id": {"key": "id", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "tenant_id": {"key": "properties.tenantId", "type": "str"},
+        "display_name": {"key": "properties.displayName", "type": "str"},
+        "details": {"key": "properties.details", "type": "CreateManagementGroupDetails"},
+        "children": {"key": "properties.children", "type": "[CreateManagementGroupChildInfo]"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(CreateManagementGroupRequest, self).__init__(**kwargs)
         self.id = None
         self.type = None
-        self.name = kwargs.get('name', None)
+        self.name = kwargs.get("name", None)
         self.tenant_id = None
-        self.display_name = kwargs.get('display_name', None)
-        self.details = kwargs.get('details', None)
+        self.display_name = kwargs.get("display_name", None)
+        self.details = kwargs.get("details", None)
         self.children = None
 
 
@@ -295,17 +277,17 @@ class CreateOrUpdateSettingsRequest(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'require_authorization_for_group_creation': {'key': 'properties.requireAuthorizationForGroupCreation', 'type': 'bool'},
-        'default_management_group': {'key': 'properties.defaultManagementGroup', 'type': 'str'},
+        "require_authorization_for_group_creation": {
+            "key": "properties.requireAuthorizationForGroupCreation",
+            "type": "bool",
+        },
+        "default_management_group": {"key": "properties.defaultManagementGroup", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(CreateOrUpdateSettingsRequest, self).__init__(**kwargs)
-        self.require_authorization_for_group_creation = kwargs.get('require_authorization_for_group_creation', None)
-        self.default_management_group = kwargs.get('default_management_group', None)
+        self.require_authorization_for_group_creation = kwargs.get("require_authorization_for_group_creation", None)
+        self.default_management_group = kwargs.get("default_management_group", None)
 
 
 class CreateParentGroupInfo(msrest.serialization.Model):
@@ -323,22 +305,19 @@ class CreateParentGroupInfo(msrest.serialization.Model):
     """
 
     _validation = {
-        'name': {'readonly': True},
-        'display_name': {'readonly': True},
+        "name": {"readonly": True},
+        "display_name": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'display_name': {'key': 'displayName', 'type': 'str'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "display_name": {"key": "displayName", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(CreateParentGroupInfo, self).__init__(**kwargs)
-        self.id = kwargs.get('id', None)
+        self.id = kwargs.get("id", None)
         self.name = None
         self.display_name = None
 
@@ -364,29 +343,26 @@ class DescendantInfo(msrest.serialization.Model):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'type': {'readonly': True},
-        'name': {'readonly': True},
+        "id": {"readonly": True},
+        "type": {"readonly": True},
+        "name": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'display_name': {'key': 'properties.displayName', 'type': 'str'},
-        'parent': {'key': 'properties.parent', 'type': 'DescendantParentGroupInfo'},
+        "id": {"key": "id", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "display_name": {"key": "properties.displayName", "type": "str"},
+        "parent": {"key": "properties.parent", "type": "DescendantParentGroupInfo"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(DescendantInfo, self).__init__(**kwargs)
         self.id = None
         self.type = None
         self.name = None
-        self.display_name = kwargs.get('display_name', None)
-        self.parent = kwargs.get('parent', None)
+        self.display_name = kwargs.get("display_name", None)
+        self.parent = kwargs.get("parent", None)
 
 
 class DescendantListResult(msrest.serialization.Model):
@@ -401,20 +377,17 @@ class DescendantListResult(msrest.serialization.Model):
     """
 
     _validation = {
-        'next_link': {'readonly': True},
+        "next_link": {"readonly": True},
     }
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[DescendantInfo]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[DescendantInfo]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(DescendantListResult, self).__init__(**kwargs)
-        self.value = kwargs.get('value', None)
+        self.value = kwargs.get("value", None)
         self.next_link = None
 
 
@@ -427,15 +400,12 @@ class DescendantParentGroupInfo(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
+        "id": {"key": "id", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(DescendantParentGroupInfo, self).__init__(**kwargs)
-        self.id = kwargs.get('id', None)
+        self.id = kwargs.get("id", None)
 
 
 class EntityHierarchyItem(msrest.serialization.Model):
@@ -461,31 +431,28 @@ class EntityHierarchyItem(msrest.serialization.Model):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'type': {'readonly': True},
-        'name': {'readonly': True},
+        "id": {"readonly": True},
+        "type": {"readonly": True},
+        "name": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'display_name': {'key': 'properties.displayName', 'type': 'str'},
-        'permissions': {'key': 'properties.permissions', 'type': 'str'},
-        'children': {'key': 'properties.children', 'type': '[EntityHierarchyItem]'},
+        "id": {"key": "id", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "display_name": {"key": "properties.displayName", "type": "str"},
+        "permissions": {"key": "properties.permissions", "type": "str"},
+        "children": {"key": "properties.children", "type": "[EntityHierarchyItem]"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(EntityHierarchyItem, self).__init__(**kwargs)
         self.id = None
         self.type = None
         self.name = None
-        self.display_name = kwargs.get('display_name', None)
-        self.permissions = kwargs.get('permissions', None)
-        self.children = kwargs.get('children', None)
+        self.display_name = kwargs.get("display_name", None)
+        self.permissions = kwargs.get("permissions", None)
+        self.children = kwargs.get("children", None)
 
 
 class EntityInfo(msrest.serialization.Model):
@@ -529,45 +496,42 @@ class EntityInfo(msrest.serialization.Model):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'type': {'readonly': True},
-        'name': {'readonly': True},
+        "id": {"readonly": True},
+        "type": {"readonly": True},
+        "name": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'tenant_id': {'key': 'properties.tenantId', 'type': 'str'},
-        'display_name': {'key': 'properties.displayName', 'type': 'str'},
-        'parent': {'key': 'properties.parent', 'type': 'EntityParentGroupInfo'},
-        'permissions': {'key': 'properties.permissions', 'type': 'str'},
-        'inherited_permissions': {'key': 'properties.inheritedPermissions', 'type': 'str'},
-        'number_of_descendants': {'key': 'properties.numberOfDescendants', 'type': 'int'},
-        'number_of_children': {'key': 'properties.numberOfChildren', 'type': 'int'},
-        'number_of_child_groups': {'key': 'properties.numberOfChildGroups', 'type': 'int'},
-        'parent_display_name_chain': {'key': 'properties.parentDisplayNameChain', 'type': '[str]'},
-        'parent_name_chain': {'key': 'properties.parentNameChain', 'type': '[str]'},
+        "id": {"key": "id", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "tenant_id": {"key": "properties.tenantId", "type": "str"},
+        "display_name": {"key": "properties.displayName", "type": "str"},
+        "parent": {"key": "properties.parent", "type": "EntityParentGroupInfo"},
+        "permissions": {"key": "properties.permissions", "type": "str"},
+        "inherited_permissions": {"key": "properties.inheritedPermissions", "type": "str"},
+        "number_of_descendants": {"key": "properties.numberOfDescendants", "type": "int"},
+        "number_of_children": {"key": "properties.numberOfChildren", "type": "int"},
+        "number_of_child_groups": {"key": "properties.numberOfChildGroups", "type": "int"},
+        "parent_display_name_chain": {"key": "properties.parentDisplayNameChain", "type": "[str]"},
+        "parent_name_chain": {"key": "properties.parentNameChain", "type": "[str]"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(EntityInfo, self).__init__(**kwargs)
         self.id = None
         self.type = None
         self.name = None
-        self.tenant_id = kwargs.get('tenant_id', None)
-        self.display_name = kwargs.get('display_name', None)
-        self.parent = kwargs.get('parent', None)
-        self.permissions = kwargs.get('permissions', None)
-        self.inherited_permissions = kwargs.get('inherited_permissions', None)
-        self.number_of_descendants = kwargs.get('number_of_descendants', None)
-        self.number_of_children = kwargs.get('number_of_children', None)
-        self.number_of_child_groups = kwargs.get('number_of_child_groups', None)
-        self.parent_display_name_chain = kwargs.get('parent_display_name_chain', None)
-        self.parent_name_chain = kwargs.get('parent_name_chain', None)
+        self.tenant_id = kwargs.get("tenant_id", None)
+        self.display_name = kwargs.get("display_name", None)
+        self.parent = kwargs.get("parent", None)
+        self.permissions = kwargs.get("permissions", None)
+        self.inherited_permissions = kwargs.get("inherited_permissions", None)
+        self.number_of_descendants = kwargs.get("number_of_descendants", None)
+        self.number_of_children = kwargs.get("number_of_children", None)
+        self.number_of_child_groups = kwargs.get("number_of_child_groups", None)
+        self.parent_display_name_chain = kwargs.get("parent_display_name_chain", None)
+        self.parent_name_chain = kwargs.get("parent_name_chain", None)
 
 
 class EntityListResult(msrest.serialization.Model):
@@ -584,22 +548,19 @@ class EntityListResult(msrest.serialization.Model):
     """
 
     _validation = {
-        'count': {'readonly': True},
-        'next_link': {'readonly': True},
+        "count": {"readonly": True},
+        "next_link": {"readonly": True},
     }
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[EntityInfo]'},
-        'count': {'key': 'count', 'type': 'int'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[EntityInfo]"},
+        "count": {"key": "count", "type": "int"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(EntityListResult, self).__init__(**kwargs)
-        self.value = kwargs.get('value', None)
+        self.value = kwargs.get("value", None)
         self.count = None
         self.next_link = None
 
@@ -613,15 +574,12 @@ class EntityParentGroupInfo(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
+        "id": {"key": "id", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(EntityParentGroupInfo, self).__init__(**kwargs)
-        self.id = kwargs.get('id', None)
+        self.id = kwargs.get("id", None)
 
 
 class ErrorDetails(msrest.serialization.Model):
@@ -636,19 +594,16 @@ class ErrorDetails(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'code': {'key': 'code', 'type': 'str'},
-        'message': {'key': 'message', 'type': 'str'},
-        'details': {'key': 'details', 'type': 'str'},
+        "code": {"key": "code", "type": "str"},
+        "message": {"key": "message", "type": "str"},
+        "details": {"key": "details", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ErrorDetails, self).__init__(**kwargs)
-        self.code = kwargs.get('code', None)
-        self.message = kwargs.get('message', None)
-        self.details = kwargs.get('details', None)
+        self.code = kwargs.get("code", None)
+        self.message = kwargs.get("message", None)
+        self.details = kwargs.get("details", None)
 
 
 class ErrorResponse(msrest.serialization.Model):
@@ -659,15 +614,12 @@ class ErrorResponse(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'error': {'key': 'error', 'type': 'ErrorDetails'},
+        "error": {"key": "error", "type": "ErrorDetails"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ErrorResponse, self).__init__(**kwargs)
-        self.error = kwargs.get('error', None)
+        self.error = kwargs.get("error", None)
 
 
 class HierarchySettings(msrest.serialization.Model):
@@ -699,31 +651,31 @@ class HierarchySettings(msrest.serialization.Model):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'type': {'readonly': True},
-        'name': {'readonly': True},
+        "id": {"readonly": True},
+        "type": {"readonly": True},
+        "name": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'tenant_id': {'key': 'properties.tenantId', 'type': 'str'},
-        'require_authorization_for_group_creation': {'key': 'properties.requireAuthorizationForGroupCreation', 'type': 'bool'},
-        'default_management_group': {'key': 'properties.defaultManagementGroup', 'type': 'str'},
+        "id": {"key": "id", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "tenant_id": {"key": "properties.tenantId", "type": "str"},
+        "require_authorization_for_group_creation": {
+            "key": "properties.requireAuthorizationForGroupCreation",
+            "type": "bool",
+        },
+        "default_management_group": {"key": "properties.defaultManagementGroup", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(HierarchySettings, self).__init__(**kwargs)
         self.id = None
         self.type = None
         self.name = None
-        self.tenant_id = kwargs.get('tenant_id', None)
-        self.require_authorization_for_group_creation = kwargs.get('require_authorization_for_group_creation', None)
-        self.default_management_group = kwargs.get('default_management_group', None)
+        self.tenant_id = kwargs.get("tenant_id", None)
+        self.require_authorization_for_group_creation = kwargs.get("require_authorization_for_group_creation", None)
+        self.default_management_group = kwargs.get("default_management_group", None)
 
 
 class HierarchySettingsInfo(msrest.serialization.Model):
@@ -755,31 +707,31 @@ class HierarchySettingsInfo(msrest.serialization.Model):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'type': {'readonly': True},
-        'name': {'readonly': True},
+        "id": {"readonly": True},
+        "type": {"readonly": True},
+        "name": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'tenant_id': {'key': 'properties.tenantId', 'type': 'str'},
-        'require_authorization_for_group_creation': {'key': 'properties.requireAuthorizationForGroupCreation', 'type': 'bool'},
-        'default_management_group': {'key': 'properties.defaultManagementGroup', 'type': 'str'},
+        "id": {"key": "id", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "tenant_id": {"key": "properties.tenantId", "type": "str"},
+        "require_authorization_for_group_creation": {
+            "key": "properties.requireAuthorizationForGroupCreation",
+            "type": "bool",
+        },
+        "default_management_group": {"key": "properties.defaultManagementGroup", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(HierarchySettingsInfo, self).__init__(**kwargs)
         self.id = None
         self.type = None
         self.name = None
-        self.tenant_id = kwargs.get('tenant_id', None)
-        self.require_authorization_for_group_creation = kwargs.get('require_authorization_for_group_creation', None)
-        self.default_management_group = kwargs.get('default_management_group', None)
+        self.tenant_id = kwargs.get("tenant_id", None)
+        self.require_authorization_for_group_creation = kwargs.get("require_authorization_for_group_creation", None)
+        self.default_management_group = kwargs.get("default_management_group", None)
 
 
 class HierarchySettingsList(msrest.serialization.Model):
@@ -794,20 +746,17 @@ class HierarchySettingsList(msrest.serialization.Model):
     """
 
     _validation = {
-        'next_link': {'readonly': True},
+        "next_link": {"readonly": True},
     }
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[HierarchySettingsInfo]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[HierarchySettingsInfo]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(HierarchySettingsList, self).__init__(**kwargs)
-        self.value = kwargs.get('value', None)
+        self.value = kwargs.get("value", None)
         self.next_link = None
 
 
@@ -823,20 +772,17 @@ class ListSubscriptionUnderManagementGroup(msrest.serialization.Model):
     """
 
     _validation = {
-        'next_link': {'readonly': True},
+        "next_link": {"readonly": True},
     }
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[SubscriptionUnderManagementGroup]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[SubscriptionUnderManagementGroup]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ListSubscriptionUnderManagementGroup, self).__init__(**kwargs)
-        self.value = kwargs.get('value', None)
+        self.value = kwargs.get("value", None)
         self.next_link = None
 
 
@@ -865,33 +811,30 @@ class ManagementGroup(msrest.serialization.Model):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'type': {'readonly': True},
-        'name': {'readonly': True},
+        "id": {"readonly": True},
+        "type": {"readonly": True},
+        "name": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'tenant_id': {'key': 'properties.tenantId', 'type': 'str'},
-        'display_name': {'key': 'properties.displayName', 'type': 'str'},
-        'details': {'key': 'properties.details', 'type': 'ManagementGroupDetails'},
-        'children': {'key': 'properties.children', 'type': '[ManagementGroupChildInfo]'},
+        "id": {"key": "id", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "tenant_id": {"key": "properties.tenantId", "type": "str"},
+        "display_name": {"key": "properties.displayName", "type": "str"},
+        "details": {"key": "properties.details", "type": "ManagementGroupDetails"},
+        "children": {"key": "properties.children", "type": "[ManagementGroupChildInfo]"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ManagementGroup, self).__init__(**kwargs)
         self.id = None
         self.type = None
         self.name = None
-        self.tenant_id = kwargs.get('tenant_id', None)
-        self.display_name = kwargs.get('display_name', None)
-        self.details = kwargs.get('details', None)
-        self.children = kwargs.get('children', None)
+        self.tenant_id = kwargs.get("tenant_id", None)
+        self.display_name = kwargs.get("display_name", None)
+        self.details = kwargs.get("details", None)
+        self.children = kwargs.get("children", None)
 
 
 class ManagementGroupChildInfo(msrest.serialization.Model):
@@ -914,23 +857,20 @@ class ManagementGroupChildInfo(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'type': {'key': 'type', 'type': 'str'},
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'display_name': {'key': 'displayName', 'type': 'str'},
-        'children': {'key': 'children', 'type': '[ManagementGroupChildInfo]'},
+        "type": {"key": "type", "type": "str"},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "display_name": {"key": "displayName", "type": "str"},
+        "children": {"key": "children", "type": "[ManagementGroupChildInfo]"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ManagementGroupChildInfo, self).__init__(**kwargs)
-        self.type = kwargs.get('type', None)
-        self.id = kwargs.get('id', None)
-        self.name = kwargs.get('name', None)
-        self.display_name = kwargs.get('display_name', None)
-        self.children = kwargs.get('children', None)
+        self.type = kwargs.get("type", None)
+        self.id = kwargs.get("id", None)
+        self.name = kwargs.get("name", None)
+        self.display_name = kwargs.get("display_name", None)
+        self.children = kwargs.get("children", None)
 
 
 class ManagementGroupDetails(msrest.serialization.Model):
@@ -955,27 +895,27 @@ class ManagementGroupDetails(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'version': {'key': 'version', 'type': 'int'},
-        'updated_time': {'key': 'updatedTime', 'type': 'iso-8601'},
-        'updated_by': {'key': 'updatedBy', 'type': 'str'},
-        'parent': {'key': 'parent', 'type': 'ParentGroupInfo'},
-        'path': {'key': 'path', 'type': '[ManagementGroupPathElement]'},
-        'management_group_ancestors': {'key': 'managementGroupAncestors', 'type': '[str]'},
-        'management_group_ancestors_chain': {'key': 'managementGroupAncestorsChain', 'type': '[ManagementGroupPathElement]'},
+        "version": {"key": "version", "type": "int"},
+        "updated_time": {"key": "updatedTime", "type": "iso-8601"},
+        "updated_by": {"key": "updatedBy", "type": "str"},
+        "parent": {"key": "parent", "type": "ParentGroupInfo"},
+        "path": {"key": "path", "type": "[ManagementGroupPathElement]"},
+        "management_group_ancestors": {"key": "managementGroupAncestors", "type": "[str]"},
+        "management_group_ancestors_chain": {
+            "key": "managementGroupAncestorsChain",
+            "type": "[ManagementGroupPathElement]",
+        },
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ManagementGroupDetails, self).__init__(**kwargs)
-        self.version = kwargs.get('version', None)
-        self.updated_time = kwargs.get('updated_time', None)
-        self.updated_by = kwargs.get('updated_by', None)
-        self.parent = kwargs.get('parent', None)
-        self.path = kwargs.get('path', None)
-        self.management_group_ancestors = kwargs.get('management_group_ancestors', None)
-        self.management_group_ancestors_chain = kwargs.get('management_group_ancestors_chain', None)
+        self.version = kwargs.get("version", None)
+        self.updated_time = kwargs.get("updated_time", None)
+        self.updated_by = kwargs.get("updated_by", None)
+        self.parent = kwargs.get("parent", None)
+        self.path = kwargs.get("path", None)
+        self.management_group_ancestors = kwargs.get("management_group_ancestors", None)
+        self.management_group_ancestors_chain = kwargs.get("management_group_ancestors_chain", None)
 
 
 class ManagementGroupInfo(msrest.serialization.Model):
@@ -999,29 +939,26 @@ class ManagementGroupInfo(msrest.serialization.Model):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'type': {'readonly': True},
-        'name': {'readonly': True},
+        "id": {"readonly": True},
+        "type": {"readonly": True},
+        "name": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'tenant_id': {'key': 'properties.tenantId', 'type': 'str'},
-        'display_name': {'key': 'properties.displayName', 'type': 'str'},
+        "id": {"key": "id", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "tenant_id": {"key": "properties.tenantId", "type": "str"},
+        "display_name": {"key": "properties.displayName", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ManagementGroupInfo, self).__init__(**kwargs)
         self.id = None
         self.type = None
         self.name = None
-        self.tenant_id = kwargs.get('tenant_id', None)
-        self.display_name = kwargs.get('display_name', None)
+        self.tenant_id = kwargs.get("tenant_id", None)
+        self.display_name = kwargs.get("display_name", None)
 
 
 class ManagementGroupListResult(msrest.serialization.Model):
@@ -1036,20 +973,17 @@ class ManagementGroupListResult(msrest.serialization.Model):
     """
 
     _validation = {
-        'next_link': {'readonly': True},
+        "next_link": {"readonly": True},
     }
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[ManagementGroupInfo]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[ManagementGroupInfo]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ManagementGroupListResult, self).__init__(**kwargs)
-        self.value = kwargs.get('value', None)
+        self.value = kwargs.get("value", None)
         self.next_link = None
 
 
@@ -1063,17 +997,14 @@ class ManagementGroupPathElement(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'name': {'key': 'name', 'type': 'str'},
-        'display_name': {'key': 'displayName', 'type': 'str'},
+        "name": {"key": "name", "type": "str"},
+        "display_name": {"key": "displayName", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ManagementGroupPathElement, self).__init__(**kwargs)
-        self.name = kwargs.get('name', None)
-        self.display_name = kwargs.get('display_name', None)
+        self.name = kwargs.get("name", None)
+        self.display_name = kwargs.get("display_name", None)
 
 
 class Operation(msrest.serialization.Model):
@@ -1088,21 +1019,18 @@ class Operation(msrest.serialization.Model):
     """
 
     _validation = {
-        'name': {'readonly': True},
+        "name": {"readonly": True},
     }
 
     _attribute_map = {
-        'name': {'key': 'name', 'type': 'str'},
-        'display': {'key': 'display', 'type': 'OperationDisplayProperties'},
+        "name": {"key": "name", "type": "str"},
+        "display": {"key": "display", "type": "OperationDisplayProperties"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(Operation, self).__init__(**kwargs)
         self.name = None
-        self.display = kwargs.get('display', None)
+        self.display = kwargs.get("display", None)
 
 
 class OperationDisplayProperties(msrest.serialization.Model):
@@ -1121,23 +1049,20 @@ class OperationDisplayProperties(msrest.serialization.Model):
     """
 
     _validation = {
-        'provider': {'readonly': True},
-        'resource': {'readonly': True},
-        'operation': {'readonly': True},
-        'description': {'readonly': True},
+        "provider": {"readonly": True},
+        "resource": {"readonly": True},
+        "operation": {"readonly": True},
+        "description": {"readonly": True},
     }
 
     _attribute_map = {
-        'provider': {'key': 'provider', 'type': 'str'},
-        'resource': {'key': 'resource', 'type': 'str'},
-        'operation': {'key': 'operation', 'type': 'str'},
-        'description': {'key': 'description', 'type': 'str'},
+        "provider": {"key": "provider", "type": "str"},
+        "resource": {"key": "resource", "type": "str"},
+        "operation": {"key": "operation", "type": "str"},
+        "description": {"key": "description", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(OperationDisplayProperties, self).__init__(**kwargs)
         self.provider = None
         self.resource = None
@@ -1157,19 +1082,16 @@ class OperationListResult(msrest.serialization.Model):
     """
 
     _validation = {
-        'value': {'readonly': True},
-        'next_link': {'readonly': True},
+        "value": {"readonly": True},
+        "next_link": {"readonly": True},
     }
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[Operation]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[Operation]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(OperationListResult, self).__init__(**kwargs)
         self.value = None
         self.next_link = None
@@ -1196,29 +1118,26 @@ class OperationResults(msrest.serialization.Model):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'type': {'readonly': True},
-        'name': {'readonly': True},
+        "id": {"readonly": True},
+        "type": {"readonly": True},
+        "name": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'tenant_id': {'key': 'properties.tenantId', 'type': 'str'},
-        'display_name': {'key': 'properties.displayName', 'type': 'str'},
+        "id": {"key": "id", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "tenant_id": {"key": "properties.tenantId", "type": "str"},
+        "display_name": {"key": "properties.displayName", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(OperationResults, self).__init__(**kwargs)
         self.id = None
         self.type = None
         self.name = None
-        self.tenant_id = kwargs.get('tenant_id', None)
-        self.display_name = kwargs.get('display_name', None)
+        self.tenant_id = kwargs.get("tenant_id", None)
+        self.display_name = kwargs.get("display_name", None)
 
 
 class ParentGroupInfo(msrest.serialization.Model):
@@ -1234,19 +1153,16 @@ class ParentGroupInfo(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'display_name': {'key': 'displayName', 'type': 'str'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "display_name": {"key": "displayName", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ParentGroupInfo, self).__init__(**kwargs)
-        self.id = kwargs.get('id', None)
-        self.name = kwargs.get('name', None)
-        self.display_name = kwargs.get('display_name', None)
+        self.id = kwargs.get("id", None)
+        self.name = kwargs.get("name", None)
+        self.display_name = kwargs.get("display_name", None)
 
 
 class PatchManagementGroupRequest(msrest.serialization.Model):
@@ -1260,17 +1176,14 @@ class PatchManagementGroupRequest(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'display_name': {'key': 'displayName', 'type': 'str'},
-        'parent_group_id': {'key': 'parentGroupId', 'type': 'str'},
+        "display_name": {"key": "displayName", "type": "str"},
+        "parent_group_id": {"key": "parentGroupId", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(PatchManagementGroupRequest, self).__init__(**kwargs)
-        self.display_name = kwargs.get('display_name', None)
-        self.parent_group_id = kwargs.get('parent_group_id', None)
+        self.display_name = kwargs.get("display_name", None)
+        self.parent_group_id = kwargs.get("parent_group_id", None)
 
 
 class SubscriptionUnderManagementGroup(msrest.serialization.Model):
@@ -1299,33 +1212,30 @@ class SubscriptionUnderManagementGroup(msrest.serialization.Model):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'type': {'readonly': True},
-        'name': {'readonly': True},
+        "id": {"readonly": True},
+        "type": {"readonly": True},
+        "name": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'tenant': {'key': 'properties.tenant', 'type': 'str'},
-        'display_name': {'key': 'properties.displayName', 'type': 'str'},
-        'parent': {'key': 'properties.parent', 'type': 'DescendantParentGroupInfo'},
-        'state': {'key': 'properties.state', 'type': 'str'},
+        "id": {"key": "id", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "tenant": {"key": "properties.tenant", "type": "str"},
+        "display_name": {"key": "properties.displayName", "type": "str"},
+        "parent": {"key": "properties.parent", "type": "DescendantParentGroupInfo"},
+        "state": {"key": "properties.state", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(SubscriptionUnderManagementGroup, self).__init__(**kwargs)
         self.id = None
         self.type = None
         self.name = None
-        self.tenant = kwargs.get('tenant', None)
-        self.display_name = kwargs.get('display_name', None)
-        self.parent = kwargs.get('parent', None)
-        self.state = kwargs.get('state', None)
+        self.tenant = kwargs.get("tenant", None)
+        self.display_name = kwargs.get("display_name", None)
+        self.parent = kwargs.get("parent", None)
+        self.state = kwargs.get("state", None)
 
 
 class TenantBackfillStatusResult(msrest.serialization.Model):
@@ -1342,19 +1252,16 @@ class TenantBackfillStatusResult(msrest.serialization.Model):
     """
 
     _validation = {
-        'tenant_id': {'readonly': True},
-        'status': {'readonly': True},
+        "tenant_id": {"readonly": True},
+        "status": {"readonly": True},
     }
 
     _attribute_map = {
-        'tenant_id': {'key': 'tenantId', 'type': 'str'},
-        'status': {'key': 'status', 'type': 'str'},
+        "tenant_id": {"key": "tenantId", "type": "str"},
+        "status": {"key": "status", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(TenantBackfillStatusResult, self).__init__(**kwargs)
         self.tenant_id = None
         self.status = None
