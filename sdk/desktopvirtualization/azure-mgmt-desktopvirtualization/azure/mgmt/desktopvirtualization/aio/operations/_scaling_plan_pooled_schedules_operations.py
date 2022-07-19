@@ -27,12 +27,11 @@ from azure.mgmt.core.exceptions import ARMErrorFormat
 
 from ... import models as _models
 from ..._vendor import _convert_request
-from ...operations._application_groups_operations import (
-    build_create_or_update_request,
+from ...operations._scaling_plan_pooled_schedules_operations import (
+    build_create_request,
     build_delete_request,
     build_get_request,
-    build_list_by_resource_group_request,
-    build_list_by_subscription_request,
+    build_list_request,
     build_update_request,
 )
 
@@ -40,14 +39,14 @@ T = TypeVar("T")
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
 
 
-class ApplicationGroupsOperations:
+class ScalingPlanPooledSchedulesOperations:
     """
     .. warning::
         **DO NOT** instantiate this class directly.
 
         Instead, you should access the following operations through
         :class:`~azure.mgmt.desktopvirtualization.aio.DesktopVirtualizationAPIClient`'s
-        :attr:`application_groups` attribute.
+        :attr:`scaling_plan_pooled_schedules` attribute.
     """
 
     models = _models
@@ -61,18 +60,20 @@ class ApplicationGroupsOperations:
 
     @distributed_trace_async
     async def get(
-        self, resource_group_name: str, application_group_name: str, **kwargs: Any
-    ) -> _models.ApplicationGroup:
-        """Get an application group.
+        self, resource_group_name: str, scaling_plan_name: str, scaling_plan_schedule_name: str, **kwargs: Any
+    ) -> _models.ScalingPlanPooledSchedule:
+        """Get a ScalingPlanPooledSchedule.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
          Required.
         :type resource_group_name: str
-        :param application_group_name: The name of the application group. Required.
-        :type application_group_name: str
+        :param scaling_plan_name: The name of the scaling plan. Required.
+        :type scaling_plan_name: str
+        :param scaling_plan_schedule_name: The name of the ScalingPlanSchedule. Required.
+        :type scaling_plan_schedule_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ApplicationGroup or the result of cls(response)
-        :rtype: ~azure.mgmt.desktopvirtualization.models.ApplicationGroup
+        :return: ScalingPlanPooledSchedule or the result of cls(response)
+        :rtype: ~azure.mgmt.desktopvirtualization.models.ScalingPlanPooledSchedule
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
@@ -82,11 +83,12 @@ class ApplicationGroupsOperations:
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
         api_version = kwargs.pop("api_version", _params.pop("api-version", self._config.api_version))  # type: str
-        cls = kwargs.pop("cls", None)  # type: ClsType[_models.ApplicationGroup]
+        cls = kwargs.pop("cls", None)  # type: ClsType[_models.ScalingPlanPooledSchedule]
 
         request = build_get_request(
             resource_group_name=resource_group_name,
-            application_group_name=application_group_name,
+            scaling_plan_name=scaling_plan_name,
+            scaling_plan_schedule_name=scaling_plan_schedule_name,
             subscription_id=self._config.subscription_id,
             api_version=api_version,
             template_url=self.get.metadata["url"],
@@ -106,95 +108,107 @@ class ApplicationGroupsOperations:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize("ApplicationGroup", pipeline_response)
+        deserialized = self._deserialize("ScalingPlanPooledSchedule", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
 
-    get.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}"}  # type: ignore
+    get.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}/pooledSchedules/{scalingPlanScheduleName}"}  # type: ignore
 
     @overload
-    async def create_or_update(
+    async def create(
         self,
         resource_group_name: str,
-        application_group_name: str,
-        application_group: _models.ApplicationGroup,
+        scaling_plan_name: str,
+        scaling_plan_schedule_name: str,
+        scaling_plan_schedule: _models.ScalingPlanPooledSchedule,
         *,
         content_type: str = "application/json",
         **kwargs: Any
-    ) -> _models.ApplicationGroup:
-        """Create or update an applicationGroup.
+    ) -> _models.ScalingPlanPooledSchedule:
+        """Create or update a ScalingPlanPooledSchedule.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
          Required.
         :type resource_group_name: str
-        :param application_group_name: The name of the application group. Required.
-        :type application_group_name: str
-        :param application_group: Object containing ApplicationGroup definitions. Required.
-        :type application_group: ~azure.mgmt.desktopvirtualization.models.ApplicationGroup
+        :param scaling_plan_name: The name of the scaling plan. Required.
+        :type scaling_plan_name: str
+        :param scaling_plan_schedule_name: The name of the ScalingPlanSchedule. Required.
+        :type scaling_plan_schedule_name: str
+        :param scaling_plan_schedule: Object containing ScalingPlanPooledSchedule definitions.
+         Required.
+        :type scaling_plan_schedule: ~azure.mgmt.desktopvirtualization.models.ScalingPlanPooledSchedule
         :keyword content_type: Body Parameter content-type. Content type parameter for JSON body.
          Default value is "application/json".
         :paramtype content_type: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ApplicationGroup or the result of cls(response)
-        :rtype: ~azure.mgmt.desktopvirtualization.models.ApplicationGroup
+        :return: ScalingPlanPooledSchedule or the result of cls(response)
+        :rtype: ~azure.mgmt.desktopvirtualization.models.ScalingPlanPooledSchedule
         :raises ~azure.core.exceptions.HttpResponseError:
         """
 
     @overload
-    async def create_or_update(
+    async def create(
         self,
         resource_group_name: str,
-        application_group_name: str,
-        application_group: IO,
+        scaling_plan_name: str,
+        scaling_plan_schedule_name: str,
+        scaling_plan_schedule: IO,
         *,
         content_type: str = "application/json",
         **kwargs: Any
-    ) -> _models.ApplicationGroup:
-        """Create or update an applicationGroup.
+    ) -> _models.ScalingPlanPooledSchedule:
+        """Create or update a ScalingPlanPooledSchedule.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
          Required.
         :type resource_group_name: str
-        :param application_group_name: The name of the application group. Required.
-        :type application_group_name: str
-        :param application_group: Object containing ApplicationGroup definitions. Required.
-        :type application_group: IO
+        :param scaling_plan_name: The name of the scaling plan. Required.
+        :type scaling_plan_name: str
+        :param scaling_plan_schedule_name: The name of the ScalingPlanSchedule. Required.
+        :type scaling_plan_schedule_name: str
+        :param scaling_plan_schedule: Object containing ScalingPlanPooledSchedule definitions.
+         Required.
+        :type scaling_plan_schedule: IO
         :keyword content_type: Body Parameter content-type. Content type parameter for binary body.
          Default value is "application/json".
         :paramtype content_type: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ApplicationGroup or the result of cls(response)
-        :rtype: ~azure.mgmt.desktopvirtualization.models.ApplicationGroup
+        :return: ScalingPlanPooledSchedule or the result of cls(response)
+        :rtype: ~azure.mgmt.desktopvirtualization.models.ScalingPlanPooledSchedule
         :raises ~azure.core.exceptions.HttpResponseError:
         """
 
     @distributed_trace_async
-    async def create_or_update(
+    async def create(
         self,
         resource_group_name: str,
-        application_group_name: str,
-        application_group: Union[_models.ApplicationGroup, IO],
+        scaling_plan_name: str,
+        scaling_plan_schedule_name: str,
+        scaling_plan_schedule: Union[_models.ScalingPlanPooledSchedule, IO],
         **kwargs: Any
-    ) -> _models.ApplicationGroup:
-        """Create or update an applicationGroup.
+    ) -> _models.ScalingPlanPooledSchedule:
+        """Create or update a ScalingPlanPooledSchedule.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
          Required.
         :type resource_group_name: str
-        :param application_group_name: The name of the application group. Required.
-        :type application_group_name: str
-        :param application_group: Object containing ApplicationGroup definitions. Is either a model
-         type or a IO type. Required.
-        :type application_group: ~azure.mgmt.desktopvirtualization.models.ApplicationGroup or IO
+        :param scaling_plan_name: The name of the scaling plan. Required.
+        :type scaling_plan_name: str
+        :param scaling_plan_schedule_name: The name of the ScalingPlanSchedule. Required.
+        :type scaling_plan_schedule_name: str
+        :param scaling_plan_schedule: Object containing ScalingPlanPooledSchedule definitions. Is
+         either a model type or a IO type. Required.
+        :type scaling_plan_schedule: ~azure.mgmt.desktopvirtualization.models.ScalingPlanPooledSchedule
+         or IO
         :keyword content_type: Body Parameter content-type. Known values are: 'application/json'.
          Default value is None.
         :paramtype content_type: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ApplicationGroup or the result of cls(response)
-        :rtype: ~azure.mgmt.desktopvirtualization.models.ApplicationGroup
+        :return: ScalingPlanPooledSchedule or the result of cls(response)
+        :rtype: ~azure.mgmt.desktopvirtualization.models.ScalingPlanPooledSchedule
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
@@ -205,25 +219,26 @@ class ApplicationGroupsOperations:
 
         api_version = kwargs.pop("api_version", _params.pop("api-version", self._config.api_version))  # type: str
         content_type = kwargs.pop("content_type", _headers.pop("Content-Type", None))  # type: Optional[str]
-        cls = kwargs.pop("cls", None)  # type: ClsType[_models.ApplicationGroup]
+        cls = kwargs.pop("cls", None)  # type: ClsType[_models.ScalingPlanPooledSchedule]
 
         content_type = content_type or "application/json"
         _json = None
         _content = None
-        if isinstance(application_group, (IO, bytes)):
-            _content = application_group
+        if isinstance(scaling_plan_schedule, (IO, bytes)):
+            _content = scaling_plan_schedule
         else:
-            _json = self._serialize.body(application_group, "ApplicationGroup")
+            _json = self._serialize.body(scaling_plan_schedule, "ScalingPlanPooledSchedule")
 
-        request = build_create_or_update_request(
+        request = build_create_request(
             resource_group_name=resource_group_name,
-            application_group_name=application_group_name,
+            scaling_plan_name=scaling_plan_name,
+            scaling_plan_schedule_name=scaling_plan_schedule_name,
             subscription_id=self._config.subscription_id,
             api_version=api_version,
             content_type=content_type,
             json=_json,
             content=_content,
-            template_url=self.create_or_update.metadata["url"],
+            template_url=self.create.metadata["url"],
             headers=_headers,
             params=_params,
         )
@@ -241,29 +256,31 @@ class ApplicationGroupsOperations:
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
         if response.status_code == 200:
-            deserialized = self._deserialize("ApplicationGroup", pipeline_response)
+            deserialized = self._deserialize("ScalingPlanPooledSchedule", pipeline_response)
 
         if response.status_code == 201:
-            deserialized = self._deserialize("ApplicationGroup", pipeline_response)
+            deserialized = self._deserialize("ScalingPlanPooledSchedule", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
 
-    create_or_update.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}"}  # type: ignore
+    create.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}/pooledSchedules/{scalingPlanScheduleName}"}  # type: ignore
 
     @distributed_trace_async
     async def delete(  # pylint: disable=inconsistent-return-statements
-        self, resource_group_name: str, application_group_name: str, **kwargs: Any
+        self, resource_group_name: str, scaling_plan_name: str, scaling_plan_schedule_name: str, **kwargs: Any
     ) -> None:
-        """Remove an applicationGroup.
+        """Remove a ScalingPlanPooledSchedule.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
          Required.
         :type resource_group_name: str
-        :param application_group_name: The name of the application group. Required.
-        :type application_group_name: str
+        :param scaling_plan_name: The name of the scaling plan. Required.
+        :type scaling_plan_name: str
+        :param scaling_plan_schedule_name: The name of the ScalingPlanSchedule. Required.
+        :type scaling_plan_schedule_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: None or the result of cls(response)
         :rtype: None
@@ -280,7 +297,8 @@ class ApplicationGroupsOperations:
 
         request = build_delete_request(
             resource_group_name=resource_group_name,
-            application_group_name=application_group_name,
+            scaling_plan_name=scaling_plan_name,
+            scaling_plan_schedule_name=scaling_plan_schedule_name,
             subscription_id=self._config.subscription_id,
             api_version=api_version,
             template_url=self.delete.metadata["url"],
@@ -303,34 +321,38 @@ class ApplicationGroupsOperations:
         if cls:
             return cls(pipeline_response, None, {})
 
-    delete.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}"}  # type: ignore
+    delete.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}/pooledSchedules/{scalingPlanScheduleName}"}  # type: ignore
 
     @overload
     async def update(
         self,
         resource_group_name: str,
-        application_group_name: str,
-        application_group: Optional[_models.ApplicationGroupPatch] = None,
+        scaling_plan_name: str,
+        scaling_plan_schedule_name: str,
+        scaling_plan_schedule: Optional[_models.ScalingPlanPooledSchedulePatch] = None,
         *,
         content_type: str = "application/json",
         **kwargs: Any
-    ) -> _models.ApplicationGroup:
-        """Update an applicationGroup.
+    ) -> _models.ScalingPlanPooledSchedule:
+        """Update a ScalingPlanPooledSchedule.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
          Required.
         :type resource_group_name: str
-        :param application_group_name: The name of the application group. Required.
-        :type application_group_name: str
-        :param application_group: Object containing ApplicationGroup definitions. Default value is
-         None.
-        :type application_group: ~azure.mgmt.desktopvirtualization.models.ApplicationGroupPatch
+        :param scaling_plan_name: The name of the scaling plan. Required.
+        :type scaling_plan_name: str
+        :param scaling_plan_schedule_name: The name of the ScalingPlanSchedule. Required.
+        :type scaling_plan_schedule_name: str
+        :param scaling_plan_schedule: Object containing ScalingPlanPooledSchedule definitions. Default
+         value is None.
+        :type scaling_plan_schedule:
+         ~azure.mgmt.desktopvirtualization.models.ScalingPlanPooledSchedulePatch
         :keyword content_type: Body Parameter content-type. Content type parameter for JSON body.
          Default value is "application/json".
         :paramtype content_type: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ApplicationGroup or the result of cls(response)
-        :rtype: ~azure.mgmt.desktopvirtualization.models.ApplicationGroup
+        :return: ScalingPlanPooledSchedule or the result of cls(response)
+        :rtype: ~azure.mgmt.desktopvirtualization.models.ScalingPlanPooledSchedule
         :raises ~azure.core.exceptions.HttpResponseError:
         """
 
@@ -338,28 +360,31 @@ class ApplicationGroupsOperations:
     async def update(
         self,
         resource_group_name: str,
-        application_group_name: str,
-        application_group: Optional[IO] = None,
+        scaling_plan_name: str,
+        scaling_plan_schedule_name: str,
+        scaling_plan_schedule: Optional[IO] = None,
         *,
         content_type: str = "application/json",
         **kwargs: Any
-    ) -> _models.ApplicationGroup:
-        """Update an applicationGroup.
+    ) -> _models.ScalingPlanPooledSchedule:
+        """Update a ScalingPlanPooledSchedule.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
          Required.
         :type resource_group_name: str
-        :param application_group_name: The name of the application group. Required.
-        :type application_group_name: str
-        :param application_group: Object containing ApplicationGroup definitions. Default value is
-         None.
-        :type application_group: IO
+        :param scaling_plan_name: The name of the scaling plan. Required.
+        :type scaling_plan_name: str
+        :param scaling_plan_schedule_name: The name of the ScalingPlanSchedule. Required.
+        :type scaling_plan_schedule_name: str
+        :param scaling_plan_schedule: Object containing ScalingPlanPooledSchedule definitions. Default
+         value is None.
+        :type scaling_plan_schedule: IO
         :keyword content_type: Body Parameter content-type. Content type parameter for binary body.
          Default value is "application/json".
         :paramtype content_type: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ApplicationGroup or the result of cls(response)
-        :rtype: ~azure.mgmt.desktopvirtualization.models.ApplicationGroup
+        :return: ScalingPlanPooledSchedule or the result of cls(response)
+        :rtype: ~azure.mgmt.desktopvirtualization.models.ScalingPlanPooledSchedule
         :raises ~azure.core.exceptions.HttpResponseError:
         """
 
@@ -367,26 +392,30 @@ class ApplicationGroupsOperations:
     async def update(
         self,
         resource_group_name: str,
-        application_group_name: str,
-        application_group: Optional[Union[_models.ApplicationGroupPatch, IO]] = None,
+        scaling_plan_name: str,
+        scaling_plan_schedule_name: str,
+        scaling_plan_schedule: Optional[Union[_models.ScalingPlanPooledSchedulePatch, IO]] = None,
         **kwargs: Any
-    ) -> _models.ApplicationGroup:
-        """Update an applicationGroup.
+    ) -> _models.ScalingPlanPooledSchedule:
+        """Update a ScalingPlanPooledSchedule.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
          Required.
         :type resource_group_name: str
-        :param application_group_name: The name of the application group. Required.
-        :type application_group_name: str
-        :param application_group: Object containing ApplicationGroup definitions. Is either a model
-         type or a IO type. Default value is None.
-        :type application_group: ~azure.mgmt.desktopvirtualization.models.ApplicationGroupPatch or IO
+        :param scaling_plan_name: The name of the scaling plan. Required.
+        :type scaling_plan_name: str
+        :param scaling_plan_schedule_name: The name of the ScalingPlanSchedule. Required.
+        :type scaling_plan_schedule_name: str
+        :param scaling_plan_schedule: Object containing ScalingPlanPooledSchedule definitions. Is
+         either a model type or a IO type. Default value is None.
+        :type scaling_plan_schedule:
+         ~azure.mgmt.desktopvirtualization.models.ScalingPlanPooledSchedulePatch or IO
         :keyword content_type: Body Parameter content-type. Known values are: 'application/json'.
          Default value is None.
         :paramtype content_type: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ApplicationGroup or the result of cls(response)
-        :rtype: ~azure.mgmt.desktopvirtualization.models.ApplicationGroup
+        :return: ScalingPlanPooledSchedule or the result of cls(response)
+        :rtype: ~azure.mgmt.desktopvirtualization.models.ScalingPlanPooledSchedule
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
@@ -397,22 +426,23 @@ class ApplicationGroupsOperations:
 
         api_version = kwargs.pop("api_version", _params.pop("api-version", self._config.api_version))  # type: str
         content_type = kwargs.pop("content_type", _headers.pop("Content-Type", None))  # type: Optional[str]
-        cls = kwargs.pop("cls", None)  # type: ClsType[_models.ApplicationGroup]
+        cls = kwargs.pop("cls", None)  # type: ClsType[_models.ScalingPlanPooledSchedule]
 
         content_type = content_type or "application/json"
         _json = None
         _content = None
-        if isinstance(application_group, (IO, bytes)):
-            _content = application_group
+        if isinstance(scaling_plan_schedule, (IO, bytes)):
+            _content = scaling_plan_schedule
         else:
-            if application_group is not None:
-                _json = self._serialize.body(application_group, "ApplicationGroupPatch")
+            if scaling_plan_schedule is not None:
+                _json = self._serialize.body(scaling_plan_schedule, "ScalingPlanPooledSchedulePatch")
             else:
                 _json = None
 
         request = build_update_request(
             resource_group_name=resource_group_name,
-            application_group_name=application_group_name,
+            scaling_plan_name=scaling_plan_name,
+            scaling_plan_schedule_name=scaling_plan_schedule_name,
             subscription_id=self._config.subscription_id,
             api_version=api_version,
             content_type=content_type,
@@ -435,38 +465,38 @@ class ApplicationGroupsOperations:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize("ApplicationGroup", pipeline_response)
+        deserialized = self._deserialize("ScalingPlanPooledSchedule", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
 
-    update.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}"}  # type: ignore
+    update.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}/pooledSchedules/{scalingPlanScheduleName}"}  # type: ignore
 
     @distributed_trace
-    def list_by_resource_group(
-        self, resource_group_name: str, filter: Optional[str] = None, **kwargs: Any
-    ) -> AsyncIterable["_models.ApplicationGroup"]:
-        """List applicationGroups.
+    def list(
+        self, resource_group_name: str, scaling_plan_name: str, **kwargs: Any
+    ) -> AsyncIterable["_models.ScalingPlanPooledSchedule"]:
+        """List ScalingPlanPooledSchedules.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
          Required.
         :type resource_group_name: str
-        :param filter: OData filter expression. Valid properties for filtering are
-         applicationGroupType. Default value is None.
-        :type filter: str
+        :param scaling_plan_name: The name of the scaling plan. Required.
+        :type scaling_plan_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either ApplicationGroup or the result of cls(response)
+        :return: An iterator like instance of either ScalingPlanPooledSchedule or the result of
+         cls(response)
         :rtype:
-         ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.desktopvirtualization.models.ApplicationGroup]
+         ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.desktopvirtualization.models.ScalingPlanPooledSchedule]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         _headers = kwargs.pop("headers", {}) or {}
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
         api_version = kwargs.pop("api_version", _params.pop("api-version", self._config.api_version))  # type: str
-        cls = kwargs.pop("cls", None)  # type: ClsType[_models.ApplicationGroupList]
+        cls = kwargs.pop("cls", None)  # type: ClsType[_models.ScalingPlanPooledScheduleList]
 
         error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop("error_map", {}) or {})
@@ -474,12 +504,12 @@ class ApplicationGroupsOperations:
         def prepare_request(next_link=None):
             if not next_link:
 
-                request = build_list_by_resource_group_request(
+                request = build_list_request(
                     resource_group_name=resource_group_name,
+                    scaling_plan_name=scaling_plan_name,
                     subscription_id=self._config.subscription_id,
-                    filter=filter,
                     api_version=api_version,
-                    template_url=self.list_by_resource_group.metadata["url"],
+                    template_url=self.list.metadata["url"],
                     headers=_headers,
                     params=_params,
                 )
@@ -498,7 +528,7 @@ class ApplicationGroupsOperations:
             return request
 
         async def extract_data(pipeline_response):
-            deserialized = self._deserialize("ApplicationGroupList", pipeline_response)
+            deserialized = self._deserialize("ScalingPlanPooledScheduleList", pipeline_response)
             list_of_elem = deserialized.value
             if cls:
                 list_of_elem = cls(list_of_elem)
@@ -520,78 +550,4 @@ class ApplicationGroupsOperations:
 
         return AsyncItemPaged(get_next, extract_data)
 
-    list_by_resource_group.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups"}  # type: ignore
-
-    @distributed_trace
-    def list_by_subscription(
-        self, filter: Optional[str] = None, **kwargs: Any
-    ) -> AsyncIterable["_models.ApplicationGroup"]:
-        """List applicationGroups in subscription.
-
-        :param filter: OData filter expression. Valid properties for filtering are
-         applicationGroupType. Default value is None.
-        :type filter: str
-        :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either ApplicationGroup or the result of cls(response)
-        :rtype:
-         ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.desktopvirtualization.models.ApplicationGroup]
-        :raises ~azure.core.exceptions.HttpResponseError:
-        """
-        _headers = kwargs.pop("headers", {}) or {}
-        _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
-
-        api_version = kwargs.pop("api_version", _params.pop("api-version", self._config.api_version))  # type: str
-        cls = kwargs.pop("cls", None)  # type: ClsType[_models.ApplicationGroupList]
-
-        error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
-        error_map.update(kwargs.pop("error_map", {}) or {})
-
-        def prepare_request(next_link=None):
-            if not next_link:
-
-                request = build_list_by_subscription_request(
-                    subscription_id=self._config.subscription_id,
-                    filter=filter,
-                    api_version=api_version,
-                    template_url=self.list_by_subscription.metadata["url"],
-                    headers=_headers,
-                    params=_params,
-                )
-                request = _convert_request(request)
-                request.url = self._client.format_url(request.url)  # type: ignore
-
-            else:
-                # make call to next link with the client's api-version
-                _parsed_next_link = urlparse(next_link)
-                _next_request_params = case_insensitive_dict(parse_qs(_parsed_next_link.query))
-                _next_request_params["api-version"] = self._config.api_version
-                request = HttpRequest("GET", urljoin(next_link, _parsed_next_link.path), params=_next_request_params)
-                request = _convert_request(request)
-                request.url = self._client.format_url(request.url)  # type: ignore
-                request.method = "GET"
-            return request
-
-        async def extract_data(pipeline_response):
-            deserialized = self._deserialize("ApplicationGroupList", pipeline_response)
-            list_of_elem = deserialized.value
-            if cls:
-                list_of_elem = cls(list_of_elem)
-            return deserialized.next_link or None, AsyncList(list_of_elem)
-
-        async def get_next(next_link=None):
-            request = prepare_request(next_link)
-
-            pipeline_response = await self._client._pipeline.run(  # type: ignore # pylint: disable=protected-access
-                request, stream=False, **kwargs
-            )
-            response = pipeline_response.http_response
-
-            if response.status_code not in [200]:
-                map_error(status_code=response.status_code, response=response, error_map=error_map)
-                raise HttpResponseError(response=response, error_format=ARMErrorFormat)
-
-            return pipeline_response
-
-        return AsyncItemPaged(get_next, extract_data)
-
-    list_by_subscription.metadata = {"url": "/subscriptions/{subscriptionId}/providers/Microsoft.DesktopVirtualization/applicationGroups"}  # type: ignore
+    list.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}/pooledSchedules"}  # type: ignore
