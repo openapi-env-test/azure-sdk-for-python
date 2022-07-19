@@ -1,4 +1,5 @@
 # coding=utf-8
+# pylint: disable=too-many-lines
 # --------------------------------------------------------------------------
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License. See License.txt in the project root for license information.
@@ -7,15 +8,22 @@
 # --------------------------------------------------------------------------
 
 import datetime
-from typing import Any, Dict, List, Optional, Union
+import sys
+from typing import Any, Dict, List, Optional, TYPE_CHECKING, Union
 
-from azure.core.exceptions import HttpResponseError
-import msrest.serialization
+from .. import _serialization
 
-from ._azure_stack_hci_client_enums import *
+if TYPE_CHECKING:
+    # pylint: disable=unused-import,ungrouped-imports
+    from .. import models as _models
+if sys.version_info >= (3, 9):
+    from collections.abc import MutableMapping
+else:
+    from typing import MutableMapping  # type: ignore  # pylint: disable=ungrouped-imports
+JSON = MutableMapping[str, Any]  # pylint: disable=unsubscriptable-object
 
 
-class ArcConnectivityProperties(msrest.serialization.Model):
+class ArcConnectivityProperties(_serialization.Model):
     """Connectivity related configuration required by arc server.
 
     :ivar enabled: True indicates ARC connectivity is enabled.
@@ -23,24 +31,19 @@ class ArcConnectivityProperties(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'enabled': {'key': 'enabled', 'type': 'bool'},
+        "enabled": {"key": "enabled", "type": "bool"},
     }
 
-    def __init__(
-        self,
-        *,
-        enabled: Optional[bool] = None,
-        **kwargs
-    ):
+    def __init__(self, *, enabled: Optional[bool] = None, **kwargs):
         """
         :keyword enabled: True indicates ARC connectivity is enabled.
         :paramtype enabled: bool
         """
-        super(ArcConnectivityProperties, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.enabled = enabled
 
 
-class ArcIdentityResponse(msrest.serialization.Model):
+class ArcIdentityResponse(_serialization.Model):
     """ArcIdentity details.
 
     :ivar arc_application_client_id:
@@ -54,10 +57,10 @@ class ArcIdentityResponse(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'arc_application_client_id': {'key': 'properties.arcApplicationClientId', 'type': 'str'},
-        'arc_application_tenant_id': {'key': 'properties.arcApplicationTenantId', 'type': 'str'},
-        'arc_service_principal_object_id': {'key': 'properties.arcServicePrincipalObjectId', 'type': 'str'},
-        'arc_application_object_id': {'key': 'properties.arcApplicationObjectId', 'type': 'str'},
+        "arc_application_client_id": {"key": "properties.arcApplicationClientId", "type": "str"},
+        "arc_application_tenant_id": {"key": "properties.arcApplicationTenantId", "type": "str"},
+        "arc_service_principal_object_id": {"key": "properties.arcServicePrincipalObjectId", "type": "str"},
+        "arc_application_object_id": {"key": "properties.arcApplicationObjectId", "type": "str"},
     }
 
     def __init__(
@@ -79,14 +82,14 @@ class ArcIdentityResponse(msrest.serialization.Model):
         :keyword arc_application_object_id:
         :paramtype arc_application_object_id: str
         """
-        super(ArcIdentityResponse, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.arc_application_client_id = arc_application_client_id
         self.arc_application_tenant_id = arc_application_tenant_id
         self.arc_service_principal_object_id = arc_service_principal_object_id
         self.arc_application_object_id = arc_application_object_id
 
 
-class Resource(msrest.serialization.Model):
+class Resource(_serialization.Model):
     """Common fields that are returned in the response for all Azure Resource Manager resources.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -102,24 +105,20 @@ class Resource(msrest.serialization.Model):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
-        """
-        """
-        super(Resource, self).__init__(**kwargs)
+    def __init__(self, **kwargs):
+        """ """
+        super().__init__(**kwargs)
         self.id = None
         self.name = None
         self.type = None
@@ -141,27 +140,23 @@ class ProxyResource(Resource):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
-        """
-        """
-        super(ProxyResource, self).__init__(**kwargs)
+    def __init__(self, **kwargs):
+        """ """
+        super().__init__(**kwargs)
 
 
-class ArcSetting(ProxyResource):
+class ArcSetting(ProxyResource):  # pylint: disable=too-many-instance-attributes
     """ArcSetting details.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -174,8 +169,8 @@ class ArcSetting(ProxyResource):
     :ivar type: The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or
      "Microsoft.Storage/storageAccounts".
     :vartype type: str
-    :ivar provisioning_state: Provisioning state of the ArcSetting proxy resource. Possible values
-     include: "Succeeded", "Failed", "Canceled", "Accepted", "Provisioning".
+    :ivar provisioning_state: Provisioning state of the ArcSetting proxy resource. Known values
+     are: "Succeeded", "Failed", "Canceled", "Accepted", and "Provisioning".
     :vartype provisioning_state: str or ~azure.mgmt.azurestackhci.models.ProvisioningState
     :ivar arc_instance_resource_group: The resource group that hosts the Arc agents, ie. Hybrid
      Compute Machine resources.
@@ -188,59 +183,59 @@ class ArcSetting(ProxyResource):
     :vartype arc_service_principal_object_id: str
     :ivar arc_application_object_id: Object id of arc AAD identity.
     :vartype arc_application_object_id: str
-    :ivar aggregate_state: Aggregate state of Arc agent across the nodes in this HCI cluster.
-     Possible values include: "NotSpecified", "Error", "Succeeded", "Canceled", "Failed",
-     "Connected", "Disconnected", "Deleted", "Creating", "Updating", "Deleting", "Moving",
-     "PartiallySucceeded", "PartiallyConnected", "InProgress".
+    :ivar aggregate_state: Aggregate state of Arc agent across the nodes in this HCI cluster. Known
+     values are: "NotSpecified", "Error", "Succeeded", "Canceled", "Failed", "Connected",
+     "Disconnected", "Deleted", "Creating", "Updating", "Deleting", "Moving", "PartiallySucceeded",
+     "PartiallyConnected", and "InProgress".
     :vartype aggregate_state: str or ~azure.mgmt.azurestackhci.models.ArcSettingAggregateState
     :ivar per_node_details: State of Arc agent in each of the nodes.
     :vartype per_node_details: list[~azure.mgmt.azurestackhci.models.PerNodeState]
     :ivar connectivity_properties: contains connectivity related configuration for ARC resources.
-    :vartype connectivity_properties: any
+    :vartype connectivity_properties: JSON
     :ivar created_by: The identity that created the resource.
     :vartype created_by: str
-    :ivar created_by_type: The type of identity that created the resource. Possible values include:
-     "User", "Application", "ManagedIdentity", "Key".
+    :ivar created_by_type: The type of identity that created the resource. Known values are:
+     "User", "Application", "ManagedIdentity", and "Key".
     :vartype created_by_type: str or ~azure.mgmt.azurestackhci.models.CreatedByType
     :ivar created_at: The timestamp of resource creation (UTC).
     :vartype created_at: ~datetime.datetime
     :ivar last_modified_by: The identity that last modified the resource.
     :vartype last_modified_by: str
-    :ivar last_modified_by_type: The type of identity that last modified the resource. Possible
-     values include: "User", "Application", "ManagedIdentity", "Key".
+    :ivar last_modified_by_type: The type of identity that last modified the resource. Known values
+     are: "User", "Application", "ManagedIdentity", and "Key".
     :vartype last_modified_by_type: str or ~azure.mgmt.azurestackhci.models.CreatedByType
     :ivar last_modified_at: The timestamp of resource last modification (UTC).
     :vartype last_modified_at: ~datetime.datetime
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'provisioning_state': {'readonly': True},
-        'aggregate_state': {'readonly': True},
-        'per_node_details': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
+        "provisioning_state": {"readonly": True},
+        "aggregate_state": {"readonly": True},
+        "per_node_details": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
-        'arc_instance_resource_group': {'key': 'properties.arcInstanceResourceGroup', 'type': 'str'},
-        'arc_application_client_id': {'key': 'properties.arcApplicationClientId', 'type': 'str'},
-        'arc_application_tenant_id': {'key': 'properties.arcApplicationTenantId', 'type': 'str'},
-        'arc_service_principal_object_id': {'key': 'properties.arcServicePrincipalObjectId', 'type': 'str'},
-        'arc_application_object_id': {'key': 'properties.arcApplicationObjectId', 'type': 'str'},
-        'aggregate_state': {'key': 'properties.aggregateState', 'type': 'str'},
-        'per_node_details': {'key': 'properties.perNodeDetails', 'type': '[PerNodeState]'},
-        'connectivity_properties': {'key': 'properties.connectivityProperties', 'type': 'object'},
-        'created_by': {'key': 'systemData.createdBy', 'type': 'str'},
-        'created_by_type': {'key': 'systemData.createdByType', 'type': 'str'},
-        'created_at': {'key': 'systemData.createdAt', 'type': 'iso-8601'},
-        'last_modified_by': {'key': 'systemData.lastModifiedBy', 'type': 'str'},
-        'last_modified_by_type': {'key': 'systemData.lastModifiedByType', 'type': 'str'},
-        'last_modified_at': {'key': 'systemData.lastModifiedAt', 'type': 'iso-8601'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "provisioning_state": {"key": "properties.provisioningState", "type": "str"},
+        "arc_instance_resource_group": {"key": "properties.arcInstanceResourceGroup", "type": "str"},
+        "arc_application_client_id": {"key": "properties.arcApplicationClientId", "type": "str"},
+        "arc_application_tenant_id": {"key": "properties.arcApplicationTenantId", "type": "str"},
+        "arc_service_principal_object_id": {"key": "properties.arcServicePrincipalObjectId", "type": "str"},
+        "arc_application_object_id": {"key": "properties.arcApplicationObjectId", "type": "str"},
+        "aggregate_state": {"key": "properties.aggregateState", "type": "str"},
+        "per_node_details": {"key": "properties.perNodeDetails", "type": "[PerNodeState]"},
+        "connectivity_properties": {"key": "properties.connectivityProperties", "type": "object"},
+        "created_by": {"key": "systemData.createdBy", "type": "str"},
+        "created_by_type": {"key": "systemData.createdByType", "type": "str"},
+        "created_at": {"key": "systemData.createdAt", "type": "iso-8601"},
+        "last_modified_by": {"key": "systemData.lastModifiedBy", "type": "str"},
+        "last_modified_by_type": {"key": "systemData.lastModifiedByType", "type": "str"},
+        "last_modified_at": {"key": "systemData.lastModifiedAt", "type": "iso-8601"},
     }
 
     def __init__(
@@ -251,12 +246,12 @@ class ArcSetting(ProxyResource):
         arc_application_tenant_id: Optional[str] = None,
         arc_service_principal_object_id: Optional[str] = None,
         arc_application_object_id: Optional[str] = None,
-        connectivity_properties: Optional[Any] = None,
+        connectivity_properties: Optional[JSON] = None,
         created_by: Optional[str] = None,
-        created_by_type: Optional[Union[str, "CreatedByType"]] = None,
+        created_by_type: Optional[Union[str, "_models.CreatedByType"]] = None,
         created_at: Optional[datetime.datetime] = None,
         last_modified_by: Optional[str] = None,
-        last_modified_by_type: Optional[Union[str, "CreatedByType"]] = None,
+        last_modified_by_type: Optional[Union[str, "_models.CreatedByType"]] = None,
         last_modified_at: Optional[datetime.datetime] = None,
         **kwargs
     ):
@@ -274,23 +269,23 @@ class ArcSetting(ProxyResource):
         :paramtype arc_application_object_id: str
         :keyword connectivity_properties: contains connectivity related configuration for ARC
          resources.
-        :paramtype connectivity_properties: any
+        :paramtype connectivity_properties: JSON
         :keyword created_by: The identity that created the resource.
         :paramtype created_by: str
-        :keyword created_by_type: The type of identity that created the resource. Possible values
-         include: "User", "Application", "ManagedIdentity", "Key".
+        :keyword created_by_type: The type of identity that created the resource. Known values are:
+         "User", "Application", "ManagedIdentity", and "Key".
         :paramtype created_by_type: str or ~azure.mgmt.azurestackhci.models.CreatedByType
         :keyword created_at: The timestamp of resource creation (UTC).
         :paramtype created_at: ~datetime.datetime
         :keyword last_modified_by: The identity that last modified the resource.
         :paramtype last_modified_by: str
-        :keyword last_modified_by_type: The type of identity that last modified the resource. Possible
-         values include: "User", "Application", "ManagedIdentity", "Key".
+        :keyword last_modified_by_type: The type of identity that last modified the resource. Known
+         values are: "User", "Application", "ManagedIdentity", and "Key".
         :paramtype last_modified_by_type: str or ~azure.mgmt.azurestackhci.models.CreatedByType
         :keyword last_modified_at: The timestamp of resource last modification (UTC).
         :paramtype last_modified_at: ~datetime.datetime
         """
-        super(ArcSetting, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.provisioning_state = None
         self.arc_instance_resource_group = arc_instance_resource_group
         self.arc_application_client_id = arc_application_client_id
@@ -308,7 +303,7 @@ class ArcSetting(ProxyResource):
         self.last_modified_at = last_modified_at
 
 
-class ArcSettingList(msrest.serialization.Model):
+class ArcSettingList(_serialization.Model):
     """List of ArcSetting proxy resources for the HCI cluster.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -320,55 +315,47 @@ class ArcSettingList(msrest.serialization.Model):
     """
 
     _validation = {
-        'value': {'readonly': True},
-        'next_link': {'readonly': True},
+        "value": {"readonly": True},
+        "next_link": {"readonly": True},
     }
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[ArcSetting]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[ArcSetting]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
-        """
-        """
-        super(ArcSettingList, self).__init__(**kwargs)
+    def __init__(self, **kwargs):
+        """ """
+        super().__init__(**kwargs)
         self.value = None
         self.next_link = None
 
 
-class ArcSettingsPatch(msrest.serialization.Model):
+class ArcSettingsPatch(_serialization.Model):
     """ArcSetting details to update.
 
-    :ivar tags: A set of tags. Resource tags.
+    :ivar tags: Resource tags.
     :vartype tags: dict[str, str]
     :ivar connectivity_properties: contains connectivity related configuration for ARC resources.
-    :vartype connectivity_properties: any
+    :vartype connectivity_properties: JSON
     """
 
     _attribute_map = {
-        'tags': {'key': 'tags', 'type': '{str}'},
-        'connectivity_properties': {'key': 'properties.connectivityProperties', 'type': 'object'},
+        "tags": {"key": "tags", "type": "{str}"},
+        "connectivity_properties": {"key": "properties.connectivityProperties", "type": "object"},
     }
 
     def __init__(
-        self,
-        *,
-        tags: Optional[Dict[str, str]] = None,
-        connectivity_properties: Optional[Any] = None,
-        **kwargs
+        self, *, tags: Optional[Dict[str, str]] = None, connectivity_properties: Optional[JSON] = None, **kwargs
     ):
         """
-        :keyword tags: A set of tags. Resource tags.
+        :keyword tags: Resource tags.
         :paramtype tags: dict[str, str]
         :keyword connectivity_properties: contains connectivity related configuration for ARC
          resources.
-        :paramtype connectivity_properties: any
+        :paramtype connectivity_properties: JSON
         """
-        super(ArcSettingsPatch, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.tags = tags
         self.connectivity_properties = connectivity_properties
 
@@ -388,46 +375,40 @@ class TrackedResource(Resource):
     :ivar type: The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or
      "Microsoft.Storage/storageAccounts".
     :vartype type: str
-    :ivar tags: A set of tags. Resource tags.
+    :ivar tags: Resource tags.
     :vartype tags: dict[str, str]
-    :ivar location: Required. The geo-location where the resource lives.
+    :ivar location: The geo-location where the resource lives. Required.
     :vartype location: str
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'location': {'required': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
+        "location": {"required": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'tags': {'key': 'tags', 'type': '{str}'},
-        'location': {'key': 'location', 'type': 'str'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "tags": {"key": "tags", "type": "{str}"},
+        "location": {"key": "location", "type": "str"},
     }
 
-    def __init__(
-        self,
-        *,
-        location: str,
-        tags: Optional[Dict[str, str]] = None,
-        **kwargs
-    ):
+    def __init__(self, *, location: str, tags: Optional[Dict[str, str]] = None, **kwargs):
         """
-        :keyword tags: A set of tags. Resource tags.
+        :keyword tags: Resource tags.
         :paramtype tags: dict[str, str]
-        :keyword location: Required. The geo-location where the resource lives.
+        :keyword location: The geo-location where the resource lives. Required.
         :paramtype location: str
         """
-        super(TrackedResource, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.tags = tags
         self.location = location
 
 
-class Cluster(TrackedResource):
+class Cluster(TrackedResource):  # pylint: disable=too-many-instance-attributes
     """Cluster details.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -442,15 +423,15 @@ class Cluster(TrackedResource):
     :ivar type: The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or
      "Microsoft.Storage/storageAccounts".
     :vartype type: str
-    :ivar tags: A set of tags. Resource tags.
+    :ivar tags: Resource tags.
     :vartype tags: dict[str, str]
-    :ivar location: Required. The geo-location where the resource lives.
+    :ivar location: The geo-location where the resource lives. Required.
     :vartype location: str
-    :ivar provisioning_state: Provisioning state. Possible values include: "Succeeded", "Failed",
-     "Canceled", "Accepted", "Provisioning".
+    :ivar provisioning_state: Provisioning state. Known values are: "Succeeded", "Failed",
+     "Canceled", "Accepted", and "Provisioning".
     :vartype provisioning_state: str or ~azure.mgmt.azurestackhci.models.ProvisioningState
-    :ivar status: Status of the cluster agent. Possible values include: "NotYetRegistered",
-     "ConnectedRecently", "NotConnectedRecently", "Disconnected", "Error".
+    :ivar status: Status of the cluster agent. Known values are: "NotYetRegistered",
+     "ConnectedRecently", "NotConnectedRecently", "Disconnected", and "Error".
     :vartype status: str or ~azure.mgmt.azurestackhci.models.Status
     :ivar cloud_id: Unique, immutable resource id.
     :vartype cloud_id: str
@@ -482,68 +463,68 @@ class Cluster(TrackedResource):
     :vartype service_endpoint: str
     :ivar created_by: The identity that created the resource.
     :vartype created_by: str
-    :ivar created_by_type: The type of identity that created the resource. Possible values include:
-     "User", "Application", "ManagedIdentity", "Key".
+    :ivar created_by_type: The type of identity that created the resource. Known values are:
+     "User", "Application", "ManagedIdentity", and "Key".
     :vartype created_by_type: str or ~azure.mgmt.azurestackhci.models.CreatedByType
     :ivar created_at: The timestamp of resource creation (UTC).
     :vartype created_at: ~datetime.datetime
     :ivar last_modified_by: The identity that last modified the resource.
     :vartype last_modified_by: str
-    :ivar last_modified_by_type: The type of identity that last modified the resource. Possible
-     values include: "User", "Application", "ManagedIdentity", "Key".
+    :ivar last_modified_by_type: The type of identity that last modified the resource. Known values
+     are: "User", "Application", "ManagedIdentity", and "Key".
     :vartype last_modified_by_type: str or ~azure.mgmt.azurestackhci.models.CreatedByType
     :ivar last_modified_at: The timestamp of resource last modification (UTC).
     :vartype last_modified_at: ~datetime.datetime
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'location': {'required': True},
-        'provisioning_state': {'readonly': True},
-        'status': {'readonly': True},
-        'cloud_id': {'readonly': True},
-        'reported_properties': {'readonly': True},
-        'trial_days_remaining': {'readonly': True},
-        'billing_model': {'readonly': True},
-        'registration_timestamp': {'readonly': True},
-        'last_sync_timestamp': {'readonly': True},
-        'last_billing_timestamp': {'readonly': True},
-        'service_endpoint': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
+        "location": {"required": True},
+        "provisioning_state": {"readonly": True},
+        "status": {"readonly": True},
+        "cloud_id": {"readonly": True},
+        "reported_properties": {"readonly": True},
+        "trial_days_remaining": {"readonly": True},
+        "billing_model": {"readonly": True},
+        "registration_timestamp": {"readonly": True},
+        "last_sync_timestamp": {"readonly": True},
+        "last_billing_timestamp": {"readonly": True},
+        "service_endpoint": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'tags': {'key': 'tags', 'type': '{str}'},
-        'location': {'key': 'location', 'type': 'str'},
-        'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
-        'status': {'key': 'properties.status', 'type': 'str'},
-        'cloud_id': {'key': 'properties.cloudId', 'type': 'str'},
-        'cloud_management_endpoint': {'key': 'properties.cloudManagementEndpoint', 'type': 'str'},
-        'aad_client_id': {'key': 'properties.aadClientId', 'type': 'str'},
-        'aad_tenant_id': {'key': 'properties.aadTenantId', 'type': 'str'},
-        'aad_application_object_id': {'key': 'properties.aadApplicationObjectId', 'type': 'str'},
-        'aad_service_principal_object_id': {'key': 'properties.aadServicePrincipalObjectId', 'type': 'str'},
-        'desired_properties': {'key': 'properties.desiredProperties', 'type': 'ClusterDesiredProperties'},
-        'reported_properties': {'key': 'properties.reportedProperties', 'type': 'ClusterReportedProperties'},
-        'trial_days_remaining': {'key': 'properties.trialDaysRemaining', 'type': 'float'},
-        'billing_model': {'key': 'properties.billingModel', 'type': 'str'},
-        'registration_timestamp': {'key': 'properties.registrationTimestamp', 'type': 'iso-8601'},
-        'last_sync_timestamp': {'key': 'properties.lastSyncTimestamp', 'type': 'iso-8601'},
-        'last_billing_timestamp': {'key': 'properties.lastBillingTimestamp', 'type': 'iso-8601'},
-        'service_endpoint': {'key': 'properties.serviceEndpoint', 'type': 'str'},
-        'created_by': {'key': 'systemData.createdBy', 'type': 'str'},
-        'created_by_type': {'key': 'systemData.createdByType', 'type': 'str'},
-        'created_at': {'key': 'systemData.createdAt', 'type': 'iso-8601'},
-        'last_modified_by': {'key': 'systemData.lastModifiedBy', 'type': 'str'},
-        'last_modified_by_type': {'key': 'systemData.lastModifiedByType', 'type': 'str'},
-        'last_modified_at': {'key': 'systemData.lastModifiedAt', 'type': 'iso-8601'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "tags": {"key": "tags", "type": "{str}"},
+        "location": {"key": "location", "type": "str"},
+        "provisioning_state": {"key": "properties.provisioningState", "type": "str"},
+        "status": {"key": "properties.status", "type": "str"},
+        "cloud_id": {"key": "properties.cloudId", "type": "str"},
+        "cloud_management_endpoint": {"key": "properties.cloudManagementEndpoint", "type": "str"},
+        "aad_client_id": {"key": "properties.aadClientId", "type": "str"},
+        "aad_tenant_id": {"key": "properties.aadTenantId", "type": "str"},
+        "aad_application_object_id": {"key": "properties.aadApplicationObjectId", "type": "str"},
+        "aad_service_principal_object_id": {"key": "properties.aadServicePrincipalObjectId", "type": "str"},
+        "desired_properties": {"key": "properties.desiredProperties", "type": "ClusterDesiredProperties"},
+        "reported_properties": {"key": "properties.reportedProperties", "type": "ClusterReportedProperties"},
+        "trial_days_remaining": {"key": "properties.trialDaysRemaining", "type": "float"},
+        "billing_model": {"key": "properties.billingModel", "type": "str"},
+        "registration_timestamp": {"key": "properties.registrationTimestamp", "type": "iso-8601"},
+        "last_sync_timestamp": {"key": "properties.lastSyncTimestamp", "type": "iso-8601"},
+        "last_billing_timestamp": {"key": "properties.lastBillingTimestamp", "type": "iso-8601"},
+        "service_endpoint": {"key": "properties.serviceEndpoint", "type": "str"},
+        "created_by": {"key": "systemData.createdBy", "type": "str"},
+        "created_by_type": {"key": "systemData.createdByType", "type": "str"},
+        "created_at": {"key": "systemData.createdAt", "type": "iso-8601"},
+        "last_modified_by": {"key": "systemData.lastModifiedBy", "type": "str"},
+        "last_modified_by_type": {"key": "systemData.lastModifiedByType", "type": "str"},
+        "last_modified_at": {"key": "systemData.lastModifiedAt", "type": "iso-8601"},
     }
 
-    def __init__(
+    def __init__(  # pylint: disable=too-many-locals
         self,
         *,
         location: str,
@@ -553,19 +534,19 @@ class Cluster(TrackedResource):
         aad_tenant_id: Optional[str] = None,
         aad_application_object_id: Optional[str] = None,
         aad_service_principal_object_id: Optional[str] = None,
-        desired_properties: Optional["ClusterDesiredProperties"] = None,
+        desired_properties: Optional["_models.ClusterDesiredProperties"] = None,
         created_by: Optional[str] = None,
-        created_by_type: Optional[Union[str, "CreatedByType"]] = None,
+        created_by_type: Optional[Union[str, "_models.CreatedByType"]] = None,
         created_at: Optional[datetime.datetime] = None,
         last_modified_by: Optional[str] = None,
-        last_modified_by_type: Optional[Union[str, "CreatedByType"]] = None,
+        last_modified_by_type: Optional[Union[str, "_models.CreatedByType"]] = None,
         last_modified_at: Optional[datetime.datetime] = None,
         **kwargs
     ):
         """
-        :keyword tags: A set of tags. Resource tags.
+        :keyword tags: Resource tags.
         :paramtype tags: dict[str, str]
-        :keyword location: Required. The geo-location where the resource lives.
+        :keyword location: The geo-location where the resource lives. Required.
         :paramtype location: str
         :keyword cloud_management_endpoint: Endpoint configured for management from the Azure portal.
         :paramtype cloud_management_endpoint: str
@@ -581,20 +562,20 @@ class Cluster(TrackedResource):
         :paramtype desired_properties: ~azure.mgmt.azurestackhci.models.ClusterDesiredProperties
         :keyword created_by: The identity that created the resource.
         :paramtype created_by: str
-        :keyword created_by_type: The type of identity that created the resource. Possible values
-         include: "User", "Application", "ManagedIdentity", "Key".
+        :keyword created_by_type: The type of identity that created the resource. Known values are:
+         "User", "Application", "ManagedIdentity", and "Key".
         :paramtype created_by_type: str or ~azure.mgmt.azurestackhci.models.CreatedByType
         :keyword created_at: The timestamp of resource creation (UTC).
         :paramtype created_at: ~datetime.datetime
         :keyword last_modified_by: The identity that last modified the resource.
         :paramtype last_modified_by: str
-        :keyword last_modified_by_type: The type of identity that last modified the resource. Possible
-         values include: "User", "Application", "ManagedIdentity", "Key".
+        :keyword last_modified_by_type: The type of identity that last modified the resource. Known
+         values are: "User", "Application", "ManagedIdentity", and "Key".
         :paramtype last_modified_by_type: str or ~azure.mgmt.azurestackhci.models.CreatedByType
         :keyword last_modified_at: The timestamp of resource last modification (UTC).
         :paramtype last_modified_at: ~datetime.datetime
         """
-        super(Cluster, self).__init__(tags=tags, location=location, **kwargs)
+        super().__init__(tags=tags, location=location, **kwargs)
         self.provisioning_state = None
         self.status = None
         self.cloud_id = None
@@ -619,45 +600,45 @@ class Cluster(TrackedResource):
         self.last_modified_at = last_modified_at
 
 
-class ClusterDesiredProperties(msrest.serialization.Model):
+class ClusterDesiredProperties(_serialization.Model):
     """Desired properties of the cluster.
 
-    :ivar windows_server_subscription: Desired state of Windows Server Subscription. Possible
-     values include: "Disabled", "Enabled".
+    :ivar windows_server_subscription: Desired state of Windows Server Subscription. Known values
+     are: "Disabled" and "Enabled".
     :vartype windows_server_subscription: str or
      ~azure.mgmt.azurestackhci.models.WindowsServerSubscription
-    :ivar diagnostic_level: Desired level of diagnostic data emitted by the cluster. Possible
-     values include: "Off", "Basic", "Enhanced".
+    :ivar diagnostic_level: Desired level of diagnostic data emitted by the cluster. Known values
+     are: "Off", "Basic", and "Enhanced".
     :vartype diagnostic_level: str or ~azure.mgmt.azurestackhci.models.DiagnosticLevel
     """
 
     _attribute_map = {
-        'windows_server_subscription': {'key': 'windowsServerSubscription', 'type': 'str'},
-        'diagnostic_level': {'key': 'diagnosticLevel', 'type': 'str'},
+        "windows_server_subscription": {"key": "windowsServerSubscription", "type": "str"},
+        "diagnostic_level": {"key": "diagnosticLevel", "type": "str"},
     }
 
     def __init__(
         self,
         *,
-        windows_server_subscription: Optional[Union[str, "WindowsServerSubscription"]] = None,
-        diagnostic_level: Optional[Union[str, "DiagnosticLevel"]] = None,
+        windows_server_subscription: Optional[Union[str, "_models.WindowsServerSubscription"]] = None,
+        diagnostic_level: Optional[Union[str, "_models.DiagnosticLevel"]] = None,
         **kwargs
     ):
         """
-        :keyword windows_server_subscription: Desired state of Windows Server Subscription. Possible
-         values include: "Disabled", "Enabled".
+        :keyword windows_server_subscription: Desired state of Windows Server Subscription. Known
+         values are: "Disabled" and "Enabled".
         :paramtype windows_server_subscription: str or
          ~azure.mgmt.azurestackhci.models.WindowsServerSubscription
-        :keyword diagnostic_level: Desired level of diagnostic data emitted by the cluster. Possible
-         values include: "Off", "Basic", "Enhanced".
+        :keyword diagnostic_level: Desired level of diagnostic data emitted by the cluster. Known
+         values are: "Off", "Basic", and "Enhanced".
         :paramtype diagnostic_level: str or ~azure.mgmt.azurestackhci.models.DiagnosticLevel
         """
-        super(ClusterDesiredProperties, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.windows_server_subscription = windows_server_subscription
         self.diagnostic_level = diagnostic_level
 
 
-class ClusterIdentityResponse(msrest.serialization.Model):
+class ClusterIdentityResponse(_serialization.Model):
     """Cluster Identity details.
 
     :ivar aad_client_id:
@@ -671,10 +652,10 @@ class ClusterIdentityResponse(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'aad_client_id': {'key': 'properties.aadClientId', 'type': 'str'},
-        'aad_tenant_id': {'key': 'properties.aadTenantId', 'type': 'str'},
-        'aad_service_principal_object_id': {'key': 'properties.aadServicePrincipalObjectId', 'type': 'str'},
-        'aad_application_object_id': {'key': 'properties.aadApplicationObjectId', 'type': 'str'},
+        "aad_client_id": {"key": "properties.aadClientId", "type": "str"},
+        "aad_tenant_id": {"key": "properties.aadTenantId", "type": "str"},
+        "aad_service_principal_object_id": {"key": "properties.aadServicePrincipalObjectId", "type": "str"},
+        "aad_application_object_id": {"key": "properties.aadApplicationObjectId", "type": "str"},
     }
 
     def __init__(
@@ -696,14 +677,14 @@ class ClusterIdentityResponse(msrest.serialization.Model):
         :keyword aad_application_object_id:
         :paramtype aad_application_object_id: str
         """
-        super(ClusterIdentityResponse, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.aad_client_id = aad_client_id
         self.aad_tenant_id = aad_tenant_id
         self.aad_service_principal_object_id = aad_service_principal_object_id
         self.aad_application_object_id = aad_application_object_id
 
 
-class ClusterList(msrest.serialization.Model):
+class ClusterList(_serialization.Model):
     """List of clusters.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -715,30 +696,25 @@ class ClusterList(msrest.serialization.Model):
     """
 
     _validation = {
-        'next_link': {'readonly': True},
+        "next_link": {"readonly": True},
     }
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[Cluster]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[Cluster]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        *,
-        value: Optional[List["Cluster"]] = None,
-        **kwargs
-    ):
+    def __init__(self, *, value: Optional[List["_models.Cluster"]] = None, **kwargs):
         """
         :keyword value: List of clusters.
         :paramtype value: list[~azure.mgmt.azurestackhci.models.Cluster]
         """
-        super(ClusterList, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.value = value
         self.next_link = None
 
 
-class ClusterNode(msrest.serialization.Model):
+class ClusterNode(_serialization.Model):
     """Cluster node details.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -747,8 +723,8 @@ class ClusterNode(msrest.serialization.Model):
     :vartype name: str
     :ivar id: Id of the node in the cluster.
     :vartype id: float
-    :ivar windows_server_subscription: State of Windows Server Subscription. Possible values
-     include: "Disabled", "Enabled".
+    :ivar windows_server_subscription: State of Windows Server Subscription. Known values are:
+     "Disabled" and "Enabled".
     :vartype windows_server_subscription: str or
      ~azure.mgmt.azurestackhci.models.WindowsServerSubscription
     :ivar manufacturer: Manufacturer of the cluster node hardware.
@@ -768,38 +744,34 @@ class ClusterNode(msrest.serialization.Model):
     """
 
     _validation = {
-        'name': {'readonly': True},
-        'id': {'readonly': True},
-        'windows_server_subscription': {'readonly': True},
-        'manufacturer': {'readonly': True},
-        'model': {'readonly': True},
-        'os_name': {'readonly': True},
-        'os_version': {'readonly': True},
-        'serial_number': {'readonly': True},
-        'core_count': {'readonly': True},
-        'memory_in_gi_b': {'readonly': True},
+        "name": {"readonly": True},
+        "id": {"readonly": True},
+        "windows_server_subscription": {"readonly": True},
+        "manufacturer": {"readonly": True},
+        "model": {"readonly": True},
+        "os_name": {"readonly": True},
+        "os_version": {"readonly": True},
+        "serial_number": {"readonly": True},
+        "core_count": {"readonly": True},
+        "memory_in_gi_b": {"readonly": True},
     }
 
     _attribute_map = {
-        'name': {'key': 'name', 'type': 'str'},
-        'id': {'key': 'id', 'type': 'float'},
-        'windows_server_subscription': {'key': 'windowsServerSubscription', 'type': 'str'},
-        'manufacturer': {'key': 'manufacturer', 'type': 'str'},
-        'model': {'key': 'model', 'type': 'str'},
-        'os_name': {'key': 'osName', 'type': 'str'},
-        'os_version': {'key': 'osVersion', 'type': 'str'},
-        'serial_number': {'key': 'serialNumber', 'type': 'str'},
-        'core_count': {'key': 'coreCount', 'type': 'float'},
-        'memory_in_gi_b': {'key': 'memoryInGiB', 'type': 'float'},
+        "name": {"key": "name", "type": "str"},
+        "id": {"key": "id", "type": "float"},
+        "windows_server_subscription": {"key": "windowsServerSubscription", "type": "str"},
+        "manufacturer": {"key": "manufacturer", "type": "str"},
+        "model": {"key": "model", "type": "str"},
+        "os_name": {"key": "osName", "type": "str"},
+        "os_version": {"key": "osVersion", "type": "str"},
+        "serial_number": {"key": "serialNumber", "type": "str"},
+        "core_count": {"key": "coreCount", "type": "float"},
+        "memory_in_gi_b": {"key": "memoryInGiB", "type": "float"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
-        """
-        """
-        super(ClusterNode, self).__init__(**kwargs)
+    def __init__(self, **kwargs):
+        """ """
+        super().__init__(**kwargs)
         self.name = None
         self.id = None
         self.windows_server_subscription = None
@@ -812,10 +784,10 @@ class ClusterNode(msrest.serialization.Model):
         self.memory_in_gi_b = None
 
 
-class ClusterPatch(msrest.serialization.Model):
+class ClusterPatch(_serialization.Model):
     """Cluster details to update.
 
-    :ivar tags: A set of tags. Resource tags.
+    :ivar tags: Resource tags.
     :vartype tags: dict[str, str]
     :ivar cloud_management_endpoint: Endpoint configured for management from the Azure portal.
     :vartype cloud_management_endpoint: str
@@ -828,11 +800,11 @@ class ClusterPatch(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'tags': {'key': 'tags', 'type': '{str}'},
-        'cloud_management_endpoint': {'key': 'properties.cloudManagementEndpoint', 'type': 'str'},
-        'aad_client_id': {'key': 'properties.aadClientId', 'type': 'str'},
-        'aad_tenant_id': {'key': 'properties.aadTenantId', 'type': 'str'},
-        'desired_properties': {'key': 'properties.desiredProperties', 'type': 'ClusterDesiredProperties'},
+        "tags": {"key": "tags", "type": "{str}"},
+        "cloud_management_endpoint": {"key": "properties.cloudManagementEndpoint", "type": "str"},
+        "aad_client_id": {"key": "properties.aadClientId", "type": "str"},
+        "aad_tenant_id": {"key": "properties.aadTenantId", "type": "str"},
+        "desired_properties": {"key": "properties.desiredProperties", "type": "ClusterDesiredProperties"},
     }
 
     def __init__(
@@ -842,11 +814,11 @@ class ClusterPatch(msrest.serialization.Model):
         cloud_management_endpoint: Optional[str] = None,
         aad_client_id: Optional[str] = None,
         aad_tenant_id: Optional[str] = None,
-        desired_properties: Optional["ClusterDesiredProperties"] = None,
+        desired_properties: Optional["_models.ClusterDesiredProperties"] = None,
         **kwargs
     ):
         """
-        :keyword tags: A set of tags. Resource tags.
+        :keyword tags: Resource tags.
         :paramtype tags: dict[str, str]
         :keyword cloud_management_endpoint: Endpoint configured for management from the Azure portal.
         :paramtype cloud_management_endpoint: str
@@ -857,7 +829,7 @@ class ClusterPatch(msrest.serialization.Model):
         :keyword desired_properties: Desired properties of the cluster.
         :paramtype desired_properties: ~azure.mgmt.azurestackhci.models.ClusterDesiredProperties
         """
-        super(ClusterPatch, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.tags = tags
         self.cloud_management_endpoint = cloud_management_endpoint
         self.aad_client_id = aad_client_id
@@ -865,7 +837,7 @@ class ClusterPatch(msrest.serialization.Model):
         self.desired_properties = desired_properties
 
 
-class ClusterReportedProperties(msrest.serialization.Model):
+class ClusterReportedProperties(_serialization.Model):
     """Properties reported by cluster agent.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -880,45 +852,40 @@ class ClusterReportedProperties(msrest.serialization.Model):
     :vartype nodes: list[~azure.mgmt.azurestackhci.models.ClusterNode]
     :ivar last_updated: Last time the cluster reported the data.
     :vartype last_updated: ~datetime.datetime
-    :ivar imds_attestation: IMDS attestation status of the cluster. Possible values include:
-     "Disabled", "Enabled".
+    :ivar imds_attestation: IMDS attestation status of the cluster. Known values are: "Disabled"
+     and "Enabled".
     :vartype imds_attestation: str or ~azure.mgmt.azurestackhci.models.ImdsAttestation
-    :ivar diagnostic_level: Level of diagnostic data emitted by the cluster. Possible values
-     include: "Off", "Basic", "Enhanced".
+    :ivar diagnostic_level: Level of diagnostic data emitted by the cluster. Known values are:
+     "Off", "Basic", and "Enhanced".
     :vartype diagnostic_level: str or ~azure.mgmt.azurestackhci.models.DiagnosticLevel
     """
 
     _validation = {
-        'cluster_name': {'readonly': True},
-        'cluster_id': {'readonly': True},
-        'cluster_version': {'readonly': True},
-        'nodes': {'readonly': True},
-        'last_updated': {'readonly': True},
-        'imds_attestation': {'readonly': True},
+        "cluster_name": {"readonly": True},
+        "cluster_id": {"readonly": True},
+        "cluster_version": {"readonly": True},
+        "nodes": {"readonly": True},
+        "last_updated": {"readonly": True},
+        "imds_attestation": {"readonly": True},
     }
 
     _attribute_map = {
-        'cluster_name': {'key': 'clusterName', 'type': 'str'},
-        'cluster_id': {'key': 'clusterId', 'type': 'str'},
-        'cluster_version': {'key': 'clusterVersion', 'type': 'str'},
-        'nodes': {'key': 'nodes', 'type': '[ClusterNode]'},
-        'last_updated': {'key': 'lastUpdated', 'type': 'iso-8601'},
-        'imds_attestation': {'key': 'imdsAttestation', 'type': 'str'},
-        'diagnostic_level': {'key': 'diagnosticLevel', 'type': 'str'},
+        "cluster_name": {"key": "clusterName", "type": "str"},
+        "cluster_id": {"key": "clusterId", "type": "str"},
+        "cluster_version": {"key": "clusterVersion", "type": "str"},
+        "nodes": {"key": "nodes", "type": "[ClusterNode]"},
+        "last_updated": {"key": "lastUpdated", "type": "iso-8601"},
+        "imds_attestation": {"key": "imdsAttestation", "type": "str"},
+        "diagnostic_level": {"key": "diagnosticLevel", "type": "str"},
     }
 
-    def __init__(
-        self,
-        *,
-        diagnostic_level: Optional[Union[str, "DiagnosticLevel"]] = None,
-        **kwargs
-    ):
+    def __init__(self, *, diagnostic_level: Optional[Union[str, "_models.DiagnosticLevel"]] = None, **kwargs):
         """
-        :keyword diagnostic_level: Level of diagnostic data emitted by the cluster. Possible values
-         include: "Off", "Basic", "Enhanced".
+        :keyword diagnostic_level: Level of diagnostic data emitted by the cluster. Known values are:
+         "Off", "Basic", and "Enhanced".
         :paramtype diagnostic_level: str or ~azure.mgmt.azurestackhci.models.DiagnosticLevel
         """
-        super(ClusterReportedProperties, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.cluster_name = None
         self.cluster_id = None
         self.cluster_version = None
@@ -928,7 +895,7 @@ class ClusterReportedProperties(msrest.serialization.Model):
         self.diagnostic_level = diagnostic_level
 
 
-class ErrorAdditionalInfo(msrest.serialization.Model):
+class ErrorAdditionalInfo(_serialization.Model):
     """The resource management error additional info.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -936,31 +903,27 @@ class ErrorAdditionalInfo(msrest.serialization.Model):
     :ivar type: The additional info type.
     :vartype type: str
     :ivar info: The additional info.
-    :vartype info: any
+    :vartype info: JSON
     """
 
     _validation = {
-        'type': {'readonly': True},
-        'info': {'readonly': True},
+        "type": {"readonly": True},
+        "info": {"readonly": True},
     }
 
     _attribute_map = {
-        'type': {'key': 'type', 'type': 'str'},
-        'info': {'key': 'info', 'type': 'object'},
+        "type": {"key": "type", "type": "str"},
+        "info": {"key": "info", "type": "object"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
-        """
-        """
-        super(ErrorAdditionalInfo, self).__init__(**kwargs)
+    def __init__(self, **kwargs):
+        """ """
+        super().__init__(**kwargs)
         self.type = None
         self.info = None
 
 
-class ErrorDetail(msrest.serialization.Model):
+class ErrorDetail(_serialization.Model):
     """The error detail.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -978,28 +941,24 @@ class ErrorDetail(msrest.serialization.Model):
     """
 
     _validation = {
-        'code': {'readonly': True},
-        'message': {'readonly': True},
-        'target': {'readonly': True},
-        'details': {'readonly': True},
-        'additional_info': {'readonly': True},
+        "code": {"readonly": True},
+        "message": {"readonly": True},
+        "target": {"readonly": True},
+        "details": {"readonly": True},
+        "additional_info": {"readonly": True},
     }
 
     _attribute_map = {
-        'code': {'key': 'code', 'type': 'str'},
-        'message': {'key': 'message', 'type': 'str'},
-        'target': {'key': 'target', 'type': 'str'},
-        'details': {'key': 'details', 'type': '[ErrorDetail]'},
-        'additional_info': {'key': 'additionalInfo', 'type': '[ErrorAdditionalInfo]'},
+        "code": {"key": "code", "type": "str"},
+        "message": {"key": "message", "type": "str"},
+        "target": {"key": "target", "type": "str"},
+        "details": {"key": "details", "type": "[ErrorDetail]"},
+        "additional_info": {"key": "additionalInfo", "type": "[ErrorAdditionalInfo]"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
-        """
-        """
-        super(ErrorDetail, self).__init__(**kwargs)
+    def __init__(self, **kwargs):
+        """ """
+        super().__init__(**kwargs)
         self.code = None
         self.message = None
         self.target = None
@@ -1007,7 +966,7 @@ class ErrorDetail(msrest.serialization.Model):
         self.additional_info = None
 
 
-class ErrorResponse(msrest.serialization.Model):
+class ErrorResponse(_serialization.Model):
     """Common error response for all Azure Resource Manager APIs to return error details for failed operations. (This also follows the OData error response format.).
 
     :ivar error: The error object.
@@ -1015,24 +974,19 @@ class ErrorResponse(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'error': {'key': 'error', 'type': 'ErrorDetail'},
+        "error": {"key": "error", "type": "ErrorDetail"},
     }
 
-    def __init__(
-        self,
-        *,
-        error: Optional["ErrorDetail"] = None,
-        **kwargs
-    ):
+    def __init__(self, *, error: Optional["_models.ErrorDetail"] = None, **kwargs):
         """
         :keyword error: The error object.
         :paramtype error: ~azure.mgmt.azurestackhci.models.ErrorDetail
         """
-        super(ErrorResponse, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.error = error
 
 
-class Extension(ProxyResource):
+class Extension(ProxyResource):  # pylint: disable=too-many-instance-attributes
     """Details of a particular extension in HCI Cluster.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -1045,13 +999,13 @@ class Extension(ProxyResource):
     :ivar type: The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or
      "Microsoft.Storage/storageAccounts".
     :vartype type: str
-    :ivar provisioning_state: Provisioning state of the Extension proxy resource. Possible values
-     include: "Succeeded", "Failed", "Canceled", "Accepted", "Provisioning".
+    :ivar provisioning_state: Provisioning state of the Extension proxy resource. Known values are:
+     "Succeeded", "Failed", "Canceled", "Accepted", and "Provisioning".
     :vartype provisioning_state: str or ~azure.mgmt.azurestackhci.models.ProvisioningState
     :ivar aggregate_state: Aggregate state of Arc Extensions across the nodes in this HCI cluster.
-     Possible values include: "NotSpecified", "Error", "Succeeded", "Canceled", "Failed",
-     "Connected", "Disconnected", "Deleted", "Creating", "Updating", "Deleting", "Moving",
-     "PartiallySucceeded", "PartiallyConnected", "InProgress".
+     Known values are: "NotSpecified", "Error", "Succeeded", "Canceled", "Failed", "Connected",
+     "Disconnected", "Deleted", "Creating", "Updating", "Deleting", "Moving", "PartiallySucceeded",
+     "PartiallyConnected", and "InProgress".
     :vartype aggregate_state: str or ~azure.mgmt.azurestackhci.models.ExtensionAggregateState
     :ivar per_node_extension_details: State of Arc Extension in each of the nodes.
     :vartype per_node_extension_details:
@@ -1071,54 +1025,54 @@ class Extension(ProxyResource):
      upgrade minor versions unless redeployed, even with this property set to true.
     :vartype auto_upgrade_minor_version: bool
     :ivar settings: Json formatted public settings for the extension.
-    :vartype settings: any
+    :vartype settings: JSON
     :ivar protected_settings: Protected settings (may contain secrets).
-    :vartype protected_settings: any
+    :vartype protected_settings: JSON
     :ivar created_by: The identity that created the resource.
     :vartype created_by: str
-    :ivar created_by_type: The type of identity that created the resource. Possible values include:
-     "User", "Application", "ManagedIdentity", "Key".
+    :ivar created_by_type: The type of identity that created the resource. Known values are:
+     "User", "Application", "ManagedIdentity", and "Key".
     :vartype created_by_type: str or ~azure.mgmt.azurestackhci.models.CreatedByType
     :ivar created_at: The timestamp of resource creation (UTC).
     :vartype created_at: ~datetime.datetime
     :ivar last_modified_by: The identity that last modified the resource.
     :vartype last_modified_by: str
-    :ivar last_modified_by_type: The type of identity that last modified the resource. Possible
-     values include: "User", "Application", "ManagedIdentity", "Key".
+    :ivar last_modified_by_type: The type of identity that last modified the resource. Known values
+     are: "User", "Application", "ManagedIdentity", and "Key".
     :vartype last_modified_by_type: str or ~azure.mgmt.azurestackhci.models.CreatedByType
     :ivar last_modified_at: The timestamp of resource last modification (UTC).
     :vartype last_modified_at: ~datetime.datetime
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'provisioning_state': {'readonly': True},
-        'aggregate_state': {'readonly': True},
-        'per_node_extension_details': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
+        "provisioning_state": {"readonly": True},
+        "aggregate_state": {"readonly": True},
+        "per_node_extension_details": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
-        'aggregate_state': {'key': 'properties.aggregateState', 'type': 'str'},
-        'per_node_extension_details': {'key': 'properties.perNodeExtensionDetails', 'type': '[PerNodeExtensionState]'},
-        'force_update_tag': {'key': 'properties.extensionParameters.forceUpdateTag', 'type': 'str'},
-        'publisher': {'key': 'properties.extensionParameters.publisher', 'type': 'str'},
-        'type_properties_extension_parameters_type': {'key': 'properties.extensionParameters.type', 'type': 'str'},
-        'type_handler_version': {'key': 'properties.extensionParameters.typeHandlerVersion', 'type': 'str'},
-        'auto_upgrade_minor_version': {'key': 'properties.extensionParameters.autoUpgradeMinorVersion', 'type': 'bool'},
-        'settings': {'key': 'properties.extensionParameters.settings', 'type': 'object'},
-        'protected_settings': {'key': 'properties.extensionParameters.protectedSettings', 'type': 'object'},
-        'created_by': {'key': 'systemData.createdBy', 'type': 'str'},
-        'created_by_type': {'key': 'systemData.createdByType', 'type': 'str'},
-        'created_at': {'key': 'systemData.createdAt', 'type': 'iso-8601'},
-        'last_modified_by': {'key': 'systemData.lastModifiedBy', 'type': 'str'},
-        'last_modified_by_type': {'key': 'systemData.lastModifiedByType', 'type': 'str'},
-        'last_modified_at': {'key': 'systemData.lastModifiedAt', 'type': 'iso-8601'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "provisioning_state": {"key": "properties.provisioningState", "type": "str"},
+        "aggregate_state": {"key": "properties.aggregateState", "type": "str"},
+        "per_node_extension_details": {"key": "properties.perNodeExtensionDetails", "type": "[PerNodeExtensionState]"},
+        "force_update_tag": {"key": "properties.extensionParameters.forceUpdateTag", "type": "str"},
+        "publisher": {"key": "properties.extensionParameters.publisher", "type": "str"},
+        "type_properties_extension_parameters_type": {"key": "properties.extensionParameters.type", "type": "str"},
+        "type_handler_version": {"key": "properties.extensionParameters.typeHandlerVersion", "type": "str"},
+        "auto_upgrade_minor_version": {"key": "properties.extensionParameters.autoUpgradeMinorVersion", "type": "bool"},
+        "settings": {"key": "properties.extensionParameters.settings", "type": "object"},
+        "protected_settings": {"key": "properties.extensionParameters.protectedSettings", "type": "object"},
+        "created_by": {"key": "systemData.createdBy", "type": "str"},
+        "created_by_type": {"key": "systemData.createdByType", "type": "str"},
+        "created_at": {"key": "systemData.createdAt", "type": "iso-8601"},
+        "last_modified_by": {"key": "systemData.lastModifiedBy", "type": "str"},
+        "last_modified_by_type": {"key": "systemData.lastModifiedByType", "type": "str"},
+        "last_modified_at": {"key": "systemData.lastModifiedAt", "type": "iso-8601"},
     }
 
     def __init__(
@@ -1129,13 +1083,13 @@ class Extension(ProxyResource):
         type_properties_extension_parameters_type: Optional[str] = None,
         type_handler_version: Optional[str] = None,
         auto_upgrade_minor_version: Optional[bool] = None,
-        settings: Optional[Any] = None,
-        protected_settings: Optional[Any] = None,
+        settings: Optional[JSON] = None,
+        protected_settings: Optional[JSON] = None,
         created_by: Optional[str] = None,
-        created_by_type: Optional[Union[str, "CreatedByType"]] = None,
+        created_by_type: Optional[Union[str, "_models.CreatedByType"]] = None,
         created_at: Optional[datetime.datetime] = None,
         last_modified_by: Optional[str] = None,
-        last_modified_by_type: Optional[Union[str, "CreatedByType"]] = None,
+        last_modified_by_type: Optional[Union[str, "_models.CreatedByType"]] = None,
         last_modified_at: Optional[datetime.datetime] = None,
         **kwargs
     ):
@@ -1155,25 +1109,25 @@ class Extension(ProxyResource):
          upgrade minor versions unless redeployed, even with this property set to true.
         :paramtype auto_upgrade_minor_version: bool
         :keyword settings: Json formatted public settings for the extension.
-        :paramtype settings: any
+        :paramtype settings: JSON
         :keyword protected_settings: Protected settings (may contain secrets).
-        :paramtype protected_settings: any
+        :paramtype protected_settings: JSON
         :keyword created_by: The identity that created the resource.
         :paramtype created_by: str
-        :keyword created_by_type: The type of identity that created the resource. Possible values
-         include: "User", "Application", "ManagedIdentity", "Key".
+        :keyword created_by_type: The type of identity that created the resource. Known values are:
+         "User", "Application", "ManagedIdentity", and "Key".
         :paramtype created_by_type: str or ~azure.mgmt.azurestackhci.models.CreatedByType
         :keyword created_at: The timestamp of resource creation (UTC).
         :paramtype created_at: ~datetime.datetime
         :keyword last_modified_by: The identity that last modified the resource.
         :paramtype last_modified_by: str
-        :keyword last_modified_by_type: The type of identity that last modified the resource. Possible
-         values include: "User", "Application", "ManagedIdentity", "Key".
+        :keyword last_modified_by_type: The type of identity that last modified the resource. Known
+         values are: "User", "Application", "ManagedIdentity", and "Key".
         :paramtype last_modified_by_type: str or ~azure.mgmt.azurestackhci.models.CreatedByType
         :keyword last_modified_at: The timestamp of resource last modification (UTC).
         :paramtype last_modified_at: ~datetime.datetime
         """
-        super(Extension, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.provisioning_state = None
         self.aggregate_state = None
         self.per_node_extension_details = None
@@ -1192,7 +1146,7 @@ class Extension(ProxyResource):
         self.last_modified_at = last_modified_at
 
 
-class ExtensionList(msrest.serialization.Model):
+class ExtensionList(_serialization.Model):
     """List of Extensions in HCI cluster.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -1204,27 +1158,23 @@ class ExtensionList(msrest.serialization.Model):
     """
 
     _validation = {
-        'value': {'readonly': True},
-        'next_link': {'readonly': True},
+        "value": {"readonly": True},
+        "next_link": {"readonly": True},
     }
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[Extension]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[Extension]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
-        """
-        """
-        super(ExtensionList, self).__init__(**kwargs)
+    def __init__(self, **kwargs):
+        """ """
+        super().__init__(**kwargs)
         self.value = None
         self.next_link = None
 
 
-class Operation(msrest.serialization.Model):
+class Operation(_serialization.Model):
     """Details of a REST API operation, returned from the Resource Provider Operations API.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -1238,40 +1188,35 @@ class Operation(msrest.serialization.Model):
     :ivar display: Localized display information for this particular operation.
     :vartype display: ~azure.mgmt.azurestackhci.models.OperationDisplay
     :ivar origin: The intended executor of the operation; as in Resource Based Access Control
-     (RBAC) and audit logs UX. Default value is "user,system". Possible values include: "user",
-     "system", "user,system".
+     (RBAC) and audit logs UX. Default value is "user,system". Known values are: "user", "system",
+     and "user,system".
     :vartype origin: str or ~azure.mgmt.azurestackhci.models.Origin
     :ivar action_type: Enum. Indicates the action type. "Internal" refers to actions that are for
-     internal only APIs. Possible values include: "Internal".
+     internal only APIs. "Internal"
     :vartype action_type: str or ~azure.mgmt.azurestackhci.models.ActionType
     """
 
     _validation = {
-        'name': {'readonly': True},
-        'is_data_action': {'readonly': True},
-        'origin': {'readonly': True},
-        'action_type': {'readonly': True},
+        "name": {"readonly": True},
+        "is_data_action": {"readonly": True},
+        "origin": {"readonly": True},
+        "action_type": {"readonly": True},
     }
 
     _attribute_map = {
-        'name': {'key': 'name', 'type': 'str'},
-        'is_data_action': {'key': 'isDataAction', 'type': 'bool'},
-        'display': {'key': 'display', 'type': 'OperationDisplay'},
-        'origin': {'key': 'origin', 'type': 'str'},
-        'action_type': {'key': 'actionType', 'type': 'str'},
+        "name": {"key": "name", "type": "str"},
+        "is_data_action": {"key": "isDataAction", "type": "bool"},
+        "display": {"key": "display", "type": "OperationDisplay"},
+        "origin": {"key": "origin", "type": "str"},
+        "action_type": {"key": "actionType", "type": "str"},
     }
 
-    def __init__(
-        self,
-        *,
-        display: Optional["OperationDisplay"] = None,
-        **kwargs
-    ):
+    def __init__(self, *, display: Optional["_models.OperationDisplay"] = None, **kwargs):
         """
         :keyword display: Localized display information for this particular operation.
         :paramtype display: ~azure.mgmt.azurestackhci.models.OperationDisplay
         """
-        super(Operation, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.name = None
         self.is_data_action = None
         self.display = display
@@ -1279,7 +1224,7 @@ class Operation(msrest.serialization.Model):
         self.action_type = None
 
 
-class OperationDisplay(msrest.serialization.Model):
+class OperationDisplay(_serialization.Model):
     """Localized display information for this particular operation.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -1299,33 +1244,29 @@ class OperationDisplay(msrest.serialization.Model):
     """
 
     _validation = {
-        'provider': {'readonly': True},
-        'resource': {'readonly': True},
-        'operation': {'readonly': True},
-        'description': {'readonly': True},
+        "provider": {"readonly": True},
+        "resource": {"readonly": True},
+        "operation": {"readonly": True},
+        "description": {"readonly": True},
     }
 
     _attribute_map = {
-        'provider': {'key': 'provider', 'type': 'str'},
-        'resource': {'key': 'resource', 'type': 'str'},
-        'operation': {'key': 'operation', 'type': 'str'},
-        'description': {'key': 'description', 'type': 'str'},
+        "provider": {"key": "provider", "type": "str"},
+        "resource": {"key": "resource", "type": "str"},
+        "operation": {"key": "operation", "type": "str"},
+        "description": {"key": "description", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
-        """
-        """
-        super(OperationDisplay, self).__init__(**kwargs)
+    def __init__(self, **kwargs):
+        """ """
+        super().__init__(**kwargs)
         self.provider = None
         self.resource = None
         self.operation = None
         self.description = None
 
 
-class OperationListResult(msrest.serialization.Model):
+class OperationListResult(_serialization.Model):
     """A list of REST API operations supported by an Azure Resource Provider. It contains an URL link to get the next set of results.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -1337,27 +1278,23 @@ class OperationListResult(msrest.serialization.Model):
     """
 
     _validation = {
-        'value': {'readonly': True},
-        'next_link': {'readonly': True},
+        "value": {"readonly": True},
+        "next_link": {"readonly": True},
     }
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[Operation]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[Operation]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
-        """
-        """
-        super(OperationListResult, self).__init__(**kwargs)
+    def __init__(self, **kwargs):
+        """ """
+        super().__init__(**kwargs)
         self.value = None
         self.next_link = None
 
 
-class PasswordCredential(msrest.serialization.Model):
+class PasswordCredential(_serialization.Model):
     """PasswordCredential.
 
     :ivar secret_text:
@@ -1371,10 +1308,10 @@ class PasswordCredential(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'secret_text': {'key': 'secretText', 'type': 'str'},
-        'key_id': {'key': 'keyId', 'type': 'str'},
-        'start_date_time': {'key': 'startDateTime', 'type': 'iso-8601'},
-        'end_date_time': {'key': 'endDateTime', 'type': 'iso-8601'},
+        "secret_text": {"key": "secretText", "type": "str"},
+        "key_id": {"key": "keyId", "type": "str"},
+        "start_date_time": {"key": "startDateTime", "type": "iso-8601"},
+        "end_date_time": {"key": "endDateTime", "type": "iso-8601"},
     }
 
     def __init__(
@@ -1396,14 +1333,14 @@ class PasswordCredential(msrest.serialization.Model):
         :keyword end_date_time:
         :paramtype end_date_time: ~datetime.datetime
         """
-        super(PasswordCredential, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.secret_text = secret_text
         self.key_id = key_id
         self.start_date_time = start_date_time
         self.end_date_time = end_date_time
 
 
-class PerNodeExtensionState(msrest.serialization.Model):
+class PerNodeExtensionState(_serialization.Model):
     """Status of Arc Extension for a particular node in HCI Cluster.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -1412,37 +1349,33 @@ class PerNodeExtensionState(msrest.serialization.Model):
     :vartype name: str
     :ivar extension: Fully qualified resource ID for the particular Arc Extension on this node.
     :vartype extension: str
-    :ivar state: State of Arc Extension in this node. Possible values include: "NotSpecified",
-     "Error", "Succeeded", "Canceled", "Failed", "Connected", "Disconnected", "Deleted", "Creating",
-     "Updating", "Deleting", "Moving".
+    :ivar state: State of Arc Extension in this node. Known values are: "NotSpecified", "Error",
+     "Succeeded", "Canceled", "Failed", "Connected", "Disconnected", "Deleted", "Creating",
+     "Updating", "Deleting", and "Moving".
     :vartype state: str or ~azure.mgmt.azurestackhci.models.NodeExtensionState
     """
 
     _validation = {
-        'name': {'readonly': True},
-        'extension': {'readonly': True},
-        'state': {'readonly': True},
+        "name": {"readonly": True},
+        "extension": {"readonly": True},
+        "state": {"readonly": True},
     }
 
     _attribute_map = {
-        'name': {'key': 'name', 'type': 'str'},
-        'extension': {'key': 'extension', 'type': 'str'},
-        'state': {'key': 'state', 'type': 'str'},
+        "name": {"key": "name", "type": "str"},
+        "extension": {"key": "extension", "type": "str"},
+        "state": {"key": "state", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
-        """
-        """
-        super(PerNodeExtensionState, self).__init__(**kwargs)
+    def __init__(self, **kwargs):
+        """ """
+        super().__init__(**kwargs)
         self.name = None
         self.extension = None
         self.state = None
 
 
-class PerNodeState(msrest.serialization.Model):
+class PerNodeState(_serialization.Model):
     """Status of Arc agent for a particular node in HCI Cluster.
 
     Variables are only populated by the server, and will be ignored when sending a request.
@@ -1451,37 +1384,33 @@ class PerNodeState(msrest.serialization.Model):
     :vartype name: str
     :ivar arc_instance: Fully qualified resource ID for the Arc agent of this node.
     :vartype arc_instance: str
-    :ivar state: State of Arc agent in this node. Possible values include: "NotSpecified", "Error",
+    :ivar state: State of Arc agent in this node. Known values are: "NotSpecified", "Error",
      "Succeeded", "Canceled", "Failed", "Connected", "Disconnected", "Deleted", "Creating",
-     "Updating", "Deleting", "Moving".
+     "Updating", "Deleting", and "Moving".
     :vartype state: str or ~azure.mgmt.azurestackhci.models.NodeArcState
     """
 
     _validation = {
-        'name': {'readonly': True},
-        'arc_instance': {'readonly': True},
-        'state': {'readonly': True},
+        "name": {"readonly": True},
+        "arc_instance": {"readonly": True},
+        "state": {"readonly": True},
     }
 
     _attribute_map = {
-        'name': {'key': 'name', 'type': 'str'},
-        'arc_instance': {'key': 'arcInstance', 'type': 'str'},
-        'state': {'key': 'state', 'type': 'str'},
+        "name": {"key": "name", "type": "str"},
+        "arc_instance": {"key": "arcInstance", "type": "str"},
+        "state": {"key": "state", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
-        """
-        """
-        super(PerNodeState, self).__init__(**kwargs)
+    def __init__(self, **kwargs):
+        """ """
+        super().__init__(**kwargs)
         self.name = None
         self.arc_instance = None
         self.state = None
 
 
-class RawCertificateData(msrest.serialization.Model):
+class RawCertificateData(_serialization.Model):
     """RawCertificateData.
 
     :ivar certificates:
@@ -1489,24 +1418,19 @@ class RawCertificateData(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'certificates': {'key': 'certificates', 'type': '[str]'},
+        "certificates": {"key": "certificates", "type": "[str]"},
     }
 
-    def __init__(
-        self,
-        *,
-        certificates: Optional[List[str]] = None,
-        **kwargs
-    ):
+    def __init__(self, *, certificates: Optional[List[str]] = None, **kwargs):
         """
         :keyword certificates:
         :paramtype certificates: list[str]
         """
-        super(RawCertificateData, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.certificates = certificates
 
 
-class UploadCertificateRequest(msrest.serialization.Model):
+class UploadCertificateRequest(_serialization.Model):
     """UploadCertificateRequest.
 
     :ivar properties:
@@ -1514,18 +1438,13 @@ class UploadCertificateRequest(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'properties': {'key': 'properties', 'type': 'RawCertificateData'},
+        "properties": {"key": "properties", "type": "RawCertificateData"},
     }
 
-    def __init__(
-        self,
-        *,
-        properties: Optional["RawCertificateData"] = None,
-        **kwargs
-    ):
+    def __init__(self, *, properties: Optional["_models.RawCertificateData"] = None, **kwargs):
         """
         :keyword properties:
         :paramtype properties: ~azure.mgmt.azurestackhci.models.RawCertificateData
         """
-        super(UploadCertificateRequest, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.properties = properties
