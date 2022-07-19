@@ -21,19 +21,16 @@ class CheckNameAvailability(msrest.serialization.Model):
     """
 
     _validation = {
-        'name': {'required': True},
+        "name": {"required": True},
     }
 
     _attribute_map = {
-        'name': {'key': 'name', 'type': 'str'},
+        "name": {"key": "name", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(CheckNameAvailability, self).__init__(**kwargs)
-        self.name = kwargs['name']
+        self.name = kwargs["name"]
 
 
 class CheckNameAvailabilityResult(msrest.serialization.Model):
@@ -53,22 +50,19 @@ class CheckNameAvailabilityResult(msrest.serialization.Model):
     """
 
     _validation = {
-        'message': {'readonly': True},
+        "message": {"readonly": True},
     }
 
     _attribute_map = {
-        'name_available': {'key': 'nameAvailable', 'type': 'bool'},
-        'reason': {'key': 'reason', 'type': 'str'},
-        'message': {'key': 'message', 'type': 'str'},
+        "name_available": {"key": "nameAvailable", "type": "bool"},
+        "reason": {"key": "reason", "type": "str"},
+        "message": {"key": "message", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(CheckNameAvailabilityResult, self).__init__(**kwargs)
-        self.name_available = kwargs.get('name_available', None)
-        self.reason = kwargs.get('reason', None)
+        self.name_available = kwargs.get("name_available", None)
+        self.reason = kwargs.get("reason", None)
         self.message = None
 
 
@@ -91,25 +85,22 @@ class MessageCountDetails(msrest.serialization.Model):
     """
 
     _validation = {
-        'active_message_count': {'readonly': True},
-        'dead_letter_message_count': {'readonly': True},
-        'scheduled_message_count': {'readonly': True},
-        'transfer_dead_letter_message_count': {'readonly': True},
-        'transfer_message_count': {'readonly': True},
+        "active_message_count": {"readonly": True},
+        "dead_letter_message_count": {"readonly": True},
+        "scheduled_message_count": {"readonly": True},
+        "transfer_dead_letter_message_count": {"readonly": True},
+        "transfer_message_count": {"readonly": True},
     }
 
     _attribute_map = {
-        'active_message_count': {'key': 'activeMessageCount', 'type': 'long'},
-        'dead_letter_message_count': {'key': 'deadLetterMessageCount', 'type': 'long'},
-        'scheduled_message_count': {'key': 'scheduledMessageCount', 'type': 'long'},
-        'transfer_dead_letter_message_count': {'key': 'transferDeadLetterMessageCount', 'type': 'long'},
-        'transfer_message_count': {'key': 'transferMessageCount', 'type': 'long'},
+        "active_message_count": {"key": "activeMessageCount", "type": "long"},
+        "dead_letter_message_count": {"key": "deadLetterMessageCount", "type": "long"},
+        "scheduled_message_count": {"key": "scheduledMessageCount", "type": "long"},
+        "transfer_dead_letter_message_count": {"key": "transferDeadLetterMessageCount", "type": "long"},
+        "transfer_message_count": {"key": "transferMessageCount", "type": "long"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(MessageCountDetails, self).__init__(**kwargs)
         self.active_message_count = None
         self.dead_letter_message_count = None
@@ -150,41 +141,38 @@ class NamespaceCreateOrUpdateParameters(msrest.serialization.Model):
     """
 
     _validation = {
-        'location': {'required': True},
-        'provisioning_state': {'readonly': True},
-        'created_at': {'readonly': True},
-        'updated_at': {'readonly': True},
-        'service_bus_endpoint': {'readonly': True},
+        "location": {"required": True},
+        "provisioning_state": {"readonly": True},
+        "created_at": {"readonly": True},
+        "updated_at": {"readonly": True},
+        "service_bus_endpoint": {"readonly": True},
     }
 
     _attribute_map = {
-        'location': {'key': 'location', 'type': 'str'},
-        'sku': {'key': 'sku', 'type': 'Sku'},
-        'tags': {'key': 'tags', 'type': '{str}'},
-        'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
-        'status': {'key': 'properties.status', 'type': 'str'},
-        'created_at': {'key': 'properties.createdAt', 'type': 'iso-8601'},
-        'updated_at': {'key': 'properties.updatedAt', 'type': 'iso-8601'},
-        'service_bus_endpoint': {'key': 'properties.serviceBusEndpoint', 'type': 'str'},
-        'create_acs_namespace': {'key': 'properties.createACSNamespace', 'type': 'bool'},
-        'enabled': {'key': 'properties.enabled', 'type': 'bool'},
+        "location": {"key": "location", "type": "str"},
+        "sku": {"key": "sku", "type": "Sku"},
+        "tags": {"key": "tags", "type": "{str}"},
+        "provisioning_state": {"key": "properties.provisioningState", "type": "str"},
+        "status": {"key": "properties.status", "type": "str"},
+        "created_at": {"key": "properties.createdAt", "type": "iso-8601"},
+        "updated_at": {"key": "properties.updatedAt", "type": "iso-8601"},
+        "service_bus_endpoint": {"key": "properties.serviceBusEndpoint", "type": "str"},
+        "create_acs_namespace": {"key": "properties.createACSNamespace", "type": "bool"},
+        "enabled": {"key": "properties.enabled", "type": "bool"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(NamespaceCreateOrUpdateParameters, self).__init__(**kwargs)
-        self.location = kwargs['location']
-        self.sku = kwargs.get('sku', None)
-        self.tags = kwargs.get('tags', None)
+        self.location = kwargs["location"]
+        self.sku = kwargs.get("sku", None)
+        self.tags = kwargs.get("tags", None)
         self.provisioning_state = None
-        self.status = kwargs.get('status', None)
+        self.status = kwargs.get("status", None)
         self.created_at = None
         self.updated_at = None
         self.service_bus_endpoint = None
-        self.create_acs_namespace = kwargs.get('create_acs_namespace', None)
-        self.enabled = kwargs.get('enabled', None)
+        self.create_acs_namespace = kwargs.get("create_acs_namespace", None)
+        self.enabled = kwargs.get("enabled", None)
 
 
 class NamespaceListResult(msrest.serialization.Model):
@@ -198,17 +186,14 @@ class NamespaceListResult(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[NamespaceResource]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[NamespaceResource]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(NamespaceListResult, self).__init__(**kwargs)
-        self.value = kwargs.get('value', None)
-        self.next_link = kwargs.get('next_link', None)
+        self.value = kwargs.get("value", None)
+        self.next_link = kwargs.get("next_link", None)
 
 
 class Resource(msrest.serialization.Model):
@@ -227,26 +212,23 @@ class Resource(msrest.serialization.Model):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'location': {'key': 'location', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "location": {"key": "location", "type": "str"},
+        "type": {"key": "type", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(Resource, self).__init__(**kwargs)
         self.id = None
         self.name = None
-        self.location = kwargs.get('location', None)
+        self.location = kwargs.get("location", None)
         self.type = None
 
 
@@ -268,25 +250,22 @@ class TrackedResource(Resource):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'location': {'key': 'location', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'tags': {'key': 'tags', 'type': '{str}'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "location": {"key": "location", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "tags": {"key": "tags", "type": "{str}"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(TrackedResource, self).__init__(**kwargs)
-        self.tags = kwargs.get('tags', None)
+        self.tags = kwargs.get("tags", None)
 
 
 class NamespaceResource(TrackedResource):
@@ -325,44 +304,41 @@ class NamespaceResource(TrackedResource):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'provisioning_state': {'readonly': True},
-        'created_at': {'readonly': True},
-        'updated_at': {'readonly': True},
-        'service_bus_endpoint': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
+        "provisioning_state": {"readonly": True},
+        "created_at": {"readonly": True},
+        "updated_at": {"readonly": True},
+        "service_bus_endpoint": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'location': {'key': 'location', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'tags': {'key': 'tags', 'type': '{str}'},
-        'sku': {'key': 'sku', 'type': 'Sku'},
-        'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
-        'status': {'key': 'properties.status', 'type': 'str'},
-        'created_at': {'key': 'properties.createdAt', 'type': 'iso-8601'},
-        'updated_at': {'key': 'properties.updatedAt', 'type': 'iso-8601'},
-        'service_bus_endpoint': {'key': 'properties.serviceBusEndpoint', 'type': 'str'},
-        'create_acs_namespace': {'key': 'properties.createACSNamespace', 'type': 'bool'},
-        'enabled': {'key': 'properties.enabled', 'type': 'bool'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "location": {"key": "location", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "tags": {"key": "tags", "type": "{str}"},
+        "sku": {"key": "sku", "type": "Sku"},
+        "provisioning_state": {"key": "properties.provisioningState", "type": "str"},
+        "status": {"key": "properties.status", "type": "str"},
+        "created_at": {"key": "properties.createdAt", "type": "iso-8601"},
+        "updated_at": {"key": "properties.updatedAt", "type": "iso-8601"},
+        "service_bus_endpoint": {"key": "properties.serviceBusEndpoint", "type": "str"},
+        "create_acs_namespace": {"key": "properties.createACSNamespace", "type": "bool"},
+        "enabled": {"key": "properties.enabled", "type": "bool"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(NamespaceResource, self).__init__(**kwargs)
-        self.sku = kwargs.get('sku', None)
+        self.sku = kwargs.get("sku", None)
         self.provisioning_state = None
-        self.status = kwargs.get('status', None)
+        self.status = kwargs.get("status", None)
         self.created_at = None
         self.updated_at = None
         self.service_bus_endpoint = None
-        self.create_acs_namespace = kwargs.get('create_acs_namespace', None)
-        self.enabled = kwargs.get('enabled', None)
+        self.create_acs_namespace = kwargs.get("create_acs_namespace", None)
+        self.enabled = kwargs.get("enabled", None)
 
 
 class NamespaceUpdateParameters(msrest.serialization.Model):
@@ -375,17 +351,14 @@ class NamespaceUpdateParameters(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'tags': {'key': 'tags', 'type': '{str}'},
-        'sku': {'key': 'sku', 'type': 'Sku'},
+        "tags": {"key": "tags", "type": "{str}"},
+        "sku": {"key": "sku", "type": "Sku"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(NamespaceUpdateParameters, self).__init__(**kwargs)
-        self.tags = kwargs.get('tags', None)
-        self.sku = kwargs.get('sku', None)
+        self.tags = kwargs.get("tags", None)
+        self.sku = kwargs.get("sku", None)
 
 
 class Operation(msrest.serialization.Model):
@@ -400,21 +373,18 @@ class Operation(msrest.serialization.Model):
     """
 
     _validation = {
-        'name': {'readonly': True},
+        "name": {"readonly": True},
     }
 
     _attribute_map = {
-        'name': {'key': 'name', 'type': 'str'},
-        'display': {'key': 'display', 'type': 'OperationDisplay'},
+        "name": {"key": "name", "type": "str"},
+        "display": {"key": "display", "type": "OperationDisplay"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(Operation, self).__init__(**kwargs)
         self.name = None
-        self.display = kwargs.get('display', None)
+        self.display = kwargs.get("display", None)
 
 
 class OperationDisplay(msrest.serialization.Model):
@@ -431,21 +401,18 @@ class OperationDisplay(msrest.serialization.Model):
     """
 
     _validation = {
-        'provider': {'readonly': True},
-        'resource': {'readonly': True},
-        'operation': {'readonly': True},
+        "provider": {"readonly": True},
+        "resource": {"readonly": True},
+        "operation": {"readonly": True},
     }
 
     _attribute_map = {
-        'provider': {'key': 'provider', 'type': 'str'},
-        'resource': {'key': 'resource', 'type': 'str'},
-        'operation': {'key': 'operation', 'type': 'str'},
+        "provider": {"key": "provider", "type": "str"},
+        "resource": {"key": "resource", "type": "str"},
+        "operation": {"key": "operation", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(OperationDisplay, self).__init__(**kwargs)
         self.provider = None
         self.resource = None
@@ -465,19 +432,16 @@ class OperationListResult(msrest.serialization.Model):
     """
 
     _validation = {
-        'value': {'readonly': True},
-        'next_link': {'readonly': True},
+        "value": {"readonly": True},
+        "next_link": {"readonly": True},
     }
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[Operation]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[Operation]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(OperationListResult, self).__init__(**kwargs)
         self.value = None
         self.next_link = None
@@ -561,70 +525,70 @@ class QueueCreateOrUpdateParameters(msrest.serialization.Model):
     """
 
     _validation = {
-        'location': {'required': True},
-        'accessed_at': {'readonly': True},
-        'created_at': {'readonly': True},
-        'message_count': {'readonly': True},
-        'count_details': {'readonly': True},
-        'size_in_bytes': {'readonly': True},
-        'updated_at': {'readonly': True},
+        "location": {"required": True},
+        "accessed_at": {"readonly": True},
+        "created_at": {"readonly": True},
+        "message_count": {"readonly": True},
+        "count_details": {"readonly": True},
+        "size_in_bytes": {"readonly": True},
+        "updated_at": {"readonly": True},
     }
 
     _attribute_map = {
-        'name': {'key': 'name', 'type': 'str'},
-        'location': {'key': 'location', 'type': 'str'},
-        'lock_duration': {'key': 'properties.lockDuration', 'type': 'str'},
-        'accessed_at': {'key': 'properties.accessedAt', 'type': 'iso-8601'},
-        'auto_delete_on_idle': {'key': 'properties.autoDeleteOnIdle', 'type': 'str'},
-        'entity_availability_status': {'key': 'properties.entityAvailabilityStatus', 'type': 'str'},
-        'created_at': {'key': 'properties.createdAt', 'type': 'iso-8601'},
-        'default_message_time_to_live': {'key': 'properties.defaultMessageTimeToLive', 'type': 'str'},
-        'duplicate_detection_history_time_window': {'key': 'properties.duplicateDetectionHistoryTimeWindow', 'type': 'str'},
-        'enable_batched_operations': {'key': 'properties.enableBatchedOperations', 'type': 'bool'},
-        'dead_lettering_on_message_expiration': {'key': 'properties.deadLetteringOnMessageExpiration', 'type': 'bool'},
-        'enable_express': {'key': 'properties.enableExpress', 'type': 'bool'},
-        'enable_partitioning': {'key': 'properties.enablePartitioning', 'type': 'bool'},
-        'is_anonymous_accessible': {'key': 'properties.isAnonymousAccessible', 'type': 'bool'},
-        'max_delivery_count': {'key': 'properties.maxDeliveryCount', 'type': 'int'},
-        'max_size_in_megabytes': {'key': 'properties.maxSizeInMegabytes', 'type': 'long'},
-        'message_count': {'key': 'properties.messageCount', 'type': 'long'},
-        'count_details': {'key': 'properties.countDetails', 'type': 'MessageCountDetails'},
-        'requires_duplicate_detection': {'key': 'properties.requiresDuplicateDetection', 'type': 'bool'},
-        'requires_session': {'key': 'properties.requiresSession', 'type': 'bool'},
-        'size_in_bytes': {'key': 'properties.sizeInBytes', 'type': 'long'},
-        'status': {'key': 'properties.status', 'type': 'str'},
-        'support_ordering': {'key': 'properties.supportOrdering', 'type': 'bool'},
-        'updated_at': {'key': 'properties.updatedAt', 'type': 'iso-8601'},
+        "name": {"key": "name", "type": "str"},
+        "location": {"key": "location", "type": "str"},
+        "lock_duration": {"key": "properties.lockDuration", "type": "str"},
+        "accessed_at": {"key": "properties.accessedAt", "type": "iso-8601"},
+        "auto_delete_on_idle": {"key": "properties.autoDeleteOnIdle", "type": "str"},
+        "entity_availability_status": {"key": "properties.entityAvailabilityStatus", "type": "str"},
+        "created_at": {"key": "properties.createdAt", "type": "iso-8601"},
+        "default_message_time_to_live": {"key": "properties.defaultMessageTimeToLive", "type": "str"},
+        "duplicate_detection_history_time_window": {
+            "key": "properties.duplicateDetectionHistoryTimeWindow",
+            "type": "str",
+        },
+        "enable_batched_operations": {"key": "properties.enableBatchedOperations", "type": "bool"},
+        "dead_lettering_on_message_expiration": {"key": "properties.deadLetteringOnMessageExpiration", "type": "bool"},
+        "enable_express": {"key": "properties.enableExpress", "type": "bool"},
+        "enable_partitioning": {"key": "properties.enablePartitioning", "type": "bool"},
+        "is_anonymous_accessible": {"key": "properties.isAnonymousAccessible", "type": "bool"},
+        "max_delivery_count": {"key": "properties.maxDeliveryCount", "type": "int"},
+        "max_size_in_megabytes": {"key": "properties.maxSizeInMegabytes", "type": "long"},
+        "message_count": {"key": "properties.messageCount", "type": "long"},
+        "count_details": {"key": "properties.countDetails", "type": "MessageCountDetails"},
+        "requires_duplicate_detection": {"key": "properties.requiresDuplicateDetection", "type": "bool"},
+        "requires_session": {"key": "properties.requiresSession", "type": "bool"},
+        "size_in_bytes": {"key": "properties.sizeInBytes", "type": "long"},
+        "status": {"key": "properties.status", "type": "str"},
+        "support_ordering": {"key": "properties.supportOrdering", "type": "bool"},
+        "updated_at": {"key": "properties.updatedAt", "type": "iso-8601"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(QueueCreateOrUpdateParameters, self).__init__(**kwargs)
-        self.name = kwargs.get('name', None)
-        self.location = kwargs['location']
-        self.lock_duration = kwargs.get('lock_duration', None)
+        self.name = kwargs.get("name", None)
+        self.location = kwargs["location"]
+        self.lock_duration = kwargs.get("lock_duration", None)
         self.accessed_at = None
-        self.auto_delete_on_idle = kwargs.get('auto_delete_on_idle', None)
-        self.entity_availability_status = kwargs.get('entity_availability_status', None)
+        self.auto_delete_on_idle = kwargs.get("auto_delete_on_idle", None)
+        self.entity_availability_status = kwargs.get("entity_availability_status", None)
         self.created_at = None
-        self.default_message_time_to_live = kwargs.get('default_message_time_to_live', None)
-        self.duplicate_detection_history_time_window = kwargs.get('duplicate_detection_history_time_window', None)
-        self.enable_batched_operations = kwargs.get('enable_batched_operations', None)
-        self.dead_lettering_on_message_expiration = kwargs.get('dead_lettering_on_message_expiration', None)
-        self.enable_express = kwargs.get('enable_express', None)
-        self.enable_partitioning = kwargs.get('enable_partitioning', None)
-        self.is_anonymous_accessible = kwargs.get('is_anonymous_accessible', None)
-        self.max_delivery_count = kwargs.get('max_delivery_count', None)
-        self.max_size_in_megabytes = kwargs.get('max_size_in_megabytes', None)
+        self.default_message_time_to_live = kwargs.get("default_message_time_to_live", None)
+        self.duplicate_detection_history_time_window = kwargs.get("duplicate_detection_history_time_window", None)
+        self.enable_batched_operations = kwargs.get("enable_batched_operations", None)
+        self.dead_lettering_on_message_expiration = kwargs.get("dead_lettering_on_message_expiration", None)
+        self.enable_express = kwargs.get("enable_express", None)
+        self.enable_partitioning = kwargs.get("enable_partitioning", None)
+        self.is_anonymous_accessible = kwargs.get("is_anonymous_accessible", None)
+        self.max_delivery_count = kwargs.get("max_delivery_count", None)
+        self.max_size_in_megabytes = kwargs.get("max_size_in_megabytes", None)
         self.message_count = None
         self.count_details = None
-        self.requires_duplicate_detection = kwargs.get('requires_duplicate_detection', None)
-        self.requires_session = kwargs.get('requires_session', None)
+        self.requires_duplicate_detection = kwargs.get("requires_duplicate_detection", None)
+        self.requires_session = kwargs.get("requires_session", None)
         self.size_in_bytes = None
-        self.status = kwargs.get('status', None)
-        self.support_ordering = kwargs.get('support_ordering', None)
+        self.status = kwargs.get("status", None)
+        self.support_ordering = kwargs.get("support_ordering", None)
         self.updated_at = None
 
 
@@ -639,17 +603,14 @@ class QueueListResult(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[QueueResource]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[QueueResource]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(QueueListResult, self).__init__(**kwargs)
-        self.value = kwargs.get('value', None)
-        self.next_link = kwargs.get('next_link', None)
+        self.value = kwargs.get("value", None)
+        self.next_link = kwargs.get("next_link", None)
 
 
 class QueueResource(Resource):
@@ -732,72 +693,72 @@ class QueueResource(Resource):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'accessed_at': {'readonly': True},
-        'created_at': {'readonly': True},
-        'message_count': {'readonly': True},
-        'count_details': {'readonly': True},
-        'size_in_bytes': {'readonly': True},
-        'updated_at': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
+        "accessed_at": {"readonly": True},
+        "created_at": {"readonly": True},
+        "message_count": {"readonly": True},
+        "count_details": {"readonly": True},
+        "size_in_bytes": {"readonly": True},
+        "updated_at": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'location': {'key': 'location', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'lock_duration': {'key': 'properties.lockDuration', 'type': 'str'},
-        'accessed_at': {'key': 'properties.accessedAt', 'type': 'iso-8601'},
-        'auto_delete_on_idle': {'key': 'properties.autoDeleteOnIdle', 'type': 'str'},
-        'entity_availability_status': {'key': 'properties.entityAvailabilityStatus', 'type': 'str'},
-        'created_at': {'key': 'properties.createdAt', 'type': 'iso-8601'},
-        'default_message_time_to_live': {'key': 'properties.defaultMessageTimeToLive', 'type': 'str'},
-        'duplicate_detection_history_time_window': {'key': 'properties.duplicateDetectionHistoryTimeWindow', 'type': 'str'},
-        'enable_batched_operations': {'key': 'properties.enableBatchedOperations', 'type': 'bool'},
-        'dead_lettering_on_message_expiration': {'key': 'properties.deadLetteringOnMessageExpiration', 'type': 'bool'},
-        'enable_express': {'key': 'properties.enableExpress', 'type': 'bool'},
-        'enable_partitioning': {'key': 'properties.enablePartitioning', 'type': 'bool'},
-        'is_anonymous_accessible': {'key': 'properties.isAnonymousAccessible', 'type': 'bool'},
-        'max_delivery_count': {'key': 'properties.maxDeliveryCount', 'type': 'int'},
-        'max_size_in_megabytes': {'key': 'properties.maxSizeInMegabytes', 'type': 'long'},
-        'message_count': {'key': 'properties.messageCount', 'type': 'long'},
-        'count_details': {'key': 'properties.countDetails', 'type': 'MessageCountDetails'},
-        'requires_duplicate_detection': {'key': 'properties.requiresDuplicateDetection', 'type': 'bool'},
-        'requires_session': {'key': 'properties.requiresSession', 'type': 'bool'},
-        'size_in_bytes': {'key': 'properties.sizeInBytes', 'type': 'long'},
-        'status': {'key': 'properties.status', 'type': 'str'},
-        'support_ordering': {'key': 'properties.supportOrdering', 'type': 'bool'},
-        'updated_at': {'key': 'properties.updatedAt', 'type': 'iso-8601'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "location": {"key": "location", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "lock_duration": {"key": "properties.lockDuration", "type": "str"},
+        "accessed_at": {"key": "properties.accessedAt", "type": "iso-8601"},
+        "auto_delete_on_idle": {"key": "properties.autoDeleteOnIdle", "type": "str"},
+        "entity_availability_status": {"key": "properties.entityAvailabilityStatus", "type": "str"},
+        "created_at": {"key": "properties.createdAt", "type": "iso-8601"},
+        "default_message_time_to_live": {"key": "properties.defaultMessageTimeToLive", "type": "str"},
+        "duplicate_detection_history_time_window": {
+            "key": "properties.duplicateDetectionHistoryTimeWindow",
+            "type": "str",
+        },
+        "enable_batched_operations": {"key": "properties.enableBatchedOperations", "type": "bool"},
+        "dead_lettering_on_message_expiration": {"key": "properties.deadLetteringOnMessageExpiration", "type": "bool"},
+        "enable_express": {"key": "properties.enableExpress", "type": "bool"},
+        "enable_partitioning": {"key": "properties.enablePartitioning", "type": "bool"},
+        "is_anonymous_accessible": {"key": "properties.isAnonymousAccessible", "type": "bool"},
+        "max_delivery_count": {"key": "properties.maxDeliveryCount", "type": "int"},
+        "max_size_in_megabytes": {"key": "properties.maxSizeInMegabytes", "type": "long"},
+        "message_count": {"key": "properties.messageCount", "type": "long"},
+        "count_details": {"key": "properties.countDetails", "type": "MessageCountDetails"},
+        "requires_duplicate_detection": {"key": "properties.requiresDuplicateDetection", "type": "bool"},
+        "requires_session": {"key": "properties.requiresSession", "type": "bool"},
+        "size_in_bytes": {"key": "properties.sizeInBytes", "type": "long"},
+        "status": {"key": "properties.status", "type": "str"},
+        "support_ordering": {"key": "properties.supportOrdering", "type": "bool"},
+        "updated_at": {"key": "properties.updatedAt", "type": "iso-8601"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(QueueResource, self).__init__(**kwargs)
-        self.lock_duration = kwargs.get('lock_duration', None)
+        self.lock_duration = kwargs.get("lock_duration", None)
         self.accessed_at = None
-        self.auto_delete_on_idle = kwargs.get('auto_delete_on_idle', None)
-        self.entity_availability_status = kwargs.get('entity_availability_status', None)
+        self.auto_delete_on_idle = kwargs.get("auto_delete_on_idle", None)
+        self.entity_availability_status = kwargs.get("entity_availability_status", None)
         self.created_at = None
-        self.default_message_time_to_live = kwargs.get('default_message_time_to_live', None)
-        self.duplicate_detection_history_time_window = kwargs.get('duplicate_detection_history_time_window', None)
-        self.enable_batched_operations = kwargs.get('enable_batched_operations', None)
-        self.dead_lettering_on_message_expiration = kwargs.get('dead_lettering_on_message_expiration', None)
-        self.enable_express = kwargs.get('enable_express', None)
-        self.enable_partitioning = kwargs.get('enable_partitioning', None)
-        self.is_anonymous_accessible = kwargs.get('is_anonymous_accessible', None)
-        self.max_delivery_count = kwargs.get('max_delivery_count', None)
-        self.max_size_in_megabytes = kwargs.get('max_size_in_megabytes', None)
+        self.default_message_time_to_live = kwargs.get("default_message_time_to_live", None)
+        self.duplicate_detection_history_time_window = kwargs.get("duplicate_detection_history_time_window", None)
+        self.enable_batched_operations = kwargs.get("enable_batched_operations", None)
+        self.dead_lettering_on_message_expiration = kwargs.get("dead_lettering_on_message_expiration", None)
+        self.enable_express = kwargs.get("enable_express", None)
+        self.enable_partitioning = kwargs.get("enable_partitioning", None)
+        self.is_anonymous_accessible = kwargs.get("is_anonymous_accessible", None)
+        self.max_delivery_count = kwargs.get("max_delivery_count", None)
+        self.max_size_in_megabytes = kwargs.get("max_size_in_megabytes", None)
         self.message_count = None
         self.count_details = None
-        self.requires_duplicate_detection = kwargs.get('requires_duplicate_detection', None)
-        self.requires_session = kwargs.get('requires_session', None)
+        self.requires_duplicate_detection = kwargs.get("requires_duplicate_detection", None)
+        self.requires_session = kwargs.get("requires_session", None)
         self.size_in_bytes = None
-        self.status = kwargs.get('status', None)
-        self.support_ordering = kwargs.get('support_ordering', None)
+        self.status = kwargs.get("status", None)
+        self.support_ordering = kwargs.get("support_ordering", None)
         self.updated_at = None
 
 
@@ -810,15 +771,12 @@ class RegenerateKeysParameters(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'policykey': {'key': 'Policykey', 'type': 'str'},
+        "policykey": {"key": "Policykey", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(RegenerateKeysParameters, self).__init__(**kwargs)
-        self.policykey = kwargs.get('policykey', None)
+        self.policykey = kwargs.get("policykey", None)
 
 
 class ResourceListKeys(msrest.serialization.Model):
@@ -841,23 +799,20 @@ class ResourceListKeys(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'primary_connection_string': {'key': 'primaryConnectionString', 'type': 'str'},
-        'secondary_connection_string': {'key': 'secondaryConnectionString', 'type': 'str'},
-        'primary_key': {'key': 'primaryKey', 'type': 'str'},
-        'secondary_key': {'key': 'secondaryKey', 'type': 'str'},
-        'key_name': {'key': 'keyName', 'type': 'str'},
+        "primary_connection_string": {"key": "primaryConnectionString", "type": "str"},
+        "secondary_connection_string": {"key": "secondaryConnectionString", "type": "str"},
+        "primary_key": {"key": "primaryKey", "type": "str"},
+        "secondary_key": {"key": "secondaryKey", "type": "str"},
+        "key_name": {"key": "keyName", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ResourceListKeys, self).__init__(**kwargs)
-        self.primary_connection_string = kwargs.get('primary_connection_string', None)
-        self.secondary_connection_string = kwargs.get('secondary_connection_string', None)
-        self.primary_key = kwargs.get('primary_key', None)
-        self.secondary_key = kwargs.get('secondary_key', None)
-        self.key_name = kwargs.get('key_name', None)
+        self.primary_connection_string = kwargs.get("primary_connection_string", None)
+        self.secondary_connection_string = kwargs.get("secondary_connection_string", None)
+        self.primary_key = kwargs.get("primary_key", None)
+        self.secondary_key = kwargs.get("secondary_key", None)
+        self.key_name = kwargs.get("key_name", None)
 
 
 class SharedAccessAuthorizationRuleCreateOrUpdateParameters(msrest.serialization.Model):
@@ -872,19 +827,16 @@ class SharedAccessAuthorizationRuleCreateOrUpdateParameters(msrest.serialization
     """
 
     _attribute_map = {
-        'location': {'key': 'location', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'rights': {'key': 'properties.rights', 'type': '[str]'},
+        "location": {"key": "location", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "rights": {"key": "properties.rights", "type": "[str]"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(SharedAccessAuthorizationRuleCreateOrUpdateParameters, self).__init__(**kwargs)
-        self.location = kwargs.get('location', None)
-        self.name = kwargs.get('name', None)
-        self.rights = kwargs.get('rights', None)
+        self.location = kwargs.get("location", None)
+        self.name = kwargs.get("name", None)
+        self.rights = kwargs.get("rights", None)
 
 
 class SharedAccessAuthorizationRuleListResult(msrest.serialization.Model):
@@ -899,17 +851,14 @@ class SharedAccessAuthorizationRuleListResult(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[SharedAccessAuthorizationRuleResource]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[SharedAccessAuthorizationRuleResource]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(SharedAccessAuthorizationRuleListResult, self).__init__(**kwargs)
-        self.value = kwargs.get('value', None)
-        self.next_link = kwargs.get('next_link', None)
+        self.value = kwargs.get("value", None)
+        self.next_link = kwargs.get("next_link", None)
 
 
 class SharedAccessAuthorizationRuleResource(Resource):
@@ -930,25 +879,22 @@ class SharedAccessAuthorizationRuleResource(Resource):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'location': {'key': 'location', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'rights': {'key': 'properties.rights', 'type': '[str]'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "location": {"key": "location", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "rights": {"key": "properties.rights", "type": "[str]"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(SharedAccessAuthorizationRuleResource, self).__init__(**kwargs)
-        self.rights = kwargs.get('rights', None)
+        self.rights = kwargs.get("rights", None)
 
 
 class Sku(msrest.serialization.Model):
@@ -966,23 +912,20 @@ class Sku(msrest.serialization.Model):
     """
 
     _validation = {
-        'tier': {'required': True},
+        "tier": {"required": True},
     }
 
     _attribute_map = {
-        'name': {'key': 'name', 'type': 'str'},
-        'tier': {'key': 'tier', 'type': 'str'},
-        'capacity': {'key': 'capacity', 'type': 'int'},
+        "name": {"key": "name", "type": "str"},
+        "tier": {"key": "tier", "type": "str"},
+        "capacity": {"key": "capacity", "type": "int"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(Sku, self).__init__(**kwargs)
-        self.name = kwargs.get('name', None)
-        self.tier = kwargs['tier']
-        self.capacity = kwargs.get('capacity', None)
+        self.name = kwargs.get("name", None)
+        self.tier = kwargs["tier"]
+        self.capacity = kwargs.get("capacity", None)
 
 
 class SubscriptionCreateOrUpdateParameters(msrest.serialization.Model):
@@ -1041,57 +984,59 @@ class SubscriptionCreateOrUpdateParameters(msrest.serialization.Model):
     """
 
     _validation = {
-        'location': {'required': True},
-        'accessed_at': {'readonly': True},
-        'count_details': {'readonly': True},
-        'created_at': {'readonly': True},
-        'message_count': {'readonly': True},
-        'updated_at': {'readonly': True},
+        "location": {"required": True},
+        "accessed_at": {"readonly": True},
+        "count_details": {"readonly": True},
+        "created_at": {"readonly": True},
+        "message_count": {"readonly": True},
+        "updated_at": {"readonly": True},
     }
 
     _attribute_map = {
-        'location': {'key': 'location', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'accessed_at': {'key': 'properties.accessedAt', 'type': 'iso-8601'},
-        'auto_delete_on_idle': {'key': 'properties.autoDeleteOnIdle', 'type': 'str'},
-        'count_details': {'key': 'properties.countDetails', 'type': 'MessageCountDetails'},
-        'created_at': {'key': 'properties.createdAt', 'type': 'iso-8601'},
-        'default_message_time_to_live': {'key': 'properties.defaultMessageTimeToLive', 'type': 'str'},
-        'dead_lettering_on_filter_evaluation_exceptions': {'key': 'properties.deadLetteringOnFilterEvaluationExceptions', 'type': 'bool'},
-        'dead_lettering_on_message_expiration': {'key': 'properties.deadLetteringOnMessageExpiration', 'type': 'bool'},
-        'enable_batched_operations': {'key': 'properties.enableBatchedOperations', 'type': 'bool'},
-        'entity_availability_status': {'key': 'properties.entityAvailabilityStatus', 'type': 'str'},
-        'is_read_only': {'key': 'properties.isReadOnly', 'type': 'bool'},
-        'lock_duration': {'key': 'properties.lockDuration', 'type': 'str'},
-        'max_delivery_count': {'key': 'properties.maxDeliveryCount', 'type': 'int'},
-        'message_count': {'key': 'properties.messageCount', 'type': 'long'},
-        'requires_session': {'key': 'properties.requiresSession', 'type': 'bool'},
-        'status': {'key': 'properties.status', 'type': 'str'},
-        'updated_at': {'key': 'properties.updatedAt', 'type': 'iso-8601'},
+        "location": {"key": "location", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "accessed_at": {"key": "properties.accessedAt", "type": "iso-8601"},
+        "auto_delete_on_idle": {"key": "properties.autoDeleteOnIdle", "type": "str"},
+        "count_details": {"key": "properties.countDetails", "type": "MessageCountDetails"},
+        "created_at": {"key": "properties.createdAt", "type": "iso-8601"},
+        "default_message_time_to_live": {"key": "properties.defaultMessageTimeToLive", "type": "str"},
+        "dead_lettering_on_filter_evaluation_exceptions": {
+            "key": "properties.deadLetteringOnFilterEvaluationExceptions",
+            "type": "bool",
+        },
+        "dead_lettering_on_message_expiration": {"key": "properties.deadLetteringOnMessageExpiration", "type": "bool"},
+        "enable_batched_operations": {"key": "properties.enableBatchedOperations", "type": "bool"},
+        "entity_availability_status": {"key": "properties.entityAvailabilityStatus", "type": "str"},
+        "is_read_only": {"key": "properties.isReadOnly", "type": "bool"},
+        "lock_duration": {"key": "properties.lockDuration", "type": "str"},
+        "max_delivery_count": {"key": "properties.maxDeliveryCount", "type": "int"},
+        "message_count": {"key": "properties.messageCount", "type": "long"},
+        "requires_session": {"key": "properties.requiresSession", "type": "bool"},
+        "status": {"key": "properties.status", "type": "str"},
+        "updated_at": {"key": "properties.updatedAt", "type": "iso-8601"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(SubscriptionCreateOrUpdateParameters, self).__init__(**kwargs)
-        self.location = kwargs['location']
-        self.type = kwargs.get('type', None)
+        self.location = kwargs["location"]
+        self.type = kwargs.get("type", None)
         self.accessed_at = None
-        self.auto_delete_on_idle = kwargs.get('auto_delete_on_idle', None)
+        self.auto_delete_on_idle = kwargs.get("auto_delete_on_idle", None)
         self.count_details = None
         self.created_at = None
-        self.default_message_time_to_live = kwargs.get('default_message_time_to_live', None)
-        self.dead_lettering_on_filter_evaluation_exceptions = kwargs.get('dead_lettering_on_filter_evaluation_exceptions', None)
-        self.dead_lettering_on_message_expiration = kwargs.get('dead_lettering_on_message_expiration', None)
-        self.enable_batched_operations = kwargs.get('enable_batched_operations', None)
-        self.entity_availability_status = kwargs.get('entity_availability_status', None)
-        self.is_read_only = kwargs.get('is_read_only', None)
-        self.lock_duration = kwargs.get('lock_duration', None)
-        self.max_delivery_count = kwargs.get('max_delivery_count', None)
+        self.default_message_time_to_live = kwargs.get("default_message_time_to_live", None)
+        self.dead_lettering_on_filter_evaluation_exceptions = kwargs.get(
+            "dead_lettering_on_filter_evaluation_exceptions", None
+        )
+        self.dead_lettering_on_message_expiration = kwargs.get("dead_lettering_on_message_expiration", None)
+        self.enable_batched_operations = kwargs.get("enable_batched_operations", None)
+        self.entity_availability_status = kwargs.get("entity_availability_status", None)
+        self.is_read_only = kwargs.get("is_read_only", None)
+        self.lock_duration = kwargs.get("lock_duration", None)
+        self.max_delivery_count = kwargs.get("max_delivery_count", None)
         self.message_count = None
-        self.requires_session = kwargs.get('requires_session', None)
-        self.status = kwargs.get('status', None)
+        self.requires_session = kwargs.get("requires_session", None)
+        self.status = kwargs.get("status", None)
         self.updated_at = None
 
 
@@ -1106,17 +1051,14 @@ class SubscriptionListResult(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[SubscriptionResource]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[SubscriptionResource]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(SubscriptionListResult, self).__init__(**kwargs)
-        self.value = kwargs.get('value', None)
-        self.next_link = kwargs.get('next_link', None)
+        self.value = kwargs.get("value", None)
+        self.next_link = kwargs.get("next_link", None)
 
 
 class SubscriptionResource(Resource):
@@ -1177,59 +1119,61 @@ class SubscriptionResource(Resource):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'accessed_at': {'readonly': True},
-        'count_details': {'readonly': True},
-        'created_at': {'readonly': True},
-        'message_count': {'readonly': True},
-        'updated_at': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
+        "accessed_at": {"readonly": True},
+        "count_details": {"readonly": True},
+        "created_at": {"readonly": True},
+        "message_count": {"readonly": True},
+        "updated_at": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'location': {'key': 'location', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'accessed_at': {'key': 'properties.accessedAt', 'type': 'iso-8601'},
-        'auto_delete_on_idle': {'key': 'properties.autoDeleteOnIdle', 'type': 'str'},
-        'count_details': {'key': 'properties.countDetails', 'type': 'MessageCountDetails'},
-        'created_at': {'key': 'properties.createdAt', 'type': 'iso-8601'},
-        'default_message_time_to_live': {'key': 'properties.defaultMessageTimeToLive', 'type': 'str'},
-        'dead_lettering_on_filter_evaluation_exceptions': {'key': 'properties.deadLetteringOnFilterEvaluationExceptions', 'type': 'bool'},
-        'dead_lettering_on_message_expiration': {'key': 'properties.deadLetteringOnMessageExpiration', 'type': 'bool'},
-        'enable_batched_operations': {'key': 'properties.enableBatchedOperations', 'type': 'bool'},
-        'entity_availability_status': {'key': 'properties.entityAvailabilityStatus', 'type': 'str'},
-        'is_read_only': {'key': 'properties.isReadOnly', 'type': 'bool'},
-        'lock_duration': {'key': 'properties.lockDuration', 'type': 'str'},
-        'max_delivery_count': {'key': 'properties.maxDeliveryCount', 'type': 'int'},
-        'message_count': {'key': 'properties.messageCount', 'type': 'long'},
-        'requires_session': {'key': 'properties.requiresSession', 'type': 'bool'},
-        'status': {'key': 'properties.status', 'type': 'str'},
-        'updated_at': {'key': 'properties.updatedAt', 'type': 'iso-8601'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "location": {"key": "location", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "accessed_at": {"key": "properties.accessedAt", "type": "iso-8601"},
+        "auto_delete_on_idle": {"key": "properties.autoDeleteOnIdle", "type": "str"},
+        "count_details": {"key": "properties.countDetails", "type": "MessageCountDetails"},
+        "created_at": {"key": "properties.createdAt", "type": "iso-8601"},
+        "default_message_time_to_live": {"key": "properties.defaultMessageTimeToLive", "type": "str"},
+        "dead_lettering_on_filter_evaluation_exceptions": {
+            "key": "properties.deadLetteringOnFilterEvaluationExceptions",
+            "type": "bool",
+        },
+        "dead_lettering_on_message_expiration": {"key": "properties.deadLetteringOnMessageExpiration", "type": "bool"},
+        "enable_batched_operations": {"key": "properties.enableBatchedOperations", "type": "bool"},
+        "entity_availability_status": {"key": "properties.entityAvailabilityStatus", "type": "str"},
+        "is_read_only": {"key": "properties.isReadOnly", "type": "bool"},
+        "lock_duration": {"key": "properties.lockDuration", "type": "str"},
+        "max_delivery_count": {"key": "properties.maxDeliveryCount", "type": "int"},
+        "message_count": {"key": "properties.messageCount", "type": "long"},
+        "requires_session": {"key": "properties.requiresSession", "type": "bool"},
+        "status": {"key": "properties.status", "type": "str"},
+        "updated_at": {"key": "properties.updatedAt", "type": "iso-8601"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(SubscriptionResource, self).__init__(**kwargs)
         self.accessed_at = None
-        self.auto_delete_on_idle = kwargs.get('auto_delete_on_idle', None)
+        self.auto_delete_on_idle = kwargs.get("auto_delete_on_idle", None)
         self.count_details = None
         self.created_at = None
-        self.default_message_time_to_live = kwargs.get('default_message_time_to_live', None)
-        self.dead_lettering_on_filter_evaluation_exceptions = kwargs.get('dead_lettering_on_filter_evaluation_exceptions', None)
-        self.dead_lettering_on_message_expiration = kwargs.get('dead_lettering_on_message_expiration', None)
-        self.enable_batched_operations = kwargs.get('enable_batched_operations', None)
-        self.entity_availability_status = kwargs.get('entity_availability_status', None)
-        self.is_read_only = kwargs.get('is_read_only', None)
-        self.lock_duration = kwargs.get('lock_duration', None)
-        self.max_delivery_count = kwargs.get('max_delivery_count', None)
+        self.default_message_time_to_live = kwargs.get("default_message_time_to_live", None)
+        self.dead_lettering_on_filter_evaluation_exceptions = kwargs.get(
+            "dead_lettering_on_filter_evaluation_exceptions", None
+        )
+        self.dead_lettering_on_message_expiration = kwargs.get("dead_lettering_on_message_expiration", None)
+        self.enable_batched_operations = kwargs.get("enable_batched_operations", None)
+        self.entity_availability_status = kwargs.get("entity_availability_status", None)
+        self.is_read_only = kwargs.get("is_read_only", None)
+        self.lock_duration = kwargs.get("lock_duration", None)
+        self.max_delivery_count = kwargs.get("max_delivery_count", None)
         self.message_count = None
-        self.requires_session = kwargs.get('requires_session', None)
-        self.status = kwargs.get('status', None)
+        self.requires_session = kwargs.get("requires_session", None)
+        self.status = kwargs.get("status", None)
         self.updated_at = None
 
 
@@ -1302,66 +1246,66 @@ class TopicCreateOrUpdateParameters(msrest.serialization.Model):
     """
 
     _validation = {
-        'location': {'required': True},
-        'accessed_at': {'readonly': True},
-        'created_at': {'readonly': True},
-        'count_details': {'readonly': True},
-        'size_in_bytes': {'readonly': True},
-        'subscription_count': {'readonly': True},
-        'updated_at': {'readonly': True},
+        "location": {"required": True},
+        "accessed_at": {"readonly": True},
+        "created_at": {"readonly": True},
+        "count_details": {"readonly": True},
+        "size_in_bytes": {"readonly": True},
+        "subscription_count": {"readonly": True},
+        "updated_at": {"readonly": True},
     }
 
     _attribute_map = {
-        'name': {'key': 'name', 'type': 'str'},
-        'location': {'key': 'location', 'type': 'str'},
-        'accessed_at': {'key': 'properties.accessedAt', 'type': 'iso-8601'},
-        'auto_delete_on_idle': {'key': 'properties.autoDeleteOnIdle', 'type': 'str'},
-        'entity_availability_status': {'key': 'properties.entityAvailabilityStatus', 'type': 'str'},
-        'created_at': {'key': 'properties.createdAt', 'type': 'iso-8601'},
-        'count_details': {'key': 'properties.countDetails', 'type': 'MessageCountDetails'},
-        'default_message_time_to_live': {'key': 'properties.defaultMessageTimeToLive', 'type': 'str'},
-        'duplicate_detection_history_time_window': {'key': 'properties.duplicateDetectionHistoryTimeWindow', 'type': 'str'},
-        'enable_batched_operations': {'key': 'properties.enableBatchedOperations', 'type': 'bool'},
-        'enable_express': {'key': 'properties.enableExpress', 'type': 'bool'},
-        'enable_partitioning': {'key': 'properties.enablePartitioning', 'type': 'bool'},
-        'filtering_messages_before_publishing': {'key': 'properties.filteringMessagesBeforePublishing', 'type': 'bool'},
-        'is_anonymous_accessible': {'key': 'properties.isAnonymousAccessible', 'type': 'bool'},
-        'is_express': {'key': 'properties.isExpress', 'type': 'bool'},
-        'max_size_in_megabytes': {'key': 'properties.maxSizeInMegabytes', 'type': 'long'},
-        'requires_duplicate_detection': {'key': 'properties.requiresDuplicateDetection', 'type': 'bool'},
-        'size_in_bytes': {'key': 'properties.sizeInBytes', 'type': 'long'},
-        'status': {'key': 'properties.status', 'type': 'str'},
-        'subscription_count': {'key': 'properties.subscriptionCount', 'type': 'int'},
-        'support_ordering': {'key': 'properties.supportOrdering', 'type': 'bool'},
-        'updated_at': {'key': 'properties.updatedAt', 'type': 'iso-8601'},
+        "name": {"key": "name", "type": "str"},
+        "location": {"key": "location", "type": "str"},
+        "accessed_at": {"key": "properties.accessedAt", "type": "iso-8601"},
+        "auto_delete_on_idle": {"key": "properties.autoDeleteOnIdle", "type": "str"},
+        "entity_availability_status": {"key": "properties.entityAvailabilityStatus", "type": "str"},
+        "created_at": {"key": "properties.createdAt", "type": "iso-8601"},
+        "count_details": {"key": "properties.countDetails", "type": "MessageCountDetails"},
+        "default_message_time_to_live": {"key": "properties.defaultMessageTimeToLive", "type": "str"},
+        "duplicate_detection_history_time_window": {
+            "key": "properties.duplicateDetectionHistoryTimeWindow",
+            "type": "str",
+        },
+        "enable_batched_operations": {"key": "properties.enableBatchedOperations", "type": "bool"},
+        "enable_express": {"key": "properties.enableExpress", "type": "bool"},
+        "enable_partitioning": {"key": "properties.enablePartitioning", "type": "bool"},
+        "filtering_messages_before_publishing": {"key": "properties.filteringMessagesBeforePublishing", "type": "bool"},
+        "is_anonymous_accessible": {"key": "properties.isAnonymousAccessible", "type": "bool"},
+        "is_express": {"key": "properties.isExpress", "type": "bool"},
+        "max_size_in_megabytes": {"key": "properties.maxSizeInMegabytes", "type": "long"},
+        "requires_duplicate_detection": {"key": "properties.requiresDuplicateDetection", "type": "bool"},
+        "size_in_bytes": {"key": "properties.sizeInBytes", "type": "long"},
+        "status": {"key": "properties.status", "type": "str"},
+        "subscription_count": {"key": "properties.subscriptionCount", "type": "int"},
+        "support_ordering": {"key": "properties.supportOrdering", "type": "bool"},
+        "updated_at": {"key": "properties.updatedAt", "type": "iso-8601"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(TopicCreateOrUpdateParameters, self).__init__(**kwargs)
-        self.name = kwargs.get('name', None)
-        self.location = kwargs['location']
+        self.name = kwargs.get("name", None)
+        self.location = kwargs["location"]
         self.accessed_at = None
-        self.auto_delete_on_idle = kwargs.get('auto_delete_on_idle', None)
-        self.entity_availability_status = kwargs.get('entity_availability_status', None)
+        self.auto_delete_on_idle = kwargs.get("auto_delete_on_idle", None)
+        self.entity_availability_status = kwargs.get("entity_availability_status", None)
         self.created_at = None
         self.count_details = None
-        self.default_message_time_to_live = kwargs.get('default_message_time_to_live', None)
-        self.duplicate_detection_history_time_window = kwargs.get('duplicate_detection_history_time_window', None)
-        self.enable_batched_operations = kwargs.get('enable_batched_operations', None)
-        self.enable_express = kwargs.get('enable_express', None)
-        self.enable_partitioning = kwargs.get('enable_partitioning', None)
-        self.filtering_messages_before_publishing = kwargs.get('filtering_messages_before_publishing', None)
-        self.is_anonymous_accessible = kwargs.get('is_anonymous_accessible', None)
-        self.is_express = kwargs.get('is_express', None)
-        self.max_size_in_megabytes = kwargs.get('max_size_in_megabytes', None)
-        self.requires_duplicate_detection = kwargs.get('requires_duplicate_detection', None)
+        self.default_message_time_to_live = kwargs.get("default_message_time_to_live", None)
+        self.duplicate_detection_history_time_window = kwargs.get("duplicate_detection_history_time_window", None)
+        self.enable_batched_operations = kwargs.get("enable_batched_operations", None)
+        self.enable_express = kwargs.get("enable_express", None)
+        self.enable_partitioning = kwargs.get("enable_partitioning", None)
+        self.filtering_messages_before_publishing = kwargs.get("filtering_messages_before_publishing", None)
+        self.is_anonymous_accessible = kwargs.get("is_anonymous_accessible", None)
+        self.is_express = kwargs.get("is_express", None)
+        self.max_size_in_megabytes = kwargs.get("max_size_in_megabytes", None)
+        self.requires_duplicate_detection = kwargs.get("requires_duplicate_detection", None)
         self.size_in_bytes = None
-        self.status = kwargs.get('status', None)
+        self.status = kwargs.get("status", None)
         self.subscription_count = None
-        self.support_ordering = kwargs.get('support_ordering', None)
+        self.support_ordering = kwargs.get("support_ordering", None)
         self.updated_at = None
 
 
@@ -1376,17 +1320,14 @@ class TopicListResult(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[TopicResource]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[TopicResource]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(TopicListResult, self).__init__(**kwargs)
-        self.value = kwargs.get('value', None)
-        self.next_link = kwargs.get('next_link', None)
+        self.value = kwargs.get("value", None)
+        self.next_link = kwargs.get("next_link", None)
 
 
 class TopicResource(Resource):
@@ -1460,66 +1401,66 @@ class TopicResource(Resource):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'accessed_at': {'readonly': True},
-        'created_at': {'readonly': True},
-        'count_details': {'readonly': True},
-        'size_in_bytes': {'readonly': True},
-        'subscription_count': {'readonly': True},
-        'updated_at': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
+        "accessed_at": {"readonly": True},
+        "created_at": {"readonly": True},
+        "count_details": {"readonly": True},
+        "size_in_bytes": {"readonly": True},
+        "subscription_count": {"readonly": True},
+        "updated_at": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'location': {'key': 'location', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'accessed_at': {'key': 'properties.accessedAt', 'type': 'iso-8601'},
-        'auto_delete_on_idle': {'key': 'properties.autoDeleteOnIdle', 'type': 'str'},
-        'entity_availability_status': {'key': 'properties.entityAvailabilityStatus', 'type': 'str'},
-        'created_at': {'key': 'properties.createdAt', 'type': 'iso-8601'},
-        'count_details': {'key': 'properties.countDetails', 'type': 'MessageCountDetails'},
-        'default_message_time_to_live': {'key': 'properties.defaultMessageTimeToLive', 'type': 'str'},
-        'duplicate_detection_history_time_window': {'key': 'properties.duplicateDetectionHistoryTimeWindow', 'type': 'str'},
-        'enable_batched_operations': {'key': 'properties.enableBatchedOperations', 'type': 'bool'},
-        'enable_express': {'key': 'properties.enableExpress', 'type': 'bool'},
-        'enable_partitioning': {'key': 'properties.enablePartitioning', 'type': 'bool'},
-        'filtering_messages_before_publishing': {'key': 'properties.filteringMessagesBeforePublishing', 'type': 'bool'},
-        'is_anonymous_accessible': {'key': 'properties.isAnonymousAccessible', 'type': 'bool'},
-        'is_express': {'key': 'properties.isExpress', 'type': 'bool'},
-        'max_size_in_megabytes': {'key': 'properties.maxSizeInMegabytes', 'type': 'long'},
-        'requires_duplicate_detection': {'key': 'properties.requiresDuplicateDetection', 'type': 'bool'},
-        'size_in_bytes': {'key': 'properties.sizeInBytes', 'type': 'long'},
-        'status': {'key': 'properties.status', 'type': 'str'},
-        'subscription_count': {'key': 'properties.subscriptionCount', 'type': 'int'},
-        'support_ordering': {'key': 'properties.supportOrdering', 'type': 'bool'},
-        'updated_at': {'key': 'properties.updatedAt', 'type': 'iso-8601'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "location": {"key": "location", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "accessed_at": {"key": "properties.accessedAt", "type": "iso-8601"},
+        "auto_delete_on_idle": {"key": "properties.autoDeleteOnIdle", "type": "str"},
+        "entity_availability_status": {"key": "properties.entityAvailabilityStatus", "type": "str"},
+        "created_at": {"key": "properties.createdAt", "type": "iso-8601"},
+        "count_details": {"key": "properties.countDetails", "type": "MessageCountDetails"},
+        "default_message_time_to_live": {"key": "properties.defaultMessageTimeToLive", "type": "str"},
+        "duplicate_detection_history_time_window": {
+            "key": "properties.duplicateDetectionHistoryTimeWindow",
+            "type": "str",
+        },
+        "enable_batched_operations": {"key": "properties.enableBatchedOperations", "type": "bool"},
+        "enable_express": {"key": "properties.enableExpress", "type": "bool"},
+        "enable_partitioning": {"key": "properties.enablePartitioning", "type": "bool"},
+        "filtering_messages_before_publishing": {"key": "properties.filteringMessagesBeforePublishing", "type": "bool"},
+        "is_anonymous_accessible": {"key": "properties.isAnonymousAccessible", "type": "bool"},
+        "is_express": {"key": "properties.isExpress", "type": "bool"},
+        "max_size_in_megabytes": {"key": "properties.maxSizeInMegabytes", "type": "long"},
+        "requires_duplicate_detection": {"key": "properties.requiresDuplicateDetection", "type": "bool"},
+        "size_in_bytes": {"key": "properties.sizeInBytes", "type": "long"},
+        "status": {"key": "properties.status", "type": "str"},
+        "subscription_count": {"key": "properties.subscriptionCount", "type": "int"},
+        "support_ordering": {"key": "properties.supportOrdering", "type": "bool"},
+        "updated_at": {"key": "properties.updatedAt", "type": "iso-8601"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(TopicResource, self).__init__(**kwargs)
         self.accessed_at = None
-        self.auto_delete_on_idle = kwargs.get('auto_delete_on_idle', None)
-        self.entity_availability_status = kwargs.get('entity_availability_status', None)
+        self.auto_delete_on_idle = kwargs.get("auto_delete_on_idle", None)
+        self.entity_availability_status = kwargs.get("entity_availability_status", None)
         self.created_at = None
         self.count_details = None
-        self.default_message_time_to_live = kwargs.get('default_message_time_to_live', None)
-        self.duplicate_detection_history_time_window = kwargs.get('duplicate_detection_history_time_window', None)
-        self.enable_batched_operations = kwargs.get('enable_batched_operations', None)
-        self.enable_express = kwargs.get('enable_express', None)
-        self.enable_partitioning = kwargs.get('enable_partitioning', None)
-        self.filtering_messages_before_publishing = kwargs.get('filtering_messages_before_publishing', None)
-        self.is_anonymous_accessible = kwargs.get('is_anonymous_accessible', None)
-        self.is_express = kwargs.get('is_express', None)
-        self.max_size_in_megabytes = kwargs.get('max_size_in_megabytes', None)
-        self.requires_duplicate_detection = kwargs.get('requires_duplicate_detection', None)
+        self.default_message_time_to_live = kwargs.get("default_message_time_to_live", None)
+        self.duplicate_detection_history_time_window = kwargs.get("duplicate_detection_history_time_window", None)
+        self.enable_batched_operations = kwargs.get("enable_batched_operations", None)
+        self.enable_express = kwargs.get("enable_express", None)
+        self.enable_partitioning = kwargs.get("enable_partitioning", None)
+        self.filtering_messages_before_publishing = kwargs.get("filtering_messages_before_publishing", None)
+        self.is_anonymous_accessible = kwargs.get("is_anonymous_accessible", None)
+        self.is_express = kwargs.get("is_express", None)
+        self.max_size_in_megabytes = kwargs.get("max_size_in_megabytes", None)
+        self.requires_duplicate_detection = kwargs.get("requires_duplicate_detection", None)
         self.size_in_bytes = None
-        self.status = kwargs.get('status', None)
+        self.status = kwargs.get("status", None)
         self.subscription_count = None
-        self.support_ordering = kwargs.get('support_ordering', None)
+        self.support_ordering = kwargs.get("support_ordering", None)
         self.updated_at = None
