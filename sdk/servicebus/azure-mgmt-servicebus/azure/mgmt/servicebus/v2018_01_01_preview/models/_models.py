@@ -38,29 +38,26 @@ class AccessKeys(msrest.serialization.Model):
     """
 
     _validation = {
-        'primary_connection_string': {'readonly': True},
-        'secondary_connection_string': {'readonly': True},
-        'alias_primary_connection_string': {'readonly': True},
-        'alias_secondary_connection_string': {'readonly': True},
-        'primary_key': {'readonly': True},
-        'secondary_key': {'readonly': True},
-        'key_name': {'readonly': True},
+        "primary_connection_string": {"readonly": True},
+        "secondary_connection_string": {"readonly": True},
+        "alias_primary_connection_string": {"readonly": True},
+        "alias_secondary_connection_string": {"readonly": True},
+        "primary_key": {"readonly": True},
+        "secondary_key": {"readonly": True},
+        "key_name": {"readonly": True},
     }
 
     _attribute_map = {
-        'primary_connection_string': {'key': 'primaryConnectionString', 'type': 'str'},
-        'secondary_connection_string': {'key': 'secondaryConnectionString', 'type': 'str'},
-        'alias_primary_connection_string': {'key': 'aliasPrimaryConnectionString', 'type': 'str'},
-        'alias_secondary_connection_string': {'key': 'aliasSecondaryConnectionString', 'type': 'str'},
-        'primary_key': {'key': 'primaryKey', 'type': 'str'},
-        'secondary_key': {'key': 'secondaryKey', 'type': 'str'},
-        'key_name': {'key': 'keyName', 'type': 'str'},
+        "primary_connection_string": {"key": "primaryConnectionString", "type": "str"},
+        "secondary_connection_string": {"key": "secondaryConnectionString", "type": "str"},
+        "alias_primary_connection_string": {"key": "aliasPrimaryConnectionString", "type": "str"},
+        "alias_secondary_connection_string": {"key": "aliasSecondaryConnectionString", "type": "str"},
+        "primary_key": {"key": "primaryKey", "type": "str"},
+        "secondary_key": {"key": "secondaryKey", "type": "str"},
+        "key_name": {"key": "keyName", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(AccessKeys, self).__init__(**kwargs)
         self.primary_connection_string = None
         self.secondary_connection_string = None
@@ -85,19 +82,16 @@ class Action(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'sql_expression': {'key': 'sqlExpression', 'type': 'str'},
-        'compatibility_level': {'key': 'compatibilityLevel', 'type': 'int'},
-        'requires_preprocessing': {'key': 'requiresPreprocessing', 'type': 'bool'},
+        "sql_expression": {"key": "sqlExpression", "type": "str"},
+        "compatibility_level": {"key": "compatibilityLevel", "type": "int"},
+        "requires_preprocessing": {"key": "requiresPreprocessing", "type": "bool"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(Action, self).__init__(**kwargs)
-        self.sql_expression = kwargs.get('sql_expression', None)
-        self.compatibility_level = kwargs.get('compatibility_level', None)
-        self.requires_preprocessing = kwargs.get('requires_preprocessing', True)
+        self.sql_expression = kwargs.get("sql_expression", None)
+        self.compatibility_level = kwargs.get("compatibility_level", None)
+        self.requires_preprocessing = kwargs.get("requires_preprocessing", True)
 
 
 class Resource(msrest.serialization.Model):
@@ -114,21 +108,18 @@ class Resource(msrest.serialization.Model):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(Resource, self).__init__(**kwargs)
         self.id = None
         self.name = None
@@ -165,34 +156,31 @@ class ArmDisasterRecovery(Resource):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'provisioning_state': {'readonly': True},
-        'pending_replication_operations_count': {'readonly': True},
-        'role': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
+        "provisioning_state": {"readonly": True},
+        "pending_replication_operations_count": {"readonly": True},
+        "role": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
-        'pending_replication_operations_count': {'key': 'properties.pendingReplicationOperationsCount', 'type': 'long'},
-        'partner_namespace': {'key': 'properties.partnerNamespace', 'type': 'str'},
-        'alternate_name': {'key': 'properties.alternateName', 'type': 'str'},
-        'role': {'key': 'properties.role', 'type': 'str'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "provisioning_state": {"key": "properties.provisioningState", "type": "str"},
+        "pending_replication_operations_count": {"key": "properties.pendingReplicationOperationsCount", "type": "long"},
+        "partner_namespace": {"key": "properties.partnerNamespace", "type": "str"},
+        "alternate_name": {"key": "properties.alternateName", "type": "str"},
+        "role": {"key": "properties.role", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ArmDisasterRecovery, self).__init__(**kwargs)
         self.provisioning_state = None
         self.pending_replication_operations_count = None
-        self.partner_namespace = kwargs.get('partner_namespace', None)
-        self.alternate_name = kwargs.get('alternate_name', None)
+        self.partner_namespace = kwargs.get("partner_namespace", None)
+        self.alternate_name = kwargs.get("alternate_name", None)
         self.role = None
 
 
@@ -209,20 +197,17 @@ class ArmDisasterRecoveryListResult(msrest.serialization.Model):
     """
 
     _validation = {
-        'next_link': {'readonly': True},
+        "next_link": {"readonly": True},
     }
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[ArmDisasterRecovery]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[ArmDisasterRecovery]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ArmDisasterRecoveryListResult, self).__init__(**kwargs)
-        self.value = kwargs.get('value', None)
+        self.value = kwargs.get("value", None)
         self.next_link = None
 
 
@@ -247,28 +232,25 @@ class CaptureDescription(msrest.serialization.Model):
     """
 
     _validation = {
-        'interval_in_seconds': {'maximum': 900, 'minimum': 60},
-        'size_limit_in_bytes': {'maximum': 524288000, 'minimum': 10485760},
+        "interval_in_seconds": {"maximum": 900, "minimum": 60},
+        "size_limit_in_bytes": {"maximum": 524288000, "minimum": 10485760},
     }
 
     _attribute_map = {
-        'enabled': {'key': 'enabled', 'type': 'bool'},
-        'encoding': {'key': 'encoding', 'type': 'str'},
-        'interval_in_seconds': {'key': 'intervalInSeconds', 'type': 'int'},
-        'size_limit_in_bytes': {'key': 'sizeLimitInBytes', 'type': 'int'},
-        'destination': {'key': 'destination', 'type': 'Destination'},
+        "enabled": {"key": "enabled", "type": "bool"},
+        "encoding": {"key": "encoding", "type": "str"},
+        "interval_in_seconds": {"key": "intervalInSeconds", "type": "int"},
+        "size_limit_in_bytes": {"key": "sizeLimitInBytes", "type": "int"},
+        "destination": {"key": "destination", "type": "Destination"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(CaptureDescription, self).__init__(**kwargs)
-        self.enabled = kwargs.get('enabled', None)
-        self.encoding = kwargs.get('encoding', None)
-        self.interval_in_seconds = kwargs.get('interval_in_seconds', None)
-        self.size_limit_in_bytes = kwargs.get('size_limit_in_bytes', None)
-        self.destination = kwargs.get('destination', None)
+        self.enabled = kwargs.get("enabled", None)
+        self.encoding = kwargs.get("encoding", None)
+        self.interval_in_seconds = kwargs.get("interval_in_seconds", None)
+        self.size_limit_in_bytes = kwargs.get("size_limit_in_bytes", None)
+        self.destination = kwargs.get("destination", None)
 
 
 class CheckNameAvailability(msrest.serialization.Model):
@@ -283,19 +265,16 @@ class CheckNameAvailability(msrest.serialization.Model):
     """
 
     _validation = {
-        'name': {'required': True},
+        "name": {"required": True},
     }
 
     _attribute_map = {
-        'name': {'key': 'name', 'type': 'str'},
+        "name": {"key": "name", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(CheckNameAvailability, self).__init__(**kwargs)
-        self.name = kwargs['name']
+        self.name = kwargs["name"]
 
 
 class CheckNameAvailabilityResult(msrest.serialization.Model):
@@ -315,23 +294,20 @@ class CheckNameAvailabilityResult(msrest.serialization.Model):
     """
 
     _validation = {
-        'message': {'readonly': True},
+        "message": {"readonly": True},
     }
 
     _attribute_map = {
-        'message': {'key': 'message', 'type': 'str'},
-        'name_available': {'key': 'nameAvailable', 'type': 'bool'},
-        'reason': {'key': 'reason', 'type': 'str'},
+        "message": {"key": "message", "type": "str"},
+        "name_available": {"key": "nameAvailable", "type": "bool"},
+        "reason": {"key": "reason", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(CheckNameAvailabilityResult, self).__init__(**kwargs)
         self.message = None
-        self.name_available = kwargs.get('name_available', None)
-        self.reason = kwargs.get('reason', None)
+        self.name_available = kwargs.get("name_available", None)
+        self.reason = kwargs.get("reason", None)
 
 
 class ConnectionState(msrest.serialization.Model):
@@ -346,17 +322,14 @@ class ConnectionState(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'status': {'key': 'status', 'type': 'str'},
-        'description': {'key': 'description', 'type': 'str'},
+        "status": {"key": "status", "type": "str"},
+        "description": {"key": "description", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ConnectionState, self).__init__(**kwargs)
-        self.status = kwargs.get('status', None)
-        self.description = kwargs.get('description', None)
+        self.status = kwargs.get("status", None)
+        self.description = kwargs.get("description", None)
 
 
 class CorrelationFilter(msrest.serialization.Model):
@@ -386,33 +359,30 @@ class CorrelationFilter(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'properties': {'key': 'properties', 'type': '{str}'},
-        'correlation_id': {'key': 'correlationId', 'type': 'str'},
-        'message_id': {'key': 'messageId', 'type': 'str'},
-        'to': {'key': 'to', 'type': 'str'},
-        'reply_to': {'key': 'replyTo', 'type': 'str'},
-        'label': {'key': 'label', 'type': 'str'},
-        'session_id': {'key': 'sessionId', 'type': 'str'},
-        'reply_to_session_id': {'key': 'replyToSessionId', 'type': 'str'},
-        'content_type': {'key': 'contentType', 'type': 'str'},
-        'requires_preprocessing': {'key': 'requiresPreprocessing', 'type': 'bool'},
+        "properties": {"key": "properties", "type": "{str}"},
+        "correlation_id": {"key": "correlationId", "type": "str"},
+        "message_id": {"key": "messageId", "type": "str"},
+        "to": {"key": "to", "type": "str"},
+        "reply_to": {"key": "replyTo", "type": "str"},
+        "label": {"key": "label", "type": "str"},
+        "session_id": {"key": "sessionId", "type": "str"},
+        "reply_to_session_id": {"key": "replyToSessionId", "type": "str"},
+        "content_type": {"key": "contentType", "type": "str"},
+        "requires_preprocessing": {"key": "requiresPreprocessing", "type": "bool"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(CorrelationFilter, self).__init__(**kwargs)
-        self.properties = kwargs.get('properties', None)
-        self.correlation_id = kwargs.get('correlation_id', None)
-        self.message_id = kwargs.get('message_id', None)
-        self.to = kwargs.get('to', None)
-        self.reply_to = kwargs.get('reply_to', None)
-        self.label = kwargs.get('label', None)
-        self.session_id = kwargs.get('session_id', None)
-        self.reply_to_session_id = kwargs.get('reply_to_session_id', None)
-        self.content_type = kwargs.get('content_type', None)
-        self.requires_preprocessing = kwargs.get('requires_preprocessing', True)
+        self.properties = kwargs.get("properties", None)
+        self.correlation_id = kwargs.get("correlation_id", None)
+        self.message_id = kwargs.get("message_id", None)
+        self.to = kwargs.get("to", None)
+        self.reply_to = kwargs.get("reply_to", None)
+        self.label = kwargs.get("label", None)
+        self.session_id = kwargs.get("session_id", None)
+        self.reply_to_session_id = kwargs.get("reply_to_session_id", None)
+        self.content_type = kwargs.get("content_type", None)
+        self.requires_preprocessing = kwargs.get("requires_preprocessing", True)
 
 
 class Destination(msrest.serialization.Model):
@@ -432,21 +402,18 @@ class Destination(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'name': {'key': 'name', 'type': 'str'},
-        'storage_account_resource_id': {'key': 'properties.storageAccountResourceId', 'type': 'str'},
-        'blob_container': {'key': 'properties.blobContainer', 'type': 'str'},
-        'archive_name_format': {'key': 'properties.archiveNameFormat', 'type': 'str'},
+        "name": {"key": "name", "type": "str"},
+        "storage_account_resource_id": {"key": "properties.storageAccountResourceId", "type": "str"},
+        "blob_container": {"key": "properties.blobContainer", "type": "str"},
+        "archive_name_format": {"key": "properties.archiveNameFormat", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(Destination, self).__init__(**kwargs)
-        self.name = kwargs.get('name', None)
-        self.storage_account_resource_id = kwargs.get('storage_account_resource_id', None)
-        self.blob_container = kwargs.get('blob_container', None)
-        self.archive_name_format = kwargs.get('archive_name_format', None)
+        self.name = kwargs.get("name", None)
+        self.storage_account_resource_id = kwargs.get("storage_account_resource_id", None)
+        self.blob_container = kwargs.get("blob_container", None)
+        self.archive_name_format = kwargs.get("archive_name_format", None)
 
 
 class Encryption(msrest.serialization.Model):
@@ -462,17 +429,14 @@ class Encryption(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'key_vault_properties': {'key': 'keyVaultProperties', 'type': 'KeyVaultProperties'},
-        'key_source': {'key': 'keySource', 'type': 'str'},
+        "key_vault_properties": {"key": "keyVaultProperties", "type": "KeyVaultProperties"},
+        "key_source": {"key": "keySource", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(Encryption, self).__init__(**kwargs)
-        self.key_vault_properties = kwargs.get('key_vault_properties', None)
-        self.key_source = kwargs.get('key_source', "Microsoft.KeyVault")
+        self.key_vault_properties = kwargs.get("key_vault_properties", None)
+        self.key_source = kwargs.get("key_source", "Microsoft.KeyVault")
 
 
 class ErrorAdditionalInfo(msrest.serialization.Model):
@@ -487,19 +451,16 @@ class ErrorAdditionalInfo(msrest.serialization.Model):
     """
 
     _validation = {
-        'type': {'readonly': True},
-        'info': {'readonly': True},
+        "type": {"readonly": True},
+        "info": {"readonly": True},
     }
 
     _attribute_map = {
-        'type': {'key': 'type', 'type': 'str'},
-        'info': {'key': 'info', 'type': 'object'},
+        "type": {"key": "type", "type": "str"},
+        "info": {"key": "info", "type": "object"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ErrorAdditionalInfo, self).__init__(**kwargs)
         self.type = None
         self.info = None
@@ -513,15 +474,12 @@ class ErrorResponse(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'error': {'key': 'error', 'type': 'ErrorResponseError'},
+        "error": {"key": "error", "type": "ErrorResponseError"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ErrorResponse, self).__init__(**kwargs)
-        self.error = kwargs.get('error', None)
+        self.error = kwargs.get("error", None)
 
 
 class ErrorResponseError(msrest.serialization.Model):
@@ -543,25 +501,22 @@ class ErrorResponseError(msrest.serialization.Model):
     """
 
     _validation = {
-        'code': {'readonly': True},
-        'message': {'readonly': True},
-        'target': {'readonly': True},
-        'details': {'readonly': True},
-        'additional_info': {'readonly': True},
+        "code": {"readonly": True},
+        "message": {"readonly": True},
+        "target": {"readonly": True},
+        "details": {"readonly": True},
+        "additional_info": {"readonly": True},
     }
 
     _attribute_map = {
-        'code': {'key': 'code', 'type': 'str'},
-        'message': {'key': 'message', 'type': 'str'},
-        'target': {'key': 'target', 'type': 'str'},
-        'details': {'key': 'details', 'type': '[ErrorResponse]'},
-        'additional_info': {'key': 'additionalInfo', 'type': '[ErrorAdditionalInfo]'},
+        "code": {"key": "code", "type": "str"},
+        "message": {"key": "message", "type": "str"},
+        "target": {"key": "target", "type": "str"},
+        "details": {"key": "details", "type": "[ErrorResponse]"},
+        "additional_info": {"key": "additionalInfo", "type": "[ErrorAdditionalInfo]"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ErrorResponseError, self).__init__(**kwargs)
         self.code = None
         self.message = None
@@ -602,41 +557,38 @@ class Eventhub(Resource):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'partition_ids': {'readonly': True},
-        'created_at': {'readonly': True},
-        'updated_at': {'readonly': True},
-        'message_retention_in_days': {'maximum': 7, 'minimum': 1},
-        'partition_count': {'maximum': 32, 'minimum': 1},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
+        "partition_ids": {"readonly": True},
+        "created_at": {"readonly": True},
+        "updated_at": {"readonly": True},
+        "message_retention_in_days": {"maximum": 7, "minimum": 1},
+        "partition_count": {"maximum": 32, "minimum": 1},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'partition_ids': {'key': 'properties.partitionIds', 'type': '[str]'},
-        'created_at': {'key': 'properties.createdAt', 'type': 'iso-8601'},
-        'updated_at': {'key': 'properties.updatedAt', 'type': 'iso-8601'},
-        'message_retention_in_days': {'key': 'properties.messageRetentionInDays', 'type': 'long'},
-        'partition_count': {'key': 'properties.partitionCount', 'type': 'long'},
-        'status': {'key': 'properties.status', 'type': 'str'},
-        'capture_description': {'key': 'properties.captureDescription', 'type': 'CaptureDescription'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "partition_ids": {"key": "properties.partitionIds", "type": "[str]"},
+        "created_at": {"key": "properties.createdAt", "type": "iso-8601"},
+        "updated_at": {"key": "properties.updatedAt", "type": "iso-8601"},
+        "message_retention_in_days": {"key": "properties.messageRetentionInDays", "type": "long"},
+        "partition_count": {"key": "properties.partitionCount", "type": "long"},
+        "status": {"key": "properties.status", "type": "str"},
+        "capture_description": {"key": "properties.captureDescription", "type": "CaptureDescription"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(Eventhub, self).__init__(**kwargs)
         self.partition_ids = None
         self.created_at = None
         self.updated_at = None
-        self.message_retention_in_days = kwargs.get('message_retention_in_days', None)
-        self.partition_count = kwargs.get('partition_count', None)
-        self.status = kwargs.get('status', None)
-        self.capture_description = kwargs.get('capture_description', None)
+        self.message_retention_in_days = kwargs.get("message_retention_in_days", None)
+        self.partition_count = kwargs.get("partition_count", None)
+        self.status = kwargs.get("status", None)
+        self.capture_description = kwargs.get("capture_description", None)
 
 
 class EventHubListResult(msrest.serialization.Model):
@@ -652,20 +604,17 @@ class EventHubListResult(msrest.serialization.Model):
     """
 
     _validation = {
-        'next_link': {'readonly': True},
+        "next_link": {"readonly": True},
     }
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[Eventhub]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[Eventhub]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(EventHubListResult, self).__init__(**kwargs)
-        self.value = kwargs.get('value', None)
+        self.value = kwargs.get("value", None)
         self.next_link = None
 
 
@@ -678,15 +627,12 @@ class FailoverProperties(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'is_safe_failover': {'key': 'properties.IsSafeFailover', 'type': 'bool'},
+        "is_safe_failover": {"key": "properties.IsSafeFailover", "type": "bool"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(FailoverProperties, self).__init__(**kwargs)
-        self.is_safe_failover = kwargs.get('is_safe_failover', None)
+        self.is_safe_failover = kwargs.get("is_safe_failover", None)
 
 
 class Identity(msrest.serialization.Model):
@@ -703,19 +649,16 @@ class Identity(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'principal_id': {'key': 'principalId', 'type': 'str'},
-        'tenant_id': {'key': 'tenantId', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
+        "principal_id": {"key": "principalId", "type": "str"},
+        "tenant_id": {"key": "tenantId", "type": "str"},
+        "type": {"key": "type", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(Identity, self).__init__(**kwargs)
-        self.principal_id = kwargs.get('principal_id', None)
-        self.tenant_id = kwargs.get('tenant_id', None)
-        self.type = kwargs.get('type', "SystemAssigned")
+        self.principal_id = kwargs.get("principal_id", None)
+        self.tenant_id = kwargs.get("tenant_id", None)
+        self.type = kwargs.get("type", "SystemAssigned")
 
 
 class IpFilterRule(Resource):
@@ -738,28 +681,25 @@ class IpFilterRule(Resource):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'ip_mask': {'key': 'properties.ipMask', 'type': 'str'},
-        'action': {'key': 'properties.action', 'type': 'str'},
-        'filter_name': {'key': 'properties.filterName', 'type': 'str'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "ip_mask": {"key": "properties.ipMask", "type": "str"},
+        "action": {"key": "properties.action", "type": "str"},
+        "filter_name": {"key": "properties.filterName", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(IpFilterRule, self).__init__(**kwargs)
-        self.ip_mask = kwargs.get('ip_mask', None)
-        self.action = kwargs.get('action', None)
-        self.filter_name = kwargs.get('filter_name', None)
+        self.ip_mask = kwargs.get("ip_mask", None)
+        self.action = kwargs.get("action", None)
+        self.filter_name = kwargs.get("filter_name", None)
 
 
 class IpFilterRuleListResult(msrest.serialization.Model):
@@ -773,17 +713,14 @@ class IpFilterRuleListResult(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[IpFilterRule]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[IpFilterRule]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(IpFilterRuleListResult, self).__init__(**kwargs)
-        self.value = kwargs.get('value', None)
-        self.next_link = kwargs.get('next_link', None)
+        self.value = kwargs.get("value", None)
+        self.next_link = kwargs.get("next_link", None)
 
 
 class KeyVaultProperties(msrest.serialization.Model):
@@ -796,17 +733,14 @@ class KeyVaultProperties(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'key_name': {'key': 'keyName', 'type': 'str'},
-        'key_vault_uri': {'key': 'keyVaultUri', 'type': 'str'},
+        "key_name": {"key": "keyName", "type": "str"},
+        "key_vault_uri": {"key": "keyVaultUri", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(KeyVaultProperties, self).__init__(**kwargs)
-        self.key_name = kwargs.get('key_name', None)
-        self.key_vault_uri = kwargs.get('key_vault_uri', None)
+        self.key_name = kwargs.get("key_name", None)
+        self.key_vault_uri = kwargs.get("key_vault_uri", None)
 
 
 class MessageCountDetails(msrest.serialization.Model):
@@ -828,25 +762,22 @@ class MessageCountDetails(msrest.serialization.Model):
     """
 
     _validation = {
-        'active_message_count': {'readonly': True},
-        'dead_letter_message_count': {'readonly': True},
-        'scheduled_message_count': {'readonly': True},
-        'transfer_message_count': {'readonly': True},
-        'transfer_dead_letter_message_count': {'readonly': True},
+        "active_message_count": {"readonly": True},
+        "dead_letter_message_count": {"readonly": True},
+        "scheduled_message_count": {"readonly": True},
+        "transfer_message_count": {"readonly": True},
+        "transfer_dead_letter_message_count": {"readonly": True},
     }
 
     _attribute_map = {
-        'active_message_count': {'key': 'activeMessageCount', 'type': 'long'},
-        'dead_letter_message_count': {'key': 'deadLetterMessageCount', 'type': 'long'},
-        'scheduled_message_count': {'key': 'scheduledMessageCount', 'type': 'long'},
-        'transfer_message_count': {'key': 'transferMessageCount', 'type': 'long'},
-        'transfer_dead_letter_message_count': {'key': 'transferDeadLetterMessageCount', 'type': 'long'},
+        "active_message_count": {"key": "activeMessageCount", "type": "long"},
+        "dead_letter_message_count": {"key": "deadLetterMessageCount", "type": "long"},
+        "scheduled_message_count": {"key": "scheduledMessageCount", "type": "long"},
+        "transfer_message_count": {"key": "transferMessageCount", "type": "long"},
+        "transfer_dead_letter_message_count": {"key": "transferDeadLetterMessageCount", "type": "long"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(MessageCountDetails, self).__init__(**kwargs)
         self.active_message_count = None
         self.dead_letter_message_count = None
@@ -868,20 +799,17 @@ class MigrationConfigListResult(msrest.serialization.Model):
     """
 
     _validation = {
-        'next_link': {'readonly': True},
+        "next_link": {"readonly": True},
     }
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[MigrationConfigProperties]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[MigrationConfigProperties]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(MigrationConfigListResult, self).__init__(**kwargs)
-        self.value = kwargs.get('value', None)
+        self.value = kwargs.get("value", None)
         self.next_link = None
 
 
@@ -911,34 +839,31 @@ class MigrationConfigProperties(Resource):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'provisioning_state': {'readonly': True},
-        'pending_replication_operations_count': {'readonly': True},
-        'migration_state': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
+        "provisioning_state": {"readonly": True},
+        "pending_replication_operations_count": {"readonly": True},
+        "migration_state": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
-        'pending_replication_operations_count': {'key': 'properties.pendingReplicationOperationsCount', 'type': 'long'},
-        'target_namespace': {'key': 'properties.targetNamespace', 'type': 'str'},
-        'post_migration_name': {'key': 'properties.postMigrationName', 'type': 'str'},
-        'migration_state': {'key': 'properties.migrationState', 'type': 'str'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "provisioning_state": {"key": "properties.provisioningState", "type": "str"},
+        "pending_replication_operations_count": {"key": "properties.pendingReplicationOperationsCount", "type": "long"},
+        "target_namespace": {"key": "properties.targetNamespace", "type": "str"},
+        "post_migration_name": {"key": "properties.postMigrationName", "type": "str"},
+        "migration_state": {"key": "properties.migrationState", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(MigrationConfigProperties, self).__init__(**kwargs)
         self.provisioning_state = None
         self.pending_replication_operations_count = None
-        self.target_namespace = kwargs.get('target_namespace', None)
-        self.post_migration_name = kwargs.get('post_migration_name', None)
+        self.target_namespace = kwargs.get("target_namespace", None)
+        self.post_migration_name = kwargs.get("post_migration_name", None)
         self.migration_state = None
 
 
@@ -964,28 +889,25 @@ class NetworkRuleSet(Resource):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'default_action': {'key': 'properties.defaultAction', 'type': 'str'},
-        'virtual_network_rules': {'key': 'properties.virtualNetworkRules', 'type': '[NWRuleSetVirtualNetworkRules]'},
-        'ip_rules': {'key': 'properties.ipRules', 'type': '[NWRuleSetIpRules]'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "default_action": {"key": "properties.defaultAction", "type": "str"},
+        "virtual_network_rules": {"key": "properties.virtualNetworkRules", "type": "[NWRuleSetVirtualNetworkRules]"},
+        "ip_rules": {"key": "properties.ipRules", "type": "[NWRuleSetIpRules]"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(NetworkRuleSet, self).__init__(**kwargs)
-        self.default_action = kwargs.get('default_action', None)
-        self.virtual_network_rules = kwargs.get('virtual_network_rules', None)
-        self.ip_rules = kwargs.get('ip_rules', None)
+        self.default_action = kwargs.get("default_action", None)
+        self.virtual_network_rules = kwargs.get("virtual_network_rules", None)
+        self.ip_rules = kwargs.get("ip_rules", None)
 
 
 class NetworkRuleSetListResult(msrest.serialization.Model):
@@ -999,17 +921,14 @@ class NetworkRuleSetListResult(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[NetworkRuleSet]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[NetworkRuleSet]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(NetworkRuleSetListResult, self).__init__(**kwargs)
-        self.value = kwargs.get('value', None)
-        self.next_link = kwargs.get('next_link', None)
+        self.value = kwargs.get("value", None)
+        self.next_link = kwargs.get("next_link", None)
 
 
 class NWRuleSetIpRules(msrest.serialization.Model):
@@ -1022,17 +941,14 @@ class NWRuleSetIpRules(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'ip_mask': {'key': 'ipMask', 'type': 'str'},
-        'action': {'key': 'action', 'type': 'str'},
+        "ip_mask": {"key": "ipMask", "type": "str"},
+        "action": {"key": "action", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(NWRuleSetIpRules, self).__init__(**kwargs)
-        self.ip_mask = kwargs.get('ip_mask', None)
-        self.action = kwargs.get('action', "Allow")
+        self.ip_mask = kwargs.get("ip_mask", None)
+        self.action = kwargs.get("action", "Allow")
 
 
 class NWRuleSetVirtualNetworkRules(msrest.serialization.Model):
@@ -1046,17 +962,14 @@ class NWRuleSetVirtualNetworkRules(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'subnet': {'key': 'subnet', 'type': 'Subnet'},
-        'ignore_missing_vnet_service_endpoint': {'key': 'ignoreMissingVnetServiceEndpoint', 'type': 'bool'},
+        "subnet": {"key": "subnet", "type": "Subnet"},
+        "ignore_missing_vnet_service_endpoint": {"key": "ignoreMissingVnetServiceEndpoint", "type": "bool"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(NWRuleSetVirtualNetworkRules, self).__init__(**kwargs)
-        self.subnet = kwargs.get('subnet', None)
-        self.ignore_missing_vnet_service_endpoint = kwargs.get('ignore_missing_vnet_service_endpoint', None)
+        self.subnet = kwargs.get("subnet", None)
+        self.ignore_missing_vnet_service_endpoint = kwargs.get("ignore_missing_vnet_service_endpoint", None)
 
 
 class Operation(msrest.serialization.Model):
@@ -1071,21 +984,18 @@ class Operation(msrest.serialization.Model):
     """
 
     _validation = {
-        'name': {'readonly': True},
+        "name": {"readonly": True},
     }
 
     _attribute_map = {
-        'name': {'key': 'name', 'type': 'str'},
-        'display': {'key': 'display', 'type': 'OperationDisplay'},
+        "name": {"key": "name", "type": "str"},
+        "display": {"key": "display", "type": "OperationDisplay"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(Operation, self).__init__(**kwargs)
         self.name = None
-        self.display = kwargs.get('display', None)
+        self.display = kwargs.get("display", None)
 
 
 class OperationDisplay(msrest.serialization.Model):
@@ -1102,21 +1012,18 @@ class OperationDisplay(msrest.serialization.Model):
     """
 
     _validation = {
-        'provider': {'readonly': True},
-        'resource': {'readonly': True},
-        'operation': {'readonly': True},
+        "provider": {"readonly": True},
+        "resource": {"readonly": True},
+        "operation": {"readonly": True},
     }
 
     _attribute_map = {
-        'provider': {'key': 'provider', 'type': 'str'},
-        'resource': {'key': 'resource', 'type': 'str'},
-        'operation': {'key': 'operation', 'type': 'str'},
+        "provider": {"key": "provider", "type": "str"},
+        "resource": {"key": "resource", "type": "str"},
+        "operation": {"key": "operation", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(OperationDisplay, self).__init__(**kwargs)
         self.provider = None
         self.resource = None
@@ -1136,19 +1043,16 @@ class OperationListResult(msrest.serialization.Model):
     """
 
     _validation = {
-        'value': {'readonly': True},
-        'next_link': {'readonly': True},
+        "value": {"readonly": True},
+        "next_link": {"readonly": True},
     }
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[Operation]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[Operation]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(OperationListResult, self).__init__(**kwargs)
         self.value = None
         self.next_link = None
@@ -1172,26 +1076,23 @@ class ResourceNamespacePatch(Resource):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'location': {'key': 'location', 'type': 'str'},
-        'tags': {'key': 'tags', 'type': '{str}'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "location": {"key": "location", "type": "str"},
+        "tags": {"key": "tags", "type": "{str}"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ResourceNamespacePatch, self).__init__(**kwargs)
-        self.location = kwargs.get('location', None)
-        self.tags = kwargs.get('tags', None)
+        self.location = kwargs.get("location", None)
+        self.tags = kwargs.get("tags", None)
 
 
 class PremiumMessagingRegions(ResourceNamespacePatch):
@@ -1215,26 +1116,23 @@ class PremiumMessagingRegions(ResourceNamespacePatch):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'location': {'key': 'location', 'type': 'str'},
-        'tags': {'key': 'tags', 'type': '{str}'},
-        'properties': {'key': 'properties', 'type': 'PremiumMessagingRegionsProperties'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "location": {"key": "location", "type": "str"},
+        "tags": {"key": "tags", "type": "{str}"},
+        "properties": {"key": "properties", "type": "PremiumMessagingRegionsProperties"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(PremiumMessagingRegions, self).__init__(**kwargs)
-        self.properties = kwargs.get('properties', None)
+        self.properties = kwargs.get("properties", None)
 
 
 class PremiumMessagingRegionsListResult(msrest.serialization.Model):
@@ -1250,20 +1148,17 @@ class PremiumMessagingRegionsListResult(msrest.serialization.Model):
     """
 
     _validation = {
-        'next_link': {'readonly': True},
+        "next_link": {"readonly": True},
     }
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[PremiumMessagingRegions]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[PremiumMessagingRegions]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(PremiumMessagingRegionsListResult, self).__init__(**kwargs)
-        self.value = kwargs.get('value', None)
+        self.value = kwargs.get("value", None)
         self.next_link = None
 
 
@@ -1279,19 +1174,16 @@ class PremiumMessagingRegionsProperties(msrest.serialization.Model):
     """
 
     _validation = {
-        'code': {'readonly': True},
-        'full_name': {'readonly': True},
+        "code": {"readonly": True},
+        "full_name": {"readonly": True},
     }
 
     _attribute_map = {
-        'code': {'key': 'code', 'type': 'str'},
-        'full_name': {'key': 'fullName', 'type': 'str'},
+        "code": {"key": "code", "type": "str"},
+        "full_name": {"key": "fullName", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(PremiumMessagingRegionsProperties, self).__init__(**kwargs)
         self.code = None
         self.full_name = None
@@ -1305,15 +1197,12 @@ class PrivateEndpoint(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
+        "id": {"key": "id", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(PrivateEndpoint, self).__init__(**kwargs)
-        self.id = kwargs.get('id', None)
+        self.id = kwargs.get("id", None)
 
 
 class PrivateEndpointConnection(Resource):
@@ -1339,28 +1228,28 @@ class PrivateEndpointConnection(Resource):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'private_endpoint': {'key': 'properties.privateEndpoint', 'type': 'PrivateEndpoint'},
-        'private_link_service_connection_state': {'key': 'properties.privateLinkServiceConnectionState', 'type': 'ConnectionState'},
-        'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "private_endpoint": {"key": "properties.privateEndpoint", "type": "PrivateEndpoint"},
+        "private_link_service_connection_state": {
+            "key": "properties.privateLinkServiceConnectionState",
+            "type": "ConnectionState",
+        },
+        "provisioning_state": {"key": "properties.provisioningState", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(PrivateEndpointConnection, self).__init__(**kwargs)
-        self.private_endpoint = kwargs.get('private_endpoint', None)
-        self.private_link_service_connection_state = kwargs.get('private_link_service_connection_state', None)
-        self.provisioning_state = kwargs.get('provisioning_state', None)
+        self.private_endpoint = kwargs.get("private_endpoint", None)
+        self.private_link_service_connection_state = kwargs.get("private_link_service_connection_state", None)
+        self.provisioning_state = kwargs.get("provisioning_state", None)
 
 
 class PrivateEndpointConnectionListResult(msrest.serialization.Model):
@@ -1373,17 +1262,14 @@ class PrivateEndpointConnectionListResult(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[PrivateEndpointConnection]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[PrivateEndpointConnection]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(PrivateEndpointConnectionListResult, self).__init__(**kwargs)
-        self.value = kwargs.get('value', None)
-        self.next_link = kwargs.get('next_link', None)
+        self.value = kwargs.get("value", None)
+        self.next_link = kwargs.get("next_link", None)
 
 
 class PrivateLinkResource(msrest.serialization.Model):
@@ -1404,25 +1290,22 @@ class PrivateLinkResource(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'group_id': {'key': 'properties.groupId', 'type': 'str'},
-        'required_members': {'key': 'properties.requiredMembers', 'type': '[str]'},
-        'required_zone_names': {'key': 'properties.requiredZoneNames', 'type': '[str]'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "group_id": {"key": "properties.groupId", "type": "str"},
+        "required_members": {"key": "properties.requiredMembers", "type": "[str]"},
+        "required_zone_names": {"key": "properties.requiredZoneNames", "type": "[str]"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(PrivateLinkResource, self).__init__(**kwargs)
-        self.id = kwargs.get('id', None)
-        self.name = kwargs.get('name', None)
-        self.type = kwargs.get('type', None)
-        self.group_id = kwargs.get('group_id', None)
-        self.required_members = kwargs.get('required_members', None)
-        self.required_zone_names = kwargs.get('required_zone_names', None)
+        self.id = kwargs.get("id", None)
+        self.name = kwargs.get("name", None)
+        self.type = kwargs.get("type", None)
+        self.group_id = kwargs.get("group_id", None)
+        self.required_members = kwargs.get("required_members", None)
+        self.required_zone_names = kwargs.get("required_zone_names", None)
 
 
 class PrivateLinkResourcesListResult(msrest.serialization.Model):
@@ -1435,17 +1318,14 @@ class PrivateLinkResourcesListResult(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[PrivateLinkResource]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[PrivateLinkResource]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(PrivateLinkResourcesListResult, self).__init__(**kwargs)
-        self.value = kwargs.get('value', None)
-        self.next_link = kwargs.get('next_link', None)
+        self.value = kwargs.get("value", None)
+        self.next_link = kwargs.get("next_link", None)
 
 
 class RegenerateAccessKeyParameters(msrest.serialization.Model):
@@ -1462,21 +1342,18 @@ class RegenerateAccessKeyParameters(msrest.serialization.Model):
     """
 
     _validation = {
-        'key_type': {'required': True},
+        "key_type": {"required": True},
     }
 
     _attribute_map = {
-        'key_type': {'key': 'keyType', 'type': 'str'},
-        'key': {'key': 'key', 'type': 'str'},
+        "key_type": {"key": "keyType", "type": "str"},
+        "key": {"key": "key", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(RegenerateAccessKeyParameters, self).__init__(**kwargs)
-        self.key_type = kwargs['key_type']
-        self.key = kwargs.get('key', None)
+        self.key_type = kwargs["key_type"]
+        self.key = kwargs.get("key", None)
 
 
 class Rule(Resource):
@@ -1503,30 +1380,27 @@ class Rule(Resource):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'action': {'key': 'properties.action', 'type': 'Action'},
-        'filter_type': {'key': 'properties.filterType', 'type': 'str'},
-        'sql_filter': {'key': 'properties.sqlFilter', 'type': 'SqlFilter'},
-        'correlation_filter': {'key': 'properties.correlationFilter', 'type': 'CorrelationFilter'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "action": {"key": "properties.action", "type": "Action"},
+        "filter_type": {"key": "properties.filterType", "type": "str"},
+        "sql_filter": {"key": "properties.sqlFilter", "type": "SqlFilter"},
+        "correlation_filter": {"key": "properties.correlationFilter", "type": "CorrelationFilter"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(Rule, self).__init__(**kwargs)
-        self.action = kwargs.get('action', None)
-        self.filter_type = kwargs.get('filter_type', None)
-        self.sql_filter = kwargs.get('sql_filter', None)
-        self.correlation_filter = kwargs.get('correlation_filter', None)
+        self.action = kwargs.get("action", None)
+        self.filter_type = kwargs.get("filter_type", None)
+        self.sql_filter = kwargs.get("sql_filter", None)
+        self.correlation_filter = kwargs.get("correlation_filter", None)
 
 
 class RuleListResult(msrest.serialization.Model):
@@ -1540,17 +1414,14 @@ class RuleListResult(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[Rule]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[Rule]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(RuleListResult, self).__init__(**kwargs)
-        self.value = kwargs.get('value', None)
-        self.next_link = kwargs.get('next_link', None)
+        self.value = kwargs.get("value", None)
+        self.next_link = kwargs.get("next_link", None)
 
 
 class SBAuthorizationRule(Resource):
@@ -1569,24 +1440,21 @@ class SBAuthorizationRule(Resource):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'rights': {'key': 'properties.rights', 'type': '[str]'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "rights": {"key": "properties.rights", "type": "[str]"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(SBAuthorizationRule, self).__init__(**kwargs)
-        self.rights = kwargs.get('rights', None)
+        self.rights = kwargs.get("rights", None)
 
 
 class SBAuthorizationRuleListResult(msrest.serialization.Model):
@@ -1600,17 +1468,14 @@ class SBAuthorizationRuleListResult(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[SBAuthorizationRule]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[SBAuthorizationRule]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(SBAuthorizationRuleListResult, self).__init__(**kwargs)
-        self.value = kwargs.get('value', None)
-        self.next_link = kwargs.get('next_link', None)
+        self.value = kwargs.get("value", None)
+        self.next_link = kwargs.get("next_link", None)
 
 
 class TrackedResource(Resource):
@@ -1633,27 +1498,24 @@ class TrackedResource(Resource):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'location': {'required': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
+        "location": {"required": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'location': {'key': 'location', 'type': 'str'},
-        'tags': {'key': 'tags', 'type': '{str}'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "location": {"key": "location", "type": "str"},
+        "tags": {"key": "tags", "type": "{str}"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(TrackedResource, self).__init__(**kwargs)
-        self.location = kwargs['location']
-        self.tags = kwargs.get('tags', None)
+        self.location = kwargs["location"]
+        self.tags = kwargs.get("tags", None)
 
 
 class SBNamespace(TrackedResource):
@@ -1697,51 +1559,48 @@ class SBNamespace(TrackedResource):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'location': {'required': True},
-        'provisioning_state': {'readonly': True},
-        'status': {'readonly': True},
-        'created_at': {'readonly': True},
-        'updated_at': {'readonly': True},
-        'service_bus_endpoint': {'readonly': True},
-        'metric_id': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
+        "location": {"required": True},
+        "provisioning_state": {"readonly": True},
+        "status": {"readonly": True},
+        "created_at": {"readonly": True},
+        "updated_at": {"readonly": True},
+        "service_bus_endpoint": {"readonly": True},
+        "metric_id": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'location': {'key': 'location', 'type': 'str'},
-        'tags': {'key': 'tags', 'type': '{str}'},
-        'sku': {'key': 'sku', 'type': 'SBSku'},
-        'identity': {'key': 'identity', 'type': 'Identity'},
-        'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
-        'status': {'key': 'properties.status', 'type': 'str'},
-        'created_at': {'key': 'properties.createdAt', 'type': 'iso-8601'},
-        'updated_at': {'key': 'properties.updatedAt', 'type': 'iso-8601'},
-        'service_bus_endpoint': {'key': 'properties.serviceBusEndpoint', 'type': 'str'},
-        'metric_id': {'key': 'properties.metricId', 'type': 'str'},
-        'zone_redundant': {'key': 'properties.zoneRedundant', 'type': 'bool'},
-        'encryption': {'key': 'properties.encryption', 'type': 'Encryption'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "location": {"key": "location", "type": "str"},
+        "tags": {"key": "tags", "type": "{str}"},
+        "sku": {"key": "sku", "type": "SBSku"},
+        "identity": {"key": "identity", "type": "Identity"},
+        "provisioning_state": {"key": "properties.provisioningState", "type": "str"},
+        "status": {"key": "properties.status", "type": "str"},
+        "created_at": {"key": "properties.createdAt", "type": "iso-8601"},
+        "updated_at": {"key": "properties.updatedAt", "type": "iso-8601"},
+        "service_bus_endpoint": {"key": "properties.serviceBusEndpoint", "type": "str"},
+        "metric_id": {"key": "properties.metricId", "type": "str"},
+        "zone_redundant": {"key": "properties.zoneRedundant", "type": "bool"},
+        "encryption": {"key": "properties.encryption", "type": "Encryption"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(SBNamespace, self).__init__(**kwargs)
-        self.sku = kwargs.get('sku', None)
-        self.identity = kwargs.get('identity', None)
+        self.sku = kwargs.get("sku", None)
+        self.identity = kwargs.get("identity", None)
         self.provisioning_state = None
         self.status = None
         self.created_at = None
         self.updated_at = None
         self.service_bus_endpoint = None
         self.metric_id = None
-        self.zone_redundant = kwargs.get('zone_redundant', None)
-        self.encryption = kwargs.get('encryption', None)
+        self.zone_redundant = kwargs.get("zone_redundant", None)
+        self.encryption = kwargs.get("encryption", None)
 
 
 class SBNamespaceListResult(msrest.serialization.Model):
@@ -1755,17 +1614,14 @@ class SBNamespaceListResult(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[SBNamespace]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[SBNamespace]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(SBNamespaceListResult, self).__init__(**kwargs)
-        self.value = kwargs.get('value', None)
-        self.next_link = kwargs.get('next_link', None)
+        self.value = kwargs.get("value", None)
+        self.next_link = kwargs.get("next_link", None)
 
 
 class SBNamespaceMigrate(msrest.serialization.Model):
@@ -1780,19 +1636,16 @@ class SBNamespaceMigrate(msrest.serialization.Model):
     """
 
     _validation = {
-        'target_namespace_type': {'required': True},
+        "target_namespace_type": {"required": True},
     }
 
     _attribute_map = {
-        'target_namespace_type': {'key': 'targetNamespaceType', 'type': 'str'},
+        "target_namespace_type": {"key": "targetNamespaceType", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(SBNamespaceMigrate, self).__init__(**kwargs)
-        self.target_namespace_type = kwargs['target_namespace_type']
+        self.target_namespace_type = kwargs["target_namespace_type"]
 
 
 class SBNamespaceUpdateParameters(ResourceNamespacePatch):
@@ -1834,50 +1687,47 @@ class SBNamespaceUpdateParameters(ResourceNamespacePatch):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'provisioning_state': {'readonly': True},
-        'status': {'readonly': True},
-        'created_at': {'readonly': True},
-        'updated_at': {'readonly': True},
-        'service_bus_endpoint': {'readonly': True},
-        'metric_id': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
+        "provisioning_state": {"readonly": True},
+        "status": {"readonly": True},
+        "created_at": {"readonly": True},
+        "updated_at": {"readonly": True},
+        "service_bus_endpoint": {"readonly": True},
+        "metric_id": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'location': {'key': 'location', 'type': 'str'},
-        'tags': {'key': 'tags', 'type': '{str}'},
-        'sku': {'key': 'sku', 'type': 'SBSku'},
-        'identity': {'key': 'identity', 'type': 'Identity'},
-        'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
-        'status': {'key': 'properties.status', 'type': 'str'},
-        'created_at': {'key': 'properties.createdAt', 'type': 'iso-8601'},
-        'updated_at': {'key': 'properties.updatedAt', 'type': 'iso-8601'},
-        'service_bus_endpoint': {'key': 'properties.serviceBusEndpoint', 'type': 'str'},
-        'metric_id': {'key': 'properties.metricId', 'type': 'str'},
-        'zone_redundant': {'key': 'properties.zoneRedundant', 'type': 'bool'},
-        'encryption': {'key': 'properties.encryption', 'type': 'Encryption'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "location": {"key": "location", "type": "str"},
+        "tags": {"key": "tags", "type": "{str}"},
+        "sku": {"key": "sku", "type": "SBSku"},
+        "identity": {"key": "identity", "type": "Identity"},
+        "provisioning_state": {"key": "properties.provisioningState", "type": "str"},
+        "status": {"key": "properties.status", "type": "str"},
+        "created_at": {"key": "properties.createdAt", "type": "iso-8601"},
+        "updated_at": {"key": "properties.updatedAt", "type": "iso-8601"},
+        "service_bus_endpoint": {"key": "properties.serviceBusEndpoint", "type": "str"},
+        "metric_id": {"key": "properties.metricId", "type": "str"},
+        "zone_redundant": {"key": "properties.zoneRedundant", "type": "bool"},
+        "encryption": {"key": "properties.encryption", "type": "Encryption"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(SBNamespaceUpdateParameters, self).__init__(**kwargs)
-        self.sku = kwargs.get('sku', None)
-        self.identity = kwargs.get('identity', None)
+        self.sku = kwargs.get("sku", None)
+        self.identity = kwargs.get("identity", None)
         self.provisioning_state = None
         self.status = None
         self.created_at = None
         self.updated_at = None
         self.service_bus_endpoint = None
         self.metric_id = None
-        self.zone_redundant = kwargs.get('zone_redundant', None)
-        self.encryption = kwargs.get('encryption', None)
+        self.zone_redundant = kwargs.get("zone_redundant", None)
+        self.encryption = kwargs.get("encryption", None)
 
 
 class SBQueue(Resource):
@@ -1953,48 +1803,48 @@ class SBQueue(Resource):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'count_details': {'readonly': True},
-        'created_at': {'readonly': True},
-        'updated_at': {'readonly': True},
-        'accessed_at': {'readonly': True},
-        'size_in_bytes': {'readonly': True},
-        'message_count': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
+        "count_details": {"readonly": True},
+        "created_at": {"readonly": True},
+        "updated_at": {"readonly": True},
+        "accessed_at": {"readonly": True},
+        "size_in_bytes": {"readonly": True},
+        "message_count": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'count_details': {'key': 'properties.countDetails', 'type': 'MessageCountDetails'},
-        'created_at': {'key': 'properties.createdAt', 'type': 'iso-8601'},
-        'updated_at': {'key': 'properties.updatedAt', 'type': 'iso-8601'},
-        'accessed_at': {'key': 'properties.accessedAt', 'type': 'iso-8601'},
-        'size_in_bytes': {'key': 'properties.sizeInBytes', 'type': 'long'},
-        'message_count': {'key': 'properties.messageCount', 'type': 'long'},
-        'lock_duration': {'key': 'properties.lockDuration', 'type': 'duration'},
-        'max_size_in_megabytes': {'key': 'properties.maxSizeInMegabytes', 'type': 'int'},
-        'requires_duplicate_detection': {'key': 'properties.requiresDuplicateDetection', 'type': 'bool'},
-        'requires_session': {'key': 'properties.requiresSession', 'type': 'bool'},
-        'default_message_time_to_live': {'key': 'properties.defaultMessageTimeToLive', 'type': 'duration'},
-        'dead_lettering_on_message_expiration': {'key': 'properties.deadLetteringOnMessageExpiration', 'type': 'bool'},
-        'duplicate_detection_history_time_window': {'key': 'properties.duplicateDetectionHistoryTimeWindow', 'type': 'duration'},
-        'max_delivery_count': {'key': 'properties.maxDeliveryCount', 'type': 'int'},
-        'status': {'key': 'properties.status', 'type': 'str'},
-        'enable_batched_operations': {'key': 'properties.enableBatchedOperations', 'type': 'bool'},
-        'auto_delete_on_idle': {'key': 'properties.autoDeleteOnIdle', 'type': 'duration'},
-        'enable_partitioning': {'key': 'properties.enablePartitioning', 'type': 'bool'},
-        'enable_express': {'key': 'properties.enableExpress', 'type': 'bool'},
-        'forward_to': {'key': 'properties.forwardTo', 'type': 'str'},
-        'forward_dead_lettered_messages_to': {'key': 'properties.forwardDeadLetteredMessagesTo', 'type': 'str'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "count_details": {"key": "properties.countDetails", "type": "MessageCountDetails"},
+        "created_at": {"key": "properties.createdAt", "type": "iso-8601"},
+        "updated_at": {"key": "properties.updatedAt", "type": "iso-8601"},
+        "accessed_at": {"key": "properties.accessedAt", "type": "iso-8601"},
+        "size_in_bytes": {"key": "properties.sizeInBytes", "type": "long"},
+        "message_count": {"key": "properties.messageCount", "type": "long"},
+        "lock_duration": {"key": "properties.lockDuration", "type": "duration"},
+        "max_size_in_megabytes": {"key": "properties.maxSizeInMegabytes", "type": "int"},
+        "requires_duplicate_detection": {"key": "properties.requiresDuplicateDetection", "type": "bool"},
+        "requires_session": {"key": "properties.requiresSession", "type": "bool"},
+        "default_message_time_to_live": {"key": "properties.defaultMessageTimeToLive", "type": "duration"},
+        "dead_lettering_on_message_expiration": {"key": "properties.deadLetteringOnMessageExpiration", "type": "bool"},
+        "duplicate_detection_history_time_window": {
+            "key": "properties.duplicateDetectionHistoryTimeWindow",
+            "type": "duration",
+        },
+        "max_delivery_count": {"key": "properties.maxDeliveryCount", "type": "int"},
+        "status": {"key": "properties.status", "type": "str"},
+        "enable_batched_operations": {"key": "properties.enableBatchedOperations", "type": "bool"},
+        "auto_delete_on_idle": {"key": "properties.autoDeleteOnIdle", "type": "duration"},
+        "enable_partitioning": {"key": "properties.enablePartitioning", "type": "bool"},
+        "enable_express": {"key": "properties.enableExpress", "type": "bool"},
+        "forward_to": {"key": "properties.forwardTo", "type": "str"},
+        "forward_dead_lettered_messages_to": {"key": "properties.forwardDeadLetteredMessagesTo", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(SBQueue, self).__init__(**kwargs)
         self.count_details = None
         self.created_at = None
@@ -2002,21 +1852,21 @@ class SBQueue(Resource):
         self.accessed_at = None
         self.size_in_bytes = None
         self.message_count = None
-        self.lock_duration = kwargs.get('lock_duration', None)
-        self.max_size_in_megabytes = kwargs.get('max_size_in_megabytes', None)
-        self.requires_duplicate_detection = kwargs.get('requires_duplicate_detection', None)
-        self.requires_session = kwargs.get('requires_session', None)
-        self.default_message_time_to_live = kwargs.get('default_message_time_to_live', None)
-        self.dead_lettering_on_message_expiration = kwargs.get('dead_lettering_on_message_expiration', None)
-        self.duplicate_detection_history_time_window = kwargs.get('duplicate_detection_history_time_window', None)
-        self.max_delivery_count = kwargs.get('max_delivery_count', None)
-        self.status = kwargs.get('status', None)
-        self.enable_batched_operations = kwargs.get('enable_batched_operations', None)
-        self.auto_delete_on_idle = kwargs.get('auto_delete_on_idle', None)
-        self.enable_partitioning = kwargs.get('enable_partitioning', None)
-        self.enable_express = kwargs.get('enable_express', None)
-        self.forward_to = kwargs.get('forward_to', None)
-        self.forward_dead_lettered_messages_to = kwargs.get('forward_dead_lettered_messages_to', None)
+        self.lock_duration = kwargs.get("lock_duration", None)
+        self.max_size_in_megabytes = kwargs.get("max_size_in_megabytes", None)
+        self.requires_duplicate_detection = kwargs.get("requires_duplicate_detection", None)
+        self.requires_session = kwargs.get("requires_session", None)
+        self.default_message_time_to_live = kwargs.get("default_message_time_to_live", None)
+        self.dead_lettering_on_message_expiration = kwargs.get("dead_lettering_on_message_expiration", None)
+        self.duplicate_detection_history_time_window = kwargs.get("duplicate_detection_history_time_window", None)
+        self.max_delivery_count = kwargs.get("max_delivery_count", None)
+        self.status = kwargs.get("status", None)
+        self.enable_batched_operations = kwargs.get("enable_batched_operations", None)
+        self.auto_delete_on_idle = kwargs.get("auto_delete_on_idle", None)
+        self.enable_partitioning = kwargs.get("enable_partitioning", None)
+        self.enable_express = kwargs.get("enable_express", None)
+        self.forward_to = kwargs.get("forward_to", None)
+        self.forward_dead_lettered_messages_to = kwargs.get("forward_dead_lettered_messages_to", None)
 
 
 class SBQueueListResult(msrest.serialization.Model):
@@ -2030,17 +1880,14 @@ class SBQueueListResult(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[SBQueue]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[SBQueue]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(SBQueueListResult, self).__init__(**kwargs)
-        self.value = kwargs.get('value', None)
-        self.next_link = kwargs.get('next_link', None)
+        self.value = kwargs.get("value", None)
+        self.next_link = kwargs.get("next_link", None)
 
 
 class SBSku(msrest.serialization.Model):
@@ -2060,23 +1907,20 @@ class SBSku(msrest.serialization.Model):
     """
 
     _validation = {
-        'name': {'required': True},
+        "name": {"required": True},
     }
 
     _attribute_map = {
-        'name': {'key': 'name', 'type': 'str'},
-        'tier': {'key': 'tier', 'type': 'str'},
-        'capacity': {'key': 'capacity', 'type': 'int'},
+        "name": {"key": "name", "type": "str"},
+        "tier": {"key": "tier", "type": "str"},
+        "capacity": {"key": "capacity", "type": "int"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(SBSku, self).__init__(**kwargs)
-        self.name = kwargs['name']
-        self.tier = kwargs.get('tier', None)
-        self.capacity = kwargs.get('capacity', None)
+        self.name = kwargs["name"]
+        self.tier = kwargs.get("tier", None)
+        self.capacity = kwargs.get("capacity", None)
 
 
 class SBSubscription(Resource):
@@ -2137,61 +1981,66 @@ class SBSubscription(Resource):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'message_count': {'readonly': True},
-        'created_at': {'readonly': True},
-        'accessed_at': {'readonly': True},
-        'updated_at': {'readonly': True},
-        'count_details': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
+        "message_count": {"readonly": True},
+        "created_at": {"readonly": True},
+        "accessed_at": {"readonly": True},
+        "updated_at": {"readonly": True},
+        "count_details": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'message_count': {'key': 'properties.messageCount', 'type': 'long'},
-        'created_at': {'key': 'properties.createdAt', 'type': 'iso-8601'},
-        'accessed_at': {'key': 'properties.accessedAt', 'type': 'iso-8601'},
-        'updated_at': {'key': 'properties.updatedAt', 'type': 'iso-8601'},
-        'count_details': {'key': 'properties.countDetails', 'type': 'MessageCountDetails'},
-        'lock_duration': {'key': 'properties.lockDuration', 'type': 'duration'},
-        'requires_session': {'key': 'properties.requiresSession', 'type': 'bool'},
-        'default_message_time_to_live': {'key': 'properties.defaultMessageTimeToLive', 'type': 'duration'},
-        'dead_lettering_on_filter_evaluation_exceptions': {'key': 'properties.deadLetteringOnFilterEvaluationExceptions', 'type': 'bool'},
-        'dead_lettering_on_message_expiration': {'key': 'properties.deadLetteringOnMessageExpiration', 'type': 'bool'},
-        'duplicate_detection_history_time_window': {'key': 'properties.duplicateDetectionHistoryTimeWindow', 'type': 'duration'},
-        'max_delivery_count': {'key': 'properties.maxDeliveryCount', 'type': 'int'},
-        'status': {'key': 'properties.status', 'type': 'str'},
-        'enable_batched_operations': {'key': 'properties.enableBatchedOperations', 'type': 'bool'},
-        'auto_delete_on_idle': {'key': 'properties.autoDeleteOnIdle', 'type': 'duration'},
-        'forward_to': {'key': 'properties.forwardTo', 'type': 'str'},
-        'forward_dead_lettered_messages_to': {'key': 'properties.forwardDeadLetteredMessagesTo', 'type': 'str'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "message_count": {"key": "properties.messageCount", "type": "long"},
+        "created_at": {"key": "properties.createdAt", "type": "iso-8601"},
+        "accessed_at": {"key": "properties.accessedAt", "type": "iso-8601"},
+        "updated_at": {"key": "properties.updatedAt", "type": "iso-8601"},
+        "count_details": {"key": "properties.countDetails", "type": "MessageCountDetails"},
+        "lock_duration": {"key": "properties.lockDuration", "type": "duration"},
+        "requires_session": {"key": "properties.requiresSession", "type": "bool"},
+        "default_message_time_to_live": {"key": "properties.defaultMessageTimeToLive", "type": "duration"},
+        "dead_lettering_on_filter_evaluation_exceptions": {
+            "key": "properties.deadLetteringOnFilterEvaluationExceptions",
+            "type": "bool",
+        },
+        "dead_lettering_on_message_expiration": {"key": "properties.deadLetteringOnMessageExpiration", "type": "bool"},
+        "duplicate_detection_history_time_window": {
+            "key": "properties.duplicateDetectionHistoryTimeWindow",
+            "type": "duration",
+        },
+        "max_delivery_count": {"key": "properties.maxDeliveryCount", "type": "int"},
+        "status": {"key": "properties.status", "type": "str"},
+        "enable_batched_operations": {"key": "properties.enableBatchedOperations", "type": "bool"},
+        "auto_delete_on_idle": {"key": "properties.autoDeleteOnIdle", "type": "duration"},
+        "forward_to": {"key": "properties.forwardTo", "type": "str"},
+        "forward_dead_lettered_messages_to": {"key": "properties.forwardDeadLetteredMessagesTo", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(SBSubscription, self).__init__(**kwargs)
         self.message_count = None
         self.created_at = None
         self.accessed_at = None
         self.updated_at = None
         self.count_details = None
-        self.lock_duration = kwargs.get('lock_duration', None)
-        self.requires_session = kwargs.get('requires_session', None)
-        self.default_message_time_to_live = kwargs.get('default_message_time_to_live', None)
-        self.dead_lettering_on_filter_evaluation_exceptions = kwargs.get('dead_lettering_on_filter_evaluation_exceptions', None)
-        self.dead_lettering_on_message_expiration = kwargs.get('dead_lettering_on_message_expiration', None)
-        self.duplicate_detection_history_time_window = kwargs.get('duplicate_detection_history_time_window', None)
-        self.max_delivery_count = kwargs.get('max_delivery_count', None)
-        self.status = kwargs.get('status', None)
-        self.enable_batched_operations = kwargs.get('enable_batched_operations', None)
-        self.auto_delete_on_idle = kwargs.get('auto_delete_on_idle', None)
-        self.forward_to = kwargs.get('forward_to', None)
-        self.forward_dead_lettered_messages_to = kwargs.get('forward_dead_lettered_messages_to', None)
+        self.lock_duration = kwargs.get("lock_duration", None)
+        self.requires_session = kwargs.get("requires_session", None)
+        self.default_message_time_to_live = kwargs.get("default_message_time_to_live", None)
+        self.dead_lettering_on_filter_evaluation_exceptions = kwargs.get(
+            "dead_lettering_on_filter_evaluation_exceptions", None
+        )
+        self.dead_lettering_on_message_expiration = kwargs.get("dead_lettering_on_message_expiration", None)
+        self.duplicate_detection_history_time_window = kwargs.get("duplicate_detection_history_time_window", None)
+        self.max_delivery_count = kwargs.get("max_delivery_count", None)
+        self.status = kwargs.get("status", None)
+        self.enable_batched_operations = kwargs.get("enable_batched_operations", None)
+        self.auto_delete_on_idle = kwargs.get("auto_delete_on_idle", None)
+        self.forward_to = kwargs.get("forward_to", None)
+        self.forward_dead_lettered_messages_to = kwargs.get("forward_dead_lettered_messages_to", None)
 
 
 class SBSubscriptionListResult(msrest.serialization.Model):
@@ -2205,17 +2054,14 @@ class SBSubscriptionListResult(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[SBSubscription]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[SBSubscription]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(SBSubscriptionListResult, self).__init__(**kwargs)
-        self.value = kwargs.get('value', None)
-        self.next_link = kwargs.get('next_link', None)
+        self.value = kwargs.get("value", None)
+        self.next_link = kwargs.get("next_link", None)
 
 
 class SBTopic(Resource):
@@ -2275,43 +2121,43 @@ class SBTopic(Resource):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'size_in_bytes': {'readonly': True},
-        'created_at': {'readonly': True},
-        'updated_at': {'readonly': True},
-        'accessed_at': {'readonly': True},
-        'subscription_count': {'readonly': True},
-        'count_details': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
+        "size_in_bytes": {"readonly": True},
+        "created_at": {"readonly": True},
+        "updated_at": {"readonly": True},
+        "accessed_at": {"readonly": True},
+        "subscription_count": {"readonly": True},
+        "count_details": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'size_in_bytes': {'key': 'properties.sizeInBytes', 'type': 'long'},
-        'created_at': {'key': 'properties.createdAt', 'type': 'iso-8601'},
-        'updated_at': {'key': 'properties.updatedAt', 'type': 'iso-8601'},
-        'accessed_at': {'key': 'properties.accessedAt', 'type': 'iso-8601'},
-        'subscription_count': {'key': 'properties.subscriptionCount', 'type': 'int'},
-        'count_details': {'key': 'properties.countDetails', 'type': 'MessageCountDetails'},
-        'default_message_time_to_live': {'key': 'properties.defaultMessageTimeToLive', 'type': 'duration'},
-        'max_size_in_megabytes': {'key': 'properties.maxSizeInMegabytes', 'type': 'int'},
-        'requires_duplicate_detection': {'key': 'properties.requiresDuplicateDetection', 'type': 'bool'},
-        'duplicate_detection_history_time_window': {'key': 'properties.duplicateDetectionHistoryTimeWindow', 'type': 'duration'},
-        'enable_batched_operations': {'key': 'properties.enableBatchedOperations', 'type': 'bool'},
-        'status': {'key': 'properties.status', 'type': 'str'},
-        'support_ordering': {'key': 'properties.supportOrdering', 'type': 'bool'},
-        'auto_delete_on_idle': {'key': 'properties.autoDeleteOnIdle', 'type': 'duration'},
-        'enable_partitioning': {'key': 'properties.enablePartitioning', 'type': 'bool'},
-        'enable_express': {'key': 'properties.enableExpress', 'type': 'bool'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "size_in_bytes": {"key": "properties.sizeInBytes", "type": "long"},
+        "created_at": {"key": "properties.createdAt", "type": "iso-8601"},
+        "updated_at": {"key": "properties.updatedAt", "type": "iso-8601"},
+        "accessed_at": {"key": "properties.accessedAt", "type": "iso-8601"},
+        "subscription_count": {"key": "properties.subscriptionCount", "type": "int"},
+        "count_details": {"key": "properties.countDetails", "type": "MessageCountDetails"},
+        "default_message_time_to_live": {"key": "properties.defaultMessageTimeToLive", "type": "duration"},
+        "max_size_in_megabytes": {"key": "properties.maxSizeInMegabytes", "type": "int"},
+        "requires_duplicate_detection": {"key": "properties.requiresDuplicateDetection", "type": "bool"},
+        "duplicate_detection_history_time_window": {
+            "key": "properties.duplicateDetectionHistoryTimeWindow",
+            "type": "duration",
+        },
+        "enable_batched_operations": {"key": "properties.enableBatchedOperations", "type": "bool"},
+        "status": {"key": "properties.status", "type": "str"},
+        "support_ordering": {"key": "properties.supportOrdering", "type": "bool"},
+        "auto_delete_on_idle": {"key": "properties.autoDeleteOnIdle", "type": "duration"},
+        "enable_partitioning": {"key": "properties.enablePartitioning", "type": "bool"},
+        "enable_express": {"key": "properties.enableExpress", "type": "bool"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(SBTopic, self).__init__(**kwargs)
         self.size_in_bytes = None
         self.created_at = None
@@ -2319,16 +2165,16 @@ class SBTopic(Resource):
         self.accessed_at = None
         self.subscription_count = None
         self.count_details = None
-        self.default_message_time_to_live = kwargs.get('default_message_time_to_live', None)
-        self.max_size_in_megabytes = kwargs.get('max_size_in_megabytes', None)
-        self.requires_duplicate_detection = kwargs.get('requires_duplicate_detection', None)
-        self.duplicate_detection_history_time_window = kwargs.get('duplicate_detection_history_time_window', None)
-        self.enable_batched_operations = kwargs.get('enable_batched_operations', None)
-        self.status = kwargs.get('status', None)
-        self.support_ordering = kwargs.get('support_ordering', None)
-        self.auto_delete_on_idle = kwargs.get('auto_delete_on_idle', None)
-        self.enable_partitioning = kwargs.get('enable_partitioning', None)
-        self.enable_express = kwargs.get('enable_express', None)
+        self.default_message_time_to_live = kwargs.get("default_message_time_to_live", None)
+        self.max_size_in_megabytes = kwargs.get("max_size_in_megabytes", None)
+        self.requires_duplicate_detection = kwargs.get("requires_duplicate_detection", None)
+        self.duplicate_detection_history_time_window = kwargs.get("duplicate_detection_history_time_window", None)
+        self.enable_batched_operations = kwargs.get("enable_batched_operations", None)
+        self.status = kwargs.get("status", None)
+        self.support_ordering = kwargs.get("support_ordering", None)
+        self.auto_delete_on_idle = kwargs.get("auto_delete_on_idle", None)
+        self.enable_partitioning = kwargs.get("enable_partitioning", None)
+        self.enable_express = kwargs.get("enable_express", None)
 
 
 class SBTopicListResult(msrest.serialization.Model):
@@ -2342,17 +2188,14 @@ class SBTopicListResult(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[SBTopic]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[SBTopic]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(SBTopicListResult, self).__init__(**kwargs)
-        self.value = kwargs.get('value', None)
-        self.next_link = kwargs.get('next_link', None)
+        self.value = kwargs.get("value", None)
+        self.next_link = kwargs.get("next_link", None)
 
 
 class SqlFilter(msrest.serialization.Model):
@@ -2369,23 +2212,20 @@ class SqlFilter(msrest.serialization.Model):
     """
 
     _validation = {
-        'compatibility_level': {'maximum': 20, 'minimum': 20},
+        "compatibility_level": {"maximum": 20, "minimum": 20},
     }
 
     _attribute_map = {
-        'sql_expression': {'key': 'sqlExpression', 'type': 'str'},
-        'compatibility_level': {'key': 'compatibilityLevel', 'type': 'int'},
-        'requires_preprocessing': {'key': 'requiresPreprocessing', 'type': 'bool'},
+        "sql_expression": {"key": "sqlExpression", "type": "str"},
+        "compatibility_level": {"key": "compatibilityLevel", "type": "int"},
+        "requires_preprocessing": {"key": "requiresPreprocessing", "type": "bool"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(SqlFilter, self).__init__(**kwargs)
-        self.sql_expression = kwargs.get('sql_expression', None)
-        self.compatibility_level = kwargs.get('compatibility_level', 20)
-        self.requires_preprocessing = kwargs.get('requires_preprocessing', True)
+        self.sql_expression = kwargs.get("sql_expression", None)
+        self.compatibility_level = kwargs.get("compatibility_level", 20)
+        self.requires_preprocessing = kwargs.get("requires_preprocessing", True)
 
 
 class SqlRuleAction(Action):
@@ -2402,15 +2242,12 @@ class SqlRuleAction(Action):
     """
 
     _attribute_map = {
-        'sql_expression': {'key': 'sqlExpression', 'type': 'str'},
-        'compatibility_level': {'key': 'compatibilityLevel', 'type': 'int'},
-        'requires_preprocessing': {'key': 'requiresPreprocessing', 'type': 'bool'},
+        "sql_expression": {"key": "sqlExpression", "type": "str"},
+        "compatibility_level": {"key": "compatibilityLevel", "type": "int"},
+        "requires_preprocessing": {"key": "requiresPreprocessing", "type": "bool"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(SqlRuleAction, self).__init__(**kwargs)
 
 
@@ -2424,19 +2261,16 @@ class Subnet(msrest.serialization.Model):
     """
 
     _validation = {
-        'id': {'required': True},
+        "id": {"required": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
+        "id": {"key": "id", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(Subnet, self).__init__(**kwargs)
-        self.id = kwargs['id']
+        self.id = kwargs["id"]
 
 
 class VirtualNetworkRule(Resource):
@@ -2455,24 +2289,21 @@ class VirtualNetworkRule(Resource):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'virtual_network_subnet_id': {'key': 'properties.virtualNetworkSubnetId', 'type': 'str'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "virtual_network_subnet_id": {"key": "properties.virtualNetworkSubnetId", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(VirtualNetworkRule, self).__init__(**kwargs)
-        self.virtual_network_subnet_id = kwargs.get('virtual_network_subnet_id', None)
+        self.virtual_network_subnet_id = kwargs.get("virtual_network_subnet_id", None)
 
 
 class VirtualNetworkRuleListResult(msrest.serialization.Model):
@@ -2486,14 +2317,11 @@ class VirtualNetworkRuleListResult(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[VirtualNetworkRule]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[VirtualNetworkRule]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(VirtualNetworkRuleListResult, self).__init__(**kwargs)
-        self.value = kwargs.get('value', None)
-        self.next_link = kwargs.get('next_link', None)
+        self.value = kwargs.get("value", None)
+        self.next_link = kwargs.get("next_link", None)
