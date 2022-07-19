@@ -26,7 +26,7 @@ from azure.mgmt.core.exceptions import ARMErrorFormat
 
 from .. import models as _models
 from .._serialization import Serializer
-from .._vendor import MixinABC, _convert_request
+from .._vendor import MixinABC, _convert_request, _format_url_section
 
 T = TypeVar("T")
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, HttpResponse], T, Dict[str, Any]], Any]]
@@ -35,7 +35,18 @@ _SERIALIZER = Serializer()
 _SERIALIZER.client_side_validation = False
 
 
-def build_list_request(**kwargs: Any) -> HttpRequest:
+def build_list_by_peering_request(
+    resource_group_name: str,
+    peering_name: str,
+    subscription_id: str,
+    *,
+    prefix: Optional[str] = None,
+    as_path: Optional[str] = None,
+    origin_as_validation_state: Optional[str] = None,
+    rpki_validation_state: Optional[str] = None,
+    skip_token: Optional[str] = None,
+    **kwargs: Any
+) -> HttpRequest:
     _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
     _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
@@ -43,9 +54,31 @@ def build_list_request(**kwargs: Any) -> HttpRequest:
     accept = _headers.pop("Accept", "application/json")
 
     # Construct URL
-    _url = kwargs.pop("template_url", "/providers/Microsoft.Peering/operations")
+    _url = kwargs.pop(
+        "template_url",
+        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/receivedRoutes",
+    )  # pylint: disable=line-too-long
+    path_format_arguments = {
+        "resourceGroupName": _SERIALIZER.url("resource_group_name", resource_group_name, "str"),
+        "peeringName": _SERIALIZER.url("peering_name", peering_name, "str"),
+        "subscriptionId": _SERIALIZER.url("subscription_id", subscription_id, "str"),
+    }
+
+    _url = _format_url_section(_url, **path_format_arguments)
 
     # Construct parameters
+    if prefix is not None:
+        _params["prefix"] = _SERIALIZER.query("prefix", prefix, "str")
+    if as_path is not None:
+        _params["asPath"] = _SERIALIZER.query("as_path", as_path, "str")
+    if origin_as_validation_state is not None:
+        _params["originAsValidationState"] = _SERIALIZER.query(
+            "origin_as_validation_state", origin_as_validation_state, "str"
+        )
+    if rpki_validation_state is not None:
+        _params["rpkiValidationState"] = _SERIALIZER.query("rpki_validation_state", rpki_validation_state, "str")
+    if skip_token is not None:
+        _params["$skipToken"] = _SERIALIZER.query("skip_token", skip_token, "str")
     _params["api-version"] = _SERIALIZER.query("api_version", api_version, "str")
 
     # Construct headers
@@ -54,14 +87,14 @@ def build_list_request(**kwargs: Any) -> HttpRequest:
     return HttpRequest(method="GET", url=_url, params=_params, headers=_headers, **kwargs)
 
 
-class Operations:
+class ReceivedRoutesOperations:
     """
     .. warning::
         **DO NOT** instantiate this class directly.
 
         Instead, you should access the following operations through
         :class:`~azure.mgmt.peering.PeeringManagementClient`'s
-        :attr:`operations` attribute.
+        :attr:`received_routes` attribute.
     """
 
     models = _models
@@ -74,19 +107,50 @@ class Operations:
         self._deserialize = input_args.pop(0) if input_args else kwargs.pop("deserializer")
 
     @distributed_trace
-    def list(self, **kwargs: Any) -> Iterable["_models.Operation"]:
-        """Lists all of the available API operations for peering resources.
+    def list_by_peering(
+        self,
+        resource_group_name: str,
+        peering_name: str,
+        prefix: Optional[str] = None,
+        as_path: Optional[str] = None,
+        origin_as_validation_state: Optional[str] = None,
+        rpki_validation_state: Optional[str] = None,
+        skip_token: Optional[str] = None,
+        **kwargs: Any
+    ) -> Iterable["_models.PeeringReceivedRoute"]:
+        """Lists the prefixes received over the specified peering under the given subscription and
+        resource group.
 
+        :param resource_group_name: The name of the resource group. Required.
+        :type resource_group_name: str
+        :param peering_name: The name of the peering. Required.
+        :type peering_name: str
+        :param prefix: The optional prefix that can be used to filter the routes. Default value is
+         None.
+        :type prefix: str
+        :param as_path: The optional AS path that can be used to filter the routes. Default value is
+         None.
+        :type as_path: str
+        :param origin_as_validation_state: The optional origin AS validation state that can be used to
+         filter the routes. Default value is None.
+        :type origin_as_validation_state: str
+        :param rpki_validation_state: The optional RPKI validation state that can be used to filter the
+         routes. Default value is None.
+        :type rpki_validation_state: str
+        :param skip_token: The optional page continuation token that is used in the event of paginated
+         result. Default value is None.
+        :type skip_token: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either Operation or the result of cls(response)
-        :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.peering.models.Operation]
+        :return: An iterator like instance of either PeeringReceivedRoute or the result of
+         cls(response)
+        :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.peering.models.PeeringReceivedRoute]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         _headers = kwargs.pop("headers", {}) or {}
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
         api_version = kwargs.pop("api_version", _params.pop("api-version", self._config.api_version))  # type: str
-        cls = kwargs.pop("cls", None)  # type: ClsType[_models.OperationListResult]
+        cls = kwargs.pop("cls", None)  # type: ClsType[_models.PeeringReceivedRouteListResult]
 
         error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop("error_map", {}) or {})
@@ -94,9 +158,17 @@ class Operations:
         def prepare_request(next_link=None):
             if not next_link:
 
-                request = build_list_request(
+                request = build_list_by_peering_request(
+                    resource_group_name=resource_group_name,
+                    peering_name=peering_name,
+                    subscription_id=self._config.subscription_id,
+                    prefix=prefix,
+                    as_path=as_path,
+                    origin_as_validation_state=origin_as_validation_state,
+                    rpki_validation_state=rpki_validation_state,
+                    skip_token=skip_token,
                     api_version=api_version,
-                    template_url=self.list.metadata["url"],
+                    template_url=self.list_by_peering.metadata["url"],
                     headers=_headers,
                     params=_params,
                 )
@@ -115,7 +187,7 @@ class Operations:
             return request
 
         def extract_data(pipeline_response):
-            deserialized = self._deserialize("OperationListResult", pipeline_response)
+            deserialized = self._deserialize("PeeringReceivedRouteListResult", pipeline_response)
             list_of_elem = deserialized.value
             if cls:
                 list_of_elem = cls(list_of_elem)
@@ -138,4 +210,4 @@ class Operations:
 
         return ItemPaged(get_next, extract_data)
 
-    list.metadata = {"url": "/providers/Microsoft.Peering/operations"}  # type: ignore
+    list_by_peering.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/receivedRoutes"}  # type: ignore

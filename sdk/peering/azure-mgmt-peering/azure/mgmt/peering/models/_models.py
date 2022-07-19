@@ -46,42 +46,39 @@ class BgpSession(msrest.serialization.Model):
     """
 
     _validation = {
-        'microsoft_session_i_pv4_address': {'readonly': True},
-        'microsoft_session_i_pv6_address': {'readonly': True},
-        'session_state_v4': {'readonly': True},
-        'session_state_v6': {'readonly': True},
+        "microsoft_session_i_pv4_address": {"readonly": True},
+        "microsoft_session_i_pv6_address": {"readonly": True},
+        "session_state_v4": {"readonly": True},
+        "session_state_v6": {"readonly": True},
     }
 
     _attribute_map = {
-        'session_prefix_v4': {'key': 'sessionPrefixV4', 'type': 'str'},
-        'session_prefix_v6': {'key': 'sessionPrefixV6', 'type': 'str'},
-        'microsoft_session_i_pv4_address': {'key': 'microsoftSessionIPv4Address', 'type': 'str'},
-        'microsoft_session_i_pv6_address': {'key': 'microsoftSessionIPv6Address', 'type': 'str'},
-        'peer_session_i_pv4_address': {'key': 'peerSessionIPv4Address', 'type': 'str'},
-        'peer_session_i_pv6_address': {'key': 'peerSessionIPv6Address', 'type': 'str'},
-        'session_state_v4': {'key': 'sessionStateV4', 'type': 'str'},
-        'session_state_v6': {'key': 'sessionStateV6', 'type': 'str'},
-        'max_prefixes_advertised_v4': {'key': 'maxPrefixesAdvertisedV4', 'type': 'int'},
-        'max_prefixes_advertised_v6': {'key': 'maxPrefixesAdvertisedV6', 'type': 'int'},
-        'md5_authentication_key': {'key': 'md5AuthenticationKey', 'type': 'str'},
+        "session_prefix_v4": {"key": "sessionPrefixV4", "type": "str"},
+        "session_prefix_v6": {"key": "sessionPrefixV6", "type": "str"},
+        "microsoft_session_i_pv4_address": {"key": "microsoftSessionIPv4Address", "type": "str"},
+        "microsoft_session_i_pv6_address": {"key": "microsoftSessionIPv6Address", "type": "str"},
+        "peer_session_i_pv4_address": {"key": "peerSessionIPv4Address", "type": "str"},
+        "peer_session_i_pv6_address": {"key": "peerSessionIPv6Address", "type": "str"},
+        "session_state_v4": {"key": "sessionStateV4", "type": "str"},
+        "session_state_v6": {"key": "sessionStateV6", "type": "str"},
+        "max_prefixes_advertised_v4": {"key": "maxPrefixesAdvertisedV4", "type": "int"},
+        "max_prefixes_advertised_v6": {"key": "maxPrefixesAdvertisedV6", "type": "int"},
+        "md5_authentication_key": {"key": "md5AuthenticationKey", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(BgpSession, self).__init__(**kwargs)
-        self.session_prefix_v4 = kwargs.get('session_prefix_v4', None)
-        self.session_prefix_v6 = kwargs.get('session_prefix_v6', None)
+        self.session_prefix_v4 = kwargs.get("session_prefix_v4", None)
+        self.session_prefix_v6 = kwargs.get("session_prefix_v6", None)
         self.microsoft_session_i_pv4_address = None
         self.microsoft_session_i_pv6_address = None
-        self.peer_session_i_pv4_address = kwargs.get('peer_session_i_pv4_address', None)
-        self.peer_session_i_pv6_address = kwargs.get('peer_session_i_pv6_address', None)
+        self.peer_session_i_pv4_address = kwargs.get("peer_session_i_pv4_address", None)
+        self.peer_session_i_pv6_address = kwargs.get("peer_session_i_pv6_address", None)
         self.session_state_v4 = None
         self.session_state_v6 = None
-        self.max_prefixes_advertised_v4 = kwargs.get('max_prefixes_advertised_v4', None)
-        self.max_prefixes_advertised_v6 = kwargs.get('max_prefixes_advertised_v6', None)
-        self.md5_authentication_key = kwargs.get('md5_authentication_key', None)
+        self.max_prefixes_advertised_v4 = kwargs.get("max_prefixes_advertised_v4", None)
+        self.max_prefixes_advertised_v6 = kwargs.get("max_prefixes_advertised_v6", None)
+        self.md5_authentication_key = kwargs.get("md5_authentication_key", None)
 
 
 class CheckServiceProviderAvailabilityInput(msrest.serialization.Model):
@@ -94,17 +91,14 @@ class CheckServiceProviderAvailabilityInput(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'peering_service_location': {'key': 'peeringServiceLocation', 'type': 'str'},
-        'peering_service_provider': {'key': 'peeringServiceProvider', 'type': 'str'},
+        "peering_service_location": {"key": "peeringServiceLocation", "type": "str"},
+        "peering_service_provider": {"key": "peeringServiceProvider", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(CheckServiceProviderAvailabilityInput, self).__init__(**kwargs)
-        self.peering_service_location = kwargs.get('peering_service_location', None)
-        self.peering_service_provider = kwargs.get('peering_service_provider', None)
+        self.peering_service_location = kwargs.get("peering_service_location", None)
+        self.peering_service_provider = kwargs.get("peering_service_provider", None)
 
 
 class ContactInfo(msrest.serialization.Model):
@@ -117,17 +111,14 @@ class ContactInfo(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'emails': {'key': 'emails', 'type': '[str]'},
-        'phone': {'key': 'phone', 'type': '[str]'},
+        "emails": {"key": "emails", "type": "[str]"},
+        "phone": {"key": "phone", "type": "[str]"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ContactInfo, self).__init__(**kwargs)
-        self.emails = kwargs.get('emails', None)
-        self.phone = kwargs.get('phone', None)
+        self.emails = kwargs.get("emails", None)
+        self.phone = kwargs.get("phone", None)
 
 
 class DirectConnection(msrest.serialization.Model):
@@ -159,33 +150,30 @@ class DirectConnection(msrest.serialization.Model):
     """
 
     _validation = {
-        'connection_state': {'readonly': True},
+        "connection_state": {"readonly": True},
     }
 
     _attribute_map = {
-        'bandwidth_in_mbps': {'key': 'bandwidthInMbps', 'type': 'int'},
-        'provisioned_bandwidth_in_mbps': {'key': 'provisionedBandwidthInMbps', 'type': 'int'},
-        'session_address_provider': {'key': 'sessionAddressProvider', 'type': 'str'},
-        'use_for_peering_service': {'key': 'useForPeeringService', 'type': 'bool'},
-        'peering_db_facility_id': {'key': 'peeringDBFacilityId', 'type': 'int'},
-        'connection_state': {'key': 'connectionState', 'type': 'str'},
-        'bgp_session': {'key': 'bgpSession', 'type': 'BgpSession'},
-        'connection_identifier': {'key': 'connectionIdentifier', 'type': 'str'},
+        "bandwidth_in_mbps": {"key": "bandwidthInMbps", "type": "int"},
+        "provisioned_bandwidth_in_mbps": {"key": "provisionedBandwidthInMbps", "type": "int"},
+        "session_address_provider": {"key": "sessionAddressProvider", "type": "str"},
+        "use_for_peering_service": {"key": "useForPeeringService", "type": "bool"},
+        "peering_db_facility_id": {"key": "peeringDBFacilityId", "type": "int"},
+        "connection_state": {"key": "connectionState", "type": "str"},
+        "bgp_session": {"key": "bgpSession", "type": "BgpSession"},
+        "connection_identifier": {"key": "connectionIdentifier", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(DirectConnection, self).__init__(**kwargs)
-        self.bandwidth_in_mbps = kwargs.get('bandwidth_in_mbps', None)
-        self.provisioned_bandwidth_in_mbps = kwargs.get('provisioned_bandwidth_in_mbps', None)
-        self.session_address_provider = kwargs.get('session_address_provider', None)
-        self.use_for_peering_service = kwargs.get('use_for_peering_service', None)
-        self.peering_db_facility_id = kwargs.get('peering_db_facility_id', None)
+        self.bandwidth_in_mbps = kwargs.get("bandwidth_in_mbps", None)
+        self.provisioned_bandwidth_in_mbps = kwargs.get("provisioned_bandwidth_in_mbps", None)
+        self.session_address_provider = kwargs.get("session_address_provider", None)
+        self.use_for_peering_service = kwargs.get("use_for_peering_service", None)
+        self.peering_db_facility_id = kwargs.get("peering_db_facility_id", None)
         self.connection_state = None
-        self.bgp_session = kwargs.get('bgp_session', None)
-        self.connection_identifier = kwargs.get('connection_identifier', None)
+        self.bgp_session = kwargs.get("bgp_session", None)
+        self.connection_identifier = kwargs.get("connection_identifier", None)
 
 
 class DirectPeeringFacility(msrest.serialization.Model):
@@ -203,21 +191,18 @@ class DirectPeeringFacility(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'address': {'key': 'address', 'type': 'str'},
-        'direct_peering_type': {'key': 'directPeeringType', 'type': 'str'},
-        'peering_db_facility_id': {'key': 'peeringDBFacilityId', 'type': 'int'},
-        'peering_db_facility_link': {'key': 'peeringDBFacilityLink', 'type': 'str'},
+        "address": {"key": "address", "type": "str"},
+        "direct_peering_type": {"key": "directPeeringType", "type": "str"},
+        "peering_db_facility_id": {"key": "peeringDBFacilityId", "type": "int"},
+        "peering_db_facility_link": {"key": "peeringDBFacilityLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(DirectPeeringFacility, self).__init__(**kwargs)
-        self.address = kwargs.get('address', None)
-        self.direct_peering_type = kwargs.get('direct_peering_type', None)
-        self.peering_db_facility_id = kwargs.get('peering_db_facility_id', None)
-        self.peering_db_facility_link = kwargs.get('peering_db_facility_link', None)
+        self.address = kwargs.get("address", None)
+        self.direct_peering_type = kwargs.get("direct_peering_type", None)
+        self.peering_db_facility_id = kwargs.get("peering_db_facility_id", None)
+        self.peering_db_facility_link = kwargs.get("peering_db_facility_link", None)
 
 
 class ErrorResponse(msrest.serialization.Model):
@@ -232,19 +217,16 @@ class ErrorResponse(msrest.serialization.Model):
     """
 
     _validation = {
-        'code': {'readonly': True},
-        'message': {'readonly': True},
+        "code": {"readonly": True},
+        "message": {"readonly": True},
     }
 
     _attribute_map = {
-        'code': {'key': 'code', 'type': 'str'},
-        'message': {'key': 'message', 'type': 'str'},
+        "code": {"key": "code", "type": "str"},
+        "message": {"key": "message", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ErrorResponse, self).__init__(**kwargs)
         self.code = None
         self.message = None
@@ -269,25 +251,22 @@ class ExchangeConnection(msrest.serialization.Model):
     """
 
     _validation = {
-        'connection_state': {'readonly': True},
+        "connection_state": {"readonly": True},
     }
 
     _attribute_map = {
-        'peering_db_facility_id': {'key': 'peeringDBFacilityId', 'type': 'int'},
-        'connection_state': {'key': 'connectionState', 'type': 'str'},
-        'bgp_session': {'key': 'bgpSession', 'type': 'BgpSession'},
-        'connection_identifier': {'key': 'connectionIdentifier', 'type': 'str'},
+        "peering_db_facility_id": {"key": "peeringDBFacilityId", "type": "int"},
+        "connection_state": {"key": "connectionState", "type": "str"},
+        "bgp_session": {"key": "bgpSession", "type": "BgpSession"},
+        "connection_identifier": {"key": "connectionIdentifier", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ExchangeConnection, self).__init__(**kwargs)
-        self.peering_db_facility_id = kwargs.get('peering_db_facility_id', None)
+        self.peering_db_facility_id = kwargs.get("peering_db_facility_id", None)
         self.connection_state = None
-        self.bgp_session = kwargs.get('bgp_session', None)
-        self.connection_identifier = kwargs.get('connection_identifier', None)
+        self.bgp_session = kwargs.get("bgp_session", None)
+        self.connection_identifier = kwargs.get("connection_identifier", None)
 
 
 class ExchangePeeringFacility(msrest.serialization.Model):
@@ -313,29 +292,26 @@ class ExchangePeeringFacility(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'exchange_name': {'key': 'exchangeName', 'type': 'str'},
-        'bandwidth_in_mbps': {'key': 'bandwidthInMbps', 'type': 'int'},
-        'microsoft_i_pv4_address': {'key': 'microsoftIPv4Address', 'type': 'str'},
-        'microsoft_i_pv6_address': {'key': 'microsoftIPv6Address', 'type': 'str'},
-        'facility_i_pv4_prefix': {'key': 'facilityIPv4Prefix', 'type': 'str'},
-        'facility_i_pv6_prefix': {'key': 'facilityIPv6Prefix', 'type': 'str'},
-        'peering_db_facility_id': {'key': 'peeringDBFacilityId', 'type': 'int'},
-        'peering_db_facility_link': {'key': 'peeringDBFacilityLink', 'type': 'str'},
+        "exchange_name": {"key": "exchangeName", "type": "str"},
+        "bandwidth_in_mbps": {"key": "bandwidthInMbps", "type": "int"},
+        "microsoft_i_pv4_address": {"key": "microsoftIPv4Address", "type": "str"},
+        "microsoft_i_pv6_address": {"key": "microsoftIPv6Address", "type": "str"},
+        "facility_i_pv4_prefix": {"key": "facilityIPv4Prefix", "type": "str"},
+        "facility_i_pv6_prefix": {"key": "facilityIPv6Prefix", "type": "str"},
+        "peering_db_facility_id": {"key": "peeringDBFacilityId", "type": "int"},
+        "peering_db_facility_link": {"key": "peeringDBFacilityLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ExchangePeeringFacility, self).__init__(**kwargs)
-        self.exchange_name = kwargs.get('exchange_name', None)
-        self.bandwidth_in_mbps = kwargs.get('bandwidth_in_mbps', None)
-        self.microsoft_i_pv4_address = kwargs.get('microsoft_i_pv4_address', None)
-        self.microsoft_i_pv6_address = kwargs.get('microsoft_i_pv6_address', None)
-        self.facility_i_pv4_prefix = kwargs.get('facility_i_pv4_prefix', None)
-        self.facility_i_pv6_prefix = kwargs.get('facility_i_pv6_prefix', None)
-        self.peering_db_facility_id = kwargs.get('peering_db_facility_id', None)
-        self.peering_db_facility_link = kwargs.get('peering_db_facility_link', None)
+        self.exchange_name = kwargs.get("exchange_name", None)
+        self.bandwidth_in_mbps = kwargs.get("bandwidth_in_mbps", None)
+        self.microsoft_i_pv4_address = kwargs.get("microsoft_i_pv4_address", None)
+        self.microsoft_i_pv6_address = kwargs.get("microsoft_i_pv6_address", None)
+        self.facility_i_pv4_prefix = kwargs.get("facility_i_pv4_prefix", None)
+        self.facility_i_pv6_prefix = kwargs.get("facility_i_pv6_prefix", None)
+        self.peering_db_facility_id = kwargs.get("peering_db_facility_id", None)
+        self.peering_db_facility_link = kwargs.get("peering_db_facility_link", None)
 
 
 class Operation(msrest.serialization.Model):
@@ -352,21 +328,18 @@ class Operation(msrest.serialization.Model):
     """
 
     _validation = {
-        'name': {'readonly': True},
-        'display': {'readonly': True},
-        'is_data_action': {'readonly': True},
+        "name": {"readonly": True},
+        "display": {"readonly": True},
+        "is_data_action": {"readonly": True},
     }
 
     _attribute_map = {
-        'name': {'key': 'name', 'type': 'str'},
-        'display': {'key': 'display', 'type': 'OperationDisplayInfo'},
-        'is_data_action': {'key': 'isDataAction', 'type': 'bool'},
+        "name": {"key": "name", "type": "str"},
+        "display": {"key": "display", "type": "OperationDisplayInfo"},
+        "is_data_action": {"key": "isDataAction", "type": "bool"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(Operation, self).__init__(**kwargs)
         self.name = None
         self.display = None
@@ -389,23 +362,20 @@ class OperationDisplayInfo(msrest.serialization.Model):
     """
 
     _validation = {
-        'provider': {'readonly': True},
-        'resource': {'readonly': True},
-        'operation': {'readonly': True},
-        'description': {'readonly': True},
+        "provider": {"readonly": True},
+        "resource": {"readonly": True},
+        "operation": {"readonly": True},
+        "description": {"readonly": True},
     }
 
     _attribute_map = {
-        'provider': {'key': 'provider', 'type': 'str'},
-        'resource': {'key': 'resource', 'type': 'str'},
-        'operation': {'key': 'operation', 'type': 'str'},
-        'description': {'key': 'description', 'type': 'str'},
+        "provider": {"key": "provider", "type": "str"},
+        "resource": {"key": "resource", "type": "str"},
+        "operation": {"key": "operation", "type": "str"},
+        "description": {"key": "description", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(OperationDisplayInfo, self).__init__(**kwargs)
         self.provider = None
         self.resource = None
@@ -423,17 +393,14 @@ class OperationListResult(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[Operation]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[Operation]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(OperationListResult, self).__init__(**kwargs)
-        self.value = kwargs.get('value', None)
-        self.next_link = kwargs.get('next_link', None)
+        self.value = kwargs.get("value", None)
+        self.next_link = kwargs.get("next_link", None)
 
 
 class Resource(msrest.serialization.Model):
@@ -450,21 +417,18 @@ class Resource(msrest.serialization.Model):
     """
 
     _validation = {
-        'name': {'readonly': True},
-        'id': {'readonly': True},
-        'type': {'readonly': True},
+        "name": {"readonly": True},
+        "id": {"readonly": True},
+        "type": {"readonly": True},
     }
 
     _attribute_map = {
-        'name': {'key': 'name', 'type': 'str'},
-        'id': {'key': 'id', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
+        "name": {"key": "name", "type": "str"},
+        "id": {"key": "id", "type": "str"},
+        "type": {"key": "type", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(Resource, self).__init__(**kwargs)
         self.name = None
         self.id = None
@@ -494,30 +458,27 @@ class PeerAsn(Resource):
     """
 
     _validation = {
-        'name': {'readonly': True},
-        'id': {'readonly': True},
-        'type': {'readonly': True},
+        "name": {"readonly": True},
+        "id": {"readonly": True},
+        "type": {"readonly": True},
     }
 
     _attribute_map = {
-        'name': {'key': 'name', 'type': 'str'},
-        'id': {'key': 'id', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'peer_asn': {'key': 'properties.peerAsn', 'type': 'int'},
-        'peer_contact_info': {'key': 'properties.peerContactInfo', 'type': 'ContactInfo'},
-        'peer_name': {'key': 'properties.peerName', 'type': 'str'},
-        'validation_state': {'key': 'properties.validationState', 'type': 'str'},
+        "name": {"key": "name", "type": "str"},
+        "id": {"key": "id", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "peer_asn": {"key": "properties.peerAsn", "type": "int"},
+        "peer_contact_info": {"key": "properties.peerContactInfo", "type": "ContactInfo"},
+        "peer_name": {"key": "properties.peerName", "type": "str"},
+        "validation_state": {"key": "properties.validationState", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(PeerAsn, self).__init__(**kwargs)
-        self.peer_asn = kwargs.get('peer_asn', None)
-        self.peer_contact_info = kwargs.get('peer_contact_info', None)
-        self.peer_name = kwargs.get('peer_name', None)
-        self.validation_state = kwargs.get('validation_state', None)
+        self.peer_asn = kwargs.get("peer_asn", None)
+        self.peer_contact_info = kwargs.get("peer_contact_info", None)
+        self.peer_name = kwargs.get("peer_name", None)
+        self.validation_state = kwargs.get("validation_state", None)
 
 
 class PeerAsnListResult(msrest.serialization.Model):
@@ -530,17 +491,14 @@ class PeerAsnListResult(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[PeerAsn]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[PeerAsn]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(PeerAsnListResult, self).__init__(**kwargs)
-        self.value = kwargs.get('value', None)
-        self.next_link = kwargs.get('next_link', None)
+        self.value = kwargs.get("value", None)
+        self.next_link = kwargs.get("next_link", None)
 
 
 class Peering(Resource):
@@ -576,41 +534,38 @@ class Peering(Resource):
     """
 
     _validation = {
-        'name': {'readonly': True},
-        'id': {'readonly': True},
-        'type': {'readonly': True},
-        'sku': {'required': True},
-        'kind': {'required': True},
-        'location': {'required': True},
-        'provisioning_state': {'readonly': True},
+        "name": {"readonly": True},
+        "id": {"readonly": True},
+        "type": {"readonly": True},
+        "sku": {"required": True},
+        "kind": {"required": True},
+        "location": {"required": True},
+        "provisioning_state": {"readonly": True},
     }
 
     _attribute_map = {
-        'name': {'key': 'name', 'type': 'str'},
-        'id': {'key': 'id', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'sku': {'key': 'sku', 'type': 'PeeringSku'},
-        'kind': {'key': 'kind', 'type': 'str'},
-        'location': {'key': 'location', 'type': 'str'},
-        'tags': {'key': 'tags', 'type': '{str}'},
-        'direct': {'key': 'properties.direct', 'type': 'PeeringPropertiesDirect'},
-        'exchange': {'key': 'properties.exchange', 'type': 'PeeringPropertiesExchange'},
-        'peering_location': {'key': 'properties.peeringLocation', 'type': 'str'},
-        'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
+        "name": {"key": "name", "type": "str"},
+        "id": {"key": "id", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "sku": {"key": "sku", "type": "PeeringSku"},
+        "kind": {"key": "kind", "type": "str"},
+        "location": {"key": "location", "type": "str"},
+        "tags": {"key": "tags", "type": "{str}"},
+        "direct": {"key": "properties.direct", "type": "PeeringPropertiesDirect"},
+        "exchange": {"key": "properties.exchange", "type": "PeeringPropertiesExchange"},
+        "peering_location": {"key": "properties.peeringLocation", "type": "str"},
+        "provisioning_state": {"key": "properties.provisioningState", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(Peering, self).__init__(**kwargs)
-        self.sku = kwargs['sku']
-        self.kind = kwargs['kind']
-        self.location = kwargs['location']
-        self.tags = kwargs.get('tags', None)
-        self.direct = kwargs.get('direct', None)
-        self.exchange = kwargs.get('exchange', None)
-        self.peering_location = kwargs.get('peering_location', None)
+        self.sku = kwargs["sku"]
+        self.kind = kwargs["kind"]
+        self.location = kwargs["location"]
+        self.tags = kwargs.get("tags", None)
+        self.direct = kwargs.get("direct", None)
+        self.exchange = kwargs.get("exchange", None)
+        self.peering_location = kwargs.get("peering_location", None)
         self.provisioning_state = None
 
 
@@ -624,17 +579,14 @@ class PeeringBandwidthOffer(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'offer_name': {'key': 'offerName', 'type': 'str'},
-        'value_in_mbps': {'key': 'valueInMbps', 'type': 'int'},
+        "offer_name": {"key": "offerName", "type": "str"},
+        "value_in_mbps": {"key": "valueInMbps", "type": "int"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(PeeringBandwidthOffer, self).__init__(**kwargs)
-        self.offer_name = kwargs.get('offer_name', None)
-        self.value_in_mbps = kwargs.get('value_in_mbps', None)
+        self.offer_name = kwargs.get("offer_name", None)
+        self.value_in_mbps = kwargs.get("value_in_mbps", None)
 
 
 class PeeringListResult(msrest.serialization.Model):
@@ -647,17 +599,14 @@ class PeeringListResult(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[Peering]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[Peering]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(PeeringListResult, self).__init__(**kwargs)
-        self.value = kwargs.get('value', None)
-        self.next_link = kwargs.get('next_link', None)
+        self.value = kwargs.get("value", None)
+        self.next_link = kwargs.get("next_link", None)
 
 
 class PeeringLocation(Resource):
@@ -687,34 +636,31 @@ class PeeringLocation(Resource):
     """
 
     _validation = {
-        'name': {'readonly': True},
-        'id': {'readonly': True},
-        'type': {'readonly': True},
+        "name": {"readonly": True},
+        "id": {"readonly": True},
+        "type": {"readonly": True},
     }
 
     _attribute_map = {
-        'name': {'key': 'name', 'type': 'str'},
-        'id': {'key': 'id', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'kind': {'key': 'kind', 'type': 'str'},
-        'direct': {'key': 'properties.direct', 'type': 'PeeringLocationPropertiesDirect'},
-        'exchange': {'key': 'properties.exchange', 'type': 'PeeringLocationPropertiesExchange'},
-        'peering_location': {'key': 'properties.peeringLocation', 'type': 'str'},
-        'country': {'key': 'properties.country', 'type': 'str'},
-        'azure_region': {'key': 'properties.azureRegion', 'type': 'str'},
+        "name": {"key": "name", "type": "str"},
+        "id": {"key": "id", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "kind": {"key": "kind", "type": "str"},
+        "direct": {"key": "properties.direct", "type": "PeeringLocationPropertiesDirect"},
+        "exchange": {"key": "properties.exchange", "type": "PeeringLocationPropertiesExchange"},
+        "peering_location": {"key": "properties.peeringLocation", "type": "str"},
+        "country": {"key": "properties.country", "type": "str"},
+        "azure_region": {"key": "properties.azureRegion", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(PeeringLocation, self).__init__(**kwargs)
-        self.kind = kwargs.get('kind', None)
-        self.direct = kwargs.get('direct', None)
-        self.exchange = kwargs.get('exchange', None)
-        self.peering_location = kwargs.get('peering_location', None)
-        self.country = kwargs.get('country', None)
-        self.azure_region = kwargs.get('azure_region', None)
+        self.kind = kwargs.get("kind", None)
+        self.direct = kwargs.get("direct", None)
+        self.exchange = kwargs.get("exchange", None)
+        self.peering_location = kwargs.get("peering_location", None)
+        self.country = kwargs.get("country", None)
+        self.azure_region = kwargs.get("azure_region", None)
 
 
 class PeeringLocationListResult(msrest.serialization.Model):
@@ -727,17 +673,14 @@ class PeeringLocationListResult(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[PeeringLocation]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[PeeringLocation]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(PeeringLocationListResult, self).__init__(**kwargs)
-        self.value = kwargs.get('value', None)
-        self.next_link = kwargs.get('next_link', None)
+        self.value = kwargs.get("value", None)
+        self.next_link = kwargs.get("next_link", None)
 
 
 class PeeringLocationPropertiesDirect(msrest.serialization.Model):
@@ -750,17 +693,14 @@ class PeeringLocationPropertiesDirect(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'peering_facilities': {'key': 'peeringFacilities', 'type': '[DirectPeeringFacility]'},
-        'bandwidth_offers': {'key': 'bandwidthOffers', 'type': '[PeeringBandwidthOffer]'},
+        "peering_facilities": {"key": "peeringFacilities", "type": "[DirectPeeringFacility]"},
+        "bandwidth_offers": {"key": "bandwidthOffers", "type": "[PeeringBandwidthOffer]"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(PeeringLocationPropertiesDirect, self).__init__(**kwargs)
-        self.peering_facilities = kwargs.get('peering_facilities', None)
-        self.bandwidth_offers = kwargs.get('bandwidth_offers', None)
+        self.peering_facilities = kwargs.get("peering_facilities", None)
+        self.bandwidth_offers = kwargs.get("bandwidth_offers", None)
 
 
 class PeeringLocationPropertiesExchange(msrest.serialization.Model):
@@ -771,15 +711,12 @@ class PeeringLocationPropertiesExchange(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'peering_facilities': {'key': 'peeringFacilities', 'type': '[ExchangePeeringFacility]'},
+        "peering_facilities": {"key": "peeringFacilities", "type": "[ExchangePeeringFacility]"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(PeeringLocationPropertiesExchange, self).__init__(**kwargs)
-        self.peering_facilities = kwargs.get('peering_facilities', None)
+        self.peering_facilities = kwargs.get("peering_facilities", None)
 
 
 class PeeringPropertiesDirect(msrest.serialization.Model):
@@ -798,21 +735,18 @@ class PeeringPropertiesDirect(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'connections': {'key': 'connections', 'type': '[DirectConnection]'},
-        'use_for_peering_service': {'key': 'useForPeeringService', 'type': 'bool'},
-        'peer_asn': {'key': 'peerAsn', 'type': 'SubResource'},
-        'direct_peering_type': {'key': 'directPeeringType', 'type': 'str'},
+        "connections": {"key": "connections", "type": "[DirectConnection]"},
+        "use_for_peering_service": {"key": "useForPeeringService", "type": "bool"},
+        "peer_asn": {"key": "peerAsn", "type": "SubResource"},
+        "direct_peering_type": {"key": "directPeeringType", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(PeeringPropertiesDirect, self).__init__(**kwargs)
-        self.connections = kwargs.get('connections', None)
-        self.use_for_peering_service = kwargs.get('use_for_peering_service', None)
-        self.peer_asn = kwargs.get('peer_asn', None)
-        self.direct_peering_type = kwargs.get('direct_peering_type', None)
+        self.connections = kwargs.get("connections", None)
+        self.use_for_peering_service = kwargs.get("use_for_peering_service", None)
+        self.peer_asn = kwargs.get("peer_asn", None)
+        self.direct_peering_type = kwargs.get("direct_peering_type", None)
 
 
 class PeeringPropertiesExchange(msrest.serialization.Model):
@@ -825,17 +759,14 @@ class PeeringPropertiesExchange(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'connections': {'key': 'connections', 'type': '[ExchangeConnection]'},
-        'peer_asn': {'key': 'peerAsn', 'type': 'SubResource'},
+        "connections": {"key": "connections", "type": "[ExchangeConnection]"},
+        "peer_asn": {"key": "peerAsn", "type": "SubResource"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(PeeringPropertiesExchange, self).__init__(**kwargs)
-        self.connections = kwargs.get('connections', None)
-        self.peer_asn = kwargs.get('peer_asn', None)
+        self.connections = kwargs.get("connections", None)
+        self.peer_asn = kwargs.get("peer_asn", None)
 
 
 class PeeringService(Resource):
@@ -865,33 +796,30 @@ class PeeringService(Resource):
     """
 
     _validation = {
-        'name': {'readonly': True},
-        'id': {'readonly': True},
-        'type': {'readonly': True},
-        'location': {'required': True},
-        'provisioning_state': {'readonly': True},
+        "name": {"readonly": True},
+        "id": {"readonly": True},
+        "type": {"readonly": True},
+        "location": {"required": True},
+        "provisioning_state": {"readonly": True},
     }
 
     _attribute_map = {
-        'name': {'key': 'name', 'type': 'str'},
-        'id': {'key': 'id', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'location': {'key': 'location', 'type': 'str'},
-        'tags': {'key': 'tags', 'type': '{str}'},
-        'peering_service_location': {'key': 'properties.peeringServiceLocation', 'type': 'str'},
-        'peering_service_provider': {'key': 'properties.peeringServiceProvider', 'type': 'str'},
-        'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
+        "name": {"key": "name", "type": "str"},
+        "id": {"key": "id", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "location": {"key": "location", "type": "str"},
+        "tags": {"key": "tags", "type": "{str}"},
+        "peering_service_location": {"key": "properties.peeringServiceLocation", "type": "str"},
+        "peering_service_provider": {"key": "properties.peeringServiceProvider", "type": "str"},
+        "provisioning_state": {"key": "properties.provisioningState", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(PeeringService, self).__init__(**kwargs)
-        self.location = kwargs['location']
-        self.tags = kwargs.get('tags', None)
-        self.peering_service_location = kwargs.get('peering_service_location', None)
-        self.peering_service_provider = kwargs.get('peering_service_provider', None)
+        self.location = kwargs["location"]
+        self.tags = kwargs.get("tags", None)
+        self.peering_service_location = kwargs.get("peering_service_location", None)
+        self.peering_service_provider = kwargs.get("peering_service_provider", None)
         self.provisioning_state = None
 
 
@@ -905,17 +833,14 @@ class PeeringServiceListResult(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[PeeringService]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[PeeringService]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(PeeringServiceListResult, self).__init__(**kwargs)
-        self.value = kwargs.get('value', None)
-        self.next_link = kwargs.get('next_link', None)
+        self.value = kwargs.get("value", None)
+        self.next_link = kwargs.get("next_link", None)
 
 
 class PeeringServiceLocation(Resource):
@@ -938,28 +863,25 @@ class PeeringServiceLocation(Resource):
     """
 
     _validation = {
-        'name': {'readonly': True},
-        'id': {'readonly': True},
-        'type': {'readonly': True},
+        "name": {"readonly": True},
+        "id": {"readonly": True},
+        "type": {"readonly": True},
     }
 
     _attribute_map = {
-        'name': {'key': 'name', 'type': 'str'},
-        'id': {'key': 'id', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'country': {'key': 'properties.country', 'type': 'str'},
-        'state': {'key': 'properties.state', 'type': 'str'},
-        'azure_region': {'key': 'properties.azureRegion', 'type': 'str'},
+        "name": {"key": "name", "type": "str"},
+        "id": {"key": "id", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "country": {"key": "properties.country", "type": "str"},
+        "state": {"key": "properties.state", "type": "str"},
+        "azure_region": {"key": "properties.azureRegion", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(PeeringServiceLocation, self).__init__(**kwargs)
-        self.country = kwargs.get('country', None)
-        self.state = kwargs.get('state', None)
-        self.azure_region = kwargs.get('azure_region', None)
+        self.country = kwargs.get("country", None)
+        self.state = kwargs.get("state", None)
+        self.azure_region = kwargs.get("azure_region", None)
 
 
 class PeeringServiceLocationListResult(msrest.serialization.Model):
@@ -972,17 +894,14 @@ class PeeringServiceLocationListResult(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[PeeringServiceLocation]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[PeeringServiceLocation]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(PeeringServiceLocationListResult, self).__init__(**kwargs)
-        self.value = kwargs.get('value', None)
-        self.next_link = kwargs.get('next_link', None)
+        self.value = kwargs.get("value", None)
+        self.next_link = kwargs.get("next_link", None)
 
 
 class PeeringServicePrefix(Resource):
@@ -1010,30 +929,27 @@ class PeeringServicePrefix(Resource):
     """
 
     _validation = {
-        'name': {'readonly': True},
-        'id': {'readonly': True},
-        'type': {'readonly': True},
-        'provisioning_state': {'readonly': True},
+        "name": {"readonly": True},
+        "id": {"readonly": True},
+        "type": {"readonly": True},
+        "provisioning_state": {"readonly": True},
     }
 
     _attribute_map = {
-        'name': {'key': 'name', 'type': 'str'},
-        'id': {'key': 'id', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'prefix': {'key': 'properties.prefix', 'type': 'str'},
-        'prefix_validation_state': {'key': 'properties.prefixValidationState', 'type': 'str'},
-        'learned_type': {'key': 'properties.learnedType', 'type': 'str'},
-        'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
+        "name": {"key": "name", "type": "str"},
+        "id": {"key": "id", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "prefix": {"key": "properties.prefix", "type": "str"},
+        "prefix_validation_state": {"key": "properties.prefixValidationState", "type": "str"},
+        "learned_type": {"key": "properties.learnedType", "type": "str"},
+        "provisioning_state": {"key": "properties.provisioningState", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(PeeringServicePrefix, self).__init__(**kwargs)
-        self.prefix = kwargs.get('prefix', None)
-        self.prefix_validation_state = kwargs.get('prefix_validation_state', None)
-        self.learned_type = kwargs.get('learned_type', None)
+        self.prefix = kwargs.get("prefix", None)
+        self.prefix_validation_state = kwargs.get("prefix_validation_state", None)
+        self.learned_type = kwargs.get("learned_type", None)
         self.provisioning_state = None
 
 
@@ -1047,17 +963,14 @@ class PeeringServicePrefixListResult(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[PeeringServicePrefix]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[PeeringServicePrefix]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(PeeringServicePrefixListResult, self).__init__(**kwargs)
-        self.value = kwargs.get('value', None)
-        self.next_link = kwargs.get('next_link', None)
+        self.value = kwargs.get("value", None)
+        self.next_link = kwargs.get("next_link", None)
 
 
 class PeeringServiceProvider(Resource):
@@ -1076,24 +989,21 @@ class PeeringServiceProvider(Resource):
     """
 
     _validation = {
-        'name': {'readonly': True},
-        'id': {'readonly': True},
-        'type': {'readonly': True},
+        "name": {"readonly": True},
+        "id": {"readonly": True},
+        "type": {"readonly": True},
     }
 
     _attribute_map = {
-        'name': {'key': 'name', 'type': 'str'},
-        'id': {'key': 'id', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'service_provider_name': {'key': 'properties.serviceProviderName', 'type': 'str'},
+        "name": {"key": "name", "type": "str"},
+        "id": {"key": "id", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "service_provider_name": {"key": "properties.serviceProviderName", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(PeeringServiceProvider, self).__init__(**kwargs)
-        self.service_provider_name = kwargs.get('service_provider_name', None)
+        self.service_provider_name = kwargs.get("service_provider_name", None)
 
 
 class PeeringServiceProviderListResult(msrest.serialization.Model):
@@ -1106,17 +1016,14 @@ class PeeringServiceProviderListResult(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[PeeringServiceProvider]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[PeeringServiceProvider]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(PeeringServiceProviderListResult, self).__init__(**kwargs)
-        self.value = kwargs.get('value', None)
-        self.next_link = kwargs.get('next_link', None)
+        self.value = kwargs.get("value", None)
+        self.next_link = kwargs.get("next_link", None)
 
 
 class PeeringSku(msrest.serialization.Model):
@@ -1136,21 +1043,18 @@ class PeeringSku(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'name': {'key': 'name', 'type': 'str'},
-        'tier': {'key': 'tier', 'type': 'str'},
-        'family': {'key': 'family', 'type': 'str'},
-        'size': {'key': 'size', 'type': 'str'},
+        "name": {"key": "name", "type": "str"},
+        "tier": {"key": "tier", "type": "str"},
+        "family": {"key": "family", "type": "str"},
+        "size": {"key": "size", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(PeeringSku, self).__init__(**kwargs)
-        self.name = kwargs.get('name', None)
-        self.tier = kwargs.get('tier', None)
-        self.family = kwargs.get('family', None)
-        self.size = kwargs.get('size', None)
+        self.name = kwargs.get("name", None)
+        self.tier = kwargs.get("tier", None)
+        self.family = kwargs.get("family", None)
+        self.size = kwargs.get("size", None)
 
 
 class ResourceTags(msrest.serialization.Model):
@@ -1161,15 +1065,12 @@ class ResourceTags(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'tags': {'key': 'tags', 'type': '{str}'},
+        "tags": {"key": "tags", "type": "{str}"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ResourceTags, self).__init__(**kwargs)
-        self.tags = kwargs.get('tags', None)
+        self.tags = kwargs.get("tags", None)
 
 
 class SubResource(msrest.serialization.Model):
@@ -1180,12 +1081,9 @@ class SubResource(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
+        "id": {"key": "id", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(SubResource, self).__init__(**kwargs)
-        self.id = kwargs.get('id', None)
+        self.id = kwargs.get("id", None)

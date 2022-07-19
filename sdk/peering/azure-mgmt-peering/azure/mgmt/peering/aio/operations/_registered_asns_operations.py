@@ -27,11 +27,11 @@ from azure.mgmt.core.exceptions import ARMErrorFormat
 
 from ... import models as _models
 from ..._vendor import _convert_request
-from ...operations._peer_asns_operations import (
+from ...operations._registered_asns_operations import (
     build_create_or_update_request,
     build_delete_request,
     build_get_request,
-    build_list_by_subscription_request,
+    build_list_by_peering_request,
 )
 from .._vendor import MixinABC
 
@@ -39,14 +39,14 @@ T = TypeVar("T")
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
 
 
-class PeerAsnsOperations:
+class RegisteredAsnsOperations:
     """
     .. warning::
         **DO NOT** instantiate this class directly.
 
         Instead, you should access the following operations through
         :class:`~azure.mgmt.peering.aio.PeeringManagementClient`'s
-        :attr:`peer_asns` attribute.
+        :attr:`registered_asns` attribute.
     """
 
     models = _models
@@ -59,14 +59,21 @@ class PeerAsnsOperations:
         self._deserialize = input_args.pop(0) if input_args else kwargs.pop("deserializer")
 
     @distributed_trace_async
-    async def get(self, peer_asn_name: str, **kwargs: Any) -> _models.PeerAsn:
-        """Gets the peer ASN with the specified name under the given subscription.
+    async def get(
+        self, resource_group_name: str, peering_name: str, registered_asn_name: str, **kwargs: Any
+    ) -> _models.PeeringRegisteredAsn:
+        """Gets an existing registered ASN with the specified name under the given subscription, resource
+        group and peering.
 
-        :param peer_asn_name: The peer ASN name. Required.
-        :type peer_asn_name: str
+        :param resource_group_name: The name of the resource group. Required.
+        :type resource_group_name: str
+        :param peering_name: The name of the peering. Required.
+        :type peering_name: str
+        :param registered_asn_name: The name of the registered ASN. Required.
+        :type registered_asn_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: PeerAsn or the result of cls(response)
-        :rtype: ~azure.mgmt.peering.models.PeerAsn
+        :return: PeeringRegisteredAsn or the result of cls(response)
+        :rtype: ~azure.mgmt.peering.models.PeeringRegisteredAsn
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
@@ -76,10 +83,12 @@ class PeerAsnsOperations:
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
         api_version = kwargs.pop("api_version", _params.pop("api-version", self._config.api_version))  # type: str
-        cls = kwargs.pop("cls", None)  # type: ClsType[_models.PeerAsn]
+        cls = kwargs.pop("cls", None)  # type: ClsType[_models.PeeringRegisteredAsn]
 
         request = build_get_request(
-            peer_asn_name=peer_asn_name,
+            resource_group_name=resource_group_name,
+            peering_name=peering_name,
+            registered_asn_name=registered_asn_name,
             subscription_id=self._config.subscription_id,
             api_version=api_version,
             template_url=self.get.metadata["url"],
@@ -100,72 +109,104 @@ class PeerAsnsOperations:
             error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, pipeline_response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize("PeerAsn", pipeline_response)
+        deserialized = self._deserialize("PeeringRegisteredAsn", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
 
-    get.metadata = {"url": "/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peerAsns/{peerAsnName}"}  # type: ignore
+    get.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/registeredAsns/{registeredAsnName}"}  # type: ignore
 
     @overload
     async def create_or_update(
-        self, peer_asn_name: str, peer_asn: _models.PeerAsn, *, content_type: str = "application/json", **kwargs: Any
-    ) -> _models.PeerAsn:
-        """Creates a new peer ASN or updates an existing peer ASN with the specified name under the given
-        subscription.
+        self,
+        resource_group_name: str,
+        peering_name: str,
+        registered_asn_name: str,
+        registered_asn: _models.PeeringRegisteredAsn,
+        *,
+        content_type: str = "application/json",
+        **kwargs: Any
+    ) -> _models.PeeringRegisteredAsn:
+        """Creates a new registered ASN with the specified name under the given subscription, resource
+        group and peering.
 
-        :param peer_asn_name: The peer ASN name. Required.
-        :type peer_asn_name: str
-        :param peer_asn: The peer ASN. Required.
-        :type peer_asn: ~azure.mgmt.peering.models.PeerAsn
+        :param resource_group_name: The name of the resource group. Required.
+        :type resource_group_name: str
+        :param peering_name: The name of the peering. Required.
+        :type peering_name: str
+        :param registered_asn_name: The name of the ASN. Required.
+        :type registered_asn_name: str
+        :param registered_asn: The properties needed to create a registered ASN. Required.
+        :type registered_asn: ~azure.mgmt.peering.models.PeeringRegisteredAsn
         :keyword content_type: Body Parameter content-type. Content type parameter for JSON body.
          Default value is "application/json".
         :paramtype content_type: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: PeerAsn or the result of cls(response)
-        :rtype: ~azure.mgmt.peering.models.PeerAsn
+        :return: PeeringRegisteredAsn or the result of cls(response)
+        :rtype: ~azure.mgmt.peering.models.PeeringRegisteredAsn
         :raises ~azure.core.exceptions.HttpResponseError:
         """
 
     @overload
     async def create_or_update(
-        self, peer_asn_name: str, peer_asn: IO, *, content_type: str = "application/json", **kwargs: Any
-    ) -> _models.PeerAsn:
-        """Creates a new peer ASN or updates an existing peer ASN with the specified name under the given
-        subscription.
+        self,
+        resource_group_name: str,
+        peering_name: str,
+        registered_asn_name: str,
+        registered_asn: IO,
+        *,
+        content_type: str = "application/json",
+        **kwargs: Any
+    ) -> _models.PeeringRegisteredAsn:
+        """Creates a new registered ASN with the specified name under the given subscription, resource
+        group and peering.
 
-        :param peer_asn_name: The peer ASN name. Required.
-        :type peer_asn_name: str
-        :param peer_asn: The peer ASN. Required.
-        :type peer_asn: IO
+        :param resource_group_name: The name of the resource group. Required.
+        :type resource_group_name: str
+        :param peering_name: The name of the peering. Required.
+        :type peering_name: str
+        :param registered_asn_name: The name of the ASN. Required.
+        :type registered_asn_name: str
+        :param registered_asn: The properties needed to create a registered ASN. Required.
+        :type registered_asn: IO
         :keyword content_type: Body Parameter content-type. Content type parameter for binary body.
          Default value is "application/json".
         :paramtype content_type: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: PeerAsn or the result of cls(response)
-        :rtype: ~azure.mgmt.peering.models.PeerAsn
+        :return: PeeringRegisteredAsn or the result of cls(response)
+        :rtype: ~azure.mgmt.peering.models.PeeringRegisteredAsn
         :raises ~azure.core.exceptions.HttpResponseError:
         """
 
     @distributed_trace_async
     async def create_or_update(
-        self, peer_asn_name: str, peer_asn: Union[_models.PeerAsn, IO], **kwargs: Any
-    ) -> _models.PeerAsn:
-        """Creates a new peer ASN or updates an existing peer ASN with the specified name under the given
-        subscription.
+        self,
+        resource_group_name: str,
+        peering_name: str,
+        registered_asn_name: str,
+        registered_asn: Union[_models.PeeringRegisteredAsn, IO],
+        **kwargs: Any
+    ) -> _models.PeeringRegisteredAsn:
+        """Creates a new registered ASN with the specified name under the given subscription, resource
+        group and peering.
 
-        :param peer_asn_name: The peer ASN name. Required.
-        :type peer_asn_name: str
-        :param peer_asn: The peer ASN. Is either a model type or a IO type. Required.
-        :type peer_asn: ~azure.mgmt.peering.models.PeerAsn or IO
+        :param resource_group_name: The name of the resource group. Required.
+        :type resource_group_name: str
+        :param peering_name: The name of the peering. Required.
+        :type peering_name: str
+        :param registered_asn_name: The name of the ASN. Required.
+        :type registered_asn_name: str
+        :param registered_asn: The properties needed to create a registered ASN. Is either a model type
+         or a IO type. Required.
+        :type registered_asn: ~azure.mgmt.peering.models.PeeringRegisteredAsn or IO
         :keyword content_type: Body Parameter content-type. Known values are: 'application/json'.
          Default value is None.
         :paramtype content_type: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: PeerAsn or the result of cls(response)
-        :rtype: ~azure.mgmt.peering.models.PeerAsn
+        :return: PeeringRegisteredAsn or the result of cls(response)
+        :rtype: ~azure.mgmt.peering.models.PeeringRegisteredAsn
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
@@ -176,18 +217,20 @@ class PeerAsnsOperations:
 
         api_version = kwargs.pop("api_version", _params.pop("api-version", self._config.api_version))  # type: str
         content_type = kwargs.pop("content_type", _headers.pop("Content-Type", None))  # type: Optional[str]
-        cls = kwargs.pop("cls", None)  # type: ClsType[_models.PeerAsn]
+        cls = kwargs.pop("cls", None)  # type: ClsType[_models.PeeringRegisteredAsn]
 
         content_type = content_type or "application/json"
         _json = None
         _content = None
-        if isinstance(peer_asn, (IO, bytes)):
-            _content = peer_asn
+        if isinstance(registered_asn, (IO, bytes)):
+            _content = registered_asn
         else:
-            _json = self._serialize.body(peer_asn, "PeerAsn")
+            _json = self._serialize.body(registered_asn, "PeeringRegisteredAsn")
 
         request = build_create_or_update_request(
-            peer_asn_name=peer_asn_name,
+            resource_group_name=resource_group_name,
+            peering_name=peering_name,
+            registered_asn_name=registered_asn_name,
             subscription_id=self._config.subscription_id,
             api_version=api_version,
             content_type=content_type,
@@ -212,24 +255,31 @@ class PeerAsnsOperations:
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         if response.status_code == 200:
-            deserialized = self._deserialize("PeerAsn", pipeline_response)
+            deserialized = self._deserialize("PeeringRegisteredAsn", pipeline_response)
 
         if response.status_code == 201:
-            deserialized = self._deserialize("PeerAsn", pipeline_response)
+            deserialized = self._deserialize("PeeringRegisteredAsn", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
 
-    create_or_update.metadata = {"url": "/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peerAsns/{peerAsnName}"}  # type: ignore
+    create_or_update.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/registeredAsns/{registeredAsnName}"}  # type: ignore
 
     @distributed_trace_async
-    async def delete(self, peer_asn_name: str, **kwargs: Any) -> None:  # pylint: disable=inconsistent-return-statements
-        """Deletes an existing peer ASN with the specified name under the given subscription.
+    async def delete(  # pylint: disable=inconsistent-return-statements
+        self, resource_group_name: str, peering_name: str, registered_asn_name: str, **kwargs: Any
+    ) -> None:
+        """Deletes an existing registered ASN with the specified name under the given subscription,
+        resource group and peering.
 
-        :param peer_asn_name: The peer ASN name. Required.
-        :type peer_asn_name: str
+        :param resource_group_name: The name of the resource group. Required.
+        :type resource_group_name: str
+        :param peering_name: The name of the peering. Required.
+        :type peering_name: str
+        :param registered_asn_name: The name of the registered ASN. Required.
+        :type registered_asn_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: None or the result of cls(response)
         :rtype: None
@@ -245,7 +295,9 @@ class PeerAsnsOperations:
         cls = kwargs.pop("cls", None)  # type: ClsType[None]
 
         request = build_delete_request(
-            peer_asn_name=peer_asn_name,
+            resource_group_name=resource_group_name,
+            peering_name=peering_name,
+            registered_asn_name=registered_asn_name,
             subscription_id=self._config.subscription_id,
             api_version=api_version,
             template_url=self.delete.metadata["url"],
@@ -269,22 +321,30 @@ class PeerAsnsOperations:
         if cls:
             return cls(pipeline_response, None, {})
 
-    delete.metadata = {"url": "/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peerAsns/{peerAsnName}"}  # type: ignore
+    delete.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/registeredAsns/{registeredAsnName}"}  # type: ignore
 
     @distributed_trace
-    def list_by_subscription(self, **kwargs: Any) -> AsyncIterable["_models.PeerAsn"]:
-        """Lists all of the peer ASNs under the given subscription.
+    def list_by_peering(
+        self, resource_group_name: str, peering_name: str, **kwargs: Any
+    ) -> AsyncIterable["_models.PeeringRegisteredAsn"]:
+        """Lists all registered ASNs under the given subscription, resource group and peering.
 
+        :param resource_group_name: The name of the resource group. Required.
+        :type resource_group_name: str
+        :param peering_name: The name of the peering. Required.
+        :type peering_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either PeerAsn or the result of cls(response)
-        :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.peering.models.PeerAsn]
+        :return: An iterator like instance of either PeeringRegisteredAsn or the result of
+         cls(response)
+        :rtype:
+         ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.peering.models.PeeringRegisteredAsn]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         _headers = kwargs.pop("headers", {}) or {}
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
         api_version = kwargs.pop("api_version", _params.pop("api-version", self._config.api_version))  # type: str
-        cls = kwargs.pop("cls", None)  # type: ClsType[_models.PeerAsnListResult]
+        cls = kwargs.pop("cls", None)  # type: ClsType[_models.PeeringRegisteredAsnListResult]
 
         error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop("error_map", {}) or {})
@@ -292,10 +352,12 @@ class PeerAsnsOperations:
         def prepare_request(next_link=None):
             if not next_link:
 
-                request = build_list_by_subscription_request(
+                request = build_list_by_peering_request(
+                    resource_group_name=resource_group_name,
+                    peering_name=peering_name,
                     subscription_id=self._config.subscription_id,
                     api_version=api_version,
-                    template_url=self.list_by_subscription.metadata["url"],
+                    template_url=self.list_by_peering.metadata["url"],
                     headers=_headers,
                     params=_params,
                 )
@@ -314,7 +376,7 @@ class PeerAsnsOperations:
             return request
 
         async def extract_data(pipeline_response):
-            deserialized = self._deserialize("PeerAsnListResult", pipeline_response)
+            deserialized = self._deserialize("PeeringRegisteredAsnListResult", pipeline_response)
             list_of_elem = deserialized.value
             if cls:
                 list_of_elem = cls(list_of_elem)
@@ -337,4 +399,4 @@ class PeerAsnsOperations:
 
         return AsyncItemPaged(get_next, extract_data)
 
-    list_by_subscription.metadata = {"url": "/subscriptions/{subscriptionId}/providers/Microsoft.Peering/peerAsns"}  # type: ignore
+    list_by_peering.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/registeredAsns"}  # type: ignore
