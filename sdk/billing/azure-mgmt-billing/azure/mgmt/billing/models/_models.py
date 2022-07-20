@@ -46,46 +46,43 @@ class AddressDetails(msrest.serialization.Model):
     """
 
     _validation = {
-        'address_line1': {'required': True},
-        'country': {'required': True},
+        "address_line1": {"required": True},
+        "country": {"required": True},
     }
 
     _attribute_map = {
-        'first_name': {'key': 'firstName', 'type': 'str'},
-        'middle_name': {'key': 'middleName', 'type': 'str'},
-        'last_name': {'key': 'lastName', 'type': 'str'},
-        'company_name': {'key': 'companyName', 'type': 'str'},
-        'address_line1': {'key': 'addressLine1', 'type': 'str'},
-        'address_line2': {'key': 'addressLine2', 'type': 'str'},
-        'address_line3': {'key': 'addressLine3', 'type': 'str'},
-        'city': {'key': 'city', 'type': 'str'},
-        'district': {'key': 'district', 'type': 'str'},
-        'region': {'key': 'region', 'type': 'str'},
-        'country': {'key': 'country', 'type': 'str'},
-        'postal_code': {'key': 'postalCode', 'type': 'str'},
-        'email': {'key': 'email', 'type': 'str'},
-        'phone_number': {'key': 'phoneNumber', 'type': 'str'},
+        "first_name": {"key": "firstName", "type": "str"},
+        "middle_name": {"key": "middleName", "type": "str"},
+        "last_name": {"key": "lastName", "type": "str"},
+        "company_name": {"key": "companyName", "type": "str"},
+        "address_line1": {"key": "addressLine1", "type": "str"},
+        "address_line2": {"key": "addressLine2", "type": "str"},
+        "address_line3": {"key": "addressLine3", "type": "str"},
+        "city": {"key": "city", "type": "str"},
+        "district": {"key": "district", "type": "str"},
+        "region": {"key": "region", "type": "str"},
+        "country": {"key": "country", "type": "str"},
+        "postal_code": {"key": "postalCode", "type": "str"},
+        "email": {"key": "email", "type": "str"},
+        "phone_number": {"key": "phoneNumber", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(AddressDetails, self).__init__(**kwargs)
-        self.first_name = kwargs.get('first_name', None)
-        self.middle_name = kwargs.get('middle_name', None)
-        self.last_name = kwargs.get('last_name', None)
-        self.company_name = kwargs.get('company_name', None)
-        self.address_line1 = kwargs['address_line1']
-        self.address_line2 = kwargs.get('address_line2', None)
-        self.address_line3 = kwargs.get('address_line3', None)
-        self.city = kwargs.get('city', None)
-        self.district = kwargs.get('district', None)
-        self.region = kwargs.get('region', None)
-        self.country = kwargs['country']
-        self.postal_code = kwargs.get('postal_code', None)
-        self.email = kwargs.get('email', None)
-        self.phone_number = kwargs.get('phone_number', None)
+        self.first_name = kwargs.get("first_name", None)
+        self.middle_name = kwargs.get("middle_name", None)
+        self.last_name = kwargs.get("last_name", None)
+        self.company_name = kwargs.get("company_name", None)
+        self.address_line1 = kwargs["address_line1"]
+        self.address_line2 = kwargs.get("address_line2", None)
+        self.address_line3 = kwargs.get("address_line3", None)
+        self.city = kwargs.get("city", None)
+        self.district = kwargs.get("district", None)
+        self.region = kwargs.get("region", None)
+        self.country = kwargs["country"]
+        self.postal_code = kwargs.get("postal_code", None)
+        self.email = kwargs.get("email", None)
+        self.phone_number = kwargs.get("phone_number", None)
 
 
 class Resource(msrest.serialization.Model):
@@ -102,21 +99,18 @@ class Resource(msrest.serialization.Model):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(Resource, self).__init__(**kwargs)
         self.id = None
         self.name = None
@@ -153,41 +147,38 @@ class Agreement(Resource):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'agreement_link': {'readonly': True},
-        'category': {'readonly': True},
-        'acceptance_mode': {'readonly': True},
-        'effective_date': {'readonly': True},
-        'expiration_date': {'readonly': True},
-        'status': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
+        "agreement_link": {"readonly": True},
+        "category": {"readonly": True},
+        "acceptance_mode": {"readonly": True},
+        "effective_date": {"readonly": True},
+        "expiration_date": {"readonly": True},
+        "status": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'agreement_link': {'key': 'properties.agreementLink', 'type': 'str'},
-        'category': {'key': 'properties.category', 'type': 'str'},
-        'acceptance_mode': {'key': 'properties.acceptanceMode', 'type': 'str'},
-        'effective_date': {'key': 'properties.effectiveDate', 'type': 'iso-8601'},
-        'expiration_date': {'key': 'properties.expirationDate', 'type': 'iso-8601'},
-        'participants': {'key': 'properties.participants', 'type': '[Participants]'},
-        'status': {'key': 'properties.status', 'type': 'str'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "agreement_link": {"key": "properties.agreementLink", "type": "str"},
+        "category": {"key": "properties.category", "type": "str"},
+        "acceptance_mode": {"key": "properties.acceptanceMode", "type": "str"},
+        "effective_date": {"key": "properties.effectiveDate", "type": "iso-8601"},
+        "expiration_date": {"key": "properties.expirationDate", "type": "iso-8601"},
+        "participants": {"key": "properties.participants", "type": "[Participants]"},
+        "status": {"key": "properties.status", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(Agreement, self).__init__(**kwargs)
         self.agreement_link = None
         self.category = None
         self.acceptance_mode = None
         self.effective_date = None
         self.expiration_date = None
-        self.participants = kwargs.get('participants', None)
+        self.participants = kwargs.get("participants", None)
         self.status = None
 
 
@@ -203,19 +194,16 @@ class AgreementListResult(msrest.serialization.Model):
     """
 
     _validation = {
-        'value': {'readonly': True},
-        'next_link': {'readonly': True},
+        "value": {"readonly": True},
+        "next_link": {"readonly": True},
     }
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[Agreement]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[Agreement]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(AgreementListResult, self).__init__(**kwargs)
         self.value = None
         self.next_link = None
@@ -233,21 +221,18 @@ class Amount(msrest.serialization.Model):
     """
 
     _validation = {
-        'currency': {'readonly': True},
+        "currency": {"readonly": True},
     }
 
     _attribute_map = {
-        'currency': {'key': 'currency', 'type': 'str'},
-        'value': {'key': 'value', 'type': 'float'},
+        "currency": {"key": "currency", "type": "str"},
+        "value": {"key": "value", "type": "float"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(Amount, self).__init__(**kwargs)
         self.currency = None
-        self.value = kwargs.get('value', None)
+        self.value = kwargs.get("value", None)
 
 
 class AvailableBalance(Resource):
@@ -266,23 +251,20 @@ class AvailableBalance(Resource):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'amount': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
+        "amount": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'amount': {'key': 'properties.amount', 'type': 'Amount'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "amount": {"key": "properties.amount", "type": "Amount"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(AvailableBalance, self).__init__(**kwargs)
         self.amount = None
 
@@ -299,20 +281,17 @@ class AzurePlan(msrest.serialization.Model):
     """
 
     _validation = {
-        'sku_description': {'readonly': True},
+        "sku_description": {"readonly": True},
     }
 
     _attribute_map = {
-        'sku_id': {'key': 'skuId', 'type': 'str'},
-        'sku_description': {'key': 'skuDescription', 'type': 'str'},
+        "sku_id": {"key": "skuId", "type": "str"},
+        "sku_description": {"key": "skuDescription", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(AzurePlan, self).__init__(**kwargs)
-        self.sku_id = kwargs.get('sku_id', None)
+        self.sku_id = kwargs.get("sku_id", None)
         self.sku_description = None
 
 
@@ -359,49 +338,46 @@ class BillingAccount(Resource):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'agreement_type': {'readonly': True},
-        'account_type': {'readonly': True},
-        'account_status': {'readonly': True},
-        'enrollment_details': {'readonly': True},
-        'has_read_access': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
+        "agreement_type": {"readonly": True},
+        "account_type": {"readonly": True},
+        "account_status": {"readonly": True},
+        "enrollment_details": {"readonly": True},
+        "has_read_access": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'display_name': {'key': 'properties.displayName', 'type': 'str'},
-        'sold_to': {'key': 'properties.soldTo', 'type': 'AddressDetails'},
-        'agreement_type': {'key': 'properties.agreementType', 'type': 'str'},
-        'account_type': {'key': 'properties.accountType', 'type': 'str'},
-        'account_status': {'key': 'properties.accountStatus', 'type': 'str'},
-        'billing_profiles': {'key': 'properties.billingProfiles', 'type': 'BillingProfilesOnExpand'},
-        'enrollment_details': {'key': 'properties.enrollmentDetails', 'type': 'Enrollment'},
-        'departments': {'key': 'properties.departments', 'type': '[Department]'},
-        'enrollment_accounts': {'key': 'properties.enrollmentAccounts', 'type': '[EnrollmentAccount]'},
-        'has_read_access': {'key': 'properties.hasReadAccess', 'type': 'bool'},
-        'notification_email_address': {'key': 'properties.notificationEmailAddress', 'type': 'str'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "display_name": {"key": "properties.displayName", "type": "str"},
+        "sold_to": {"key": "properties.soldTo", "type": "AddressDetails"},
+        "agreement_type": {"key": "properties.agreementType", "type": "str"},
+        "account_type": {"key": "properties.accountType", "type": "str"},
+        "account_status": {"key": "properties.accountStatus", "type": "str"},
+        "billing_profiles": {"key": "properties.billingProfiles", "type": "BillingProfilesOnExpand"},
+        "enrollment_details": {"key": "properties.enrollmentDetails", "type": "Enrollment"},
+        "departments": {"key": "properties.departments", "type": "[Department]"},
+        "enrollment_accounts": {"key": "properties.enrollmentAccounts", "type": "[EnrollmentAccount]"},
+        "has_read_access": {"key": "properties.hasReadAccess", "type": "bool"},
+        "notification_email_address": {"key": "properties.notificationEmailAddress", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(BillingAccount, self).__init__(**kwargs)
-        self.display_name = kwargs.get('display_name', None)
-        self.sold_to = kwargs.get('sold_to', None)
+        self.display_name = kwargs.get("display_name", None)
+        self.sold_to = kwargs.get("sold_to", None)
         self.agreement_type = None
         self.account_type = None
         self.account_status = None
-        self.billing_profiles = kwargs.get('billing_profiles', None)
+        self.billing_profiles = kwargs.get("billing_profiles", None)
         self.enrollment_details = None
-        self.departments = kwargs.get('departments', None)
-        self.enrollment_accounts = kwargs.get('enrollment_accounts', None)
+        self.departments = kwargs.get("departments", None)
+        self.enrollment_accounts = kwargs.get("enrollment_accounts", None)
         self.has_read_access = None
-        self.notification_email_address = kwargs.get('notification_email_address', None)
+        self.notification_email_address = kwargs.get("notification_email_address", None)
 
 
 class BillingAccountListResult(msrest.serialization.Model):
@@ -416,19 +392,16 @@ class BillingAccountListResult(msrest.serialization.Model):
     """
 
     _validation = {
-        'value': {'readonly': True},
-        'next_link': {'readonly': True},
+        "value": {"readonly": True},
+        "next_link": {"readonly": True},
     }
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[BillingAccount]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[BillingAccount]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(BillingAccountListResult, self).__init__(**kwargs)
         self.value = None
         self.next_link = None
@@ -471,43 +444,40 @@ class BillingAccountUpdateRequest(msrest.serialization.Model):
     """
 
     _validation = {
-        'agreement_type': {'readonly': True},
-        'account_type': {'readonly': True},
-        'account_status': {'readonly': True},
-        'enrollment_details': {'readonly': True},
-        'has_read_access': {'readonly': True},
+        "agreement_type": {"readonly": True},
+        "account_type": {"readonly": True},
+        "account_status": {"readonly": True},
+        "enrollment_details": {"readonly": True},
+        "has_read_access": {"readonly": True},
     }
 
     _attribute_map = {
-        'display_name': {'key': 'properties.displayName', 'type': 'str'},
-        'sold_to': {'key': 'properties.soldTo', 'type': 'AddressDetails'},
-        'agreement_type': {'key': 'properties.agreementType', 'type': 'str'},
-        'account_type': {'key': 'properties.accountType', 'type': 'str'},
-        'account_status': {'key': 'properties.accountStatus', 'type': 'str'},
-        'billing_profiles': {'key': 'properties.billingProfiles', 'type': 'BillingProfilesOnExpand'},
-        'enrollment_details': {'key': 'properties.enrollmentDetails', 'type': 'Enrollment'},
-        'departments': {'key': 'properties.departments', 'type': '[Department]'},
-        'enrollment_accounts': {'key': 'properties.enrollmentAccounts', 'type': '[EnrollmentAccount]'},
-        'has_read_access': {'key': 'properties.hasReadAccess', 'type': 'bool'},
-        'notification_email_address': {'key': 'properties.notificationEmailAddress', 'type': 'str'},
+        "display_name": {"key": "properties.displayName", "type": "str"},
+        "sold_to": {"key": "properties.soldTo", "type": "AddressDetails"},
+        "agreement_type": {"key": "properties.agreementType", "type": "str"},
+        "account_type": {"key": "properties.accountType", "type": "str"},
+        "account_status": {"key": "properties.accountStatus", "type": "str"},
+        "billing_profiles": {"key": "properties.billingProfiles", "type": "BillingProfilesOnExpand"},
+        "enrollment_details": {"key": "properties.enrollmentDetails", "type": "Enrollment"},
+        "departments": {"key": "properties.departments", "type": "[Department]"},
+        "enrollment_accounts": {"key": "properties.enrollmentAccounts", "type": "[EnrollmentAccount]"},
+        "has_read_access": {"key": "properties.hasReadAccess", "type": "bool"},
+        "notification_email_address": {"key": "properties.notificationEmailAddress", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(BillingAccountUpdateRequest, self).__init__(**kwargs)
-        self.display_name = kwargs.get('display_name', None)
-        self.sold_to = kwargs.get('sold_to', None)
+        self.display_name = kwargs.get("display_name", None)
+        self.sold_to = kwargs.get("sold_to", None)
         self.agreement_type = None
         self.account_type = None
         self.account_status = None
-        self.billing_profiles = kwargs.get('billing_profiles', None)
+        self.billing_profiles = kwargs.get("billing_profiles", None)
         self.enrollment_details = None
-        self.departments = kwargs.get('departments', None)
-        self.enrollment_accounts = kwargs.get('enrollment_accounts', None)
+        self.departments = kwargs.get("departments", None)
+        self.enrollment_accounts = kwargs.get("enrollment_accounts", None)
         self.has_read_access = None
-        self.notification_email_address = kwargs.get('notification_email_address', None)
+        self.notification_email_address = kwargs.get("notification_email_address", None)
 
 
 class BillingPeriod(Resource):
@@ -530,27 +500,24 @@ class BillingPeriod(Resource):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'billing_period_start_date': {'readonly': True},
-        'billing_period_end_date': {'readonly': True},
-        'invoice_ids': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
+        "billing_period_start_date": {"readonly": True},
+        "billing_period_end_date": {"readonly": True},
+        "invoice_ids": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'billing_period_start_date': {'key': 'properties.billingPeriodStartDate', 'type': 'date'},
-        'billing_period_end_date': {'key': 'properties.billingPeriodEndDate', 'type': 'date'},
-        'invoice_ids': {'key': 'properties.invoiceIds', 'type': '[str]'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "billing_period_start_date": {"key": "properties.billingPeriodStartDate", "type": "date"},
+        "billing_period_end_date": {"key": "properties.billingPeriodEndDate", "type": "date"},
+        "invoice_ids": {"key": "properties.invoiceIds", "type": "[str]"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(BillingPeriod, self).__init__(**kwargs)
         self.billing_period_start_date = None
         self.billing_period_end_date = None
@@ -569,19 +536,16 @@ class BillingPeriodsListResult(msrest.serialization.Model):
     """
 
     _validation = {
-        'value': {'readonly': True},
-        'next_link': {'readonly': True},
+        "value": {"readonly": True},
+        "next_link": {"readonly": True},
     }
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[BillingPeriod]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[BillingPeriod]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(BillingPeriodsListResult, self).__init__(**kwargs)
         self.value = None
         self.next_link = None
@@ -599,19 +563,16 @@ class BillingPermissionsListResult(msrest.serialization.Model):
     """
 
     _validation = {
-        'value': {'readonly': True},
-        'next_link': {'readonly': True},
+        "value": {"readonly": True},
+        "next_link": {"readonly": True},
     }
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[BillingPermissionsProperties]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[BillingPermissionsProperties]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(BillingPermissionsListResult, self).__init__(**kwargs)
         self.value = None
         self.next_link = None
@@ -629,19 +590,16 @@ class BillingPermissionsProperties(msrest.serialization.Model):
     """
 
     _validation = {
-        'actions': {'readonly': True},
-        'not_actions': {'readonly': True},
+        "actions": {"readonly": True},
+        "not_actions": {"readonly": True},
     }
 
     _attribute_map = {
-        'actions': {'key': 'actions', 'type': '[str]'},
-        'not_actions': {'key': 'notActions', 'type': '[str]'},
+        "actions": {"key": "actions", "type": "[str]"},
+        "not_actions": {"key": "notActions", "type": "[str]"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(BillingPermissionsProperties, self).__init__(**kwargs)
         self.actions = None
         self.not_actions = None
@@ -705,66 +663,66 @@ class BillingProfile(Resource):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'billing_relationship_type': {'readonly': True},
-        'indirect_relationship_info': {'readonly': True},
-        'invoice_day': {'readonly': True},
-        'currency': {'readonly': True},
-        'has_read_access': {'readonly': True},
-        'system_id': {'readonly': True},
-        'status': {'readonly': True},
-        'status_reason_code': {'readonly': True},
-        'spending_limit': {'readonly': True},
-        'target_clouds': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
+        "billing_relationship_type": {"readonly": True},
+        "indirect_relationship_info": {"readonly": True},
+        "invoice_day": {"readonly": True},
+        "currency": {"readonly": True},
+        "has_read_access": {"readonly": True},
+        "system_id": {"readonly": True},
+        "status": {"readonly": True},
+        "status_reason_code": {"readonly": True},
+        "spending_limit": {"readonly": True},
+        "target_clouds": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'display_name': {'key': 'properties.displayName', 'type': 'str'},
-        'po_number': {'key': 'properties.poNumber', 'type': 'str'},
-        'billing_relationship_type': {'key': 'properties.billingRelationshipType', 'type': 'str'},
-        'bill_to': {'key': 'properties.billTo', 'type': 'AddressDetails'},
-        'indirect_relationship_info': {'key': 'properties.indirectRelationshipInfo', 'type': 'IndirectRelationshipInfo'},
-        'invoice_email_opt_in': {'key': 'properties.invoiceEmailOptIn', 'type': 'bool'},
-        'invoice_day': {'key': 'properties.invoiceDay', 'type': 'int'},
-        'currency': {'key': 'properties.currency', 'type': 'str'},
-        'enabled_azure_plans': {'key': 'properties.enabledAzurePlans', 'type': '[AzurePlan]'},
-        'invoice_sections': {'key': 'properties.invoiceSections', 'type': 'InvoiceSectionsOnExpand'},
-        'has_read_access': {'key': 'properties.hasReadAccess', 'type': 'bool'},
-        'system_id': {'key': 'properties.systemId', 'type': 'str'},
-        'status': {'key': 'properties.status', 'type': 'str'},
-        'status_reason_code': {'key': 'properties.statusReasonCode', 'type': 'str'},
-        'spending_limit': {'key': 'properties.spendingLimit', 'type': 'str'},
-        'target_clouds': {'key': 'properties.targetClouds', 'type': '[str]'},
-        'tags': {'key': 'properties.tags', 'type': '{str}'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "display_name": {"key": "properties.displayName", "type": "str"},
+        "po_number": {"key": "properties.poNumber", "type": "str"},
+        "billing_relationship_type": {"key": "properties.billingRelationshipType", "type": "str"},
+        "bill_to": {"key": "properties.billTo", "type": "AddressDetails"},
+        "indirect_relationship_info": {
+            "key": "properties.indirectRelationshipInfo",
+            "type": "IndirectRelationshipInfo",
+        },
+        "invoice_email_opt_in": {"key": "properties.invoiceEmailOptIn", "type": "bool"},
+        "invoice_day": {"key": "properties.invoiceDay", "type": "int"},
+        "currency": {"key": "properties.currency", "type": "str"},
+        "enabled_azure_plans": {"key": "properties.enabledAzurePlans", "type": "[AzurePlan]"},
+        "invoice_sections": {"key": "properties.invoiceSections", "type": "InvoiceSectionsOnExpand"},
+        "has_read_access": {"key": "properties.hasReadAccess", "type": "bool"},
+        "system_id": {"key": "properties.systemId", "type": "str"},
+        "status": {"key": "properties.status", "type": "str"},
+        "status_reason_code": {"key": "properties.statusReasonCode", "type": "str"},
+        "spending_limit": {"key": "properties.spendingLimit", "type": "str"},
+        "target_clouds": {"key": "properties.targetClouds", "type": "[str]"},
+        "tags": {"key": "properties.tags", "type": "{str}"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(BillingProfile, self).__init__(**kwargs)
-        self.display_name = kwargs.get('display_name', None)
-        self.po_number = kwargs.get('po_number', None)
+        self.display_name = kwargs.get("display_name", None)
+        self.po_number = kwargs.get("po_number", None)
         self.billing_relationship_type = None
-        self.bill_to = kwargs.get('bill_to', None)
+        self.bill_to = kwargs.get("bill_to", None)
         self.indirect_relationship_info = None
-        self.invoice_email_opt_in = kwargs.get('invoice_email_opt_in', None)
+        self.invoice_email_opt_in = kwargs.get("invoice_email_opt_in", None)
         self.invoice_day = None
         self.currency = None
-        self.enabled_azure_plans = kwargs.get('enabled_azure_plans', None)
-        self.invoice_sections = kwargs.get('invoice_sections', None)
+        self.enabled_azure_plans = kwargs.get("enabled_azure_plans", None)
+        self.invoice_sections = kwargs.get("invoice_sections", None)
         self.has_read_access = None
         self.system_id = None
         self.status = None
         self.status_reason_code = None
         self.spending_limit = None
         self.target_clouds = None
-        self.tags = kwargs.get('tags', None)
+        self.tags = kwargs.get("tags", None)
 
 
 class BillingProfileCreationRequest(msrest.serialization.Model):
@@ -786,23 +744,20 @@ class BillingProfileCreationRequest(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'display_name': {'key': 'displayName', 'type': 'str'},
-        'po_number': {'key': 'poNumber', 'type': 'str'},
-        'bill_to': {'key': 'billTo', 'type': 'AddressDetails'},
-        'invoice_email_opt_in': {'key': 'invoiceEmailOptIn', 'type': 'bool'},
-        'enabled_azure_plans': {'key': 'enabledAzurePlans', 'type': '[AzurePlan]'},
+        "display_name": {"key": "displayName", "type": "str"},
+        "po_number": {"key": "poNumber", "type": "str"},
+        "bill_to": {"key": "billTo", "type": "AddressDetails"},
+        "invoice_email_opt_in": {"key": "invoiceEmailOptIn", "type": "bool"},
+        "enabled_azure_plans": {"key": "enabledAzurePlans", "type": "[AzurePlan]"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(BillingProfileCreationRequest, self).__init__(**kwargs)
-        self.display_name = kwargs.get('display_name', None)
-        self.po_number = kwargs.get('po_number', None)
-        self.bill_to = kwargs.get('bill_to', None)
-        self.invoice_email_opt_in = kwargs.get('invoice_email_opt_in', None)
-        self.enabled_azure_plans = kwargs.get('enabled_azure_plans', None)
+        self.display_name = kwargs.get("display_name", None)
+        self.po_number = kwargs.get("po_number", None)
+        self.bill_to = kwargs.get("bill_to", None)
+        self.invoice_email_opt_in = kwargs.get("invoice_email_opt_in", None)
+        self.enabled_azure_plans = kwargs.get("enabled_azure_plans", None)
 
 
 class BillingProfileListResult(msrest.serialization.Model):
@@ -817,19 +772,16 @@ class BillingProfileListResult(msrest.serialization.Model):
     """
 
     _validation = {
-        'value': {'readonly': True},
-        'next_link': {'readonly': True},
+        "value": {"readonly": True},
+        "next_link": {"readonly": True},
     }
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[BillingProfile]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[BillingProfile]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(BillingProfileListResult, self).__init__(**kwargs)
         self.value = None
         self.next_link = None
@@ -849,21 +801,18 @@ class BillingProfilesOnExpand(msrest.serialization.Model):
     """
 
     _validation = {
-        'has_more_results': {'readonly': True},
+        "has_more_results": {"readonly": True},
     }
 
     _attribute_map = {
-        'has_more_results': {'key': 'hasMoreResults', 'type': 'bool'},
-        'value': {'key': 'value', 'type': '[BillingProfile]'},
+        "has_more_results": {"key": "hasMoreResults", "type": "bool"},
+        "value": {"key": "value", "type": "[BillingProfile]"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(BillingProfilesOnExpand, self).__init__(**kwargs)
         self.has_more_results = None
-        self.value = kwargs.get('value', None)
+        self.value = kwargs.get("value", None)
 
 
 class BillingProperty(Resource):
@@ -923,54 +872,54 @@ class BillingProperty(Resource):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'account_admin_notification_email_address': {'readonly': True},
-        'billing_tenant_id': {'readonly': True},
-        'billing_account_id': {'readonly': True},
-        'billing_account_display_name': {'readonly': True},
-        'billing_profile_id': {'readonly': True},
-        'billing_profile_display_name': {'readonly': True},
-        'billing_profile_status': {'readonly': True},
-        'billing_profile_status_reason_code': {'readonly': True},
-        'billing_profile_spending_limit': {'readonly': True},
-        'invoice_section_id': {'readonly': True},
-        'invoice_section_display_name': {'readonly': True},
-        'is_account_admin': {'readonly': True},
-        'product_id': {'readonly': True},
-        'product_name': {'readonly': True},
-        'sku_id': {'readonly': True},
-        'sku_description': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
+        "account_admin_notification_email_address": {"readonly": True},
+        "billing_tenant_id": {"readonly": True},
+        "billing_account_id": {"readonly": True},
+        "billing_account_display_name": {"readonly": True},
+        "billing_profile_id": {"readonly": True},
+        "billing_profile_display_name": {"readonly": True},
+        "billing_profile_status": {"readonly": True},
+        "billing_profile_status_reason_code": {"readonly": True},
+        "billing_profile_spending_limit": {"readonly": True},
+        "invoice_section_id": {"readonly": True},
+        "invoice_section_display_name": {"readonly": True},
+        "is_account_admin": {"readonly": True},
+        "product_id": {"readonly": True},
+        "product_name": {"readonly": True},
+        "sku_id": {"readonly": True},
+        "sku_description": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'account_admin_notification_email_address': {'key': 'properties.accountAdminNotificationEmailAddress', 'type': 'str'},
-        'billing_tenant_id': {'key': 'properties.billingTenantId', 'type': 'str'},
-        'billing_account_id': {'key': 'properties.billingAccountId', 'type': 'str'},
-        'billing_account_display_name': {'key': 'properties.billingAccountDisplayName', 'type': 'str'},
-        'billing_profile_id': {'key': 'properties.billingProfileId', 'type': 'str'},
-        'billing_profile_display_name': {'key': 'properties.billingProfileDisplayName', 'type': 'str'},
-        'billing_profile_status': {'key': 'properties.billingProfileStatus', 'type': 'str'},
-        'billing_profile_status_reason_code': {'key': 'properties.billingProfileStatusReasonCode', 'type': 'str'},
-        'billing_profile_spending_limit': {'key': 'properties.billingProfileSpendingLimit', 'type': 'str'},
-        'cost_center': {'key': 'properties.costCenter', 'type': 'str'},
-        'invoice_section_id': {'key': 'properties.invoiceSectionId', 'type': 'str'},
-        'invoice_section_display_name': {'key': 'properties.invoiceSectionDisplayName', 'type': 'str'},
-        'is_account_admin': {'key': 'properties.isAccountAdmin', 'type': 'bool'},
-        'product_id': {'key': 'properties.productId', 'type': 'str'},
-        'product_name': {'key': 'properties.productName', 'type': 'str'},
-        'sku_id': {'key': 'properties.skuId', 'type': 'str'},
-        'sku_description': {'key': 'properties.skuDescription', 'type': 'str'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "account_admin_notification_email_address": {
+            "key": "properties.accountAdminNotificationEmailAddress",
+            "type": "str",
+        },
+        "billing_tenant_id": {"key": "properties.billingTenantId", "type": "str"},
+        "billing_account_id": {"key": "properties.billingAccountId", "type": "str"},
+        "billing_account_display_name": {"key": "properties.billingAccountDisplayName", "type": "str"},
+        "billing_profile_id": {"key": "properties.billingProfileId", "type": "str"},
+        "billing_profile_display_name": {"key": "properties.billingProfileDisplayName", "type": "str"},
+        "billing_profile_status": {"key": "properties.billingProfileStatus", "type": "str"},
+        "billing_profile_status_reason_code": {"key": "properties.billingProfileStatusReasonCode", "type": "str"},
+        "billing_profile_spending_limit": {"key": "properties.billingProfileSpendingLimit", "type": "str"},
+        "cost_center": {"key": "properties.costCenter", "type": "str"},
+        "invoice_section_id": {"key": "properties.invoiceSectionId", "type": "str"},
+        "invoice_section_display_name": {"key": "properties.invoiceSectionDisplayName", "type": "str"},
+        "is_account_admin": {"key": "properties.isAccountAdmin", "type": "bool"},
+        "product_id": {"key": "properties.productId", "type": "str"},
+        "product_name": {"key": "properties.productName", "type": "str"},
+        "sku_id": {"key": "properties.skuId", "type": "str"},
+        "sku_description": {"key": "properties.skuDescription", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(BillingProperty, self).__init__(**kwargs)
         self.account_admin_notification_email_address = None
         self.billing_tenant_id = None
@@ -981,7 +930,7 @@ class BillingProperty(Resource):
         self.billing_profile_status = None
         self.billing_profile_status_reason_code = None
         self.billing_profile_spending_limit = None
-        self.cost_center = kwargs.get('cost_center', None)
+        self.cost_center = kwargs.get("cost_center", None)
         self.invoice_section_id = None
         self.invoice_section_display_name = None
         self.is_account_admin = None
@@ -1027,47 +976,44 @@ class BillingRoleAssignment(Resource):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'created_on': {'readonly': True},
-        'created_by_principal_tenant_id': {'readonly': True},
-        'created_by_principal_id': {'readonly': True},
-        'created_by_user_email_address': {'readonly': True},
-        'scope': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
+        "created_on": {"readonly": True},
+        "created_by_principal_tenant_id": {"readonly": True},
+        "created_by_principal_id": {"readonly": True},
+        "created_by_user_email_address": {"readonly": True},
+        "scope": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'created_on': {'key': 'properties.createdOn', 'type': 'str'},
-        'created_by_principal_tenant_id': {'key': 'properties.createdByPrincipalTenantId', 'type': 'str'},
-        'created_by_principal_id': {'key': 'properties.createdByPrincipalId', 'type': 'str'},
-        'created_by_user_email_address': {'key': 'properties.createdByUserEmailAddress', 'type': 'str'},
-        'principal_id': {'key': 'properties.principalId', 'type': 'str'},
-        'principal_tenant_id': {'key': 'properties.principalTenantId', 'type': 'str'},
-        'role_definition_id': {'key': 'properties.roleDefinitionId', 'type': 'str'},
-        'scope': {'key': 'properties.scope', 'type': 'str'},
-        'user_authentication_type': {'key': 'properties.userAuthenticationType', 'type': 'str'},
-        'user_email_address': {'key': 'properties.userEmailAddress', 'type': 'str'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "created_on": {"key": "properties.createdOn", "type": "str"},
+        "created_by_principal_tenant_id": {"key": "properties.createdByPrincipalTenantId", "type": "str"},
+        "created_by_principal_id": {"key": "properties.createdByPrincipalId", "type": "str"},
+        "created_by_user_email_address": {"key": "properties.createdByUserEmailAddress", "type": "str"},
+        "principal_id": {"key": "properties.principalId", "type": "str"},
+        "principal_tenant_id": {"key": "properties.principalTenantId", "type": "str"},
+        "role_definition_id": {"key": "properties.roleDefinitionId", "type": "str"},
+        "scope": {"key": "properties.scope", "type": "str"},
+        "user_authentication_type": {"key": "properties.userAuthenticationType", "type": "str"},
+        "user_email_address": {"key": "properties.userEmailAddress", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(BillingRoleAssignment, self).__init__(**kwargs)
         self.created_on = None
         self.created_by_principal_tenant_id = None
         self.created_by_principal_id = None
         self.created_by_user_email_address = None
-        self.principal_id = kwargs.get('principal_id', None)
-        self.principal_tenant_id = kwargs.get('principal_tenant_id', None)
-        self.role_definition_id = kwargs.get('role_definition_id', None)
+        self.principal_id = kwargs.get("principal_id", None)
+        self.principal_tenant_id = kwargs.get("principal_tenant_id", None)
+        self.role_definition_id = kwargs.get("role_definition_id", None)
         self.scope = None
-        self.user_authentication_type = kwargs.get('user_authentication_type', None)
-        self.user_email_address = kwargs.get('user_email_address', None)
+        self.user_authentication_type = kwargs.get("user_authentication_type", None)
+        self.user_email_address = kwargs.get("user_email_address", None)
 
 
 class BillingRoleAssignmentListResult(msrest.serialization.Model):
@@ -1082,19 +1028,16 @@ class BillingRoleAssignmentListResult(msrest.serialization.Model):
     """
 
     _validation = {
-        'value': {'readonly': True},
-        'next_link': {'readonly': True},
+        "value": {"readonly": True},
+        "next_link": {"readonly": True},
     }
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[BillingRoleAssignment]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[BillingRoleAssignment]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(BillingRoleAssignmentListResult, self).__init__(**kwargs)
         self.value = None
         self.next_link = None
@@ -1120,29 +1063,26 @@ class BillingRoleDefinition(Resource):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'description': {'readonly': True},
-        'role_name': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
+        "description": {"readonly": True},
+        "role_name": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'description': {'key': 'properties.description', 'type': 'str'},
-        'permissions': {'key': 'properties.permissions', 'type': '[BillingPermissionsProperties]'},
-        'role_name': {'key': 'properties.roleName', 'type': 'str'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "description": {"key": "properties.description", "type": "str"},
+        "permissions": {"key": "properties.permissions", "type": "[BillingPermissionsProperties]"},
+        "role_name": {"key": "properties.roleName", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(BillingRoleDefinition, self).__init__(**kwargs)
         self.description = None
-        self.permissions = kwargs.get('permissions', None)
+        self.permissions = kwargs.get("permissions", None)
         self.role_name = None
 
 
@@ -1158,19 +1098,16 @@ class BillingRoleDefinitionListResult(msrest.serialization.Model):
     """
 
     _validation = {
-        'value': {'readonly': True},
-        'next_link': {'readonly': True},
+        "value": {"readonly": True},
+        "next_link": {"readonly": True},
     }
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[BillingRoleDefinition]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[BillingRoleDefinition]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(BillingRoleDefinitionListResult, self).__init__(**kwargs)
         self.value = None
         self.next_link = None
@@ -1226,63 +1163,60 @@ class BillingSubscription(Resource):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'display_name': {'readonly': True},
-        'subscription_id': {'readonly': True},
-        'last_month_charges': {'readonly': True},
-        'month_to_date_charges': {'readonly': True},
-        'billing_profile_id': {'readonly': True},
-        'billing_profile_display_name': {'readonly': True},
-        'customer_id': {'readonly': True},
-        'customer_display_name': {'readonly': True},
-        'invoice_section_id': {'readonly': True},
-        'invoice_section_display_name': {'readonly': True},
-        'reseller': {'readonly': True},
-        'sku_description': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
+        "display_name": {"readonly": True},
+        "subscription_id": {"readonly": True},
+        "last_month_charges": {"readonly": True},
+        "month_to_date_charges": {"readonly": True},
+        "billing_profile_id": {"readonly": True},
+        "billing_profile_display_name": {"readonly": True},
+        "customer_id": {"readonly": True},
+        "customer_display_name": {"readonly": True},
+        "invoice_section_id": {"readonly": True},
+        "invoice_section_display_name": {"readonly": True},
+        "reseller": {"readonly": True},
+        "sku_description": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'display_name': {'key': 'properties.displayName', 'type': 'str'},
-        'subscription_id': {'key': 'properties.subscriptionId', 'type': 'str'},
-        'subscription_billing_status': {'key': 'properties.subscriptionBillingStatus', 'type': 'str'},
-        'last_month_charges': {'key': 'properties.lastMonthCharges', 'type': 'Amount'},
-        'month_to_date_charges': {'key': 'properties.monthToDateCharges', 'type': 'Amount'},
-        'billing_profile_id': {'key': 'properties.billingProfileId', 'type': 'str'},
-        'billing_profile_display_name': {'key': 'properties.billingProfileDisplayName', 'type': 'str'},
-        'cost_center': {'key': 'properties.costCenter', 'type': 'str'},
-        'customer_id': {'key': 'properties.customerId', 'type': 'str'},
-        'customer_display_name': {'key': 'properties.customerDisplayName', 'type': 'str'},
-        'invoice_section_id': {'key': 'properties.invoiceSectionId', 'type': 'str'},
-        'invoice_section_display_name': {'key': 'properties.invoiceSectionDisplayName', 'type': 'str'},
-        'reseller': {'key': 'properties.reseller', 'type': 'Reseller'},
-        'sku_id': {'key': 'properties.skuId', 'type': 'str'},
-        'sku_description': {'key': 'properties.skuDescription', 'type': 'str'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "display_name": {"key": "properties.displayName", "type": "str"},
+        "subscription_id": {"key": "properties.subscriptionId", "type": "str"},
+        "subscription_billing_status": {"key": "properties.subscriptionBillingStatus", "type": "str"},
+        "last_month_charges": {"key": "properties.lastMonthCharges", "type": "Amount"},
+        "month_to_date_charges": {"key": "properties.monthToDateCharges", "type": "Amount"},
+        "billing_profile_id": {"key": "properties.billingProfileId", "type": "str"},
+        "billing_profile_display_name": {"key": "properties.billingProfileDisplayName", "type": "str"},
+        "cost_center": {"key": "properties.costCenter", "type": "str"},
+        "customer_id": {"key": "properties.customerId", "type": "str"},
+        "customer_display_name": {"key": "properties.customerDisplayName", "type": "str"},
+        "invoice_section_id": {"key": "properties.invoiceSectionId", "type": "str"},
+        "invoice_section_display_name": {"key": "properties.invoiceSectionDisplayName", "type": "str"},
+        "reseller": {"key": "properties.reseller", "type": "Reseller"},
+        "sku_id": {"key": "properties.skuId", "type": "str"},
+        "sku_description": {"key": "properties.skuDescription", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(BillingSubscription, self).__init__(**kwargs)
         self.display_name = None
         self.subscription_id = None
-        self.subscription_billing_status = kwargs.get('subscription_billing_status', None)
+        self.subscription_billing_status = kwargs.get("subscription_billing_status", None)
         self.last_month_charges = None
         self.month_to_date_charges = None
         self.billing_profile_id = None
         self.billing_profile_display_name = None
-        self.cost_center = kwargs.get('cost_center', None)
+        self.cost_center = kwargs.get("cost_center", None)
         self.customer_id = None
         self.customer_display_name = None
         self.invoice_section_id = None
         self.invoice_section_display_name = None
         self.reseller = None
-        self.sku_id = kwargs.get('sku_id', None)
+        self.sku_id = kwargs.get("sku_id", None)
         self.sku_description = None
 
 
@@ -1300,21 +1234,18 @@ class BillingSubscriptionsListResult(msrest.serialization.Model):
     """
 
     _validation = {
-        'value': {'readonly': True},
-        'total_count': {'readonly': True},
-        'next_link': {'readonly': True},
+        "value": {"readonly": True},
+        "total_count": {"readonly": True},
+        "next_link": {"readonly": True},
     }
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[BillingSubscription]'},
-        'total_count': {'key': 'totalCount', 'type': 'int'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[BillingSubscription]"},
+        "total_count": {"key": "totalCount", "type": "int"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(BillingSubscriptionsListResult, self).__init__(**kwargs)
         self.value = None
         self.total_count = None
@@ -1345,34 +1276,31 @@ class Customer(Resource):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'billing_profile_id': {'readonly': True},
-        'billing_profile_display_name': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
+        "billing_profile_id": {"readonly": True},
+        "billing_profile_display_name": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'billing_profile_id': {'key': 'properties.billingProfileId', 'type': 'str'},
-        'billing_profile_display_name': {'key': 'properties.billingProfileDisplayName', 'type': 'str'},
-        'display_name': {'key': 'properties.displayName', 'type': 'str'},
-        'enabled_azure_plans': {'key': 'properties.enabledAzurePlans', 'type': '[AzurePlan]'},
-        'resellers': {'key': 'properties.resellers', 'type': '[Reseller]'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "billing_profile_id": {"key": "properties.billingProfileId", "type": "str"},
+        "billing_profile_display_name": {"key": "properties.billingProfileDisplayName", "type": "str"},
+        "display_name": {"key": "properties.displayName", "type": "str"},
+        "enabled_azure_plans": {"key": "properties.enabledAzurePlans", "type": "[AzurePlan]"},
+        "resellers": {"key": "properties.resellers", "type": "[Reseller]"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(Customer, self).__init__(**kwargs)
         self.billing_profile_id = None
         self.billing_profile_display_name = None
-        self.display_name = kwargs.get('display_name', None)
-        self.enabled_azure_plans = kwargs.get('enabled_azure_plans', None)
-        self.resellers = kwargs.get('resellers', None)
+        self.display_name = kwargs.get("display_name", None)
+        self.enabled_azure_plans = kwargs.get("enabled_azure_plans", None)
+        self.resellers = kwargs.get("resellers", None)
 
 
 class CustomerListResult(msrest.serialization.Model):
@@ -1389,21 +1317,18 @@ class CustomerListResult(msrest.serialization.Model):
     """
 
     _validation = {
-        'value': {'readonly': True},
-        'total_count': {'readonly': True},
-        'next_link': {'readonly': True},
+        "value": {"readonly": True},
+        "total_count": {"readonly": True},
+        "next_link": {"readonly": True},
     }
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[Customer]'},
-        'total_count': {'key': 'totalCount', 'type': 'int'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[Customer]"},
+        "total_count": {"key": "totalCount", "type": "int"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(CustomerListResult, self).__init__(**kwargs)
         self.value = None
         self.total_count = None
@@ -1427,24 +1352,21 @@ class CustomerPolicy(Resource):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'view_charges': {'key': 'properties.viewCharges', 'type': 'str'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "view_charges": {"key": "properties.viewCharges", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(CustomerPolicy, self).__init__(**kwargs)
-        self.view_charges = kwargs.get('view_charges', None)
+        self.view_charges = kwargs.get("view_charges", None)
 
 
 class Department(Resource):
@@ -1470,30 +1392,27 @@ class Department(Resource):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'department_name': {'key': 'properties.departmentName', 'type': 'str'},
-        'cost_center': {'key': 'properties.costCenter', 'type': 'str'},
-        'status': {'key': 'properties.status', 'type': 'str'},
-        'enrollment_accounts': {'key': 'properties.enrollmentAccounts', 'type': '[EnrollmentAccount]'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "department_name": {"key": "properties.departmentName", "type": "str"},
+        "cost_center": {"key": "properties.costCenter", "type": "str"},
+        "status": {"key": "properties.status", "type": "str"},
+        "enrollment_accounts": {"key": "properties.enrollmentAccounts", "type": "[EnrollmentAccount]"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(Department, self).__init__(**kwargs)
-        self.department_name = kwargs.get('department_name', None)
-        self.cost_center = kwargs.get('cost_center', None)
-        self.status = kwargs.get('status', None)
-        self.enrollment_accounts = kwargs.get('enrollment_accounts', None)
+        self.department_name = kwargs.get("department_name", None)
+        self.cost_center = kwargs.get("cost_center", None)
+        self.status = kwargs.get("status", None)
+        self.enrollment_accounts = kwargs.get("enrollment_accounts", None)
 
 
 class Document(msrest.serialization.Model):
@@ -1512,21 +1431,18 @@ class Document(msrest.serialization.Model):
     """
 
     _validation = {
-        'kind': {'readonly': True},
-        'url': {'readonly': True},
-        'source': {'readonly': True},
+        "kind": {"readonly": True},
+        "url": {"readonly": True},
+        "source": {"readonly": True},
     }
 
     _attribute_map = {
-        'kind': {'key': 'kind', 'type': 'str'},
-        'url': {'key': 'url', 'type': 'str'},
-        'source': {'key': 'source', 'type': 'str'},
+        "kind": {"key": "kind", "type": "str"},
+        "url": {"key": "url", "type": "str"},
+        "source": {"key": "source", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(Document, self).__init__(**kwargs)
         self.kind = None
         self.url = None
@@ -1545,19 +1461,16 @@ class DownloadUrl(msrest.serialization.Model):
     """
 
     _validation = {
-        'expiry_time': {'readonly': True},
-        'url': {'readonly': True},
+        "expiry_time": {"readonly": True},
+        "url": {"readonly": True},
     }
 
     _attribute_map = {
-        'expiry_time': {'key': 'expiryTime', 'type': 'iso-8601'},
-        'url': {'key': 'url', 'type': 'str'},
+        "expiry_time": {"key": "expiryTime", "type": "iso-8601"},
+        "url": {"key": "url", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(DownloadUrl, self).__init__(**kwargs)
         self.expiry_time = None
         self.url = None
@@ -1589,34 +1502,31 @@ class Enrollment(msrest.serialization.Model):
     """
 
     _validation = {
-        'currency': {'readonly': True},
-        'channel': {'readonly': True},
-        'policies': {'readonly': True},
-        'language': {'readonly': True},
-        'country_code': {'readonly': True},
-        'status': {'readonly': True},
-        'billing_cycle': {'readonly': True},
+        "currency": {"readonly": True},
+        "channel": {"readonly": True},
+        "policies": {"readonly": True},
+        "language": {"readonly": True},
+        "country_code": {"readonly": True},
+        "status": {"readonly": True},
+        "billing_cycle": {"readonly": True},
     }
 
     _attribute_map = {
-        'start_date': {'key': 'startDate', 'type': 'iso-8601'},
-        'end_date': {'key': 'endDate', 'type': 'iso-8601'},
-        'currency': {'key': 'currency', 'type': 'str'},
-        'channel': {'key': 'channel', 'type': 'str'},
-        'policies': {'key': 'policies', 'type': 'EnrollmentPolicies'},
-        'language': {'key': 'language', 'type': 'str'},
-        'country_code': {'key': 'countryCode', 'type': 'str'},
-        'status': {'key': 'status', 'type': 'str'},
-        'billing_cycle': {'key': 'billingCycle', 'type': 'str'},
+        "start_date": {"key": "startDate", "type": "iso-8601"},
+        "end_date": {"key": "endDate", "type": "iso-8601"},
+        "currency": {"key": "currency", "type": "str"},
+        "channel": {"key": "channel", "type": "str"},
+        "policies": {"key": "policies", "type": "EnrollmentPolicies"},
+        "language": {"key": "language", "type": "str"},
+        "country_code": {"key": "countryCode", "type": "str"},
+        "status": {"key": "status", "type": "str"},
+        "billing_cycle": {"key": "billingCycle", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(Enrollment, self).__init__(**kwargs)
-        self.start_date = kwargs.get('start_date', None)
-        self.end_date = kwargs.get('end_date', None)
+        self.start_date = kwargs.get("start_date", None)
+        self.end_date = kwargs.get("end_date", None)
         self.currency = None
         self.channel = None
         self.policies = None
@@ -1657,38 +1567,35 @@ class EnrollmentAccount(Resource):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'account_name': {'key': 'properties.accountName', 'type': 'str'},
-        'cost_center': {'key': 'properties.costCenter', 'type': 'str'},
-        'account_owner': {'key': 'properties.accountOwner', 'type': 'str'},
-        'account_owner_email': {'key': 'properties.accountOwnerEmail', 'type': 'str'},
-        'status': {'key': 'properties.status', 'type': 'str'},
-        'start_date': {'key': 'properties.startDate', 'type': 'iso-8601'},
-        'end_date': {'key': 'properties.endDate', 'type': 'iso-8601'},
-        'department': {'key': 'properties.department', 'type': 'Department'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "account_name": {"key": "properties.accountName", "type": "str"},
+        "cost_center": {"key": "properties.costCenter", "type": "str"},
+        "account_owner": {"key": "properties.accountOwner", "type": "str"},
+        "account_owner_email": {"key": "properties.accountOwnerEmail", "type": "str"},
+        "status": {"key": "properties.status", "type": "str"},
+        "start_date": {"key": "properties.startDate", "type": "iso-8601"},
+        "end_date": {"key": "properties.endDate", "type": "iso-8601"},
+        "department": {"key": "properties.department", "type": "Department"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(EnrollmentAccount, self).__init__(**kwargs)
-        self.account_name = kwargs.get('account_name', None)
-        self.cost_center = kwargs.get('cost_center', None)
-        self.account_owner = kwargs.get('account_owner', None)
-        self.account_owner_email = kwargs.get('account_owner_email', None)
-        self.status = kwargs.get('status', None)
-        self.start_date = kwargs.get('start_date', None)
-        self.end_date = kwargs.get('end_date', None)
-        self.department = kwargs.get('department', None)
+        self.account_name = kwargs.get("account_name", None)
+        self.cost_center = kwargs.get("cost_center", None)
+        self.account_owner = kwargs.get("account_owner", None)
+        self.account_owner_email = kwargs.get("account_owner_email", None)
+        self.status = kwargs.get("status", None)
+        self.start_date = kwargs.get("start_date", None)
+        self.end_date = kwargs.get("end_date", None)
+        self.department = kwargs.get("department", None)
 
 
 class EnrollmentAccountContext(msrest.serialization.Model):
@@ -1705,21 +1612,18 @@ class EnrollmentAccountContext(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'cost_center': {'key': 'costCenter', 'type': 'str'},
-        'start_date': {'key': 'startDate', 'type': 'iso-8601'},
-        'end_date': {'key': 'endDate', 'type': 'iso-8601'},
-        'enrollment_account_name': {'key': 'enrollmentAccountName', 'type': 'str'},
+        "cost_center": {"key": "costCenter", "type": "str"},
+        "start_date": {"key": "startDate", "type": "iso-8601"},
+        "end_date": {"key": "endDate", "type": "iso-8601"},
+        "enrollment_account_name": {"key": "enrollmentAccountName", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(EnrollmentAccountContext, self).__init__(**kwargs)
-        self.cost_center = kwargs.get('cost_center', None)
-        self.start_date = kwargs.get('start_date', None)
-        self.end_date = kwargs.get('end_date', None)
-        self.enrollment_account_name = kwargs.get('enrollment_account_name', None)
+        self.cost_center = kwargs.get("cost_center", None)
+        self.start_date = kwargs.get("start_date", None)
+        self.end_date = kwargs.get("end_date", None)
+        self.enrollment_account_name = kwargs.get("enrollment_account_name", None)
 
 
 class EnrollmentAccountListResult(msrest.serialization.Model):
@@ -1734,19 +1638,16 @@ class EnrollmentAccountListResult(msrest.serialization.Model):
     """
 
     _validation = {
-        'value': {'readonly': True},
-        'next_link': {'readonly': True},
+        "value": {"readonly": True},
+        "next_link": {"readonly": True},
     }
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[EnrollmentAccountSummary]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[EnrollmentAccountSummary]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(EnrollmentAccountListResult, self).__init__(**kwargs)
         self.value = None
         self.next_link = None
@@ -1768,23 +1669,20 @@ class EnrollmentAccountSummary(Resource):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'principal_name': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
+        "principal_name": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'principal_name': {'key': 'properties.principalName', 'type': 'str'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "principal_name": {"key": "properties.principalName", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(EnrollmentAccountSummary, self).__init__(**kwargs)
         self.principal_name = None
 
@@ -1809,23 +1707,20 @@ class EnrollmentPolicies(msrest.serialization.Model):
     """
 
     _validation = {
-        'account_owner_view_charges': {'readonly': True},
-        'department_admin_view_charges': {'readonly': True},
-        'marketplace_enabled': {'readonly': True},
-        'reserved_instances_enabled': {'readonly': True},
+        "account_owner_view_charges": {"readonly": True},
+        "department_admin_view_charges": {"readonly": True},
+        "marketplace_enabled": {"readonly": True},
+        "reserved_instances_enabled": {"readonly": True},
     }
 
     _attribute_map = {
-        'account_owner_view_charges': {'key': 'accountOwnerViewCharges', 'type': 'bool'},
-        'department_admin_view_charges': {'key': 'departmentAdminViewCharges', 'type': 'bool'},
-        'marketplace_enabled': {'key': 'marketplaceEnabled', 'type': 'bool'},
-        'reserved_instances_enabled': {'key': 'reservedInstancesEnabled', 'type': 'bool'},
+        "account_owner_view_charges": {"key": "accountOwnerViewCharges", "type": "bool"},
+        "department_admin_view_charges": {"key": "departmentAdminViewCharges", "type": "bool"},
+        "marketplace_enabled": {"key": "marketplaceEnabled", "type": "bool"},
+        "reserved_instances_enabled": {"key": "reservedInstancesEnabled", "type": "bool"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(EnrollmentPolicies, self).__init__(**kwargs)
         self.account_owner_view_charges = None
         self.department_admin_view_charges = None
@@ -1849,23 +1744,20 @@ class ErrorDetails(msrest.serialization.Model):
     """
 
     _validation = {
-        'code': {'readonly': True},
-        'message': {'readonly': True},
-        'target': {'readonly': True},
-        'details': {'readonly': True},
+        "code": {"readonly": True},
+        "message": {"readonly": True},
+        "target": {"readonly": True},
+        "details": {"readonly": True},
     }
 
     _attribute_map = {
-        'code': {'key': 'code', 'type': 'str'},
-        'message': {'key': 'message', 'type': 'str'},
-        'target': {'key': 'target', 'type': 'str'},
-        'details': {'key': 'details', 'type': '[ErrorSubDetailsItem]'},
+        "code": {"key": "code", "type": "str"},
+        "message": {"key": "message", "type": "str"},
+        "target": {"key": "target", "type": "str"},
+        "details": {"key": "details", "type": "[ErrorSubDetailsItem]"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ErrorDetails, self).__init__(**kwargs)
         self.code = None
         self.message = None
@@ -1881,15 +1773,12 @@ class ErrorResponse(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'error': {'key': 'error', 'type': 'ErrorDetails'},
+        "error": {"key": "error", "type": "ErrorDetails"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ErrorResponse, self).__init__(**kwargs)
-        self.error = kwargs.get('error', None)
+        self.error = kwargs.get("error", None)
 
 
 class ErrorSubDetailsItem(msrest.serialization.Model):
@@ -1906,21 +1795,18 @@ class ErrorSubDetailsItem(msrest.serialization.Model):
     """
 
     _validation = {
-        'code': {'readonly': True},
-        'message': {'readonly': True},
-        'target': {'readonly': True},
+        "code": {"readonly": True},
+        "message": {"readonly": True},
+        "target": {"readonly": True},
     }
 
     _attribute_map = {
-        'code': {'key': 'code', 'type': 'str'},
-        'message': {'key': 'message', 'type': 'str'},
-        'target': {'key': 'target', 'type': 'str'},
+        "code": {"key": "code", "type": "str"},
+        "message": {"key": "message", "type": "str"},
+        "target": {"key": "target", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ErrorSubDetailsItem, self).__init__(**kwargs)
         self.code = None
         self.message = None
@@ -1941,19 +1827,16 @@ class IndirectRelationshipInfo(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'billing_account_name': {'key': 'billingAccountName', 'type': 'str'},
-        'billing_profile_name': {'key': 'billingProfileName', 'type': 'str'},
-        'display_name': {'key': 'displayName', 'type': 'str'},
+        "billing_account_name": {"key": "billingAccountName", "type": "str"},
+        "billing_profile_name": {"key": "billingProfileName", "type": "str"},
+        "display_name": {"key": "displayName", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(IndirectRelationshipInfo, self).__init__(**kwargs)
-        self.billing_account_name = kwargs.get('billing_account_name', None)
-        self.billing_profile_name = kwargs.get('billing_profile_name', None)
-        self.display_name = kwargs.get('display_name', None)
+        self.billing_account_name = kwargs.get("billing_account_name", None)
+        self.billing_profile_name = kwargs.get("billing_profile_name", None)
+        self.display_name = kwargs.get("display_name", None)
 
 
 class Instruction(Resource):
@@ -1978,30 +1861,27 @@ class Instruction(Resource):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'amount': {'key': 'properties.amount', 'type': 'float'},
-        'start_date': {'key': 'properties.startDate', 'type': 'iso-8601'},
-        'end_date': {'key': 'properties.endDate', 'type': 'iso-8601'},
-        'creation_date': {'key': 'properties.creationDate', 'type': 'iso-8601'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "amount": {"key": "properties.amount", "type": "float"},
+        "start_date": {"key": "properties.startDate", "type": "iso-8601"},
+        "end_date": {"key": "properties.endDate", "type": "iso-8601"},
+        "creation_date": {"key": "properties.creationDate", "type": "iso-8601"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(Instruction, self).__init__(**kwargs)
-        self.amount = kwargs.get('amount', None)
-        self.start_date = kwargs.get('start_date', None)
-        self.end_date = kwargs.get('end_date', None)
-        self.creation_date = kwargs.get('creation_date', None)
+        self.amount = kwargs.get("amount", None)
+        self.start_date = kwargs.get("start_date", None)
+        self.end_date = kwargs.get("end_date", None)
+        self.creation_date = kwargs.get("creation_date", None)
 
 
 class InstructionListResult(msrest.serialization.Model):
@@ -2016,19 +1896,16 @@ class InstructionListResult(msrest.serialization.Model):
     """
 
     _validation = {
-        'value': {'readonly': True},
-        'next_link': {'readonly': True},
+        "value": {"readonly": True},
+        "next_link": {"readonly": True},
     }
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[Instruction]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[Instruction]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(InstructionListResult, self).__init__(**kwargs)
         self.value = None
         self.next_link = None
@@ -2115,71 +1992,68 @@ class Invoice(Resource):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'due_date': {'readonly': True},
-        'invoice_date': {'readonly': True},
-        'status': {'readonly': True},
-        'amount_due': {'readonly': True},
-        'azure_prepayment_applied': {'readonly': True},
-        'billed_amount': {'readonly': True},
-        'credit_amount': {'readonly': True},
-        'free_azure_credit_applied': {'readonly': True},
-        'sub_total': {'readonly': True},
-        'tax_amount': {'readonly': True},
-        'total_amount': {'readonly': True},
-        'invoice_period_start_date': {'readonly': True},
-        'invoice_period_end_date': {'readonly': True},
-        'invoice_type': {'readonly': True},
-        'is_monthly_invoice': {'readonly': True},
-        'billing_profile_id': {'readonly': True},
-        'billing_profile_display_name': {'readonly': True},
-        'purchase_order_number': {'readonly': True},
-        'documents': {'readonly': True},
-        'payments': {'readonly': True},
-        'rebill_details': {'readonly': True},
-        'document_type': {'readonly': True},
-        'billed_document_id': {'readonly': True},
-        'credit_for_document_id': {'readonly': True},
-        'subscription_id': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
+        "due_date": {"readonly": True},
+        "invoice_date": {"readonly": True},
+        "status": {"readonly": True},
+        "amount_due": {"readonly": True},
+        "azure_prepayment_applied": {"readonly": True},
+        "billed_amount": {"readonly": True},
+        "credit_amount": {"readonly": True},
+        "free_azure_credit_applied": {"readonly": True},
+        "sub_total": {"readonly": True},
+        "tax_amount": {"readonly": True},
+        "total_amount": {"readonly": True},
+        "invoice_period_start_date": {"readonly": True},
+        "invoice_period_end_date": {"readonly": True},
+        "invoice_type": {"readonly": True},
+        "is_monthly_invoice": {"readonly": True},
+        "billing_profile_id": {"readonly": True},
+        "billing_profile_display_name": {"readonly": True},
+        "purchase_order_number": {"readonly": True},
+        "documents": {"readonly": True},
+        "payments": {"readonly": True},
+        "rebill_details": {"readonly": True},
+        "document_type": {"readonly": True},
+        "billed_document_id": {"readonly": True},
+        "credit_for_document_id": {"readonly": True},
+        "subscription_id": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'due_date': {'key': 'properties.dueDate', 'type': 'iso-8601'},
-        'invoice_date': {'key': 'properties.invoiceDate', 'type': 'iso-8601'},
-        'status': {'key': 'properties.status', 'type': 'str'},
-        'amount_due': {'key': 'properties.amountDue', 'type': 'Amount'},
-        'azure_prepayment_applied': {'key': 'properties.azurePrepaymentApplied', 'type': 'Amount'},
-        'billed_amount': {'key': 'properties.billedAmount', 'type': 'Amount'},
-        'credit_amount': {'key': 'properties.creditAmount', 'type': 'Amount'},
-        'free_azure_credit_applied': {'key': 'properties.freeAzureCreditApplied', 'type': 'Amount'},
-        'sub_total': {'key': 'properties.subTotal', 'type': 'Amount'},
-        'tax_amount': {'key': 'properties.taxAmount', 'type': 'Amount'},
-        'total_amount': {'key': 'properties.totalAmount', 'type': 'Amount'},
-        'invoice_period_start_date': {'key': 'properties.invoicePeriodStartDate', 'type': 'iso-8601'},
-        'invoice_period_end_date': {'key': 'properties.invoicePeriodEndDate', 'type': 'iso-8601'},
-        'invoice_type': {'key': 'properties.invoiceType', 'type': 'str'},
-        'is_monthly_invoice': {'key': 'properties.isMonthlyInvoice', 'type': 'bool'},
-        'billing_profile_id': {'key': 'properties.billingProfileId', 'type': 'str'},
-        'billing_profile_display_name': {'key': 'properties.billingProfileDisplayName', 'type': 'str'},
-        'purchase_order_number': {'key': 'properties.purchaseOrderNumber', 'type': 'str'},
-        'documents': {'key': 'properties.documents', 'type': '[Document]'},
-        'payments': {'key': 'properties.payments', 'type': '[PaymentProperties]'},
-        'rebill_details': {'key': 'properties.rebillDetails', 'type': '{RebillDetails}'},
-        'document_type': {'key': 'properties.documentType', 'type': 'str'},
-        'billed_document_id': {'key': 'properties.billedDocumentId', 'type': 'str'},
-        'credit_for_document_id': {'key': 'properties.creditForDocumentId', 'type': 'str'},
-        'subscription_id': {'key': 'properties.subscriptionId', 'type': 'str'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "due_date": {"key": "properties.dueDate", "type": "iso-8601"},
+        "invoice_date": {"key": "properties.invoiceDate", "type": "iso-8601"},
+        "status": {"key": "properties.status", "type": "str"},
+        "amount_due": {"key": "properties.amountDue", "type": "Amount"},
+        "azure_prepayment_applied": {"key": "properties.azurePrepaymentApplied", "type": "Amount"},
+        "billed_amount": {"key": "properties.billedAmount", "type": "Amount"},
+        "credit_amount": {"key": "properties.creditAmount", "type": "Amount"},
+        "free_azure_credit_applied": {"key": "properties.freeAzureCreditApplied", "type": "Amount"},
+        "sub_total": {"key": "properties.subTotal", "type": "Amount"},
+        "tax_amount": {"key": "properties.taxAmount", "type": "Amount"},
+        "total_amount": {"key": "properties.totalAmount", "type": "Amount"},
+        "invoice_period_start_date": {"key": "properties.invoicePeriodStartDate", "type": "iso-8601"},
+        "invoice_period_end_date": {"key": "properties.invoicePeriodEndDate", "type": "iso-8601"},
+        "invoice_type": {"key": "properties.invoiceType", "type": "str"},
+        "is_monthly_invoice": {"key": "properties.isMonthlyInvoice", "type": "bool"},
+        "billing_profile_id": {"key": "properties.billingProfileId", "type": "str"},
+        "billing_profile_display_name": {"key": "properties.billingProfileDisplayName", "type": "str"},
+        "purchase_order_number": {"key": "properties.purchaseOrderNumber", "type": "str"},
+        "documents": {"key": "properties.documents", "type": "[Document]"},
+        "payments": {"key": "properties.payments", "type": "[PaymentProperties]"},
+        "rebill_details": {"key": "properties.rebillDetails", "type": "{RebillDetails}"},
+        "document_type": {"key": "properties.documentType", "type": "str"},
+        "billed_document_id": {"key": "properties.billedDocumentId", "type": "str"},
+        "credit_for_document_id": {"key": "properties.creditForDocumentId", "type": "str"},
+        "subscription_id": {"key": "properties.subscriptionId", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(Invoice, self).__init__(**kwargs)
         self.due_date = None
         self.invoice_date = None
@@ -2220,19 +2094,16 @@ class InvoiceListResult(msrest.serialization.Model):
     """
 
     _validation = {
-        'value': {'readonly': True},
-        'next_link': {'readonly': True},
+        "value": {"readonly": True},
+        "next_link": {"readonly": True},
     }
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[Invoice]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[Invoice]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(InvoiceListResult, self).__init__(**kwargs)
         self.value = None
         self.next_link = None
@@ -2265,32 +2136,29 @@ class InvoiceSection(Resource):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'state': {'readonly': True},
-        'system_id': {'readonly': True},
-        'target_cloud': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
+        "state": {"readonly": True},
+        "system_id": {"readonly": True},
+        "target_cloud": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'display_name': {'key': 'properties.displayName', 'type': 'str'},
-        'labels': {'key': 'properties.labels', 'type': '{str}'},
-        'state': {'key': 'properties.state', 'type': 'str'},
-        'system_id': {'key': 'properties.systemId', 'type': 'str'},
-        'target_cloud': {'key': 'properties.targetCloud', 'type': 'str'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "display_name": {"key": "properties.displayName", "type": "str"},
+        "labels": {"key": "properties.labels", "type": "{str}"},
+        "state": {"key": "properties.state", "type": "str"},
+        "system_id": {"key": "properties.systemId", "type": "str"},
+        "target_cloud": {"key": "properties.targetCloud", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(InvoiceSection, self).__init__(**kwargs)
-        self.display_name = kwargs.get('display_name', None)
-        self.labels = kwargs.get('labels', None)
+        self.display_name = kwargs.get("display_name", None)
+        self.labels = kwargs.get("labels", None)
         self.state = None
         self.system_id = None
         self.target_cloud = None
@@ -2304,15 +2172,12 @@ class InvoiceSectionCreationRequest(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'display_name': {'key': 'displayName', 'type': 'str'},
+        "display_name": {"key": "displayName", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(InvoiceSectionCreationRequest, self).__init__(**kwargs)
-        self.display_name = kwargs.get('display_name', None)
+        self.display_name = kwargs.get("display_name", None)
 
 
 class InvoiceSectionListResult(msrest.serialization.Model):
@@ -2329,21 +2194,18 @@ class InvoiceSectionListResult(msrest.serialization.Model):
     """
 
     _validation = {
-        'value': {'readonly': True},
-        'total_count': {'readonly': True},
-        'next_link': {'readonly': True},
+        "value": {"readonly": True},
+        "total_count": {"readonly": True},
+        "next_link": {"readonly": True},
     }
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[InvoiceSection]'},
-        'total_count': {'key': 'totalCount', 'type': 'int'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[InvoiceSection]"},
+        "total_count": {"key": "totalCount", "type": "int"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(InvoiceSectionListResult, self).__init__(**kwargs)
         self.value = None
         self.total_count = None
@@ -2362,20 +2224,17 @@ class InvoiceSectionListWithCreateSubPermissionResult(msrest.serialization.Model
     """
 
     _validation = {
-        'next_link': {'readonly': True},
+        "next_link": {"readonly": True},
     }
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[InvoiceSectionWithCreateSubPermission]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[InvoiceSectionWithCreateSubPermission]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(InvoiceSectionListWithCreateSubPermissionResult, self).__init__(**kwargs)
-        self.value = kwargs.get('value', None)
+        self.value = kwargs.get("value", None)
         self.next_link = None
 
 
@@ -2393,21 +2252,18 @@ class InvoiceSectionsOnExpand(msrest.serialization.Model):
     """
 
     _validation = {
-        'has_more_results': {'readonly': True},
+        "has_more_results": {"readonly": True},
     }
 
     _attribute_map = {
-        'has_more_results': {'key': 'hasMoreResults', 'type': 'bool'},
-        'value': {'key': 'value', 'type': '[InvoiceSection]'},
+        "has_more_results": {"key": "hasMoreResults", "type": "bool"},
+        "value": {"key": "value", "type": "[InvoiceSection]"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(InvoiceSectionsOnExpand, self).__init__(**kwargs)
         self.has_more_results = None
-        self.value = kwargs.get('value', None)
+        self.value = kwargs.get("value", None)
 
 
 class InvoiceSectionWithCreateSubPermission(msrest.serialization.Model):
@@ -2443,34 +2299,31 @@ class InvoiceSectionWithCreateSubPermission(msrest.serialization.Model):
     """
 
     _validation = {
-        'invoice_section_id': {'readonly': True},
-        'invoice_section_display_name': {'readonly': True},
-        'invoice_section_system_id': {'readonly': True},
-        'billing_profile_id': {'readonly': True},
-        'billing_profile_display_name': {'readonly': True},
-        'billing_profile_status': {'readonly': True},
-        'billing_profile_status_reason_code': {'readonly': True},
-        'billing_profile_spending_limit': {'readonly': True},
-        'billing_profile_system_id': {'readonly': True},
+        "invoice_section_id": {"readonly": True},
+        "invoice_section_display_name": {"readonly": True},
+        "invoice_section_system_id": {"readonly": True},
+        "billing_profile_id": {"readonly": True},
+        "billing_profile_display_name": {"readonly": True},
+        "billing_profile_status": {"readonly": True},
+        "billing_profile_status_reason_code": {"readonly": True},
+        "billing_profile_spending_limit": {"readonly": True},
+        "billing_profile_system_id": {"readonly": True},
     }
 
     _attribute_map = {
-        'invoice_section_id': {'key': 'invoiceSectionId', 'type': 'str'},
-        'invoice_section_display_name': {'key': 'invoiceSectionDisplayName', 'type': 'str'},
-        'invoice_section_system_id': {'key': 'invoiceSectionSystemId', 'type': 'str'},
-        'billing_profile_id': {'key': 'billingProfileId', 'type': 'str'},
-        'billing_profile_display_name': {'key': 'billingProfileDisplayName', 'type': 'str'},
-        'billing_profile_status': {'key': 'billingProfileStatus', 'type': 'str'},
-        'billing_profile_status_reason_code': {'key': 'billingProfileStatusReasonCode', 'type': 'str'},
-        'billing_profile_spending_limit': {'key': 'billingProfileSpendingLimit', 'type': 'str'},
-        'billing_profile_system_id': {'key': 'billingProfileSystemId', 'type': 'str'},
-        'enabled_azure_plans': {'key': 'enabledAzurePlans', 'type': '[AzurePlan]'},
+        "invoice_section_id": {"key": "invoiceSectionId", "type": "str"},
+        "invoice_section_display_name": {"key": "invoiceSectionDisplayName", "type": "str"},
+        "invoice_section_system_id": {"key": "invoiceSectionSystemId", "type": "str"},
+        "billing_profile_id": {"key": "billingProfileId", "type": "str"},
+        "billing_profile_display_name": {"key": "billingProfileDisplayName", "type": "str"},
+        "billing_profile_status": {"key": "billingProfileStatus", "type": "str"},
+        "billing_profile_status_reason_code": {"key": "billingProfileStatusReasonCode", "type": "str"},
+        "billing_profile_spending_limit": {"key": "billingProfileSpendingLimit", "type": "str"},
+        "billing_profile_system_id": {"key": "billingProfileSystemId", "type": "str"},
+        "enabled_azure_plans": {"key": "enabledAzurePlans", "type": "[AzurePlan]"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(InvoiceSectionWithCreateSubPermission, self).__init__(**kwargs)
         self.invoice_section_id = None
         self.invoice_section_display_name = None
@@ -2481,7 +2334,7 @@ class InvoiceSectionWithCreateSubPermission(msrest.serialization.Model):
         self.billing_profile_status_reason_code = None
         self.billing_profile_spending_limit = None
         self.billing_profile_system_id = None
-        self.enabled_azure_plans = kwargs.get('enabled_azure_plans', None)
+        self.enabled_azure_plans = kwargs.get("enabled_azure_plans", None)
 
 
 class Operation(msrest.serialization.Model):
@@ -2498,24 +2351,21 @@ class Operation(msrest.serialization.Model):
     """
 
     _validation = {
-        'name': {'readonly': True},
-        'is_data_action': {'readonly': True},
+        "name": {"readonly": True},
+        "is_data_action": {"readonly": True},
     }
 
     _attribute_map = {
-        'name': {'key': 'name', 'type': 'str'},
-        'is_data_action': {'key': 'isDataAction', 'type': 'bool'},
-        'display': {'key': 'display', 'type': 'OperationDisplay'},
+        "name": {"key": "name", "type": "str"},
+        "is_data_action": {"key": "isDataAction", "type": "bool"},
+        "display": {"key": "display", "type": "OperationDisplay"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(Operation, self).__init__(**kwargs)
         self.name = None
         self.is_data_action = None
-        self.display = kwargs.get('display', None)
+        self.display = kwargs.get("display", None)
 
 
 class OperationDisplay(msrest.serialization.Model):
@@ -2535,23 +2385,20 @@ class OperationDisplay(msrest.serialization.Model):
     """
 
     _validation = {
-        'provider': {'readonly': True},
-        'resource': {'readonly': True},
-        'operation': {'readonly': True},
-        'description': {'readonly': True},
+        "provider": {"readonly": True},
+        "resource": {"readonly": True},
+        "operation": {"readonly": True},
+        "description": {"readonly": True},
     }
 
     _attribute_map = {
-        'provider': {'key': 'provider', 'type': 'str'},
-        'resource': {'key': 'resource', 'type': 'str'},
-        'operation': {'key': 'operation', 'type': 'str'},
-        'description': {'key': 'description', 'type': 'str'},
+        "provider": {"key": "provider", "type": "str"},
+        "resource": {"key": "resource", "type": "str"},
+        "operation": {"key": "operation", "type": "str"},
+        "description": {"key": "description", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(OperationDisplay, self).__init__(**kwargs)
         self.provider = None
         self.resource = None
@@ -2572,19 +2419,16 @@ class OperationListResult(msrest.serialization.Model):
     """
 
     _validation = {
-        'value': {'readonly': True},
-        'next_link': {'readonly': True},
+        "value": {"readonly": True},
+        "next_link": {"readonly": True},
     }
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[Operation]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[Operation]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(OperationListResult, self).__init__(**kwargs)
         self.value = None
         self.next_link = None
@@ -2604,21 +2448,18 @@ class Participants(msrest.serialization.Model):
     """
 
     _validation = {
-        'status': {'readonly': True},
-        'status_date': {'readonly': True},
-        'email': {'readonly': True},
+        "status": {"readonly": True},
+        "status_date": {"readonly": True},
+        "email": {"readonly": True},
     }
 
     _attribute_map = {
-        'status': {'key': 'status', 'type': 'str'},
-        'status_date': {'key': 'statusDate', 'type': 'iso-8601'},
-        'email': {'key': 'email', 'type': 'str'},
+        "status": {"key": "status", "type": "str"},
+        "status_date": {"key": "statusDate", "type": "iso-8601"},
+        "email": {"key": "email", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(Participants, self).__init__(**kwargs)
         self.status = None
         self.status_date = None
@@ -2644,29 +2485,26 @@ class PaymentProperties(msrest.serialization.Model):
     """
 
     _validation = {
-        'payment_type': {'readonly': True},
-        'amount': {'readonly': True},
-        'date': {'readonly': True},
-        'payment_method_type': {'readonly': True},
+        "payment_type": {"readonly": True},
+        "amount": {"readonly": True},
+        "date": {"readonly": True},
+        "payment_method_type": {"readonly": True},
     }
 
     _attribute_map = {
-        'payment_type': {'key': 'paymentType', 'type': 'str'},
-        'amount': {'key': 'amount', 'type': 'Amount'},
-        'date': {'key': 'date', 'type': 'iso-8601'},
-        'payment_method_family': {'key': 'paymentMethodFamily', 'type': 'str'},
-        'payment_method_type': {'key': 'paymentMethodType', 'type': 'str'},
+        "payment_type": {"key": "paymentType", "type": "str"},
+        "amount": {"key": "amount", "type": "Amount"},
+        "date": {"key": "date", "type": "iso-8601"},
+        "payment_method_family": {"key": "paymentMethodFamily", "type": "str"},
+        "payment_method_type": {"key": "paymentMethodType", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(PaymentProperties, self).__init__(**kwargs)
         self.payment_type = None
         self.amount = None
         self.date = None
-        self.payment_method_family = kwargs.get('payment_method_family', None)
+        self.payment_method_family = kwargs.get("payment_method_family", None)
         self.payment_method_type = None
 
 
@@ -2694,28 +2532,25 @@ class Policy(Resource):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'marketplace_purchases': {'key': 'properties.marketplacePurchases', 'type': 'str'},
-        'reservation_purchases': {'key': 'properties.reservationPurchases', 'type': 'str'},
-        'view_charges': {'key': 'properties.viewCharges', 'type': 'str'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "marketplace_purchases": {"key": "properties.marketplacePurchases", "type": "str"},
+        "reservation_purchases": {"key": "properties.reservationPurchases", "type": "str"},
+        "view_charges": {"key": "properties.viewCharges", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(Policy, self).__init__(**kwargs)
-        self.marketplace_purchases = kwargs.get('marketplace_purchases', None)
-        self.reservation_purchases = kwargs.get('reservation_purchases', None)
-        self.view_charges = kwargs.get('view_charges', None)
+        self.marketplace_purchases = kwargs.get("marketplace_purchases", None)
+        self.reservation_purchases = kwargs.get("reservation_purchases", None)
+        self.view_charges = kwargs.get("view_charges", None)
 
 
 class Product(Resource):
@@ -2783,71 +2618,68 @@ class Product(Resource):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'display_name': {'readonly': True},
-        'purchase_date': {'readonly': True},
-        'product_type_id': {'readonly': True},
-        'product_type': {'readonly': True},
-        'end_date': {'readonly': True},
-        'last_charge': {'readonly': True},
-        'last_charge_date': {'readonly': True},
-        'quantity': {'readonly': True},
-        'sku_id': {'readonly': True},
-        'sku_description': {'readonly': True},
-        'tenant_id': {'readonly': True},
-        'availability_id': {'readonly': True},
-        'invoice_section_id': {'readonly': True},
-        'invoice_section_display_name': {'readonly': True},
-        'billing_profile_id': {'readonly': True},
-        'billing_profile_display_name': {'readonly': True},
-        'customer_id': {'readonly': True},
-        'customer_display_name': {'readonly': True},
-        'reseller': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
+        "display_name": {"readonly": True},
+        "purchase_date": {"readonly": True},
+        "product_type_id": {"readonly": True},
+        "product_type": {"readonly": True},
+        "end_date": {"readonly": True},
+        "last_charge": {"readonly": True},
+        "last_charge_date": {"readonly": True},
+        "quantity": {"readonly": True},
+        "sku_id": {"readonly": True},
+        "sku_description": {"readonly": True},
+        "tenant_id": {"readonly": True},
+        "availability_id": {"readonly": True},
+        "invoice_section_id": {"readonly": True},
+        "invoice_section_display_name": {"readonly": True},
+        "billing_profile_id": {"readonly": True},
+        "billing_profile_display_name": {"readonly": True},
+        "customer_id": {"readonly": True},
+        "customer_display_name": {"readonly": True},
+        "reseller": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'auto_renew': {'key': 'properties.autoRenew', 'type': 'str'},
-        'display_name': {'key': 'properties.displayName', 'type': 'str'},
-        'purchase_date': {'key': 'properties.purchaseDate', 'type': 'iso-8601'},
-        'product_type_id': {'key': 'properties.productTypeId', 'type': 'str'},
-        'product_type': {'key': 'properties.productType', 'type': 'str'},
-        'status': {'key': 'properties.status', 'type': 'str'},
-        'end_date': {'key': 'properties.endDate', 'type': 'iso-8601'},
-        'billing_frequency': {'key': 'properties.billingFrequency', 'type': 'str'},
-        'last_charge': {'key': 'properties.lastCharge', 'type': 'Amount'},
-        'last_charge_date': {'key': 'properties.lastChargeDate', 'type': 'iso-8601'},
-        'quantity': {'key': 'properties.quantity', 'type': 'float'},
-        'sku_id': {'key': 'properties.skuId', 'type': 'str'},
-        'sku_description': {'key': 'properties.skuDescription', 'type': 'str'},
-        'tenant_id': {'key': 'properties.tenantId', 'type': 'str'},
-        'availability_id': {'key': 'properties.availabilityId', 'type': 'str'},
-        'invoice_section_id': {'key': 'properties.invoiceSectionId', 'type': 'str'},
-        'invoice_section_display_name': {'key': 'properties.invoiceSectionDisplayName', 'type': 'str'},
-        'billing_profile_id': {'key': 'properties.billingProfileId', 'type': 'str'},
-        'billing_profile_display_name': {'key': 'properties.billingProfileDisplayName', 'type': 'str'},
-        'customer_id': {'key': 'properties.customerId', 'type': 'str'},
-        'customer_display_name': {'key': 'properties.customerDisplayName', 'type': 'str'},
-        'reseller': {'key': 'properties.reseller', 'type': 'Reseller'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "auto_renew": {"key": "properties.autoRenew", "type": "str"},
+        "display_name": {"key": "properties.displayName", "type": "str"},
+        "purchase_date": {"key": "properties.purchaseDate", "type": "iso-8601"},
+        "product_type_id": {"key": "properties.productTypeId", "type": "str"},
+        "product_type": {"key": "properties.productType", "type": "str"},
+        "status": {"key": "properties.status", "type": "str"},
+        "end_date": {"key": "properties.endDate", "type": "iso-8601"},
+        "billing_frequency": {"key": "properties.billingFrequency", "type": "str"},
+        "last_charge": {"key": "properties.lastCharge", "type": "Amount"},
+        "last_charge_date": {"key": "properties.lastChargeDate", "type": "iso-8601"},
+        "quantity": {"key": "properties.quantity", "type": "float"},
+        "sku_id": {"key": "properties.skuId", "type": "str"},
+        "sku_description": {"key": "properties.skuDescription", "type": "str"},
+        "tenant_id": {"key": "properties.tenantId", "type": "str"},
+        "availability_id": {"key": "properties.availabilityId", "type": "str"},
+        "invoice_section_id": {"key": "properties.invoiceSectionId", "type": "str"},
+        "invoice_section_display_name": {"key": "properties.invoiceSectionDisplayName", "type": "str"},
+        "billing_profile_id": {"key": "properties.billingProfileId", "type": "str"},
+        "billing_profile_display_name": {"key": "properties.billingProfileDisplayName", "type": "str"},
+        "customer_id": {"key": "properties.customerId", "type": "str"},
+        "customer_display_name": {"key": "properties.customerDisplayName", "type": "str"},
+        "reseller": {"key": "properties.reseller", "type": "Reseller"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(Product, self).__init__(**kwargs)
-        self.auto_renew = kwargs.get('auto_renew', None)
+        self.auto_renew = kwargs.get("auto_renew", None)
         self.display_name = None
         self.purchase_date = None
         self.product_type_id = None
         self.product_type = None
-        self.status = kwargs.get('status', None)
+        self.status = kwargs.get("status", None)
         self.end_date = None
-        self.billing_frequency = kwargs.get('billing_frequency', None)
+        self.billing_frequency = kwargs.get("billing_frequency", None)
         self.last_charge = None
         self.last_charge_date = None
         self.quantity = None
@@ -2876,19 +2708,16 @@ class ProductsListResult(msrest.serialization.Model):
     """
 
     _validation = {
-        'value': {'readonly': True},
-        'next_link': {'readonly': True},
+        "value": {"readonly": True},
+        "next_link": {"readonly": True},
     }
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[Product]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[Product]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ProductsListResult, self).__init__(**kwargs)
         self.value = None
         self.next_link = None
@@ -2908,21 +2737,18 @@ class RebillDetails(msrest.serialization.Model):
     """
 
     _validation = {
-        'credit_note_document_id': {'readonly': True},
-        'invoice_document_id': {'readonly': True},
-        'rebill_details': {'readonly': True},
+        "credit_note_document_id": {"readonly": True},
+        "invoice_document_id": {"readonly": True},
+        "rebill_details": {"readonly": True},
     }
 
     _attribute_map = {
-        'credit_note_document_id': {'key': 'creditNoteDocumentId', 'type': 'str'},
-        'invoice_document_id': {'key': 'invoiceDocumentId', 'type': 'str'},
-        'rebill_details': {'key': 'rebillDetails', 'type': '{RebillDetails}'},
+        "credit_note_document_id": {"key": "creditNoteDocumentId", "type": "str"},
+        "invoice_document_id": {"key": "invoiceDocumentId", "type": "str"},
+        "rebill_details": {"key": "rebillDetails", "type": "{RebillDetails}"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(RebillDetails, self).__init__(**kwargs)
         self.credit_note_document_id = None
         self.invoice_document_id = None
@@ -2941,19 +2767,16 @@ class Reseller(msrest.serialization.Model):
     """
 
     _validation = {
-        'reseller_id': {'readonly': True},
-        'description': {'readonly': True},
+        "reseller_id": {"readonly": True},
+        "description": {"readonly": True},
     }
 
     _attribute_map = {
-        'reseller_id': {'key': 'resellerId', 'type': 'str'},
-        'description': {'key': 'description', 'type': 'str'},
+        "reseller_id": {"key": "resellerId", "type": "str"},
+        "description": {"key": "description", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(Reseller, self).__init__(**kwargs)
         self.reseller_id = None
         self.description = None
@@ -3015,64 +2838,61 @@ class Reservation(msrest.serialization.Model):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'location': {'readonly': True},
-        'applied_scope_type': {'readonly': True},
-        'reserved_resource_type': {'readonly': True},
-        'quantity': {'readonly': True},
-        'provisioning_state': {'readonly': True},
-        'expiry_date': {'readonly': True},
-        'provisioning_sub_state': {'readonly': True},
-        'display_name': {'readonly': True},
-        'display_provisioning_state': {'readonly': True},
-        'user_friendly_renew_state': {'readonly': True},
-        'user_friendly_applied_scope_type': {'readonly': True},
-        'effective_date_time': {'readonly': True},
-        'sku_description': {'readonly': True},
-        'term': {'readonly': True},
-        'renew': {'readonly': True},
-        'renew_source': {'readonly': True},
-        'utilization': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
+        "location": {"readonly": True},
+        "applied_scope_type": {"readonly": True},
+        "reserved_resource_type": {"readonly": True},
+        "quantity": {"readonly": True},
+        "provisioning_state": {"readonly": True},
+        "expiry_date": {"readonly": True},
+        "provisioning_sub_state": {"readonly": True},
+        "display_name": {"readonly": True},
+        "display_provisioning_state": {"readonly": True},
+        "user_friendly_renew_state": {"readonly": True},
+        "user_friendly_applied_scope_type": {"readonly": True},
+        "effective_date_time": {"readonly": True},
+        "sku_description": {"readonly": True},
+        "term": {"readonly": True},
+        "renew": {"readonly": True},
+        "renew_source": {"readonly": True},
+        "utilization": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'location': {'key': 'location', 'type': 'str'},
-        'sku': {'key': 'sku', 'type': 'ReservationSkuProperty'},
-        'applied_scopes': {'key': 'properties.appliedScopes', 'type': '[str]'},
-        'applied_scope_type': {'key': 'properties.appliedScopeType', 'type': 'str'},
-        'reserved_resource_type': {'key': 'properties.reservedResourceType', 'type': 'str'},
-        'quantity': {'key': 'properties.quantity', 'type': 'float'},
-        'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
-        'expiry_date': {'key': 'properties.expiryDate', 'type': 'str'},
-        'provisioning_sub_state': {'key': 'properties.provisioningSubState', 'type': 'str'},
-        'display_name': {'key': 'properties.displayName', 'type': 'str'},
-        'display_provisioning_state': {'key': 'properties.displayProvisioningState', 'type': 'str'},
-        'user_friendly_renew_state': {'key': 'properties.userFriendlyRenewState', 'type': 'str'},
-        'user_friendly_applied_scope_type': {'key': 'properties.userFriendlyAppliedScopeType', 'type': 'str'},
-        'effective_date_time': {'key': 'properties.effectiveDateTime', 'type': 'str'},
-        'sku_description': {'key': 'properties.skuDescription', 'type': 'str'},
-        'term': {'key': 'properties.term', 'type': 'str'},
-        'renew': {'key': 'properties.renew', 'type': 'bool'},
-        'renew_source': {'key': 'properties.renewSource', 'type': 'str'},
-        'utilization': {'key': 'properties.utilization', 'type': 'ReservationPropertyUtilization'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "location": {"key": "location", "type": "str"},
+        "sku": {"key": "sku", "type": "ReservationSkuProperty"},
+        "applied_scopes": {"key": "properties.appliedScopes", "type": "[str]"},
+        "applied_scope_type": {"key": "properties.appliedScopeType", "type": "str"},
+        "reserved_resource_type": {"key": "properties.reservedResourceType", "type": "str"},
+        "quantity": {"key": "properties.quantity", "type": "float"},
+        "provisioning_state": {"key": "properties.provisioningState", "type": "str"},
+        "expiry_date": {"key": "properties.expiryDate", "type": "str"},
+        "provisioning_sub_state": {"key": "properties.provisioningSubState", "type": "str"},
+        "display_name": {"key": "properties.displayName", "type": "str"},
+        "display_provisioning_state": {"key": "properties.displayProvisioningState", "type": "str"},
+        "user_friendly_renew_state": {"key": "properties.userFriendlyRenewState", "type": "str"},
+        "user_friendly_applied_scope_type": {"key": "properties.userFriendlyAppliedScopeType", "type": "str"},
+        "effective_date_time": {"key": "properties.effectiveDateTime", "type": "str"},
+        "sku_description": {"key": "properties.skuDescription", "type": "str"},
+        "term": {"key": "properties.term", "type": "str"},
+        "renew": {"key": "properties.renew", "type": "bool"},
+        "renew_source": {"key": "properties.renewSource", "type": "str"},
+        "utilization": {"key": "properties.utilization", "type": "ReservationPropertyUtilization"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(Reservation, self).__init__(**kwargs)
         self.id = None
         self.name = None
         self.type = None
         self.location = None
-        self.sku = kwargs.get('sku', None)
-        self.applied_scopes = kwargs.get('applied_scopes', None)
+        self.sku = kwargs.get("sku", None)
+        self.applied_scopes = kwargs.get("applied_scopes", None)
         self.applied_scope_type = None
         self.reserved_resource_type = None
         self.quantity = None
@@ -3103,21 +2923,18 @@ class ReservationPropertyUtilization(msrest.serialization.Model):
     """
 
     _validation = {
-        'trend': {'readonly': True},
+        "trend": {"readonly": True},
     }
 
     _attribute_map = {
-        'trend': {'key': 'trend', 'type': 'str'},
-        'aggregates': {'key': 'aggregates', 'type': '[ReservationUtilizationAggregates]'},
+        "trend": {"key": "trend", "type": "str"},
+        "aggregates": {"key": "aggregates", "type": "[ReservationUtilizationAggregates]"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ReservationPropertyUtilization, self).__init__(**kwargs)
         self.trend = None
-        self.aggregates = kwargs.get('aggregates', None)
+        self.aggregates = kwargs.get("aggregates", None)
 
 
 class ReservationSkuProperty(msrest.serialization.Model):
@@ -3130,17 +2947,14 @@ class ReservationSkuProperty(msrest.serialization.Model):
     """
 
     _validation = {
-        'name': {'readonly': True},
+        "name": {"readonly": True},
     }
 
     _attribute_map = {
-        'name': {'key': 'name', 'type': 'str'},
+        "name": {"key": "name", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ReservationSkuProperty, self).__init__(**kwargs)
         self.name = None
 
@@ -3159,24 +2973,21 @@ class ReservationsListResult(msrest.serialization.Model):
     """
 
     _validation = {
-        'value': {'readonly': True},
-        'next_link': {'readonly': True},
+        "value": {"readonly": True},
+        "next_link": {"readonly": True},
     }
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[Reservation]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
-        'summary': {'key': 'summary', 'type': 'ReservationSummary'},
+        "value": {"key": "value", "type": "[Reservation]"},
+        "next_link": {"key": "nextLink", "type": "str"},
+        "summary": {"key": "summary", "type": "ReservationSummary"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ReservationsListResult, self).__init__(**kwargs)
         self.value = None
         self.next_link = None
-        self.summary = kwargs.get('summary', None)
+        self.summary = kwargs.get("summary", None)
 
 
 class ReservationSummary(msrest.serialization.Model):
@@ -3199,27 +3010,24 @@ class ReservationSummary(msrest.serialization.Model):
     """
 
     _validation = {
-        'succeeded_count': {'readonly': True},
-        'failed_count': {'readonly': True},
-        'expiring_count': {'readonly': True},
-        'expired_count': {'readonly': True},
-        'pending_count': {'readonly': True},
-        'cancelled_count': {'readonly': True},
+        "succeeded_count": {"readonly": True},
+        "failed_count": {"readonly": True},
+        "expiring_count": {"readonly": True},
+        "expired_count": {"readonly": True},
+        "pending_count": {"readonly": True},
+        "cancelled_count": {"readonly": True},
     }
 
     _attribute_map = {
-        'succeeded_count': {'key': 'succeededCount', 'type': 'float'},
-        'failed_count': {'key': 'failedCount', 'type': 'float'},
-        'expiring_count': {'key': 'expiringCount', 'type': 'float'},
-        'expired_count': {'key': 'expiredCount', 'type': 'float'},
-        'pending_count': {'key': 'pendingCount', 'type': 'float'},
-        'cancelled_count': {'key': 'cancelledCount', 'type': 'float'},
+        "succeeded_count": {"key": "succeededCount", "type": "float"},
+        "failed_count": {"key": "failedCount", "type": "float"},
+        "expiring_count": {"key": "expiringCount", "type": "float"},
+        "expired_count": {"key": "expiredCount", "type": "float"},
+        "pending_count": {"key": "pendingCount", "type": "float"},
+        "cancelled_count": {"key": "cancelledCount", "type": "float"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ReservationSummary, self).__init__(**kwargs)
         self.succeeded_count = None
         self.failed_count = None
@@ -3245,23 +3053,20 @@ class ReservationUtilizationAggregates(msrest.serialization.Model):
     """
 
     _validation = {
-        'grain': {'readonly': True},
-        'grain_unit': {'readonly': True},
-        'value': {'readonly': True},
-        'value_unit': {'readonly': True},
+        "grain": {"readonly": True},
+        "grain_unit": {"readonly": True},
+        "value": {"readonly": True},
+        "value_unit": {"readonly": True},
     }
 
     _attribute_map = {
-        'grain': {'key': 'grain', 'type': 'float'},
-        'grain_unit': {'key': 'grainUnit', 'type': 'str'},
-        'value': {'key': 'value', 'type': 'float'},
-        'value_unit': {'key': 'valueUnit', 'type': 'str'},
+        "grain": {"key": "grain", "type": "float"},
+        "grain_unit": {"key": "grainUnit", "type": "str"},
+        "value": {"key": "value", "type": "float"},
+        "value_unit": {"key": "valueUnit", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ReservationUtilizationAggregates, self).__init__(**kwargs)
         self.grain = None
         self.grain_unit = None
@@ -3374,93 +3179,90 @@ class Transaction(Resource):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'date': {'readonly': True},
-        'invoice': {'readonly': True},
-        'invoice_id': {'readonly': True},
-        'order_id': {'readonly': True},
-        'order_name': {'readonly': True},
-        'product_family': {'readonly': True},
-        'product_type_id': {'readonly': True},
-        'product_type': {'readonly': True},
-        'product_description': {'readonly': True},
-        'transaction_amount': {'readonly': True},
-        'quantity': {'readonly': True},
-        'invoice_section_id': {'readonly': True},
-        'invoice_section_display_name': {'readonly': True},
-        'billing_profile_id': {'readonly': True},
-        'billing_profile_display_name': {'readonly': True},
-        'customer_id': {'readonly': True},
-        'customer_display_name': {'readonly': True},
-        'subscription_id': {'readonly': True},
-        'subscription_name': {'readonly': True},
-        'azure_plan': {'readonly': True},
-        'azure_credit_applied': {'readonly': True},
-        'billing_currency': {'readonly': True},
-        'discount': {'readonly': True},
-        'effective_price': {'readonly': True},
-        'exchange_rate': {'readonly': True},
-        'market_price': {'readonly': True},
-        'pricing_currency': {'readonly': True},
-        'service_period_start_date': {'readonly': True},
-        'service_period_end_date': {'readonly': True},
-        'sub_total': {'readonly': True},
-        'tax': {'readonly': True},
-        'unit_of_measure': {'readonly': True},
-        'units': {'readonly': True},
-        'unit_type': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
+        "date": {"readonly": True},
+        "invoice": {"readonly": True},
+        "invoice_id": {"readonly": True},
+        "order_id": {"readonly": True},
+        "order_name": {"readonly": True},
+        "product_family": {"readonly": True},
+        "product_type_id": {"readonly": True},
+        "product_type": {"readonly": True},
+        "product_description": {"readonly": True},
+        "transaction_amount": {"readonly": True},
+        "quantity": {"readonly": True},
+        "invoice_section_id": {"readonly": True},
+        "invoice_section_display_name": {"readonly": True},
+        "billing_profile_id": {"readonly": True},
+        "billing_profile_display_name": {"readonly": True},
+        "customer_id": {"readonly": True},
+        "customer_display_name": {"readonly": True},
+        "subscription_id": {"readonly": True},
+        "subscription_name": {"readonly": True},
+        "azure_plan": {"readonly": True},
+        "azure_credit_applied": {"readonly": True},
+        "billing_currency": {"readonly": True},
+        "discount": {"readonly": True},
+        "effective_price": {"readonly": True},
+        "exchange_rate": {"readonly": True},
+        "market_price": {"readonly": True},
+        "pricing_currency": {"readonly": True},
+        "service_period_start_date": {"readonly": True},
+        "service_period_end_date": {"readonly": True},
+        "sub_total": {"readonly": True},
+        "tax": {"readonly": True},
+        "unit_of_measure": {"readonly": True},
+        "units": {"readonly": True},
+        "unit_type": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'kind': {'key': 'properties.kind', 'type': 'str'},
-        'date': {'key': 'properties.date', 'type': 'iso-8601'},
-        'invoice': {'key': 'properties.invoice', 'type': 'str'},
-        'invoice_id': {'key': 'properties.invoiceId', 'type': 'str'},
-        'order_id': {'key': 'properties.orderId', 'type': 'str'},
-        'order_name': {'key': 'properties.orderName', 'type': 'str'},
-        'product_family': {'key': 'properties.productFamily', 'type': 'str'},
-        'product_type_id': {'key': 'properties.productTypeId', 'type': 'str'},
-        'product_type': {'key': 'properties.productType', 'type': 'str'},
-        'product_description': {'key': 'properties.productDescription', 'type': 'str'},
-        'transaction_type': {'key': 'properties.transactionType', 'type': 'str'},
-        'transaction_amount': {'key': 'properties.transactionAmount', 'type': 'Amount'},
-        'quantity': {'key': 'properties.quantity', 'type': 'int'},
-        'invoice_section_id': {'key': 'properties.invoiceSectionId', 'type': 'str'},
-        'invoice_section_display_name': {'key': 'properties.invoiceSectionDisplayName', 'type': 'str'},
-        'billing_profile_id': {'key': 'properties.billingProfileId', 'type': 'str'},
-        'billing_profile_display_name': {'key': 'properties.billingProfileDisplayName', 'type': 'str'},
-        'customer_id': {'key': 'properties.customerId', 'type': 'str'},
-        'customer_display_name': {'key': 'properties.customerDisplayName', 'type': 'str'},
-        'subscription_id': {'key': 'properties.subscriptionId', 'type': 'str'},
-        'subscription_name': {'key': 'properties.subscriptionName', 'type': 'str'},
-        'azure_plan': {'key': 'properties.azurePlan', 'type': 'str'},
-        'azure_credit_applied': {'key': 'properties.azureCreditApplied', 'type': 'Amount'},
-        'billing_currency': {'key': 'properties.billingCurrency', 'type': 'str'},
-        'discount': {'key': 'properties.discount', 'type': 'float'},
-        'effective_price': {'key': 'properties.effectivePrice', 'type': 'Amount'},
-        'exchange_rate': {'key': 'properties.exchangeRate', 'type': 'float'},
-        'market_price': {'key': 'properties.marketPrice', 'type': 'Amount'},
-        'pricing_currency': {'key': 'properties.pricingCurrency', 'type': 'str'},
-        'service_period_start_date': {'key': 'properties.servicePeriodStartDate', 'type': 'iso-8601'},
-        'service_period_end_date': {'key': 'properties.servicePeriodEndDate', 'type': 'iso-8601'},
-        'sub_total': {'key': 'properties.subTotal', 'type': 'Amount'},
-        'tax': {'key': 'properties.tax', 'type': 'Amount'},
-        'unit_of_measure': {'key': 'properties.unitOfMeasure', 'type': 'str'},
-        'units': {'key': 'properties.units', 'type': 'float'},
-        'unit_type': {'key': 'properties.unitType', 'type': 'str'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "kind": {"key": "properties.kind", "type": "str"},
+        "date": {"key": "properties.date", "type": "iso-8601"},
+        "invoice": {"key": "properties.invoice", "type": "str"},
+        "invoice_id": {"key": "properties.invoiceId", "type": "str"},
+        "order_id": {"key": "properties.orderId", "type": "str"},
+        "order_name": {"key": "properties.orderName", "type": "str"},
+        "product_family": {"key": "properties.productFamily", "type": "str"},
+        "product_type_id": {"key": "properties.productTypeId", "type": "str"},
+        "product_type": {"key": "properties.productType", "type": "str"},
+        "product_description": {"key": "properties.productDescription", "type": "str"},
+        "transaction_type": {"key": "properties.transactionType", "type": "str"},
+        "transaction_amount": {"key": "properties.transactionAmount", "type": "Amount"},
+        "quantity": {"key": "properties.quantity", "type": "int"},
+        "invoice_section_id": {"key": "properties.invoiceSectionId", "type": "str"},
+        "invoice_section_display_name": {"key": "properties.invoiceSectionDisplayName", "type": "str"},
+        "billing_profile_id": {"key": "properties.billingProfileId", "type": "str"},
+        "billing_profile_display_name": {"key": "properties.billingProfileDisplayName", "type": "str"},
+        "customer_id": {"key": "properties.customerId", "type": "str"},
+        "customer_display_name": {"key": "properties.customerDisplayName", "type": "str"},
+        "subscription_id": {"key": "properties.subscriptionId", "type": "str"},
+        "subscription_name": {"key": "properties.subscriptionName", "type": "str"},
+        "azure_plan": {"key": "properties.azurePlan", "type": "str"},
+        "azure_credit_applied": {"key": "properties.azureCreditApplied", "type": "Amount"},
+        "billing_currency": {"key": "properties.billingCurrency", "type": "str"},
+        "discount": {"key": "properties.discount", "type": "float"},
+        "effective_price": {"key": "properties.effectivePrice", "type": "Amount"},
+        "exchange_rate": {"key": "properties.exchangeRate", "type": "float"},
+        "market_price": {"key": "properties.marketPrice", "type": "Amount"},
+        "pricing_currency": {"key": "properties.pricingCurrency", "type": "str"},
+        "service_period_start_date": {"key": "properties.servicePeriodStartDate", "type": "iso-8601"},
+        "service_period_end_date": {"key": "properties.servicePeriodEndDate", "type": "iso-8601"},
+        "sub_total": {"key": "properties.subTotal", "type": "Amount"},
+        "tax": {"key": "properties.tax", "type": "Amount"},
+        "unit_of_measure": {"key": "properties.unitOfMeasure", "type": "str"},
+        "units": {"key": "properties.units", "type": "float"},
+        "unit_type": {"key": "properties.unitType", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(Transaction, self).__init__(**kwargs)
-        self.kind = kwargs.get('kind', None)
+        self.kind = kwargs.get("kind", None)
         self.date = None
         self.invoice = None
         self.invoice_id = None
@@ -3470,7 +3272,7 @@ class Transaction(Resource):
         self.product_type_id = None
         self.product_type = None
         self.product_description = None
-        self.transaction_type = kwargs.get('transaction_type', None)
+        self.transaction_type = kwargs.get("transaction_type", None)
         self.transaction_amount = None
         self.quantity = None
         self.invoice_section_id = None
@@ -3510,19 +3312,16 @@ class TransactionListResult(msrest.serialization.Model):
     """
 
     _validation = {
-        'value': {'readonly': True},
-        'next_link': {'readonly': True},
+        "value": {"readonly": True},
+        "next_link": {"readonly": True},
     }
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[Transaction]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[Transaction]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(TransactionListResult, self).__init__(**kwargs)
         self.value = None
         self.next_link = None
@@ -3538,19 +3337,16 @@ class TransferBillingSubscriptionRequestProperties(msrest.serialization.Model):
     """
 
     _validation = {
-        'destination_invoice_section_id': {'required': True},
+        "destination_invoice_section_id": {"required": True},
     }
 
     _attribute_map = {
-        'destination_invoice_section_id': {'key': 'destinationInvoiceSectionId', 'type': 'str'},
+        "destination_invoice_section_id": {"key": "destinationInvoiceSectionId", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(TransferBillingSubscriptionRequestProperties, self).__init__(**kwargs)
-        self.destination_invoice_section_id = kwargs['destination_invoice_section_id']
+        self.destination_invoice_section_id = kwargs["destination_invoice_section_id"]
 
 
 class TransferProductRequestProperties(msrest.serialization.Model):
@@ -3561,15 +3357,12 @@ class TransferProductRequestProperties(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'destination_invoice_section_id': {'key': 'destinationInvoiceSectionId', 'type': 'str'},
+        "destination_invoice_section_id": {"key": "destinationInvoiceSectionId", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(TransferProductRequestProperties, self).__init__(**kwargs)
-        self.destination_invoice_section_id = kwargs.get('destination_invoice_section_id', None)
+        self.destination_invoice_section_id = kwargs.get("destination_invoice_section_id", None)
 
 
 class ValidateAddressResponse(msrest.serialization.Model):
@@ -3584,19 +3377,16 @@ class ValidateAddressResponse(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'status': {'key': 'status', 'type': 'str'},
-        'suggested_addresses': {'key': 'suggestedAddresses', 'type': '[AddressDetails]'},
-        'validation_message': {'key': 'validationMessage', 'type': 'str'},
+        "status": {"key": "status", "type": "str"},
+        "suggested_addresses": {"key": "suggestedAddresses", "type": "[AddressDetails]"},
+        "validation_message": {"key": "validationMessage", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ValidateAddressResponse, self).__init__(**kwargs)
-        self.status = kwargs.get('status', None)
-        self.suggested_addresses = kwargs.get('suggested_addresses', None)
-        self.validation_message = kwargs.get('validation_message', None)
+        self.status = kwargs.get("status", None)
+        self.suggested_addresses = kwargs.get("suggested_addresses", None)
+        self.validation_message = kwargs.get("validation_message", None)
 
 
 class ValidateProductTransferEligibilityError(msrest.serialization.Model):
@@ -3615,19 +3405,16 @@ class ValidateProductTransferEligibilityError(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'code': {'key': 'code', 'type': 'str'},
-        'message': {'key': 'message', 'type': 'str'},
-        'details': {'key': 'details', 'type': 'str'},
+        "code": {"key": "code", "type": "str"},
+        "message": {"key": "message", "type": "str"},
+        "details": {"key": "details", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ValidateProductTransferEligibilityError, self).__init__(**kwargs)
-        self.code = kwargs.get('code', None)
-        self.message = kwargs.get('message', None)
-        self.details = kwargs.get('details', None)
+        self.code = kwargs.get("code", None)
+        self.message = kwargs.get("message", None)
+        self.details = kwargs.get("details", None)
 
 
 class ValidateProductTransferEligibilityResult(msrest.serialization.Model):
@@ -3642,21 +3429,18 @@ class ValidateProductTransferEligibilityResult(msrest.serialization.Model):
     """
 
     _validation = {
-        'is_move_eligible': {'readonly': True},
+        "is_move_eligible": {"readonly": True},
     }
 
     _attribute_map = {
-        'is_move_eligible': {'key': 'isMoveEligible', 'type': 'bool'},
-        'error_details': {'key': 'errorDetails', 'type': 'ValidateProductTransferEligibilityError'},
+        "is_move_eligible": {"key": "isMoveEligible", "type": "bool"},
+        "error_details": {"key": "errorDetails", "type": "ValidateProductTransferEligibilityError"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ValidateProductTransferEligibilityResult, self).__init__(**kwargs)
         self.is_move_eligible = None
-        self.error_details = kwargs.get('error_details', None)
+        self.error_details = kwargs.get("error_details", None)
 
 
 class ValidateSubscriptionTransferEligibilityError(msrest.serialization.Model):
@@ -3678,19 +3462,16 @@ class ValidateSubscriptionTransferEligibilityError(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'code': {'key': 'code', 'type': 'str'},
-        'message': {'key': 'message', 'type': 'str'},
-        'details': {'key': 'details', 'type': 'str'},
+        "code": {"key": "code", "type": "str"},
+        "message": {"key": "message", "type": "str"},
+        "details": {"key": "details", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ValidateSubscriptionTransferEligibilityError, self).__init__(**kwargs)
-        self.code = kwargs.get('code', None)
-        self.message = kwargs.get('message', None)
-        self.details = kwargs.get('details', None)
+        self.code = kwargs.get("code", None)
+        self.message = kwargs.get("message", None)
+        self.details = kwargs.get("details", None)
 
 
 class ValidateSubscriptionTransferEligibilityResult(msrest.serialization.Model):
@@ -3705,18 +3486,15 @@ class ValidateSubscriptionTransferEligibilityResult(msrest.serialization.Model):
     """
 
     _validation = {
-        'is_move_eligible': {'readonly': True},
+        "is_move_eligible": {"readonly": True},
     }
 
     _attribute_map = {
-        'is_move_eligible': {'key': 'isMoveEligible', 'type': 'bool'},
-        'error_details': {'key': 'errorDetails', 'type': 'ValidateSubscriptionTransferEligibilityError'},
+        "is_move_eligible": {"key": "isMoveEligible", "type": "bool"},
+        "error_details": {"key": "errorDetails", "type": "ValidateSubscriptionTransferEligibilityError"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ValidateSubscriptionTransferEligibilityResult, self).__init__(**kwargs)
         self.is_move_eligible = None
-        self.error_details = kwargs.get('error_details', None)
+        self.error_details = kwargs.get("error_details", None)
