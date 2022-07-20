@@ -16,8 +16,9 @@ from azure.mgmt.core.exceptions import ARMErrorFormat
 
 from ... import models
 
-T = TypeVar('T')
+T = TypeVar("T")
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
+
 
 class ConfigurationProfilePreferencesOperations:
     """ConfigurationProfilePreferencesOperations async operations.
@@ -61,33 +62,44 @@ class ConfigurationProfilePreferencesOperations:
         :rtype: ~automanage_client.models.ConfigurationProfilePreference
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ConfigurationProfilePreference"]
+        cls = kwargs.pop("cls", None)  # type: ClsType["models.ConfigurationProfilePreference"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
-        error_map.update(kwargs.pop('error_map', {}))
+        error_map.update(kwargs.pop("error_map", {}))
         api_version = "2020-06-30-preview"
         content_type = kwargs.pop("content_type", "application/json")
 
         # Construct URL
-        url = self.create_or_update.metadata['url']  # type: ignore
+        url = self.create_or_update.metadata["url"]  # type: ignore
         path_format_arguments = {
-            'configurationProfilePreferenceName': self._serialize.url("configuration_profile_preference_name", configuration_profile_preference_name, 'str'),
-            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
+            "configurationProfilePreferenceName": self._serialize.url(
+                "configuration_profile_preference_name", configuration_profile_preference_name, "str"
+            ),
+            "subscriptionId": self._serialize.url(
+                "self._config.subscription_id", self._config.subscription_id, "str", min_length=1
+            ),
+            "resourceGroupName": self._serialize.url(
+                "resource_group_name",
+                resource_group_name,
+                "str",
+                max_length=90,
+                min_length=1,
+                pattern=r"^[-\w\._\(\)]+$",
+            ),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+        query_parameters["api-version"] = self._serialize.query("api_version", api_version, "str")
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
-        header_parameters['Content-Type'] = self._serialize.header("content_type", content_type, 'str')
-        header_parameters['Accept'] = 'application/json'
+        header_parameters["Content-Type"] = self._serialize.header("content_type", content_type, "str")
+        header_parameters["Accept"] = "application/json"
 
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(parameters, 'ConfigurationProfilePreference')
-        body_content_kwargs['content'] = body_content
+        body_content = self._serialize.body(parameters, "ConfigurationProfilePreference")
+        body_content_kwargs["content"] = body_content
         request = self._client.put(url, query_parameters, header_parameters, **body_content_kwargs)
 
         pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
@@ -99,22 +111,20 @@ class ConfigurationProfilePreferencesOperations:
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         if response.status_code == 200:
-            deserialized = self._deserialize('ConfigurationProfilePreference', pipeline_response)
+            deserialized = self._deserialize("ConfigurationProfilePreference", pipeline_response)
 
         if response.status_code == 201:
-            deserialized = self._deserialize('ConfigurationProfilePreference', pipeline_response)
+            deserialized = self._deserialize("ConfigurationProfilePreference", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automanage/configurationProfilePreferences/{configurationProfilePreferenceName}'}  # type: ignore
+
+    create_or_update.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automanage/configurationProfilePreferences/{configurationProfilePreferenceName}"}  # type: ignore
 
     async def get(
-        self,
-        configuration_profile_preference_name: str,
-        resource_group_name: str,
-        **kwargs
+        self, configuration_profile_preference_name: str, resource_group_name: str, **kwargs
     ) -> "models.ConfigurationProfilePreference":
         """Get information about a configuration profile preference.
 
@@ -127,27 +137,38 @@ class ConfigurationProfilePreferencesOperations:
         :rtype: ~automanage_client.models.ConfigurationProfilePreference
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ConfigurationProfilePreference"]
+        cls = kwargs.pop("cls", None)  # type: ClsType["models.ConfigurationProfilePreference"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
-        error_map.update(kwargs.pop('error_map', {}))
+        error_map.update(kwargs.pop("error_map", {}))
         api_version = "2020-06-30-preview"
 
         # Construct URL
-        url = self.get.metadata['url']  # type: ignore
+        url = self.get.metadata["url"]  # type: ignore
         path_format_arguments = {
-            'configurationProfilePreferenceName': self._serialize.url("configuration_profile_preference_name", configuration_profile_preference_name, 'str'),
-            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
+            "configurationProfilePreferenceName": self._serialize.url(
+                "configuration_profile_preference_name", configuration_profile_preference_name, "str"
+            ),
+            "subscriptionId": self._serialize.url(
+                "self._config.subscription_id", self._config.subscription_id, "str", min_length=1
+            ),
+            "resourceGroupName": self._serialize.url(
+                "resource_group_name",
+                resource_group_name,
+                "str",
+                max_length=90,
+                min_length=1,
+                pattern=r"^[-\w\._\(\)]+$",
+            ),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+        query_parameters["api-version"] = self._serialize.query("api_version", api_version, "str")
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
-        header_parameters['Accept'] = 'application/json'
+        header_parameters["Accept"] = "application/json"
 
         request = self._client.get(url, query_parameters, header_parameters)
         pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
@@ -158,20 +179,16 @@ class ConfigurationProfilePreferencesOperations:
             error = self._deserialize(models.ErrorResponse, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize('ConfigurationProfilePreference', pipeline_response)
+        deserialized = self._deserialize("ConfigurationProfilePreference", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automanage/configurationProfilePreferences/{configurationProfilePreferenceName}'}  # type: ignore
 
-    async def delete(
-        self,
-        resource_group_name: str,
-        configuration_profile_preference_name: str,
-        **kwargs
-    ) -> None:
+    get.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automanage/configurationProfilePreferences/{configurationProfilePreferenceName}"}  # type: ignore
+
+    async def delete(self, resource_group_name: str, configuration_profile_preference_name: str, **kwargs) -> None:
         """Delete a configuration profile preference.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -183,23 +200,34 @@ class ConfigurationProfilePreferencesOperations:
         :rtype: None
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[None]
+        cls = kwargs.pop("cls", None)  # type: ClsType[None]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
-        error_map.update(kwargs.pop('error_map', {}))
+        error_map.update(kwargs.pop("error_map", {}))
         api_version = "2020-06-30-preview"
 
         # Construct URL
-        url = self.delete.metadata['url']  # type: ignore
+        url = self.delete.metadata["url"]  # type: ignore
         path_format_arguments = {
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
-            'configurationProfilePreferenceName': self._serialize.url("configuration_profile_preference_name", configuration_profile_preference_name, 'str'),
-            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
+            "resourceGroupName": self._serialize.url(
+                "resource_group_name",
+                resource_group_name,
+                "str",
+                max_length=90,
+                min_length=1,
+                pattern=r"^[-\w\._\(\)]+$",
+            ),
+            "configurationProfilePreferenceName": self._serialize.url(
+                "configuration_profile_preference_name", configuration_profile_preference_name, "str"
+            ),
+            "subscriptionId": self._serialize.url(
+                "self._config.subscription_id", self._config.subscription_id, "str", min_length=1
+            ),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+        query_parameters["api-version"] = self._serialize.query("api_version", api_version, "str")
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
@@ -216,7 +244,7 @@ class ConfigurationProfilePreferencesOperations:
         if cls:
             return cls(pipeline_response, None, {})
 
-    delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automanage/configurationProfilePreferences/{configurationProfilePreferenceName}'}  # type: ignore
+    delete.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automanage/configurationProfilePreferences/{configurationProfilePreferenceName}"}  # type: ignore
 
     async def update(
         self,
@@ -238,33 +266,44 @@ class ConfigurationProfilePreferencesOperations:
         :rtype: ~automanage_client.models.ConfigurationProfilePreference
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ConfigurationProfilePreference"]
+        cls = kwargs.pop("cls", None)  # type: ClsType["models.ConfigurationProfilePreference"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
-        error_map.update(kwargs.pop('error_map', {}))
+        error_map.update(kwargs.pop("error_map", {}))
         api_version = "2020-06-30-preview"
         content_type = kwargs.pop("content_type", "application/json")
 
         # Construct URL
-        url = self.update.metadata['url']  # type: ignore
+        url = self.update.metadata["url"]  # type: ignore
         path_format_arguments = {
-            'configurationProfilePreferenceName': self._serialize.url("configuration_profile_preference_name", configuration_profile_preference_name, 'str'),
-            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
+            "configurationProfilePreferenceName": self._serialize.url(
+                "configuration_profile_preference_name", configuration_profile_preference_name, "str"
+            ),
+            "subscriptionId": self._serialize.url(
+                "self._config.subscription_id", self._config.subscription_id, "str", min_length=1
+            ),
+            "resourceGroupName": self._serialize.url(
+                "resource_group_name",
+                resource_group_name,
+                "str",
+                max_length=90,
+                min_length=1,
+                pattern=r"^[-\w\._\(\)]+$",
+            ),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+        query_parameters["api-version"] = self._serialize.query("api_version", api_version, "str")
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
-        header_parameters['Content-Type'] = self._serialize.header("content_type", content_type, 'str')
-        header_parameters['Accept'] = 'application/json'
+        header_parameters["Content-Type"] = self._serialize.header("content_type", content_type, "str")
+        header_parameters["Accept"] = "application/json"
 
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(parameters, 'ConfigurationProfilePreferenceUpdate')
-        body_content_kwargs['content'] = body_content
+        body_content = self._serialize.body(parameters, "ConfigurationProfilePreferenceUpdate")
+        body_content_kwargs["content"] = body_content
         request = self._client.patch(url, query_parameters, header_parameters, **body_content_kwargs)
 
         pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
@@ -275,18 +314,17 @@ class ConfigurationProfilePreferencesOperations:
             error = self._deserialize(models.ErrorResponse, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize('ConfigurationProfilePreference', pipeline_response)
+        deserialized = self._deserialize("ConfigurationProfilePreference", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automanage/configurationProfilePreferences/{configurationProfilePreferenceName}'}  # type: ignore
+
+    update.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automanage/configurationProfilePreferences/{configurationProfilePreferenceName}"}  # type: ignore
 
     def list_by_resource_group(
-        self,
-        resource_group_name: str,
-        **kwargs
+        self, resource_group_name: str, **kwargs
     ) -> AsyncIterable["models.ConfigurationProfilePreferenceList"]:
         """Retrieve a list of configuration profile preferences within a given resource group.
 
@@ -297,27 +335,36 @@ class ConfigurationProfilePreferencesOperations:
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~automanage_client.models.ConfigurationProfilePreferenceList]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ConfigurationProfilePreferenceList"]
+        cls = kwargs.pop("cls", None)  # type: ClsType["models.ConfigurationProfilePreferenceList"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
-        error_map.update(kwargs.pop('error_map', {}))
+        error_map.update(kwargs.pop("error_map", {}))
         api_version = "2020-06-30-preview"
 
         def prepare_request(next_link=None):
             # Construct headers
             header_parameters = {}  # type: Dict[str, Any]
-            header_parameters['Accept'] = 'application/json'
+            header_parameters["Accept"] = "application/json"
 
             if not next_link:
                 # Construct URL
-                url = self.list_by_resource_group.metadata['url']  # type: ignore
+                url = self.list_by_resource_group.metadata["url"]  # type: ignore
                 path_format_arguments = {
-                    'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
-                    'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
+                    "subscriptionId": self._serialize.url(
+                        "self._config.subscription_id", self._config.subscription_id, "str", min_length=1
+                    ),
+                    "resourceGroupName": self._serialize.url(
+                        "resource_group_name",
+                        resource_group_name,
+                        "str",
+                        max_length=90,
+                        min_length=1,
+                        pattern=r"^[-\w\._\(\)]+$",
+                    ),
                 }
                 url = self._client.format_url(url, **path_format_arguments)
                 # Construct parameters
                 query_parameters = {}  # type: Dict[str, Any]
-                query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+                query_parameters["api-version"] = self._serialize.query("api_version", api_version, "str")
 
                 request = self._client.get(url, query_parameters, header_parameters)
             else:
@@ -327,7 +374,7 @@ class ConfigurationProfilePreferencesOperations:
             return request
 
         async def extract_data(pipeline_response):
-            deserialized = self._deserialize('ConfigurationProfilePreferenceList', pipeline_response)
+            deserialized = self._deserialize("ConfigurationProfilePreferenceList", pipeline_response)
             list_of_elem = deserialized.value
             if cls:
                 list_of_elem = cls(list_of_elem)
@@ -346,15 +393,11 @@ class ConfigurationProfilePreferencesOperations:
 
             return pipeline_response
 
-        return AsyncItemPaged(
-            get_next, extract_data
-        )
-    list_by_resource_group.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automanage/configurationProfilePreferences'}  # type: ignore
+        return AsyncItemPaged(get_next, extract_data)
 
-    def list_by_subscription(
-        self,
-        **kwargs
-    ) -> AsyncIterable["models.ConfigurationProfilePreferenceList"]:
+    list_by_resource_group.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automanage/configurationProfilePreferences"}  # type: ignore
+
+    def list_by_subscription(self, **kwargs) -> AsyncIterable["models.ConfigurationProfilePreferenceList"]:
         """Retrieve a list of configuration profile preferences within a subscription.
 
         :keyword callable cls: A custom type or function that will be passed the direct response
@@ -362,26 +405,28 @@ class ConfigurationProfilePreferencesOperations:
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~automanage_client.models.ConfigurationProfilePreferenceList]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.ConfigurationProfilePreferenceList"]
+        cls = kwargs.pop("cls", None)  # type: ClsType["models.ConfigurationProfilePreferenceList"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
-        error_map.update(kwargs.pop('error_map', {}))
+        error_map.update(kwargs.pop("error_map", {}))
         api_version = "2020-06-30-preview"
 
         def prepare_request(next_link=None):
             # Construct headers
             header_parameters = {}  # type: Dict[str, Any]
-            header_parameters['Accept'] = 'application/json'
+            header_parameters["Accept"] = "application/json"
 
             if not next_link:
                 # Construct URL
-                url = self.list_by_subscription.metadata['url']  # type: ignore
+                url = self.list_by_subscription.metadata["url"]  # type: ignore
                 path_format_arguments = {
-                    'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
+                    "subscriptionId": self._serialize.url(
+                        "self._config.subscription_id", self._config.subscription_id, "str", min_length=1
+                    ),
                 }
                 url = self._client.format_url(url, **path_format_arguments)
                 # Construct parameters
                 query_parameters = {}  # type: Dict[str, Any]
-                query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+                query_parameters["api-version"] = self._serialize.query("api_version", api_version, "str")
 
                 request = self._client.get(url, query_parameters, header_parameters)
             else:
@@ -391,7 +436,7 @@ class ConfigurationProfilePreferencesOperations:
             return request
 
         async def extract_data(pipeline_response):
-            deserialized = self._deserialize('ConfigurationProfilePreferenceList', pipeline_response)
+            deserialized = self._deserialize("ConfigurationProfilePreferenceList", pipeline_response)
             list_of_elem = deserialized.value
             if cls:
                 list_of_elem = cls(list_of_elem)
@@ -410,7 +455,6 @@ class ConfigurationProfilePreferencesOperations:
 
             return pipeline_response
 
-        return AsyncItemPaged(
-            get_next, extract_data
-        )
-    list_by_subscription.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Automanage/configurationProfilePreferences'}  # type: ignore
+        return AsyncItemPaged(get_next, extract_data)
+
+    list_by_subscription.metadata = {"url": "/subscriptions/{subscriptionId}/providers/Microsoft.Automanage/configurationProfilePreferences"}  # type: ignore

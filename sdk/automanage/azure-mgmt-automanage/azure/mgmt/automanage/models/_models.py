@@ -26,21 +26,18 @@ class Resource(msrest.serialization.Model):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(Resource, self).__init__(**kwargs)
         self.id = None
         self.name = None
@@ -69,27 +66,24 @@ class TrackedResource(Resource):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'location': {'required': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
+        "location": {"required": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'tags': {'key': 'tags', 'type': '{str}'},
-        'location': {'key': 'location', 'type': 'str'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "tags": {"key": "tags", "type": "{str}"},
+        "location": {"key": "location", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(TrackedResource, self).__init__(**kwargs)
-        self.tags = kwargs.get('tags', None)
-        self.location = kwargs['location']
+        self.tags = kwargs.get("tags", None)
+        self.location = kwargs["location"]
 
 
 class Account(TrackedResource):
@@ -116,27 +110,24 @@ class Account(TrackedResource):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'location': {'required': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
+        "location": {"required": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'tags': {'key': 'tags', 'type': '{str}'},
-        'location': {'key': 'location', 'type': 'str'},
-        'identity': {'key': 'identity', 'type': 'AccountIdentity'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "tags": {"key": "tags", "type": "{str}"},
+        "location": {"key": "location", "type": "str"},
+        "identity": {"key": "identity", "type": "AccountIdentity"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(Account, self).__init__(**kwargs)
-        self.identity = kwargs.get('identity', None)
+        self.identity = kwargs.get("identity", None)
 
 
 class AccountIdentity(msrest.serialization.Model):
@@ -155,24 +146,21 @@ class AccountIdentity(msrest.serialization.Model):
     """
 
     _validation = {
-        'principal_id': {'readonly': True},
-        'tenant_id': {'readonly': True},
+        "principal_id": {"readonly": True},
+        "tenant_id": {"readonly": True},
     }
 
     _attribute_map = {
-        'principal_id': {'key': 'principalId', 'type': 'str'},
-        'tenant_id': {'key': 'tenantId', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
+        "principal_id": {"key": "principalId", "type": "str"},
+        "tenant_id": {"key": "tenantId", "type": "str"},
+        "type": {"key": "type", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(AccountIdentity, self).__init__(**kwargs)
         self.principal_id = None
         self.tenant_id = None
-        self.type = kwargs.get('type', None)
+        self.type = kwargs.get("type", None)
 
 
 class AccountList(msrest.serialization.Model):
@@ -183,15 +171,12 @@ class AccountList(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[Account]'},
+        "value": {"key": "value", "type": "[Account]"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(AccountList, self).__init__(**kwargs)
-        self.value = kwargs.get('value', None)
+        self.value = kwargs.get("value", None)
 
 
 class UpdateResource(msrest.serialization.Model):
@@ -202,15 +187,12 @@ class UpdateResource(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'tags': {'key': 'tags', 'type': '{str}'},
+        "tags": {"key": "tags", "type": "{str}"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(UpdateResource, self).__init__(**kwargs)
-        self.tags = kwargs.get('tags', None)
+        self.tags = kwargs.get("tags", None)
 
 
 class AccountUpdate(UpdateResource):
@@ -223,16 +205,13 @@ class AccountUpdate(UpdateResource):
     """
 
     _attribute_map = {
-        'tags': {'key': 'tags', 'type': '{str}'},
-        'identity': {'key': 'identity', 'type': 'AccountIdentity'},
+        "tags": {"key": "tags", "type": "{str}"},
+        "identity": {"key": "identity", "type": "AccountIdentity"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(AccountUpdate, self).__init__(**kwargs)
-        self.identity = kwargs.get('identity', None)
+        self.identity = kwargs.get("identity", None)
 
 
 class ConfigurationProfileAssignment(Resource):
@@ -253,24 +232,21 @@ class ConfigurationProfileAssignment(Resource):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'properties': {'key': 'properties', 'type': 'ConfigurationProfileAssignmentProperties'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "properties": {"key": "properties", "type": "ConfigurationProfileAssignmentProperties"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ConfigurationProfileAssignment, self).__init__(**kwargs)
-        self.properties = kwargs.get('properties', None)
+        self.properties = kwargs.get("properties", None)
 
 
 class ConfigurationProfileAssignmentCompliance(msrest.serialization.Model):
@@ -284,17 +260,14 @@ class ConfigurationProfileAssignmentCompliance(msrest.serialization.Model):
     """
 
     _validation = {
-        'update_status': {'readonly': True},
+        "update_status": {"readonly": True},
     }
 
     _attribute_map = {
-        'update_status': {'key': 'updateStatus', 'type': 'str'},
+        "update_status": {"key": "updateStatus", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ConfigurationProfileAssignmentCompliance, self).__init__(**kwargs)
         self.update_status = None
 
@@ -307,15 +280,12 @@ class ConfigurationProfileAssignmentList(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[ConfigurationProfileAssignment]'},
+        "value": {"key": "value", "type": "[ConfigurationProfileAssignment]"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ConfigurationProfileAssignmentList, self).__init__(**kwargs)
-        self.value = kwargs.get('value', None)
+        self.value = kwargs.get("value", None)
 
 
 class ConfigurationProfileAssignmentProperties(msrest.serialization.Model):
@@ -342,29 +312,26 @@ class ConfigurationProfileAssignmentProperties(msrest.serialization.Model):
     """
 
     _validation = {
-        'provisioning_status': {'readonly': True},
+        "provisioning_status": {"readonly": True},
     }
 
     _attribute_map = {
-        'configuration_profile': {'key': 'configurationProfile', 'type': 'str'},
-        'target_id': {'key': 'targetId', 'type': 'str'},
-        'account_id': {'key': 'accountId', 'type': 'str'},
-        'configuration_profile_preference_id': {'key': 'configurationProfilePreferenceId', 'type': 'str'},
-        'provisioning_status': {'key': 'provisioningStatus', 'type': 'str'},
-        'compliance': {'key': 'compliance', 'type': 'ConfigurationProfileAssignmentCompliance'},
+        "configuration_profile": {"key": "configurationProfile", "type": "str"},
+        "target_id": {"key": "targetId", "type": "str"},
+        "account_id": {"key": "accountId", "type": "str"},
+        "configuration_profile_preference_id": {"key": "configurationProfilePreferenceId", "type": "str"},
+        "provisioning_status": {"key": "provisioningStatus", "type": "str"},
+        "compliance": {"key": "compliance", "type": "ConfigurationProfileAssignmentCompliance"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ConfigurationProfileAssignmentProperties, self).__init__(**kwargs)
-        self.configuration_profile = kwargs.get('configuration_profile', None)
-        self.target_id = kwargs.get('target_id', None)
-        self.account_id = kwargs.get('account_id', None)
-        self.configuration_profile_preference_id = kwargs.get('configuration_profile_preference_id', None)
+        self.configuration_profile = kwargs.get("configuration_profile", None)
+        self.target_id = kwargs.get("target_id", None)
+        self.account_id = kwargs.get("account_id", None)
+        self.configuration_profile_preference_id = kwargs.get("configuration_profile_preference_id", None)
         self.provisioning_status = None
-        self.compliance = kwargs.get('compliance', None)
+        self.compliance = kwargs.get("compliance", None)
 
 
 class ConfigurationProfilePreference(TrackedResource):
@@ -391,27 +358,24 @@ class ConfigurationProfilePreference(TrackedResource):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'location': {'required': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
+        "location": {"required": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'tags': {'key': 'tags', 'type': '{str}'},
-        'location': {'key': 'location', 'type': 'str'},
-        'properties': {'key': 'properties', 'type': 'ConfigurationProfilePreferenceProperties'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "tags": {"key": "tags", "type": "{str}"},
+        "location": {"key": "location", "type": "str"},
+        "properties": {"key": "properties", "type": "ConfigurationProfilePreferenceProperties"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ConfigurationProfilePreference, self).__init__(**kwargs)
-        self.properties = kwargs.get('properties', None)
+        self.properties = kwargs.get("properties", None)
 
 
 class ConfigurationProfilePreferenceAntiMalware(msrest.serialization.Model):
@@ -434,25 +398,22 @@ class ConfigurationProfilePreferenceAntiMalware(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'enable_real_time_protection': {'key': 'enableRealTimeProtection', 'type': 'str'},
-        'exclusions': {'key': 'exclusions', 'type': 'object'},
-        'run_scheduled_scan': {'key': 'runScheduledScan', 'type': 'str'},
-        'scan_type': {'key': 'scanType', 'type': 'str'},
-        'scan_day': {'key': 'scanDay', 'type': 'str'},
-        'scan_time_in_minutes': {'key': 'scanTimeInMinutes', 'type': 'str'},
+        "enable_real_time_protection": {"key": "enableRealTimeProtection", "type": "str"},
+        "exclusions": {"key": "exclusions", "type": "object"},
+        "run_scheduled_scan": {"key": "runScheduledScan", "type": "str"},
+        "scan_type": {"key": "scanType", "type": "str"},
+        "scan_day": {"key": "scanDay", "type": "str"},
+        "scan_time_in_minutes": {"key": "scanTimeInMinutes", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ConfigurationProfilePreferenceAntiMalware, self).__init__(**kwargs)
-        self.enable_real_time_protection = kwargs.get('enable_real_time_protection', None)
-        self.exclusions = kwargs.get('exclusions', None)
-        self.run_scheduled_scan = kwargs.get('run_scheduled_scan', None)
-        self.scan_type = kwargs.get('scan_type', None)
-        self.scan_day = kwargs.get('scan_day', None)
-        self.scan_time_in_minutes = kwargs.get('scan_time_in_minutes', None)
+        self.enable_real_time_protection = kwargs.get("enable_real_time_protection", None)
+        self.exclusions = kwargs.get("exclusions", None)
+        self.run_scheduled_scan = kwargs.get("run_scheduled_scan", None)
+        self.scan_type = kwargs.get("scan_type", None)
+        self.scan_day = kwargs.get("scan_day", None)
+        self.scan_time_in_minutes = kwargs.get("scan_time_in_minutes", None)
 
 
 class ConfigurationProfilePreferenceList(msrest.serialization.Model):
@@ -463,15 +424,12 @@ class ConfigurationProfilePreferenceList(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[ConfigurationProfilePreference]'},
+        "value": {"key": "value", "type": "[ConfigurationProfilePreference]"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ConfigurationProfilePreferenceList, self).__init__(**kwargs)
-        self.value = kwargs.get('value', None)
+        self.value = kwargs.get("value", None)
 
 
 class ConfigurationProfilePreferenceProperties(msrest.serialization.Model):
@@ -484,17 +442,14 @@ class ConfigurationProfilePreferenceProperties(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'vm_backup': {'key': 'vmBackup', 'type': 'ConfigurationProfilePreferenceVmBackup'},
-        'anti_malware': {'key': 'antiMalware', 'type': 'ConfigurationProfilePreferenceAntiMalware'},
+        "vm_backup": {"key": "vmBackup", "type": "ConfigurationProfilePreferenceVmBackup"},
+        "anti_malware": {"key": "antiMalware", "type": "ConfigurationProfilePreferenceAntiMalware"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ConfigurationProfilePreferenceProperties, self).__init__(**kwargs)
-        self.vm_backup = kwargs.get('vm_backup', None)
-        self.anti_malware = kwargs.get('anti_malware', None)
+        self.vm_backup = kwargs.get("vm_backup", None)
+        self.anti_malware = kwargs.get("anti_malware", None)
 
 
 class ConfigurationProfilePreferenceUpdate(UpdateResource):
@@ -507,16 +462,13 @@ class ConfigurationProfilePreferenceUpdate(UpdateResource):
     """
 
     _attribute_map = {
-        'tags': {'key': 'tags', 'type': '{str}'},
-        'properties': {'key': 'properties', 'type': 'ConfigurationProfilePreferenceProperties'},
+        "tags": {"key": "tags", "type": "{str}"},
+        "properties": {"key": "properties", "type": "ConfigurationProfilePreferenceProperties"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ConfigurationProfilePreferenceUpdate, self).__init__(**kwargs)
-        self.properties = kwargs.get('properties', None)
+        self.properties = kwargs.get("properties", None)
 
 
 class ConfigurationProfilePreferenceVmBackup(msrest.serialization.Model):
@@ -533,21 +485,18 @@ class ConfigurationProfilePreferenceVmBackup(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'time_zone': {'key': 'timeZone', 'type': 'str'},
-        'instant_rp_retention_range_in_days': {'key': 'instantRpRetentionRangeInDays', 'type': 'int'},
-        'retention_policy': {'key': 'retentionPolicy', 'type': 'str'},
-        'schedule_policy': {'key': 'schedulePolicy', 'type': 'str'},
+        "time_zone": {"key": "timeZone", "type": "str"},
+        "instant_rp_retention_range_in_days": {"key": "instantRpRetentionRangeInDays", "type": "int"},
+        "retention_policy": {"key": "retentionPolicy", "type": "str"},
+        "schedule_policy": {"key": "schedulePolicy", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ConfigurationProfilePreferenceVmBackup, self).__init__(**kwargs)
-        self.time_zone = kwargs.get('time_zone', None)
-        self.instant_rp_retention_range_in_days = kwargs.get('instant_rp_retention_range_in_days', None)
-        self.retention_policy = kwargs.get('retention_policy', None)
-        self.schedule_policy = kwargs.get('schedule_policy', None)
+        self.time_zone = kwargs.get("time_zone", None)
+        self.instant_rp_retention_range_in_days = kwargs.get("instant_rp_retention_range_in_days", None)
+        self.retention_policy = kwargs.get("retention_policy", None)
+        self.schedule_policy = kwargs.get("schedule_policy", None)
 
 
 class ErrorAdditionalInfo(msrest.serialization.Model):
@@ -562,19 +511,16 @@ class ErrorAdditionalInfo(msrest.serialization.Model):
     """
 
     _validation = {
-        'type': {'readonly': True},
-        'info': {'readonly': True},
+        "type": {"readonly": True},
+        "info": {"readonly": True},
     }
 
     _attribute_map = {
-        'type': {'key': 'type', 'type': 'str'},
-        'info': {'key': 'info', 'type': 'object'},
+        "type": {"key": "type", "type": "str"},
+        "info": {"key": "info", "type": "object"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ErrorAdditionalInfo, self).__init__(**kwargs)
         self.type = None
         self.info = None
@@ -588,15 +534,12 @@ class ErrorResponse(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'error': {'key': 'error', 'type': 'ErrorResponseError'},
+        "error": {"key": "error", "type": "ErrorResponseError"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ErrorResponse, self).__init__(**kwargs)
-        self.error = kwargs.get('error', None)
+        self.error = kwargs.get("error", None)
 
 
 class ErrorResponseError(msrest.serialization.Model):
@@ -617,25 +560,22 @@ class ErrorResponseError(msrest.serialization.Model):
     """
 
     _validation = {
-        'code': {'readonly': True},
-        'message': {'readonly': True},
-        'target': {'readonly': True},
-        'details': {'readonly': True},
-        'additional_info': {'readonly': True},
+        "code": {"readonly": True},
+        "message": {"readonly": True},
+        "target": {"readonly": True},
+        "details": {"readonly": True},
+        "additional_info": {"readonly": True},
     }
 
     _attribute_map = {
-        'code': {'key': 'code', 'type': 'str'},
-        'message': {'key': 'message', 'type': 'str'},
-        'target': {'key': 'target', 'type': 'str'},
-        'details': {'key': 'details', 'type': '[ErrorResponse]'},
-        'additional_info': {'key': 'additionalInfo', 'type': '[ErrorAdditionalInfo]'},
+        "code": {"key": "code", "type": "str"},
+        "message": {"key": "message", "type": "str"},
+        "target": {"key": "target", "type": "str"},
+        "details": {"key": "details", "type": "[ErrorResponse]"},
+        "additional_info": {"key": "additionalInfo", "type": "[ErrorAdditionalInfo]"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ErrorResponseError, self).__init__(**kwargs)
         self.code = None
         self.message = None
@@ -659,21 +599,18 @@ class Operation(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'name': {'key': 'name', 'type': 'str'},
-        'is_data_action': {'key': 'isDataAction', 'type': 'str'},
-        'display': {'key': 'display', 'type': 'OperationDisplay'},
-        'status_code': {'key': 'properties.statusCode', 'type': 'str'},
+        "name": {"key": "name", "type": "str"},
+        "is_data_action": {"key": "isDataAction", "type": "str"},
+        "display": {"key": "display", "type": "OperationDisplay"},
+        "status_code": {"key": "properties.statusCode", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(Operation, self).__init__(**kwargs)
-        self.name = kwargs.get('name', None)
-        self.is_data_action = kwargs.get('is_data_action', None)
-        self.display = kwargs.get('display', None)
-        self.status_code = kwargs.get('status_code', None)
+        self.name = kwargs.get("name", None)
+        self.is_data_action = kwargs.get("is_data_action", None)
+        self.display = kwargs.get("display", None)
+        self.status_code = kwargs.get("status_code", None)
 
 
 class OperationDisplay(msrest.serialization.Model):
@@ -690,21 +627,18 @@ class OperationDisplay(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'provider': {'key': 'provider', 'type': 'str'},
-        'resource': {'key': 'resource', 'type': 'str'},
-        'operation': {'key': 'operation', 'type': 'str'},
-        'description': {'key': 'description', 'type': 'str'},
+        "provider": {"key": "provider", "type": "str"},
+        "resource": {"key": "resource", "type": "str"},
+        "operation": {"key": "operation", "type": "str"},
+        "description": {"key": "description", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(OperationDisplay, self).__init__(**kwargs)
-        self.provider = kwargs.get('provider', None)
-        self.resource = kwargs.get('resource', None)
-        self.operation = kwargs.get('operation', None)
-        self.description = kwargs.get('description', None)
+        self.provider = kwargs.get("provider", None)
+        self.resource = kwargs.get("resource", None)
+        self.operation = kwargs.get("operation", None)
+        self.description = kwargs.get("description", None)
 
 
 class OperationList(msrest.serialization.Model):
@@ -715,15 +649,12 @@ class OperationList(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[Operation]'},
+        "value": {"key": "value", "type": "[Operation]"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(OperationList, self).__init__(**kwargs)
-        self.value = kwargs.get('value', None)
+        self.value = kwargs.get("value", None)
 
 
 class ProxyResource(Resource):
@@ -742,19 +673,16 @@ class ProxyResource(Resource):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ProxyResource, self).__init__(**kwargs)
