@@ -17,15 +17,12 @@ class AaaaRecord(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'ipv6_address': {'key': 'ipv6Address', 'type': 'str'},
+        "ipv6_address": {"key": "ipv6Address", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(AaaaRecord, self).__init__(**kwargs)
-        self.ipv6_address = kwargs.get('ipv6_address', None)
+        self.ipv6_address = kwargs.get("ipv6_address", None)
 
 
 class ARecord(msrest.serialization.Model):
@@ -36,15 +33,12 @@ class ARecord(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'ipv4_address': {'key': 'ipv4Address', 'type': 'str'},
+        "ipv4_address": {"key": "ipv4Address", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ARecord, self).__init__(**kwargs)
-        self.ipv4_address = kwargs.get('ipv4_address', None)
+        self.ipv4_address = kwargs.get("ipv4_address", None)
 
 
 class CaaRecord(msrest.serialization.Model):
@@ -59,19 +53,16 @@ class CaaRecord(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'flags': {'key': 'flags', 'type': 'int'},
-        'tag': {'key': 'tag', 'type': 'str'},
-        'value': {'key': 'value', 'type': 'str'},
+        "flags": {"key": "flags", "type": "int"},
+        "tag": {"key": "tag", "type": "str"},
+        "value": {"key": "value", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(CaaRecord, self).__init__(**kwargs)
-        self.flags = kwargs.get('flags', None)
-        self.tag = kwargs.get('tag', None)
-        self.value = kwargs.get('value', None)
+        self.flags = kwargs.get("flags", None)
+        self.tag = kwargs.get("tag", None)
+        self.value = kwargs.get("value", None)
 
 
 class CloudErrorBody(msrest.serialization.Model):
@@ -91,21 +82,18 @@ class CloudErrorBody(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'code': {'key': 'code', 'type': 'str'},
-        'message': {'key': 'message', 'type': 'str'},
-        'target': {'key': 'target', 'type': 'str'},
-        'details': {'key': 'details', 'type': '[CloudErrorBody]'},
+        "code": {"key": "code", "type": "str"},
+        "message": {"key": "message", "type": "str"},
+        "target": {"key": "target", "type": "str"},
+        "details": {"key": "details", "type": "[CloudErrorBody]"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(CloudErrorBody, self).__init__(**kwargs)
-        self.code = kwargs.get('code', None)
-        self.message = kwargs.get('message', None)
-        self.target = kwargs.get('target', None)
-        self.details = kwargs.get('details', None)
+        self.code = kwargs.get("code", None)
+        self.message = kwargs.get("message", None)
+        self.target = kwargs.get("target", None)
+        self.details = kwargs.get("details", None)
 
 
 class CnameRecord(msrest.serialization.Model):
@@ -116,15 +104,12 @@ class CnameRecord(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'cname': {'key': 'cname', 'type': 'str'},
+        "cname": {"key": "cname", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(CnameRecord, self).__init__(**kwargs)
-        self.cname = kwargs.get('cname', None)
+        self.cname = kwargs.get("cname", None)
 
 
 class DnsResourceReference(msrest.serialization.Model):
@@ -138,17 +123,14 @@ class DnsResourceReference(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'dns_resources': {'key': 'dnsResources', 'type': '[SubResource]'},
-        'target_resource': {'key': 'targetResource', 'type': 'SubResource'},
+        "dns_resources": {"key": "dnsResources", "type": "[SubResource]"},
+        "target_resource": {"key": "targetResource", "type": "SubResource"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(DnsResourceReference, self).__init__(**kwargs)
-        self.dns_resources = kwargs.get('dns_resources', None)
-        self.target_resource = kwargs.get('target_resource', None)
+        self.dns_resources = kwargs.get("dns_resources", None)
+        self.target_resource = kwargs.get("target_resource", None)
 
 
 class DnsResourceReferenceRequest(msrest.serialization.Model):
@@ -160,15 +142,12 @@ class DnsResourceReferenceRequest(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'target_resources': {'key': 'properties.targetResources', 'type': '[SubResource]'},
+        "target_resources": {"key": "properties.targetResources", "type": "[SubResource]"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(DnsResourceReferenceRequest, self).__init__(**kwargs)
-        self.target_resources = kwargs.get('target_resources', None)
+        self.target_resources = kwargs.get("target_resources", None)
 
 
 class DnsResourceReferenceResult(msrest.serialization.Model):
@@ -180,15 +159,12 @@ class DnsResourceReferenceResult(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'dns_resource_references': {'key': 'properties.dnsResourceReferences', 'type': '[DnsResourceReference]'},
+        "dns_resource_references": {"key": "properties.dnsResourceReferences", "type": "[DnsResourceReference]"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(DnsResourceReferenceResult, self).__init__(**kwargs)
-        self.dns_resource_references = kwargs.get('dns_resource_references', None)
+        self.dns_resource_references = kwargs.get("dns_resource_references", None)
 
 
 class MxRecord(msrest.serialization.Model):
@@ -201,17 +177,14 @@ class MxRecord(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'preference': {'key': 'preference', 'type': 'int'},
-        'exchange': {'key': 'exchange', 'type': 'str'},
+        "preference": {"key": "preference", "type": "int"},
+        "exchange": {"key": "exchange", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(MxRecord, self).__init__(**kwargs)
-        self.preference = kwargs.get('preference', None)
-        self.exchange = kwargs.get('exchange', None)
+        self.preference = kwargs.get("preference", None)
+        self.exchange = kwargs.get("exchange", None)
 
 
 class NsRecord(msrest.serialization.Model):
@@ -222,15 +195,12 @@ class NsRecord(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'nsdname': {'key': 'nsdname', 'type': 'str'},
+        "nsdname": {"key": "nsdname", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(NsRecord, self).__init__(**kwargs)
-        self.nsdname = kwargs.get('nsdname', None)
+        self.nsdname = kwargs.get("nsdname", None)
 
 
 class PtrRecord(msrest.serialization.Model):
@@ -241,15 +211,12 @@ class PtrRecord(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'ptrdname': {'key': 'ptrdname', 'type': 'str'},
+        "ptrdname": {"key": "ptrdname", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(PtrRecord, self).__init__(**kwargs)
-        self.ptrdname = kwargs.get('ptrdname', None)
+        self.ptrdname = kwargs.get("ptrdname", None)
 
 
 class RecordSet(msrest.serialization.Model):
@@ -299,59 +266,56 @@ class RecordSet(msrest.serialization.Model):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'fqdn': {'readonly': True},
-        'provisioning_state': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
+        "fqdn": {"readonly": True},
+        "provisioning_state": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'etag': {'key': 'etag', 'type': 'str'},
-        'metadata': {'key': 'properties.metadata', 'type': '{str}'},
-        'ttl': {'key': 'properties.TTL', 'type': 'long'},
-        'fqdn': {'key': 'properties.fqdn', 'type': 'str'},
-        'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
-        'target_resource': {'key': 'properties.targetResource', 'type': 'SubResource'},
-        'a_records': {'key': 'properties.ARecords', 'type': '[ARecord]'},
-        'aaaa_records': {'key': 'properties.AAAARecords', 'type': '[AaaaRecord]'},
-        'mx_records': {'key': 'properties.MXRecords', 'type': '[MxRecord]'},
-        'ns_records': {'key': 'properties.NSRecords', 'type': '[NsRecord]'},
-        'ptr_records': {'key': 'properties.PTRRecords', 'type': '[PtrRecord]'},
-        'srv_records': {'key': 'properties.SRVRecords', 'type': '[SrvRecord]'},
-        'txt_records': {'key': 'properties.TXTRecords', 'type': '[TxtRecord]'},
-        'cname_record': {'key': 'properties.CNAMERecord', 'type': 'CnameRecord'},
-        'soa_record': {'key': 'properties.SOARecord', 'type': 'SoaRecord'},
-        'caa_records': {'key': 'properties.caaRecords', 'type': '[CaaRecord]'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "etag": {"key": "etag", "type": "str"},
+        "metadata": {"key": "properties.metadata", "type": "{str}"},
+        "ttl": {"key": "properties.TTL", "type": "long"},
+        "fqdn": {"key": "properties.fqdn", "type": "str"},
+        "provisioning_state": {"key": "properties.provisioningState", "type": "str"},
+        "target_resource": {"key": "properties.targetResource", "type": "SubResource"},
+        "a_records": {"key": "properties.ARecords", "type": "[ARecord]"},
+        "aaaa_records": {"key": "properties.AAAARecords", "type": "[AaaaRecord]"},
+        "mx_records": {"key": "properties.MXRecords", "type": "[MxRecord]"},
+        "ns_records": {"key": "properties.NSRecords", "type": "[NsRecord]"},
+        "ptr_records": {"key": "properties.PTRRecords", "type": "[PtrRecord]"},
+        "srv_records": {"key": "properties.SRVRecords", "type": "[SrvRecord]"},
+        "txt_records": {"key": "properties.TXTRecords", "type": "[TxtRecord]"},
+        "cname_record": {"key": "properties.CNAMERecord", "type": "CnameRecord"},
+        "soa_record": {"key": "properties.SOARecord", "type": "SoaRecord"},
+        "caa_records": {"key": "properties.caaRecords", "type": "[CaaRecord]"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(RecordSet, self).__init__(**kwargs)
         self.id = None
         self.name = None
         self.type = None
-        self.etag = kwargs.get('etag', None)
-        self.metadata = kwargs.get('metadata', None)
-        self.ttl = kwargs.get('ttl', None)
+        self.etag = kwargs.get("etag", None)
+        self.metadata = kwargs.get("metadata", None)
+        self.ttl = kwargs.get("ttl", None)
         self.fqdn = None
         self.provisioning_state = None
-        self.target_resource = kwargs.get('target_resource', None)
-        self.a_records = kwargs.get('a_records', None)
-        self.aaaa_records = kwargs.get('aaaa_records', None)
-        self.mx_records = kwargs.get('mx_records', None)
-        self.ns_records = kwargs.get('ns_records', None)
-        self.ptr_records = kwargs.get('ptr_records', None)
-        self.srv_records = kwargs.get('srv_records', None)
-        self.txt_records = kwargs.get('txt_records', None)
-        self.cname_record = kwargs.get('cname_record', None)
-        self.soa_record = kwargs.get('soa_record', None)
-        self.caa_records = kwargs.get('caa_records', None)
+        self.target_resource = kwargs.get("target_resource", None)
+        self.a_records = kwargs.get("a_records", None)
+        self.aaaa_records = kwargs.get("aaaa_records", None)
+        self.mx_records = kwargs.get("mx_records", None)
+        self.ns_records = kwargs.get("ns_records", None)
+        self.ptr_records = kwargs.get("ptr_records", None)
+        self.srv_records = kwargs.get("srv_records", None)
+        self.txt_records = kwargs.get("txt_records", None)
+        self.cname_record = kwargs.get("cname_record", None)
+        self.soa_record = kwargs.get("soa_record", None)
+        self.caa_records = kwargs.get("caa_records", None)
 
 
 class RecordSetListResult(msrest.serialization.Model):
@@ -366,20 +330,17 @@ class RecordSetListResult(msrest.serialization.Model):
     """
 
     _validation = {
-        'next_link': {'readonly': True},
+        "next_link": {"readonly": True},
     }
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[RecordSet]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[RecordSet]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(RecordSetListResult, self).__init__(**kwargs)
-        self.value = kwargs.get('value', None)
+        self.value = kwargs.get("value", None)
         self.next_link = None
 
 
@@ -391,15 +352,12 @@ class RecordSetUpdateParameters(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'record_set': {'key': 'RecordSet', 'type': 'RecordSet'},
+        "record_set": {"key": "RecordSet", "type": "RecordSet"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(RecordSetUpdateParameters, self).__init__(**kwargs)
-        self.record_set = kwargs.get('record_set', None)
+        self.record_set = kwargs.get("record_set", None)
 
 
 class Resource(msrest.serialization.Model):
@@ -422,30 +380,27 @@ class Resource(msrest.serialization.Model):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'location': {'required': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
+        "location": {"required": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'location': {'key': 'location', 'type': 'str'},
-        'tags': {'key': 'tags', 'type': '{str}'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "location": {"key": "location", "type": "str"},
+        "tags": {"key": "tags", "type": "{str}"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(Resource, self).__init__(**kwargs)
         self.id = None
         self.name = None
         self.type = None
-        self.location = kwargs['location']
-        self.tags = kwargs.get('tags', None)
+        self.location = kwargs["location"]
+        self.tags = kwargs.get("tags", None)
 
 
 class SoaRecord(msrest.serialization.Model):
@@ -469,27 +424,24 @@ class SoaRecord(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'host': {'key': 'host', 'type': 'str'},
-        'email': {'key': 'email', 'type': 'str'},
-        'serial_number': {'key': 'serialNumber', 'type': 'long'},
-        'refresh_time': {'key': 'refreshTime', 'type': 'long'},
-        'retry_time': {'key': 'retryTime', 'type': 'long'},
-        'expire_time': {'key': 'expireTime', 'type': 'long'},
-        'minimum_ttl': {'key': 'minimumTTL', 'type': 'long'},
+        "host": {"key": "host", "type": "str"},
+        "email": {"key": "email", "type": "str"},
+        "serial_number": {"key": "serialNumber", "type": "long"},
+        "refresh_time": {"key": "refreshTime", "type": "long"},
+        "retry_time": {"key": "retryTime", "type": "long"},
+        "expire_time": {"key": "expireTime", "type": "long"},
+        "minimum_ttl": {"key": "minimumTTL", "type": "long"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(SoaRecord, self).__init__(**kwargs)
-        self.host = kwargs.get('host', None)
-        self.email = kwargs.get('email', None)
-        self.serial_number = kwargs.get('serial_number', None)
-        self.refresh_time = kwargs.get('refresh_time', None)
-        self.retry_time = kwargs.get('retry_time', None)
-        self.expire_time = kwargs.get('expire_time', None)
-        self.minimum_ttl = kwargs.get('minimum_ttl', None)
+        self.host = kwargs.get("host", None)
+        self.email = kwargs.get("email", None)
+        self.serial_number = kwargs.get("serial_number", None)
+        self.refresh_time = kwargs.get("refresh_time", None)
+        self.retry_time = kwargs.get("retry_time", None)
+        self.expire_time = kwargs.get("expire_time", None)
+        self.minimum_ttl = kwargs.get("minimum_ttl", None)
 
 
 class SrvRecord(msrest.serialization.Model):
@@ -506,21 +458,18 @@ class SrvRecord(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'priority': {'key': 'priority', 'type': 'int'},
-        'weight': {'key': 'weight', 'type': 'int'},
-        'port': {'key': 'port', 'type': 'int'},
-        'target': {'key': 'target', 'type': 'str'},
+        "priority": {"key": "priority", "type": "int"},
+        "weight": {"key": "weight", "type": "int"},
+        "port": {"key": "port", "type": "int"},
+        "target": {"key": "target", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(SrvRecord, self).__init__(**kwargs)
-        self.priority = kwargs.get('priority', None)
-        self.weight = kwargs.get('weight', None)
-        self.port = kwargs.get('port', None)
-        self.target = kwargs.get('target', None)
+        self.priority = kwargs.get("priority", None)
+        self.weight = kwargs.get("weight", None)
+        self.port = kwargs.get("port", None)
+        self.target = kwargs.get("target", None)
 
 
 class SubResource(msrest.serialization.Model):
@@ -531,15 +480,12 @@ class SubResource(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
+        "id": {"key": "id", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(SubResource, self).__init__(**kwargs)
-        self.id = kwargs.get('id', None)
+        self.id = kwargs.get("id", None)
 
 
 class TxtRecord(msrest.serialization.Model):
@@ -550,15 +496,12 @@ class TxtRecord(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[str]'},
+        "value": {"key": "value", "type": "[str]"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(TxtRecord, self).__init__(**kwargs)
-        self.value = kwargs.get('value', None)
+        self.value = kwargs.get("value", None)
 
 
 class Zone(Resource):
@@ -605,45 +548,42 @@ class Zone(Resource):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'location': {'required': True},
-        'max_number_of_record_sets': {'readonly': True},
-        'max_number_of_records_per_record_set': {'readonly': True},
-        'number_of_record_sets': {'readonly': True},
-        'name_servers': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
+        "location": {"required": True},
+        "max_number_of_record_sets": {"readonly": True},
+        "max_number_of_records_per_record_set": {"readonly": True},
+        "number_of_record_sets": {"readonly": True},
+        "name_servers": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'location': {'key': 'location', 'type': 'str'},
-        'tags': {'key': 'tags', 'type': '{str}'},
-        'etag': {'key': 'etag', 'type': 'str'},
-        'max_number_of_record_sets': {'key': 'properties.maxNumberOfRecordSets', 'type': 'long'},
-        'max_number_of_records_per_record_set': {'key': 'properties.maxNumberOfRecordsPerRecordSet', 'type': 'long'},
-        'number_of_record_sets': {'key': 'properties.numberOfRecordSets', 'type': 'long'},
-        'name_servers': {'key': 'properties.nameServers', 'type': '[str]'},
-        'zone_type': {'key': 'properties.zoneType', 'type': 'str'},
-        'registration_virtual_networks': {'key': 'properties.registrationVirtualNetworks', 'type': '[SubResource]'},
-        'resolution_virtual_networks': {'key': 'properties.resolutionVirtualNetworks', 'type': '[SubResource]'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "location": {"key": "location", "type": "str"},
+        "tags": {"key": "tags", "type": "{str}"},
+        "etag": {"key": "etag", "type": "str"},
+        "max_number_of_record_sets": {"key": "properties.maxNumberOfRecordSets", "type": "long"},
+        "max_number_of_records_per_record_set": {"key": "properties.maxNumberOfRecordsPerRecordSet", "type": "long"},
+        "number_of_record_sets": {"key": "properties.numberOfRecordSets", "type": "long"},
+        "name_servers": {"key": "properties.nameServers", "type": "[str]"},
+        "zone_type": {"key": "properties.zoneType", "type": "str"},
+        "registration_virtual_networks": {"key": "properties.registrationVirtualNetworks", "type": "[SubResource]"},
+        "resolution_virtual_networks": {"key": "properties.resolutionVirtualNetworks", "type": "[SubResource]"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(Zone, self).__init__(**kwargs)
-        self.etag = kwargs.get('etag', None)
+        self.etag = kwargs.get("etag", None)
         self.max_number_of_record_sets = None
         self.max_number_of_records_per_record_set = None
         self.number_of_record_sets = None
         self.name_servers = None
-        self.zone_type = kwargs.get('zone_type', "Public")
-        self.registration_virtual_networks = kwargs.get('registration_virtual_networks', None)
-        self.resolution_virtual_networks = kwargs.get('resolution_virtual_networks', None)
+        self.zone_type = kwargs.get("zone_type", "Public")
+        self.registration_virtual_networks = kwargs.get("registration_virtual_networks", None)
+        self.resolution_virtual_networks = kwargs.get("resolution_virtual_networks", None)
 
 
 class ZoneListResult(msrest.serialization.Model):
@@ -658,20 +598,17 @@ class ZoneListResult(msrest.serialization.Model):
     """
 
     _validation = {
-        'next_link': {'readonly': True},
+        "next_link": {"readonly": True},
     }
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[Zone]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[Zone]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ZoneListResult, self).__init__(**kwargs)
-        self.value = kwargs.get('value', None)
+        self.value = kwargs.get("value", None)
         self.next_link = None
 
 
@@ -683,12 +620,9 @@ class ZoneUpdate(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'tags': {'key': 'tags', 'type': '{str}'},
+        "tags": {"key": "tags", "type": "{str}"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ZoneUpdate, self).__init__(**kwargs)
-        self.tags = kwargs.get('tags', None)
+        self.tags = kwargs.get("tags", None)
