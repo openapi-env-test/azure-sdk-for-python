@@ -9,7 +9,13 @@
 from typing import Any, AsyncIterable, Callable, Dict, Optional, TypeVar, Union
 
 from azure.core.async_paging import AsyncItemPaged, AsyncList
-from azure.core.exceptions import ClientAuthenticationError, HttpResponseError, ResourceExistsError, ResourceNotFoundError, map_error
+from azure.core.exceptions import (
+    ClientAuthenticationError,
+    HttpResponseError,
+    ResourceExistsError,
+    ResourceNotFoundError,
+    map_error,
+)
 from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import AsyncHttpResponse
 from azure.core.polling import AsyncLROPoller, AsyncNoPolling, AsyncPollingMethod
@@ -21,9 +27,16 @@ from azure.mgmt.core.polling.async_arm_polling import AsyncARMPolling
 
 from ... import models as _models
 from ..._vendor import _convert_request
-from ...operations._graph_resources_operations import build_create_update_graph_request_initial, build_delete_graph_resource_request_initial, build_get_graph_request, build_list_graphs_request
-T = TypeVar('T')
+from ...operations._graph_resources_operations import (
+    build_create_update_graph_request_initial,
+    build_delete_graph_resource_request_initial,
+    build_get_graph_request,
+    build_list_graphs_request,
+)
+
+T = TypeVar("T")
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
+
 
 class GraphResourcesOperations:
     """GraphResourcesOperations async operations.
@@ -49,10 +62,7 @@ class GraphResourcesOperations:
 
     @distributed_trace
     def list_graphs(
-        self,
-        resource_group_name: str,
-        account_name: str,
-        **kwargs: Any
+        self, resource_group_name: str, account_name: str, **kwargs: Any
     ) -> AsyncIterable["_models.GraphResourcesListResult"]:
         """Lists the graphs under an existing Azure Cosmos DB database account.
 
@@ -67,28 +77,27 @@ class GraphResourcesOperations:
          ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.cosmosdb.models.GraphResourcesListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop("api_version", "2022-02-15-preview")  # type: str
 
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.GraphResourcesListResult"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
+        cls = kwargs.pop("cls", None)  # type: ClsType["_models.GraphResourcesListResult"]
+        error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop("error_map", {}))
+
         def prepare_request(next_link=None):
             if not next_link:
-                
+
                 request = build_list_graphs_request(
                     subscription_id=self._config.subscription_id,
                     resource_group_name=resource_group_name,
                     account_name=account_name,
                     api_version=api_version,
-                    template_url=self.list_graphs.metadata['url'],
+                    template_url=self.list_graphs.metadata["url"],
                 )
                 request = _convert_request(request)
                 request.url = self._client.format_url(request.url)
 
             else:
-                
+
                 request = build_list_graphs_request(
                     subscription_id=self._config.subscription_id,
                     resource_group_name=resource_group_name,
@@ -112,9 +121,7 @@ class GraphResourcesOperations:
             request = prepare_request(next_link)
 
             pipeline_response = await self._client._pipeline.run(  # pylint: disable=protected-access
-                request,
-                stream=False,
-                **kwargs
+                request, stream=False, **kwargs
             )
             response = pipeline_response.http_response
 
@@ -124,19 +131,13 @@ class GraphResourcesOperations:
 
             return pipeline_response
 
+        return AsyncItemPaged(get_next, extract_data)
 
-        return AsyncItemPaged(
-            get_next, extract_data
-        )
-    list_graphs.metadata = {'url': "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/graphs"}  # type: ignore
+    list_graphs.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/graphs"}  # type: ignore
 
     @distributed_trace_async
     async def get_graph(
-        self,
-        resource_group_name: str,
-        account_name: str,
-        graph_name: str,
-        **kwargs: Any
+        self, resource_group_name: str, account_name: str, graph_name: str, **kwargs: Any
     ) -> "_models.GraphResourceGetResults":
         """Gets the Graph resource under an existing Azure Cosmos DB database account with the provided
         name.
@@ -152,30 +153,25 @@ class GraphResourcesOperations:
         :rtype: ~azure.mgmt.cosmosdb.models.GraphResourceGetResults
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.GraphResourceGetResults"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
+        cls = kwargs.pop("cls", None)  # type: ClsType["_models.GraphResourceGetResults"]
+        error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop("error_map", {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop("api_version", "2022-02-15-preview")  # type: str
 
-        
         request = build_get_graph_request(
             subscription_id=self._config.subscription_id,
             resource_group_name=resource_group_name,
             account_name=account_name,
             graph_name=graph_name,
             api_version=api_version,
-            template_url=self.get_graph.metadata['url'],
+            template_url=self.get_graph.metadata["url"],
         )
         request = _convert_request(request)
         request.url = self._client.format_url(request.url)
 
         pipeline_response = await self._client._pipeline.run(  # pylint: disable=protected-access
-            request,
-            stream=False,
-            **kwargs
+            request, stream=False, **kwargs
         )
         response = pipeline_response.http_response
 
@@ -183,15 +179,14 @@ class GraphResourcesOperations:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize('GraphResourceGetResults', pipeline_response)
+        deserialized = self._deserialize("GraphResourceGetResults", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
 
-    get_graph.metadata = {'url': "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/graphs/{graphName}"}  # type: ignore
-
+    get_graph.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/graphs/{graphName}"}  # type: ignore
 
     async def _create_update_graph_initial(
         self,
@@ -201,16 +196,14 @@ class GraphResourcesOperations:
         create_update_graph_parameters: "_models.GraphResourceCreateUpdateParameters",
         **kwargs: Any
     ) -> Optional["_models.GraphResourceGetResults"]:
-        cls = kwargs.pop('cls', None)  # type: ClsType[Optional["_models.GraphResourceGetResults"]]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
+        cls = kwargs.pop("cls", None)  # type: ClsType[Optional["_models.GraphResourceGetResults"]]
+        error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop("error_map", {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
-        content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
+        api_version = kwargs.pop("api_version", "2022-02-15-preview")  # type: str
+        content_type = kwargs.pop("content_type", "application/json")  # type: Optional[str]
 
-        _json = self._serialize.body(create_update_graph_parameters, 'GraphResourceCreateUpdateParameters')
+        _json = self._serialize.body(create_update_graph_parameters, "GraphResourceCreateUpdateParameters")
 
         request = build_create_update_graph_request_initial(
             subscription_id=self._config.subscription_id,
@@ -220,15 +213,13 @@ class GraphResourcesOperations:
             api_version=api_version,
             content_type=content_type,
             json=_json,
-            template_url=self._create_update_graph_initial.metadata['url'],
+            template_url=self._create_update_graph_initial.metadata["url"],
         )
         request = _convert_request(request)
         request.url = self._client.format_url(request.url)
 
         pipeline_response = await self._client._pipeline.run(  # pylint: disable=protected-access
-            request,
-            stream=False,
-            **kwargs
+            request, stream=False, **kwargs
         )
         response = pipeline_response.http_response
 
@@ -238,15 +229,14 @@ class GraphResourcesOperations:
 
         deserialized = None
         if response.status_code == 200:
-            deserialized = self._deserialize('GraphResourceGetResults', pipeline_response)
+            deserialized = self._deserialize("GraphResourceGetResults", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
 
-    _create_update_graph_initial.metadata = {'url': "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/graphs/{graphName}"}  # type: ignore
-
+    _create_update_graph_initial.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/graphs/{graphName}"}  # type: ignore
 
     @distributed_trace_async
     async def begin_create_update_graph(
@@ -281,15 +271,12 @@ class GraphResourcesOperations:
         :rtype: ~azure.core.polling.AsyncLROPoller[~azure.mgmt.cosmosdb.models.GraphResourceGetResults]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
-        content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
-        polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.GraphResourceGetResults"]
-        lro_delay = kwargs.pop(
-            'polling_interval',
-            self._config.polling_interval
-        )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
+        api_version = kwargs.pop("api_version", "2022-02-15-preview")  # type: str
+        content_type = kwargs.pop("content_type", "application/json")  # type: Optional[str]
+        polling = kwargs.pop("polling", True)  # type: Union[bool, AsyncPollingMethod]
+        cls = kwargs.pop("cls", None)  # type: ClsType["_models.GraphResourceGetResults"]
+        lro_delay = kwargs.pop("polling_interval", self._config.polling_interval)
+        cont_token = kwargs.pop("continuation_token", None)  # type: Optional[str]
         if cont_token is None:
             raw_result = await self._create_update_graph_initial(
                 resource_group_name=resource_group_name,
@@ -298,64 +285,57 @@ class GraphResourcesOperations:
                 create_update_graph_parameters=create_update_graph_parameters,
                 api_version=api_version,
                 content_type=content_type,
-                cls=lambda x,y,z: x,
+                cls=lambda x, y, z: x,
                 **kwargs
             )
-        kwargs.pop('error_map', None)
+        kwargs.pop("error_map", None)
 
         def get_long_running_output(pipeline_response):
             response = pipeline_response.http_response
-            deserialized = self._deserialize('GraphResourceGetResults', pipeline_response)
+            deserialized = self._deserialize("GraphResourceGetResults", pipeline_response)
             if cls:
                 return cls(pipeline_response, deserialized, {})
             return deserialized
 
-
-        if polling is True: polling_method = AsyncARMPolling(lro_delay, **kwargs)
-        elif polling is False: polling_method = AsyncNoPolling()
-        else: polling_method = polling
+        if polling is True:
+            polling_method = AsyncARMPolling(lro_delay, **kwargs)
+        elif polling is False:
+            polling_method = AsyncNoPolling()
+        else:
+            polling_method = polling
         if cont_token:
             return AsyncLROPoller.from_continuation_token(
                 polling_method=polling_method,
                 continuation_token=cont_token,
                 client=self._client,
-                deserialization_callback=get_long_running_output
+                deserialization_callback=get_long_running_output,
             )
         return AsyncLROPoller(self._client, raw_result, get_long_running_output, polling_method)
 
-    begin_create_update_graph.metadata = {'url': "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/graphs/{graphName}"}  # type: ignore
+    begin_create_update_graph.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/graphs/{graphName}"}  # type: ignore
 
     async def _delete_graph_resource_initial(  # pylint: disable=inconsistent-return-statements
-        self,
-        resource_group_name: str,
-        account_name: str,
-        graph_name: str,
-        **kwargs: Any
+        self, resource_group_name: str, account_name: str, graph_name: str, **kwargs: Any
     ) -> None:
-        cls = kwargs.pop('cls', None)  # type: ClsType[None]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
+        cls = kwargs.pop("cls", None)  # type: ClsType[None]
+        error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop("error_map", {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop("api_version", "2022-02-15-preview")  # type: str
 
-        
         request = build_delete_graph_resource_request_initial(
             subscription_id=self._config.subscription_id,
             resource_group_name=resource_group_name,
             account_name=account_name,
             graph_name=graph_name,
             api_version=api_version,
-            template_url=self._delete_graph_resource_initial.metadata['url'],
+            template_url=self._delete_graph_resource_initial.metadata["url"],
         )
         request = _convert_request(request)
         request.url = self._client.format_url(request.url)
 
         pipeline_response = await self._client._pipeline.run(  # pylint: disable=protected-access
-            request,
-            stream=False,
-            **kwargs
+            request, stream=False, **kwargs
         )
         response = pipeline_response.http_response
 
@@ -366,16 +346,11 @@ class GraphResourcesOperations:
         if cls:
             return cls(pipeline_response, None, {})
 
-    _delete_graph_resource_initial.metadata = {'url': "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/graphs/{graphName}"}  # type: ignore
-
+    _delete_graph_resource_initial.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/graphs/{graphName}"}  # type: ignore
 
     @distributed_trace_async
     async def begin_delete_graph_resource(  # pylint: disable=inconsistent-return-statements
-        self,
-        resource_group_name: str,
-        account_name: str,
-        graph_name: str,
-        **kwargs: Any
+        self, resource_group_name: str, account_name: str, graph_name: str, **kwargs: Any
     ) -> AsyncLROPoller[None]:
         """Deletes an existing Azure Cosmos DB Graph Resource.
 
@@ -397,40 +372,39 @@ class GraphResourcesOperations:
         :rtype: ~azure.core.polling.AsyncLROPoller[None]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
-        polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType[None]
-        lro_delay = kwargs.pop(
-            'polling_interval',
-            self._config.polling_interval
-        )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
+        api_version = kwargs.pop("api_version", "2022-02-15-preview")  # type: str
+        polling = kwargs.pop("polling", True)  # type: Union[bool, AsyncPollingMethod]
+        cls = kwargs.pop("cls", None)  # type: ClsType[None]
+        lro_delay = kwargs.pop("polling_interval", self._config.polling_interval)
+        cont_token = kwargs.pop("continuation_token", None)  # type: Optional[str]
         if cont_token is None:
             raw_result = await self._delete_graph_resource_initial(
                 resource_group_name=resource_group_name,
                 account_name=account_name,
                 graph_name=graph_name,
                 api_version=api_version,
-                cls=lambda x,y,z: x,
+                cls=lambda x, y, z: x,
                 **kwargs
             )
-        kwargs.pop('error_map', None)
+        kwargs.pop("error_map", None)
 
         def get_long_running_output(pipeline_response):
             if cls:
                 return cls(pipeline_response, None, {})
 
-
-        if polling is True: polling_method = AsyncARMPolling(lro_delay, **kwargs)
-        elif polling is False: polling_method = AsyncNoPolling()
-        else: polling_method = polling
+        if polling is True:
+            polling_method = AsyncARMPolling(lro_delay, **kwargs)
+        elif polling is False:
+            polling_method = AsyncNoPolling()
+        else:
+            polling_method = polling
         if cont_token:
             return AsyncLROPoller.from_continuation_token(
                 polling_method=polling_method,
                 continuation_token=cont_token,
                 client=self._client,
-                deserialization_callback=get_long_running_output
+                deserialization_callback=get_long_running_output,
             )
         return AsyncLROPoller(self._client, raw_result, get_long_running_output, polling_method)
 
-    begin_delete_graph_resource.metadata = {'url': "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/graphs/{graphName}"}  # type: ignore
+    begin_delete_graph_resource.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/graphs/{graphName}"}  # type: ignore

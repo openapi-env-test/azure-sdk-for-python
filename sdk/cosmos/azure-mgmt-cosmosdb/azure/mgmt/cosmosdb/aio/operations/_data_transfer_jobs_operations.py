@@ -9,7 +9,13 @@
 from typing import Any, AsyncIterable, Callable, Dict, Optional, TypeVar
 
 from azure.core.async_paging import AsyncItemPaged, AsyncList
-from azure.core.exceptions import ClientAuthenticationError, HttpResponseError, ResourceExistsError, ResourceNotFoundError, map_error
+from azure.core.exceptions import (
+    ClientAuthenticationError,
+    HttpResponseError,
+    ResourceExistsError,
+    ResourceNotFoundError,
+    map_error,
+)
 from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import AsyncHttpResponse
 from azure.core.rest import HttpRequest
@@ -19,9 +25,18 @@ from azure.mgmt.core.exceptions import ARMErrorFormat
 
 from ... import models as _models
 from ..._vendor import _convert_request
-from ...operations._data_transfer_jobs_operations import build_cancel_request, build_create_request, build_get_request, build_list_by_database_account_request, build_pause_request, build_resume_request
-T = TypeVar('T')
+from ...operations._data_transfer_jobs_operations import (
+    build_cancel_request,
+    build_create_request,
+    build_get_request,
+    build_list_by_database_account_request,
+    build_pause_request,
+    build_resume_request,
+)
+
+T = TypeVar("T")
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
+
 
 class DataTransferJobsOperations:
     """DataTransferJobsOperations async operations.
@@ -69,16 +84,14 @@ class DataTransferJobsOperations:
         :rtype: ~azure.mgmt.cosmosdb.models.DataTransferJobGetResults
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.DataTransferJobGetResults"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
+        cls = kwargs.pop("cls", None)  # type: ClsType["_models.DataTransferJobGetResults"]
+        error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop("error_map", {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
-        content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
+        api_version = kwargs.pop("api_version", "2022-02-15-preview")  # type: str
+        content_type = kwargs.pop("content_type", "application/json")  # type: Optional[str]
 
-        _json = self._serialize.body(job_create_parameters, 'CreateJobRequest')
+        _json = self._serialize.body(job_create_parameters, "CreateJobRequest")
 
         request = build_create_request(
             subscription_id=self._config.subscription_id,
@@ -88,15 +101,13 @@ class DataTransferJobsOperations:
             api_version=api_version,
             content_type=content_type,
             json=_json,
-            template_url=self.create.metadata['url'],
+            template_url=self.create.metadata["url"],
         )
         request = _convert_request(request)
         request.url = self._client.format_url(request.url)
 
         pipeline_response = await self._client._pipeline.run(  # pylint: disable=protected-access
-            request,
-            stream=False,
-            **kwargs
+            request, stream=False, **kwargs
         )
         response = pipeline_response.http_response
 
@@ -104,23 +115,18 @@ class DataTransferJobsOperations:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize('DataTransferJobGetResults', pipeline_response)
+        deserialized = self._deserialize("DataTransferJobGetResults", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
 
-    create.metadata = {'url': "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/dataTransferJobs/{jobName}"}  # type: ignore
-
+    create.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/dataTransferJobs/{jobName}"}  # type: ignore
 
     @distributed_trace_async
     async def get(
-        self,
-        resource_group_name: str,
-        account_name: str,
-        job_name: str,
-        **kwargs: Any
+        self, resource_group_name: str, account_name: str, job_name: str, **kwargs: Any
     ) -> "_models.DataTransferJobGetResults":
         """Get a Data Transfer Job.
 
@@ -135,30 +141,25 @@ class DataTransferJobsOperations:
         :rtype: ~azure.mgmt.cosmosdb.models.DataTransferJobGetResults
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.DataTransferJobGetResults"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
+        cls = kwargs.pop("cls", None)  # type: ClsType["_models.DataTransferJobGetResults"]
+        error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop("error_map", {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop("api_version", "2022-02-15-preview")  # type: str
 
-        
         request = build_get_request(
             subscription_id=self._config.subscription_id,
             resource_group_name=resource_group_name,
             account_name=account_name,
             job_name=job_name,
             api_version=api_version,
-            template_url=self.get.metadata['url'],
+            template_url=self.get.metadata["url"],
         )
         request = _convert_request(request)
         request.url = self._client.format_url(request.url)
 
         pipeline_response = await self._client._pipeline.run(  # pylint: disable=protected-access
-            request,
-            stream=False,
-            **kwargs
+            request, stream=False, **kwargs
         )
         response = pipeline_response.http_response
 
@@ -166,23 +167,18 @@ class DataTransferJobsOperations:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize('DataTransferJobGetResults', pipeline_response)
+        deserialized = self._deserialize("DataTransferJobGetResults", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
 
-    get.metadata = {'url': "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/dataTransferJobs/{jobName}"}  # type: ignore
-
+    get.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/dataTransferJobs/{jobName}"}  # type: ignore
 
     @distributed_trace_async
     async def pause(
-        self,
-        resource_group_name: str,
-        account_name: str,
-        job_name: str,
-        **kwargs: Any
+        self, resource_group_name: str, account_name: str, job_name: str, **kwargs: Any
     ) -> "_models.DataTransferJobGetResults":
         """Pause a Data Transfer Job.
 
@@ -197,30 +193,25 @@ class DataTransferJobsOperations:
         :rtype: ~azure.mgmt.cosmosdb.models.DataTransferJobGetResults
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.DataTransferJobGetResults"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
+        cls = kwargs.pop("cls", None)  # type: ClsType["_models.DataTransferJobGetResults"]
+        error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop("error_map", {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop("api_version", "2022-02-15-preview")  # type: str
 
-        
         request = build_pause_request(
             subscription_id=self._config.subscription_id,
             resource_group_name=resource_group_name,
             account_name=account_name,
             job_name=job_name,
             api_version=api_version,
-            template_url=self.pause.metadata['url'],
+            template_url=self.pause.metadata["url"],
         )
         request = _convert_request(request)
         request.url = self._client.format_url(request.url)
 
         pipeline_response = await self._client._pipeline.run(  # pylint: disable=protected-access
-            request,
-            stream=False,
-            **kwargs
+            request, stream=False, **kwargs
         )
         response = pipeline_response.http_response
 
@@ -228,23 +219,18 @@ class DataTransferJobsOperations:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize('DataTransferJobGetResults', pipeline_response)
+        deserialized = self._deserialize("DataTransferJobGetResults", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
 
-    pause.metadata = {'url': "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/dataTransferJobs/{jobName}/pause"}  # type: ignore
-
+    pause.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/dataTransferJobs/{jobName}/pause"}  # type: ignore
 
     @distributed_trace_async
     async def resume(
-        self,
-        resource_group_name: str,
-        account_name: str,
-        job_name: str,
-        **kwargs: Any
+        self, resource_group_name: str, account_name: str, job_name: str, **kwargs: Any
     ) -> "_models.DataTransferJobGetResults":
         """Resumes a Data Transfer Job.
 
@@ -259,30 +245,25 @@ class DataTransferJobsOperations:
         :rtype: ~azure.mgmt.cosmosdb.models.DataTransferJobGetResults
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.DataTransferJobGetResults"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
+        cls = kwargs.pop("cls", None)  # type: ClsType["_models.DataTransferJobGetResults"]
+        error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop("error_map", {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop("api_version", "2022-02-15-preview")  # type: str
 
-        
         request = build_resume_request(
             subscription_id=self._config.subscription_id,
             resource_group_name=resource_group_name,
             account_name=account_name,
             job_name=job_name,
             api_version=api_version,
-            template_url=self.resume.metadata['url'],
+            template_url=self.resume.metadata["url"],
         )
         request = _convert_request(request)
         request.url = self._client.format_url(request.url)
 
         pipeline_response = await self._client._pipeline.run(  # pylint: disable=protected-access
-            request,
-            stream=False,
-            **kwargs
+            request, stream=False, **kwargs
         )
         response = pipeline_response.http_response
 
@@ -290,23 +271,18 @@ class DataTransferJobsOperations:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize('DataTransferJobGetResults', pipeline_response)
+        deserialized = self._deserialize("DataTransferJobGetResults", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
 
-    resume.metadata = {'url': "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/dataTransferJobs/{jobName}/resume"}  # type: ignore
-
+    resume.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/dataTransferJobs/{jobName}/resume"}  # type: ignore
 
     @distributed_trace_async
     async def cancel(
-        self,
-        resource_group_name: str,
-        account_name: str,
-        job_name: str,
-        **kwargs: Any
+        self, resource_group_name: str, account_name: str, job_name: str, **kwargs: Any
     ) -> "_models.DataTransferJobGetResults":
         """Cancels a Data Transfer Job.
 
@@ -321,30 +297,25 @@ class DataTransferJobsOperations:
         :rtype: ~azure.mgmt.cosmosdb.models.DataTransferJobGetResults
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.DataTransferJobGetResults"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
+        cls = kwargs.pop("cls", None)  # type: ClsType["_models.DataTransferJobGetResults"]
+        error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop("error_map", {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop("api_version", "2022-02-15-preview")  # type: str
 
-        
         request = build_cancel_request(
             subscription_id=self._config.subscription_id,
             resource_group_name=resource_group_name,
             account_name=account_name,
             job_name=job_name,
             api_version=api_version,
-            template_url=self.cancel.metadata['url'],
+            template_url=self.cancel.metadata["url"],
         )
         request = _convert_request(request)
         request.url = self._client.format_url(request.url)
 
         pipeline_response = await self._client._pipeline.run(  # pylint: disable=protected-access
-            request,
-            stream=False,
-            **kwargs
+            request, stream=False, **kwargs
         )
         response = pipeline_response.http_response
 
@@ -352,22 +323,18 @@ class DataTransferJobsOperations:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize('DataTransferJobGetResults', pipeline_response)
+        deserialized = self._deserialize("DataTransferJobGetResults", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
 
-    cancel.metadata = {'url': "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/dataTransferJobs/{jobName}/cancel"}  # type: ignore
-
+    cancel.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/dataTransferJobs/{jobName}/cancel"}  # type: ignore
 
     @distributed_trace
     def list_by_database_account(
-        self,
-        resource_group_name: str,
-        account_name: str,
-        **kwargs: Any
+        self, resource_group_name: str, account_name: str, **kwargs: Any
     ) -> AsyncIterable["_models.DataTransferJobFeedResults"]:
         """Get a list of Data Transfer jobs.
 
@@ -382,28 +349,27 @@ class DataTransferJobsOperations:
          ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.cosmosdb.models.DataTransferJobFeedResults]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop("api_version", "2022-02-15-preview")  # type: str
 
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.DataTransferJobFeedResults"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
+        cls = kwargs.pop("cls", None)  # type: ClsType["_models.DataTransferJobFeedResults"]
+        error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop("error_map", {}))
+
         def prepare_request(next_link=None):
             if not next_link:
-                
+
                 request = build_list_by_database_account_request(
                     subscription_id=self._config.subscription_id,
                     resource_group_name=resource_group_name,
                     account_name=account_name,
                     api_version=api_version,
-                    template_url=self.list_by_database_account.metadata['url'],
+                    template_url=self.list_by_database_account.metadata["url"],
                 )
                 request = _convert_request(request)
                 request.url = self._client.format_url(request.url)
 
             else:
-                
+
                 request = build_list_by_database_account_request(
                     subscription_id=self._config.subscription_id,
                     resource_group_name=resource_group_name,
@@ -427,9 +393,7 @@ class DataTransferJobsOperations:
             request = prepare_request(next_link)
 
             pipeline_response = await self._client._pipeline.run(  # pylint: disable=protected-access
-                request,
-                stream=False,
-                **kwargs
+                request, stream=False, **kwargs
             )
             response = pipeline_response.http_response
 
@@ -439,8 +403,6 @@ class DataTransferJobsOperations:
 
             return pipeline_response
 
+        return AsyncItemPaged(get_next, extract_data)
 
-        return AsyncItemPaged(
-            get_next, extract_data
-        )
-    list_by_database_account.metadata = {'url': "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/dataTransferJobs"}  # type: ignore
+    list_by_database_account.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/dataTransferJobs"}  # type: ignore
