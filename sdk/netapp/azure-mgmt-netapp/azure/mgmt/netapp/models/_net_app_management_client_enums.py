@@ -7,68 +7,71 @@
 # --------------------------------------------------------------------------
 
 from enum import Enum
-from six import with_metaclass
 from azure.core import CaseInsensitiveEnumMeta
 
 
-class ActiveDirectoryStatus(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
-    """Status of the Active Directory
-    """
+class ActiveDirectoryStatus(str, Enum, metaclass=CaseInsensitiveEnumMeta):
+    """Status of the Active Directory."""
 
-    #: Active Directory created but not in use.
+    #: Active Directory created but not in use
     CREATED = "Created"
-    #: Active Directory in use by SMB Volume.
+    #: Active Directory in use by SMB Volume
     IN_USE = "InUse"
-    #: Active Directory Deleted.
+    #: Active Directory Deleted
     DELETED = "Deleted"
-    #: Error with the Active Directory.
+    #: Error with the Active Directory
     ERROR = "Error"
-    #: Active Directory Updating.
+    #: Active Directory Updating
     UPDATING = "Updating"
 
-class ApplicationType(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
-    """Application Type
-    """
+
+class ApplicationType(str, Enum, metaclass=CaseInsensitiveEnumMeta):
+    """Application Type."""
 
     SAP_HANA = "SAP-HANA"
 
-class AvsDataStore(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
-    """Specifies whether the volume is enabled for Azure VMware Solution (AVS) datastore purpose
-    """
 
-    #: avsDataStore is enabled.
+class AvsDataStore(str, Enum, metaclass=CaseInsensitiveEnumMeta):
+    """Specifies whether the volume is enabled for Azure VMware Solution (AVS) datastore purpose."""
+
+    #: avsDataStore is enabled
     ENABLED = "Enabled"
-    #: avsDataStore is disabled.
+    #: avsDataStore is disabled
     DISABLED = "Disabled"
 
-class BackupType(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
-    """Type of backup Manual or Scheduled
-    """
 
-    #: Manual backup.
+class BackupType(str, Enum, metaclass=CaseInsensitiveEnumMeta):
+    """Type of backup Manual or Scheduled."""
+
+    #: Manual backup
     MANUAL = "Manual"
-    #: Scheduled backup.
+    #: Scheduled backup
     SCHEDULED = "Scheduled"
 
-class CheckNameResourceTypes(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
-    """Resource type used for verification.
-    """
+
+class CheckNameResourceTypes(str, Enum, metaclass=CaseInsensitiveEnumMeta):
+    """Resource type used for verification."""
 
     MICROSOFT_NET_APP_NET_APP_ACCOUNTS = "Microsoft.NetApp/netAppAccounts"
     MICROSOFT_NET_APP_NET_APP_ACCOUNTS_CAPACITY_POOLS = "Microsoft.NetApp/netAppAccounts/capacityPools"
     MICROSOFT_NET_APP_NET_APP_ACCOUNTS_CAPACITY_POOLS_VOLUMES = "Microsoft.NetApp/netAppAccounts/capacityPools/volumes"
-    MICROSOFT_NET_APP_NET_APP_ACCOUNTS_CAPACITY_POOLS_VOLUMES_SNAPSHOTS = "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/snapshots"
+    MICROSOFT_NET_APP_NET_APP_ACCOUNTS_CAPACITY_POOLS_VOLUMES_SNAPSHOTS = (
+        "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/snapshots"
+    )
 
-class CheckQuotaNameResourceTypes(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
-    """Resource type used for verification.
-    """
+
+class CheckQuotaNameResourceTypes(str, Enum, metaclass=CaseInsensitiveEnumMeta):
+    """Resource type used for verification."""
 
     MICROSOFT_NET_APP_NET_APP_ACCOUNTS = "Microsoft.NetApp/netAppAccounts"
     MICROSOFT_NET_APP_NET_APP_ACCOUNTS_CAPACITY_POOLS = "Microsoft.NetApp/netAppAccounts/capacityPools"
     MICROSOFT_NET_APP_NET_APP_ACCOUNTS_CAPACITY_POOLS_VOLUMES = "Microsoft.NetApp/netAppAccounts/capacityPools/volumes"
-    MICROSOFT_NET_APP_NET_APP_ACCOUNTS_CAPACITY_POOLS_VOLUMES_SNAPSHOTS = "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/snapshots"
+    MICROSOFT_NET_APP_NET_APP_ACCOUNTS_CAPACITY_POOLS_VOLUMES_SNAPSHOTS = (
+        "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/snapshots"
+    )
 
-class ChownMode(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
+
+class ChownMode(str, Enum, metaclass=CaseInsensitiveEnumMeta):
     """This parameter specifies who is authorized to change the ownership of a file. restricted - Only
     root user can change the ownership of the file. unrestricted - Non-root users can change
     ownership of files that they own.
@@ -77,50 +80,53 @@ class ChownMode(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
     RESTRICTED = "Restricted"
     UNRESTRICTED = "Unrestricted"
 
-class CreatedByType(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
-    """The type of identity that created the resource.
-    """
+
+class CreatedByType(str, Enum, metaclass=CaseInsensitiveEnumMeta):
+    """The type of identity that created the resource."""
 
     USER = "User"
     APPLICATION = "Application"
     MANAGED_IDENTITY = "ManagedIdentity"
     KEY = "Key"
 
-class EnableSubvolumes(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
-    """Flag indicating whether subvolume operations are enabled on the volume
-    """
 
-    #: subvolumes are enabled.
+class EnableSubvolumes(str, Enum, metaclass=CaseInsensitiveEnumMeta):
+    """Flag indicating whether subvolume operations are enabled on the volume."""
+
+    #: subvolumes are enabled
     ENABLED = "Enabled"
-    #: subvolumes are not enabled.
+    #: subvolumes are not enabled
     DISABLED = "Disabled"
 
-class EncryptionKeySource(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
+
+class EncryptionKeySource(str, Enum, metaclass=CaseInsensitiveEnumMeta):
     """Source of key used to encrypt data in volume. Possible values (case-insensitive) are:
-    'Microsoft.NetApp'
+    'Microsoft.NetApp'.
     """
 
-    #: Microsoft-managed key encryption.
+    #: Microsoft-managed key encryption
     MICROSOFT_NET_APP = "Microsoft.NetApp"
 
-class EncryptionType(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
+
+class EncryptionType(str, Enum, metaclass=CaseInsensitiveEnumMeta):
     """Encryption type of the capacity pool, set encryption type for data at rest for this pool and
     all volumes in it. This value can only be set when creating new pool.
     """
 
-    #: EncryptionType Single, volumes will use single encryption at rest.
+    #: EncryptionType Single, volumes will use single encryption at rest
     SINGLE = "Single"
-    #: EncryptionType Double, volumes will use double encryption at rest.
+    #: EncryptionType Double, volumes will use double encryption at rest
     DOUBLE = "Double"
 
-class EndpointType(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
-    """Indicates whether the local volume is the source or destination for the Volume Replication
-    """
+
+class EndpointType(str, Enum, metaclass=CaseInsensitiveEnumMeta):
+    """Indicates whether the local volume is the source or destination for the Volume Replication."""
 
     SRC = "src"
     DST = "dst"
 
-class InAvailabilityReasonType(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
+
+class InAvailabilityReasonType(str, Enum, metaclass=CaseInsensitiveEnumMeta):
     """:code:`<code>Invalid</code>` indicates the name provided does not match Azure App Service
     naming requirements. :code:`<code>AlreadyExists</code>` indicates that the name is already in
     use and is therefore unavailable.
@@ -129,30 +135,32 @@ class InAvailabilityReasonType(with_metaclass(CaseInsensitiveEnumMeta, str, Enum
     INVALID = "Invalid"
     ALREADY_EXISTS = "AlreadyExists"
 
-class MetricAggregationType(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
+
+class MetricAggregationType(str, Enum, metaclass=CaseInsensitiveEnumMeta):
+    """MetricAggregationType."""
 
     AVERAGE = "Average"
 
-class MirrorState(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
-    """The status of the replication
-    """
+
+class MirrorState(str, Enum, metaclass=CaseInsensitiveEnumMeta):
+    """The status of the replication."""
 
     UNINITIALIZED = "Uninitialized"
     MIRRORED = "Mirrored"
     BROKEN = "Broken"
 
-class NetworkFeatures(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
-    """Basic network, or Standard features available to the volume.
-    """
+
+class NetworkFeatures(str, Enum, metaclass=CaseInsensitiveEnumMeta):
+    """Basic network, or Standard features available to the volume."""
 
     #: Basic network feature.
     BASIC = "Basic"
     #: Standard network feature.
     STANDARD = "Standard"
 
-class ProvisioningState(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
-    """Gets the status of the VolumeQuotaRule at the time the operation was called.
-    """
+
+class ProvisioningState(str, Enum, metaclass=CaseInsensitiveEnumMeta):
+    """Gets the status of the VolumeQuotaRule at the time the operation was called."""
 
     ACCEPTED = "Accepted"
     CREATING = "Creating"
@@ -162,66 +170,68 @@ class ProvisioningState(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
     FAILED = "Failed"
     SUCCEEDED = "Succeeded"
 
-class QosType(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
-    """The qos type of the pool
-    """
 
-    #: qos type Auto.
+class QosType(str, Enum, metaclass=CaseInsensitiveEnumMeta):
+    """The qos type of the pool."""
+
+    #: qos type Auto
     AUTO = "Auto"
-    #: qos type Manual.
+    #: qos type Manual
     MANUAL = "Manual"
 
-class RelationshipStatus(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
-    """Status of the mirror relationship
-    """
+
+class RelationshipStatus(str, Enum, metaclass=CaseInsensitiveEnumMeta):
+    """Status of the mirror relationship."""
 
     IDLE = "Idle"
     TRANSFERRING = "Transferring"
 
-class ReplicationSchedule(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
-    """Schedule
-    """
+
+class ReplicationSchedule(str, Enum, metaclass=CaseInsensitiveEnumMeta):
+    """Schedule."""
 
     _10_MINUTELY = "_10minutely"
     HOURLY = "hourly"
     DAILY = "daily"
 
-class SecurityStyle(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
-    """The security style of volume, default unix, defaults to ntfs for dual protocol or CIFS protocol
+
+class SecurityStyle(str, Enum, metaclass=CaseInsensitiveEnumMeta):
+    """The security style of volume, default unix, defaults to ntfs for dual protocol or CIFS
+    protocol.
     """
 
     NTFS = "ntfs"
     UNIX = "unix"
 
-class ServiceLevel(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
-    """The service level of the file system
-    """
 
-    #: Standard service level.
+class ServiceLevel(str, Enum, metaclass=CaseInsensitiveEnumMeta):
+    """The service level of the file system."""
+
+    #: Standard service level
     STANDARD = "Standard"
-    #: Premium service level.
+    #: Premium service level
     PREMIUM = "Premium"
-    #: Ultra service level.
+    #: Ultra service level
     ULTRA = "Ultra"
-    #: Zone redundant storage service level.
+    #: Zone redundant storage service level
     STANDARD_ZRS = "StandardZRS"
 
-class Type(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
-    """Type of quota
-    """
 
-    #: Default user quota.
+class Type(str, Enum, metaclass=CaseInsensitiveEnumMeta):
+    """Type of quota."""
+
+    #: Default user quota
     DEFAULT_USER_QUOTA = "DefaultUserQuota"
-    #: Default group quota.
+    #: Default group quota
     DEFAULT_GROUP_QUOTA = "DefaultGroupQuota"
-    #: Individual user quota.
+    #: Individual user quota
     INDIVIDUAL_USER_QUOTA = "IndividualUserQuota"
-    #: Individual group quota.
+    #: Individual group quota
     INDIVIDUAL_GROUP_QUOTA = "IndividualGroupQuota"
 
-class VolumeStorageToNetworkProximity(with_metaclass(CaseInsensitiveEnumMeta, str, Enum)):
-    """Provides storage to network proximity information for the volume.
-    """
+
+class VolumeStorageToNetworkProximity(str, Enum, metaclass=CaseInsensitiveEnumMeta):
+    """Provides storage to network proximity information for the volume."""
 
     #: Basic storage to network connectivity.
     DEFAULT = "Default"
