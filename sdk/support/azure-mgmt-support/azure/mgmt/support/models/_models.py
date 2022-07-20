@@ -23,22 +23,19 @@ class CheckNameAvailabilityInput(msrest.serialization.Model):
     """
 
     _validation = {
-        'name': {'required': True},
-        'type': {'required': True},
+        "name": {"required": True},
+        "type": {"required": True},
     }
 
     _attribute_map = {
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(CheckNameAvailabilityInput, self).__init__(**kwargs)
-        self.name = kwargs['name']
-        self.type = kwargs['type']
+        self.name = kwargs["name"]
+        self.type = kwargs["type"]
 
 
 class CheckNameAvailabilityOutput(msrest.serialization.Model):
@@ -55,21 +52,18 @@ class CheckNameAvailabilityOutput(msrest.serialization.Model):
     """
 
     _validation = {
-        'name_available': {'readonly': True},
-        'reason': {'readonly': True},
-        'message': {'readonly': True},
+        "name_available": {"readonly": True},
+        "reason": {"readonly": True},
+        "message": {"readonly": True},
     }
 
     _attribute_map = {
-        'name_available': {'key': 'nameAvailable', 'type': 'bool'},
-        'reason': {'key': 'reason', 'type': 'str'},
-        'message': {'key': 'message', 'type': 'str'},
+        "name_available": {"key": "nameAvailable", "type": "bool"},
+        "reason": {"key": "reason", "type": "str"},
+        "message": {"key": "message", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(CheckNameAvailabilityOutput, self).__init__(**kwargs)
         self.name_available = None
         self.reason = None
@@ -104,39 +98,36 @@ class CommunicationDetails(msrest.serialization.Model):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'communication_type': {'readonly': True},
-        'communication_direction': {'readonly': True},
-        'created_date': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
+        "communication_type": {"readonly": True},
+        "communication_direction": {"readonly": True},
+        "created_date": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'communication_type': {'key': 'properties.communicationType', 'type': 'str'},
-        'communication_direction': {'key': 'properties.communicationDirection', 'type': 'str'},
-        'sender': {'key': 'properties.sender', 'type': 'str'},
-        'subject': {'key': 'properties.subject', 'type': 'str'},
-        'body': {'key': 'properties.body', 'type': 'str'},
-        'created_date': {'key': 'properties.createdDate', 'type': 'iso-8601'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "communication_type": {"key": "properties.communicationType", "type": "str"},
+        "communication_direction": {"key": "properties.communicationDirection", "type": "str"},
+        "sender": {"key": "properties.sender", "type": "str"},
+        "subject": {"key": "properties.subject", "type": "str"},
+        "body": {"key": "properties.body", "type": "str"},
+        "created_date": {"key": "properties.createdDate", "type": "iso-8601"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(CommunicationDetails, self).__init__(**kwargs)
         self.id = None
         self.name = None
         self.type = None
         self.communication_type = None
         self.communication_direction = None
-        self.sender = kwargs.get('sender', None)
-        self.subject = kwargs.get('subject', None)
-        self.body = kwargs.get('body', None)
+        self.sender = kwargs.get("sender", None)
+        self.subject = kwargs.get("subject", None)
+        self.body = kwargs.get("body", None)
         self.created_date = None
 
 
@@ -150,17 +141,14 @@ class CommunicationsListResult(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[CommunicationDetails]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[CommunicationDetails]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(CommunicationsListResult, self).__init__(**kwargs)
-        self.value = kwargs.get('value', None)
-        self.next_link = kwargs.get('next_link', None)
+        self.value = kwargs.get("value", None)
+        self.next_link = kwargs.get("next_link", None)
 
 
 class ContactProfile(msrest.serialization.Model):
@@ -199,41 +187,38 @@ class ContactProfile(msrest.serialization.Model):
     """
 
     _validation = {
-        'first_name': {'required': True},
-        'last_name': {'required': True},
-        'preferred_contact_method': {'required': True},
-        'primary_email_address': {'required': True},
-        'preferred_time_zone': {'required': True},
-        'country': {'required': True},
-        'preferred_support_language': {'required': True},
+        "first_name": {"required": True},
+        "last_name": {"required": True},
+        "preferred_contact_method": {"required": True},
+        "primary_email_address": {"required": True},
+        "preferred_time_zone": {"required": True},
+        "country": {"required": True},
+        "preferred_support_language": {"required": True},
     }
 
     _attribute_map = {
-        'first_name': {'key': 'firstName', 'type': 'str'},
-        'last_name': {'key': 'lastName', 'type': 'str'},
-        'preferred_contact_method': {'key': 'preferredContactMethod', 'type': 'str'},
-        'primary_email_address': {'key': 'primaryEmailAddress', 'type': 'str'},
-        'additional_email_addresses': {'key': 'additionalEmailAddresses', 'type': '[str]'},
-        'phone_number': {'key': 'phoneNumber', 'type': 'str'},
-        'preferred_time_zone': {'key': 'preferredTimeZone', 'type': 'str'},
-        'country': {'key': 'country', 'type': 'str'},
-        'preferred_support_language': {'key': 'preferredSupportLanguage', 'type': 'str'},
+        "first_name": {"key": "firstName", "type": "str"},
+        "last_name": {"key": "lastName", "type": "str"},
+        "preferred_contact_method": {"key": "preferredContactMethod", "type": "str"},
+        "primary_email_address": {"key": "primaryEmailAddress", "type": "str"},
+        "additional_email_addresses": {"key": "additionalEmailAddresses", "type": "[str]"},
+        "phone_number": {"key": "phoneNumber", "type": "str"},
+        "preferred_time_zone": {"key": "preferredTimeZone", "type": "str"},
+        "country": {"key": "country", "type": "str"},
+        "preferred_support_language": {"key": "preferredSupportLanguage", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ContactProfile, self).__init__(**kwargs)
-        self.first_name = kwargs['first_name']
-        self.last_name = kwargs['last_name']
-        self.preferred_contact_method = kwargs['preferred_contact_method']
-        self.primary_email_address = kwargs['primary_email_address']
-        self.additional_email_addresses = kwargs.get('additional_email_addresses', None)
-        self.phone_number = kwargs.get('phone_number', None)
-        self.preferred_time_zone = kwargs['preferred_time_zone']
-        self.country = kwargs['country']
-        self.preferred_support_language = kwargs['preferred_support_language']
+        self.first_name = kwargs["first_name"]
+        self.last_name = kwargs["last_name"]
+        self.preferred_contact_method = kwargs["preferred_contact_method"]
+        self.primary_email_address = kwargs["primary_email_address"]
+        self.additional_email_addresses = kwargs.get("additional_email_addresses", None)
+        self.phone_number = kwargs.get("phone_number", None)
+        self.preferred_time_zone = kwargs["preferred_time_zone"]
+        self.country = kwargs["country"]
+        self.preferred_support_language = kwargs["preferred_support_language"]
 
 
 class ExceptionResponse(msrest.serialization.Model):
@@ -244,15 +229,12 @@ class ExceptionResponse(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'error': {'key': 'error', 'type': 'ServiceError'},
+        "error": {"key": "error", "type": "ServiceError"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ExceptionResponse, self).__init__(**kwargs)
-        self.error = kwargs.get('error', None)
+        self.error = kwargs.get("error", None)
 
 
 class Operation(msrest.serialization.Model):
@@ -267,21 +249,18 @@ class Operation(msrest.serialization.Model):
     """
 
     _validation = {
-        'name': {'readonly': True},
+        "name": {"readonly": True},
     }
 
     _attribute_map = {
-        'name': {'key': 'name', 'type': 'str'},
-        'display': {'key': 'display', 'type': 'OperationDisplay'},
+        "name": {"key": "name", "type": "str"},
+        "display": {"key": "display", "type": "OperationDisplay"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(Operation, self).__init__(**kwargs)
         self.name = None
-        self.display = kwargs.get('display', None)
+        self.display = kwargs.get("display", None)
 
 
 class OperationDisplay(msrest.serialization.Model):
@@ -300,23 +279,20 @@ class OperationDisplay(msrest.serialization.Model):
     """
 
     _validation = {
-        'description': {'readonly': True},
-        'operation': {'readonly': True},
-        'provider': {'readonly': True},
-        'resource': {'readonly': True},
+        "description": {"readonly": True},
+        "operation": {"readonly": True},
+        "provider": {"readonly": True},
+        "resource": {"readonly": True},
     }
 
     _attribute_map = {
-        'description': {'key': 'description', 'type': 'str'},
-        'operation': {'key': 'operation', 'type': 'str'},
-        'provider': {'key': 'provider', 'type': 'str'},
-        'resource': {'key': 'resource', 'type': 'str'},
+        "description": {"key": "description", "type": "str"},
+        "operation": {"key": "operation", "type": "str"},
+        "provider": {"key": "provider", "type": "str"},
+        "resource": {"key": "resource", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(OperationDisplay, self).__init__(**kwargs)
         self.description = None
         self.operation = None
@@ -332,15 +308,12 @@ class OperationsListResult(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[Operation]'},
+        "value": {"key": "value", "type": "[Operation]"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(OperationsListResult, self).__init__(**kwargs)
-        self.value = kwargs.get('value', None)
+        self.value = kwargs.get("value", None)
 
 
 class ProblemClassification(msrest.serialization.Model):
@@ -359,27 +332,24 @@ class ProblemClassification(msrest.serialization.Model):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'display_name': {'key': 'properties.displayName', 'type': 'str'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "display_name": {"key": "properties.displayName", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ProblemClassification, self).__init__(**kwargs)
         self.id = None
         self.name = None
         self.type = None
-        self.display_name = kwargs.get('display_name', None)
+        self.display_name = kwargs.get("display_name", None)
 
 
 class ProblemClassificationsListResult(msrest.serialization.Model):
@@ -390,15 +360,12 @@ class ProblemClassificationsListResult(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[ProblemClassification]'},
+        "value": {"key": "value", "type": "[ProblemClassification]"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ProblemClassificationsListResult, self).__init__(**kwargs)
-        self.value = kwargs.get('value', None)
+        self.value = kwargs.get("value", None)
 
 
 class QuotaChangeRequest(msrest.serialization.Model):
@@ -411,17 +378,14 @@ class QuotaChangeRequest(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'region': {'key': 'region', 'type': 'str'},
-        'payload': {'key': 'payload', 'type': 'str'},
+        "region": {"key": "region", "type": "str"},
+        "payload": {"key": "payload", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(QuotaChangeRequest, self).__init__(**kwargs)
-        self.region = kwargs.get('region', None)
-        self.payload = kwargs.get('payload', None)
+        self.region = kwargs.get("region", None)
+        self.payload = kwargs.get("payload", None)
 
 
 class QuotaTicketDetails(msrest.serialization.Model):
@@ -438,19 +402,16 @@ class QuotaTicketDetails(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'quota_change_request_sub_type': {'key': 'quotaChangeRequestSubType', 'type': 'str'},
-        'quota_change_request_version': {'key': 'quotaChangeRequestVersion', 'type': 'str'},
-        'quota_change_requests': {'key': 'quotaChangeRequests', 'type': '[QuotaChangeRequest]'},
+        "quota_change_request_sub_type": {"key": "quotaChangeRequestSubType", "type": "str"},
+        "quota_change_request_version": {"key": "quotaChangeRequestVersion", "type": "str"},
+        "quota_change_requests": {"key": "quotaChangeRequests", "type": "[QuotaChangeRequest]"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(QuotaTicketDetails, self).__init__(**kwargs)
-        self.quota_change_request_sub_type = kwargs.get('quota_change_request_sub_type', None)
-        self.quota_change_request_version = kwargs.get('quota_change_request_version', None)
-        self.quota_change_requests = kwargs.get('quota_change_requests', None)
+        self.quota_change_request_sub_type = kwargs.get("quota_change_request_sub_type", None)
+        self.quota_change_request_version = kwargs.get("quota_change_request_version", None)
+        self.quota_change_requests = kwargs.get("quota_change_requests", None)
 
 
 class Service(msrest.serialization.Model):
@@ -471,29 +432,26 @@ class Service(msrest.serialization.Model):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'display_name': {'key': 'properties.displayName', 'type': 'str'},
-        'resource_types': {'key': 'properties.resourceTypes', 'type': '[str]'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "display_name": {"key": "properties.displayName", "type": "str"},
+        "resource_types": {"key": "properties.resourceTypes", "type": "[str]"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(Service, self).__init__(**kwargs)
         self.id = None
         self.name = None
         self.type = None
-        self.display_name = kwargs.get('display_name', None)
-        self.resource_types = kwargs.get('resource_types', None)
+        self.display_name = kwargs.get("display_name", None)
+        self.resource_types = kwargs.get("resource_types", None)
 
 
 class ServiceError(msrest.serialization.Model):
@@ -512,24 +470,21 @@ class ServiceError(msrest.serialization.Model):
     """
 
     _validation = {
-        'details': {'readonly': True},
+        "details": {"readonly": True},
     }
 
     _attribute_map = {
-        'code': {'key': 'code', 'type': 'str'},
-        'message': {'key': 'message', 'type': 'str'},
-        'target': {'key': 'target', 'type': 'str'},
-        'details': {'key': 'details', 'type': '[ServiceErrorDetail]'},
+        "code": {"key": "code", "type": "str"},
+        "message": {"key": "message", "type": "str"},
+        "target": {"key": "target", "type": "str"},
+        "details": {"key": "details", "type": "[ServiceErrorDetail]"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ServiceError, self).__init__(**kwargs)
-        self.code = kwargs.get('code', None)
-        self.message = kwargs.get('message', None)
-        self.target = kwargs.get('target', None)
+        self.code = kwargs.get("code", None)
+        self.message = kwargs.get("message", None)
+        self.target = kwargs.get("target", None)
         self.details = None
 
 
@@ -547,24 +502,21 @@ class ServiceErrorDetail(msrest.serialization.Model):
     """
 
     _validation = {
-        'code': {'readonly': True},
-        'message': {'readonly': True},
+        "code": {"readonly": True},
+        "message": {"readonly": True},
     }
 
     _attribute_map = {
-        'code': {'key': 'code', 'type': 'str'},
-        'message': {'key': 'message', 'type': 'str'},
-        'target': {'key': 'target', 'type': 'str'},
+        "code": {"key": "code", "type": "str"},
+        "message": {"key": "message", "type": "str"},
+        "target": {"key": "target", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ServiceErrorDetail, self).__init__(**kwargs)
         self.code = None
         self.message = None
-        self.target = kwargs.get('target', None)
+        self.target = kwargs.get("target", None)
 
 
 class ServiceLevelAgreement(msrest.serialization.Model):
@@ -581,21 +533,18 @@ class ServiceLevelAgreement(msrest.serialization.Model):
     """
 
     _validation = {
-        'start_time': {'readonly': True},
-        'expiration_time': {'readonly': True},
-        'sla_minutes': {'readonly': True},
+        "start_time": {"readonly": True},
+        "expiration_time": {"readonly": True},
+        "sla_minutes": {"readonly": True},
     }
 
     _attribute_map = {
-        'start_time': {'key': 'startTime', 'type': 'iso-8601'},
-        'expiration_time': {'key': 'expirationTime', 'type': 'iso-8601'},
-        'sla_minutes': {'key': 'slaMinutes', 'type': 'int'},
+        "start_time": {"key": "startTime", "type": "iso-8601"},
+        "expiration_time": {"key": "expirationTime", "type": "iso-8601"},
+        "sla_minutes": {"key": "slaMinutes", "type": "int"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ServiceLevelAgreement, self).__init__(**kwargs)
         self.start_time = None
         self.expiration_time = None
@@ -610,15 +559,12 @@ class ServicesListResult(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[Service]'},
+        "value": {"key": "value", "type": "[Service]"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ServicesListResult, self).__init__(**kwargs)
-        self.value = kwargs.get('value', None)
+        self.value = kwargs.get("value", None)
 
 
 class SupportEngineer(msrest.serialization.Model):
@@ -632,17 +578,14 @@ class SupportEngineer(msrest.serialization.Model):
     """
 
     _validation = {
-        'email_address': {'readonly': True},
+        "email_address": {"readonly": True},
     }
 
     _attribute_map = {
-        'email_address': {'key': 'emailAddress', 'type': 'str'},
+        "email_address": {"key": "emailAddress", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(SupportEngineer, self).__init__(**kwargs)
         self.email_address = None
 
@@ -710,72 +653,69 @@ class SupportTicketDetails(msrest.serialization.Model):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'problem_classification_display_name': {'readonly': True},
-        'enrollment_id': {'readonly': True},
-        'support_plan_type': {'readonly': True},
-        'service_display_name': {'readonly': True},
-        'status': {'readonly': True},
-        'created_date': {'readonly': True},
-        'modified_date': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
+        "problem_classification_display_name": {"readonly": True},
+        "enrollment_id": {"readonly": True},
+        "support_plan_type": {"readonly": True},
+        "service_display_name": {"readonly": True},
+        "status": {"readonly": True},
+        "created_date": {"readonly": True},
+        "modified_date": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'support_ticket_id': {'key': 'properties.supportTicketId', 'type': 'str'},
-        'description': {'key': 'properties.description', 'type': 'str'},
-        'problem_classification_id': {'key': 'properties.problemClassificationId', 'type': 'str'},
-        'problem_classification_display_name': {'key': 'properties.problemClassificationDisplayName', 'type': 'str'},
-        'severity': {'key': 'properties.severity', 'type': 'str'},
-        'enrollment_id': {'key': 'properties.enrollmentId', 'type': 'str'},
-        'require24_x7_response': {'key': 'properties.require24X7Response', 'type': 'bool'},
-        'contact_details': {'key': 'properties.contactDetails', 'type': 'ContactProfile'},
-        'service_level_agreement': {'key': 'properties.serviceLevelAgreement', 'type': 'ServiceLevelAgreement'},
-        'support_engineer': {'key': 'properties.supportEngineer', 'type': 'SupportEngineer'},
-        'support_plan_type': {'key': 'properties.supportPlanType', 'type': 'str'},
-        'title': {'key': 'properties.title', 'type': 'str'},
-        'problem_start_time': {'key': 'properties.problemStartTime', 'type': 'iso-8601'},
-        'service_id': {'key': 'properties.serviceId', 'type': 'str'},
-        'service_display_name': {'key': 'properties.serviceDisplayName', 'type': 'str'},
-        'status': {'key': 'properties.status', 'type': 'str'},
-        'created_date': {'key': 'properties.createdDate', 'type': 'iso-8601'},
-        'modified_date': {'key': 'properties.modifiedDate', 'type': 'iso-8601'},
-        'technical_ticket_details': {'key': 'properties.technicalTicketDetails', 'type': 'TechnicalTicketDetails'},
-        'quota_ticket_details': {'key': 'properties.quotaTicketDetails', 'type': 'QuotaTicketDetails'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "support_ticket_id": {"key": "properties.supportTicketId", "type": "str"},
+        "description": {"key": "properties.description", "type": "str"},
+        "problem_classification_id": {"key": "properties.problemClassificationId", "type": "str"},
+        "problem_classification_display_name": {"key": "properties.problemClassificationDisplayName", "type": "str"},
+        "severity": {"key": "properties.severity", "type": "str"},
+        "enrollment_id": {"key": "properties.enrollmentId", "type": "str"},
+        "require24_x7_response": {"key": "properties.require24X7Response", "type": "bool"},
+        "contact_details": {"key": "properties.contactDetails", "type": "ContactProfile"},
+        "service_level_agreement": {"key": "properties.serviceLevelAgreement", "type": "ServiceLevelAgreement"},
+        "support_engineer": {"key": "properties.supportEngineer", "type": "SupportEngineer"},
+        "support_plan_type": {"key": "properties.supportPlanType", "type": "str"},
+        "title": {"key": "properties.title", "type": "str"},
+        "problem_start_time": {"key": "properties.problemStartTime", "type": "iso-8601"},
+        "service_id": {"key": "properties.serviceId", "type": "str"},
+        "service_display_name": {"key": "properties.serviceDisplayName", "type": "str"},
+        "status": {"key": "properties.status", "type": "str"},
+        "created_date": {"key": "properties.createdDate", "type": "iso-8601"},
+        "modified_date": {"key": "properties.modifiedDate", "type": "iso-8601"},
+        "technical_ticket_details": {"key": "properties.technicalTicketDetails", "type": "TechnicalTicketDetails"},
+        "quota_ticket_details": {"key": "properties.quotaTicketDetails", "type": "QuotaTicketDetails"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(SupportTicketDetails, self).__init__(**kwargs)
         self.id = None
         self.name = None
         self.type = None
-        self.support_ticket_id = kwargs.get('support_ticket_id', None)
-        self.description = kwargs.get('description', None)
-        self.problem_classification_id = kwargs.get('problem_classification_id', None)
+        self.support_ticket_id = kwargs.get("support_ticket_id", None)
+        self.description = kwargs.get("description", None)
+        self.problem_classification_id = kwargs.get("problem_classification_id", None)
         self.problem_classification_display_name = None
-        self.severity = kwargs.get('severity', None)
+        self.severity = kwargs.get("severity", None)
         self.enrollment_id = None
-        self.require24_x7_response = kwargs.get('require24_x7_response', None)
-        self.contact_details = kwargs.get('contact_details', None)
-        self.service_level_agreement = kwargs.get('service_level_agreement', None)
-        self.support_engineer = kwargs.get('support_engineer', None)
+        self.require24_x7_response = kwargs.get("require24_x7_response", None)
+        self.contact_details = kwargs.get("contact_details", None)
+        self.service_level_agreement = kwargs.get("service_level_agreement", None)
+        self.support_engineer = kwargs.get("support_engineer", None)
         self.support_plan_type = None
-        self.title = kwargs.get('title', None)
-        self.problem_start_time = kwargs.get('problem_start_time', None)
-        self.service_id = kwargs.get('service_id', None)
+        self.title = kwargs.get("title", None)
+        self.problem_start_time = kwargs.get("problem_start_time", None)
+        self.service_id = kwargs.get("service_id", None)
         self.service_display_name = None
         self.status = None
         self.created_date = None
         self.modified_date = None
-        self.technical_ticket_details = kwargs.get('technical_ticket_details', None)
-        self.quota_ticket_details = kwargs.get('quota_ticket_details', None)
+        self.technical_ticket_details = kwargs.get("technical_ticket_details", None)
+        self.quota_ticket_details = kwargs.get("quota_ticket_details", None)
 
 
 class SupportTicketsListResult(msrest.serialization.Model):
@@ -788,17 +728,14 @@ class SupportTicketsListResult(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[SupportTicketDetails]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[SupportTicketDetails]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(SupportTicketsListResult, self).__init__(**kwargs)
-        self.value = kwargs.get('value', None)
-        self.next_link = kwargs.get('next_link', None)
+        self.value = kwargs.get("value", None)
+        self.next_link = kwargs.get("next_link", None)
 
 
 class TechnicalTicketDetails(msrest.serialization.Model):
@@ -810,15 +747,12 @@ class TechnicalTicketDetails(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'resource_id': {'key': 'resourceId', 'type': 'str'},
+        "resource_id": {"key": "resourceId", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(TechnicalTicketDetails, self).__init__(**kwargs)
-        self.resource_id = kwargs.get('resource_id', None)
+        self.resource_id = kwargs.get("resource_id", None)
 
 
 class UpdateContactProfile(msrest.serialization.Model):
@@ -854,31 +788,28 @@ class UpdateContactProfile(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'first_name': {'key': 'firstName', 'type': 'str'},
-        'last_name': {'key': 'lastName', 'type': 'str'},
-        'preferred_contact_method': {'key': 'preferredContactMethod', 'type': 'str'},
-        'primary_email_address': {'key': 'primaryEmailAddress', 'type': 'str'},
-        'additional_email_addresses': {'key': 'additionalEmailAddresses', 'type': '[str]'},
-        'phone_number': {'key': 'phoneNumber', 'type': 'str'},
-        'preferred_time_zone': {'key': 'preferredTimeZone', 'type': 'str'},
-        'country': {'key': 'country', 'type': 'str'},
-        'preferred_support_language': {'key': 'preferredSupportLanguage', 'type': 'str'},
+        "first_name": {"key": "firstName", "type": "str"},
+        "last_name": {"key": "lastName", "type": "str"},
+        "preferred_contact_method": {"key": "preferredContactMethod", "type": "str"},
+        "primary_email_address": {"key": "primaryEmailAddress", "type": "str"},
+        "additional_email_addresses": {"key": "additionalEmailAddresses", "type": "[str]"},
+        "phone_number": {"key": "phoneNumber", "type": "str"},
+        "preferred_time_zone": {"key": "preferredTimeZone", "type": "str"},
+        "country": {"key": "country", "type": "str"},
+        "preferred_support_language": {"key": "preferredSupportLanguage", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(UpdateContactProfile, self).__init__(**kwargs)
-        self.first_name = kwargs.get('first_name', None)
-        self.last_name = kwargs.get('last_name', None)
-        self.preferred_contact_method = kwargs.get('preferred_contact_method', None)
-        self.primary_email_address = kwargs.get('primary_email_address', None)
-        self.additional_email_addresses = kwargs.get('additional_email_addresses', None)
-        self.phone_number = kwargs.get('phone_number', None)
-        self.preferred_time_zone = kwargs.get('preferred_time_zone', None)
-        self.country = kwargs.get('country', None)
-        self.preferred_support_language = kwargs.get('preferred_support_language', None)
+        self.first_name = kwargs.get("first_name", None)
+        self.last_name = kwargs.get("last_name", None)
+        self.preferred_contact_method = kwargs.get("preferred_contact_method", None)
+        self.primary_email_address = kwargs.get("primary_email_address", None)
+        self.additional_email_addresses = kwargs.get("additional_email_addresses", None)
+        self.phone_number = kwargs.get("phone_number", None)
+        self.preferred_time_zone = kwargs.get("preferred_time_zone", None)
+        self.country = kwargs.get("country", None)
+        self.preferred_support_language = kwargs.get("preferred_support_language", None)
 
 
 class UpdateSupportTicket(msrest.serialization.Model):
@@ -894,16 +825,13 @@ class UpdateSupportTicket(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'severity': {'key': 'severity', 'type': 'str'},
-        'status': {'key': 'status', 'type': 'str'},
-        'contact_details': {'key': 'contactDetails', 'type': 'UpdateContactProfile'},
+        "severity": {"key": "severity", "type": "str"},
+        "status": {"key": "status", "type": "str"},
+        "contact_details": {"key": "contactDetails", "type": "UpdateContactProfile"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(UpdateSupportTicket, self).__init__(**kwargs)
-        self.severity = kwargs.get('severity', None)
-        self.status = kwargs.get('status', None)
-        self.contact_details = kwargs.get('contact_details', None)
+        self.severity = kwargs.get("severity", None)
+        self.status = kwargs.get("status", None)
+        self.contact_details = kwargs.get("contact_details", None)
