@@ -20,8 +20,9 @@ if TYPE_CHECKING:
     # pylint: disable=unused-import,ungrouped-imports
     from typing import Any, Callable, Dict, Generic, Iterable, Optional, TypeVar, Union
 
-    T = TypeVar('T')
+    T = TypeVar("T")
     ClsType = Optional[Callable[[PipelineResponse[HttpRequest, HttpResponse], T, Dict[str, Any]], Any]]
+
 
 class AccountsOperations(object):
     """AccountsOperations operations.
@@ -66,33 +67,42 @@ class AccountsOperations(object):
         :rtype: ~automanage_client.models.Account
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.Account"]
+        cls = kwargs.pop("cls", None)  # type: ClsType["models.Account"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
-        error_map.update(kwargs.pop('error_map', {}))
+        error_map.update(kwargs.pop("error_map", {}))
         api_version = "2020-06-30-preview"
         content_type = kwargs.pop("content_type", "application/json")
 
         # Construct URL
-        url = self.create_or_update.metadata['url']  # type: ignore
+        url = self.create_or_update.metadata["url"]  # type: ignore
         path_format_arguments = {
-            'accountName': self._serialize.url("account_name", account_name, 'str'),
-            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
+            "accountName": self._serialize.url("account_name", account_name, "str"),
+            "subscriptionId": self._serialize.url(
+                "self._config.subscription_id", self._config.subscription_id, "str", min_length=1
+            ),
+            "resourceGroupName": self._serialize.url(
+                "resource_group_name",
+                resource_group_name,
+                "str",
+                max_length=90,
+                min_length=1,
+                pattern=r"^[-\w\._\(\)]+$",
+            ),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+        query_parameters["api-version"] = self._serialize.query("api_version", api_version, "str")
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
-        header_parameters['Content-Type'] = self._serialize.header("content_type", content_type, 'str')
-        header_parameters['Accept'] = 'application/json'
+        header_parameters["Content-Type"] = self._serialize.header("content_type", content_type, "str")
+        header_parameters["Accept"] = "application/json"
 
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(parameters, 'Account')
-        body_content_kwargs['content'] = body_content
+        body_content = self._serialize.body(parameters, "Account")
+        body_content_kwargs["content"] = body_content
         request = self._client.put(url, query_parameters, header_parameters, **body_content_kwargs)
 
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
@@ -104,16 +114,17 @@ class AccountsOperations(object):
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         if response.status_code == 200:
-            deserialized = self._deserialize('Account', pipeline_response)
+            deserialized = self._deserialize("Account", pipeline_response)
 
         if response.status_code == 201:
-            deserialized = self._deserialize('Account', pipeline_response)
+            deserialized = self._deserialize("Account", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automanage/accounts/{accountName}'}  # type: ignore
+
+    create_or_update.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automanage/accounts/{accountName}"}  # type: ignore
 
     def get(
         self,
@@ -133,27 +144,36 @@ class AccountsOperations(object):
         :rtype: ~automanage_client.models.Account
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.Account"]
+        cls = kwargs.pop("cls", None)  # type: ClsType["models.Account"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
-        error_map.update(kwargs.pop('error_map', {}))
+        error_map.update(kwargs.pop("error_map", {}))
         api_version = "2020-06-30-preview"
 
         # Construct URL
-        url = self.get.metadata['url']  # type: ignore
+        url = self.get.metadata["url"]  # type: ignore
         path_format_arguments = {
-            'accountName': self._serialize.url("account_name", account_name, 'str'),
-            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
+            "accountName": self._serialize.url("account_name", account_name, "str"),
+            "subscriptionId": self._serialize.url(
+                "self._config.subscription_id", self._config.subscription_id, "str", min_length=1
+            ),
+            "resourceGroupName": self._serialize.url(
+                "resource_group_name",
+                resource_group_name,
+                "str",
+                max_length=90,
+                min_length=1,
+                pattern=r"^[-\w\._\(\)]+$",
+            ),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+        query_parameters["api-version"] = self._serialize.query("api_version", api_version, "str")
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
-        header_parameters['Accept'] = 'application/json'
+        header_parameters["Accept"] = "application/json"
 
         request = self._client.get(url, query_parameters, header_parameters)
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
@@ -164,13 +184,14 @@ class AccountsOperations(object):
             error = self._deserialize(models.ErrorResponse, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize('Account', pipeline_response)
+        deserialized = self._deserialize("Account", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automanage/accounts/{accountName}'}  # type: ignore
+
+    get.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automanage/accounts/{accountName}"}  # type: ignore
 
     def delete(
         self,
@@ -190,23 +211,32 @@ class AccountsOperations(object):
         :rtype: None
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[None]
+        cls = kwargs.pop("cls", None)  # type: ClsType[None]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
-        error_map.update(kwargs.pop('error_map', {}))
+        error_map.update(kwargs.pop("error_map", {}))
         api_version = "2020-06-30-preview"
 
         # Construct URL
-        url = self.delete.metadata['url']  # type: ignore
+        url = self.delete.metadata["url"]  # type: ignore
         path_format_arguments = {
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
-            'accountName': self._serialize.url("account_name", account_name, 'str'),
-            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
+            "resourceGroupName": self._serialize.url(
+                "resource_group_name",
+                resource_group_name,
+                "str",
+                max_length=90,
+                min_length=1,
+                pattern=r"^[-\w\._\(\)]+$",
+            ),
+            "accountName": self._serialize.url("account_name", account_name, "str"),
+            "subscriptionId": self._serialize.url(
+                "self._config.subscription_id", self._config.subscription_id, "str", min_length=1
+            ),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+        query_parameters["api-version"] = self._serialize.query("api_version", api_version, "str")
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
@@ -223,7 +253,7 @@ class AccountsOperations(object):
         if cls:
             return cls(pipeline_response, None, {})
 
-    delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automanage/accounts/{accountName}'}  # type: ignore
+    delete.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automanage/accounts/{accountName}"}  # type: ignore
 
     def update(
         self,
@@ -246,33 +276,42 @@ class AccountsOperations(object):
         :rtype: ~automanage_client.models.Account
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.Account"]
+        cls = kwargs.pop("cls", None)  # type: ClsType["models.Account"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
-        error_map.update(kwargs.pop('error_map', {}))
+        error_map.update(kwargs.pop("error_map", {}))
         api_version = "2020-06-30-preview"
         content_type = kwargs.pop("content_type", "application/json")
 
         # Construct URL
-        url = self.update.metadata['url']  # type: ignore
+        url = self.update.metadata["url"]  # type: ignore
         path_format_arguments = {
-            'accountName': self._serialize.url("account_name", account_name, 'str'),
-            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
+            "accountName": self._serialize.url("account_name", account_name, "str"),
+            "subscriptionId": self._serialize.url(
+                "self._config.subscription_id", self._config.subscription_id, "str", min_length=1
+            ),
+            "resourceGroupName": self._serialize.url(
+                "resource_group_name",
+                resource_group_name,
+                "str",
+                max_length=90,
+                min_length=1,
+                pattern=r"^[-\w\._\(\)]+$",
+            ),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+        query_parameters["api-version"] = self._serialize.query("api_version", api_version, "str")
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
-        header_parameters['Content-Type'] = self._serialize.header("content_type", content_type, 'str')
-        header_parameters['Accept'] = 'application/json'
+        header_parameters["Content-Type"] = self._serialize.header("content_type", content_type, "str")
+        header_parameters["Accept"] = "application/json"
 
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(parameters, 'AccountUpdate')
-        body_content_kwargs['content'] = body_content
+        body_content = self._serialize.body(parameters, "AccountUpdate")
+        body_content_kwargs["content"] = body_content
         request = self._client.patch(url, query_parameters, header_parameters, **body_content_kwargs)
 
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
@@ -283,13 +322,14 @@ class AccountsOperations(object):
             error = self._deserialize(models.ErrorResponse, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize('Account', pipeline_response)
+        deserialized = self._deserialize("Account", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automanage/accounts/{accountName}'}  # type: ignore
+
+    update.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automanage/accounts/{accountName}"}  # type: ignore
 
     def list_by_resource_group(
         self,
@@ -306,27 +346,36 @@ class AccountsOperations(object):
         :rtype: ~azure.core.paging.ItemPaged[~automanage_client.models.AccountList]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.AccountList"]
+        cls = kwargs.pop("cls", None)  # type: ClsType["models.AccountList"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
-        error_map.update(kwargs.pop('error_map', {}))
+        error_map.update(kwargs.pop("error_map", {}))
         api_version = "2020-06-30-preview"
 
         def prepare_request(next_link=None):
             # Construct headers
             header_parameters = {}  # type: Dict[str, Any]
-            header_parameters['Accept'] = 'application/json'
+            header_parameters["Accept"] = "application/json"
 
             if not next_link:
                 # Construct URL
-                url = self.list_by_resource_group.metadata['url']  # type: ignore
+                url = self.list_by_resource_group.metadata["url"]  # type: ignore
                 path_format_arguments = {
-                    'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
-                    'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._\(\)]+$'),
+                    "subscriptionId": self._serialize.url(
+                        "self._config.subscription_id", self._config.subscription_id, "str", min_length=1
+                    ),
+                    "resourceGroupName": self._serialize.url(
+                        "resource_group_name",
+                        resource_group_name,
+                        "str",
+                        max_length=90,
+                        min_length=1,
+                        pattern=r"^[-\w\._\(\)]+$",
+                    ),
                 }
                 url = self._client.format_url(url, **path_format_arguments)
                 # Construct parameters
                 query_parameters = {}  # type: Dict[str, Any]
-                query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+                query_parameters["api-version"] = self._serialize.query("api_version", api_version, "str")
 
                 request = self._client.get(url, query_parameters, header_parameters)
             else:
@@ -336,7 +385,7 @@ class AccountsOperations(object):
             return request
 
         def extract_data(pipeline_response):
-            deserialized = self._deserialize('AccountList', pipeline_response)
+            deserialized = self._deserialize("AccountList", pipeline_response)
             list_of_elem = deserialized.value
             if cls:
                 list_of_elem = cls(list_of_elem)
@@ -355,14 +404,12 @@ class AccountsOperations(object):
 
             return pipeline_response
 
-        return ItemPaged(
-            get_next, extract_data
-        )
-    list_by_resource_group.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automanage/accounts'}  # type: ignore
+        return ItemPaged(get_next, extract_data)
+
+    list_by_resource_group.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automanage/accounts"}  # type: ignore
 
     def list_by_subscription(
-        self,
-        **kwargs  # type: Any
+        self, **kwargs  # type: Any
     ):
         # type: (...) -> Iterable["models.AccountList"]
         """Retrieve a list of Automanage accounts within a subscription.
@@ -372,26 +419,28 @@ class AccountsOperations(object):
         :rtype: ~azure.core.paging.ItemPaged[~automanage_client.models.AccountList]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.AccountList"]
+        cls = kwargs.pop("cls", None)  # type: ClsType["models.AccountList"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
-        error_map.update(kwargs.pop('error_map', {}))
+        error_map.update(kwargs.pop("error_map", {}))
         api_version = "2020-06-30-preview"
 
         def prepare_request(next_link=None):
             # Construct headers
             header_parameters = {}  # type: Dict[str, Any]
-            header_parameters['Accept'] = 'application/json'
+            header_parameters["Accept"] = "application/json"
 
             if not next_link:
                 # Construct URL
-                url = self.list_by_subscription.metadata['url']  # type: ignore
+                url = self.list_by_subscription.metadata["url"]  # type: ignore
                 path_format_arguments = {
-                    'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str', min_length=1),
+                    "subscriptionId": self._serialize.url(
+                        "self._config.subscription_id", self._config.subscription_id, "str", min_length=1
+                    ),
                 }
                 url = self._client.format_url(url, **path_format_arguments)
                 # Construct parameters
                 query_parameters = {}  # type: Dict[str, Any]
-                query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+                query_parameters["api-version"] = self._serialize.query("api_version", api_version, "str")
 
                 request = self._client.get(url, query_parameters, header_parameters)
             else:
@@ -401,7 +450,7 @@ class AccountsOperations(object):
             return request
 
         def extract_data(pipeline_response):
-            deserialized = self._deserialize('AccountList', pipeline_response)
+            deserialized = self._deserialize("AccountList", pipeline_response)
             list_of_elem = deserialized.value
             if cls:
                 list_of_elem = cls(list_of_elem)
@@ -420,7 +469,6 @@ class AccountsOperations(object):
 
             return pipeline_response
 
-        return ItemPaged(
-            get_next, extract_data
-        )
-    list_by_subscription.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Automanage/accounts'}  # type: ignore
+        return ItemPaged(get_next, extract_data)
+
+    list_by_subscription.metadata = {"url": "/subscriptions/{subscriptionId}/providers/Microsoft.Automanage/accounts"}  # type: ignore

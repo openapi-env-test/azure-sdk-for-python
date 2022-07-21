@@ -16,8 +16,9 @@ from azure.mgmt.core.exceptions import ARMErrorFormat
 
 from ... import models
 
-T = TypeVar('T')
+T = TypeVar("T")
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
+
 
 class Operations:
     """Operations async operations.
@@ -41,10 +42,7 @@ class Operations:
         self._deserialize = deserializer
         self._config = config
 
-    def list(
-        self,
-        **kwargs
-    ) -> AsyncIterable["models.OperationList"]:
+    def list(self, **kwargs) -> AsyncIterable["models.OperationList"]:
         """Lists all of the available Automanage REST API operations.
 
         :keyword callable cls: A custom type or function that will be passed the direct response
@@ -52,22 +50,22 @@ class Operations:
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~automanage_client.models.OperationList]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["models.OperationList"]
+        cls = kwargs.pop("cls", None)  # type: ClsType["models.OperationList"]
         error_map = {404: ResourceNotFoundError, 409: ResourceExistsError}
-        error_map.update(kwargs.pop('error_map', {}))
+        error_map.update(kwargs.pop("error_map", {}))
         api_version = "2020-06-30-preview"
 
         def prepare_request(next_link=None):
             # Construct headers
             header_parameters = {}  # type: Dict[str, Any]
-            header_parameters['Accept'] = 'application/json'
+            header_parameters["Accept"] = "application/json"
 
             if not next_link:
                 # Construct URL
-                url = self.list.metadata['url']  # type: ignore
+                url = self.list.metadata["url"]  # type: ignore
                 # Construct parameters
                 query_parameters = {}  # type: Dict[str, Any]
-                query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+                query_parameters["api-version"] = self._serialize.query("api_version", api_version, "str")
 
                 request = self._client.get(url, query_parameters, header_parameters)
             else:
@@ -77,7 +75,7 @@ class Operations:
             return request
 
         async def extract_data(pipeline_response):
-            deserialized = self._deserialize('OperationList', pipeline_response)
+            deserialized = self._deserialize("OperationList", pipeline_response)
             list_of_elem = deserialized.value
             if cls:
                 list_of_elem = cls(list_of_elem)
@@ -96,7 +94,6 @@ class Operations:
 
             return pipeline_response
 
-        return AsyncItemPaged(
-            get_next, extract_data
-        )
-    list.metadata = {'url': '/providers/Microsoft.Automanage/operations'}  # type: ignore
+        return AsyncItemPaged(get_next, extract_data)
+
+    list.metadata = {"url": "/providers/Microsoft.Automanage/operations"}  # type: ignore

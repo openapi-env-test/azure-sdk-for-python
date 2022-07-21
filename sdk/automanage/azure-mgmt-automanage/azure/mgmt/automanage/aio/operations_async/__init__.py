@@ -12,8 +12,8 @@ from ._configuration_profile_preferences_operations_async import ConfigurationPr
 from ._operations_async import Operations
 
 __all__ = [
-    'AccountsOperations',
-    'ConfigurationProfileAssignmentsOperations',
-    'ConfigurationProfilePreferencesOperations',
-    'Operations',
+    "AccountsOperations",
+    "ConfigurationProfileAssignmentsOperations",
+    "ConfigurationProfilePreferencesOperations",
+    "Operations",
 ]
