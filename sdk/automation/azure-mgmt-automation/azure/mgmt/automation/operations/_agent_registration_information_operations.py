@@ -8,7 +8,13 @@
 from typing import TYPE_CHECKING
 import warnings
 
-from azure.core.exceptions import ClientAuthenticationError, HttpResponseError, ResourceExistsError, ResourceNotFoundError, map_error
+from azure.core.exceptions import (
+    ClientAuthenticationError,
+    HttpResponseError,
+    ResourceExistsError,
+    ResourceNotFoundError,
+    map_error,
+)
 from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import HttpRequest, HttpResponse
 from azure.mgmt.core.exceptions import ARMErrorFormat
@@ -19,8 +25,9 @@ if TYPE_CHECKING:
     # pylint: disable=unused-import,ungrouped-imports
     from typing import Any, Callable, Dict, Generic, Optional, TypeVar
 
-    T = TypeVar('T')
+    T = TypeVar("T")
     ClsType = Optional[Callable[[PipelineResponse[HttpRequest, HttpResponse], T, Dict[str, Any]], Any]]
+
 
 class AgentRegistrationInformationOperations(object):
     """AgentRegistrationInformationOperations operations.
@@ -62,30 +69,30 @@ class AgentRegistrationInformationOperations(object):
         :rtype: ~azure.mgmt.automation.models.AgentRegistration
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.AgentRegistration"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
+        cls = kwargs.pop("cls", None)  # type: ClsType["_models.AgentRegistration"]
+        error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop("error_map", {}))
         api_version = "2019-06-01"
         accept = "application/json"
 
         # Construct URL
-        url = self.get.metadata['url']  # type: ignore
+        url = self.get.metadata["url"]  # type: ignore
         path_format_arguments = {
-            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._]+$'),
-            'automationAccountName': self._serialize.url("automation_account_name", automation_account_name, 'str'),
+            "subscriptionId": self._serialize.url("self._config.subscription_id", self._config.subscription_id, "str"),
+            "resourceGroupName": self._serialize.url(
+                "resource_group_name", resource_group_name, "str", max_length=90, min_length=1, pattern=r"^[-\w\._]+$"
+            ),
+            "automationAccountName": self._serialize.url("automation_account_name", automation_account_name, "str"),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+        query_parameters["api-version"] = self._serialize.query("api_version", api_version, "str")
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
-        header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
+        header_parameters["Accept"] = self._serialize.header("accept", accept, "str")
 
         request = self._client.get(url, query_parameters, header_parameters)
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
@@ -96,13 +103,14 @@ class AgentRegistrationInformationOperations(object):
             error = self._deserialize(_models.ErrorResponse, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize('AgentRegistration', pipeline_response)
+        deserialized = self._deserialize("AgentRegistration", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/agentRegistrationInformation'}  # type: ignore
+
+    get.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/agentRegistrationInformation"}  # type: ignore
 
     def regenerate_key(
         self,
@@ -125,36 +133,36 @@ class AgentRegistrationInformationOperations(object):
         :rtype: ~azure.mgmt.automation.models.AgentRegistration
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.AgentRegistration"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
+        cls = kwargs.pop("cls", None)  # type: ClsType["_models.AgentRegistration"]
+        error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop("error_map", {}))
         api_version = "2019-06-01"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"
 
         # Construct URL
-        url = self.regenerate_key.metadata['url']  # type: ignore
+        url = self.regenerate_key.metadata["url"]  # type: ignore
         path_format_arguments = {
-            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._]+$'),
-            'automationAccountName': self._serialize.url("automation_account_name", automation_account_name, 'str'),
+            "subscriptionId": self._serialize.url("self._config.subscription_id", self._config.subscription_id, "str"),
+            "resourceGroupName": self._serialize.url(
+                "resource_group_name", resource_group_name, "str", max_length=90, min_length=1, pattern=r"^[-\w\._]+$"
+            ),
+            "automationAccountName": self._serialize.url("automation_account_name", automation_account_name, "str"),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+        query_parameters["api-version"] = self._serialize.query("api_version", api_version, "str")
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
-        header_parameters['Content-Type'] = self._serialize.header("content_type", content_type, 'str')
-        header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
+        header_parameters["Content-Type"] = self._serialize.header("content_type", content_type, "str")
+        header_parameters["Accept"] = self._serialize.header("accept", accept, "str")
 
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(parameters, 'AgentRegistrationRegenerateKeyParameter')
-        body_content_kwargs['content'] = body_content
+        body_content = self._serialize.body(parameters, "AgentRegistrationRegenerateKeyParameter")
+        body_content_kwargs["content"] = body_content
         request = self._client.post(url, query_parameters, header_parameters, **body_content_kwargs)
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
@@ -164,10 +172,11 @@ class AgentRegistrationInformationOperations(object):
             error = self._deserialize(_models.ErrorResponse, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize('AgentRegistration', pipeline_response)
+        deserialized = self._deserialize("AgentRegistration", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    regenerate_key.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/agentRegistrationInformation/regenerateKey'}  # type: ignore
+
+    regenerate_key.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/agentRegistrationInformation/regenerateKey"}  # type: ignore

@@ -8,7 +8,13 @@
 from typing import TYPE_CHECKING
 import warnings
 
-from azure.core.exceptions import ClientAuthenticationError, HttpResponseError, ResourceExistsError, ResourceNotFoundError, map_error
+from azure.core.exceptions import (
+    ClientAuthenticationError,
+    HttpResponseError,
+    ResourceExistsError,
+    ResourceNotFoundError,
+    map_error,
+)
 from azure.core.paging import ItemPaged
 from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import HttpRequest, HttpResponse
@@ -20,8 +26,9 @@ if TYPE_CHECKING:
     # pylint: disable=unused-import,ungrouped-imports
     from typing import Any, Callable, Dict, Generic, Iterable, Optional, TypeVar, Union
 
-    T = TypeVar('T')
+    T = TypeVar("T")
     ClsType = Optional[Callable[[PipelineResponse[HttpRequest, HttpResponse], T, Dict[str, Any]], Any]]
+
 
 class DscConfigurationOperations(object):
     """DscConfigurationOperations operations.
@@ -66,31 +73,31 @@ class DscConfigurationOperations(object):
         :rtype: None
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[None]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
+        cls = kwargs.pop("cls", None)  # type: ClsType[None]
+        error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop("error_map", {}))
         api_version = "2019-06-01"
         accept = "application/json"
 
         # Construct URL
-        url = self.delete.metadata['url']  # type: ignore
+        url = self.delete.metadata["url"]  # type: ignore
         path_format_arguments = {
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._]+$'),
-            'automationAccountName': self._serialize.url("automation_account_name", automation_account_name, 'str'),
-            'configurationName': self._serialize.url("configuration_name", configuration_name, 'str'),
-            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
+            "resourceGroupName": self._serialize.url(
+                "resource_group_name", resource_group_name, "str", max_length=90, min_length=1, pattern=r"^[-\w\._]+$"
+            ),
+            "automationAccountName": self._serialize.url("automation_account_name", automation_account_name, "str"),
+            "configurationName": self._serialize.url("configuration_name", configuration_name, "str"),
+            "subscriptionId": self._serialize.url("self._config.subscription_id", self._config.subscription_id, "str"),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+        query_parameters["api-version"] = self._serialize.query("api_version", api_version, "str")
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
-        header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
+        header_parameters["Accept"] = self._serialize.header("accept", accept, "str")
 
         request = self._client.delete(url, query_parameters, header_parameters)
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
@@ -104,7 +111,7 @@ class DscConfigurationOperations(object):
         if cls:
             return cls(pipeline_response, None, {})
 
-    delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/configurations/{configurationName}'}  # type: ignore
+    delete.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/configurations/{configurationName}"}  # type: ignore
 
     def get(
         self,
@@ -127,31 +134,31 @@ class DscConfigurationOperations(object):
         :rtype: ~azure.mgmt.automation.models.DscConfiguration
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.DscConfiguration"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
+        cls = kwargs.pop("cls", None)  # type: ClsType["_models.DscConfiguration"]
+        error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop("error_map", {}))
         api_version = "2019-06-01"
         accept = "application/json"
 
         # Construct URL
-        url = self.get.metadata['url']  # type: ignore
+        url = self.get.metadata["url"]  # type: ignore
         path_format_arguments = {
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._]+$'),
-            'automationAccountName': self._serialize.url("automation_account_name", automation_account_name, 'str'),
-            'configurationName': self._serialize.url("configuration_name", configuration_name, 'str'),
-            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
+            "resourceGroupName": self._serialize.url(
+                "resource_group_name", resource_group_name, "str", max_length=90, min_length=1, pattern=r"^[-\w\._]+$"
+            ),
+            "automationAccountName": self._serialize.url("automation_account_name", automation_account_name, "str"),
+            "configurationName": self._serialize.url("configuration_name", configuration_name, "str"),
+            "subscriptionId": self._serialize.url("self._config.subscription_id", self._config.subscription_id, "str"),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+        query_parameters["api-version"] = self._serialize.query("api_version", api_version, "str")
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
-        header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
+        header_parameters["Accept"] = self._serialize.header("accept", accept, "str")
 
         request = self._client.get(url, query_parameters, header_parameters)
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
@@ -162,13 +169,14 @@ class DscConfigurationOperations(object):
             error = self._deserialize(_models.ErrorResponse, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize('DscConfiguration', pipeline_response)
+        deserialized = self._deserialize("DscConfiguration", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/configurations/{configurationName}'}  # type: ignore
+
+    get.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/configurations/{configurationName}"}  # type: ignore
 
     def create_or_update(
         self,
@@ -196,45 +204,45 @@ class DscConfigurationOperations(object):
         :rtype: ~azure.mgmt.automation.models.DscConfiguration
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.DscConfiguration"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
+        cls = kwargs.pop("cls", None)  # type: ClsType["_models.DscConfiguration"]
+        error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop("error_map", {}))
         api_version = "2019-06-01"
         content_type = kwargs.pop("content_type", "text/plain; charset=utf-8")
         accept = "application/json"
 
         # Construct URL
-        url = self.create_or_update.metadata['url']  # type: ignore
+        url = self.create_or_update.metadata["url"]  # type: ignore
         path_format_arguments = {
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._]+$'),
-            'automationAccountName': self._serialize.url("automation_account_name", automation_account_name, 'str'),
-            'configurationName': self._serialize.url("configuration_name", configuration_name, 'str'),
-            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
+            "resourceGroupName": self._serialize.url(
+                "resource_group_name", resource_group_name, "str", max_length=90, min_length=1, pattern=r"^[-\w\._]+$"
+            ),
+            "automationAccountName": self._serialize.url("automation_account_name", automation_account_name, "str"),
+            "configurationName": self._serialize.url("configuration_name", configuration_name, "str"),
+            "subscriptionId": self._serialize.url("self._config.subscription_id", self._config.subscription_id, "str"),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+        query_parameters["api-version"] = self._serialize.query("api_version", api_version, "str")
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
-        header_parameters['Content-Type'] = self._serialize.header("content_type", content_type, 'str')
-        header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
+        header_parameters["Content-Type"] = self._serialize.header("content_type", content_type, "str")
+        header_parameters["Accept"] = self._serialize.header("accept", accept, "str")
 
         body_content_kwargs = {}  # type: Dict[str, Any]
-        if header_parameters['Content-Type'].split(";")[0] in ['text/plain']:
-            body_content = self._serialize.body(parameters, 'str')
-            body_content_kwargs['content'] = body_content
-        elif header_parameters['Content-Type'].split(";")[0] in ['application/json']:
-            body_content = self._serialize.body(parameters, 'DscConfigurationCreateOrUpdateParameters')
-            body_content_kwargs['content'] = body_content
+        if header_parameters["Content-Type"].split(";")[0] in ["text/plain"]:
+            body_content = self._serialize.body(parameters, "str")
+            body_content_kwargs["content"] = body_content
+        elif header_parameters["Content-Type"].split(";")[0] in ["application/json"]:
+            body_content = self._serialize.body(parameters, "DscConfigurationCreateOrUpdateParameters")
+            body_content_kwargs["content"] = body_content
         else:
             raise ValueError(
                 "The content_type '{}' is not one of the allowed values: "
-                "['text/plain; charset=utf-8', 'application/json']".format(header_parameters['Content-Type'])
+                "['text/plain; charset=utf-8', 'application/json']".format(header_parameters["Content-Type"])
             )
         request = self._client.put(url, query_parameters, header_parameters, **body_content_kwargs)
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
@@ -246,16 +254,17 @@ class DscConfigurationOperations(object):
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         if response.status_code == 200:
-            deserialized = self._deserialize('DscConfiguration', pipeline_response)
+            deserialized = self._deserialize("DscConfiguration", pipeline_response)
 
         if response.status_code == 201:
-            deserialized = self._deserialize('DscConfiguration', pipeline_response)
+            deserialized = self._deserialize("DscConfiguration", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/configurations/{configurationName}'}  # type: ignore
+
+    create_or_update.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/configurations/{configurationName}"}  # type: ignore
 
     def update(
         self,
@@ -283,48 +292,48 @@ class DscConfigurationOperations(object):
         :rtype: ~azure.mgmt.automation.models.DscConfiguration
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.DscConfiguration"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
+        cls = kwargs.pop("cls", None)  # type: ClsType["_models.DscConfiguration"]
+        error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop("error_map", {}))
         api_version = "2019-06-01"
         content_type = kwargs.pop("content_type", "text/plain; charset=utf-8")
         accept = "application/json"
 
         # Construct URL
-        url = self.update.metadata['url']  # type: ignore
+        url = self.update.metadata["url"]  # type: ignore
         path_format_arguments = {
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._]+$'),
-            'automationAccountName': self._serialize.url("automation_account_name", automation_account_name, 'str'),
-            'configurationName': self._serialize.url("configuration_name", configuration_name, 'str'),
-            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
+            "resourceGroupName": self._serialize.url(
+                "resource_group_name", resource_group_name, "str", max_length=90, min_length=1, pattern=r"^[-\w\._]+$"
+            ),
+            "automationAccountName": self._serialize.url("automation_account_name", automation_account_name, "str"),
+            "configurationName": self._serialize.url("configuration_name", configuration_name, "str"),
+            "subscriptionId": self._serialize.url("self._config.subscription_id", self._config.subscription_id, "str"),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+        query_parameters["api-version"] = self._serialize.query("api_version", api_version, "str")
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
-        header_parameters['Content-Type'] = self._serialize.header("content_type", content_type, 'str')
-        header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
+        header_parameters["Content-Type"] = self._serialize.header("content_type", content_type, "str")
+        header_parameters["Accept"] = self._serialize.header("accept", accept, "str")
 
         body_content_kwargs = {}  # type: Dict[str, Any]
-        if header_parameters['Content-Type'].split(";")[0] in ['text/plain']:
-            body_content = self._serialize.body(parameters, 'str')
-            body_content_kwargs['content'] = body_content
-        elif header_parameters['Content-Type'].split(";")[0] in ['application/json']:
+        if header_parameters["Content-Type"].split(";")[0] in ["text/plain"]:
+            body_content = self._serialize.body(parameters, "str")
+            body_content_kwargs["content"] = body_content
+        elif header_parameters["Content-Type"].split(";")[0] in ["application/json"]:
             if parameters is not None:
-                body_content = self._serialize.body(parameters, 'DscConfigurationUpdateParameters')
+                body_content = self._serialize.body(parameters, "DscConfigurationUpdateParameters")
             else:
                 body_content = None
-            body_content_kwargs['content'] = body_content
+            body_content_kwargs["content"] = body_content
         else:
             raise ValueError(
                 "The content_type '{}' is not one of the allowed values: "
-                "['text/plain; charset=utf-8', 'application/json']".format(header_parameters['Content-Type'])
+                "['text/plain; charset=utf-8', 'application/json']".format(header_parameters["Content-Type"])
             )
         request = self._client.patch(url, query_parameters, header_parameters, **body_content_kwargs)
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
@@ -335,13 +344,14 @@ class DscConfigurationOperations(object):
             error = self._deserialize(_models.ErrorResponse, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize('DscConfiguration', pipeline_response)
+        deserialized = self._deserialize("DscConfiguration", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/configurations/{configurationName}'}  # type: ignore
+
+    update.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/configurations/{configurationName}"}  # type: ignore
 
     def get_content(
         self,
@@ -364,31 +374,31 @@ class DscConfigurationOperations(object):
         :rtype: str
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[str]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
+        cls = kwargs.pop("cls", None)  # type: ClsType[str]
+        error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop("error_map", {}))
         api_version = "2019-06-01"
         accept = "text/powershell"
 
         # Construct URL
-        url = self.get_content.metadata['url']  # type: ignore
+        url = self.get_content.metadata["url"]  # type: ignore
         path_format_arguments = {
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._]+$'),
-            'automationAccountName': self._serialize.url("automation_account_name", automation_account_name, 'str'),
-            'configurationName': self._serialize.url("configuration_name", configuration_name, 'str'),
-            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
+            "resourceGroupName": self._serialize.url(
+                "resource_group_name", resource_group_name, "str", max_length=90, min_length=1, pattern=r"^[-\w\._]+$"
+            ),
+            "automationAccountName": self._serialize.url("automation_account_name", automation_account_name, "str"),
+            "configurationName": self._serialize.url("configuration_name", configuration_name, "str"),
+            "subscriptionId": self._serialize.url("self._config.subscription_id", self._config.subscription_id, "str"),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+        query_parameters["api-version"] = self._serialize.query("api_version", api_version, "str")
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
-        header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
+        header_parameters["Accept"] = self._serialize.header("accept", accept, "str")
 
         request = self._client.get(url, query_parameters, header_parameters)
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
@@ -398,13 +408,14 @@ class DscConfigurationOperations(object):
             map_error(status_code=response.status_code, response=response, error_map=error_map)
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize('str', pipeline_response)
+        deserialized = self._deserialize("str", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    get_content.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/configurations/{configurationName}/content'}  # type: ignore
+
+    get_content.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/configurations/{configurationName}/content"}  # type: ignore
 
     def list_by_automation_account(
         self,
@@ -436,39 +447,48 @@ class DscConfigurationOperations(object):
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.automation.models.DscConfigurationListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.DscConfigurationListResult"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
+        cls = kwargs.pop("cls", None)  # type: ClsType["_models.DscConfigurationListResult"]
+        error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop("error_map", {}))
         api_version = "2019-06-01"
         accept = "application/json"
 
         def prepare_request(next_link=None):
             # Construct headers
             header_parameters = {}  # type: Dict[str, Any]
-            header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
+            header_parameters["Accept"] = self._serialize.header("accept", accept, "str")
 
             if not next_link:
                 # Construct URL
-                url = self.list_by_automation_account.metadata['url']  # type: ignore
+                url = self.list_by_automation_account.metadata["url"]  # type: ignore
                 path_format_arguments = {
-                    'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._]+$'),
-                    'automationAccountName': self._serialize.url("automation_account_name", automation_account_name, 'str'),
-                    'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
+                    "resourceGroupName": self._serialize.url(
+                        "resource_group_name",
+                        resource_group_name,
+                        "str",
+                        max_length=90,
+                        min_length=1,
+                        pattern=r"^[-\w\._]+$",
+                    ),
+                    "automationAccountName": self._serialize.url(
+                        "automation_account_name", automation_account_name, "str"
+                    ),
+                    "subscriptionId": self._serialize.url(
+                        "self._config.subscription_id", self._config.subscription_id, "str"
+                    ),
                 }
                 url = self._client.format_url(url, **path_format_arguments)
                 # Construct parameters
                 query_parameters = {}  # type: Dict[str, Any]
-                query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+                query_parameters["api-version"] = self._serialize.query("api_version", api_version, "str")
                 if filter is not None:
-                    query_parameters['$filter'] = self._serialize.query("filter", filter, 'str')
+                    query_parameters["$filter"] = self._serialize.query("filter", filter, "str")
                 if skip is not None:
-                    query_parameters['$skip'] = self._serialize.query("skip", skip, 'int')
+                    query_parameters["$skip"] = self._serialize.query("skip", skip, "int")
                 if top is not None:
-                    query_parameters['$top'] = self._serialize.query("top", top, 'int')
+                    query_parameters["$top"] = self._serialize.query("top", top, "int")
                 if inlinecount is not None:
-                    query_parameters['$inlinecount'] = self._serialize.query("inlinecount", inlinecount, 'str')
+                    query_parameters["$inlinecount"] = self._serialize.query("inlinecount", inlinecount, "str")
 
                 request = self._client.get(url, query_parameters, header_parameters)
             else:
@@ -478,7 +498,7 @@ class DscConfigurationOperations(object):
             return request
 
         def extract_data(pipeline_response):
-            deserialized = self._deserialize('DscConfigurationListResult', pipeline_response)
+            deserialized = self._deserialize("DscConfigurationListResult", pipeline_response)
             list_of_elem = deserialized.value
             if cls:
                 list_of_elem = cls(list_of_elem)
@@ -497,7 +517,6 @@ class DscConfigurationOperations(object):
 
             return pipeline_response
 
-        return ItemPaged(
-            get_next, extract_data
-        )
-    list_by_automation_account.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/configurations'}  # type: ignore
+        return ItemPaged(get_next, extract_data)
+
+    list_by_automation_account.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/configurations"}  # type: ignore

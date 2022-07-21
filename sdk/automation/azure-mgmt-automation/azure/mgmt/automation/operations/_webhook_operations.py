@@ -8,7 +8,13 @@
 from typing import TYPE_CHECKING
 import warnings
 
-from azure.core.exceptions import ClientAuthenticationError, HttpResponseError, ResourceExistsError, ResourceNotFoundError, map_error
+from azure.core.exceptions import (
+    ClientAuthenticationError,
+    HttpResponseError,
+    ResourceExistsError,
+    ResourceNotFoundError,
+    map_error,
+)
 from azure.core.paging import ItemPaged
 from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import HttpRequest, HttpResponse
@@ -20,8 +26,9 @@ if TYPE_CHECKING:
     # pylint: disable=unused-import,ungrouped-imports
     from typing import Any, Callable, Dict, Generic, Iterable, Optional, TypeVar, Union
 
-    T = TypeVar('T')
+    T = TypeVar("T")
     ClsType = Optional[Callable[[PipelineResponse[HttpRequest, HttpResponse], T, Dict[str, Any]], Any]]
+
 
 class WebhookOperations(object):
     """WebhookOperations operations.
@@ -63,30 +70,30 @@ class WebhookOperations(object):
         :rtype: str
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[str]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
+        cls = kwargs.pop("cls", None)  # type: ClsType[str]
+        error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop("error_map", {}))
         api_version = "2015-10-31"
         accept = "application/json"
 
         # Construct URL
-        url = self.generate_uri.metadata['url']  # type: ignore
+        url = self.generate_uri.metadata["url"]  # type: ignore
         path_format_arguments = {
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._]+$'),
-            'automationAccountName': self._serialize.url("automation_account_name", automation_account_name, 'str'),
-            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
+            "resourceGroupName": self._serialize.url(
+                "resource_group_name", resource_group_name, "str", max_length=90, min_length=1, pattern=r"^[-\w\._]+$"
+            ),
+            "automationAccountName": self._serialize.url("automation_account_name", automation_account_name, "str"),
+            "subscriptionId": self._serialize.url("self._config.subscription_id", self._config.subscription_id, "str"),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+        query_parameters["api-version"] = self._serialize.query("api_version", api_version, "str")
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
-        header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
+        header_parameters["Accept"] = self._serialize.header("accept", accept, "str")
 
         request = self._client.post(url, query_parameters, header_parameters)
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
@@ -97,13 +104,14 @@ class WebhookOperations(object):
             error = self._deserialize(_models.ErrorResponse, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize('str', pipeline_response)
+        deserialized = self._deserialize("str", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    generate_uri.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/webhooks/generateUri'}  # type: ignore
+
+    generate_uri.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/webhooks/generateUri"}  # type: ignore
 
     def delete(
         self,
@@ -126,31 +134,31 @@ class WebhookOperations(object):
         :rtype: None
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType[None]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
+        cls = kwargs.pop("cls", None)  # type: ClsType[None]
+        error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop("error_map", {}))
         api_version = "2015-10-31"
         accept = "application/json"
 
         # Construct URL
-        url = self.delete.metadata['url']  # type: ignore
+        url = self.delete.metadata["url"]  # type: ignore
         path_format_arguments = {
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._]+$'),
-            'automationAccountName': self._serialize.url("automation_account_name", automation_account_name, 'str'),
-            'webhookName': self._serialize.url("webhook_name", webhook_name, 'str'),
-            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
+            "resourceGroupName": self._serialize.url(
+                "resource_group_name", resource_group_name, "str", max_length=90, min_length=1, pattern=r"^[-\w\._]+$"
+            ),
+            "automationAccountName": self._serialize.url("automation_account_name", automation_account_name, "str"),
+            "webhookName": self._serialize.url("webhook_name", webhook_name, "str"),
+            "subscriptionId": self._serialize.url("self._config.subscription_id", self._config.subscription_id, "str"),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+        query_parameters["api-version"] = self._serialize.query("api_version", api_version, "str")
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
-        header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
+        header_parameters["Accept"] = self._serialize.header("accept", accept, "str")
 
         request = self._client.delete(url, query_parameters, header_parameters)
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
@@ -164,7 +172,7 @@ class WebhookOperations(object):
         if cls:
             return cls(pipeline_response, None, {})
 
-    delete.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/webhooks/{webhookName}'}  # type: ignore
+    delete.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/webhooks/{webhookName}"}  # type: ignore
 
     def get(
         self,
@@ -187,31 +195,31 @@ class WebhookOperations(object):
         :rtype: ~azure.mgmt.automation.models.Webhook
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.Webhook"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
+        cls = kwargs.pop("cls", None)  # type: ClsType["_models.Webhook"]
+        error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop("error_map", {}))
         api_version = "2015-10-31"
         accept = "application/json"
 
         # Construct URL
-        url = self.get.metadata['url']  # type: ignore
+        url = self.get.metadata["url"]  # type: ignore
         path_format_arguments = {
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._]+$'),
-            'automationAccountName': self._serialize.url("automation_account_name", automation_account_name, 'str'),
-            'webhookName': self._serialize.url("webhook_name", webhook_name, 'str'),
-            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
+            "resourceGroupName": self._serialize.url(
+                "resource_group_name", resource_group_name, "str", max_length=90, min_length=1, pattern=r"^[-\w\._]+$"
+            ),
+            "automationAccountName": self._serialize.url("automation_account_name", automation_account_name, "str"),
+            "webhookName": self._serialize.url("webhook_name", webhook_name, "str"),
+            "subscriptionId": self._serialize.url("self._config.subscription_id", self._config.subscription_id, "str"),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+        query_parameters["api-version"] = self._serialize.query("api_version", api_version, "str")
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
-        header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
+        header_parameters["Accept"] = self._serialize.header("accept", accept, "str")
 
         request = self._client.get(url, query_parameters, header_parameters)
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
@@ -222,13 +230,14 @@ class WebhookOperations(object):
             error = self._deserialize(_models.ErrorResponse, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize('Webhook', pipeline_response)
+        deserialized = self._deserialize("Webhook", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/webhooks/{webhookName}'}  # type: ignore
+
+    get.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/webhooks/{webhookName}"}  # type: ignore
 
     def create_or_update(
         self,
@@ -254,37 +263,37 @@ class WebhookOperations(object):
         :rtype: ~azure.mgmt.automation.models.Webhook
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.Webhook"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
+        cls = kwargs.pop("cls", None)  # type: ClsType["_models.Webhook"]
+        error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop("error_map", {}))
         api_version = "2015-10-31"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"
 
         # Construct URL
-        url = self.create_or_update.metadata['url']  # type: ignore
+        url = self.create_or_update.metadata["url"]  # type: ignore
         path_format_arguments = {
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._]+$'),
-            'automationAccountName': self._serialize.url("automation_account_name", automation_account_name, 'str'),
-            'webhookName': self._serialize.url("webhook_name", webhook_name, 'str'),
-            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
+            "resourceGroupName": self._serialize.url(
+                "resource_group_name", resource_group_name, "str", max_length=90, min_length=1, pattern=r"^[-\w\._]+$"
+            ),
+            "automationAccountName": self._serialize.url("automation_account_name", automation_account_name, "str"),
+            "webhookName": self._serialize.url("webhook_name", webhook_name, "str"),
+            "subscriptionId": self._serialize.url("self._config.subscription_id", self._config.subscription_id, "str"),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+        query_parameters["api-version"] = self._serialize.query("api_version", api_version, "str")
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
-        header_parameters['Content-Type'] = self._serialize.header("content_type", content_type, 'str')
-        header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
+        header_parameters["Content-Type"] = self._serialize.header("content_type", content_type, "str")
+        header_parameters["Accept"] = self._serialize.header("accept", accept, "str")
 
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(parameters, 'WebhookCreateOrUpdateParameters')
-        body_content_kwargs['content'] = body_content
+        body_content = self._serialize.body(parameters, "WebhookCreateOrUpdateParameters")
+        body_content_kwargs["content"] = body_content
         request = self._client.put(url, query_parameters, header_parameters, **body_content_kwargs)
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
@@ -295,16 +304,17 @@ class WebhookOperations(object):
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         if response.status_code == 200:
-            deserialized = self._deserialize('Webhook', pipeline_response)
+            deserialized = self._deserialize("Webhook", pipeline_response)
 
         if response.status_code == 201:
-            deserialized = self._deserialize('Webhook', pipeline_response)
+            deserialized = self._deserialize("Webhook", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    create_or_update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/webhooks/{webhookName}'}  # type: ignore
+
+    create_or_update.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/webhooks/{webhookName}"}  # type: ignore
 
     def update(
         self,
@@ -330,37 +340,37 @@ class WebhookOperations(object):
         :rtype: ~azure.mgmt.automation.models.Webhook
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.Webhook"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
+        cls = kwargs.pop("cls", None)  # type: ClsType["_models.Webhook"]
+        error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop("error_map", {}))
         api_version = "2015-10-31"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"
 
         # Construct URL
-        url = self.update.metadata['url']  # type: ignore
+        url = self.update.metadata["url"]  # type: ignore
         path_format_arguments = {
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._]+$'),
-            'automationAccountName': self._serialize.url("automation_account_name", automation_account_name, 'str'),
-            'webhookName': self._serialize.url("webhook_name", webhook_name, 'str'),
-            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
+            "resourceGroupName": self._serialize.url(
+                "resource_group_name", resource_group_name, "str", max_length=90, min_length=1, pattern=r"^[-\w\._]+$"
+            ),
+            "automationAccountName": self._serialize.url("automation_account_name", automation_account_name, "str"),
+            "webhookName": self._serialize.url("webhook_name", webhook_name, "str"),
+            "subscriptionId": self._serialize.url("self._config.subscription_id", self._config.subscription_id, "str"),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+        query_parameters["api-version"] = self._serialize.query("api_version", api_version, "str")
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
-        header_parameters['Content-Type'] = self._serialize.header("content_type", content_type, 'str')
-        header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
+        header_parameters["Content-Type"] = self._serialize.header("content_type", content_type, "str")
+        header_parameters["Accept"] = self._serialize.header("accept", accept, "str")
 
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(parameters, 'WebhookUpdateParameters')
-        body_content_kwargs['content'] = body_content
+        body_content = self._serialize.body(parameters, "WebhookUpdateParameters")
+        body_content_kwargs["content"] = body_content
         request = self._client.patch(url, query_parameters, header_parameters, **body_content_kwargs)
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
@@ -370,13 +380,14 @@ class WebhookOperations(object):
             error = self._deserialize(_models.ErrorResponse, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize('Webhook', pipeline_response)
+        deserialized = self._deserialize("Webhook", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    update.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/webhooks/{webhookName}'}  # type: ignore
+
+    update.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/webhooks/{webhookName}"}  # type: ignore
 
     def list_by_automation_account(
         self,
@@ -399,33 +410,42 @@ class WebhookOperations(object):
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.automation.models.WebhookListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.WebhookListResult"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
+        cls = kwargs.pop("cls", None)  # type: ClsType["_models.WebhookListResult"]
+        error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop("error_map", {}))
         api_version = "2015-10-31"
         accept = "application/json"
 
         def prepare_request(next_link=None):
             # Construct headers
             header_parameters = {}  # type: Dict[str, Any]
-            header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
+            header_parameters["Accept"] = self._serialize.header("accept", accept, "str")
 
             if not next_link:
                 # Construct URL
-                url = self.list_by_automation_account.metadata['url']  # type: ignore
+                url = self.list_by_automation_account.metadata["url"]  # type: ignore
                 path_format_arguments = {
-                    'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._]+$'),
-                    'automationAccountName': self._serialize.url("automation_account_name", automation_account_name, 'str'),
-                    'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
+                    "resourceGroupName": self._serialize.url(
+                        "resource_group_name",
+                        resource_group_name,
+                        "str",
+                        max_length=90,
+                        min_length=1,
+                        pattern=r"^[-\w\._]+$",
+                    ),
+                    "automationAccountName": self._serialize.url(
+                        "automation_account_name", automation_account_name, "str"
+                    ),
+                    "subscriptionId": self._serialize.url(
+                        "self._config.subscription_id", self._config.subscription_id, "str"
+                    ),
                 }
                 url = self._client.format_url(url, **path_format_arguments)
                 # Construct parameters
                 query_parameters = {}  # type: Dict[str, Any]
                 if filter is not None:
-                    query_parameters['$filter'] = self._serialize.query("filter", filter, 'str')
-                query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+                    query_parameters["$filter"] = self._serialize.query("filter", filter, "str")
+                query_parameters["api-version"] = self._serialize.query("api_version", api_version, "str")
 
                 request = self._client.get(url, query_parameters, header_parameters)
             else:
@@ -435,7 +455,7 @@ class WebhookOperations(object):
             return request
 
         def extract_data(pipeline_response):
-            deserialized = self._deserialize('WebhookListResult', pipeline_response)
+            deserialized = self._deserialize("WebhookListResult", pipeline_response)
             list_of_elem = deserialized.value
             if cls:
                 list_of_elem = cls(list_of_elem)
@@ -454,7 +474,6 @@ class WebhookOperations(object):
 
             return pipeline_response
 
-        return ItemPaged(
-            get_next, extract_data
-        )
-    list_by_automation_account.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/webhooks'}  # type: ignore
+        return ItemPaged(get_next, extract_data)
+
+    list_by_automation_account.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/webhooks"}  # type: ignore

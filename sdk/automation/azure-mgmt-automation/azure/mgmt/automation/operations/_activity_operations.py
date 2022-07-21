@@ -8,7 +8,13 @@
 from typing import TYPE_CHECKING
 import warnings
 
-from azure.core.exceptions import ClientAuthenticationError, HttpResponseError, ResourceExistsError, ResourceNotFoundError, map_error
+from azure.core.exceptions import (
+    ClientAuthenticationError,
+    HttpResponseError,
+    ResourceExistsError,
+    ResourceNotFoundError,
+    map_error,
+)
 from azure.core.paging import ItemPaged
 from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import HttpRequest, HttpResponse
@@ -20,8 +26,9 @@ if TYPE_CHECKING:
     # pylint: disable=unused-import,ungrouped-imports
     from typing import Any, Callable, Dict, Generic, Iterable, Optional, TypeVar
 
-    T = TypeVar('T')
+    T = TypeVar("T")
     ClsType = Optional[Callable[[PipelineResponse[HttpRequest, HttpResponse], T, Dict[str, Any]], Any]]
+
 
 class ActivityOperations(object):
     """ActivityOperations operations.
@@ -69,32 +76,32 @@ class ActivityOperations(object):
         :rtype: ~azure.mgmt.automation.models.Activity
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.Activity"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
+        cls = kwargs.pop("cls", None)  # type: ClsType["_models.Activity"]
+        error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop("error_map", {}))
         api_version = "2019-06-01"
         accept = "application/json"
 
         # Construct URL
-        url = self.get.metadata['url']  # type: ignore
+        url = self.get.metadata["url"]  # type: ignore
         path_format_arguments = {
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._]+$'),
-            'automationAccountName': self._serialize.url("automation_account_name", automation_account_name, 'str'),
-            'moduleName': self._serialize.url("module_name", module_name, 'str'),
-            'activityName': self._serialize.url("activity_name", activity_name, 'str'),
-            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
+            "resourceGroupName": self._serialize.url(
+                "resource_group_name", resource_group_name, "str", max_length=90, min_length=1, pattern=r"^[-\w\._]+$"
+            ),
+            "automationAccountName": self._serialize.url("automation_account_name", automation_account_name, "str"),
+            "moduleName": self._serialize.url("module_name", module_name, "str"),
+            "activityName": self._serialize.url("activity_name", activity_name, "str"),
+            "subscriptionId": self._serialize.url("self._config.subscription_id", self._config.subscription_id, "str"),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+        query_parameters["api-version"] = self._serialize.query("api_version", api_version, "str")
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
-        header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
+        header_parameters["Accept"] = self._serialize.header("accept", accept, "str")
 
         request = self._client.get(url, query_parameters, header_parameters)
         pipeline_response = self._client._pipeline.run(request, stream=False, **kwargs)
@@ -105,13 +112,14 @@ class ActivityOperations(object):
             error = self._deserialize(_models.ErrorResponse, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize('Activity', pipeline_response)
+        deserialized = self._deserialize("Activity", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}/activities/{activityName}'}  # type: ignore
+
+    get.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}/activities/{activityName}"}  # type: ignore
 
     def list_by_module(
         self,
@@ -134,32 +142,41 @@ class ActivityOperations(object):
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.automation.models.ActivityListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ActivityListResult"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
+        cls = kwargs.pop("cls", None)  # type: ClsType["_models.ActivityListResult"]
+        error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop("error_map", {}))
         api_version = "2019-06-01"
         accept = "application/json"
 
         def prepare_request(next_link=None):
             # Construct headers
             header_parameters = {}  # type: Dict[str, Any]
-            header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
+            header_parameters["Accept"] = self._serialize.header("accept", accept, "str")
 
             if not next_link:
                 # Construct URL
-                url = self.list_by_module.metadata['url']  # type: ignore
+                url = self.list_by_module.metadata["url"]  # type: ignore
                 path_format_arguments = {
-                    'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._]+$'),
-                    'automationAccountName': self._serialize.url("automation_account_name", automation_account_name, 'str'),
-                    'moduleName': self._serialize.url("module_name", module_name, 'str'),
-                    'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
+                    "resourceGroupName": self._serialize.url(
+                        "resource_group_name",
+                        resource_group_name,
+                        "str",
+                        max_length=90,
+                        min_length=1,
+                        pattern=r"^[-\w\._]+$",
+                    ),
+                    "automationAccountName": self._serialize.url(
+                        "automation_account_name", automation_account_name, "str"
+                    ),
+                    "moduleName": self._serialize.url("module_name", module_name, "str"),
+                    "subscriptionId": self._serialize.url(
+                        "self._config.subscription_id", self._config.subscription_id, "str"
+                    ),
                 }
                 url = self._client.format_url(url, **path_format_arguments)
                 # Construct parameters
                 query_parameters = {}  # type: Dict[str, Any]
-                query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+                query_parameters["api-version"] = self._serialize.query("api_version", api_version, "str")
 
                 request = self._client.get(url, query_parameters, header_parameters)
             else:
@@ -169,7 +186,7 @@ class ActivityOperations(object):
             return request
 
         def extract_data(pipeline_response):
-            deserialized = self._deserialize('ActivityListResult', pipeline_response)
+            deserialized = self._deserialize("ActivityListResult", pipeline_response)
             list_of_elem = deserialized.value
             if cls:
                 list_of_elem = cls(list_of_elem)
@@ -188,7 +205,6 @@ class ActivityOperations(object):
 
             return pipeline_response
 
-        return ItemPaged(
-            get_next, extract_data
-        )
-    list_by_module.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}/activities'}  # type: ignore
+        return ItemPaged(get_next, extract_data)
+
+    list_by_module.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}/activities"}  # type: ignore

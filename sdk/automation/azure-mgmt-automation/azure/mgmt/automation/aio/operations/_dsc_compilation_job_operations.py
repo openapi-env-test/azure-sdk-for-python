@@ -9,7 +9,13 @@ from typing import Any, AsyncIterable, Callable, Dict, Generic, Optional, TypeVa
 import warnings
 
 from azure.core.async_paging import AsyncItemPaged, AsyncList
-from azure.core.exceptions import ClientAuthenticationError, HttpResponseError, ResourceExistsError, ResourceNotFoundError, map_error
+from azure.core.exceptions import (
+    ClientAuthenticationError,
+    HttpResponseError,
+    ResourceExistsError,
+    ResourceNotFoundError,
+    map_error,
+)
 from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import AsyncHttpResponse, HttpRequest
 from azure.core.polling import AsyncLROPoller, AsyncNoPolling, AsyncPollingMethod
@@ -18,8 +24,9 @@ from azure.mgmt.core.polling.async_arm_polling import AsyncARMPolling
 
 from ... import models as _models
 
-T = TypeVar('T')
+T = TypeVar("T")
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
+
 
 class DscCompilationJobOperations:
     """DscCompilationJobOperations async operations.
@@ -51,37 +58,37 @@ class DscCompilationJobOperations:
         parameters: "_models.DscCompilationJobCreateParameters",
         **kwargs
     ) -> "_models.DscCompilationJob":
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.DscCompilationJob"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
+        cls = kwargs.pop("cls", None)  # type: ClsType["_models.DscCompilationJob"]
+        error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop("error_map", {}))
         api_version = "2019-06-01"
         content_type = kwargs.pop("content_type", "application/json")
         accept = "application/json"
 
         # Construct URL
-        url = self._create_initial.metadata['url']  # type: ignore
+        url = self._create_initial.metadata["url"]  # type: ignore
         path_format_arguments = {
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._]+$'),
-            'automationAccountName': self._serialize.url("automation_account_name", automation_account_name, 'str'),
-            'compilationJobName': self._serialize.url("compilation_job_name", compilation_job_name, 'str'),
-            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
+            "resourceGroupName": self._serialize.url(
+                "resource_group_name", resource_group_name, "str", max_length=90, min_length=1, pattern=r"^[-\w\._]+$"
+            ),
+            "automationAccountName": self._serialize.url("automation_account_name", automation_account_name, "str"),
+            "compilationJobName": self._serialize.url("compilation_job_name", compilation_job_name, "str"),
+            "subscriptionId": self._serialize.url("self._config.subscription_id", self._config.subscription_id, "str"),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+        query_parameters["api-version"] = self._serialize.query("api_version", api_version, "str")
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
-        header_parameters['Content-Type'] = self._serialize.header("content_type", content_type, 'str')
-        header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
+        header_parameters["Content-Type"] = self._serialize.header("content_type", content_type, "str")
+        header_parameters["Accept"] = self._serialize.header("accept", accept, "str")
 
         body_content_kwargs = {}  # type: Dict[str, Any]
-        body_content = self._serialize.body(parameters, 'DscCompilationJobCreateParameters')
-        body_content_kwargs['content'] = body_content
+        body_content = self._serialize.body(parameters, "DscCompilationJobCreateParameters")
+        body_content_kwargs["content"] = body_content
         request = self._client.put(url, query_parameters, header_parameters, **body_content_kwargs)
         pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
         response = pipeline_response.http_response
@@ -91,13 +98,14 @@ class DscCompilationJobOperations:
             error = self._deserialize(_models.ErrorResponse, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize('DscCompilationJob', pipeline_response)
+        deserialized = self._deserialize("DscCompilationJob", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    _create_initial.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/compilationjobs/{compilationJobName}'}  # type: ignore
+
+    _create_initial.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/compilationjobs/{compilationJobName}"}  # type: ignore
 
     async def begin_create(
         self,
@@ -127,60 +135,59 @@ class DscCompilationJobOperations:
         :rtype: ~azure.core.polling.AsyncLROPoller[~azure.mgmt.automation.models.DscCompilationJob]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
-        polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.DscCompilationJob"]
-        lro_delay = kwargs.pop(
-            'polling_interval',
-            self._config.polling_interval
-        )
-        cont_token = kwargs.pop('continuation_token', None)  # type: Optional[str]
+        polling = kwargs.pop("polling", True)  # type: Union[bool, AsyncPollingMethod]
+        cls = kwargs.pop("cls", None)  # type: ClsType["_models.DscCompilationJob"]
+        lro_delay = kwargs.pop("polling_interval", self._config.polling_interval)
+        cont_token = kwargs.pop("continuation_token", None)  # type: Optional[str]
         if cont_token is None:
             raw_result = await self._create_initial(
                 resource_group_name=resource_group_name,
                 automation_account_name=automation_account_name,
                 compilation_job_name=compilation_job_name,
                 parameters=parameters,
-                cls=lambda x,y,z: x,
+                cls=lambda x, y, z: x,
                 **kwargs
             )
 
-        kwargs.pop('error_map', None)
-        kwargs.pop('content_type', None)
+        kwargs.pop("error_map", None)
+        kwargs.pop("content_type", None)
 
         def get_long_running_output(pipeline_response):
-            deserialized = self._deserialize('DscCompilationJob', pipeline_response)
+            deserialized = self._deserialize("DscCompilationJob", pipeline_response)
 
             if cls:
                 return cls(pipeline_response, deserialized, {})
             return deserialized
 
         path_format_arguments = {
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._]+$'),
-            'automationAccountName': self._serialize.url("automation_account_name", automation_account_name, 'str'),
-            'compilationJobName': self._serialize.url("compilation_job_name", compilation_job_name, 'str'),
-            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
+            "resourceGroupName": self._serialize.url(
+                "resource_group_name", resource_group_name, "str", max_length=90, min_length=1, pattern=r"^[-\w\._]+$"
+            ),
+            "automationAccountName": self._serialize.url("automation_account_name", automation_account_name, "str"),
+            "compilationJobName": self._serialize.url("compilation_job_name", compilation_job_name, "str"),
+            "subscriptionId": self._serialize.url("self._config.subscription_id", self._config.subscription_id, "str"),
         }
 
-        if polling is True: polling_method = AsyncARMPolling(lro_delay, path_format_arguments=path_format_arguments,  **kwargs)
-        elif polling is False: polling_method = AsyncNoPolling()
-        else: polling_method = polling
+        if polling is True:
+            polling_method = AsyncARMPolling(lro_delay, path_format_arguments=path_format_arguments, **kwargs)
+        elif polling is False:
+            polling_method = AsyncNoPolling()
+        else:
+            polling_method = polling
         if cont_token:
             return AsyncLROPoller.from_continuation_token(
                 polling_method=polling_method,
                 continuation_token=cont_token,
                 client=self._client,
-                deserialization_callback=get_long_running_output
+                deserialization_callback=get_long_running_output,
             )
         else:
             return AsyncLROPoller(self._client, raw_result, get_long_running_output, polling_method)
-    begin_create.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/compilationjobs/{compilationJobName}'}  # type: ignore
+
+    begin_create.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/compilationjobs/{compilationJobName}"}  # type: ignore
 
     async def get(
-        self,
-        resource_group_name: str,
-        automation_account_name: str,
-        compilation_job_name: str,
-        **kwargs
+        self, resource_group_name: str, automation_account_name: str, compilation_job_name: str, **kwargs
     ) -> "_models.DscCompilationJob":
         """Retrieve the Dsc configuration compilation job identified by job id.
 
@@ -195,31 +202,31 @@ class DscCompilationJobOperations:
         :rtype: ~azure.mgmt.automation.models.DscCompilationJob
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.DscCompilationJob"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
+        cls = kwargs.pop("cls", None)  # type: ClsType["_models.DscCompilationJob"]
+        error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop("error_map", {}))
         api_version = "2019-06-01"
         accept = "application/json"
 
         # Construct URL
-        url = self.get.metadata['url']  # type: ignore
+        url = self.get.metadata["url"]  # type: ignore
         path_format_arguments = {
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._]+$'),
-            'automationAccountName': self._serialize.url("automation_account_name", automation_account_name, 'str'),
-            'compilationJobName': self._serialize.url("compilation_job_name", compilation_job_name, 'str'),
-            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
+            "resourceGroupName": self._serialize.url(
+                "resource_group_name", resource_group_name, "str", max_length=90, min_length=1, pattern=r"^[-\w\._]+$"
+            ),
+            "automationAccountName": self._serialize.url("automation_account_name", automation_account_name, "str"),
+            "compilationJobName": self._serialize.url("compilation_job_name", compilation_job_name, "str"),
+            "subscriptionId": self._serialize.url("self._config.subscription_id", self._config.subscription_id, "str"),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+        query_parameters["api-version"] = self._serialize.query("api_version", api_version, "str")
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
-        header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
+        header_parameters["Accept"] = self._serialize.header("accept", accept, "str")
 
         request = self._client.get(url, query_parameters, header_parameters)
         pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
@@ -230,20 +237,17 @@ class DscCompilationJobOperations:
             error = self._deserialize(_models.ErrorResponse, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize('DscCompilationJob', pipeline_response)
+        deserialized = self._deserialize("DscCompilationJob", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/compilationjobs/{compilationJobName}'}  # type: ignore
+
+    get.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/compilationjobs/{compilationJobName}"}  # type: ignore
 
     def list_by_automation_account(
-        self,
-        resource_group_name: str,
-        automation_account_name: str,
-        filter: Optional[str] = None,
-        **kwargs
+        self, resource_group_name: str, automation_account_name: str, filter: Optional[str] = None, **kwargs
     ) -> AsyncIterable["_models.DscCompilationJobListResult"]:
         """Retrieve a list of dsc compilation jobs.
 
@@ -258,33 +262,42 @@ class DscCompilationJobOperations:
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.automation.models.DscCompilationJobListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.DscCompilationJobListResult"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
+        cls = kwargs.pop("cls", None)  # type: ClsType["_models.DscCompilationJobListResult"]
+        error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop("error_map", {}))
         api_version = "2019-06-01"
         accept = "application/json"
 
         def prepare_request(next_link=None):
             # Construct headers
             header_parameters = {}  # type: Dict[str, Any]
-            header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
+            header_parameters["Accept"] = self._serialize.header("accept", accept, "str")
 
             if not next_link:
                 # Construct URL
-                url = self.list_by_automation_account.metadata['url']  # type: ignore
+                url = self.list_by_automation_account.metadata["url"]  # type: ignore
                 path_format_arguments = {
-                    'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._]+$'),
-                    'automationAccountName': self._serialize.url("automation_account_name", automation_account_name, 'str'),
-                    'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
+                    "resourceGroupName": self._serialize.url(
+                        "resource_group_name",
+                        resource_group_name,
+                        "str",
+                        max_length=90,
+                        min_length=1,
+                        pattern=r"^[-\w\._]+$",
+                    ),
+                    "automationAccountName": self._serialize.url(
+                        "automation_account_name", automation_account_name, "str"
+                    ),
+                    "subscriptionId": self._serialize.url(
+                        "self._config.subscription_id", self._config.subscription_id, "str"
+                    ),
                 }
                 url = self._client.format_url(url, **path_format_arguments)
                 # Construct parameters
                 query_parameters = {}  # type: Dict[str, Any]
                 if filter is not None:
-                    query_parameters['$filter'] = self._serialize.query("filter", filter, 'str')
-                query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+                    query_parameters["$filter"] = self._serialize.query("filter", filter, "str")
+                query_parameters["api-version"] = self._serialize.query("api_version", api_version, "str")
 
                 request = self._client.get(url, query_parameters, header_parameters)
             else:
@@ -294,7 +307,7 @@ class DscCompilationJobOperations:
             return request
 
         async def extract_data(pipeline_response):
-            deserialized = self._deserialize('DscCompilationJobListResult', pipeline_response)
+            deserialized = self._deserialize("DscCompilationJobListResult", pipeline_response)
             list_of_elem = deserialized.value
             if cls:
                 list_of_elem = cls(list_of_elem)
@@ -313,18 +326,12 @@ class DscCompilationJobOperations:
 
             return pipeline_response
 
-        return AsyncItemPaged(
-            get_next, extract_data
-        )
-    list_by_automation_account.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/compilationjobs'}  # type: ignore
+        return AsyncItemPaged(get_next, extract_data)
+
+    list_by_automation_account.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/compilationjobs"}  # type: ignore
 
     async def get_stream(
-        self,
-        resource_group_name: str,
-        automation_account_name: str,
-        job_id: str,
-        job_stream_id: str,
-        **kwargs
+        self, resource_group_name: str, automation_account_name: str, job_id: str, job_stream_id: str, **kwargs
     ) -> "_models.JobStream":
         """Retrieve the job stream identified by job stream id.
 
@@ -341,32 +348,32 @@ class DscCompilationJobOperations:
         :rtype: ~azure.mgmt.automation.models.JobStream
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.JobStream"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
+        cls = kwargs.pop("cls", None)  # type: ClsType["_models.JobStream"]
+        error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop("error_map", {}))
         api_version = "2019-06-01"
         accept = "application/json"
 
         # Construct URL
-        url = self.get_stream.metadata['url']  # type: ignore
+        url = self.get_stream.metadata["url"]  # type: ignore
         path_format_arguments = {
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._]+$'),
-            'automationAccountName': self._serialize.url("automation_account_name", automation_account_name, 'str'),
-            'jobId': self._serialize.url("job_id", job_id, 'str'),
-            'jobStreamId': self._serialize.url("job_stream_id", job_stream_id, 'str'),
-            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
+            "resourceGroupName": self._serialize.url(
+                "resource_group_name", resource_group_name, "str", max_length=90, min_length=1, pattern=r"^[-\w\._]+$"
+            ),
+            "automationAccountName": self._serialize.url("automation_account_name", automation_account_name, "str"),
+            "jobId": self._serialize.url("job_id", job_id, "str"),
+            "jobStreamId": self._serialize.url("job_stream_id", job_stream_id, "str"),
+            "subscriptionId": self._serialize.url("self._config.subscription_id", self._config.subscription_id, "str"),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+        query_parameters["api-version"] = self._serialize.query("api_version", api_version, "str")
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
-        header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
+        header_parameters["Accept"] = self._serialize.header("accept", accept, "str")
 
         request = self._client.get(url, query_parameters, header_parameters)
         pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
@@ -377,10 +384,11 @@ class DscCompilationJobOperations:
             error = self._deserialize(_models.ErrorResponse, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize('JobStream', pipeline_response)
+        deserialized = self._deserialize("JobStream", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    get_stream.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/compilationjobs/{jobId}/streams/{jobStreamId}'}  # type: ignore
+
+    get_stream.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/compilationjobs/{jobId}/streams/{jobStreamId}"}  # type: ignore

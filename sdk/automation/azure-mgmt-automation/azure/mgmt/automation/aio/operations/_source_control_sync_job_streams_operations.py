@@ -9,15 +9,22 @@ from typing import Any, AsyncIterable, Callable, Dict, Generic, Optional, TypeVa
 import warnings
 
 from azure.core.async_paging import AsyncItemPaged, AsyncList
-from azure.core.exceptions import ClientAuthenticationError, HttpResponseError, ResourceExistsError, ResourceNotFoundError, map_error
+from azure.core.exceptions import (
+    ClientAuthenticationError,
+    HttpResponseError,
+    ResourceExistsError,
+    ResourceNotFoundError,
+    map_error,
+)
 from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import AsyncHttpResponse, HttpRequest
 from azure.mgmt.core.exceptions import ARMErrorFormat
 
 from ... import models as _models
 
-T = TypeVar('T')
+T = TypeVar("T")
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
+
 
 class SourceControlSyncJobStreamsOperations:
     """SourceControlSyncJobStreamsOperations async operations.
@@ -67,35 +74,46 @@ class SourceControlSyncJobStreamsOperations:
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.automation.models.SourceControlSyncJobStreamsListBySyncJob]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.SourceControlSyncJobStreamsListBySyncJob"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
+        cls = kwargs.pop("cls", None)  # type: ClsType["_models.SourceControlSyncJobStreamsListBySyncJob"]
+        error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop("error_map", {}))
         api_version = "2019-06-01"
         accept = "application/json"
 
         def prepare_request(next_link=None):
             # Construct headers
             header_parameters = {}  # type: Dict[str, Any]
-            header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
+            header_parameters["Accept"] = self._serialize.header("accept", accept, "str")
 
             if not next_link:
                 # Construct URL
-                url = self.list_by_sync_job.metadata['url']  # type: ignore
+                url = self.list_by_sync_job.metadata["url"]  # type: ignore
                 path_format_arguments = {
-                    'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._]+$'),
-                    'automationAccountName': self._serialize.url("automation_account_name", automation_account_name, 'str'),
-                    'sourceControlName': self._serialize.url("source_control_name", source_control_name, 'str'),
-                    'sourceControlSyncJobId': self._serialize.url("source_control_sync_job_id", source_control_sync_job_id, 'str'),
-                    'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
+                    "resourceGroupName": self._serialize.url(
+                        "resource_group_name",
+                        resource_group_name,
+                        "str",
+                        max_length=90,
+                        min_length=1,
+                        pattern=r"^[-\w\._]+$",
+                    ),
+                    "automationAccountName": self._serialize.url(
+                        "automation_account_name", automation_account_name, "str"
+                    ),
+                    "sourceControlName": self._serialize.url("source_control_name", source_control_name, "str"),
+                    "sourceControlSyncJobId": self._serialize.url(
+                        "source_control_sync_job_id", source_control_sync_job_id, "str"
+                    ),
+                    "subscriptionId": self._serialize.url(
+                        "self._config.subscription_id", self._config.subscription_id, "str"
+                    ),
                 }
                 url = self._client.format_url(url, **path_format_arguments)
                 # Construct parameters
                 query_parameters = {}  # type: Dict[str, Any]
                 if filter is not None:
-                    query_parameters['$filter'] = self._serialize.query("filter", filter, 'str')
-                query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+                    query_parameters["$filter"] = self._serialize.query("filter", filter, "str")
+                query_parameters["api-version"] = self._serialize.query("api_version", api_version, "str")
 
                 request = self._client.get(url, query_parameters, header_parameters)
             else:
@@ -105,7 +123,7 @@ class SourceControlSyncJobStreamsOperations:
             return request
 
         async def extract_data(pipeline_response):
-            deserialized = self._deserialize('SourceControlSyncJobStreamsListBySyncJob', pipeline_response)
+            deserialized = self._deserialize("SourceControlSyncJobStreamsListBySyncJob", pipeline_response)
             list_of_elem = deserialized.value
             if cls:
                 list_of_elem = cls(list_of_elem)
@@ -124,10 +142,9 @@ class SourceControlSyncJobStreamsOperations:
 
             return pipeline_response
 
-        return AsyncItemPaged(
-            get_next, extract_data
-        )
-    list_by_sync_job.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/sourceControls/{sourceControlName}/sourceControlSyncJobs/{sourceControlSyncJobId}/streams'}  # type: ignore
+        return AsyncItemPaged(get_next, extract_data)
+
+    list_by_sync_job.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/sourceControls/{sourceControlName}/sourceControlSyncJobs/{sourceControlSyncJobId}/streams"}  # type: ignore
 
     async def get(
         self,
@@ -155,33 +172,35 @@ class SourceControlSyncJobStreamsOperations:
         :rtype: ~azure.mgmt.automation.models.SourceControlSyncJobStreamById
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.SourceControlSyncJobStreamById"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
+        cls = kwargs.pop("cls", None)  # type: ClsType["_models.SourceControlSyncJobStreamById"]
+        error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop("error_map", {}))
         api_version = "2019-06-01"
         accept = "application/json"
 
         # Construct URL
-        url = self.get.metadata['url']  # type: ignore
+        url = self.get.metadata["url"]  # type: ignore
         path_format_arguments = {
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._]+$'),
-            'automationAccountName': self._serialize.url("automation_account_name", automation_account_name, 'str'),
-            'sourceControlName': self._serialize.url("source_control_name", source_control_name, 'str'),
-            'sourceControlSyncJobId': self._serialize.url("source_control_sync_job_id", source_control_sync_job_id, 'str'),
-            'streamId': self._serialize.url("stream_id", stream_id, 'str'),
-            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
+            "resourceGroupName": self._serialize.url(
+                "resource_group_name", resource_group_name, "str", max_length=90, min_length=1, pattern=r"^[-\w\._]+$"
+            ),
+            "automationAccountName": self._serialize.url("automation_account_name", automation_account_name, "str"),
+            "sourceControlName": self._serialize.url("source_control_name", source_control_name, "str"),
+            "sourceControlSyncJobId": self._serialize.url(
+                "source_control_sync_job_id", source_control_sync_job_id, "str"
+            ),
+            "streamId": self._serialize.url("stream_id", stream_id, "str"),
+            "subscriptionId": self._serialize.url("self._config.subscription_id", self._config.subscription_id, "str"),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+        query_parameters["api-version"] = self._serialize.query("api_version", api_version, "str")
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
-        header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
+        header_parameters["Accept"] = self._serialize.header("accept", accept, "str")
 
         request = self._client.get(url, query_parameters, header_parameters)
         pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
@@ -192,10 +211,11 @@ class SourceControlSyncJobStreamsOperations:
             error = self._deserialize(_models.ErrorResponse, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize('SourceControlSyncJobStreamById', pipeline_response)
+        deserialized = self._deserialize("SourceControlSyncJobStreamById", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    get.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/sourceControls/{sourceControlName}/sourceControlSyncJobs/{sourceControlSyncJobId}/streams/{streamId}'}  # type: ignore
+
+    get.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/sourceControls/{sourceControlName}/sourceControlSyncJobs/{sourceControlSyncJobId}/streams/{streamId}"}  # type: ignore

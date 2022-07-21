@@ -8,15 +8,22 @@
 from typing import Any, Callable, Dict, Generic, Optional, TypeVar
 import warnings
 
-from azure.core.exceptions import ClientAuthenticationError, HttpResponseError, ResourceExistsError, ResourceNotFoundError, map_error
+from azure.core.exceptions import (
+    ClientAuthenticationError,
+    HttpResponseError,
+    ResourceExistsError,
+    ResourceNotFoundError,
+    map_error,
+)
 from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import AsyncHttpResponse, HttpRequest
 from azure.mgmt.core.exceptions import ARMErrorFormat
 
 from ... import models as _models
 
-T = TypeVar('T')
+T = TypeVar("T")
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
+
 
 class SoftwareUpdateConfigurationMachineRunsOperations:
     """SoftwareUpdateConfigurationMachineRunsOperations async operations.
@@ -64,33 +71,35 @@ class SoftwareUpdateConfigurationMachineRunsOperations:
         :rtype: ~azure.mgmt.automation.models.SoftwareUpdateConfigurationMachineRun
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.SoftwareUpdateConfigurationMachineRun"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
+        cls = kwargs.pop("cls", None)  # type: ClsType["_models.SoftwareUpdateConfigurationMachineRun"]
+        error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop("error_map", {}))
         api_version = "2019-06-01"
         accept = "application/json"
 
         # Construct URL
-        url = self.get_by_id.metadata['url']  # type: ignore
+        url = self.get_by_id.metadata["url"]  # type: ignore
         path_format_arguments = {
-            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._]+$'),
-            'automationAccountName': self._serialize.url("automation_account_name", automation_account_name, 'str'),
-            'softwareUpdateConfigurationMachineRunId': self._serialize.url("software_update_configuration_machine_run_id", software_update_configuration_machine_run_id, 'str'),
+            "subscriptionId": self._serialize.url("self._config.subscription_id", self._config.subscription_id, "str"),
+            "resourceGroupName": self._serialize.url(
+                "resource_group_name", resource_group_name, "str", max_length=90, min_length=1, pattern=r"^[-\w\._]+$"
+            ),
+            "automationAccountName": self._serialize.url("automation_account_name", automation_account_name, "str"),
+            "softwareUpdateConfigurationMachineRunId": self._serialize.url(
+                "software_update_configuration_machine_run_id", software_update_configuration_machine_run_id, "str"
+            ),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+        query_parameters["api-version"] = self._serialize.query("api_version", api_version, "str")
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
         if client_request_id is not None:
-            header_parameters['clientRequestId'] = self._serialize.header("client_request_id", client_request_id, 'str')
-        header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
+            header_parameters["clientRequestId"] = self._serialize.header("client_request_id", client_request_id, "str")
+        header_parameters["Accept"] = self._serialize.header("accept", accept, "str")
 
         request = self._client.get(url, query_parameters, header_parameters)
         pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
@@ -101,13 +110,14 @@ class SoftwareUpdateConfigurationMachineRunsOperations:
             error = self._deserialize(_models.ErrorResponse, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize('SoftwareUpdateConfigurationMachineRun', pipeline_response)
+        deserialized = self._deserialize("SoftwareUpdateConfigurationMachineRun", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    get_by_id.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurationMachineRuns/{softwareUpdateConfigurationMachineRunId}'}  # type: ignore
+
+    get_by_id.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurationMachineRuns/{softwareUpdateConfigurationMachineRunId}"}  # type: ignore
 
     async def list(
         self,
@@ -140,38 +150,38 @@ class SoftwareUpdateConfigurationMachineRunsOperations:
         :rtype: ~azure.mgmt.automation.models.SoftwareUpdateConfigurationMachineRunListResult
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.SoftwareUpdateConfigurationMachineRunListResult"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
+        cls = kwargs.pop("cls", None)  # type: ClsType["_models.SoftwareUpdateConfigurationMachineRunListResult"]
+        error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop("error_map", {}))
         api_version = "2019-06-01"
         accept = "application/json"
 
         # Construct URL
-        url = self.list.metadata['url']  # type: ignore
+        url = self.list.metadata["url"]  # type: ignore
         path_format_arguments = {
-            'subscriptionId': self._serialize.url("self._config.subscription_id", self._config.subscription_id, 'str'),
-            'resourceGroupName': self._serialize.url("resource_group_name", resource_group_name, 'str', max_length=90, min_length=1, pattern=r'^[-\w\._]+$'),
-            'automationAccountName': self._serialize.url("automation_account_name", automation_account_name, 'str'),
+            "subscriptionId": self._serialize.url("self._config.subscription_id", self._config.subscription_id, "str"),
+            "resourceGroupName": self._serialize.url(
+                "resource_group_name", resource_group_name, "str", max_length=90, min_length=1, pattern=r"^[-\w\._]+$"
+            ),
+            "automationAccountName": self._serialize.url("automation_account_name", automation_account_name, "str"),
         }
         url = self._client.format_url(url, **path_format_arguments)
 
         # Construct parameters
         query_parameters = {}  # type: Dict[str, Any]
-        query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+        query_parameters["api-version"] = self._serialize.query("api_version", api_version, "str")
         if filter is not None:
-            query_parameters['$filter'] = self._serialize.query("filter", filter, 'str')
+            query_parameters["$filter"] = self._serialize.query("filter", filter, "str")
         if skip is not None:
-            query_parameters['$skip'] = self._serialize.query("skip", skip, 'str')
+            query_parameters["$skip"] = self._serialize.query("skip", skip, "str")
         if top is not None:
-            query_parameters['$top'] = self._serialize.query("top", top, 'str')
+            query_parameters["$top"] = self._serialize.query("top", top, "str")
 
         # Construct headers
         header_parameters = {}  # type: Dict[str, Any]
         if client_request_id is not None:
-            header_parameters['clientRequestId'] = self._serialize.header("client_request_id", client_request_id, 'str')
-        header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
+            header_parameters["clientRequestId"] = self._serialize.header("client_request_id", client_request_id, "str")
+        header_parameters["Accept"] = self._serialize.header("accept", accept, "str")
 
         request = self._client.get(url, query_parameters, header_parameters)
         pipeline_response = await self._client._pipeline.run(request, stream=False, **kwargs)
@@ -182,10 +192,11 @@ class SoftwareUpdateConfigurationMachineRunsOperations:
             error = self._deserialize(_models.ErrorResponse, response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize('SoftwareUpdateConfigurationMachineRunListResult', pipeline_response)
+        deserialized = self._deserialize("SoftwareUpdateConfigurationMachineRunListResult", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
-    list.metadata = {'url': '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurationMachineRuns'}  # type: ignore
+
+    list.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurationMachineRuns"}  # type: ignore

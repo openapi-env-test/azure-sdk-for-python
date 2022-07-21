@@ -9,15 +9,22 @@ from typing import Any, AsyncIterable, Callable, Dict, Generic, Optional, TypeVa
 import warnings
 
 from azure.core.async_paging import AsyncItemPaged, AsyncList
-from azure.core.exceptions import ClientAuthenticationError, HttpResponseError, ResourceExistsError, ResourceNotFoundError, map_error
+from azure.core.exceptions import (
+    ClientAuthenticationError,
+    HttpResponseError,
+    ResourceExistsError,
+    ResourceNotFoundError,
+    map_error,
+)
 from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import AsyncHttpResponse, HttpRequest
 from azure.mgmt.core.exceptions import ARMErrorFormat
 
 from ... import models as _models
 
-T = TypeVar('T')
+T = TypeVar("T")
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
+
 
 class Operations:
     """Operations async operations.
@@ -41,10 +48,7 @@ class Operations:
         self._deserialize = deserializer
         self._config = config
 
-    def list(
-        self,
-        **kwargs
-    ) -> AsyncIterable["_models.OperationListResult"]:
+    def list(self, **kwargs) -> AsyncIterable["_models.OperationListResult"]:
         """Lists all of the available Automation REST API operations.
 
         :keyword callable cls: A custom type or function that will be passed the direct response
@@ -52,25 +56,23 @@ class Operations:
         :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.automation.models.OperationListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.OperationListResult"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
+        cls = kwargs.pop("cls", None)  # type: ClsType["_models.OperationListResult"]
+        error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop("error_map", {}))
         api_version = "2019-06-01"
         accept = "application/json"
 
         def prepare_request(next_link=None):
             # Construct headers
             header_parameters = {}  # type: Dict[str, Any]
-            header_parameters['Accept'] = self._serialize.header("accept", accept, 'str')
+            header_parameters["Accept"] = self._serialize.header("accept", accept, "str")
 
             if not next_link:
                 # Construct URL
-                url = self.list.metadata['url']  # type: ignore
+                url = self.list.metadata["url"]  # type: ignore
                 # Construct parameters
                 query_parameters = {}  # type: Dict[str, Any]
-                query_parameters['api-version'] = self._serialize.query("api_version", api_version, 'str')
+                query_parameters["api-version"] = self._serialize.query("api_version", api_version, "str")
 
                 request = self._client.get(url, query_parameters, header_parameters)
             else:
@@ -80,7 +82,7 @@ class Operations:
             return request
 
         async def extract_data(pipeline_response):
-            deserialized = self._deserialize('OperationListResult', pipeline_response)
+            deserialized = self._deserialize("OperationListResult", pipeline_response)
             list_of_elem = deserialized.value
             if cls:
                 list_of_elem = cls(list_of_elem)
@@ -99,7 +101,6 @@ class Operations:
 
             return pipeline_response
 
-        return AsyncItemPaged(
-            get_next, extract_data
-        )
-    list.metadata = {'url': '/providers/Microsoft.Automation/operations'}  # type: ignore
+        return AsyncItemPaged(get_next, extract_data)
+
+    list.metadata = {"url": "/providers/Microsoft.Automation/operations"}  # type: ignore
