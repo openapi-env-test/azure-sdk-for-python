@@ -169,7 +169,7 @@ def gen_basic_config(origin_config: Dict[str, Any]) -> Dict[str, Any]:
         "no-namespace-folders": True,
         "version-tolerant": True,
         "package-version": origin_config.get("package-version", "1.0.0b1"),
-        "require": ["../../../../../azure-rest-api-specs/" + line for line in origin_config["require"]],
+        "require": ["../../../../../spec-repo/" + line for line in origin_config["require"]],
     }
 
 

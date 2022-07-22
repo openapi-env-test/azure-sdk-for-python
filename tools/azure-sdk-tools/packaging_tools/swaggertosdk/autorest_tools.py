@@ -113,6 +113,12 @@ def generate_code(input_file, global_conf, local_conf, output_dir=None, autorest
     cmd_line = autorest_bin.split()
     cmd_line += params
     _LOGGER.info("Autorest cmd line:\n%s", " ".join(cmd_line))
+    _LOGGER.info("input_path:\n%s", input_path)
+
+    execute_simple_command("pwd", cwd=str(input_path))
+    catcmd = ["cat"]
+    catcmd += ["README.md"]
+    execute_simple_command(catcmd, cwd=str(input_path))
 
     execute_simple_command(cmd_line, cwd=str(input_path))
     # Checks that Autorest did something if output_dir is under control
