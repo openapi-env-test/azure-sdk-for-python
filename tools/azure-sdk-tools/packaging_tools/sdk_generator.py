@@ -27,7 +27,7 @@ def main(generate_input, generate_output):
     if 'resource-manager' in input_readme:
         config = generate(CONFIG_FILE, sdk_folder, [], relative_path_readme, spec_folder, force_generation=True)
     else:
-        config = gen_dpg(input_readme, data.get('autorestConfig', ''))
+        config = gen_dpg(input_readme, data.get('autorestConfig', ''), spec_folder)
     package_names = get_package_names(sdk_folder)
     _LOGGER.info(f"[CODEGEN]({input_readme})codegen end. [(packages:{str(package_names)})]")
 
