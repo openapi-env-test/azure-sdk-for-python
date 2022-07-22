@@ -7,587 +7,25 @@
 # Changes may cause incorrect behavior and will be lost if the code is regenerated.
 # --------------------------------------------------------------------------
 import sys
-from typing import Any, Callable, Dict, IO, Iterable, Optional, TypeVar, Union, cast, overload
+from typing import Any, AsyncIterable, Callable, Dict, IO, Optional, TypeVar, Union, cast, overload
 
-from msrest import Serializer
-
+from azure.core.async_paging import AsyncItemPaged, AsyncList
 from azure.core.exceptions import ClientAuthenticationError, HttpResponseError, ResourceExistsError, ResourceNotFoundError, map_error
-from azure.core.paging import ItemPaged
 from azure.core.pipeline import PipelineResponse
-from azure.core.pipeline.transport import HttpResponse
+from azure.core.pipeline.transport import AsyncHttpResponse
 from azure.core.rest import HttpRequest
 from azure.core.tracing.decorator import distributed_trace
+from azure.core.tracing.decorator_async import distributed_trace_async
 from azure.core.utils import case_insensitive_dict
 
-from .._vendor import _format_url_section
+from ...operations._operations import build_accounts_get_access_keys_request, build_accounts_get_account_properties_request, build_accounts_regenerate_access_key_request, build_accounts_update_account_properties_request, build_collections_create_or_update_collection_request, build_collections_delete_collection_request, build_collections_get_collection_path_request, build_collections_get_collection_request, build_collections_list_child_collection_names_request, build_collections_list_collections_request, build_metadata_policy_get_request, build_metadata_policy_list_all_request, build_metadata_policy_update_request, build_metadata_roles_list_request, build_resource_set_rules_create_or_update_resource_set_rule_request, build_resource_set_rules_delete_resource_set_rule_request, build_resource_set_rules_get_resource_set_rule_request, build_resource_set_rules_list_resource_set_rules_request
 if sys.version_info >= (3, 9):
     from collections.abc import MutableMapping
 else:
     from typing import MutableMapping  # type: ignore  # pylint: disable=ungrouped-imports
 JSON = MutableMapping[str, Any] # pylint: disable=unsubscriptable-object
 T = TypeVar('T')
-ClsType = Optional[Callable[[PipelineResponse[HttpRequest, HttpResponse], T, Dict[str, Any]], Any]]
-
-_SERIALIZER = Serializer()
-_SERIALIZER.client_side_validation = False
-
-def build_accounts_get_account_properties_request(
-    **kwargs: Any
-) -> HttpRequest:
-    _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
-    _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
-
-    api_version = kwargs.pop('api_version', _params.pop('api-version', "2019-11-01-preview"))  # type: str
-    accept = _headers.pop('Accept', "application/json")
-
-    # Construct URL
-    _url = "/"
-
-    # Construct parameters
-    _params['api-version'] = _SERIALIZER.query("api_version", api_version, 'str')
-
-    # Construct headers
-    _headers['Accept'] = _SERIALIZER.header("accept", accept, 'str')
-
-    return HttpRequest(
-        method="GET",
-        url=_url,
-        params=_params,
-        headers=_headers,
-        **kwargs
-    )
-
-
-def build_accounts_update_account_properties_request(
-    **kwargs: Any
-) -> HttpRequest:
-    _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
-    _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
-
-    api_version = kwargs.pop('api_version', _params.pop('api-version', "2019-11-01-preview"))  # type: str
-    content_type = kwargs.pop('content_type', _headers.pop('Content-Type', None))  # type: Optional[str]
-    accept = _headers.pop('Accept', "application/json")
-
-    # Construct URL
-    _url = "/"
-
-    # Construct parameters
-    _params['api-version'] = _SERIALIZER.query("api_version", api_version, 'str')
-
-    # Construct headers
-    if content_type is not None:
-        _headers['Content-Type'] = _SERIALIZER.header("content_type", content_type, 'str')
-    _headers['Accept'] = _SERIALIZER.header("accept", accept, 'str')
-
-    return HttpRequest(
-        method="PATCH",
-        url=_url,
-        params=_params,
-        headers=_headers,
-        **kwargs
-    )
-
-
-def build_accounts_get_access_keys_request(
-    **kwargs: Any
-) -> HttpRequest:
-    _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
-    _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
-
-    api_version = kwargs.pop('api_version', _params.pop('api-version', "2019-11-01-preview"))  # type: str
-    accept = _headers.pop('Accept', "application/json")
-
-    # Construct URL
-    _url = "/listkeys"
-
-    # Construct parameters
-    _params['api-version'] = _SERIALIZER.query("api_version", api_version, 'str')
-
-    # Construct headers
-    _headers['Accept'] = _SERIALIZER.header("accept", accept, 'str')
-
-    return HttpRequest(
-        method="POST",
-        url=_url,
-        params=_params,
-        headers=_headers,
-        **kwargs
-    )
-
-
-def build_accounts_regenerate_access_key_request(
-    **kwargs: Any
-) -> HttpRequest:
-    _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
-    _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
-
-    api_version = kwargs.pop('api_version', _params.pop('api-version', "2019-11-01-preview"))  # type: str
-    content_type = kwargs.pop('content_type', _headers.pop('Content-Type', None))  # type: Optional[str]
-    accept = _headers.pop('Accept', "application/json")
-
-    # Construct URL
-    _url = "/regeneratekeys"
-
-    # Construct parameters
-    _params['api-version'] = _SERIALIZER.query("api_version", api_version, 'str')
-
-    # Construct headers
-    if content_type is not None:
-        _headers['Content-Type'] = _SERIALIZER.header("content_type", content_type, 'str')
-    _headers['Accept'] = _SERIALIZER.header("accept", accept, 'str')
-
-    return HttpRequest(
-        method="POST",
-        url=_url,
-        params=_params,
-        headers=_headers,
-        **kwargs
-    )
-
-
-def build_collections_get_collection_request(
-    collection_name: str,
-    **kwargs: Any
-) -> HttpRequest:
-    _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
-    _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
-
-    api_version = kwargs.pop('api_version', _params.pop('api-version', "2019-11-01-preview"))  # type: str
-    accept = _headers.pop('Accept', "application/json")
-
-    # Construct URL
-    _url = "/collections/{collectionName}"
-    path_format_arguments = {
-        "collectionName": _SERIALIZER.url("collection_name", collection_name, 'str'),
-    }
-
-    _url = _format_url_section(_url, **path_format_arguments)
-
-    # Construct parameters
-    _params['api-version'] = _SERIALIZER.query("api_version", api_version, 'str')
-
-    # Construct headers
-    _headers['Accept'] = _SERIALIZER.header("accept", accept, 'str')
-
-    return HttpRequest(
-        method="GET",
-        url=_url,
-        params=_params,
-        headers=_headers,
-        **kwargs
-    )
-
-
-def build_collections_create_or_update_collection_request(
-    collection_name: str,
-    **kwargs: Any
-) -> HttpRequest:
-    _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
-    _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
-
-    api_version = kwargs.pop('api_version', _params.pop('api-version', "2019-11-01-preview"))  # type: str
-    content_type = kwargs.pop('content_type', _headers.pop('Content-Type', None))  # type: Optional[str]
-    accept = _headers.pop('Accept', "application/json")
-
-    # Construct URL
-    _url = "/collections/{collectionName}"
-    path_format_arguments = {
-        "collectionName": _SERIALIZER.url("collection_name", collection_name, 'str'),
-    }
-
-    _url = _format_url_section(_url, **path_format_arguments)
-
-    # Construct parameters
-    _params['api-version'] = _SERIALIZER.query("api_version", api_version, 'str')
-
-    # Construct headers
-    if content_type is not None:
-        _headers['Content-Type'] = _SERIALIZER.header("content_type", content_type, 'str')
-    _headers['Accept'] = _SERIALIZER.header("accept", accept, 'str')
-
-    return HttpRequest(
-        method="PUT",
-        url=_url,
-        params=_params,
-        headers=_headers,
-        **kwargs
-    )
-
-
-def build_collections_delete_collection_request(
-    collection_name: str,
-    **kwargs: Any
-) -> HttpRequest:
-    _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
-    _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
-
-    api_version = kwargs.pop('api_version', _params.pop('api-version', "2019-11-01-preview"))  # type: str
-    accept = _headers.pop('Accept', "application/json")
-
-    # Construct URL
-    _url = "/collections/{collectionName}"
-    path_format_arguments = {
-        "collectionName": _SERIALIZER.url("collection_name", collection_name, 'str'),
-    }
-
-    _url = _format_url_section(_url, **path_format_arguments)
-
-    # Construct parameters
-    _params['api-version'] = _SERIALIZER.query("api_version", api_version, 'str')
-
-    # Construct headers
-    _headers['Accept'] = _SERIALIZER.header("accept", accept, 'str')
-
-    return HttpRequest(
-        method="DELETE",
-        url=_url,
-        params=_params,
-        headers=_headers,
-        **kwargs
-    )
-
-
-def build_collections_list_collections_request(
-    *,
-    skip_token: Optional[str] = None,
-    **kwargs: Any
-) -> HttpRequest:
-    _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
-    _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
-
-    api_version = kwargs.pop('api_version', _params.pop('api-version', "2019-11-01-preview"))  # type: str
-    accept = _headers.pop('Accept', "application/json")
-
-    # Construct URL
-    _url = "/collections"
-
-    # Construct parameters
-    _params['api-version'] = _SERIALIZER.query("api_version", api_version, 'str')
-    if skip_token is not None:
-        _params['$skipToken'] = _SERIALIZER.query("skip_token", skip_token, 'str')
-
-    # Construct headers
-    _headers['Accept'] = _SERIALIZER.header("accept", accept, 'str')
-
-    return HttpRequest(
-        method="GET",
-        url=_url,
-        params=_params,
-        headers=_headers,
-        **kwargs
-    )
-
-
-def build_collections_list_child_collection_names_request(
-    collection_name: str,
-    *,
-    skip_token: Optional[str] = None,
-    **kwargs: Any
-) -> HttpRequest:
-    _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
-    _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
-
-    api_version = kwargs.pop('api_version', _params.pop('api-version', "2019-11-01-preview"))  # type: str
-    accept = _headers.pop('Accept', "application/json")
-
-    # Construct URL
-    _url = "/collections/{collectionName}/getChildCollectionNames"
-    path_format_arguments = {
-        "collectionName": _SERIALIZER.url("collection_name", collection_name, 'str'),
-    }
-
-    _url = _format_url_section(_url, **path_format_arguments)
-
-    # Construct parameters
-    _params['api-version'] = _SERIALIZER.query("api_version", api_version, 'str')
-    if skip_token is not None:
-        _params['$skipToken'] = _SERIALIZER.query("skip_token", skip_token, 'str')
-
-    # Construct headers
-    _headers['Accept'] = _SERIALIZER.header("accept", accept, 'str')
-
-    return HttpRequest(
-        method="GET",
-        url=_url,
-        params=_params,
-        headers=_headers,
-        **kwargs
-    )
-
-
-def build_collections_get_collection_path_request(
-    collection_name: str,
-    **kwargs: Any
-) -> HttpRequest:
-    _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
-    _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
-
-    api_version = kwargs.pop('api_version', _params.pop('api-version', "2019-11-01-preview"))  # type: str
-    accept = _headers.pop('Accept', "application/json")
-
-    # Construct URL
-    _url = "/collections/{collectionName}/getCollectionPath"
-    path_format_arguments = {
-        "collectionName": _SERIALIZER.url("collection_name", collection_name, 'str'),
-    }
-
-    _url = _format_url_section(_url, **path_format_arguments)
-
-    # Construct parameters
-    _params['api-version'] = _SERIALIZER.query("api_version", api_version, 'str')
-
-    # Construct headers
-    _headers['Accept'] = _SERIALIZER.header("accept", accept, 'str')
-
-    return HttpRequest(
-        method="GET",
-        url=_url,
-        params=_params,
-        headers=_headers,
-        **kwargs
-    )
-
-
-def build_resource_set_rules_get_resource_set_rule_request(
-    **kwargs: Any
-) -> HttpRequest:
-    _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
-    _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
-
-    api_version = kwargs.pop('api_version', _params.pop('api-version', "2019-11-01-preview"))  # type: str
-    accept = _headers.pop('Accept', "application/json")
-
-    # Construct URL
-    _url = "/resourceSetRuleConfigs/defaultResourceSetRuleConfig"
-
-    # Construct parameters
-    _params['api-version'] = _SERIALIZER.query("api_version", api_version, 'str')
-
-    # Construct headers
-    _headers['Accept'] = _SERIALIZER.header("accept", accept, 'str')
-
-    return HttpRequest(
-        method="GET",
-        url=_url,
-        params=_params,
-        headers=_headers,
-        **kwargs
-    )
-
-
-def build_resource_set_rules_create_or_update_resource_set_rule_request(
-    **kwargs: Any
-) -> HttpRequest:
-    _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
-    _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
-
-    api_version = kwargs.pop('api_version', _params.pop('api-version', "2019-11-01-preview"))  # type: str
-    content_type = kwargs.pop('content_type', _headers.pop('Content-Type', None))  # type: Optional[str]
-    accept = _headers.pop('Accept', "application/json")
-
-    # Construct URL
-    _url = "/resourceSetRuleConfigs/defaultResourceSetRuleConfig"
-
-    # Construct parameters
-    _params['api-version'] = _SERIALIZER.query("api_version", api_version, 'str')
-
-    # Construct headers
-    if content_type is not None:
-        _headers['Content-Type'] = _SERIALIZER.header("content_type", content_type, 'str')
-    _headers['Accept'] = _SERIALIZER.header("accept", accept, 'str')
-
-    return HttpRequest(
-        method="PUT",
-        url=_url,
-        params=_params,
-        headers=_headers,
-        **kwargs
-    )
-
-
-def build_resource_set_rules_delete_resource_set_rule_request(
-    **kwargs: Any
-) -> HttpRequest:
-    _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
-    _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
-
-    api_version = kwargs.pop('api_version', _params.pop('api-version', "2019-11-01-preview"))  # type: str
-    accept = _headers.pop('Accept', "application/json")
-
-    # Construct URL
-    _url = "/resourceSetRuleConfigs/defaultResourceSetRuleConfig"
-
-    # Construct parameters
-    _params['api-version'] = _SERIALIZER.query("api_version", api_version, 'str')
-
-    # Construct headers
-    _headers['Accept'] = _SERIALIZER.header("accept", accept, 'str')
-
-    return HttpRequest(
-        method="DELETE",
-        url=_url,
-        params=_params,
-        headers=_headers,
-        **kwargs
-    )
-
-
-def build_resource_set_rules_list_resource_set_rules_request(
-    *,
-    skip_token: Optional[str] = None,
-    **kwargs: Any
-) -> HttpRequest:
-    _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
-    _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
-
-    api_version = kwargs.pop('api_version', _params.pop('api-version', "2019-11-01-preview"))  # type: str
-    accept = _headers.pop('Accept', "application/json")
-
-    # Construct URL
-    _url = "/resourceSetRuleConfigs"
-
-    # Construct parameters
-    _params['api-version'] = _SERIALIZER.query("api_version", api_version, 'str')
-    if skip_token is not None:
-        _params['$skipToken'] = _SERIALIZER.query("skip_token", skip_token, 'str')
-
-    # Construct headers
-    _headers['Accept'] = _SERIALIZER.header("accept", accept, 'str')
-
-    return HttpRequest(
-        method="GET",
-        url=_url,
-        params=_params,
-        headers=_headers,
-        **kwargs
-    )
-
-
-def build_metadata_roles_list_request(
-    **kwargs: Any
-) -> HttpRequest:
-    _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
-    _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
-
-    api_version = kwargs.pop('api_version', _params.pop('api-version', "2021-07-01-preview"))  # type: str
-    accept = _headers.pop('Accept', "application/json")
-
-    # Construct URL
-    _url = "/metadataRoles"
-
-    # Construct parameters
-    _params['api-version'] = _SERIALIZER.query("api_version", api_version, 'str')
-
-    # Construct headers
-    _headers['Accept'] = _SERIALIZER.header("accept", accept, 'str')
-
-    return HttpRequest(
-        method="GET",
-        url=_url,
-        params=_params,
-        headers=_headers,
-        **kwargs
-    )
-
-
-def build_metadata_policy_list_all_request(
-    *,
-    collection_name: Optional[str] = None,
-    **kwargs: Any
-) -> HttpRequest:
-    _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
-    _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
-
-    api_version = kwargs.pop('api_version', _params.pop('api-version', "2021-07-01-preview"))  # type: str
-    accept = _headers.pop('Accept', "application/json")
-
-    # Construct URL
-    _url = "/metadataPolicies"
-
-    # Construct parameters
-    if collection_name is not None:
-        _params['collectionName'] = _SERIALIZER.query("collection_name", collection_name, 'str')
-    _params['api-version'] = _SERIALIZER.query("api_version", api_version, 'str')
-
-    # Construct headers
-    _headers['Accept'] = _SERIALIZER.header("accept", accept, 'str')
-
-    return HttpRequest(
-        method="GET",
-        url=_url,
-        params=_params,
-        headers=_headers,
-        **kwargs
-    )
-
-
-def build_metadata_policy_update_request(
-    policy_id: str,
-    **kwargs: Any
-) -> HttpRequest:
-    _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
-    _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
-
-    api_version = kwargs.pop('api_version', _params.pop('api-version', "2021-07-01-preview"))  # type: str
-    content_type = kwargs.pop('content_type', _headers.pop('Content-Type', None))  # type: Optional[str]
-    accept = _headers.pop('Accept', "application/json")
-
-    # Construct URL
-    _url = "/metadataPolicies/{policyId}"
-    path_format_arguments = {
-        "policyId": _SERIALIZER.url("policy_id", policy_id, 'str'),
-    }
-
-    _url = _format_url_section(_url, **path_format_arguments)
-
-    # Construct parameters
-    _params['api-version'] = _SERIALIZER.query("api_version", api_version, 'str')
-
-    # Construct headers
-    if content_type is not None:
-        _headers['Content-Type'] = _SERIALIZER.header("content_type", content_type, 'str')
-    _headers['Accept'] = _SERIALIZER.header("accept", accept, 'str')
-
-    return HttpRequest(
-        method="PUT",
-        url=_url,
-        params=_params,
-        headers=_headers,
-        **kwargs
-    )
-
-
-def build_metadata_policy_get_request(
-    policy_id: str,
-    **kwargs: Any
-) -> HttpRequest:
-    _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
-    _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
-
-    api_version = kwargs.pop('api_version', _params.pop('api-version', "2021-07-01-preview"))  # type: str
-    accept = _headers.pop('Accept', "application/json")
-
-    # Construct URL
-    _url = "/metadataPolicies/{policyId}"
-    path_format_arguments = {
-        "policyId": _SERIALIZER.url("policy_id", policy_id, 'str'),
-    }
-
-    _url = _format_url_section(_url, **path_format_arguments)
-
-    # Construct parameters
-    _params['api-version'] = _SERIALIZER.query("api_version", api_version, 'str')
-
-    # Construct headers
-    _headers['Accept'] = _SERIALIZER.header("accept", accept, 'str')
-
-    return HttpRequest(
-        method="GET",
-        url=_url,
-        params=_params,
-        headers=_headers,
-        **kwargs
-    )
+ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
 
 class AccountsOperations:
     """
@@ -595,11 +33,11 @@ class AccountsOperations:
         **DO NOT** instantiate this class directly.
 
         Instead, you should access the following operations through
-        :class:`~azure.purview.administration.account.PurviewAccountClient`'s
+        :class:`~azure.purview.administration.metadata.aio.PurviewMetadataClient`'s
         :attr:`accounts` attribute.
     """
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         input_args = list(args)
         self._client = input_args.pop(0) if input_args else kwargs.pop("client")
         self._config = input_args.pop(0) if input_args else kwargs.pop("config")
@@ -607,8 +45,8 @@ class AccountsOperations:
         self._deserialize = input_args.pop(0) if input_args else kwargs.pop("deserializer")
 
 
-    @distributed_trace
-    def get_account_properties(
+    @distributed_trace_async
+    async def get_account_properties(
         self,
         **kwargs: Any
     ) -> JSON:
@@ -741,7 +179,7 @@ class AccountsOperations:
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)  # type: ignore
 
-        pipeline_response = self._client._pipeline.run(  # type: ignore # pylint: disable=protected-access
+        pipeline_response = await self._client._pipeline.run(  # type: ignore # pylint: disable=protected-access
             request,
             stream=False,
             **kwargs
@@ -766,7 +204,7 @@ class AccountsOperations:
 
 
     @overload
-    def update_account_properties(
+    async def update_account_properties(
         self,
         account_update_parameters: JSON,
         *,
@@ -892,7 +330,7 @@ class AccountsOperations:
         """
 
     @overload
-    def update_account_properties(
+    async def update_account_properties(
         self,
         account_update_parameters: IO,
         *,
@@ -1013,8 +451,8 @@ class AccountsOperations:
         """
 
 
-    @distributed_trace
-    def update_account_properties(
+    @distributed_trace_async
+    async def update_account_properties(
         self,
         account_update_parameters: Union[JSON, IO],
         **kwargs: Any
@@ -1164,7 +602,7 @@ class AccountsOperations:
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)  # type: ignore
 
-        pipeline_response = self._client._pipeline.run(  # type: ignore # pylint: disable=protected-access
+        pipeline_response = await self._client._pipeline.run(  # type: ignore # pylint: disable=protected-access
             request,
             stream=False,
             **kwargs
@@ -1188,8 +626,8 @@ class AccountsOperations:
 
 
 
-    @distributed_trace
-    def get_access_keys(
+    @distributed_trace_async
+    async def get_access_keys(
         self,
         **kwargs: Any
     ) -> JSON:
@@ -1232,7 +670,7 @@ class AccountsOperations:
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)  # type: ignore
 
-        pipeline_response = self._client._pipeline.run(  # type: ignore # pylint: disable=protected-access
+        pipeline_response = await self._client._pipeline.run(  # type: ignore # pylint: disable=protected-access
             request,
             stream=False,
             **kwargs
@@ -1257,7 +695,7 @@ class AccountsOperations:
 
 
     @overload
-    def regenerate_access_key(
+    async def regenerate_access_key(
         self,
         key_options: JSON,
         *,
@@ -1294,7 +732,7 @@ class AccountsOperations:
         """
 
     @overload
-    def regenerate_access_key(
+    async def regenerate_access_key(
         self,
         key_options: IO,
         *,
@@ -1325,8 +763,8 @@ class AccountsOperations:
         """
 
 
-    @distributed_trace
-    def regenerate_access_key(
+    @distributed_trace_async
+    async def regenerate_access_key(
         self,
         key_options: Union[JSON, IO],
         **kwargs: Any
@@ -1386,7 +824,7 @@ class AccountsOperations:
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)  # type: ignore
 
-        pipeline_response = self._client._pipeline.run(  # type: ignore # pylint: disable=protected-access
+        pipeline_response = await self._client._pipeline.run(  # type: ignore # pylint: disable=protected-access
             request,
             stream=False,
             **kwargs
@@ -1415,11 +853,11 @@ class CollectionsOperations:
         **DO NOT** instantiate this class directly.
 
         Instead, you should access the following operations through
-        :class:`~azure.purview.administration.account.PurviewAccountClient`'s
+        :class:`~azure.purview.administration.metadata.aio.PurviewMetadataClient`'s
         :attr:`collections` attribute.
     """
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         input_args = list(args)
         self._client = input_args.pop(0) if input_args else kwargs.pop("client")
         self._config = input_args.pop(0) if input_args else kwargs.pop("config")
@@ -1427,8 +865,8 @@ class CollectionsOperations:
         self._deserialize = input_args.pop(0) if input_args else kwargs.pop("deserializer")
 
 
-    @distributed_trace
-    def get_collection(
+    @distributed_trace_async
+    async def get_collection(
         self,
         collection_name: str,
         **kwargs: Any
@@ -1498,7 +936,7 @@ class CollectionsOperations:
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)  # type: ignore
 
-        pipeline_response = self._client._pipeline.run(  # type: ignore # pylint: disable=protected-access
+        pipeline_response = await self._client._pipeline.run(  # type: ignore # pylint: disable=protected-access
             request,
             stream=False,
             **kwargs
@@ -1523,7 +961,7 @@ class CollectionsOperations:
 
 
     @overload
-    def create_or_update_collection(
+    async def create_or_update_collection(
         self,
         collection_name: str,
         collection: JSON,
@@ -1611,7 +1049,7 @@ class CollectionsOperations:
         """
 
     @overload
-    def create_or_update_collection(
+    async def create_or_update_collection(
         self,
         collection_name: str,
         collection: IO,
@@ -1668,8 +1106,8 @@ class CollectionsOperations:
         """
 
 
-    @distributed_trace
-    def create_or_update_collection(
+    @distributed_trace_async
+    async def create_or_update_collection(
         self,
         collection_name: str,
         collection: Union[JSON, IO],
@@ -1756,7 +1194,7 @@ class CollectionsOperations:
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)  # type: ignore
 
-        pipeline_response = self._client._pipeline.run(  # type: ignore # pylint: disable=protected-access
+        pipeline_response = await self._client._pipeline.run(  # type: ignore # pylint: disable=protected-access
             request,
             stream=False,
             **kwargs
@@ -1780,8 +1218,8 @@ class CollectionsOperations:
 
 
 
-    @distributed_trace
-    def delete_collection(  # pylint: disable=inconsistent-return-statements
+    @distributed_trace_async
+    async def delete_collection(  # pylint: disable=inconsistent-return-statements
         self,
         collection_name: str,
         **kwargs: Any
@@ -1817,7 +1255,7 @@ class CollectionsOperations:
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)  # type: ignore
 
-        pipeline_response = self._client._pipeline.run(  # type: ignore # pylint: disable=protected-access
+        pipeline_response = await self._client._pipeline.run(  # type: ignore # pylint: disable=protected-access
             request,
             stream=False,
             **kwargs
@@ -1840,13 +1278,13 @@ class CollectionsOperations:
         *,
         skip_token: Optional[str] = None,
         **kwargs: Any
-    ) -> Iterable[JSON]:
+    ) -> AsyncIterable[JSON]:
         """List the collections in the account.
 
         :keyword skip_token: Default value is None.
         :paramtype skip_token: str
         :return: An iterator like instance of JSON object
-        :rtype: ~azure.core.paging.ItemPaged[JSON]
+        :rtype: ~azure.core.async_paging.AsyncItemPaged[JSON]
         :raises ~azure.core.exceptions.HttpResponseError:
 
         Example:
@@ -1924,17 +1362,17 @@ class CollectionsOperations:
                 request.method = "GET"
             return request
 
-        def extract_data(pipeline_response):
+        async def extract_data(pipeline_response):
             deserialized = pipeline_response.http_response.json()
             list_of_elem = deserialized["value"]
             if cls:
                 list_of_elem = cls(list_of_elem)
-            return deserialized.get("nextLink", None), iter(list_of_elem)
+            return deserialized.get("nextLink", None), AsyncList(list_of_elem)
 
-        def get_next(next_link=None):
+        async def get_next(next_link=None):
             request = prepare_request(next_link)
 
-            pipeline_response = self._client._pipeline.run(  # type: ignore # pylint: disable=protected-access
+            pipeline_response = await self._client._pipeline.run(  # type: ignore # pylint: disable=protected-access
                 request,
                 stream=False,
                 **kwargs
@@ -1948,7 +1386,7 @@ class CollectionsOperations:
             return pipeline_response
 
 
-        return ItemPaged(
+        return AsyncItemPaged(
             get_next, extract_data
         )
 
@@ -1960,7 +1398,7 @@ class CollectionsOperations:
         *,
         skip_token: Optional[str] = None,
         **kwargs: Any
-    ) -> Iterable[JSON]:
+    ) -> AsyncIterable[JSON]:
         """Lists the child collections names in the collection.
 
         :param collection_name: Required.
@@ -1968,7 +1406,7 @@ class CollectionsOperations:
         :keyword skip_token: Default value is None.
         :paramtype skip_token: str
         :return: An iterator like instance of JSON object
-        :rtype: ~azure.core.paging.ItemPaged[JSON]
+        :rtype: ~azure.core.async_paging.AsyncItemPaged[JSON]
         :raises ~azure.core.exceptions.HttpResponseError:
 
         Example:
@@ -2024,17 +1462,17 @@ class CollectionsOperations:
                 request.method = "GET"
             return request
 
-        def extract_data(pipeline_response):
+        async def extract_data(pipeline_response):
             deserialized = pipeline_response.http_response.json()
             list_of_elem = deserialized["value"]
             if cls:
                 list_of_elem = cls(list_of_elem)
-            return deserialized.get("nextLink", None), iter(list_of_elem)
+            return deserialized.get("nextLink", None), AsyncList(list_of_elem)
 
-        def get_next(next_link=None):
+        async def get_next(next_link=None):
             request = prepare_request(next_link)
 
-            pipeline_response = self._client._pipeline.run(  # type: ignore # pylint: disable=protected-access
+            pipeline_response = await self._client._pipeline.run(  # type: ignore # pylint: disable=protected-access
                 request,
                 stream=False,
                 **kwargs
@@ -2048,13 +1486,13 @@ class CollectionsOperations:
             return pipeline_response
 
 
-        return ItemPaged(
+        return AsyncItemPaged(
             get_next, extract_data
         )
 
 
-    @distributed_trace
-    def get_collection_path(
+    @distributed_trace_async
+    async def get_collection_path(
         self,
         collection_name: str,
         **kwargs: Any
@@ -2105,7 +1543,7 @@ class CollectionsOperations:
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)  # type: ignore
 
-        pipeline_response = self._client._pipeline.run(  # type: ignore # pylint: disable=protected-access
+        pipeline_response = await self._client._pipeline.run(  # type: ignore # pylint: disable=protected-access
             request,
             stream=False,
             **kwargs
@@ -2134,11 +1572,11 @@ class ResourceSetRulesOperations:
         **DO NOT** instantiate this class directly.
 
         Instead, you should access the following operations through
-        :class:`~azure.purview.administration.account.PurviewAccountClient`'s
+        :class:`~azure.purview.administration.metadata.aio.PurviewMetadataClient`'s
         :attr:`resource_set_rules` attribute.
     """
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         input_args = list(args)
         self._client = input_args.pop(0) if input_args else kwargs.pop("client")
         self._config = input_args.pop(0) if input_args else kwargs.pop("config")
@@ -2146,8 +1584,8 @@ class ResourceSetRulesOperations:
         self._deserialize = input_args.pop(0) if input_args else kwargs.pop("deserializer")
 
 
-    @distributed_trace
-    def get_resource_set_rule(
+    @distributed_trace_async
+    async def get_resource_set_rule(
         self,
         **kwargs: Any
     ) -> JSON:
@@ -2392,7 +1830,7 @@ class ResourceSetRulesOperations:
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)  # type: ignore
 
-        pipeline_response = self._client._pipeline.run(  # type: ignore # pylint: disable=protected-access
+        pipeline_response = await self._client._pipeline.run(  # type: ignore # pylint: disable=protected-access
             request,
             stream=False,
             **kwargs
@@ -2417,7 +1855,7 @@ class ResourceSetRulesOperations:
 
 
     @overload
-    def create_or_update_resource_set_rule(
+    async def create_or_update_resource_set_rule(
         self,
         resource_set_rule_config: JSON,
         *,
@@ -2860,7 +2298,7 @@ class ResourceSetRulesOperations:
         """
 
     @overload
-    def create_or_update_resource_set_rule(
+    async def create_or_update_resource_set_rule(
         self,
         resource_set_rule_config: IO,
         *,
@@ -3093,8 +2531,8 @@ class ResourceSetRulesOperations:
         """
 
 
-    @distributed_trace
-    def create_or_update_resource_set_rule(
+    @distributed_trace_async
+    async def create_or_update_resource_set_rule(
         self,
         resource_set_rule_config: Union[JSON, IO],
         **kwargs: Any
@@ -3356,7 +2794,7 @@ class ResourceSetRulesOperations:
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)  # type: ignore
 
-        pipeline_response = self._client._pipeline.run(  # type: ignore # pylint: disable=protected-access
+        pipeline_response = await self._client._pipeline.run(  # type: ignore # pylint: disable=protected-access
             request,
             stream=False,
             **kwargs
@@ -3380,8 +2818,8 @@ class ResourceSetRulesOperations:
 
 
 
-    @distributed_trace
-    def delete_resource_set_rule(  # pylint: disable=inconsistent-return-statements
+    @distributed_trace_async
+    async def delete_resource_set_rule(  # pylint: disable=inconsistent-return-statements
         self,
         **kwargs: Any
     ) -> None:
@@ -3413,7 +2851,7 @@ class ResourceSetRulesOperations:
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)  # type: ignore
 
-        pipeline_response = self._client._pipeline.run(  # type: ignore # pylint: disable=protected-access
+        pipeline_response = await self._client._pipeline.run(  # type: ignore # pylint: disable=protected-access
             request,
             stream=False,
             **kwargs
@@ -3436,13 +2874,13 @@ class ResourceSetRulesOperations:
         *,
         skip_token: Optional[str] = None,
         **kwargs: Any
-    ) -> Iterable[JSON]:
+    ) -> AsyncIterable[JSON]:
         """Get a resource set config service model.
 
         :keyword skip_token: Default value is None.
         :paramtype skip_token: str
         :return: An iterator like instance of JSON object
-        :rtype: ~azure.core.paging.ItemPaged[JSON]
+        :rtype: ~azure.core.async_paging.AsyncItemPaged[JSON]
         :raises ~azure.core.exceptions.HttpResponseError:
 
         Example:
@@ -3699,17 +3137,17 @@ class ResourceSetRulesOperations:
                 request.method = "GET"
             return request
 
-        def extract_data(pipeline_response):
+        async def extract_data(pipeline_response):
             deserialized = pipeline_response.http_response.json()
             list_of_elem = deserialized["value"]
             if cls:
                 list_of_elem = cls(list_of_elem)
-            return deserialized.get("nextLink", None), iter(list_of_elem)
+            return deserialized.get("nextLink", None), AsyncList(list_of_elem)
 
-        def get_next(next_link=None):
+        async def get_next(next_link=None):
             request = prepare_request(next_link)
 
-            pipeline_response = self._client._pipeline.run(  # type: ignore # pylint: disable=protected-access
+            pipeline_response = await self._client._pipeline.run(  # type: ignore # pylint: disable=protected-access
                 request,
                 stream=False,
                 **kwargs
@@ -3723,7 +3161,7 @@ class ResourceSetRulesOperations:
             return pipeline_response
 
 
-        return ItemPaged(
+        return AsyncItemPaged(
             get_next, extract_data
         )
 
@@ -3733,11 +3171,11 @@ class MetadataRolesOperations:
         **DO NOT** instantiate this class directly.
 
         Instead, you should access the following operations through
-        :class:`~azure.purview.administration.account.PurviewAccountClient`'s
+        :class:`~azure.purview.administration.metadata.aio.PurviewMetadataClient`'s
         :attr:`metadata_roles` attribute.
     """
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         input_args = list(args)
         self._client = input_args.pop(0) if input_args else kwargs.pop("client")
         self._config = input_args.pop(0) if input_args else kwargs.pop("config")
@@ -3749,11 +3187,11 @@ class MetadataRolesOperations:
     def list(
         self,
         **kwargs: Any
-    ) -> Iterable[JSON]:
+    ) -> AsyncIterable[JSON]:
         """Lists roles for Purview Account.
 
         :return: An iterator like instance of JSON object
-        :rtype: ~azure.core.paging.ItemPaged[JSON]
+        :rtype: ~azure.core.async_paging.AsyncItemPaged[JSON]
         :raises ~azure.core.exceptions.HttpResponseError:
 
         Example:
@@ -3854,17 +3292,17 @@ class MetadataRolesOperations:
                 request.method = "GET"
             return request
 
-        def extract_data(pipeline_response):
+        async def extract_data(pipeline_response):
             deserialized = pipeline_response.http_response.json()
             list_of_elem = deserialized["values"]
             if cls:
                 list_of_elem = cls(list_of_elem)
-            return deserialized.get("nextLink", None), iter(list_of_elem)
+            return deserialized.get("nextLink", None), AsyncList(list_of_elem)
 
-        def get_next(next_link=None):
+        async def get_next(next_link=None):
             request = prepare_request(next_link)
 
-            pipeline_response = self._client._pipeline.run(  # type: ignore # pylint: disable=protected-access
+            pipeline_response = await self._client._pipeline.run(  # type: ignore # pylint: disable=protected-access
                 request,
                 stream=False,
                 **kwargs
@@ -3878,7 +3316,7 @@ class MetadataRolesOperations:
             return pipeline_response
 
 
-        return ItemPaged(
+        return AsyncItemPaged(
             get_next, extract_data
         )
 
@@ -3888,11 +3326,11 @@ class MetadataPolicyOperations:
         **DO NOT** instantiate this class directly.
 
         Instead, you should access the following operations through
-        :class:`~azure.purview.administration.account.PurviewAccountClient`'s
+        :class:`~azure.purview.administration.metadata.aio.PurviewMetadataClient`'s
         :attr:`metadata_policy` attribute.
     """
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         input_args = list(args)
         self._client = input_args.pop(0) if input_args else kwargs.pop("client")
         self._config = input_args.pop(0) if input_args else kwargs.pop("config")
@@ -3906,14 +3344,14 @@ class MetadataPolicyOperations:
         *,
         collection_name: Optional[str] = None,
         **kwargs: Any
-    ) -> Iterable[JSON]:
+    ) -> AsyncIterable[JSON]:
         """List or Get metadata policies.
 
         :keyword collection_name: The name of an existing collection for which one policy needs to be
          fetched. Default value is None.
         :paramtype collection_name: str
         :return: An iterator like instance of JSON object
-        :rtype: ~azure.core.paging.ItemPaged[JSON]
+        :rtype: ~azure.core.async_paging.AsyncItemPaged[JSON]
         :raises ~azure.core.exceptions.HttpResponseError:
 
         Example:
@@ -4033,17 +3471,17 @@ class MetadataPolicyOperations:
                 request.method = "GET"
             return request
 
-        def extract_data(pipeline_response):
+        async def extract_data(pipeline_response):
             deserialized = pipeline_response.http_response.json()
             list_of_elem = deserialized["values"]
             if cls:
                 list_of_elem = cls(list_of_elem)
-            return deserialized.get("nextLink", None), iter(list_of_elem)
+            return deserialized.get("nextLink", None), AsyncList(list_of_elem)
 
-        def get_next(next_link=None):
+        async def get_next(next_link=None):
             request = prepare_request(next_link)
 
-            pipeline_response = self._client._pipeline.run(  # type: ignore # pylint: disable=protected-access
+            pipeline_response = await self._client._pipeline.run(  # type: ignore # pylint: disable=protected-access
                 request,
                 stream=False,
                 **kwargs
@@ -4057,13 +3495,13 @@ class MetadataPolicyOperations:
             return pipeline_response
 
 
-        return ItemPaged(
+        return AsyncItemPaged(
             get_next, extract_data
         )
 
 
     @overload
-    def update(
+    async def update(
         self,
         policy_id: str,
         body: Optional[JSON] = None,
@@ -4235,7 +3673,7 @@ class MetadataPolicyOperations:
         """
 
     @overload
-    def update(
+    async def update(
         self,
         policy_id: str,
         body: Optional[IO] = None,
@@ -4334,8 +3772,8 @@ class MetadataPolicyOperations:
         """
 
 
-    @distributed_trace
-    def update(
+    @distributed_trace_async
+    async def update(
         self,
         policy_id: str,
         body: Optional[Union[JSON, IO]] = None,
@@ -4467,7 +3905,7 @@ class MetadataPolicyOperations:
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)  # type: ignore
 
-        pipeline_response = self._client._pipeline.run(  # type: ignore # pylint: disable=protected-access
+        pipeline_response = await self._client._pipeline.run(  # type: ignore # pylint: disable=protected-access
             request,
             stream=False,
             **kwargs
@@ -4491,8 +3929,8 @@ class MetadataPolicyOperations:
 
 
 
-    @distributed_trace
-    def get(
+    @distributed_trace_async
+    async def get(
         self,
         policy_id: str,
         **kwargs: Any
@@ -4604,7 +4042,7 @@ class MetadataPolicyOperations:
         }
         request.url = self._client.format_url(request.url, **path_format_arguments)  # type: ignore
 
-        pipeline_response = self._client._pipeline.run(  # type: ignore # pylint: disable=protected-access
+        pipeline_response = await self._client._pipeline.run(  # type: ignore # pylint: disable=protected-access
             request,
             stream=False,
             **kwargs

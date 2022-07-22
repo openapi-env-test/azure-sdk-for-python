@@ -11,15 +11,15 @@ from typing import Any, TYPE_CHECKING
 from azure.core.configuration import Configuration
 from azure.core.pipeline import policies
 
-from ._version import VERSION
+from .._version import VERSION
 
 if TYPE_CHECKING:
     # pylint: disable=unused-import,ungrouped-imports
-    from azure.core.credentials import TokenCredential
+    from azure.core.credentials_async import AsyncTokenCredential
 
 
-class PurviewAccountClientConfiguration(Configuration):  # pylint: disable=too-many-instance-attributes
-    """Configuration for PurviewAccountClient.
+class PurviewMetadataClientConfiguration(Configuration):  # pylint: disable=too-many-instance-attributes
+    """Configuration for PurviewMetadataClient.
 
     Note that all parameters used to create this instance are saved as instance
     attributes.
@@ -31,17 +31,17 @@ class PurviewAccountClientConfiguration(Configuration):  # pylint: disable=too-m
      https://{accountName}.purview.azure.com. Required.
     :type endpoint: str
     :param credential: Credential needed for the client to connect to Azure. Required.
-    :type credential: ~azure.core.credentials.TokenCredential
+    :type credential: ~azure.core.credentials_async.AsyncTokenCredential
     """
 
     def __init__(
         self,
         endpoint: str,
         endpoint: str,
-        credential: "TokenCredential",
+        credential: "AsyncTokenCredential",
         **kwargs: Any
     ) -> None:
-        super(PurviewAccountClientConfiguration, self).__init__(**kwargs)
+        super(PurviewMetadataClientConfiguration, self).__init__(**kwargs)
         if endpoint is None:
             raise ValueError("Parameter 'endpoint' must not be None.")
         if endpoint is None:
@@ -58,17 +58,16 @@ class PurviewAccountClientConfiguration(Configuration):  # pylint: disable=too-m
 
     def _configure(
         self,
-        **kwargs  # type: Any
-    ):
-        # type: (...) -> None
+        **kwargs: Any
+    ) -> None:
         self.user_agent_policy = kwargs.get('user_agent_policy') or policies.UserAgentPolicy(**kwargs)
         self.headers_policy = kwargs.get('headers_policy') or policies.HeadersPolicy(**kwargs)
         self.proxy_policy = kwargs.get('proxy_policy') or policies.ProxyPolicy(**kwargs)
         self.logging_policy = kwargs.get('logging_policy') or policies.NetworkTraceLoggingPolicy(**kwargs)
         self.http_logging_policy = kwargs.get('http_logging_policy') or policies.HttpLoggingPolicy(**kwargs)
-        self.retry_policy = kwargs.get('retry_policy') or policies.RetryPolicy(**kwargs)
+        self.retry_policy = kwargs.get('retry_policy') or policies.AsyncRetryPolicy(**kwargs)
         self.custom_hook_policy = kwargs.get('custom_hook_policy') or policies.CustomHookPolicy(**kwargs)
-        self.redirect_policy = kwargs.get('redirect_policy') or policies.RedirectPolicy(**kwargs)
+        self.redirect_policy = kwargs.get('redirect_policy') or policies.AsyncRedirectPolicy(**kwargs)
         self.authentication_policy = kwargs.get('authentication_policy')
         if self.credential and not self.authentication_policy:
-            self.authentication_policy = policies.BearerTokenCredentialPolicy(self.credential, *self.credential_scopes, **kwargs)
+            self.authentication_policy = policies.AsyncBearerTokenCredentialPolicy(self.credential, *self.credential_scopes, **kwargs)

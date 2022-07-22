@@ -18,33 +18,40 @@ if TYPE_CHECKING:
     from azure.core.credentials_async import AsyncTokenCredential
 
 
-class PurviewAccountClientConfiguration(Configuration):
+class PurviewAccountClientConfiguration(Configuration):  # pylint: disable=too-many-instance-attributes
     """Configuration for PurviewAccountClient.
 
     Note that all parameters used to create this instance are saved as instance
     attributes.
 
-    :param endpoint: The account endpoint of your Purview account. Example: https://{accountName}.purview.azure.com/account/.
+    :param endpoint: The account endpoint of your Purview account. Example:
+     https://{accountName}.purview.azure.com/account/. Required.
     :type endpoint: str
-    :param credential: Credential needed for the client to connect to Azure.
+    :param endpoint: The endpoint of your Purview account. Example:
+     https://{accountName}.purview.azure.com. Required.
+    :type endpoint: str
+    :param credential: Credential needed for the client to connect to Azure. Required.
     :type credential: ~azure.core.credentials_async.AsyncTokenCredential
     """
 
     def __init__(
         self,
         endpoint: str,
+        endpoint: str,
         credential: "AsyncTokenCredential",
         **kwargs: Any
     ) -> None:
+        super(PurviewAccountClientConfiguration, self).__init__(**kwargs)
+        if endpoint is None:
+            raise ValueError("Parameter 'endpoint' must not be None.")
         if endpoint is None:
             raise ValueError("Parameter 'endpoint' must not be None.")
         if credential is None:
             raise ValueError("Parameter 'credential' must not be None.")
-        super(PurviewAccountClientConfiguration, self).__init__(**kwargs)
 
         self.endpoint = endpoint
+        self.endpoint = endpoint
         self.credential = credential
-        self.api_version = "2019-11-01-preview"
         self.credential_scopes = kwargs.pop('credential_scopes', ['https://purview.azure.net/.default'])
         kwargs.setdefault('sdk_moniker', 'purview-administration/{}'.format(VERSION))
         self._configure(**kwargs)
