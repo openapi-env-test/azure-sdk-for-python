@@ -32,9 +32,11 @@ version-tolerant: true
 Generate all API versions currently shipped for this package
 
 ```yaml
+require:
+  - https://github.com/Azure/azure-rest-api-specs/blob/9e30496a8803beb5a84909997e5cd7ea0f242fd8/specification/purview/data-plane/readme.md
 batch:
-  - tag: package-account
-  - tag: package-metadatapolicies
+  - purview-account: true
+  - purview-metadata: true
 ```
 
 ### Tag: package-account
@@ -42,8 +44,7 @@ batch:
 These settings apply only when `--tag=package-account` is specified on the command line.
 Please also specify `--python-sdks-folder=<path to the root directory of your azure-sdk-for-python clone>`.
 
-``` yaml $(tag) == 'package-account'
-input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/purview/data-plane/Azure.Analytics.Purview.Account/preview/2019-11-01-preview/account.json
+``` yaml $(purview-account)
 output-folder: ../azure/purview/administration/account
 namespace: azure.purview.administration.account
 clear-output-folder: true
@@ -57,8 +58,7 @@ credential-scopes: https://purview.azure.net/.default
 These settings apply only when `--tag=package-metadatapolicies` is specified on the command line.
 Please also specify `--python-sdks-folder=<path to the root directory of your azure-sdk-for-python clone>`.
 
-``` yaml $(tag) == 'package-metadatapolicies'
-input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/purview/data-plane/Azure.Analytics.Purview.MetadataPolicies/preview/2021-07-01-preview/purviewMetadataPolicy.json
+``` yaml $(purview-metadata)
 output-folder: ../azure/purview/administration/metadatapolicies
 namespace: azure.purview.administration.metadatapolicies
 clear-output-folder: true
