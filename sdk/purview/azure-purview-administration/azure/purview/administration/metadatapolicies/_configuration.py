@@ -6,7 +6,7 @@
 # Changes may cause incorrect behavior and will be lost if the code is regenerated.
 # --------------------------------------------------------------------------
 
-from typing import TYPE_CHECKING
+from typing import Any, TYPE_CHECKING
 
 from azure.core.configuration import Configuration
 from azure.core.pipeline import policies
@@ -15,39 +15,36 @@ from ._version import VERSION
 
 if TYPE_CHECKING:
     # pylint: disable=unused-import,ungrouped-imports
-    from typing import Any
-
     from azure.core.credentials import TokenCredential
 
 
-class PurviewMetadataPoliciesClientConfiguration(Configuration):
+class PurviewMetadataPoliciesClientConfiguration(Configuration):  # pylint: disable=too-many-instance-attributes
     """Configuration for PurviewMetadataPoliciesClient.
 
     Note that all parameters used to create this instance are saved as instance
     attributes.
 
-    :param endpoint: The endpoint of your Purview account. Example: https://{accountName}.purview.azure.com.
+    :param endpoint: The catalog endpoint of your Purview account. Example:
+     https://{accountName}.purview.azure.com. Required.
     :type endpoint: str
-    :param credential: Credential needed for the client to connect to Azure.
+    :param credential: Credential needed for the client to connect to Azure. Required.
     :type credential: ~azure.core.credentials.TokenCredential
     """
 
     def __init__(
         self,
-        endpoint,  # type: str
-        credential,  # type: "TokenCredential"
-        **kwargs  # type: Any
-    ):
-        # type: (...) -> None
+        endpoint: str,
+        credential: "TokenCredential",
+        **kwargs: Any
+    ) -> None:
+        super(PurviewMetadataPoliciesClientConfiguration, self).__init__(**kwargs)
         if endpoint is None:
             raise ValueError("Parameter 'endpoint' must not be None.")
         if credential is None:
             raise ValueError("Parameter 'credential' must not be None.")
-        super(PurviewMetadataPoliciesClientConfiguration, self).__init__(**kwargs)
 
         self.endpoint = endpoint
         self.credential = credential
-        self.api_version = "2021-07-01-preview"
         self.credential_scopes = kwargs.pop('credential_scopes', ['https://purview.azure.net/.default'])
         kwargs.setdefault('sdk_moniker', 'purview-administration/{}'.format(VERSION))
         self._configure(**kwargs)

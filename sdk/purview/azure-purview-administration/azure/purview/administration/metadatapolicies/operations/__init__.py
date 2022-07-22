@@ -6,10 +6,47 @@
 # Changes may cause incorrect behavior and will be lost if the code is regenerated.
 # --------------------------------------------------------------------------
 
+from ._operations import EntityOperations
+from ._operations import GlossaryOperations
+from ._operations import DiscoveryOperations
+from ._operations import LineageOperations
+from ._operations import RelationshipOperations
+from ._operations import TypesOperations
+from ._operations import CollectionOperations
+from ._operations import KeyVaultConnectionsOperations
+from ._operations import ClassificationRulesOperations
+from ._operations import DataSourcesOperations
+from ._operations import FiltersOperations
+from ._operations import ScansOperations
+from ._operations import ScanResultOperations
+from ._operations import ScanRulesetsOperations
+from ._operations import SystemScanRulesetsOperations
+from ._operations import TriggersOperations
 from ._operations import MetadataRolesOperations
 from ._operations import MetadataPolicyOperations
 
+from ._patch import __all__ as _patch_all
+from ._patch import *  # type: ignore # pylint: disable=unused-wildcard-import
+from ._patch import patch_sdk as _patch_sdk
 __all__ = [
+    'EntityOperations',
+    'GlossaryOperations',
+    'DiscoveryOperations',
+    'LineageOperations',
+    'RelationshipOperations',
+    'TypesOperations',
+    'CollectionOperations',
+    'KeyVaultConnectionsOperations',
+    'ClassificationRulesOperations',
+    'DataSourcesOperations',
+    'FiltersOperations',
+    'ScansOperations',
+    'ScanResultOperations',
+    'ScanRulesetsOperations',
+    'SystemScanRulesetsOperations',
+    'TriggersOperations',
     'MetadataRolesOperations',
     'MetadataPolicyOperations',
 ]
+__all__.extend([p for p in _patch_all if p not in __all__])
+_patch_sdk()

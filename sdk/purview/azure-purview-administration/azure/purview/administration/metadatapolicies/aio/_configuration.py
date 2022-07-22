@@ -18,15 +18,16 @@ if TYPE_CHECKING:
     from azure.core.credentials_async import AsyncTokenCredential
 
 
-class PurviewMetadataPoliciesClientConfiguration(Configuration):
+class PurviewMetadataPoliciesClientConfiguration(Configuration):  # pylint: disable=too-many-instance-attributes
     """Configuration for PurviewMetadataPoliciesClient.
 
     Note that all parameters used to create this instance are saved as instance
     attributes.
 
-    :param endpoint: The endpoint of your Purview account. Example: https://{accountName}.purview.azure.com.
+    :param endpoint: The catalog endpoint of your Purview account. Example:
+     https://{accountName}.purview.azure.com. Required.
     :type endpoint: str
-    :param credential: Credential needed for the client to connect to Azure.
+    :param credential: Credential needed for the client to connect to Azure. Required.
     :type credential: ~azure.core.credentials_async.AsyncTokenCredential
     """
 
@@ -36,15 +37,14 @@ class PurviewMetadataPoliciesClientConfiguration(Configuration):
         credential: "AsyncTokenCredential",
         **kwargs: Any
     ) -> None:
+        super(PurviewMetadataPoliciesClientConfiguration, self).__init__(**kwargs)
         if endpoint is None:
             raise ValueError("Parameter 'endpoint' must not be None.")
         if credential is None:
             raise ValueError("Parameter 'credential' must not be None.")
-        super(PurviewMetadataPoliciesClientConfiguration, self).__init__(**kwargs)
 
         self.endpoint = endpoint
         self.credential = credential
-        self.api_version = "2021-07-01-preview"
         self.credential_scopes = kwargs.pop('credential_scopes', ['https://purview.azure.net/.default'])
         kwargs.setdefault('sdk_moniker', 'purview-administration/{}'.format(VERSION))
         self._configure(**kwargs)
