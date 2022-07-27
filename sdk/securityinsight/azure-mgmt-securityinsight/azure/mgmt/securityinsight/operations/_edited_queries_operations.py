@@ -35,8 +35,8 @@ _SERIALIZER = Serializer()
 _SERIALIZER.client_side_validation = False
 
 
-def build_list_by_alert_rule_request(
-    resource_group_name: str, workspace_name: str, rule_id: str, subscription_id: str, **kwargs: Any
+def build_list_request(
+    resource_group_name: str, workspace_name: str, query_id: str, subscription_id: str, **kwargs: Any
 ) -> HttpRequest:
     _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
     _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
@@ -47,7 +47,7 @@ def build_list_by_alert_rule_request(
     # Construct URL
     _url = kwargs.pop(
         "template_url",
-        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRules/{ruleId}/actions",
+        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/assistedQueries/{queryId}/editedQueries",
     )  # pylint: disable=line-too-long
     path_format_arguments = {
         "subscriptionId": _SERIALIZER.url("subscription_id", subscription_id, "str", min_length=1),
@@ -55,7 +55,7 @@ def build_list_by_alert_rule_request(
             "resource_group_name", resource_group_name, "str", max_length=90, min_length=1
         ),
         "workspaceName": _SERIALIZER.url("workspace_name", workspace_name, "str", max_length=90, min_length=1),
-        "ruleId": _SERIALIZER.url("rule_id", rule_id, "str"),
+        "queryId": _SERIALIZER.url("query_id", query_id, "str"),
     }
 
     _url = _format_url_section(_url, **path_format_arguments)
@@ -70,7 +70,12 @@ def build_list_by_alert_rule_request(
 
 
 def build_get_request(
-    resource_group_name: str, workspace_name: str, rule_id: str, action_id: str, subscription_id: str, **kwargs: Any
+    resource_group_name: str,
+    workspace_name: str,
+    query_id: str,
+    edited_query_id: str,
+    subscription_id: str,
+    **kwargs: Any
 ) -> HttpRequest:
     _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
     _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
@@ -81,7 +86,7 @@ def build_get_request(
     # Construct URL
     _url = kwargs.pop(
         "template_url",
-        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRules/{ruleId}/actions/{actionId}",
+        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/assistedQueries/{queryId}/editedQueries/{editedQueryId}",
     )  # pylint: disable=line-too-long
     path_format_arguments = {
         "subscriptionId": _SERIALIZER.url("subscription_id", subscription_id, "str", min_length=1),
@@ -89,8 +94,8 @@ def build_get_request(
             "resource_group_name", resource_group_name, "str", max_length=90, min_length=1
         ),
         "workspaceName": _SERIALIZER.url("workspace_name", workspace_name, "str", max_length=90, min_length=1),
-        "ruleId": _SERIALIZER.url("rule_id", rule_id, "str"),
-        "actionId": _SERIALIZER.url("action_id", action_id, "str"),
+        "queryId": _SERIALIZER.url("query_id", query_id, "str"),
+        "editedQueryId": _SERIALIZER.url("edited_query_id", edited_query_id, "str"),
     }
 
     _url = _format_url_section(_url, **path_format_arguments)
@@ -104,8 +109,53 @@ def build_get_request(
     return HttpRequest(method="GET", url=_url, params=_params, headers=_headers, **kwargs)
 
 
+def build_delete_request(
+    resource_group_name: str,
+    workspace_name: str,
+    query_id: str,
+    edited_query_id: str,
+    subscription_id: str,
+    **kwargs: Any
+) -> HttpRequest:
+    _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
+    _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
+
+    api_version = kwargs.pop("api_version", _params.pop("api-version", "2022-11-01-preview"))  # type: str
+    accept = _headers.pop("Accept", "application/json")
+
+    # Construct URL
+    _url = kwargs.pop(
+        "template_url",
+        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/assistedQueries/{queryId}/editedQueries/{editedQueryId}",
+    )  # pylint: disable=line-too-long
+    path_format_arguments = {
+        "subscriptionId": _SERIALIZER.url("subscription_id", subscription_id, "str", min_length=1),
+        "resourceGroupName": _SERIALIZER.url(
+            "resource_group_name", resource_group_name, "str", max_length=90, min_length=1
+        ),
+        "workspaceName": _SERIALIZER.url("workspace_name", workspace_name, "str", max_length=90, min_length=1),
+        "queryId": _SERIALIZER.url("query_id", query_id, "str"),
+        "editedQueryId": _SERIALIZER.url("edited_query_id", edited_query_id, "str"),
+    }
+
+    _url = _format_url_section(_url, **path_format_arguments)
+
+    # Construct parameters
+    _params["api-version"] = _SERIALIZER.query("api_version", api_version, "str")
+
+    # Construct headers
+    _headers["Accept"] = _SERIALIZER.header("accept", accept, "str")
+
+    return HttpRequest(method="DELETE", url=_url, params=_params, headers=_headers, **kwargs)
+
+
 def build_create_or_update_request(
-    resource_group_name: str, workspace_name: str, rule_id: str, action_id: str, subscription_id: str, **kwargs: Any
+    resource_group_name: str,
+    workspace_name: str,
+    query_id: str,
+    edited_query_id: str,
+    subscription_id: str,
+    **kwargs: Any
 ) -> HttpRequest:
     _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
     _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
@@ -117,7 +167,7 @@ def build_create_or_update_request(
     # Construct URL
     _url = kwargs.pop(
         "template_url",
-        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRules/{ruleId}/actions/{actionId}",
+        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/assistedQueries/{queryId}/editedQueries/{editedQueryId}",
     )  # pylint: disable=line-too-long
     path_format_arguments = {
         "subscriptionId": _SERIALIZER.url("subscription_id", subscription_id, "str", min_length=1),
@@ -125,8 +175,8 @@ def build_create_or_update_request(
             "resource_group_name", resource_group_name, "str", max_length=90, min_length=1
         ),
         "workspaceName": _SERIALIZER.url("workspace_name", workspace_name, "str", max_length=90, min_length=1),
-        "ruleId": _SERIALIZER.url("rule_id", rule_id, "str"),
-        "actionId": _SERIALIZER.url("action_id", action_id, "str"),
+        "queryId": _SERIALIZER.url("query_id", query_id, "str"),
+        "editedQueryId": _SERIALIZER.url("edited_query_id", edited_query_id, "str"),
     }
 
     _url = _format_url_section(_url, **path_format_arguments)
@@ -142,49 +192,14 @@ def build_create_or_update_request(
     return HttpRequest(method="PUT", url=_url, params=_params, headers=_headers, **kwargs)
 
 
-def build_delete_request(
-    resource_group_name: str, workspace_name: str, rule_id: str, action_id: str, subscription_id: str, **kwargs: Any
-) -> HttpRequest:
-    _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
-    _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
-
-    api_version = kwargs.pop("api_version", _params.pop("api-version", "2022-11-01-preview"))  # type: str
-    accept = _headers.pop("Accept", "application/json")
-
-    # Construct URL
-    _url = kwargs.pop(
-        "template_url",
-        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRules/{ruleId}/actions/{actionId}",
-    )  # pylint: disable=line-too-long
-    path_format_arguments = {
-        "subscriptionId": _SERIALIZER.url("subscription_id", subscription_id, "str", min_length=1),
-        "resourceGroupName": _SERIALIZER.url(
-            "resource_group_name", resource_group_name, "str", max_length=90, min_length=1
-        ),
-        "workspaceName": _SERIALIZER.url("workspace_name", workspace_name, "str", max_length=90, min_length=1),
-        "ruleId": _SERIALIZER.url("rule_id", rule_id, "str"),
-        "actionId": _SERIALIZER.url("action_id", action_id, "str"),
-    }
-
-    _url = _format_url_section(_url, **path_format_arguments)
-
-    # Construct parameters
-    _params["api-version"] = _SERIALIZER.query("api_version", api_version, "str")
-
-    # Construct headers
-    _headers["Accept"] = _SERIALIZER.header("accept", accept, "str")
-
-    return HttpRequest(method="DELETE", url=_url, params=_params, headers=_headers, **kwargs)
-
-
-class ActionsOperations:
+class EditedQueriesOperations:
     """
     .. warning::
         **DO NOT** instantiate this class directly.
 
         Instead, you should access the following operations through
         :class:`~azure.mgmt.securityinsight.SecurityInsights`'s
-        :attr:`actions` attribute.
+        :attr:`edited_queries` attribute.
     """
 
     models = _models
@@ -197,28 +212,28 @@ class ActionsOperations:
         self._deserialize = input_args.pop(0) if input_args else kwargs.pop("deserializer")
 
     @distributed_trace
-    def list_by_alert_rule(
-        self, resource_group_name: str, workspace_name: str, rule_id: str, **kwargs: Any
-    ) -> Iterable["_models.ActionResponse"]:
-        """Gets all actions of alert rule.
+    def list(
+        self, resource_group_name: str, workspace_name: str, query_id: str, **kwargs: Any
+    ) -> Iterable["_models.EditedQuery"]:
+        """Gets all edited queries.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
          Required.
         :type resource_group_name: str
         :param workspace_name: The name of the workspace. Required.
         :type workspace_name: str
-        :param rule_id: Alert rule ID. Required.
-        :type rule_id: str
+        :param query_id: Query Id. Required.
+        :type query_id: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either ActionResponse or the result of cls(response)
-        :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.securityinsight.models.ActionResponse]
+        :return: An iterator like instance of either EditedQuery or the result of cls(response)
+        :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.securityinsight.models.EditedQuery]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         _headers = kwargs.pop("headers", {}) or {}
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
         api_version = kwargs.pop("api_version", _params.pop("api-version", self._config.api_version))  # type: str
-        cls = kwargs.pop("cls", None)  # type: ClsType[_models.ActionsList]
+        cls = kwargs.pop("cls", None)  # type: ClsType[_models.EditedQueryList]
 
         error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop("error_map", {}) or {})
@@ -226,13 +241,13 @@ class ActionsOperations:
         def prepare_request(next_link=None):
             if not next_link:
 
-                request = build_list_by_alert_rule_request(
+                request = build_list_request(
                     resource_group_name=resource_group_name,
                     workspace_name=workspace_name,
-                    rule_id=rule_id,
+                    query_id=query_id,
                     subscription_id=self._config.subscription_id,
                     api_version=api_version,
-                    template_url=self.list_by_alert_rule.metadata["url"],
+                    template_url=self.list.metadata["url"],
                     headers=_headers,
                     params=_params,
                 )
@@ -251,7 +266,7 @@ class ActionsOperations:
             return request
 
         def extract_data(pipeline_response):
-            deserialized = self._deserialize("ActionsList", pipeline_response)
+            deserialized = self._deserialize("EditedQueryList", pipeline_response)
             list_of_elem = deserialized.value
             if cls:
                 list_of_elem = cls(list_of_elem)
@@ -273,26 +288,26 @@ class ActionsOperations:
 
         return ItemPaged(get_next, extract_data)
 
-    list_by_alert_rule.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRules/{ruleId}/actions"}  # type: ignore
+    list.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/assistedQueries/{queryId}/editedQueries"}  # type: ignore
 
     @distributed_trace
     def get(
-        self, resource_group_name: str, workspace_name: str, rule_id: str, action_id: str, **kwargs: Any
-    ) -> _models.ActionResponse:
-        """Gets the action of alert rule.
+        self, resource_group_name: str, workspace_name: str, query_id: str, edited_query_id: str, **kwargs: Any
+    ) -> _models.EditedQuery:
+        """Gets an edited query.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
          Required.
         :type resource_group_name: str
         :param workspace_name: The name of the workspace. Required.
         :type workspace_name: str
-        :param rule_id: Alert rule ID. Required.
-        :type rule_id: str
-        :param action_id: Action ID. Required.
-        :type action_id: str
+        :param query_id: Query Id. Required.
+        :type query_id: str
+        :param edited_query_id: Edited Query Id (GUID). Required.
+        :type edited_query_id: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ActionResponse or the result of cls(response)
-        :rtype: ~azure.mgmt.securityinsight.models.ActionResponse
+        :return: EditedQuery or the result of cls(response)
+        :rtype: ~azure.mgmt.securityinsight.models.EditedQuery
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
@@ -302,13 +317,13 @@ class ActionsOperations:
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
         api_version = kwargs.pop("api_version", _params.pop("api-version", self._config.api_version))  # type: str
-        cls = kwargs.pop("cls", None)  # type: ClsType[_models.ActionResponse]
+        cls = kwargs.pop("cls", None)  # type: ClsType[_models.EditedQuery]
 
         request = build_get_request(
             resource_group_name=resource_group_name,
             workspace_name=workspace_name,
-            rule_id=rule_id,
-            action_id=action_id,
+            query_id=query_id,
+            edited_query_id=edited_query_id,
             subscription_id=self._config.subscription_id,
             api_version=api_version,
             template_url=self.get.metadata["url"],
@@ -328,46 +343,104 @@ class ActionsOperations:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize("ActionResponse", pipeline_response)
+        deserialized = self._deserialize("EditedQuery", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
 
-    get.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRules/{ruleId}/actions/{actionId}"}  # type: ignore
+    get.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/assistedQueries/{queryId}/editedQueries/{editedQueryId}"}  # type: ignore
 
-    @overload
-    def create_or_update(
-        self,
-        resource_group_name: str,
-        workspace_name: str,
-        rule_id: str,
-        action_id: str,
-        action: _models.ActionRequest,
-        *,
-        content_type: str = "application/json",
-        **kwargs: Any
-    ) -> _models.ActionResponse:
-        """Creates or updates the action of alert rule.
+    @distributed_trace
+    def delete(  # pylint: disable=inconsistent-return-statements
+        self, resource_group_name: str, workspace_name: str, query_id: str, edited_query_id: str, **kwargs: Any
+    ) -> None:
+        """Delete an edited queries.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
          Required.
         :type resource_group_name: str
         :param workspace_name: The name of the workspace. Required.
         :type workspace_name: str
-        :param rule_id: Alert rule ID. Required.
-        :type rule_id: str
-        :param action_id: Action ID. Required.
-        :type action_id: str
-        :param action: The action. Required.
-        :type action: ~azure.mgmt.securityinsight.models.ActionRequest
+        :param query_id: Query Id. Required.
+        :type query_id: str
+        :param edited_query_id: Edited Query Id (GUID). Required.
+        :type edited_query_id: str
+        :keyword callable cls: A custom type or function that will be passed the direct response
+        :return: None or the result of cls(response)
+        :rtype: None
+        :raises ~azure.core.exceptions.HttpResponseError:
+        """
+        error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop("error_map", {}) or {})
+
+        _headers = kwargs.pop("headers", {}) or {}
+        _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
+
+        api_version = kwargs.pop("api_version", _params.pop("api-version", self._config.api_version))  # type: str
+        cls = kwargs.pop("cls", None)  # type: ClsType[None]
+
+        request = build_delete_request(
+            resource_group_name=resource_group_name,
+            workspace_name=workspace_name,
+            query_id=query_id,
+            edited_query_id=edited_query_id,
+            subscription_id=self._config.subscription_id,
+            api_version=api_version,
+            template_url=self.delete.metadata["url"],
+            headers=_headers,
+            params=_params,
+        )
+        request = _convert_request(request)
+        request.url = self._client.format_url(request.url)  # type: ignore
+
+        pipeline_response = self._client._pipeline.run(  # type: ignore # pylint: disable=protected-access
+            request, stream=False, **kwargs
+        )
+
+        response = pipeline_response.http_response
+
+        if response.status_code not in [200, 204]:
+            map_error(status_code=response.status_code, response=response, error_map=error_map)
+            raise HttpResponseError(response=response, error_format=ARMErrorFormat)
+
+        if cls:
+            return cls(pipeline_response, None, {})
+
+    delete.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/assistedQueries/{queryId}/editedQueries/{editedQueryId}"}  # type: ignore
+
+    @overload
+    def create_or_update(
+        self,
+        resource_group_name: str,
+        workspace_name: str,
+        query_id: str,
+        edited_query_id: str,
+        edited_query: _models.EditedQuery,
+        *,
+        content_type: str = "application/json",
+        **kwargs: Any
+    ) -> _models.EditedQuery:
+        """Creates or updates an edited query.
+
+        :param resource_group_name: The name of the resource group. The name is case insensitive.
+         Required.
+        :type resource_group_name: str
+        :param workspace_name: The name of the workspace. Required.
+        :type workspace_name: str
+        :param query_id: Query Id. Required.
+        :type query_id: str
+        :param edited_query_id: Edited Query Id (GUID). Required.
+        :type edited_query_id: str
+        :param edited_query: The edited query. Required.
+        :type edited_query: ~azure.mgmt.securityinsight.models.EditedQuery
         :keyword content_type: Body Parameter content-type. Content type parameter for JSON body.
          Default value is "application/json".
         :paramtype content_type: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ActionResponse or the result of cls(response)
-        :rtype: ~azure.mgmt.securityinsight.models.ActionResponse
+        :return: EditedQuery or the result of cls(response)
+        :rtype: ~azure.mgmt.securityinsight.models.EditedQuery
         :raises ~azure.core.exceptions.HttpResponseError:
         """
 
@@ -376,32 +449,32 @@ class ActionsOperations:
         self,
         resource_group_name: str,
         workspace_name: str,
-        rule_id: str,
-        action_id: str,
-        action: IO,
+        query_id: str,
+        edited_query_id: str,
+        edited_query: IO,
         *,
         content_type: str = "application/json",
         **kwargs: Any
-    ) -> _models.ActionResponse:
-        """Creates or updates the action of alert rule.
+    ) -> _models.EditedQuery:
+        """Creates or updates an edited query.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
          Required.
         :type resource_group_name: str
         :param workspace_name: The name of the workspace. Required.
         :type workspace_name: str
-        :param rule_id: Alert rule ID. Required.
-        :type rule_id: str
-        :param action_id: Action ID. Required.
-        :type action_id: str
-        :param action: The action. Required.
-        :type action: IO
+        :param query_id: Query Id. Required.
+        :type query_id: str
+        :param edited_query_id: Edited Query Id (GUID). Required.
+        :type edited_query_id: str
+        :param edited_query: The edited query. Required.
+        :type edited_query: IO
         :keyword content_type: Body Parameter content-type. Content type parameter for binary body.
          Default value is "application/json".
         :paramtype content_type: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ActionResponse or the result of cls(response)
-        :rtype: ~azure.mgmt.securityinsight.models.ActionResponse
+        :return: EditedQuery or the result of cls(response)
+        :rtype: ~azure.mgmt.securityinsight.models.EditedQuery
         :raises ~azure.core.exceptions.HttpResponseError:
         """
 
@@ -410,30 +483,30 @@ class ActionsOperations:
         self,
         resource_group_name: str,
         workspace_name: str,
-        rule_id: str,
-        action_id: str,
-        action: Union[_models.ActionRequest, IO],
+        query_id: str,
+        edited_query_id: str,
+        edited_query: Union[_models.EditedQuery, IO],
         **kwargs: Any
-    ) -> _models.ActionResponse:
-        """Creates or updates the action of alert rule.
+    ) -> _models.EditedQuery:
+        """Creates or updates an edited query.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
          Required.
         :type resource_group_name: str
         :param workspace_name: The name of the workspace. Required.
         :type workspace_name: str
-        :param rule_id: Alert rule ID. Required.
-        :type rule_id: str
-        :param action_id: Action ID. Required.
-        :type action_id: str
-        :param action: The action. Is either a model type or a IO type. Required.
-        :type action: ~azure.mgmt.securityinsight.models.ActionRequest or IO
+        :param query_id: Query Id. Required.
+        :type query_id: str
+        :param edited_query_id: Edited Query Id (GUID). Required.
+        :type edited_query_id: str
+        :param edited_query: The edited query. Is either a model type or a IO type. Required.
+        :type edited_query: ~azure.mgmt.securityinsight.models.EditedQuery or IO
         :keyword content_type: Body Parameter content-type. Known values are: 'application/json'.
          Default value is None.
         :paramtype content_type: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ActionResponse or the result of cls(response)
-        :rtype: ~azure.mgmt.securityinsight.models.ActionResponse
+        :return: EditedQuery or the result of cls(response)
+        :rtype: ~azure.mgmt.securityinsight.models.EditedQuery
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
@@ -444,21 +517,21 @@ class ActionsOperations:
 
         api_version = kwargs.pop("api_version", _params.pop("api-version", self._config.api_version))  # type: str
         content_type = kwargs.pop("content_type", _headers.pop("Content-Type", None))  # type: Optional[str]
-        cls = kwargs.pop("cls", None)  # type: ClsType[_models.ActionResponse]
+        cls = kwargs.pop("cls", None)  # type: ClsType[_models.EditedQuery]
 
         content_type = content_type or "application/json"
         _json = None
         _content = None
-        if isinstance(action, (IO, bytes)):
-            _content = action
+        if isinstance(edited_query, (IO, bytes)):
+            _content = edited_query
         else:
-            _json = self._serialize.body(action, "ActionRequest")
+            _json = self._serialize.body(edited_query, "EditedQuery")
 
         request = build_create_or_update_request(
             resource_group_name=resource_group_name,
             workspace_name=workspace_name,
-            rule_id=rule_id,
-            action_id=action_id,
+            query_id=query_id,
+            edited_query_id=edited_query_id,
             subscription_id=self._config.subscription_id,
             api_version=api_version,
             content_type=content_type,
@@ -482,72 +555,14 @@ class ActionsOperations:
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
         if response.status_code == 200:
-            deserialized = self._deserialize("ActionResponse", pipeline_response)
+            deserialized = self._deserialize("EditedQuery", pipeline_response)
 
         if response.status_code == 201:
-            deserialized = self._deserialize("ActionResponse", pipeline_response)
+            deserialized = self._deserialize("EditedQuery", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
 
-    create_or_update.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRules/{ruleId}/actions/{actionId}"}  # type: ignore
-
-    @distributed_trace
-    def delete(  # pylint: disable=inconsistent-return-statements
-        self, resource_group_name: str, workspace_name: str, rule_id: str, action_id: str, **kwargs: Any
-    ) -> None:
-        """Delete the action of alert rule.
-
-        :param resource_group_name: The name of the resource group. The name is case insensitive.
-         Required.
-        :type resource_group_name: str
-        :param workspace_name: The name of the workspace. Required.
-        :type workspace_name: str
-        :param rule_id: Alert rule ID. Required.
-        :type rule_id: str
-        :param action_id: Action ID. Required.
-        :type action_id: str
-        :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: None or the result of cls(response)
-        :rtype: None
-        :raises ~azure.core.exceptions.HttpResponseError:
-        """
-        error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
-        error_map.update(kwargs.pop("error_map", {}) or {})
-
-        _headers = kwargs.pop("headers", {}) or {}
-        _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
-
-        api_version = kwargs.pop("api_version", _params.pop("api-version", self._config.api_version))  # type: str
-        cls = kwargs.pop("cls", None)  # type: ClsType[None]
-
-        request = build_delete_request(
-            resource_group_name=resource_group_name,
-            workspace_name=workspace_name,
-            rule_id=rule_id,
-            action_id=action_id,
-            subscription_id=self._config.subscription_id,
-            api_version=api_version,
-            template_url=self.delete.metadata["url"],
-            headers=_headers,
-            params=_params,
-        )
-        request = _convert_request(request)
-        request.url = self._client.format_url(request.url)  # type: ignore
-
-        pipeline_response = self._client._pipeline.run(  # type: ignore # pylint: disable=protected-access
-            request, stream=False, **kwargs
-        )
-
-        response = pipeline_response.http_response
-
-        if response.status_code not in [200, 204]:
-            map_error(status_code=response.status_code, response=response, error_map=error_map)
-            raise HttpResponseError(response=response, error_format=ARMErrorFormat)
-
-        if cls:
-            return cls(pipeline_response, None, {})
-
-    delete.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRules/{ruleId}/actions/{actionId}"}  # type: ignore
+    create_or_update.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/assistedQueries/{queryId}/editedQueries/{editedQueryId}"}  # type: ignore

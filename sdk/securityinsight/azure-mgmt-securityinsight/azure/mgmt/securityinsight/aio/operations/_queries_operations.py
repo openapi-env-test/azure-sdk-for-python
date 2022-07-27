@@ -27,7 +27,7 @@ from azure.mgmt.core.exceptions import ARMErrorFormat
 
 from ... import models as _models
 from ..._vendor import _convert_request
-from ...operations._bookmarks_operations import (
+from ...operations._queries_operations import (
     build_create_or_update_request,
     build_delete_request,
     build_get_request,
@@ -38,14 +38,14 @@ T = TypeVar("T")
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
 
 
-class BookmarksOperations:
+class QueriesOperations:
     """
     .. warning::
         **DO NOT** instantiate this class directly.
 
         Instead, you should access the following operations through
         :class:`~azure.mgmt.securityinsight.aio.SecurityInsights`'s
-        :attr:`bookmarks` attribute.
+        :attr:`queries` attribute.
     """
 
     models = _models
@@ -58,8 +58,8 @@ class BookmarksOperations:
         self._deserialize = input_args.pop(0) if input_args else kwargs.pop("deserializer")
 
     @distributed_trace
-    def list(self, resource_group_name: str, workspace_name: str, **kwargs: Any) -> AsyncIterable["_models.Bookmark"]:
-        """Gets all bookmarks.
+    def list(self, resource_group_name: str, workspace_name: str, **kwargs: Any) -> AsyncIterable["_models.Query"]:
+        """Gets all queries.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
          Required.
@@ -67,15 +67,15 @@ class BookmarksOperations:
         :param workspace_name: The name of the workspace. Required.
         :type workspace_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either Bookmark or the result of cls(response)
-        :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.securityinsight.models.Bookmark]
+        :return: An iterator like instance of either Query or the result of cls(response)
+        :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.securityinsight.models.Query]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         _headers = kwargs.pop("headers", {}) or {}
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
         api_version = kwargs.pop("api_version", _params.pop("api-version", self._config.api_version))  # type: str
-        cls = kwargs.pop("cls", None)  # type: ClsType[_models.BookmarkList]
+        cls = kwargs.pop("cls", None)  # type: ClsType[_models.QueryList]
 
         error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop("error_map", {}) or {})
@@ -107,7 +107,7 @@ class BookmarksOperations:
             return request
 
         async def extract_data(pipeline_response):
-            deserialized = self._deserialize("BookmarkList", pipeline_response)
+            deserialized = self._deserialize("QueryList", pipeline_response)
             list_of_elem = deserialized.value
             if cls:
                 list_of_elem = cls(list_of_elem)
@@ -129,24 +129,22 @@ class BookmarksOperations:
 
         return AsyncItemPaged(get_next, extract_data)
 
-    list.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/bookmarks"}  # type: ignore
+    list.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/assistedQueries"}  # type: ignore
 
     @distributed_trace_async
-    async def get(
-        self, resource_group_name: str, workspace_name: str, bookmark_id: str, **kwargs: Any
-    ) -> _models.Bookmark:
-        """Gets a bookmark.
+    async def get(self, resource_group_name: str, workspace_name: str, query_id: str, **kwargs: Any) -> _models.Query:
+        """Gets a query.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
          Required.
         :type resource_group_name: str
         :param workspace_name: The name of the workspace. Required.
         :type workspace_name: str
-        :param bookmark_id: Bookmark ID. Required.
-        :type bookmark_id: str
+        :param query_id: Query Id. Required.
+        :type query_id: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: Bookmark or the result of cls(response)
-        :rtype: ~azure.mgmt.securityinsight.models.Bookmark
+        :return: Query or the result of cls(response)
+        :rtype: ~azure.mgmt.securityinsight.models.Query
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
@@ -156,12 +154,12 @@ class BookmarksOperations:
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
         api_version = kwargs.pop("api_version", _params.pop("api-version", self._config.api_version))  # type: str
-        cls = kwargs.pop("cls", None)  # type: ClsType[_models.Bookmark]
+        cls = kwargs.pop("cls", None)  # type: ClsType[_models.Query]
 
         request = build_get_request(
             resource_group_name=resource_group_name,
             workspace_name=workspace_name,
-            bookmark_id=bookmark_id,
+            query_id=query_id,
             subscription_id=self._config.subscription_id,
             api_version=api_version,
             template_url=self.get.metadata["url"],
@@ -181,43 +179,104 @@ class BookmarksOperations:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize("Bookmark", pipeline_response)
+        deserialized = self._deserialize("Query", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
 
-    get.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/bookmarks/{bookmarkId}"}  # type: ignore
+    get.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/assistedQueries/{queryId}"}  # type: ignore
 
-    @overload
-    async def create_or_update(
-        self,
-        resource_group_name: str,
-        workspace_name: str,
-        bookmark_id: str,
-        bookmark: _models.Bookmark,
-        *,
-        content_type: str = "application/json",
-        **kwargs: Any
-    ) -> _models.Bookmark:
-        """Creates or updates the bookmark.
+    @distributed_trace_async
+    async def delete(  # pylint: disable=inconsistent-return-statements
+        self, resource_group_name: str, workspace_name: str, query_id: str, **kwargs: Any
+    ) -> None:
+        """Delete a query.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
          Required.
         :type resource_group_name: str
         :param workspace_name: The name of the workspace. Required.
         :type workspace_name: str
-        :param bookmark_id: Bookmark ID. Required.
-        :type bookmark_id: str
-        :param bookmark: The bookmark. Required.
-        :type bookmark: ~azure.mgmt.securityinsight.models.Bookmark
+        :param query_id: Query Id. Required.
+        :type query_id: str
+        :keyword callable cls: A custom type or function that will be passed the direct response
+        :return: None or the result of cls(response)
+        :rtype: None
+        :raises ~azure.core.exceptions.HttpResponseError:
+        """
+        error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop("error_map", {}) or {})
+
+        _headers = kwargs.pop("headers", {}) or {}
+        _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
+
+        api_version = kwargs.pop("api_version", _params.pop("api-version", self._config.api_version))  # type: str
+        cls = kwargs.pop("cls", None)  # type: ClsType[None]
+
+        request = build_delete_request(
+            resource_group_name=resource_group_name,
+            workspace_name=workspace_name,
+            query_id=query_id,
+            subscription_id=self._config.subscription_id,
+            api_version=api_version,
+            template_url=self.delete.metadata["url"],
+            headers=_headers,
+            params=_params,
+        )
+        request = _convert_request(request)
+        request.url = self._client.format_url(request.url)  # type: ignore
+
+        pipeline_response = await self._client._pipeline.run(  # type: ignore # pylint: disable=protected-access
+            request, stream=False, **kwargs
+        )
+
+        response = pipeline_response.http_response
+
+        if response.status_code not in [200, 204]:
+            map_error(status_code=response.status_code, response=response, error_map=error_map)
+            raise HttpResponseError(response=response, error_format=ARMErrorFormat)
+
+        response_headers = {}
+        if response.status_code == 200:
+            response_headers["Azure-AsyncOperation"] = self._deserialize(
+                "str", response.headers.get("Azure-AsyncOperation")
+            )
+
+        if cls:
+            return cls(pipeline_response, None, response_headers)
+
+    delete.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/assistedQueries/{queryId}"}  # type: ignore
+
+    @overload
+    async def create_or_update(
+        self,
+        resource_group_name: str,
+        workspace_name: str,
+        query_id: str,
+        query: _models.Query,
+        *,
+        content_type: str = "application/json",
+        **kwargs: Any
+    ) -> _models.Query:
+        """Create or update a query.
+
+        :param resource_group_name: The name of the resource group. The name is case insensitive.
+         Required.
+        :type resource_group_name: str
+        :param workspace_name: The name of the workspace. Required.
+        :type workspace_name: str
+        :param query_id: Query Id. Required.
+        :type query_id: str
+        :param query: The Query. Required.
+        :type query: ~azure.mgmt.securityinsight.models.Query
         :keyword content_type: Body Parameter content-type. Content type parameter for JSON body.
          Default value is "application/json".
         :paramtype content_type: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: Bookmark or the result of cls(response)
-        :rtype: ~azure.mgmt.securityinsight.models.Bookmark
+        :return: Query or the result of cls(response)
+        :rtype: ~azure.mgmt.securityinsight.models.Query
         :raises ~azure.core.exceptions.HttpResponseError:
         """
 
@@ -226,29 +285,29 @@ class BookmarksOperations:
         self,
         resource_group_name: str,
         workspace_name: str,
-        bookmark_id: str,
-        bookmark: IO,
+        query_id: str,
+        query: IO,
         *,
         content_type: str = "application/json",
         **kwargs: Any
-    ) -> _models.Bookmark:
-        """Creates or updates the bookmark.
+    ) -> _models.Query:
+        """Create or update a query.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
          Required.
         :type resource_group_name: str
         :param workspace_name: The name of the workspace. Required.
         :type workspace_name: str
-        :param bookmark_id: Bookmark ID. Required.
-        :type bookmark_id: str
-        :param bookmark: The bookmark. Required.
-        :type bookmark: IO
+        :param query_id: Query Id. Required.
+        :type query_id: str
+        :param query: The Query. Required.
+        :type query: IO
         :keyword content_type: Body Parameter content-type. Content type parameter for binary body.
          Default value is "application/json".
         :paramtype content_type: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: Bookmark or the result of cls(response)
-        :rtype: ~azure.mgmt.securityinsight.models.Bookmark
+        :return: Query or the result of cls(response)
+        :rtype: ~azure.mgmt.securityinsight.models.Query
         :raises ~azure.core.exceptions.HttpResponseError:
         """
 
@@ -257,27 +316,27 @@ class BookmarksOperations:
         self,
         resource_group_name: str,
         workspace_name: str,
-        bookmark_id: str,
-        bookmark: Union[_models.Bookmark, IO],
+        query_id: str,
+        query: Union[_models.Query, IO],
         **kwargs: Any
-    ) -> _models.Bookmark:
-        """Creates or updates the bookmark.
+    ) -> _models.Query:
+        """Create or update a query.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
          Required.
         :type resource_group_name: str
         :param workspace_name: The name of the workspace. Required.
         :type workspace_name: str
-        :param bookmark_id: Bookmark ID. Required.
-        :type bookmark_id: str
-        :param bookmark: The bookmark. Is either a model type or a IO type. Required.
-        :type bookmark: ~azure.mgmt.securityinsight.models.Bookmark or IO
+        :param query_id: Query Id. Required.
+        :type query_id: str
+        :param query: The Query. Is either a model type or a IO type. Required.
+        :type query: ~azure.mgmt.securityinsight.models.Query or IO
         :keyword content_type: Body Parameter content-type. Known values are: 'application/json'.
          Default value is None.
         :paramtype content_type: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: Bookmark or the result of cls(response)
-        :rtype: ~azure.mgmt.securityinsight.models.Bookmark
+        :return: Query or the result of cls(response)
+        :rtype: ~azure.mgmt.securityinsight.models.Query
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
@@ -288,20 +347,20 @@ class BookmarksOperations:
 
         api_version = kwargs.pop("api_version", _params.pop("api-version", self._config.api_version))  # type: str
         content_type = kwargs.pop("content_type", _headers.pop("Content-Type", None))  # type: Optional[str]
-        cls = kwargs.pop("cls", None)  # type: ClsType[_models.Bookmark]
+        cls = kwargs.pop("cls", None)  # type: ClsType[_models.Query]
 
         content_type = content_type or "application/json"
         _json = None
         _content = None
-        if isinstance(bookmark, (IO, bytes)):
-            _content = bookmark
+        if isinstance(query, (IO, bytes)):
+            _content = query
         else:
-            _json = self._serialize.body(bookmark, "Bookmark")
+            _json = self._serialize.body(query, "Query")
 
         request = build_create_or_update_request(
             resource_group_name=resource_group_name,
             workspace_name=workspace_name,
-            bookmark_id=bookmark_id,
+            query_id=query_id,
             subscription_id=self._config.subscription_id,
             api_version=api_version,
             content_type=content_type,
@@ -324,70 +383,20 @@ class BookmarksOperations:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
+        response_headers = {}
         if response.status_code == 200:
-            deserialized = self._deserialize("Bookmark", pipeline_response)
+            deserialized = self._deserialize("Query", pipeline_response)
 
         if response.status_code == 201:
-            deserialized = self._deserialize("Bookmark", pipeline_response)
+            response_headers["Azure-AsyncOperation"] = self._deserialize(
+                "str", response.headers.get("Azure-AsyncOperation")
+            )
+
+            deserialized = self._deserialize("Query", pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})
+            return cls(pipeline_response, deserialized, response_headers)
 
         return deserialized
 
-    create_or_update.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/bookmarks/{bookmarkId}"}  # type: ignore
-
-    @distributed_trace_async
-    async def delete(  # pylint: disable=inconsistent-return-statements
-        self, resource_group_name: str, workspace_name: str, bookmark_id: str, **kwargs: Any
-    ) -> None:
-        """Delete the bookmark.
-
-        :param resource_group_name: The name of the resource group. The name is case insensitive.
-         Required.
-        :type resource_group_name: str
-        :param workspace_name: The name of the workspace. Required.
-        :type workspace_name: str
-        :param bookmark_id: Bookmark ID. Required.
-        :type bookmark_id: str
-        :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: None or the result of cls(response)
-        :rtype: None
-        :raises ~azure.core.exceptions.HttpResponseError:
-        """
-        error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
-        error_map.update(kwargs.pop("error_map", {}) or {})
-
-        _headers = kwargs.pop("headers", {}) or {}
-        _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
-
-        api_version = kwargs.pop("api_version", _params.pop("api-version", self._config.api_version))  # type: str
-        cls = kwargs.pop("cls", None)  # type: ClsType[None]
-
-        request = build_delete_request(
-            resource_group_name=resource_group_name,
-            workspace_name=workspace_name,
-            bookmark_id=bookmark_id,
-            subscription_id=self._config.subscription_id,
-            api_version=api_version,
-            template_url=self.delete.metadata["url"],
-            headers=_headers,
-            params=_params,
-        )
-        request = _convert_request(request)
-        request.url = self._client.format_url(request.url)  # type: ignore
-
-        pipeline_response = await self._client._pipeline.run(  # type: ignore # pylint: disable=protected-access
-            request, stream=False, **kwargs
-        )
-
-        response = pipeline_response.http_response
-
-        if response.status_code not in [200, 204]:
-            map_error(status_code=response.status_code, response=response, error_map=error_map)
-            raise HttpResponseError(response=response, error_format=ARMErrorFormat)
-
-        if cls:
-            return cls(pipeline_response, None, {})
-
-    delete.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/bookmarks/{bookmarkId}"}  # type: ignore
+    create_or_update.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/assistedQueries/{queryId}"}  # type: ignore

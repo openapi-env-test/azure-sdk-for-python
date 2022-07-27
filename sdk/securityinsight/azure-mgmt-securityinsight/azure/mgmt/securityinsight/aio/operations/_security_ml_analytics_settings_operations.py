@@ -27,7 +27,7 @@ from azure.mgmt.core.exceptions import ARMErrorFormat
 
 from ... import models as _models
 from ..._vendor import _convert_request
-from ...operations._bookmarks_operations import (
+from ...operations._security_ml_analytics_settings_operations import (
     build_create_or_update_request,
     build_delete_request,
     build_get_request,
@@ -38,14 +38,14 @@ T = TypeVar("T")
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
 
 
-class BookmarksOperations:
+class SecurityMLAnalyticsSettingsOperations:
     """
     .. warning::
         **DO NOT** instantiate this class directly.
 
         Instead, you should access the following operations through
         :class:`~azure.mgmt.securityinsight.aio.SecurityInsights`'s
-        :attr:`bookmarks` attribute.
+        :attr:`security_ml_analytics_settings` attribute.
     """
 
     models = _models
@@ -58,8 +58,10 @@ class BookmarksOperations:
         self._deserialize = input_args.pop(0) if input_args else kwargs.pop("deserializer")
 
     @distributed_trace
-    def list(self, resource_group_name: str, workspace_name: str, **kwargs: Any) -> AsyncIterable["_models.Bookmark"]:
-        """Gets all bookmarks.
+    def list(
+        self, resource_group_name: str, workspace_name: str, **kwargs: Any
+    ) -> AsyncIterable["_models.SecurityMLAnalyticsSetting"]:
+        """Gets all Security ML Analytics Settings.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
          Required.
@@ -67,15 +69,17 @@ class BookmarksOperations:
         :param workspace_name: The name of the workspace. Required.
         :type workspace_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either Bookmark or the result of cls(response)
-        :rtype: ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.securityinsight.models.Bookmark]
+        :return: An iterator like instance of either SecurityMLAnalyticsSetting or the result of
+         cls(response)
+        :rtype:
+         ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.securityinsight.models.SecurityMLAnalyticsSetting]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         _headers = kwargs.pop("headers", {}) or {}
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
         api_version = kwargs.pop("api_version", _params.pop("api-version", self._config.api_version))  # type: str
-        cls = kwargs.pop("cls", None)  # type: ClsType[_models.BookmarkList]
+        cls = kwargs.pop("cls", None)  # type: ClsType[_models.SecurityMLAnalyticsSettingsList]
 
         error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop("error_map", {}) or {})
@@ -107,7 +111,7 @@ class BookmarksOperations:
             return request
 
         async def extract_data(pipeline_response):
-            deserialized = self._deserialize("BookmarkList", pipeline_response)
+            deserialized = self._deserialize("SecurityMLAnalyticsSettingsList", pipeline_response)
             list_of_elem = deserialized.value
             if cls:
                 list_of_elem = cls(list_of_elem)
@@ -129,24 +133,24 @@ class BookmarksOperations:
 
         return AsyncItemPaged(get_next, extract_data)
 
-    list.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/bookmarks"}  # type: ignore
+    list.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/securityMLAnalyticsSettings"}  # type: ignore
 
     @distributed_trace_async
     async def get(
-        self, resource_group_name: str, workspace_name: str, bookmark_id: str, **kwargs: Any
-    ) -> _models.Bookmark:
-        """Gets a bookmark.
+        self, resource_group_name: str, workspace_name: str, settings_resource_name: str, **kwargs: Any
+    ) -> _models.SecurityMLAnalyticsSetting:
+        """Gets the Security ML Analytics Settings.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
          Required.
         :type resource_group_name: str
         :param workspace_name: The name of the workspace. Required.
         :type workspace_name: str
-        :param bookmark_id: Bookmark ID. Required.
-        :type bookmark_id: str
+        :param settings_resource_name: Security ML Analytics Settings resource name. Required.
+        :type settings_resource_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: Bookmark or the result of cls(response)
-        :rtype: ~azure.mgmt.securityinsight.models.Bookmark
+        :return: SecurityMLAnalyticsSetting or the result of cls(response)
+        :rtype: ~azure.mgmt.securityinsight.models.SecurityMLAnalyticsSetting
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
@@ -156,12 +160,12 @@ class BookmarksOperations:
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
         api_version = kwargs.pop("api_version", _params.pop("api-version", self._config.api_version))  # type: str
-        cls = kwargs.pop("cls", None)  # type: ClsType[_models.Bookmark]
+        cls = kwargs.pop("cls", None)  # type: ClsType[_models.SecurityMLAnalyticsSetting]
 
         request = build_get_request(
             resource_group_name=resource_group_name,
             workspace_name=workspace_name,
-            bookmark_id=bookmark_id,
+            settings_resource_name=settings_resource_name,
             subscription_id=self._config.subscription_id,
             api_version=api_version,
             template_url=self.get.metadata["url"],
@@ -181,43 +185,44 @@ class BookmarksOperations:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize("Bookmark", pipeline_response)
+        deserialized = self._deserialize("SecurityMLAnalyticsSetting", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
 
-    get.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/bookmarks/{bookmarkId}"}  # type: ignore
+    get.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/securityMLAnalyticsSettings/{settingsResourceName}"}  # type: ignore
 
     @overload
     async def create_or_update(
         self,
         resource_group_name: str,
         workspace_name: str,
-        bookmark_id: str,
-        bookmark: _models.Bookmark,
+        settings_resource_name: str,
+        security_ml_analytics_setting: _models.SecurityMLAnalyticsSetting,
         *,
         content_type: str = "application/json",
         **kwargs: Any
-    ) -> _models.Bookmark:
-        """Creates or updates the bookmark.
+    ) -> _models.SecurityMLAnalyticsSetting:
+        """Creates or updates the Security ML Analytics Settings.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
          Required.
         :type resource_group_name: str
         :param workspace_name: The name of the workspace. Required.
         :type workspace_name: str
-        :param bookmark_id: Bookmark ID. Required.
-        :type bookmark_id: str
-        :param bookmark: The bookmark. Required.
-        :type bookmark: ~azure.mgmt.securityinsight.models.Bookmark
+        :param settings_resource_name: Security ML Analytics Settings resource name. Required.
+        :type settings_resource_name: str
+        :param security_ml_analytics_setting: The security ML Analytics setting. Required.
+        :type security_ml_analytics_setting:
+         ~azure.mgmt.securityinsight.models.SecurityMLAnalyticsSetting
         :keyword content_type: Body Parameter content-type. Content type parameter for JSON body.
          Default value is "application/json".
         :paramtype content_type: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: Bookmark or the result of cls(response)
-        :rtype: ~azure.mgmt.securityinsight.models.Bookmark
+        :return: SecurityMLAnalyticsSetting or the result of cls(response)
+        :rtype: ~azure.mgmt.securityinsight.models.SecurityMLAnalyticsSetting
         :raises ~azure.core.exceptions.HttpResponseError:
         """
 
@@ -226,29 +231,29 @@ class BookmarksOperations:
         self,
         resource_group_name: str,
         workspace_name: str,
-        bookmark_id: str,
-        bookmark: IO,
+        settings_resource_name: str,
+        security_ml_analytics_setting: IO,
         *,
         content_type: str = "application/json",
         **kwargs: Any
-    ) -> _models.Bookmark:
-        """Creates or updates the bookmark.
+    ) -> _models.SecurityMLAnalyticsSetting:
+        """Creates or updates the Security ML Analytics Settings.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
          Required.
         :type resource_group_name: str
         :param workspace_name: The name of the workspace. Required.
         :type workspace_name: str
-        :param bookmark_id: Bookmark ID. Required.
-        :type bookmark_id: str
-        :param bookmark: The bookmark. Required.
-        :type bookmark: IO
+        :param settings_resource_name: Security ML Analytics Settings resource name. Required.
+        :type settings_resource_name: str
+        :param security_ml_analytics_setting: The security ML Analytics setting. Required.
+        :type security_ml_analytics_setting: IO
         :keyword content_type: Body Parameter content-type. Content type parameter for binary body.
          Default value is "application/json".
         :paramtype content_type: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: Bookmark or the result of cls(response)
-        :rtype: ~azure.mgmt.securityinsight.models.Bookmark
+        :return: SecurityMLAnalyticsSetting or the result of cls(response)
+        :rtype: ~azure.mgmt.securityinsight.models.SecurityMLAnalyticsSetting
         :raises ~azure.core.exceptions.HttpResponseError:
         """
 
@@ -257,27 +262,29 @@ class BookmarksOperations:
         self,
         resource_group_name: str,
         workspace_name: str,
-        bookmark_id: str,
-        bookmark: Union[_models.Bookmark, IO],
+        settings_resource_name: str,
+        security_ml_analytics_setting: Union[_models.SecurityMLAnalyticsSetting, IO],
         **kwargs: Any
-    ) -> _models.Bookmark:
-        """Creates or updates the bookmark.
+    ) -> _models.SecurityMLAnalyticsSetting:
+        """Creates or updates the Security ML Analytics Settings.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
          Required.
         :type resource_group_name: str
         :param workspace_name: The name of the workspace. Required.
         :type workspace_name: str
-        :param bookmark_id: Bookmark ID. Required.
-        :type bookmark_id: str
-        :param bookmark: The bookmark. Is either a model type or a IO type. Required.
-        :type bookmark: ~azure.mgmt.securityinsight.models.Bookmark or IO
+        :param settings_resource_name: Security ML Analytics Settings resource name. Required.
+        :type settings_resource_name: str
+        :param security_ml_analytics_setting: The security ML Analytics setting. Is either a model type
+         or a IO type. Required.
+        :type security_ml_analytics_setting:
+         ~azure.mgmt.securityinsight.models.SecurityMLAnalyticsSetting or IO
         :keyword content_type: Body Parameter content-type. Known values are: 'application/json'.
          Default value is None.
         :paramtype content_type: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: Bookmark or the result of cls(response)
-        :rtype: ~azure.mgmt.securityinsight.models.Bookmark
+        :return: SecurityMLAnalyticsSetting or the result of cls(response)
+        :rtype: ~azure.mgmt.securityinsight.models.SecurityMLAnalyticsSetting
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
@@ -288,20 +295,20 @@ class BookmarksOperations:
 
         api_version = kwargs.pop("api_version", _params.pop("api-version", self._config.api_version))  # type: str
         content_type = kwargs.pop("content_type", _headers.pop("Content-Type", None))  # type: Optional[str]
-        cls = kwargs.pop("cls", None)  # type: ClsType[_models.Bookmark]
+        cls = kwargs.pop("cls", None)  # type: ClsType[_models.SecurityMLAnalyticsSetting]
 
         content_type = content_type or "application/json"
         _json = None
         _content = None
-        if isinstance(bookmark, (IO, bytes)):
-            _content = bookmark
+        if isinstance(security_ml_analytics_setting, (IO, bytes)):
+            _content = security_ml_analytics_setting
         else:
-            _json = self._serialize.body(bookmark, "Bookmark")
+            _json = self._serialize.body(security_ml_analytics_setting, "SecurityMLAnalyticsSetting")
 
         request = build_create_or_update_request(
             resource_group_name=resource_group_name,
             workspace_name=workspace_name,
-            bookmark_id=bookmark_id,
+            settings_resource_name=settings_resource_name,
             subscription_id=self._config.subscription_id,
             api_version=api_version,
             content_type=content_type,
@@ -325,31 +332,31 @@ class BookmarksOperations:
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
         if response.status_code == 200:
-            deserialized = self._deserialize("Bookmark", pipeline_response)
+            deserialized = self._deserialize("SecurityMLAnalyticsSetting", pipeline_response)
 
         if response.status_code == 201:
-            deserialized = self._deserialize("Bookmark", pipeline_response)
+            deserialized = self._deserialize("SecurityMLAnalyticsSetting", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
 
-    create_or_update.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/bookmarks/{bookmarkId}"}  # type: ignore
+    create_or_update.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/securityMLAnalyticsSettings/{settingsResourceName}"}  # type: ignore
 
     @distributed_trace_async
     async def delete(  # pylint: disable=inconsistent-return-statements
-        self, resource_group_name: str, workspace_name: str, bookmark_id: str, **kwargs: Any
+        self, resource_group_name: str, workspace_name: str, settings_resource_name: str, **kwargs: Any
     ) -> None:
-        """Delete the bookmark.
+        """Delete the Security ML Analytics Settings.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
          Required.
         :type resource_group_name: str
         :param workspace_name: The name of the workspace. Required.
         :type workspace_name: str
-        :param bookmark_id: Bookmark ID. Required.
-        :type bookmark_id: str
+        :param settings_resource_name: Security ML Analytics Settings resource name. Required.
+        :type settings_resource_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: None or the result of cls(response)
         :rtype: None
@@ -367,7 +374,7 @@ class BookmarksOperations:
         request = build_delete_request(
             resource_group_name=resource_group_name,
             workspace_name=workspace_name,
-            bookmark_id=bookmark_id,
+            settings_resource_name=settings_resource_name,
             subscription_id=self._config.subscription_id,
             api_version=api_version,
             template_url=self.delete.metadata["url"],
@@ -390,4 +397,4 @@ class BookmarksOperations:
         if cls:
             return cls(pipeline_response, None, {})
 
-    delete.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/bookmarks/{bookmarkId}"}  # type: ignore
+    delete.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/securityMLAnalyticsSettings/{settingsResourceName}"}  # type: ignore
