@@ -30,14 +30,14 @@ class DeviceUpdateClientConfiguration(Configuration):  # pylint: disable=too-man
     :type instance_id: str
     :param credential: Credential needed for the client to connect to Azure. Required.
     :type credential: ~azure.core.credentials.TokenCredential
-    :keyword api_version: Api Version. Default value is "2022-07-01-preview". Note that overriding
-     this default value may result in unsupported behavior.
+    :keyword api_version: Api Version. Default value is "2022-07-03". Note that overriding this
+     default value may result in unsupported behavior.
     :paramtype api_version: str
     """
 
     def __init__(self, endpoint: str, instance_id: str, credential: "TokenCredential", **kwargs: Any) -> None:
         super(DeviceUpdateClientConfiguration, self).__init__(**kwargs)
-        api_version = kwargs.pop("api_version", "2022-07-01-preview")  # type: str
+        api_version = kwargs.pop("api_version", "2022-07-03")  # type: str
 
         if endpoint is None:
             raise ValueError("Parameter 'endpoint' must not be None.")
