@@ -15,6 +15,35 @@ import msrest.serialization
 from ._cosmos_db_management_client_enums import *
 
 
+class AccountKeyMetadata(msrest.serialization.Model):
+    """The metadata related to an access key for a given database account.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    :ivar generation_time: Generation time in UTC of the key in ISO-8601 format. If the value is
+     missing from the object, it means that the last key regeneration was triggered before
+     2022-06-18.
+    :vartype generation_time: ~datetime.datetime
+    """
+
+    _validation = {
+        'generation_time': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'generation_time': {'key': 'generationTime', 'type': 'iso-8601'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        """
+        """
+        super(AccountKeyMetadata, self).__init__(**kwargs)
+        self.generation_time = None
+
+
 class AnalyticalStorageConfiguration(msrest.serialization.Model):
     """Analytical storage specific properties.
 
@@ -3605,6 +3634,10 @@ class DatabaseAccountCreateUpdateParameters(ARMResourceProperties):
     :ivar enable_materialized_views: Flag to indicate whether to enable MaterializedViews on the
      Cosmos DB account.
     :vartype enable_materialized_views: bool
+    :ivar keys_metadata: This property is ignored during the update/create operation, as the
+     metadata is read-only. The object represents the metadata for the Account Keys of the Cosmos DB
+     account.
+    :vartype keys_metadata: ~azure.mgmt.cosmosdb.models.DatabaseAccountKeysMetadata
     """
 
     _validation = {
@@ -3652,6 +3685,7 @@ class DatabaseAccountCreateUpdateParameters(ARMResourceProperties):
         'restore_parameters': {'key': 'properties.restoreParameters', 'type': 'RestoreParameters'},
         'capacity': {'key': 'properties.capacity', 'type': 'Capacity'},
         'enable_materialized_views': {'key': 'properties.enableMaterializedViews', 'type': 'bool'},
+        'keys_metadata': {'key': 'properties.keysMetadata', 'type': 'DatabaseAccountKeysMetadata'},
     }
 
     database_account_offer_type = "Standard"
@@ -3691,6 +3725,7 @@ class DatabaseAccountCreateUpdateParameters(ARMResourceProperties):
         restore_parameters: Optional["RestoreParameters"] = None,
         capacity: Optional["Capacity"] = None,
         enable_materialized_views: Optional[bool] = None,
+        keys_metadata: Optional["DatabaseAccountKeysMetadata"] = None,
         **kwargs
     ):
         """
@@ -3784,6 +3819,10 @@ class DatabaseAccountCreateUpdateParameters(ARMResourceProperties):
         :keyword enable_materialized_views: Flag to indicate whether to enable MaterializedViews on the
          Cosmos DB account.
         :paramtype enable_materialized_views: bool
+        :keyword keys_metadata: This property is ignored during the update/create operation, as the
+         metadata is read-only. The object represents the metadata for the Account Keys of the Cosmos DB
+         account.
+        :paramtype keys_metadata: ~azure.mgmt.cosmosdb.models.DatabaseAccountKeysMetadata
         """
         super(DatabaseAccountCreateUpdateParameters, self).__init__(location=location, tags=tags, identity=identity, **kwargs)
         self.kind = kind
@@ -3815,6 +3854,7 @@ class DatabaseAccountCreateUpdateParameters(ARMResourceProperties):
         self.restore_parameters = restore_parameters
         self.capacity = capacity
         self.enable_materialized_views = enable_materialized_views
+        self.keys_metadata = keys_metadata
 
 
 class DatabaseAccountGetResults(ARMResourceProperties):
@@ -3946,6 +3986,9 @@ class DatabaseAccountGetResults(ARMResourceProperties):
     :ivar enable_materialized_views: Flag to indicate whether to enable MaterializedViews on the
      Cosmos DB account.
     :vartype enable_materialized_views: bool
+    :ivar keys_metadata: The object that represents the metadata for the Account Keys of the Cosmos
+     DB account.
+    :vartype keys_metadata: ~azure.mgmt.cosmosdb.models.DatabaseAccountKeysMetadata
     """
 
     _validation = {
@@ -4009,6 +4052,7 @@ class DatabaseAccountGetResults(ARMResourceProperties):
         'disable_local_auth': {'key': 'properties.disableLocalAuth', 'type': 'bool'},
         'capacity': {'key': 'properties.capacity', 'type': 'Capacity'},
         'enable_materialized_views': {'key': 'properties.enableMaterializedViews', 'type': 'bool'},
+        'keys_metadata': {'key': 'properties.keysMetadata', 'type': 'DatabaseAccountKeysMetadata'},
     }
 
     def __init__(
@@ -4045,6 +4089,7 @@ class DatabaseAccountGetResults(ARMResourceProperties):
         disable_local_auth: Optional[bool] = None,
         capacity: Optional["Capacity"] = None,
         enable_materialized_views: Optional[bool] = None,
+        keys_metadata: Optional["DatabaseAccountKeysMetadata"] = None,
         **kwargs
     ):
         """
@@ -4135,6 +4180,9 @@ class DatabaseAccountGetResults(ARMResourceProperties):
         :keyword enable_materialized_views: Flag to indicate whether to enable MaterializedViews on the
          Cosmos DB account.
         :paramtype enable_materialized_views: bool
+        :keyword keys_metadata: The object that represents the metadata for the Account Keys of the
+         Cosmos DB account.
+        :paramtype keys_metadata: ~azure.mgmt.cosmosdb.models.DatabaseAccountKeysMetadata
         """
         super(DatabaseAccountGetResults, self).__init__(location=location, tags=tags, identity=identity, **kwargs)
         self.kind = kind
@@ -4175,6 +4223,61 @@ class DatabaseAccountGetResults(ARMResourceProperties):
         self.disable_local_auth = disable_local_auth
         self.capacity = capacity
         self.enable_materialized_views = enable_materialized_views
+        self.keys_metadata = keys_metadata
+
+
+class DatabaseAccountKeysMetadata(msrest.serialization.Model):
+    """The metadata related to each access key for the given Cosmos DB database account.
+
+    :ivar primary_master_key: The metadata related to the Primary Read-Write Key for the given
+     Cosmos DB database account.
+    :vartype primary_master_key: ~azure.mgmt.cosmosdb.models.AccountKeyMetadata
+    :ivar secondary_master_key: The metadata related to the Secondary Read-Write Key for the given
+     Cosmos DB database account.
+    :vartype secondary_master_key: ~azure.mgmt.cosmosdb.models.AccountKeyMetadata
+    :ivar primary_readonly_master_key: The metadata related to the Primary Read-Only Key for the
+     given Cosmos DB database account.
+    :vartype primary_readonly_master_key: ~azure.mgmt.cosmosdb.models.AccountKeyMetadata
+    :ivar secondary_readonly_master_key: The metadata related to the Secondary Read-Only Key for
+     the given Cosmos DB database account.
+    :vartype secondary_readonly_master_key: ~azure.mgmt.cosmosdb.models.AccountKeyMetadata
+    """
+
+    _attribute_map = {
+        'primary_master_key': {'key': 'primaryMasterKey', 'type': 'AccountKeyMetadata'},
+        'secondary_master_key': {'key': 'secondaryMasterKey', 'type': 'AccountKeyMetadata'},
+        'primary_readonly_master_key': {'key': 'primaryReadonlyMasterKey', 'type': 'AccountKeyMetadata'},
+        'secondary_readonly_master_key': {'key': 'secondaryReadonlyMasterKey', 'type': 'AccountKeyMetadata'},
+    }
+
+    def __init__(
+        self,
+        *,
+        primary_master_key: Optional["AccountKeyMetadata"] = None,
+        secondary_master_key: Optional["AccountKeyMetadata"] = None,
+        primary_readonly_master_key: Optional["AccountKeyMetadata"] = None,
+        secondary_readonly_master_key: Optional["AccountKeyMetadata"] = None,
+        **kwargs
+    ):
+        """
+        :keyword primary_master_key: The metadata related to the Primary Read-Write Key for the given
+         Cosmos DB database account.
+        :paramtype primary_master_key: ~azure.mgmt.cosmosdb.models.AccountKeyMetadata
+        :keyword secondary_master_key: The metadata related to the Secondary Read-Write Key for the
+         given Cosmos DB database account.
+        :paramtype secondary_master_key: ~azure.mgmt.cosmosdb.models.AccountKeyMetadata
+        :keyword primary_readonly_master_key: The metadata related to the Primary Read-Only Key for the
+         given Cosmos DB database account.
+        :paramtype primary_readonly_master_key: ~azure.mgmt.cosmosdb.models.AccountKeyMetadata
+        :keyword secondary_readonly_master_key: The metadata related to the Secondary Read-Only Key for
+         the given Cosmos DB database account.
+        :paramtype secondary_readonly_master_key: ~azure.mgmt.cosmosdb.models.AccountKeyMetadata
+        """
+        super(DatabaseAccountKeysMetadata, self).__init__(**kwargs)
+        self.primary_master_key = primary_master_key
+        self.secondary_master_key = secondary_master_key
+        self.primary_readonly_master_key = primary_readonly_master_key
+        self.secondary_readonly_master_key = secondary_readonly_master_key
 
 
 class DatabaseAccountListConnectionStringsResult(msrest.serialization.Model):
@@ -4421,6 +4524,9 @@ class DatabaseAccountUpdateParameters(msrest.serialization.Model):
     :ivar enable_materialized_views: Flag to indicate whether to enable MaterializedViews on the
      Cosmos DB account.
     :vartype enable_materialized_views: bool
+    :ivar keys_metadata: This property is ignored during the update operation, as the metadata is
+     read-only. The object represents the metadata for the Account Keys of the Cosmos DB account.
+    :vartype keys_metadata: ~azure.mgmt.cosmosdb.models.DatabaseAccountKeysMetadata
     """
 
     _attribute_map = {
@@ -4453,6 +4559,7 @@ class DatabaseAccountUpdateParameters(msrest.serialization.Model):
         'disable_local_auth': {'key': 'properties.disableLocalAuth', 'type': 'bool'},
         'capacity': {'key': 'properties.capacity', 'type': 'Capacity'},
         'enable_materialized_views': {'key': 'properties.enableMaterializedViews', 'type': 'bool'},
+        'keys_metadata': {'key': 'properties.keysMetadata', 'type': 'DatabaseAccountKeysMetadata'},
     }
 
     def __init__(
@@ -4487,6 +4594,7 @@ class DatabaseAccountUpdateParameters(msrest.serialization.Model):
         disable_local_auth: Optional[bool] = None,
         capacity: Optional["Capacity"] = None,
         enable_materialized_views: Optional[bool] = None,
+        keys_metadata: Optional["DatabaseAccountKeysMetadata"] = None,
         **kwargs
     ):
         """
@@ -4572,6 +4680,9 @@ class DatabaseAccountUpdateParameters(msrest.serialization.Model):
         :keyword enable_materialized_views: Flag to indicate whether to enable MaterializedViews on the
          Cosmos DB account.
         :paramtype enable_materialized_views: bool
+        :keyword keys_metadata: This property is ignored during the update operation, as the metadata
+         is read-only. The object represents the metadata for the Account Keys of the Cosmos DB account.
+        :paramtype keys_metadata: ~azure.mgmt.cosmosdb.models.DatabaseAccountKeysMetadata
         """
         super(DatabaseAccountUpdateParameters, self).__init__(**kwargs)
         self.tags = tags
@@ -4603,6 +4714,7 @@ class DatabaseAccountUpdateParameters(msrest.serialization.Model):
         self.disable_local_auth = disable_local_auth
         self.capacity = capacity
         self.enable_materialized_views = enable_materialized_views
+        self.keys_metadata = keys_metadata
 
 
 class DatabaseRestoreResource(msrest.serialization.Model):
@@ -6321,6 +6433,8 @@ class GremlinGraphResource(msrest.serialization.Model):
     :vartype unique_key_policy: ~azure.mgmt.cosmosdb.models.UniqueKeyPolicy
     :ivar conflict_resolution_policy: The conflict resolution policy for the graph.
     :vartype conflict_resolution_policy: ~azure.mgmt.cosmosdb.models.ConflictResolutionPolicy
+    :ivar analytical_storage_ttl: Analytical TTL.
+    :vartype analytical_storage_ttl: long
     """
 
     _validation = {
@@ -6334,6 +6448,7 @@ class GremlinGraphResource(msrest.serialization.Model):
         'default_ttl': {'key': 'defaultTtl', 'type': 'int'},
         'unique_key_policy': {'key': 'uniqueKeyPolicy', 'type': 'UniqueKeyPolicy'},
         'conflict_resolution_policy': {'key': 'conflictResolutionPolicy', 'type': 'ConflictResolutionPolicy'},
+        'analytical_storage_ttl': {'key': 'analyticalStorageTtl', 'type': 'long'},
     }
 
     def __init__(
@@ -6345,6 +6460,7 @@ class GremlinGraphResource(msrest.serialization.Model):
         default_ttl: Optional[int] = None,
         unique_key_policy: Optional["UniqueKeyPolicy"] = None,
         conflict_resolution_policy: Optional["ConflictResolutionPolicy"] = None,
+        analytical_storage_ttl: Optional[int] = None,
         **kwargs
     ):
         """
@@ -6363,6 +6479,8 @@ class GremlinGraphResource(msrest.serialization.Model):
         :paramtype unique_key_policy: ~azure.mgmt.cosmosdb.models.UniqueKeyPolicy
         :keyword conflict_resolution_policy: The conflict resolution policy for the graph.
         :paramtype conflict_resolution_policy: ~azure.mgmt.cosmosdb.models.ConflictResolutionPolicy
+        :keyword analytical_storage_ttl: Analytical TTL.
+        :paramtype analytical_storage_ttl: long
         """
         super(GremlinGraphResource, self).__init__(**kwargs)
         self.id = id
@@ -6371,6 +6489,7 @@ class GremlinGraphResource(msrest.serialization.Model):
         self.default_ttl = default_ttl
         self.unique_key_policy = unique_key_policy
         self.conflict_resolution_policy = conflict_resolution_policy
+        self.analytical_storage_ttl = analytical_storage_ttl
 
 
 class GremlinGraphGetPropertiesResource(ExtendedResourceProperties, GremlinGraphResource):
@@ -6395,6 +6514,8 @@ class GremlinGraphGetPropertiesResource(ExtendedResourceProperties, GremlinGraph
     :vartype unique_key_policy: ~azure.mgmt.cosmosdb.models.UniqueKeyPolicy
     :ivar conflict_resolution_policy: The conflict resolution policy for the graph.
     :vartype conflict_resolution_policy: ~azure.mgmt.cosmosdb.models.ConflictResolutionPolicy
+    :ivar analytical_storage_ttl: Analytical TTL.
+    :vartype analytical_storage_ttl: long
     :ivar rid: A system generated property. A unique identifier.
     :vartype rid: str
     :ivar ts: A system generated property that denotes the last updated timestamp of the resource.
@@ -6418,6 +6539,7 @@ class GremlinGraphGetPropertiesResource(ExtendedResourceProperties, GremlinGraph
         'default_ttl': {'key': 'defaultTtl', 'type': 'int'},
         'unique_key_policy': {'key': 'uniqueKeyPolicy', 'type': 'UniqueKeyPolicy'},
         'conflict_resolution_policy': {'key': 'conflictResolutionPolicy', 'type': 'ConflictResolutionPolicy'},
+        'analytical_storage_ttl': {'key': 'analyticalStorageTtl', 'type': 'long'},
         'rid': {'key': '_rid', 'type': 'str'},
         'ts': {'key': '_ts', 'type': 'float'},
         'etag': {'key': '_etag', 'type': 'str'},
@@ -6432,6 +6554,7 @@ class GremlinGraphGetPropertiesResource(ExtendedResourceProperties, GremlinGraph
         default_ttl: Optional[int] = None,
         unique_key_policy: Optional["UniqueKeyPolicy"] = None,
         conflict_resolution_policy: Optional["ConflictResolutionPolicy"] = None,
+        analytical_storage_ttl: Optional[int] = None,
         **kwargs
     ):
         """
@@ -6450,14 +6573,17 @@ class GremlinGraphGetPropertiesResource(ExtendedResourceProperties, GremlinGraph
         :paramtype unique_key_policy: ~azure.mgmt.cosmosdb.models.UniqueKeyPolicy
         :keyword conflict_resolution_policy: The conflict resolution policy for the graph.
         :paramtype conflict_resolution_policy: ~azure.mgmt.cosmosdb.models.ConflictResolutionPolicy
+        :keyword analytical_storage_ttl: Analytical TTL.
+        :paramtype analytical_storage_ttl: long
         """
-        super(GremlinGraphGetPropertiesResource, self).__init__(id=id, indexing_policy=indexing_policy, partition_key=partition_key, default_ttl=default_ttl, unique_key_policy=unique_key_policy, conflict_resolution_policy=conflict_resolution_policy, **kwargs)
+        super(GremlinGraphGetPropertiesResource, self).__init__(id=id, indexing_policy=indexing_policy, partition_key=partition_key, default_ttl=default_ttl, unique_key_policy=unique_key_policy, conflict_resolution_policy=conflict_resolution_policy, analytical_storage_ttl=analytical_storage_ttl, **kwargs)
         self.id = id
         self.indexing_policy = indexing_policy
         self.partition_key = partition_key
         self.default_ttl = default_ttl
         self.unique_key_policy = unique_key_policy
         self.conflict_resolution_policy = conflict_resolution_policy
+        self.analytical_storage_ttl = analytical_storage_ttl
         self.rid = None
         self.ts = None
         self.etag = None
@@ -10591,6 +10717,58 @@ class RestorableGremlinGraphsListResult(msrest.serialization.Model):
         self.value = None
 
 
+class RestorableGremlinResourcesGetResult(msrest.serialization.Model):
+    """Specific Databases to restore.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    :ivar id: The unique resource identifier of the ARM resource.
+    :vartype id: str
+    :ivar name: The name of the ARM resource.
+    :vartype name: str
+    :ivar type: The type of Azure resource.
+    :vartype type: str
+    :ivar database_name: The name of the gremlin database available for restore.
+    :vartype database_name: str
+    :ivar graph_names: The names of the graphs available for restore.
+    :vartype graph_names: list[str]
+    """
+
+    _validation = {
+        'id': {'readonly': True},
+        'name': {'readonly': True},
+        'type': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'id': {'key': 'id', 'type': 'str'},
+        'name': {'key': 'name', 'type': 'str'},
+        'type': {'key': 'type', 'type': 'str'},
+        'database_name': {'key': 'databaseName', 'type': 'str'},
+        'graph_names': {'key': 'graphNames', 'type': '[str]'},
+    }
+
+    def __init__(
+        self,
+        *,
+        database_name: Optional[str] = None,
+        graph_names: Optional[List[str]] = None,
+        **kwargs
+    ):
+        """
+        :keyword database_name: The name of the gremlin database available for restore.
+        :paramtype database_name: str
+        :keyword graph_names: The names of the graphs available for restore.
+        :paramtype graph_names: list[str]
+        """
+        super(RestorableGremlinResourcesGetResult, self).__init__(**kwargs)
+        self.id = None
+        self.name = None
+        self.type = None
+        self.database_name = database_name
+        self.graph_names = graph_names
+
+
 class RestorableGremlinResourcesListResult(msrest.serialization.Model):
     """The List operation response, that contains the restorable Gremlin resources.
 
@@ -10598,7 +10776,7 @@ class RestorableGremlinResourcesListResult(msrest.serialization.Model):
 
     :ivar value: List of restorable Gremlin resources, including the gremlin database and graph
      names.
-    :vartype value: list[~azure.mgmt.cosmosdb.models.GremlinDatabaseRestoreResource]
+    :vartype value: list[~azure.mgmt.cosmosdb.models.RestorableGremlinResourcesGetResult]
     """
 
     _validation = {
@@ -10606,7 +10784,7 @@ class RestorableGremlinResourcesListResult(msrest.serialization.Model):
     }
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[GremlinDatabaseRestoreResource]'},
+        'value': {'key': 'value', 'type': '[RestorableGremlinResourcesGetResult]'},
     }
 
     def __init__(
@@ -10904,13 +11082,65 @@ class RestorableMongodbDatabasesListResult(msrest.serialization.Model):
         self.value = None
 
 
+class RestorableMongodbResourcesGetResult(msrest.serialization.Model):
+    """Specific Databases to restore.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    :ivar id: The unique resource identifier of the ARM resource.
+    :vartype id: str
+    :ivar name: The name of the ARM resource.
+    :vartype name: str
+    :ivar type: The type of Azure resource.
+    :vartype type: str
+    :ivar database_name: The name of the database available for restore.
+    :vartype database_name: str
+    :ivar collection_names: The names of the collections available for restore.
+    :vartype collection_names: list[str]
+    """
+
+    _validation = {
+        'id': {'readonly': True},
+        'name': {'readonly': True},
+        'type': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'id': {'key': 'id', 'type': 'str'},
+        'name': {'key': 'name', 'type': 'str'},
+        'type': {'key': 'type', 'type': 'str'},
+        'database_name': {'key': 'databaseName', 'type': 'str'},
+        'collection_names': {'key': 'collectionNames', 'type': '[str]'},
+    }
+
+    def __init__(
+        self,
+        *,
+        database_name: Optional[str] = None,
+        collection_names: Optional[List[str]] = None,
+        **kwargs
+    ):
+        """
+        :keyword database_name: The name of the database available for restore.
+        :paramtype database_name: str
+        :keyword collection_names: The names of the collections available for restore.
+        :paramtype collection_names: list[str]
+        """
+        super(RestorableMongodbResourcesGetResult, self).__init__(**kwargs)
+        self.id = None
+        self.name = None
+        self.type = None
+        self.database_name = database_name
+        self.collection_names = collection_names
+
+
 class RestorableMongodbResourcesListResult(msrest.serialization.Model):
     """The List operation response, that contains the restorable MongoDB resources.
 
     Variables are only populated by the server, and will be ignored when sending a request.
 
     :ivar value: List of restorable MongoDB resources, including the database and collection names.
-    :vartype value: list[~azure.mgmt.cosmosdb.models.DatabaseRestoreResource]
+    :vartype value: list[~azure.mgmt.cosmosdb.models.RestorableMongodbResourcesGetResult]
     """
 
     _validation = {
@@ -10918,7 +11148,7 @@ class RestorableMongodbResourcesListResult(msrest.serialization.Model):
     }
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[DatabaseRestoreResource]'},
+        'value': {'key': 'value', 'type': '[RestorableMongodbResourcesGetResult]'},
     }
 
     def __init__(
@@ -11484,13 +11714,65 @@ class RestorableSqlDatabasesListResult(msrest.serialization.Model):
         self.value = None
 
 
+class RestorableSqlResourcesGetResult(msrest.serialization.Model):
+    """Specific Databases to restore.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    :ivar id: The unique resource identifier of the ARM resource.
+    :vartype id: str
+    :ivar name: The name of the ARM resource.
+    :vartype name: str
+    :ivar type: The type of Azure resource.
+    :vartype type: str
+    :ivar database_name: The name of the database available for restore.
+    :vartype database_name: str
+    :ivar collection_names: The names of the collections available for restore.
+    :vartype collection_names: list[str]
+    """
+
+    _validation = {
+        'id': {'readonly': True},
+        'name': {'readonly': True},
+        'type': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'id': {'key': 'id', 'type': 'str'},
+        'name': {'key': 'name', 'type': 'str'},
+        'type': {'key': 'type', 'type': 'str'},
+        'database_name': {'key': 'databaseName', 'type': 'str'},
+        'collection_names': {'key': 'collectionNames', 'type': '[str]'},
+    }
+
+    def __init__(
+        self,
+        *,
+        database_name: Optional[str] = None,
+        collection_names: Optional[List[str]] = None,
+        **kwargs
+    ):
+        """
+        :keyword database_name: The name of the database available for restore.
+        :paramtype database_name: str
+        :keyword collection_names: The names of the collections available for restore.
+        :paramtype collection_names: list[str]
+        """
+        super(RestorableSqlResourcesGetResult, self).__init__(**kwargs)
+        self.id = None
+        self.name = None
+        self.type = None
+        self.database_name = database_name
+        self.collection_names = collection_names
+
+
 class RestorableSqlResourcesListResult(msrest.serialization.Model):
     """The List operation response, that contains the restorable SQL resources.
 
     Variables are only populated by the server, and will be ignored when sending a request.
 
     :ivar value: List of restorable SQL resources, including the database and collection names.
-    :vartype value: list[~azure.mgmt.cosmosdb.models.DatabaseRestoreResource]
+    :vartype value: list[~azure.mgmt.cosmosdb.models.RestorableSqlResourcesGetResult]
     """
 
     _validation = {
@@ -11498,7 +11780,7 @@ class RestorableSqlResourcesListResult(msrest.serialization.Model):
     }
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[DatabaseRestoreResource]'},
+        'value': {'key': 'value', 'type': '[RestorableSqlResourcesGetResult]'},
     }
 
     def __init__(
@@ -11604,13 +11886,50 @@ class RestorableTablePropertiesResource(msrest.serialization.Model):
         self.owner_resource_id = None
 
 
+class RestorableTableResourcesGetResult(msrest.serialization.Model):
+    """Specific Databases to restore.
+
+    Variables are only populated by the server, and will be ignored when sending a request.
+
+    :ivar id: The unique resource identifier of the ARM resource.
+    :vartype id: str
+    :ivar name: The name of the Table.
+    :vartype name: str
+    :ivar type: The type of Azure resource.
+    :vartype type: str
+    """
+
+    _validation = {
+        'id': {'readonly': True},
+        'name': {'readonly': True},
+        'type': {'readonly': True},
+    }
+
+    _attribute_map = {
+        'id': {'key': 'id', 'type': 'str'},
+        'name': {'key': 'name', 'type': 'str'},
+        'type': {'key': 'type', 'type': 'str'},
+    }
+
+    def __init__(
+        self,
+        **kwargs
+    ):
+        """
+        """
+        super(RestorableTableResourcesGetResult, self).__init__(**kwargs)
+        self.id = None
+        self.name = None
+        self.type = None
+
+
 class RestorableTableResourcesListResult(msrest.serialization.Model):
     """List of restorable table names.
 
     Variables are only populated by the server, and will be ignored when sending a request.
 
     :ivar value: List of restorable table names.
-    :vartype value: list[str]
+    :vartype value: list[~azure.mgmt.cosmosdb.models.RestorableTableResourcesGetResult]
     """
 
     _validation = {
@@ -11618,7 +11937,7 @@ class RestorableTableResourcesListResult(msrest.serialization.Model):
     }
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[str]'},
+        'value': {'key': 'value', 'type': '[RestorableTableResourcesGetResult]'},
     }
 
     def __init__(
