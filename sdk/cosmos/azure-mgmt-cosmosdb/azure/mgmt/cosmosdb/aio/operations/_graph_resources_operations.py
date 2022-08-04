@@ -67,7 +67,7 @@ class GraphResourcesOperations:
          ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.cosmosdb.models.GraphResourcesListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.GraphResourcesListResult"]
         error_map = {
@@ -158,7 +158,7 @@ class GraphResourcesOperations:
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         
         request = build_get_graph_request(
@@ -207,7 +207,7 @@ class GraphResourcesOperations:
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
         _json = self._serialize.body(create_update_graph_parameters, 'GraphResourceCreateUpdateParameters')
@@ -281,7 +281,7 @@ class GraphResourcesOperations:
         :rtype: ~azure.core.polling.AsyncLROPoller[~azure.mgmt.cosmosdb.models.GraphResourceGetResults]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
         polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.GraphResourceGetResults"]
@@ -338,7 +338,7 @@ class GraphResourcesOperations:
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         
         request = build_delete_graph_resource_request_initial(
@@ -397,7 +397,7 @@ class GraphResourcesOperations:
         :rtype: ~azure.core.polling.AsyncLROPoller[None]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         polling = kwargs.pop('polling', True)  # type: Union[bool, AsyncPollingMethod]
         cls = kwargs.pop('cls', None)  # type: ClsType[None]
         lro_delay = kwargs.pop(

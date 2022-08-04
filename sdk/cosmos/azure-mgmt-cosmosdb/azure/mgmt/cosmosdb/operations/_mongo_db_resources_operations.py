@@ -35,7 +35,7 @@ def build_list_mongo_db_databases_request(
     account_name: str,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
     accept = "application/json"
     # Construct URL
@@ -72,7 +72,7 @@ def build_get_mongo_db_database_request(
     database_name: str,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
     accept = "application/json"
     # Construct URL
@@ -113,7 +113,7 @@ def build_create_update_mongo_db_database_request_initial(
     content: Any = None,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
     content_type = kwargs.pop('content_type', None)  # type: Optional[str]
 
     accept = "application/json"
@@ -156,7 +156,7 @@ def build_delete_mongo_db_database_request_initial(
     database_name: str,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
     # Construct URL
     _url = kwargs.pop("template_url", "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbDatabases/{databaseName}")  # pylint: disable=line-too-long
@@ -188,7 +188,7 @@ def build_get_mongo_db_database_throughput_request(
     database_name: str,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
     accept = "application/json"
     # Construct URL
@@ -229,7 +229,7 @@ def build_update_mongo_db_database_throughput_request_initial(
     content: Any = None,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
     content_type = kwargs.pop('content_type', None)  # type: Optional[str]
 
     accept = "application/json"
@@ -272,7 +272,7 @@ def build_migrate_mongo_db_database_to_autoscale_request_initial(
     database_name: str,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
     accept = "application/json"
     # Construct URL
@@ -310,7 +310,7 @@ def build_migrate_mongo_db_database_to_manual_throughput_request_initial(
     database_name: str,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
     accept = "application/json"
     # Construct URL
@@ -352,7 +352,7 @@ def build_mongo_db_container_retrieve_throughput_distribution_request_initial(
     content: Any = None,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
     content_type = kwargs.pop('content_type', None)  # type: Optional[str]
 
     accept = "application/json"
@@ -400,7 +400,7 @@ def build_mongo_db_container_redistribute_throughput_request_initial(
     content: Any = None,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
     content_type = kwargs.pop('content_type', None)  # type: Optional[str]
 
     accept = "application/json"
@@ -444,7 +444,7 @@ def build_list_mongo_db_collections_request(
     database_name: str,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
     accept = "application/json"
     # Construct URL
@@ -483,7 +483,7 @@ def build_get_mongo_db_collection_request(
     collection_name: str,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
     accept = "application/json"
     # Construct URL
@@ -526,7 +526,7 @@ def build_create_update_mongo_db_collection_request_initial(
     content: Any = None,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
     content_type = kwargs.pop('content_type', None)  # type: Optional[str]
 
     accept = "application/json"
@@ -571,7 +571,7 @@ def build_delete_mongo_db_collection_request_initial(
     collection_name: str,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
     # Construct URL
     _url = kwargs.pop("template_url", "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbDatabases/{databaseName}/collections/{collectionName}")  # pylint: disable=line-too-long
@@ -608,7 +608,7 @@ def build_list_mongo_db_collection_partition_merge_request_initial(
     content: Any = None,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
     content_type = kwargs.pop('content_type', None)  # type: Optional[str]
 
     accept = "application/json"
@@ -653,7 +653,7 @@ def build_get_mongo_db_collection_throughput_request(
     collection_name: str,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
     accept = "application/json"
     # Construct URL
@@ -696,7 +696,7 @@ def build_update_mongo_db_collection_throughput_request_initial(
     content: Any = None,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
     content_type = kwargs.pop('content_type', None)  # type: Optional[str]
 
     accept = "application/json"
@@ -741,7 +741,7 @@ def build_migrate_mongo_db_collection_to_autoscale_request_initial(
     collection_name: str,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
     accept = "application/json"
     # Construct URL
@@ -781,7 +781,7 @@ def build_migrate_mongo_db_collection_to_manual_throughput_request_initial(
     collection_name: str,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
     accept = "application/json"
     # Construct URL
@@ -820,7 +820,7 @@ def build_get_mongo_role_definition_request(
     account_name: str,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
     accept = "application/json"
     # Construct URL
@@ -861,7 +861,7 @@ def build_create_update_mongo_role_definition_request_initial(
     content: Any = None,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
     content_type = kwargs.pop('content_type', None)  # type: Optional[str]
 
     accept = "application/json"
@@ -904,7 +904,7 @@ def build_delete_mongo_role_definition_request_initial(
     account_name: str,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
     accept = "application/json"
     # Construct URL
@@ -941,7 +941,7 @@ def build_list_mongo_role_definitions_request(
     account_name: str,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
     accept = "application/json"
     # Construct URL
@@ -978,7 +978,7 @@ def build_get_mongo_user_definition_request(
     account_name: str,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
     accept = "application/json"
     # Construct URL
@@ -1019,7 +1019,7 @@ def build_create_update_mongo_user_definition_request_initial(
     content: Any = None,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
     content_type = kwargs.pop('content_type', None)  # type: Optional[str]
 
     accept = "application/json"
@@ -1062,7 +1062,7 @@ def build_delete_mongo_user_definition_request_initial(
     account_name: str,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
     accept = "application/json"
     # Construct URL
@@ -1099,7 +1099,7 @@ def build_list_mongo_user_definitions_request(
     account_name: str,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
     accept = "application/json"
     # Construct URL
@@ -1140,7 +1140,7 @@ def build_retrieve_continuous_backup_information_request_initial(
     content: Any = None,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
     content_type = kwargs.pop('content_type', None)  # type: Optional[str]
 
     accept = "application/json"
@@ -1217,7 +1217,7 @@ class MongoDBResourcesOperations(object):  # pylint: disable=too-many-public-met
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.cosmosdb.models.MongoDBDatabaseListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.MongoDBDatabaseListResult"]
         error_map = {
@@ -1308,7 +1308,7 @@ class MongoDBResourcesOperations(object):  # pylint: disable=too-many-public-met
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         
         request = build_get_mongo_db_database_request(
@@ -1357,7 +1357,7 @@ class MongoDBResourcesOperations(object):  # pylint: disable=too-many-public-met
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
         _json = self._serialize.body(create_update_mongo_db_database_parameters, 'MongoDBDatabaseCreateUpdateParameters')
@@ -1432,7 +1432,7 @@ class MongoDBResourcesOperations(object):  # pylint: disable=too-many-public-met
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.cosmosdb.models.MongoDBDatabaseGetResults]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.MongoDBDatabaseGetResults"]
@@ -1489,7 +1489,7 @@ class MongoDBResourcesOperations(object):  # pylint: disable=too-many-public-met
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         
         request = build_delete_mongo_db_database_request_initial(
@@ -1548,7 +1548,7 @@ class MongoDBResourcesOperations(object):  # pylint: disable=too-many-public-met
         :rtype: ~azure.core.polling.LROPoller[None]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
         cls = kwargs.pop('cls', None)  # type: ClsType[None]
         lro_delay = kwargs.pop(
@@ -1614,7 +1614,7 @@ class MongoDBResourcesOperations(object):  # pylint: disable=too-many-public-met
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         
         request = build_get_mongo_db_database_throughput_request(
@@ -1663,7 +1663,7 @@ class MongoDBResourcesOperations(object):  # pylint: disable=too-many-public-met
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
         _json = self._serialize.body(update_throughput_parameters, 'ThroughputSettingsUpdateParameters')
@@ -1738,7 +1738,7 @@ class MongoDBResourcesOperations(object):  # pylint: disable=too-many-public-met
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.cosmosdb.models.ThroughputSettingsGetResults]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.ThroughputSettingsGetResults"]
@@ -1795,7 +1795,7 @@ class MongoDBResourcesOperations(object):  # pylint: disable=too-many-public-met
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         
         request = build_migrate_mongo_db_database_to_autoscale_request_initial(
@@ -1861,7 +1861,7 @@ class MongoDBResourcesOperations(object):  # pylint: disable=too-many-public-met
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.cosmosdb.models.ThroughputSettingsGetResults]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.ThroughputSettingsGetResults"]
         lro_delay = kwargs.pop(
@@ -1915,7 +1915,7 @@ class MongoDBResourcesOperations(object):  # pylint: disable=too-many-public-met
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         
         request = build_migrate_mongo_db_database_to_manual_throughput_request_initial(
@@ -1981,7 +1981,7 @@ class MongoDBResourcesOperations(object):  # pylint: disable=too-many-public-met
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.cosmosdb.models.ThroughputSettingsGetResults]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.ThroughputSettingsGetResults"]
         lro_delay = kwargs.pop(
@@ -2037,7 +2037,7 @@ class MongoDBResourcesOperations(object):  # pylint: disable=too-many-public-met
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
         _json = self._serialize.body(retrieve_throughput_parameters, 'RetrieveThroughputParameters')
@@ -2116,7 +2116,7 @@ class MongoDBResourcesOperations(object):  # pylint: disable=too-many-public-met
          ~azure.core.polling.LROPoller[~azure.mgmt.cosmosdb.models.PhysicalPartitionThroughputInfoResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.PhysicalPartitionThroughputInfoResult"]
@@ -2176,7 +2176,7 @@ class MongoDBResourcesOperations(object):  # pylint: disable=too-many-public-met
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
         _json = self._serialize.body(redistribute_throughput_parameters, 'RedistributeThroughputParameters')
@@ -2256,7 +2256,7 @@ class MongoDBResourcesOperations(object):  # pylint: disable=too-many-public-met
          ~azure.core.polling.LROPoller[~azure.mgmt.cosmosdb.models.PhysicalPartitionThroughputInfoResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.PhysicalPartitionThroughputInfoResult"]
@@ -2323,7 +2323,7 @@ class MongoDBResourcesOperations(object):  # pylint: disable=too-many-public-met
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.cosmosdb.models.MongoDBCollectionListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.MongoDBCollectionListResult"]
         error_map = {
@@ -2418,7 +2418,7 @@ class MongoDBResourcesOperations(object):  # pylint: disable=too-many-public-met
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         
         request = build_get_mongo_db_collection_request(
@@ -2469,7 +2469,7 @@ class MongoDBResourcesOperations(object):  # pylint: disable=too-many-public-met
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
         _json = self._serialize.body(create_update_mongo_db_collection_parameters, 'MongoDBCollectionCreateUpdateParameters')
@@ -2548,7 +2548,7 @@ class MongoDBResourcesOperations(object):  # pylint: disable=too-many-public-met
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.cosmosdb.models.MongoDBCollectionGetResults]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.MongoDBCollectionGetResults"]
@@ -2607,7 +2607,7 @@ class MongoDBResourcesOperations(object):  # pylint: disable=too-many-public-met
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         
         request = build_delete_mongo_db_collection_request_initial(
@@ -2670,7 +2670,7 @@ class MongoDBResourcesOperations(object):  # pylint: disable=too-many-public-met
         :rtype: ~azure.core.polling.LROPoller[None]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
         cls = kwargs.pop('cls', None)  # type: ClsType[None]
         lro_delay = kwargs.pop(
@@ -2724,7 +2724,7 @@ class MongoDBResourcesOperations(object):  # pylint: disable=too-many-public-met
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
         _json = self._serialize.body(merge_parameters, 'MergeParameters')
@@ -2802,7 +2802,7 @@ class MongoDBResourcesOperations(object):  # pylint: disable=too-many-public-met
          ~azure.core.polling.LROPoller[~azure.mgmt.cosmosdb.models.PhysicalPartitionStorageInfoCollection]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.PhysicalPartitionStorageInfoCollection"]
@@ -2878,7 +2878,7 @@ class MongoDBResourcesOperations(object):  # pylint: disable=too-many-public-met
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         
         request = build_get_mongo_db_collection_throughput_request(
@@ -2929,7 +2929,7 @@ class MongoDBResourcesOperations(object):  # pylint: disable=too-many-public-met
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
         _json = self._serialize.body(update_throughput_parameters, 'ThroughputSettingsUpdateParameters')
@@ -3008,7 +3008,7 @@ class MongoDBResourcesOperations(object):  # pylint: disable=too-many-public-met
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.cosmosdb.models.ThroughputSettingsGetResults]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.ThroughputSettingsGetResults"]
@@ -3067,7 +3067,7 @@ class MongoDBResourcesOperations(object):  # pylint: disable=too-many-public-met
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         
         request = build_migrate_mongo_db_collection_to_autoscale_request_initial(
@@ -3137,7 +3137,7 @@ class MongoDBResourcesOperations(object):  # pylint: disable=too-many-public-met
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.cosmosdb.models.ThroughputSettingsGetResults]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.ThroughputSettingsGetResults"]
         lro_delay = kwargs.pop(
@@ -3193,7 +3193,7 @@ class MongoDBResourcesOperations(object):  # pylint: disable=too-many-public-met
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         
         request = build_migrate_mongo_db_collection_to_manual_throughput_request_initial(
@@ -3263,7 +3263,7 @@ class MongoDBResourcesOperations(object):  # pylint: disable=too-many-public-met
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.cosmosdb.models.ThroughputSettingsGetResults]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.ThroughputSettingsGetResults"]
         lro_delay = kwargs.pop(
@@ -3333,7 +3333,7 @@ class MongoDBResourcesOperations(object):  # pylint: disable=too-many-public-met
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         
         request = build_get_mongo_role_definition_request(
@@ -3382,7 +3382,7 @@ class MongoDBResourcesOperations(object):  # pylint: disable=too-many-public-met
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
         _json = self._serialize.body(create_update_mongo_role_definition_parameters, 'MongoRoleDefinitionCreateUpdateParameters')
@@ -3458,7 +3458,7 @@ class MongoDBResourcesOperations(object):  # pylint: disable=too-many-public-met
          ~azure.core.polling.LROPoller[~azure.mgmt.cosmosdb.models.MongoRoleDefinitionGetResults]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.MongoRoleDefinitionGetResults"]
@@ -3515,7 +3515,7 @@ class MongoDBResourcesOperations(object):  # pylint: disable=too-many-public-met
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         
         request = build_delete_mongo_role_definition_request_initial(
@@ -3574,7 +3574,7 @@ class MongoDBResourcesOperations(object):  # pylint: disable=too-many-public-met
         :rtype: ~azure.core.polling.LROPoller[None]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
         cls = kwargs.pop('cls', None)  # type: ClsType[None]
         lro_delay = kwargs.pop(
@@ -3631,7 +3631,7 @@ class MongoDBResourcesOperations(object):  # pylint: disable=too-many-public-met
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.cosmosdb.models.MongoRoleDefinitionListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.MongoRoleDefinitionListResult"]
         error_map = {
@@ -3722,7 +3722,7 @@ class MongoDBResourcesOperations(object):  # pylint: disable=too-many-public-met
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         
         request = build_get_mongo_user_definition_request(
@@ -3771,7 +3771,7 @@ class MongoDBResourcesOperations(object):  # pylint: disable=too-many-public-met
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
         _json = self._serialize.body(create_update_mongo_user_definition_parameters, 'MongoUserDefinitionCreateUpdateParameters')
@@ -3847,7 +3847,7 @@ class MongoDBResourcesOperations(object):  # pylint: disable=too-many-public-met
          ~azure.core.polling.LROPoller[~azure.mgmt.cosmosdb.models.MongoUserDefinitionGetResults]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.MongoUserDefinitionGetResults"]
@@ -3904,7 +3904,7 @@ class MongoDBResourcesOperations(object):  # pylint: disable=too-many-public-met
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         
         request = build_delete_mongo_user_definition_request_initial(
@@ -3963,7 +3963,7 @@ class MongoDBResourcesOperations(object):  # pylint: disable=too-many-public-met
         :rtype: ~azure.core.polling.LROPoller[None]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
         cls = kwargs.pop('cls', None)  # type: ClsType[None]
         lro_delay = kwargs.pop(
@@ -4020,7 +4020,7 @@ class MongoDBResourcesOperations(object):  # pylint: disable=too-many-public-met
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.cosmosdb.models.MongoUserDefinitionListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.MongoUserDefinitionListResult"]
         error_map = {
@@ -4098,7 +4098,7 @@ class MongoDBResourcesOperations(object):  # pylint: disable=too-many-public-met
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
         _json = self._serialize.body(location, 'ContinuousBackupRestoreLocation')
@@ -4175,7 +4175,7 @@ class MongoDBResourcesOperations(object):  # pylint: disable=too-many-public-met
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.cosmosdb.models.BackupInformation]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.BackupInformation"]

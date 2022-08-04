@@ -75,7 +75,7 @@ class DataTransferJobsOperations:
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
         _json = self._serialize.body(job_create_parameters, 'CreateJobRequest')
@@ -141,7 +141,7 @@ class DataTransferJobsOperations:
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         
         request = build_get_request(
@@ -203,7 +203,7 @@ class DataTransferJobsOperations:
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         
         request = build_pause_request(
@@ -265,7 +265,7 @@ class DataTransferJobsOperations:
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         
         request = build_resume_request(
@@ -327,7 +327,7 @@ class DataTransferJobsOperations:
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         
         request = build_cancel_request(
@@ -382,7 +382,7 @@ class DataTransferJobsOperations:
          ~azure.core.async_paging.AsyncItemPaged[~azure.mgmt.cosmosdb.models.DataTransferJobFeedResults]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.DataTransferJobFeedResults"]
         error_map = {

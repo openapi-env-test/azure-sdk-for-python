@@ -35,7 +35,7 @@ def build_list_sql_databases_request(
     account_name: str,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
     accept = "application/json"
     # Construct URL
@@ -72,7 +72,7 @@ def build_get_sql_database_request(
     database_name: str,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
     accept = "application/json"
     # Construct URL
@@ -113,7 +113,7 @@ def build_create_update_sql_database_request_initial(
     content: Any = None,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
     content_type = kwargs.pop('content_type', None)  # type: Optional[str]
 
     accept = "application/json"
@@ -156,7 +156,7 @@ def build_delete_sql_database_request_initial(
     database_name: str,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
     # Construct URL
     _url = kwargs.pop("template_url", "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}")  # pylint: disable=line-too-long
@@ -188,7 +188,7 @@ def build_get_sql_database_throughput_request(
     database_name: str,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
     accept = "application/json"
     # Construct URL
@@ -229,7 +229,7 @@ def build_update_sql_database_throughput_request_initial(
     content: Any = None,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
     content_type = kwargs.pop('content_type', None)  # type: Optional[str]
 
     accept = "application/json"
@@ -272,7 +272,7 @@ def build_migrate_sql_database_to_autoscale_request_initial(
     database_name: str,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
     accept = "application/json"
     # Construct URL
@@ -310,7 +310,7 @@ def build_migrate_sql_database_to_manual_throughput_request_initial(
     database_name: str,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
     accept = "application/json"
     # Construct URL
@@ -348,7 +348,7 @@ def build_list_client_encryption_keys_request(
     database_name: str,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
     accept = "application/json"
     # Construct URL
@@ -387,7 +387,7 @@ def build_get_client_encryption_key_request(
     client_encryption_key_name: str,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
     accept = "application/json"
     # Construct URL
@@ -430,7 +430,7 @@ def build_create_update_client_encryption_key_request_initial(
     content: Any = None,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
     content_type = kwargs.pop('content_type', None)  # type: Optional[str]
 
     accept = "application/json"
@@ -474,7 +474,7 @@ def build_list_sql_containers_request(
     database_name: str,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
     accept = "application/json"
     # Construct URL
@@ -513,7 +513,7 @@ def build_get_sql_container_request(
     container_name: str,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
     accept = "application/json"
     # Construct URL
@@ -556,7 +556,7 @@ def build_create_update_sql_container_request_initial(
     content: Any = None,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
     content_type = kwargs.pop('content_type', None)  # type: Optional[str]
 
     accept = "application/json"
@@ -601,7 +601,7 @@ def build_delete_sql_container_request_initial(
     container_name: str,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
     # Construct URL
     _url = kwargs.pop("template_url", "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}")  # pylint: disable=line-too-long
@@ -638,7 +638,7 @@ def build_list_sql_container_partition_merge_request_initial(
     content: Any = None,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
     content_type = kwargs.pop('content_type', None)  # type: Optional[str]
 
     accept = "application/json"
@@ -683,7 +683,7 @@ def build_get_sql_container_throughput_request(
     container_name: str,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
     accept = "application/json"
     # Construct URL
@@ -726,7 +726,7 @@ def build_update_sql_container_throughput_request_initial(
     content: Any = None,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
     content_type = kwargs.pop('content_type', None)  # type: Optional[str]
 
     accept = "application/json"
@@ -771,7 +771,7 @@ def build_migrate_sql_container_to_autoscale_request_initial(
     container_name: str,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
     accept = "application/json"
     # Construct URL
@@ -811,7 +811,7 @@ def build_migrate_sql_container_to_manual_throughput_request_initial(
     container_name: str,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
     accept = "application/json"
     # Construct URL
@@ -854,7 +854,7 @@ def build_sql_container_retrieve_throughput_distribution_request_initial(
     content: Any = None,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
     content_type = kwargs.pop('content_type', None)  # type: Optional[str]
 
     accept = "application/json"
@@ -902,7 +902,7 @@ def build_sql_container_redistribute_throughput_request_initial(
     content: Any = None,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
     content_type = kwargs.pop('content_type', None)  # type: Optional[str]
 
     accept = "application/json"
@@ -947,7 +947,7 @@ def build_list_sql_stored_procedures_request(
     container_name: str,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
     accept = "application/json"
     # Construct URL
@@ -988,7 +988,7 @@ def build_get_sql_stored_procedure_request(
     stored_procedure_name: str,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
     accept = "application/json"
     # Construct URL
@@ -1033,7 +1033,7 @@ def build_create_update_sql_stored_procedure_request_initial(
     content: Any = None,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
     content_type = kwargs.pop('content_type', None)  # type: Optional[str]
 
     accept = "application/json"
@@ -1080,7 +1080,7 @@ def build_delete_sql_stored_procedure_request_initial(
     stored_procedure_name: str,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
     # Construct URL
     _url = kwargs.pop("template_url", "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/storedProcedures/{storedProcedureName}")  # pylint: disable=line-too-long
@@ -1115,7 +1115,7 @@ def build_list_sql_user_defined_functions_request(
     container_name: str,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
     accept = "application/json"
     # Construct URL
@@ -1156,7 +1156,7 @@ def build_get_sql_user_defined_function_request(
     user_defined_function_name: str,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
     accept = "application/json"
     # Construct URL
@@ -1201,7 +1201,7 @@ def build_create_update_sql_user_defined_function_request_initial(
     content: Any = None,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
     content_type = kwargs.pop('content_type', None)  # type: Optional[str]
 
     accept = "application/json"
@@ -1248,7 +1248,7 @@ def build_delete_sql_user_defined_function_request_initial(
     user_defined_function_name: str,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
     # Construct URL
     _url = kwargs.pop("template_url", "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/userDefinedFunctions/{userDefinedFunctionName}")  # pylint: disable=line-too-long
@@ -1283,7 +1283,7 @@ def build_list_sql_triggers_request(
     container_name: str,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
     accept = "application/json"
     # Construct URL
@@ -1324,7 +1324,7 @@ def build_get_sql_trigger_request(
     trigger_name: str,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
     accept = "application/json"
     # Construct URL
@@ -1369,7 +1369,7 @@ def build_create_update_sql_trigger_request_initial(
     content: Any = None,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
     content_type = kwargs.pop('content_type', None)  # type: Optional[str]
 
     accept = "application/json"
@@ -1416,7 +1416,7 @@ def build_delete_sql_trigger_request_initial(
     trigger_name: str,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
     # Construct URL
     _url = kwargs.pop("template_url", "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/triggers/{triggerName}")  # pylint: disable=line-too-long
@@ -1450,7 +1450,7 @@ def build_get_sql_role_definition_request(
     account_name: str,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
     accept = "application/json"
     # Construct URL
@@ -1491,7 +1491,7 @@ def build_create_update_sql_role_definition_request_initial(
     content: Any = None,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
     content_type = kwargs.pop('content_type', None)  # type: Optional[str]
 
     accept = "application/json"
@@ -1534,7 +1534,7 @@ def build_delete_sql_role_definition_request_initial(
     account_name: str,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
     accept = "application/json"
     # Construct URL
@@ -1571,7 +1571,7 @@ def build_list_sql_role_definitions_request(
     account_name: str,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
     accept = "application/json"
     # Construct URL
@@ -1608,7 +1608,7 @@ def build_get_sql_role_assignment_request(
     account_name: str,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
     accept = "application/json"
     # Construct URL
@@ -1649,7 +1649,7 @@ def build_create_update_sql_role_assignment_request_initial(
     content: Any = None,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
     content_type = kwargs.pop('content_type', None)  # type: Optional[str]
 
     accept = "application/json"
@@ -1692,7 +1692,7 @@ def build_delete_sql_role_assignment_request_initial(
     account_name: str,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
     accept = "application/json"
     # Construct URL
@@ -1729,7 +1729,7 @@ def build_list_sql_role_assignments_request(
     account_name: str,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
     accept = "application/json"
     # Construct URL
@@ -1770,7 +1770,7 @@ def build_retrieve_continuous_backup_information_request_initial(
     content: Any = None,
     **kwargs: Any
 ) -> HttpRequest:
-    api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+    api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
     content_type = kwargs.pop('content_type', None)  # type: Optional[str]
 
     accept = "application/json"
@@ -1847,7 +1847,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.cosmosdb.models.SqlDatabaseListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.SqlDatabaseListResult"]
         error_map = {
@@ -1938,7 +1938,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         
         request = build_get_sql_database_request(
@@ -1987,7 +1987,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
         _json = self._serialize.body(create_update_sql_database_parameters, 'SqlDatabaseCreateUpdateParameters')
@@ -2062,7 +2062,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.cosmosdb.models.SqlDatabaseGetResults]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.SqlDatabaseGetResults"]
@@ -2119,7 +2119,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         
         request = build_delete_sql_database_request_initial(
@@ -2178,7 +2178,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         :rtype: ~azure.core.polling.LROPoller[None]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
         cls = kwargs.pop('cls', None)  # type: ClsType[None]
         lro_delay = kwargs.pop(
@@ -2244,7 +2244,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         
         request = build_get_sql_database_throughput_request(
@@ -2293,7 +2293,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
         _json = self._serialize.body(update_throughput_parameters, 'ThroughputSettingsUpdateParameters')
@@ -2368,7 +2368,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.cosmosdb.models.ThroughputSettingsGetResults]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.ThroughputSettingsGetResults"]
@@ -2425,7 +2425,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         
         request = build_migrate_sql_database_to_autoscale_request_initial(
@@ -2491,7 +2491,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.cosmosdb.models.ThroughputSettingsGetResults]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.ThroughputSettingsGetResults"]
         lro_delay = kwargs.pop(
@@ -2545,7 +2545,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         
         request = build_migrate_sql_database_to_manual_throughput_request_initial(
@@ -2611,7 +2611,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.cosmosdb.models.ThroughputSettingsGetResults]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.ThroughputSettingsGetResults"]
         lro_delay = kwargs.pop(
@@ -2675,7 +2675,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
          ~azure.core.paging.ItemPaged[~azure.mgmt.cosmosdb.models.ClientEncryptionKeysListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.ClientEncryptionKeysListResult"]
         error_map = {
@@ -2770,7 +2770,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         
         request = build_get_client_encryption_key_request(
@@ -2821,7 +2821,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
         _json = self._serialize.body(create_update_client_encryption_key_parameters, 'ClientEncryptionKeyCreateUpdateParameters')
@@ -2902,7 +2902,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
          ~azure.core.polling.LROPoller[~azure.mgmt.cosmosdb.models.ClientEncryptionKeyGetResults]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.ClientEncryptionKeyGetResults"]
@@ -2969,7 +2969,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.cosmosdb.models.SqlContainerListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.SqlContainerListResult"]
         error_map = {
@@ -3064,7 +3064,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         
         request = build_get_sql_container_request(
@@ -3115,7 +3115,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
         _json = self._serialize.body(create_update_sql_container_parameters, 'SqlContainerCreateUpdateParameters')
@@ -3194,7 +3194,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.cosmosdb.models.SqlContainerGetResults]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.SqlContainerGetResults"]
@@ -3253,7 +3253,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         
         request = build_delete_sql_container_request_initial(
@@ -3316,7 +3316,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         :rtype: ~azure.core.polling.LROPoller[None]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
         cls = kwargs.pop('cls', None)  # type: ClsType[None]
         lro_delay = kwargs.pop(
@@ -3370,7 +3370,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
         _json = self._serialize.body(merge_parameters, 'MergeParameters')
@@ -3448,7 +3448,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
          ~azure.core.polling.LROPoller[~azure.mgmt.cosmosdb.models.PhysicalPartitionStorageInfoCollection]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.PhysicalPartitionStorageInfoCollection"]
@@ -3524,7 +3524,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         
         request = build_get_sql_container_throughput_request(
@@ -3575,7 +3575,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
         _json = self._serialize.body(update_throughput_parameters, 'ThroughputSettingsUpdateParameters')
@@ -3654,7 +3654,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.cosmosdb.models.ThroughputSettingsGetResults]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.ThroughputSettingsGetResults"]
@@ -3713,7 +3713,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         
         request = build_migrate_sql_container_to_autoscale_request_initial(
@@ -3783,7 +3783,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.cosmosdb.models.ThroughputSettingsGetResults]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.ThroughputSettingsGetResults"]
         lro_delay = kwargs.pop(
@@ -3839,7 +3839,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         
         request = build_migrate_sql_container_to_manual_throughput_request_initial(
@@ -3909,7 +3909,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.cosmosdb.models.ThroughputSettingsGetResults]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.ThroughputSettingsGetResults"]
         lro_delay = kwargs.pop(
@@ -3966,7 +3966,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
         _json = self._serialize.body(retrieve_throughput_parameters, 'RetrieveThroughputParameters')
@@ -4045,7 +4045,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
          ~azure.core.polling.LROPoller[~azure.mgmt.cosmosdb.models.PhysicalPartitionThroughputInfoResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.PhysicalPartitionThroughputInfoResult"]
@@ -4105,7 +4105,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
         _json = self._serialize.body(redistribute_throughput_parameters, 'RedistributeThroughputParameters')
@@ -4185,7 +4185,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
          ~azure.core.polling.LROPoller[~azure.mgmt.cosmosdb.models.PhysicalPartitionThroughputInfoResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.PhysicalPartitionThroughputInfoResult"]
@@ -4255,7 +4255,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.cosmosdb.models.SqlStoredProcedureListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.SqlStoredProcedureListResult"]
         error_map = {
@@ -4355,7 +4355,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         
         request = build_get_sql_stored_procedure_request(
@@ -4408,7 +4408,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
         _json = self._serialize.body(create_update_sql_stored_procedure_parameters, 'SqlStoredProcedureCreateUpdateParameters')
@@ -4491,7 +4491,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.cosmosdb.models.SqlStoredProcedureGetResults]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.SqlStoredProcedureGetResults"]
@@ -4552,7 +4552,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         
         request = build_delete_sql_stored_procedure_request_initial(
@@ -4619,7 +4619,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         :rtype: ~azure.core.polling.LROPoller[None]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
         cls = kwargs.pop('cls', None)  # type: ClsType[None]
         lro_delay = kwargs.pop(
@@ -4685,7 +4685,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
          ~azure.core.paging.ItemPaged[~azure.mgmt.cosmosdb.models.SqlUserDefinedFunctionListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.SqlUserDefinedFunctionListResult"]
         error_map = {
@@ -4785,7 +4785,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         
         request = build_get_sql_user_defined_function_request(
@@ -4838,7 +4838,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
         _json = self._serialize.body(create_update_sql_user_defined_function_parameters, 'SqlUserDefinedFunctionCreateUpdateParameters')
@@ -4922,7 +4922,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
          ~azure.core.polling.LROPoller[~azure.mgmt.cosmosdb.models.SqlUserDefinedFunctionGetResults]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.SqlUserDefinedFunctionGetResults"]
@@ -4983,7 +4983,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         
         request = build_delete_sql_user_defined_function_request_initial(
@@ -5050,7 +5050,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         :rtype: ~azure.core.polling.LROPoller[None]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
         cls = kwargs.pop('cls', None)  # type: ClsType[None]
         lro_delay = kwargs.pop(
@@ -5115,7 +5115,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.cosmosdb.models.SqlTriggerListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.SqlTriggerListResult"]
         error_map = {
@@ -5215,7 +5215,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         
         request = build_get_sql_trigger_request(
@@ -5268,7 +5268,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
         _json = self._serialize.body(create_update_sql_trigger_parameters, 'SqlTriggerCreateUpdateParameters')
@@ -5351,7 +5351,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.cosmosdb.models.SqlTriggerGetResults]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.SqlTriggerGetResults"]
@@ -5412,7 +5412,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         
         request = build_delete_sql_trigger_request_initial(
@@ -5479,7 +5479,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         :rtype: ~azure.core.polling.LROPoller[None]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
         cls = kwargs.pop('cls', None)  # type: ClsType[None]
         lro_delay = kwargs.pop(
@@ -5546,7 +5546,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         
         request = build_get_sql_role_definition_request(
@@ -5595,7 +5595,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
         _json = self._serialize.body(create_update_sql_role_definition_parameters, 'SqlRoleDefinitionCreateUpdateParameters')
@@ -5670,7 +5670,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.cosmosdb.models.SqlRoleDefinitionGetResults]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.SqlRoleDefinitionGetResults"]
@@ -5727,7 +5727,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         
         request = build_delete_sql_role_definition_request_initial(
@@ -5786,7 +5786,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         :rtype: ~azure.core.polling.LROPoller[None]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
         cls = kwargs.pop('cls', None)  # type: ClsType[None]
         lro_delay = kwargs.pop(
@@ -5843,7 +5843,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.cosmosdb.models.SqlRoleDefinitionListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.SqlRoleDefinitionListResult"]
         error_map = {
@@ -5933,7 +5933,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         
         request = build_get_sql_role_assignment_request(
@@ -5982,7 +5982,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
         _json = self._serialize.body(create_update_sql_role_assignment_parameters, 'SqlRoleAssignmentCreateUpdateParameters')
@@ -6057,7 +6057,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.cosmosdb.models.SqlRoleAssignmentGetResults]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.SqlRoleAssignmentGetResults"]
@@ -6114,7 +6114,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         
         request = build_delete_sql_role_assignment_request_initial(
@@ -6173,7 +6173,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         :rtype: ~azure.core.polling.LROPoller[None]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
         cls = kwargs.pop('cls', None)  # type: ClsType[None]
         lro_delay = kwargs.pop(
@@ -6230,7 +6230,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.cosmosdb.models.SqlRoleAssignmentListResult]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
 
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.SqlRoleAssignmentListResult"]
         error_map = {
@@ -6308,7 +6308,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         }
         error_map.update(kwargs.pop('error_map', {}))
 
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
 
         _json = self._serialize.body(location, 'ContinuousBackupRestoreLocation')
@@ -6385,7 +6385,7 @@ class SqlResourcesOperations(object):  # pylint: disable=too-many-public-methods
         :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.cosmosdb.models.BackupInformation]
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        api_version = kwargs.pop('api_version', "2022-02-15-preview")  # type: str
+        api_version = kwargs.pop('api_version', "2022-05-15-preview")  # type: str
         content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
         polling = kwargs.pop('polling', True)  # type: Union[bool, PollingMethod]
         cls = kwargs.pop('cls', None)  # type: ClsType["_models.BackupInformation"]
