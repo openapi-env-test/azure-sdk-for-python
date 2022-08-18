@@ -26,21 +26,18 @@ class Resource(msrest.serialization.Model):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(Resource, self).__init__(**kwargs)
         self.id = None
         self.name = None
@@ -69,27 +66,24 @@ class TrackedResource(Resource):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'location': {'required': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
+        "location": {"required": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'tags': {'key': 'tags', 'type': '{str}'},
-        'location': {'key': 'location', 'type': 'str'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "tags": {"key": "tags", "type": "{str}"},
+        "location": {"key": "location", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(TrackedResource, self).__init__(**kwargs)
-        self.tags = kwargs.get('tags', None)
-        self.location = kwargs['location']
+        self.tags = kwargs.get("tags", None)
+        self.location = kwargs["location"]
 
 
 class AzureBareMetalInstance(TrackedResource):
@@ -141,52 +135,49 @@ class AzureBareMetalInstance(TrackedResource):
     """
 
     _validation = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'type': {'readonly': True},
-        'location': {'required': True},
-        'system_data': {'readonly': True},
-        'azure_bare_metal_instance_id': {'readonly': True},
-        'power_state': {'readonly': True},
-        'proximity_placement_group': {'readonly': True},
-        'hw_revision': {'readonly': True},
-        'provisioning_state': {'readonly': True},
+        "id": {"readonly": True},
+        "name": {"readonly": True},
+        "type": {"readonly": True},
+        "location": {"required": True},
+        "system_data": {"readonly": True},
+        "azure_bare_metal_instance_id": {"readonly": True},
+        "power_state": {"readonly": True},
+        "proximity_placement_group": {"readonly": True},
+        "hw_revision": {"readonly": True},
+        "provisioning_state": {"readonly": True},
     }
 
     _attribute_map = {
-        'id': {'key': 'id', 'type': 'str'},
-        'name': {'key': 'name', 'type': 'str'},
-        'type': {'key': 'type', 'type': 'str'},
-        'tags': {'key': 'tags', 'type': '{str}'},
-        'location': {'key': 'location', 'type': 'str'},
-        'system_data': {'key': 'systemData', 'type': 'SystemData'},
-        'hardware_profile': {'key': 'properties.hardwareProfile', 'type': 'HardwareProfile'},
-        'storage_profile': {'key': 'properties.storageProfile', 'type': 'StorageProfile'},
-        'os_profile': {'key': 'properties.osProfile', 'type': 'OSProfile'},
-        'network_profile': {'key': 'properties.networkProfile', 'type': 'NetworkProfile'},
-        'azure_bare_metal_instance_id': {'key': 'properties.azureBareMetalInstanceId', 'type': 'str'},
-        'power_state': {'key': 'properties.powerState', 'type': 'str'},
-        'proximity_placement_group': {'key': 'properties.proximityPlacementGroup', 'type': 'str'},
-        'hw_revision': {'key': 'properties.hwRevision', 'type': 'str'},
-        'partner_node_id': {'key': 'properties.partnerNodeId', 'type': 'str'},
-        'provisioning_state': {'key': 'properties.provisioningState', 'type': 'str'},
+        "id": {"key": "id", "type": "str"},
+        "name": {"key": "name", "type": "str"},
+        "type": {"key": "type", "type": "str"},
+        "tags": {"key": "tags", "type": "{str}"},
+        "location": {"key": "location", "type": "str"},
+        "system_data": {"key": "systemData", "type": "SystemData"},
+        "hardware_profile": {"key": "properties.hardwareProfile", "type": "HardwareProfile"},
+        "storage_profile": {"key": "properties.storageProfile", "type": "StorageProfile"},
+        "os_profile": {"key": "properties.osProfile", "type": "OSProfile"},
+        "network_profile": {"key": "properties.networkProfile", "type": "NetworkProfile"},
+        "azure_bare_metal_instance_id": {"key": "properties.azureBareMetalInstanceId", "type": "str"},
+        "power_state": {"key": "properties.powerState", "type": "str"},
+        "proximity_placement_group": {"key": "properties.proximityPlacementGroup", "type": "str"},
+        "hw_revision": {"key": "properties.hwRevision", "type": "str"},
+        "partner_node_id": {"key": "properties.partnerNodeId", "type": "str"},
+        "provisioning_state": {"key": "properties.provisioningState", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(AzureBareMetalInstance, self).__init__(**kwargs)
         self.system_data = None
-        self.hardware_profile = kwargs.get('hardware_profile', None)
-        self.storage_profile = kwargs.get('storage_profile', None)
-        self.os_profile = kwargs.get('os_profile', None)
-        self.network_profile = kwargs.get('network_profile', None)
+        self.hardware_profile = kwargs.get("hardware_profile", None)
+        self.storage_profile = kwargs.get("storage_profile", None)
+        self.os_profile = kwargs.get("os_profile", None)
+        self.network_profile = kwargs.get("network_profile", None)
         self.azure_bare_metal_instance_id = None
         self.power_state = None
         self.proximity_placement_group = None
         self.hw_revision = None
-        self.partner_node_id = kwargs.get('partner_node_id', None)
+        self.partner_node_id = kwargs.get("partner_node_id", None)
         self.provisioning_state = None
 
 
@@ -200,17 +191,14 @@ class AzureBareMetalInstancesListResult(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[AzureBareMetalInstance]'},
-        'next_link': {'key': 'nextLink', 'type': 'str'},
+        "value": {"key": "value", "type": "[AzureBareMetalInstance]"},
+        "next_link": {"key": "nextLink", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(AzureBareMetalInstancesListResult, self).__init__(**kwargs)
-        self.value = kwargs.get('value', None)
-        self.next_link = kwargs.get('next_link', None)
+        self.value = kwargs.get("value", None)
+        self.next_link = kwargs.get("next_link", None)
 
 
 class Disk(msrest.serialization.Model):
@@ -228,22 +216,19 @@ class Disk(msrest.serialization.Model):
     """
 
     _validation = {
-        'lun': {'readonly': True},
+        "lun": {"readonly": True},
     }
 
     _attribute_map = {
-        'name': {'key': 'name', 'type': 'str'},
-        'disk_size_gb': {'key': 'diskSizeGB', 'type': 'int'},
-        'lun': {'key': 'lun', 'type': 'int'},
+        "name": {"key": "name", "type": "str"},
+        "disk_size_gb": {"key": "diskSizeGB", "type": "int"},
+        "lun": {"key": "lun", "type": "int"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(Disk, self).__init__(**kwargs)
-        self.name = kwargs.get('name', None)
-        self.disk_size_gb = kwargs.get('disk_size_gb', None)
+        self.name = kwargs.get("name", None)
+        self.disk_size_gb = kwargs.get("disk_size_gb", None)
         self.lun = None
 
 
@@ -264,23 +249,20 @@ class Display(msrest.serialization.Model):
     """
 
     _validation = {
-        'provider': {'readonly': True},
-        'resource': {'readonly': True},
-        'operation': {'readonly': True},
-        'description': {'readonly': True},
+        "provider": {"readonly": True},
+        "resource": {"readonly": True},
+        "operation": {"readonly": True},
+        "description": {"readonly": True},
     }
 
     _attribute_map = {
-        'provider': {'key': 'provider', 'type': 'str'},
-        'resource': {'key': 'resource', 'type': 'str'},
-        'operation': {'key': 'operation', 'type': 'str'},
-        'description': {'key': 'description', 'type': 'str'},
+        "provider": {"key": "provider", "type": "str"},
+        "resource": {"key": "resource", "type": "str"},
+        "operation": {"key": "operation", "type": "str"},
+        "description": {"key": "description", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(Display, self).__init__(**kwargs)
         self.provider = None
         self.resource = None
@@ -302,21 +284,18 @@ class ErrorDefinition(msrest.serialization.Model):
     """
 
     _validation = {
-        'code': {'readonly': True},
-        'message': {'readonly': True},
-        'details': {'readonly': True},
+        "code": {"readonly": True},
+        "message": {"readonly": True},
+        "details": {"readonly": True},
     }
 
     _attribute_map = {
-        'code': {'key': 'code', 'type': 'str'},
-        'message': {'key': 'message', 'type': 'str'},
-        'details': {'key': 'details', 'type': '[ErrorDefinition]'},
+        "code": {"key": "code", "type": "str"},
+        "message": {"key": "message", "type": "str"},
+        "details": {"key": "details", "type": "[ErrorDefinition]"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ErrorDefinition, self).__init__(**kwargs)
         self.code = None
         self.message = None
@@ -331,15 +310,12 @@ class ErrorResponse(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'error': {'key': 'error', 'type': 'ErrorDefinition'},
+        "error": {"key": "error", "type": "ErrorDefinition"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(ErrorResponse, self).__init__(**kwargs)
-        self.error = kwargs.get('error', None)
+        self.error = kwargs.get("error", None)
 
 
 class HardwareProfile(msrest.serialization.Model):
@@ -362,19 +338,16 @@ class HardwareProfile(msrest.serialization.Model):
     """
 
     _validation = {
-        'hardware_type': {'readonly': True},
-        'azure_bare_metal_instance_size': {'readonly': True},
+        "hardware_type": {"readonly": True},
+        "azure_bare_metal_instance_size": {"readonly": True},
     }
 
     _attribute_map = {
-        'hardware_type': {'key': 'hardwareType', 'type': 'str'},
-        'azure_bare_metal_instance_size': {'key': 'azureBareMetalInstanceSize', 'type': 'str'},
+        "hardware_type": {"key": "hardwareType", "type": "str"},
+        "azure_bare_metal_instance_size": {"key": "azureBareMetalInstanceSize", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(HardwareProfile, self).__init__(**kwargs)
         self.hardware_type = None
         self.azure_bare_metal_instance_size = None
@@ -388,15 +361,12 @@ class IpAddress(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'ip_address': {'key': 'ipAddress', 'type': 'str'},
+        "ip_address": {"key": "ipAddress", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(IpAddress, self).__init__(**kwargs)
-        self.ip_address = kwargs.get('ip_address', None)
+        self.ip_address = kwargs.get("ip_address", None)
 
 
 class NetworkProfile(msrest.serialization.Model):
@@ -411,20 +381,17 @@ class NetworkProfile(msrest.serialization.Model):
     """
 
     _validation = {
-        'circuit_id': {'readonly': True},
+        "circuit_id": {"readonly": True},
     }
 
     _attribute_map = {
-        'network_interfaces': {'key': 'networkInterfaces', 'type': '[IpAddress]'},
-        'circuit_id': {'key': 'circuitId', 'type': 'str'},
+        "network_interfaces": {"key": "networkInterfaces", "type": "[IpAddress]"},
+        "circuit_id": {"key": "circuitId", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(NetworkProfile, self).__init__(**kwargs)
-        self.network_interfaces = kwargs.get('network_interfaces', None)
+        self.network_interfaces = kwargs.get("network_interfaces", None)
         self.circuit_id = None
 
 
@@ -443,23 +410,20 @@ class Operation(msrest.serialization.Model):
     """
 
     _validation = {
-        'name': {'readonly': True},
-        'is_data_action': {'readonly': True},
+        "name": {"readonly": True},
+        "is_data_action": {"readonly": True},
     }
 
     _attribute_map = {
-        'name': {'key': 'name', 'type': 'str'},
-        'display': {'key': 'display', 'type': 'Display'},
-        'is_data_action': {'key': 'isDataAction', 'type': 'bool'},
+        "name": {"key": "name", "type": "str"},
+        "display": {"key": "display", "type": "Display"},
+        "is_data_action": {"key": "isDataAction", "type": "bool"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(Operation, self).__init__(**kwargs)
         self.name = None
-        self.display = kwargs.get('display', None)
+        self.display = kwargs.get("display", None)
         self.is_data_action = None
 
 
@@ -471,15 +435,12 @@ class OperationList(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'value': {'key': 'value', 'type': '[Operation]'},
+        "value": {"key": "value", "type": "[Operation]"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(OperationList, self).__init__(**kwargs)
-        self.value = kwargs.get('value', None)
+        self.value = kwargs.get("value", None)
 
 
 class OSProfile(msrest.serialization.Model):
@@ -498,26 +459,23 @@ class OSProfile(msrest.serialization.Model):
     """
 
     _validation = {
-        'os_type': {'readonly': True},
-        'version': {'readonly': True},
+        "os_type": {"readonly": True},
+        "version": {"readonly": True},
     }
 
     _attribute_map = {
-        'computer_name': {'key': 'computerName', 'type': 'str'},
-        'os_type': {'key': 'osType', 'type': 'str'},
-        'version': {'key': 'version', 'type': 'str'},
-        'ssh_public_key': {'key': 'sshPublicKey', 'type': 'str'},
+        "computer_name": {"key": "computerName", "type": "str"},
+        "os_type": {"key": "osType", "type": "str"},
+        "version": {"key": "version", "type": "str"},
+        "ssh_public_key": {"key": "sshPublicKey", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(OSProfile, self).__init__(**kwargs)
-        self.computer_name = kwargs.get('computer_name', None)
+        self.computer_name = kwargs.get("computer_name", None)
         self.os_type = None
         self.version = None
-        self.ssh_public_key = kwargs.get('ssh_public_key', None)
+        self.ssh_public_key = kwargs.get("ssh_public_key", None)
 
 
 class Result(msrest.serialization.Model):
@@ -528,15 +486,12 @@ class Result(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'sample_property': {'key': 'sampleProperty', 'type': 'str'},
+        "sample_property": {"key": "sampleProperty", "type": "str"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(Result, self).__init__(**kwargs)
-        self.sample_property = kwargs.get('sample_property', None)
+        self.sample_property = kwargs.get("sample_property", None)
 
 
 class StorageProfile(msrest.serialization.Model):
@@ -552,21 +507,18 @@ class StorageProfile(msrest.serialization.Model):
     """
 
     _validation = {
-        'nfs_ip_address': {'readonly': True},
+        "nfs_ip_address": {"readonly": True},
     }
 
     _attribute_map = {
-        'nfs_ip_address': {'key': 'nfsIpAddress', 'type': 'str'},
-        'os_disks': {'key': 'osDisks', 'type': '[Disk]'},
+        "nfs_ip_address": {"key": "nfsIpAddress", "type": "str"},
+        "os_disks": {"key": "osDisks", "type": "[Disk]"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(StorageProfile, self).__init__(**kwargs)
         self.nfs_ip_address = None
-        self.os_disks = kwargs.get('os_disks', None)
+        self.os_disks = kwargs.get("os_disks", None)
 
 
 class SystemData(msrest.serialization.Model):
@@ -589,25 +541,22 @@ class SystemData(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'created_by': {'key': 'createdBy', 'type': 'str'},
-        'created_by_type': {'key': 'createdByType', 'type': 'str'},
-        'created_at': {'key': 'createdAt', 'type': 'iso-8601'},
-        'last_modified_by': {'key': 'lastModifiedBy', 'type': 'str'},
-        'last_modified_by_type': {'key': 'lastModifiedByType', 'type': 'str'},
-        'last_modified_at': {'key': 'lastModifiedAt', 'type': 'iso-8601'},
+        "created_by": {"key": "createdBy", "type": "str"},
+        "created_by_type": {"key": "createdByType", "type": "str"},
+        "created_at": {"key": "createdAt", "type": "iso-8601"},
+        "last_modified_by": {"key": "lastModifiedBy", "type": "str"},
+        "last_modified_by_type": {"key": "lastModifiedByType", "type": "str"},
+        "last_modified_at": {"key": "lastModifiedAt", "type": "iso-8601"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(SystemData, self).__init__(**kwargs)
-        self.created_by = kwargs.get('created_by', None)
-        self.created_by_type = kwargs.get('created_by_type', None)
-        self.created_at = kwargs.get('created_at', None)
-        self.last_modified_by = kwargs.get('last_modified_by', None)
-        self.last_modified_by_type = kwargs.get('last_modified_by_type', None)
-        self.last_modified_at = kwargs.get('last_modified_at', None)
+        self.created_by = kwargs.get("created_by", None)
+        self.created_by_type = kwargs.get("created_by_type", None)
+        self.created_at = kwargs.get("created_at", None)
+        self.last_modified_by = kwargs.get("last_modified_by", None)
+        self.last_modified_by_type = kwargs.get("last_modified_by_type", None)
+        self.last_modified_at = kwargs.get("last_modified_at", None)
 
 
 class Tags(msrest.serialization.Model):
@@ -618,12 +567,9 @@ class Tags(msrest.serialization.Model):
     """
 
     _attribute_map = {
-        'tags': {'key': 'tags', 'type': '{str}'},
+        "tags": {"key": "tags", "type": "{str}"},
     }
 
-    def __init__(
-        self,
-        **kwargs
-    ):
+    def __init__(self, **kwargs):
         super(Tags, self).__init__(**kwargs)
-        self.tags = kwargs.get('tags', None)
+        self.tags = kwargs.get("tags", None)
