@@ -1,0 +1,15 @@
+{
+  "commit": "c28fc98dcc6b86135cb9732c374b7ac21c3b21ed",
+  "repository_url": "https://github.com/Azure/azure-rest-api-specs",
+  "cadl_src": "confidentialledger/ConfientialLedger",
+  "@azure-tools/cadl-python": {
+    "version": "0.4.7",
+    "resolved": "https://registry.npmjs.org/@azure-tools/cadl-python/-/cadl-python-0.4.7.tgz",
+    "dependencies": {
+      "@autorest/python": {
+        "version": "6.2.8",
+        "resolved": "https://registry.npmjs.org/@autorest/python/-/python-6.2.8.tgz"
+      }
+    }
+  }
+}
