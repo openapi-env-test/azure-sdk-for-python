@@ -47,7 +47,7 @@ def build_list_by_factory_request(
     # Construct URL
     _url = kwargs.pop(
         "template_url",
-        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/managedVirtualNetworks",
+        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/credentials",
     )  # pylint: disable=line-too-long
     path_format_arguments = {
         "subscriptionId": _SERIALIZER.url("subscription_id", subscription_id, "str"),
@@ -78,7 +78,7 @@ def build_list_by_factory_request(
 def build_create_or_update_request(
     resource_group_name: str,
     factory_name: str,
-    managed_virtual_network_name: str,
+    credential_name: str,
     subscription_id: str,
     *,
     if_match: Optional[str] = None,
@@ -94,7 +94,7 @@ def build_create_or_update_request(
     # Construct URL
     _url = kwargs.pop(
         "template_url",
-        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/managedVirtualNetworks/{managedVirtualNetworkName}",
+        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/credentials/{credentialName}",
     )  # pylint: disable=line-too-long
     path_format_arguments = {
         "subscriptionId": _SERIALIZER.url("subscription_id", subscription_id, "str"),
@@ -109,9 +109,9 @@ def build_create_or_update_request(
             min_length=3,
             pattern=r"^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$",
         ),
-        "managedVirtualNetworkName": _SERIALIZER.url(
-            "managed_virtual_network_name",
-            managed_virtual_network_name,
+        "credentialName": _SERIALIZER.url(
+            "credential_name",
+            credential_name,
             "str",
             max_length=127,
             min_length=1,
@@ -137,7 +137,7 @@ def build_create_or_update_request(
 def build_get_request(
     resource_group_name: str,
     factory_name: str,
-    managed_virtual_network_name: str,
+    credential_name: str,
     subscription_id: str,
     *,
     if_none_match: Optional[str] = None,
@@ -152,7 +152,7 @@ def build_get_request(
     # Construct URL
     _url = kwargs.pop(
         "template_url",
-        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/managedVirtualNetworks/{managedVirtualNetworkName}",
+        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/credentials/{credentialName}",
     )  # pylint: disable=line-too-long
     path_format_arguments = {
         "subscriptionId": _SERIALIZER.url("subscription_id", subscription_id, "str"),
@@ -167,9 +167,9 @@ def build_get_request(
             min_length=3,
             pattern=r"^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$",
         ),
-        "managedVirtualNetworkName": _SERIALIZER.url(
-            "managed_virtual_network_name",
-            managed_virtual_network_name,
+        "credentialName": _SERIALIZER.url(
+            "credential_name",
+            credential_name,
             "str",
             max_length=127,
             min_length=1,
@@ -190,14 +190,62 @@ def build_get_request(
     return HttpRequest(method="GET", url=_url, params=_params, headers=_headers, **kwargs)
 
 
-class ManagedVirtualNetworksOperations:
+def build_delete_request(
+    resource_group_name: str, factory_name: str, credential_name: str, subscription_id: str, **kwargs: Any
+) -> HttpRequest:
+    _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
+    _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
+
+    api_version = kwargs.pop("api_version", _params.pop("api-version", "2018-06-01"))  # type: str
+    accept = _headers.pop("Accept", "application/json")
+
+    # Construct URL
+    _url = kwargs.pop(
+        "template_url",
+        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/credentials/{credentialName}",
+    )  # pylint: disable=line-too-long
+    path_format_arguments = {
+        "subscriptionId": _SERIALIZER.url("subscription_id", subscription_id, "str"),
+        "resourceGroupName": _SERIALIZER.url(
+            "resource_group_name", resource_group_name, "str", max_length=90, min_length=1, pattern=r"^[-\w\._\(\)]+$"
+        ),
+        "factoryName": _SERIALIZER.url(
+            "factory_name",
+            factory_name,
+            "str",
+            max_length=63,
+            min_length=3,
+            pattern=r"^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$",
+        ),
+        "credentialName": _SERIALIZER.url(
+            "credential_name",
+            credential_name,
+            "str",
+            max_length=127,
+            min_length=1,
+            pattern=r"^([_A-Za-z0-9]|([_A-Za-z0-9][-_A-Za-z0-9]{0,125}[_A-Za-z0-9]))$",
+        ),
+    }
+
+    _url = _format_url_section(_url, **path_format_arguments)
+
+    # Construct parameters
+    _params["api-version"] = _SERIALIZER.query("api_version", api_version, "str")
+
+    # Construct headers
+    _headers["Accept"] = _SERIALIZER.header("accept", accept, "str")
+
+    return HttpRequest(method="DELETE", url=_url, params=_params, headers=_headers, **kwargs)
+
+
+class CredentialOperationsOperations:
     """
     .. warning::
         **DO NOT** instantiate this class directly.
 
         Instead, you should access the following operations through
         :class:`~azure.mgmt.datafactory.DataFactoryManagementClient`'s
-        :attr:`managed_virtual_networks` attribute.
+        :attr:`credential_operations` attribute.
     """
 
     models = _models
@@ -212,25 +260,25 @@ class ManagedVirtualNetworksOperations:
     @distributed_trace
     def list_by_factory(
         self, resource_group_name: str, factory_name: str, **kwargs: Any
-    ) -> Iterable["_models.ManagedVirtualNetworkResource"]:
-        """Lists managed Virtual Networks.
+    ) -> Iterable["_models.ManagedIdentityCredentialResource"]:
+        """List credentials.
 
         :param resource_group_name: The resource group name. Required.
         :type resource_group_name: str
         :param factory_name: The factory name. Required.
         :type factory_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either ManagedVirtualNetworkResource or the result of
+        :return: An iterator like instance of either ManagedIdentityCredentialResource or the result of
          cls(response)
         :rtype:
-         ~azure.core.paging.ItemPaged[~azure.mgmt.datafactory.models.ManagedVirtualNetworkResource]
+         ~azure.core.paging.ItemPaged[~azure.mgmt.datafactory.models.ManagedIdentityCredentialResource]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         _headers = kwargs.pop("headers", {}) or {}
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
         api_version = kwargs.pop("api_version", _params.pop("api-version", self._config.api_version))  # type: str
-        cls = kwargs.pop("cls", None)  # type: ClsType[_models.ManagedVirtualNetworkListResponse]
+        cls = kwargs.pop("cls", None)  # type: ClsType[_models.CredentialListResponse]
 
         error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop("error_map", {}) or {})
@@ -262,7 +310,7 @@ class ManagedVirtualNetworksOperations:
             return request
 
         def extract_data(pipeline_response):
-            deserialized = self._deserialize("ManagedVirtualNetworkListResponse", pipeline_response)
+            deserialized = self._deserialize("CredentialListResponse", pipeline_response)
             list_of_elem = deserialized.value
             if cls:
                 list_of_elem = cls(list_of_elem)
@@ -284,40 +332,39 @@ class ManagedVirtualNetworksOperations:
 
         return ItemPaged(get_next, extract_data)
 
-    list_by_factory.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/managedVirtualNetworks"}  # type: ignore
+    list_by_factory.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/credentials"}  # type: ignore
 
     @overload
     def create_or_update(
         self,
         resource_group_name: str,
         factory_name: str,
-        managed_virtual_network_name: str,
-        managed_virtual_network: _models.ManagedVirtualNetworkResource,
+        credential_name: str,
+        credential: _models.ManagedIdentityCredentialResource,
         if_match: Optional[str] = None,
         *,
         content_type: str = "application/json",
         **kwargs: Any
-    ) -> _models.ManagedVirtualNetworkResource:
-        """Creates or updates a managed Virtual Network.
+    ) -> _models.ManagedIdentityCredentialResource:
+        """Creates or updates a credential.
 
         :param resource_group_name: The resource group name. Required.
         :type resource_group_name: str
         :param factory_name: The factory name. Required.
         :type factory_name: str
-        :param managed_virtual_network_name: Managed virtual network name. Required.
-        :type managed_virtual_network_name: str
-        :param managed_virtual_network: Managed Virtual Network resource definition. Required.
-        :type managed_virtual_network: ~azure.mgmt.datafactory.models.ManagedVirtualNetworkResource
-        :param if_match: ETag of the managed Virtual Network entity. Should only be specified for
-         update, for which it should match existing entity or can be * for unconditional update. Default
-         value is None.
+        :param credential_name: Credential name. Required.
+        :type credential_name: str
+        :param credential: Credential resource definition. Required.
+        :type credential: ~azure.mgmt.datafactory.models.ManagedIdentityCredentialResource
+        :param if_match: ETag of the credential entity. Should only be specified for update, for which
+         it should match existing entity or can be * for unconditional update. Default value is None.
         :type if_match: str
         :keyword content_type: Body Parameter content-type. Content type parameter for JSON body.
          Default value is "application/json".
         :paramtype content_type: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ManagedVirtualNetworkResource or the result of cls(response)
-        :rtype: ~azure.mgmt.datafactory.models.ManagedVirtualNetworkResource
+        :return: ManagedIdentityCredentialResource or the result of cls(response)
+        :rtype: ~azure.mgmt.datafactory.models.ManagedIdentityCredentialResource
         :raises ~azure.core.exceptions.HttpResponseError:
         """
 
@@ -326,33 +373,32 @@ class ManagedVirtualNetworksOperations:
         self,
         resource_group_name: str,
         factory_name: str,
-        managed_virtual_network_name: str,
-        managed_virtual_network: IO,
+        credential_name: str,
+        credential: IO,
         if_match: Optional[str] = None,
         *,
         content_type: str = "application/json",
         **kwargs: Any
-    ) -> _models.ManagedVirtualNetworkResource:
-        """Creates or updates a managed Virtual Network.
+    ) -> _models.ManagedIdentityCredentialResource:
+        """Creates or updates a credential.
 
         :param resource_group_name: The resource group name. Required.
         :type resource_group_name: str
         :param factory_name: The factory name. Required.
         :type factory_name: str
-        :param managed_virtual_network_name: Managed virtual network name. Required.
-        :type managed_virtual_network_name: str
-        :param managed_virtual_network: Managed Virtual Network resource definition. Required.
-        :type managed_virtual_network: IO
-        :param if_match: ETag of the managed Virtual Network entity. Should only be specified for
-         update, for which it should match existing entity or can be * for unconditional update. Default
-         value is None.
+        :param credential_name: Credential name. Required.
+        :type credential_name: str
+        :param credential: Credential resource definition. Required.
+        :type credential: IO
+        :param if_match: ETag of the credential entity. Should only be specified for update, for which
+         it should match existing entity or can be * for unconditional update. Default value is None.
         :type if_match: str
         :keyword content_type: Body Parameter content-type. Content type parameter for binary body.
          Default value is "application/json".
         :paramtype content_type: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ManagedVirtualNetworkResource or the result of cls(response)
-        :rtype: ~azure.mgmt.datafactory.models.ManagedVirtualNetworkResource
+        :return: ManagedIdentityCredentialResource or the result of cls(response)
+        :rtype: ~azure.mgmt.datafactory.models.ManagedIdentityCredentialResource
         :raises ~azure.core.exceptions.HttpResponseError:
         """
 
@@ -361,33 +407,31 @@ class ManagedVirtualNetworksOperations:
         self,
         resource_group_name: str,
         factory_name: str,
-        managed_virtual_network_name: str,
-        managed_virtual_network: Union[_models.ManagedVirtualNetworkResource, IO],
+        credential_name: str,
+        credential: Union[_models.ManagedIdentityCredentialResource, IO],
         if_match: Optional[str] = None,
         **kwargs: Any
-    ) -> _models.ManagedVirtualNetworkResource:
-        """Creates or updates a managed Virtual Network.
+    ) -> _models.ManagedIdentityCredentialResource:
+        """Creates or updates a credential.
 
         :param resource_group_name: The resource group name. Required.
         :type resource_group_name: str
         :param factory_name: The factory name. Required.
         :type factory_name: str
-        :param managed_virtual_network_name: Managed virtual network name. Required.
-        :type managed_virtual_network_name: str
-        :param managed_virtual_network: Managed Virtual Network resource definition. Is either a model
-         type or a IO type. Required.
-        :type managed_virtual_network: ~azure.mgmt.datafactory.models.ManagedVirtualNetworkResource or
-         IO
-        :param if_match: ETag of the managed Virtual Network entity. Should only be specified for
-         update, for which it should match existing entity or can be * for unconditional update. Default
-         value is None.
+        :param credential_name: Credential name. Required.
+        :type credential_name: str
+        :param credential: Credential resource definition. Is either a model type or a IO type.
+         Required.
+        :type credential: ~azure.mgmt.datafactory.models.ManagedIdentityCredentialResource or IO
+        :param if_match: ETag of the credential entity. Should only be specified for update, for which
+         it should match existing entity or can be * for unconditional update. Default value is None.
         :type if_match: str
         :keyword content_type: Body Parameter content-type. Known values are: 'application/json'.
          Default value is None.
         :paramtype content_type: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ManagedVirtualNetworkResource or the result of cls(response)
-        :rtype: ~azure.mgmt.datafactory.models.ManagedVirtualNetworkResource
+        :return: ManagedIdentityCredentialResource or the result of cls(response)
+        :rtype: ~azure.mgmt.datafactory.models.ManagedIdentityCredentialResource
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
@@ -398,20 +442,20 @@ class ManagedVirtualNetworksOperations:
 
         api_version = kwargs.pop("api_version", _params.pop("api-version", self._config.api_version))  # type: str
         content_type = kwargs.pop("content_type", _headers.pop("Content-Type", None))  # type: Optional[str]
-        cls = kwargs.pop("cls", None)  # type: ClsType[_models.ManagedVirtualNetworkResource]
+        cls = kwargs.pop("cls", None)  # type: ClsType[_models.ManagedIdentityCredentialResource]
 
         content_type = content_type or "application/json"
         _json = None
         _content = None
-        if isinstance(managed_virtual_network, (IO, bytes)):
-            _content = managed_virtual_network
+        if isinstance(credential, (IO, bytes)):
+            _content = credential
         else:
-            _json = self._serialize.body(managed_virtual_network, "ManagedVirtualNetworkResource")
+            _json = self._serialize.body(credential, "ManagedIdentityCredentialResource")
 
         request = build_create_or_update_request(
             resource_group_name=resource_group_name,
             factory_name=factory_name,
-            managed_virtual_network_name=managed_virtual_network_name,
+            credential_name=credential_name,
             subscription_id=self._config.subscription_id,
             if_match=if_match,
             api_version=api_version,
@@ -435,39 +479,39 @@ class ManagedVirtualNetworksOperations:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize("ManagedVirtualNetworkResource", pipeline_response)
+        deserialized = self._deserialize("ManagedIdentityCredentialResource", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
 
-    create_or_update.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/managedVirtualNetworks/{managedVirtualNetworkName}"}  # type: ignore
+    create_or_update.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/credentials/{credentialName}"}  # type: ignore
 
     @distributed_trace
     def get(
         self,
         resource_group_name: str,
         factory_name: str,
-        managed_virtual_network_name: str,
+        credential_name: str,
         if_none_match: Optional[str] = None,
         **kwargs: Any
-    ) -> _models.ManagedVirtualNetworkResource:
-        """Gets a managed Virtual Network.
+    ) -> Optional[_models.ManagedIdentityCredentialResource]:
+        """Gets a credential.
 
         :param resource_group_name: The resource group name. Required.
         :type resource_group_name: str
         :param factory_name: The factory name. Required.
         :type factory_name: str
-        :param managed_virtual_network_name: Managed virtual network name. Required.
-        :type managed_virtual_network_name: str
-        :param if_none_match: ETag of the managed Virtual Network entity. Should only be specified for
-         get. If the ETag matches the existing entity tag, or if * was provided, then no content will be
-         returned. Default value is None.
+        :param credential_name: Credential name. Required.
+        :type credential_name: str
+        :param if_none_match: ETag of the credential entity. Should only be specified for get. If the
+         ETag matches the existing entity tag, or if * was provided, then no content will be returned.
+         Default value is None.
         :type if_none_match: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ManagedVirtualNetworkResource or the result of cls(response)
-        :rtype: ~azure.mgmt.datafactory.models.ManagedVirtualNetworkResource
+        :return: ManagedIdentityCredentialResource or None or the result of cls(response)
+        :rtype: ~azure.mgmt.datafactory.models.ManagedIdentityCredentialResource or None
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
@@ -477,12 +521,12 @@ class ManagedVirtualNetworksOperations:
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
         api_version = kwargs.pop("api_version", _params.pop("api-version", self._config.api_version))  # type: str
-        cls = kwargs.pop("cls", None)  # type: ClsType[_models.ManagedVirtualNetworkResource]
+        cls = kwargs.pop("cls", None)  # type: ClsType[Optional[_models.ManagedIdentityCredentialResource]]
 
         request = build_get_request(
             resource_group_name=resource_group_name,
             factory_name=factory_name,
-            managed_virtual_network_name=managed_virtual_network_name,
+            credential_name=credential_name,
             subscription_id=self._config.subscription_id,
             if_none_match=if_none_match,
             api_version=api_version,
@@ -499,15 +543,71 @@ class ManagedVirtualNetworksOperations:
 
         response = pipeline_response.http_response
 
-        if response.status_code not in [200]:
+        if response.status_code not in [200, 304]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
             raise HttpResponseError(response=response, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize("ManagedVirtualNetworkResource", pipeline_response)
+        deserialized = None
+        if response.status_code == 200:
+            deserialized = self._deserialize("ManagedIdentityCredentialResource", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
 
-    get.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/managedVirtualNetworks/{managedVirtualNetworkName}"}  # type: ignore
+    get.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/credentials/{credentialName}"}  # type: ignore
+
+    @distributed_trace
+    def delete(  # pylint: disable=inconsistent-return-statements
+        self, resource_group_name: str, factory_name: str, credential_name: str, **kwargs: Any
+    ) -> None:
+        """Deletes a credential.
+
+        :param resource_group_name: The resource group name. Required.
+        :type resource_group_name: str
+        :param factory_name: The factory name. Required.
+        :type factory_name: str
+        :param credential_name: Credential name. Required.
+        :type credential_name: str
+        :keyword callable cls: A custom type or function that will be passed the direct response
+        :return: None or the result of cls(response)
+        :rtype: None
+        :raises ~azure.core.exceptions.HttpResponseError:
+        """
+        error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop("error_map", {}) or {})
+
+        _headers = kwargs.pop("headers", {}) or {}
+        _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
+
+        api_version = kwargs.pop("api_version", _params.pop("api-version", self._config.api_version))  # type: str
+        cls = kwargs.pop("cls", None)  # type: ClsType[None]
+
+        request = build_delete_request(
+            resource_group_name=resource_group_name,
+            factory_name=factory_name,
+            credential_name=credential_name,
+            subscription_id=self._config.subscription_id,
+            api_version=api_version,
+            template_url=self.delete.metadata["url"],
+            headers=_headers,
+            params=_params,
+        )
+        request = _convert_request(request)
+        request.url = self._client.format_url(request.url)  # type: ignore
+
+        pipeline_response = self._client._pipeline.run(  # type: ignore # pylint: disable=protected-access
+            request, stream=False, **kwargs
+        )
+
+        response = pipeline_response.http_response
+
+        if response.status_code not in [200, 204]:
+            map_error(status_code=response.status_code, response=response, error_map=error_map)
+            raise HttpResponseError(response=response, error_format=ARMErrorFormat)
+
+        if cls:
+            return cls(pipeline_response, None, {})
+
+    delete.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/credentials/{credentialName}"}  # type: ignore
