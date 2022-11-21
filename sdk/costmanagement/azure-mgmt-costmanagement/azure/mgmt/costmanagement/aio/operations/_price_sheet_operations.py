@@ -26,23 +26,20 @@ from azure.mgmt.core.polling.async_arm_polling import AsyncARMPolling
 
 from ... import models as _models
 from ..._vendor import _convert_request
-from ...operations._generate_reservation_details_report_operations import (
-    build_by_billing_account_id_request,
-    build_by_billing_profile_id_request,
-)
+from ...operations._price_sheet_operations import build_download_by_billing_profile_request, build_download_request
 
 T = TypeVar("T")
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
 
 
-class GenerateReservationDetailsReportOperations:
+class PriceSheetOperations:
     """
     .. warning::
         **DO NOT** instantiate this class directly.
 
         Instead, you should access the following operations through
         :class:`~azure.mgmt.costmanagement.aio.CostManagementClient`'s
-        :attr:`generate_reservation_details_report` attribute.
+        :attr:`price_sheet` attribute.
     """
 
     models = _models
@@ -54,9 +51,9 @@ class GenerateReservationDetailsReportOperations:
         self._serialize = input_args.pop(0) if input_args else kwargs.pop("serializer")
         self._deserialize = input_args.pop(0) if input_args else kwargs.pop("deserializer")
 
-    async def _by_billing_account_id_initial(
-        self, billing_account_id: str, start_date: str, end_date: str, **kwargs: Any
-    ) -> Optional[_models.OperationStatus]:
+    async def _download_initial(
+        self, billing_account_name: str, billing_profile_name: str, invoice_name: str, **kwargs: Any
+    ) -> Optional[_models.DownloadURL]:
         error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop("error_map", {}) or {})
 
@@ -64,14 +61,14 @@ class GenerateReservationDetailsReportOperations:
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
         api_version = kwargs.pop("api_version", _params.pop("api-version", self._config.api_version))  # type: str
-        cls = kwargs.pop("cls", None)  # type: ClsType[Optional[_models.OperationStatus]]
+        cls = kwargs.pop("cls", None)  # type: ClsType[Optional[_models.DownloadURL]]
 
-        request = build_by_billing_account_id_request(
-            billing_account_id=billing_account_id,
-            start_date=start_date,
-            end_date=end_date,
+        request = build_download_request(
+            billing_account_name=billing_account_name,
+            billing_profile_name=billing_profile_name,
+            invoice_name=invoice_name,
             api_version=api_version,
-            template_url=self._by_billing_account_id_initial.metadata["url"],
+            template_url=self._download_initial.metadata["url"],
             headers=_headers,
             params=_params,
         )
@@ -92,34 +89,33 @@ class GenerateReservationDetailsReportOperations:
         deserialized = None
         response_headers = {}
         if response.status_code == 200:
-            deserialized = self._deserialize("OperationStatus", pipeline_response)
+            deserialized = self._deserialize("DownloadURL", pipeline_response)
 
         if response.status_code == 202:
             response_headers["Location"] = self._deserialize("str", response.headers.get("Location"))
-            response_headers["Retry-After"] = self._deserialize("int", response.headers.get("Retry-After"))
+            response_headers["Retry-After"] = self._deserialize("str", response.headers.get("Retry-After"))
+            response_headers["OData-EntityId"] = self._deserialize("str", response.headers.get("OData-EntityId"))
 
         if cls:
             return cls(pipeline_response, deserialized, response_headers)
 
         return deserialized
 
-    _by_billing_account_id_initial.metadata = {"url": "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/generateReservationDetailsReport"}  # type: ignore
+    _download_initial.metadata = {"url": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoices/{invoiceName}/providers/Microsoft.CostManagement/pricesheets/default/download"}  # type: ignore
 
     @distributed_trace_async
-    async def begin_by_billing_account_id(
-        self, billing_account_id: str, start_date: str, end_date: str, **kwargs: Any
-    ) -> AsyncLROPoller[_models.OperationStatus]:
-        """Generates the reservations details report for provided date range asynchronously based on
-        enrollment id. The Reservation usage details can be viewed only by certain enterprise roles.
-        For more details on the roles see,
-        https://docs.microsoft.com/en-us/azure/cost-management-billing/manage/understand-ea-roles#usage-and-costs-access-by-role.
+    async def begin_download(
+        self, billing_account_name: str, billing_profile_name: str, invoice_name: str, **kwargs: Any
+    ) -> AsyncLROPoller[_models.DownloadURL]:
+        """Gets a URL to download the pricesheet for an invoice. The operation is supported for billing
+        accounts with agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.
 
-        :param billing_account_id: Enrollment ID (Legacy BillingAccount ID). Required.
-        :type billing_account_id: str
-        :param start_date: Start Date. Required.
-        :type start_date: str
-        :param end_date: End Date. Required.
-        :type end_date: str
+        :param billing_account_name: The ID that uniquely identifies a billing account. Required.
+        :type billing_account_name: str
+        :param billing_profile_name: The ID that uniquely identifies a billing profile. Required.
+        :type billing_profile_name: str
+        :param invoice_name: The ID that uniquely identifies an invoice. Required.
+        :type invoice_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: By default, your polling method will be AsyncARMPolling. Pass in False for
@@ -128,24 +124,24 @@ class GenerateReservationDetailsReportOperations:
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no
          Retry-After header is present.
-        :return: An instance of AsyncLROPoller that returns either OperationStatus or the result of
+        :return: An instance of AsyncLROPoller that returns either DownloadURL or the result of
          cls(response)
-        :rtype: ~azure.core.polling.AsyncLROPoller[~azure.mgmt.costmanagement.models.OperationStatus]
+        :rtype: ~azure.core.polling.AsyncLROPoller[~azure.mgmt.costmanagement.models.DownloadURL]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         _headers = kwargs.pop("headers", {}) or {}
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
         api_version = kwargs.pop("api_version", _params.pop("api-version", self._config.api_version))  # type: str
-        cls = kwargs.pop("cls", None)  # type: ClsType[_models.OperationStatus]
+        cls = kwargs.pop("cls", None)  # type: ClsType[_models.DownloadURL]
         polling = kwargs.pop("polling", True)  # type: Union[bool, AsyncPollingMethod]
         lro_delay = kwargs.pop("polling_interval", self._config.polling_interval)
         cont_token = kwargs.pop("continuation_token", None)  # type: Optional[str]
         if cont_token is None:
-            raw_result = await self._by_billing_account_id_initial(  # type: ignore
-                billing_account_id=billing_account_id,
-                start_date=start_date,
-                end_date=end_date,
+            raw_result = await self._download_initial(  # type: ignore
+                billing_account_name=billing_account_name,
+                billing_profile_name=billing_profile_name,
+                invoice_name=invoice_name,
                 api_version=api_version,
                 cls=lambda x, y, z: x,
                 headers=_headers,
@@ -155,7 +151,7 @@ class GenerateReservationDetailsReportOperations:
         kwargs.pop("error_map", None)
 
         def get_long_running_output(pipeline_response):
-            deserialized = self._deserialize("OperationStatus", pipeline_response)
+            deserialized = self._deserialize("DownloadURL", pipeline_response)
             if cls:
                 return cls(pipeline_response, deserialized, {})
             return deserialized
@@ -177,11 +173,11 @@ class GenerateReservationDetailsReportOperations:
             )
         return AsyncLROPoller(self._client, raw_result, get_long_running_output, polling_method)
 
-    begin_by_billing_account_id.metadata = {"url": "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/generateReservationDetailsReport"}  # type: ignore
+    begin_download.metadata = {"url": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoices/{invoiceName}/providers/Microsoft.CostManagement/pricesheets/default/download"}  # type: ignore
 
-    async def _by_billing_profile_id_initial(
-        self, billing_account_id: str, billing_profile_id: str, start_date: str, end_date: str, **kwargs: Any
-    ) -> Optional[_models.OperationStatus]:
+    async def _download_by_billing_profile_initial(
+        self, billing_account_name: str, billing_profile_name: str, **kwargs: Any
+    ) -> Optional[_models.DownloadURL]:
         error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop("error_map", {}) or {})
 
@@ -189,15 +185,13 @@ class GenerateReservationDetailsReportOperations:
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
         api_version = kwargs.pop("api_version", _params.pop("api-version", self._config.api_version))  # type: str
-        cls = kwargs.pop("cls", None)  # type: ClsType[Optional[_models.OperationStatus]]
+        cls = kwargs.pop("cls", None)  # type: ClsType[Optional[_models.DownloadURL]]
 
-        request = build_by_billing_profile_id_request(
-            billing_account_id=billing_account_id,
-            billing_profile_id=billing_profile_id,
-            start_date=start_date,
-            end_date=end_date,
+        request = build_download_by_billing_profile_request(
+            billing_account_name=billing_account_name,
+            billing_profile_name=billing_profile_name,
             api_version=api_version,
-            template_url=self._by_billing_profile_id_initial.metadata["url"],
+            template_url=self._download_by_billing_profile_initial.metadata["url"],
             headers=_headers,
             params=_params,
         )
@@ -218,36 +212,34 @@ class GenerateReservationDetailsReportOperations:
         deserialized = None
         response_headers = {}
         if response.status_code == 200:
-            deserialized = self._deserialize("OperationStatus", pipeline_response)
+            deserialized = self._deserialize("DownloadURL", pipeline_response)
 
         if response.status_code == 202:
             response_headers["Location"] = self._deserialize("str", response.headers.get("Location"))
-            response_headers["Retry-After"] = self._deserialize("int", response.headers.get("Retry-After"))
+            response_headers["Retry-After"] = self._deserialize("str", response.headers.get("Retry-After"))
+            response_headers["OData-EntityId"] = self._deserialize("str", response.headers.get("OData-EntityId"))
 
         if cls:
             return cls(pipeline_response, deserialized, response_headers)
 
         return deserialized
 
-    _by_billing_profile_id_initial.metadata = {"url": "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.CostManagement/generateReservationDetailsReport"}  # type: ignore
+    _download_by_billing_profile_initial.metadata = {"url": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/providers/Microsoft.CostManagement/pricesheets/default/download"}  # type: ignore
 
     @distributed_trace_async
-    async def begin_by_billing_profile_id(
-        self, billing_account_id: str, billing_profile_id: str, start_date: str, end_date: str, **kwargs: Any
-    ) -> AsyncLROPoller[_models.OperationStatus]:
-        """Generates the reservations details report for provided date range asynchronously by billing
-        profile. The Reservation usage details can be viewed by only certain enterprise roles by
-        default. For more details on the roles see,
-        https://docs.microsoft.com/en-us/azure/cost-management-billing/reservations/reservation-utilization#view-utilization-in-the-azure-portal-with-azure-rbac-access.
+    async def begin_download_by_billing_profile(
+        self, billing_account_name: str, billing_profile_name: str, **kwargs: Any
+    ) -> AsyncLROPoller[_models.DownloadURL]:
+        """Gets a URL to download the current month's pricesheet for a billing profile. The operation is
+        supported for billing accounts with agreement type Microsoft Partner Agreement or Microsoft
+        Customer Agreement.Due to Azure product growth, the Azure price sheet download experience in
+        this preview version will be updated from a single csv file to a Zip file containing multiple
+        csv files, each with max 200k records.
 
-        :param billing_account_id: Billing account ID. Required.
-        :type billing_account_id: str
-        :param billing_profile_id: Billing profile ID. Required.
-        :type billing_profile_id: str
-        :param start_date: Start Date. Required.
-        :type start_date: str
-        :param end_date: End Date. Required.
-        :type end_date: str
+        :param billing_account_name: The ID that uniquely identifies a billing account. Required.
+        :type billing_account_name: str
+        :param billing_profile_name: The ID that uniquely identifies a billing profile. Required.
+        :type billing_profile_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: By default, your polling method will be AsyncARMPolling. Pass in False for
@@ -256,25 +248,23 @@ class GenerateReservationDetailsReportOperations:
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no
          Retry-After header is present.
-        :return: An instance of AsyncLROPoller that returns either OperationStatus or the result of
+        :return: An instance of AsyncLROPoller that returns either DownloadURL or the result of
          cls(response)
-        :rtype: ~azure.core.polling.AsyncLROPoller[~azure.mgmt.costmanagement.models.OperationStatus]
+        :rtype: ~azure.core.polling.AsyncLROPoller[~azure.mgmt.costmanagement.models.DownloadURL]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         _headers = kwargs.pop("headers", {}) or {}
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
         api_version = kwargs.pop("api_version", _params.pop("api-version", self._config.api_version))  # type: str
-        cls = kwargs.pop("cls", None)  # type: ClsType[_models.OperationStatus]
+        cls = kwargs.pop("cls", None)  # type: ClsType[_models.DownloadURL]
         polling = kwargs.pop("polling", True)  # type: Union[bool, AsyncPollingMethod]
         lro_delay = kwargs.pop("polling_interval", self._config.polling_interval)
         cont_token = kwargs.pop("continuation_token", None)  # type: Optional[str]
         if cont_token is None:
-            raw_result = await self._by_billing_profile_id_initial(  # type: ignore
-                billing_account_id=billing_account_id,
-                billing_profile_id=billing_profile_id,
-                start_date=start_date,
-                end_date=end_date,
+            raw_result = await self._download_by_billing_profile_initial(  # type: ignore
+                billing_account_name=billing_account_name,
+                billing_profile_name=billing_profile_name,
                 api_version=api_version,
                 cls=lambda x, y, z: x,
                 headers=_headers,
@@ -284,7 +274,7 @@ class GenerateReservationDetailsReportOperations:
         kwargs.pop("error_map", None)
 
         def get_long_running_output(pipeline_response):
-            deserialized = self._deserialize("OperationStatus", pipeline_response)
+            deserialized = self._deserialize("DownloadURL", pipeline_response)
             if cls:
                 return cls(pipeline_response, deserialized, {})
             return deserialized
@@ -306,4 +296,4 @@ class GenerateReservationDetailsReportOperations:
             )
         return AsyncLROPoller(self._client, raw_result, get_long_running_output, polling_method)
 
-    begin_by_billing_profile_id.metadata = {"url": "/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.CostManagement/generateReservationDetailsReport"}  # type: ignore
+    begin_download_by_billing_profile.metadata = {"url": "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/providers/Microsoft.CostManagement/pricesheets/default/download"}  # type: ignore
