@@ -6,6 +6,7 @@
 # Changes may cause incorrect behavior and will be lost if the code is regenerated.
 # --------------------------------------------------------------------------
 
+import sys
 from typing import Any, TYPE_CHECKING
 
 from azure.core.configuration import Configuration
@@ -14,13 +15,18 @@ from azure.mgmt.core.policies import ARMHttpLoggingPolicy, AsyncARMChallengeAuth
 
 from .._version import VERSION
 
+if sys.version_info >= (3, 8):
+    from typing import Literal  # pylint: disable=no-name-in-module, ungrouped-imports
+else:
+    from typing_extensions import Literal  # type: ignore  # pylint: disable=ungrouped-imports
+
 if TYPE_CHECKING:
     # pylint: disable=unused-import,ungrouped-imports
     from azure.core.credentials_async import AsyncTokenCredential
 
 
-class AgriFoodMgmtClientConfiguration(Configuration):  # pylint: disable=too-many-instance-attributes
-    """Configuration for AgriFoodMgmtClient.
+class AzureAgriFoodRPServiceConfiguration(Configuration):  # pylint: disable=too-many-instance-attributes
+    """Configuration for AzureAgriFoodRPService.
 
     Note that all parameters used to create this instance are saved as instance
     attributes.
@@ -29,14 +35,14 @@ class AgriFoodMgmtClientConfiguration(Configuration):  # pylint: disable=too-man
     :type credential: ~azure.core.credentials_async.AsyncTokenCredential
     :param subscription_id: The ID of the target subscription. Required.
     :type subscription_id: str
-    :keyword api_version: Api Version. Default value is "2021-09-01-preview". Note that overriding
+    :keyword api_version: Api Version. Default value is "2020-05-12-preview". Note that overriding
      this default value may result in unsupported behavior.
     :paramtype api_version: str
     """
 
     def __init__(self, credential: "AsyncTokenCredential", subscription_id: str, **kwargs: Any) -> None:
-        super(AgriFoodMgmtClientConfiguration, self).__init__(**kwargs)
-        api_version = kwargs.pop("api_version", "2021-09-01-preview")  # type: str
+        super(AzureAgriFoodRPServiceConfiguration, self).__init__(**kwargs)
+        api_version: Literal["2020-05-12-preview"] = kwargs.pop("api_version", "2020-05-12-preview")
 
         if credential is None:
             raise ValueError("Parameter 'credential' must not be None.")
