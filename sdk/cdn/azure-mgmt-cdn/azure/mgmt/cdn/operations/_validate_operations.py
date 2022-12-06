@@ -9,7 +9,13 @@ import functools
 from typing import Any, Callable, Dict, Generic, Optional, TypeVar
 import warnings
 
-from azure.core.exceptions import ClientAuthenticationError, HttpResponseError, ResourceExistsError, ResourceNotFoundError, map_error
+from azure.core.exceptions import (
+    ClientAuthenticationError,
+    HttpResponseError,
+    ResourceExistsError,
+    ResourceNotFoundError,
+    map_error,
+)
 from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import HttpResponse
 from azure.core.rest import HttpRequest
@@ -19,51 +25,44 @@ from msrest import Serializer
 
 from .. import models as _models
 from .._vendor import _convert_request, _format_url_section
-T = TypeVar('T')
+
+T = TypeVar("T")
 JSONType = Any
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, HttpResponse], T, Dict[str, Any]], Any]]
 
 _SERIALIZER = Serializer()
 _SERIALIZER.client_side_validation = False
 
+
 def build_secret_request(
-    subscription_id: str,
-    *,
-    json: JSONType = None,
-    content: Any = None,
-    **kwargs: Any
+    subscription_id: str, *, json: JSONType = None, content: Any = None, **kwargs: Any
 ) -> HttpRequest:
-    content_type = kwargs.pop('content_type', None)  # type: Optional[str]
+    content_type = kwargs.pop("content_type", None)  # type: Optional[str]
 
     api_version = "2021-06-01"
     accept = "application/json"
     # Construct URL
-    url = kwargs.pop("template_url", '/subscriptions/{subscriptionId}/providers/Microsoft.Cdn/validateSecret')
+    url = kwargs.pop("template_url", "/subscriptions/{subscriptionId}/providers/Microsoft.Cdn/validateSecret")
     path_format_arguments = {
-        "subscriptionId": _SERIALIZER.url("subscription_id", subscription_id, 'str'),
+        "subscriptionId": _SERIALIZER.url("subscription_id", subscription_id, "str"),
     }
 
     url = _format_url_section(url, **path_format_arguments)
 
     # Construct parameters
     query_parameters = kwargs.pop("params", {})  # type: Dict[str, Any]
-    query_parameters['api-version'] = _SERIALIZER.query("api_version", api_version, 'str')
+    query_parameters["api-version"] = _SERIALIZER.query("api_version", api_version, "str")
 
     # Construct headers
     header_parameters = kwargs.pop("headers", {})  # type: Dict[str, Any]
     if content_type is not None:
-        header_parameters['Content-Type'] = _SERIALIZER.header("content_type", content_type, 'str')
-    header_parameters['Accept'] = _SERIALIZER.header("accept", accept, 'str')
+        header_parameters["Content-Type"] = _SERIALIZER.header("content_type", content_type, "str")
+    header_parameters["Accept"] = _SERIALIZER.header("accept", accept, "str")
 
     return HttpRequest(
-        method="POST",
-        url=url,
-        params=query_parameters,
-        headers=header_parameters,
-        json=json,
-        content=content,
-        **kwargs
+        method="POST", url=url, params=query_parameters, headers=header_parameters, json=json, content=content, **kwargs
     )
+
 
 class ValidateOperations(object):
     """ValidateOperations operations.
@@ -89,9 +88,7 @@ class ValidateOperations(object):
 
     @distributed_trace
     def secret(
-        self,
-        validate_secret_input: "_models.ValidateSecretInput",
-        **kwargs: Any
+        self, validate_secret_input: "_models.ValidateSecretInput", **kwargs: Any
     ) -> "_models.ValidateSecretOutput":
         """Validate a Secret in the profile.
 
@@ -102,21 +99,19 @@ class ValidateOperations(object):
         :rtype: ~azure.mgmt.cdn.models.ValidateSecretOutput
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ValidateSecretOutput"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
+        cls = kwargs.pop("cls", None)  # type: ClsType["_models.ValidateSecretOutput"]
+        error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop("error_map", {}))
 
-        content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
+        content_type = kwargs.pop("content_type", "application/json")  # type: Optional[str]
 
-        _json = self._serialize.body(validate_secret_input, 'ValidateSecretInput')
+        _json = self._serialize.body(validate_secret_input, "ValidateSecretInput")
 
         request = build_secret_request(
             subscription_id=self._config.subscription_id,
             content_type=content_type,
             json=_json,
-            template_url=self.secret.metadata['url'],
+            template_url=self.secret.metadata["url"],
         )
         request = _convert_request(request)
         request.url = self._client.format_url(request.url)
@@ -129,12 +124,11 @@ class ValidateOperations(object):
             error = self._deserialize.failsafe_deserialize(_models.AfdErrorResponse, pipeline_response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize('ValidateSecretOutput', pipeline_response)
+        deserialized = self._deserialize("ValidateSecretOutput", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
 
-    secret.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Cdn/validateSecret'}  # type: ignore
-
+    secret.metadata = {"url": "/subscriptions/{subscriptionId}/providers/Microsoft.Cdn/validateSecret"}  # type: ignore

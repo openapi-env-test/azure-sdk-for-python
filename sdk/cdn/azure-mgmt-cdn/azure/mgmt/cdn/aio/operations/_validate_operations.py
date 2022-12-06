@@ -9,7 +9,13 @@ import functools
 from typing import Any, Callable, Dict, Generic, Optional, TypeVar
 import warnings
 
-from azure.core.exceptions import ClientAuthenticationError, HttpResponseError, ResourceExistsError, ResourceNotFoundError, map_error
+from azure.core.exceptions import (
+    ClientAuthenticationError,
+    HttpResponseError,
+    ResourceExistsError,
+    ResourceNotFoundError,
+    map_error,
+)
 from azure.core.pipeline import PipelineResponse
 from azure.core.pipeline.transport import AsyncHttpResponse
 from azure.core.rest import HttpRequest
@@ -19,8 +25,10 @@ from azure.mgmt.core.exceptions import ARMErrorFormat
 from ... import models as _models
 from ..._vendor import _convert_request
 from ...operations._validate_operations import build_secret_request
-T = TypeVar('T')
+
+T = TypeVar("T")
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
+
 
 class ValidateOperations:
     """ValidateOperations async operations.
@@ -46,9 +54,7 @@ class ValidateOperations:
 
     @distributed_trace_async
     async def secret(
-        self,
-        validate_secret_input: "_models.ValidateSecretInput",
-        **kwargs: Any
+        self, validate_secret_input: "_models.ValidateSecretInput", **kwargs: Any
     ) -> "_models.ValidateSecretOutput":
         """Validate a Secret in the profile.
 
@@ -59,21 +65,19 @@ class ValidateOperations:
         :rtype: ~azure.mgmt.cdn.models.ValidateSecretOutput
         :raises: ~azure.core.exceptions.HttpResponseError
         """
-        cls = kwargs.pop('cls', None)  # type: ClsType["_models.ValidateSecretOutput"]
-        error_map = {
-            401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError
-        }
-        error_map.update(kwargs.pop('error_map', {}))
+        cls = kwargs.pop("cls", None)  # type: ClsType["_models.ValidateSecretOutput"]
+        error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop("error_map", {}))
 
-        content_type = kwargs.pop('content_type', "application/json")  # type: Optional[str]
+        content_type = kwargs.pop("content_type", "application/json")  # type: Optional[str]
 
-        _json = self._serialize.body(validate_secret_input, 'ValidateSecretInput')
+        _json = self._serialize.body(validate_secret_input, "ValidateSecretInput")
 
         request = build_secret_request(
             subscription_id=self._config.subscription_id,
             content_type=content_type,
             json=_json,
-            template_url=self.secret.metadata['url'],
+            template_url=self.secret.metadata["url"],
         )
         request = _convert_request(request)
         request.url = self._client.format_url(request.url)
@@ -86,12 +90,11 @@ class ValidateOperations:
             error = self._deserialize.failsafe_deserialize(_models.AfdErrorResponse, pipeline_response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize('ValidateSecretOutput', pipeline_response)
+        deserialized = self._deserialize("ValidateSecretOutput", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
 
-    secret.metadata = {'url': '/subscriptions/{subscriptionId}/providers/Microsoft.Cdn/validateSecret'}  # type: ignore
-
+    secret.metadata = {"url": "/subscriptions/{subscriptionId}/providers/Microsoft.Cdn/validateSecret"}  # type: ignore
