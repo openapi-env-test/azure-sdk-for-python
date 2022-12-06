@@ -37,31 +37,9 @@ _SERIALIZER = Serializer()
 _SERIALIZER.client_side_validation = False
 
 
-def build_list_by_subscription_request(subscription_id: str, **kwargs: Any) -> HttpRequest:
-    _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
-    _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
-
-    api_version = kwargs.pop("api_version", _params.pop("api-version", "2022-10-01-preview"))  # type: str
-    accept = _headers.pop("Accept", "application/json")
-
-    # Construct URL
-    _url = kwargs.pop("template_url", "/subscriptions/{subscriptionId}/providers/Microsoft.HealthcareApis/workspaces")
-    path_format_arguments = {
-        "subscriptionId": _SERIALIZER.url("subscription_id", subscription_id, "str"),
-    }
-
-    _url = _format_url_section(_url, **path_format_arguments)
-
-    # Construct parameters
-    _params["api-version"] = _SERIALIZER.query("api_version", api_version, "str")
-
-    # Construct headers
-    _headers["Accept"] = _SERIALIZER.header("accept", accept, "str")
-
-    return HttpRequest(method="GET", url=_url, params=_params, headers=_headers, **kwargs)
-
-
-def build_list_by_resource_group_request(resource_group_name: str, subscription_id: str, **kwargs: Any) -> HttpRequest:
+def build_list_by_workspace_request(
+    resource_group_name: str, workspace_name: str, subscription_id: str, **kwargs: Any
+) -> HttpRequest:
     _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
     _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
@@ -71,13 +49,14 @@ def build_list_by_resource_group_request(resource_group_name: str, subscription_
     # Construct URL
     _url = kwargs.pop(
         "template_url",
-        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces",
+        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/analyticsconnectors",
     )  # pylint: disable=line-too-long
     path_format_arguments = {
-        "subscriptionId": _SERIALIZER.url("subscription_id", subscription_id, "str"),
         "resourceGroupName": _SERIALIZER.url(
             "resource_group_name", resource_group_name, "str", max_length=90, min_length=1, pattern=r"^[-\w\._\(\)]+$"
         ),
+        "subscriptionId": _SERIALIZER.url("subscription_id", subscription_id, "str"),
+        "workspaceName": _SERIALIZER.url("workspace_name", workspace_name, "str", max_length=24, min_length=3),
     }
 
     _url = _format_url_section(_url, **path_format_arguments)
@@ -92,7 +71,7 @@ def build_list_by_resource_group_request(resource_group_name: str, subscription_
 
 
 def build_get_request(
-    resource_group_name: str, workspace_name: str, subscription_id: str, **kwargs: Any
+    resource_group_name: str, workspace_name: str, analytics_connector_name: str, subscription_id: str, **kwargs: Any
 ) -> HttpRequest:
     _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
     _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
@@ -103,7 +82,7 @@ def build_get_request(
     # Construct URL
     _url = kwargs.pop(
         "template_url",
-        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}",
+        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/analyticsconnectors/{analyticsConnectorName}",
     )  # pylint: disable=line-too-long
     path_format_arguments = {
         "resourceGroupName": _SERIALIZER.url(
@@ -111,6 +90,14 @@ def build_get_request(
         ),
         "subscriptionId": _SERIALIZER.url("subscription_id", subscription_id, "str"),
         "workspaceName": _SERIALIZER.url("workspace_name", workspace_name, "str", max_length=24, min_length=3),
+        "analyticsConnectorName": _SERIALIZER.url(
+            "analytics_connector_name",
+            analytics_connector_name,
+            "str",
+            max_length=24,
+            min_length=3,
+            pattern=r"^[a-z0-9][a-z0-9\-]*[a-z0-9]$",
+        ),
     }
 
     _url = _format_url_section(_url, **path_format_arguments)
@@ -125,7 +112,7 @@ def build_get_request(
 
 
 def build_create_or_update_request(
-    resource_group_name: str, workspace_name: str, subscription_id: str, **kwargs: Any
+    resource_group_name: str, workspace_name: str, analytics_connector_name: str, subscription_id: str, **kwargs: Any
 ) -> HttpRequest:
     _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
     _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
@@ -137,7 +124,7 @@ def build_create_or_update_request(
     # Construct URL
     _url = kwargs.pop(
         "template_url",
-        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}",
+        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/analyticsconnectors/{analyticsConnectorName}",
     )  # pylint: disable=line-too-long
     path_format_arguments = {
         "resourceGroupName": _SERIALIZER.url(
@@ -145,6 +132,14 @@ def build_create_or_update_request(
         ),
         "subscriptionId": _SERIALIZER.url("subscription_id", subscription_id, "str"),
         "workspaceName": _SERIALIZER.url("workspace_name", workspace_name, "str", max_length=24, min_length=3),
+        "analyticsConnectorName": _SERIALIZER.url(
+            "analytics_connector_name",
+            analytics_connector_name,
+            "str",
+            max_length=24,
+            min_length=3,
+            pattern=r"^[a-z0-9][a-z0-9\-]*[a-z0-9]$",
+        ),
     }
 
     _url = _format_url_section(_url, **path_format_arguments)
@@ -161,7 +156,7 @@ def build_create_or_update_request(
 
 
 def build_update_request(
-    resource_group_name: str, workspace_name: str, subscription_id: str, **kwargs: Any
+    resource_group_name: str, workspace_name: str, analytics_connector_name: str, subscription_id: str, **kwargs: Any
 ) -> HttpRequest:
     _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
     _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
@@ -173,7 +168,7 @@ def build_update_request(
     # Construct URL
     _url = kwargs.pop(
         "template_url",
-        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}",
+        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/analyticsconnectors/{analyticsConnectorName}",
     )  # pylint: disable=line-too-long
     path_format_arguments = {
         "resourceGroupName": _SERIALIZER.url(
@@ -181,6 +176,14 @@ def build_update_request(
         ),
         "subscriptionId": _SERIALIZER.url("subscription_id", subscription_id, "str"),
         "workspaceName": _SERIALIZER.url("workspace_name", workspace_name, "str", max_length=24, min_length=3),
+        "analyticsConnectorName": _SERIALIZER.url(
+            "analytics_connector_name",
+            analytics_connector_name,
+            "str",
+            max_length=24,
+            min_length=3,
+            pattern=r"^[a-z0-9][a-z0-9\-]*[a-z0-9]$",
+        ),
     }
 
     _url = _format_url_section(_url, **path_format_arguments)
@@ -197,7 +200,7 @@ def build_update_request(
 
 
 def build_delete_request(
-    resource_group_name: str, workspace_name: str, subscription_id: str, **kwargs: Any
+    resource_group_name: str, workspace_name: str, analytics_connector_name: str, subscription_id: str, **kwargs: Any
 ) -> HttpRequest:
     _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
     _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
@@ -208,7 +211,7 @@ def build_delete_request(
     # Construct URL
     _url = kwargs.pop(
         "template_url",
-        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}",
+        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/analyticsconnectors/{analyticsConnectorName}",
     )  # pylint: disable=line-too-long
     path_format_arguments = {
         "subscriptionId": _SERIALIZER.url("subscription_id", subscription_id, "str"),
@@ -216,6 +219,14 @@ def build_delete_request(
             "resource_group_name", resource_group_name, "str", max_length=90, min_length=1, pattern=r"^[-\w\._\(\)]+$"
         ),
         "workspaceName": _SERIALIZER.url("workspace_name", workspace_name, "str", max_length=24, min_length=3),
+        "analyticsConnectorName": _SERIALIZER.url(
+            "analytics_connector_name",
+            analytics_connector_name,
+            "str",
+            max_length=24,
+            min_length=3,
+            pattern=r"^[a-z0-9][a-z0-9\-]*[a-z0-9]$",
+        ),
     }
 
     _url = _format_url_section(_url, **path_format_arguments)
@@ -229,14 +240,14 @@ def build_delete_request(
     return HttpRequest(method="DELETE", url=_url, params=_params, headers=_headers, **kwargs)
 
 
-class WorkspacesOperations:
+class AnalyticsConnectorsOperations:
     """
     .. warning::
         **DO NOT** instantiate this class directly.
 
         Instead, you should access the following operations through
         :class:`~azure.mgmt.healthcareapis.HealthcareApisManagementClient`'s
-        :attr:`workspaces` attribute.
+        :attr:`analytics_connectors` attribute.
     """
 
     models = _models
@@ -249,148 +260,10 @@ class WorkspacesOperations:
         self._deserialize = input_args.pop(0) if input_args else kwargs.pop("deserializer")
 
     @distributed_trace
-    def list_by_subscription(self, **kwargs: Any) -> Iterable["_models.Workspace"]:
-        """Lists all the available workspaces under the specified subscription.
-
-        :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either Workspace or the result of cls(response)
-        :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.healthcareapis.models.Workspace]
-        :raises ~azure.core.exceptions.HttpResponseError:
-        """
-        _headers = kwargs.pop("headers", {}) or {}
-        _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
-
-        api_version = kwargs.pop("api_version", _params.pop("api-version", self._config.api_version))  # type: str
-        cls = kwargs.pop("cls", None)  # type: ClsType[_models.WorkspaceList]
-
-        error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
-        error_map.update(kwargs.pop("error_map", {}) or {})
-
-        def prepare_request(next_link=None):
-            if not next_link:
-
-                request = build_list_by_subscription_request(
-                    subscription_id=self._config.subscription_id,
-                    api_version=api_version,
-                    template_url=self.list_by_subscription.metadata["url"],
-                    headers=_headers,
-                    params=_params,
-                )
-                request = _convert_request(request)
-                request.url = self._client.format_url(request.url)  # type: ignore
-
-            else:
-                # make call to next link with the client's api-version
-                _parsed_next_link = urlparse(next_link)
-                _next_request_params = case_insensitive_dict(parse_qs(_parsed_next_link.query))
-                _next_request_params["api-version"] = self._config.api_version
-                request = HttpRequest("GET", urljoin(next_link, _parsed_next_link.path), params=_next_request_params)
-                request = _convert_request(request)
-                request.url = self._client.format_url(request.url)  # type: ignore
-                request.method = "GET"
-            return request
-
-        def extract_data(pipeline_response):
-            deserialized = self._deserialize("WorkspaceList", pipeline_response)
-            list_of_elem = deserialized.value
-            if cls:
-                list_of_elem = cls(list_of_elem)
-            return deserialized.next_link or None, iter(list_of_elem)
-
-        def get_next(next_link=None):
-            request = prepare_request(next_link)
-
-            pipeline_response = self._client._pipeline.run(  # type: ignore # pylint: disable=protected-access
-                request, stream=False, **kwargs
-            )
-            response = pipeline_response.http_response
-
-            if response.status_code not in [200]:
-                map_error(status_code=response.status_code, response=response, error_map=error_map)
-                error = self._deserialize.failsafe_deserialize(_models.ErrorDetails, pipeline_response)
-                raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
-
-            return pipeline_response
-
-        return ItemPaged(get_next, extract_data)
-
-    list_by_subscription.metadata = {"url": "/subscriptions/{subscriptionId}/providers/Microsoft.HealthcareApis/workspaces"}  # type: ignore
-
-    @distributed_trace
-    def list_by_resource_group(self, resource_group_name: str, **kwargs: Any) -> Iterable["_models.Workspace"]:
-        """Lists all the available workspaces under the specified resource group.
-
-        :param resource_group_name: The name of the resource group that contains the service instance.
-         Required.
-        :type resource_group_name: str
-        :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either Workspace or the result of cls(response)
-        :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.healthcareapis.models.Workspace]
-        :raises ~azure.core.exceptions.HttpResponseError:
-        """
-        _headers = kwargs.pop("headers", {}) or {}
-        _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
-
-        api_version = kwargs.pop("api_version", _params.pop("api-version", self._config.api_version))  # type: str
-        cls = kwargs.pop("cls", None)  # type: ClsType[_models.WorkspaceList]
-
-        error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
-        error_map.update(kwargs.pop("error_map", {}) or {})
-
-        def prepare_request(next_link=None):
-            if not next_link:
-
-                request = build_list_by_resource_group_request(
-                    resource_group_name=resource_group_name,
-                    subscription_id=self._config.subscription_id,
-                    api_version=api_version,
-                    template_url=self.list_by_resource_group.metadata["url"],
-                    headers=_headers,
-                    params=_params,
-                )
-                request = _convert_request(request)
-                request.url = self._client.format_url(request.url)  # type: ignore
-
-            else:
-                # make call to next link with the client's api-version
-                _parsed_next_link = urlparse(next_link)
-                _next_request_params = case_insensitive_dict(parse_qs(_parsed_next_link.query))
-                _next_request_params["api-version"] = self._config.api_version
-                request = HttpRequest("GET", urljoin(next_link, _parsed_next_link.path), params=_next_request_params)
-                request = _convert_request(request)
-                request.url = self._client.format_url(request.url)  # type: ignore
-                request.method = "GET"
-            return request
-
-        def extract_data(pipeline_response):
-            deserialized = self._deserialize("WorkspaceList", pipeline_response)
-            list_of_elem = deserialized.value
-            if cls:
-                list_of_elem = cls(list_of_elem)
-            return deserialized.next_link or None, iter(list_of_elem)
-
-        def get_next(next_link=None):
-            request = prepare_request(next_link)
-
-            pipeline_response = self._client._pipeline.run(  # type: ignore # pylint: disable=protected-access
-                request, stream=False, **kwargs
-            )
-            response = pipeline_response.http_response
-
-            if response.status_code not in [200]:
-                map_error(status_code=response.status_code, response=response, error_map=error_map)
-                error = self._deserialize.failsafe_deserialize(_models.ErrorDetails, pipeline_response)
-                raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
-
-            return pipeline_response
-
-        return ItemPaged(get_next, extract_data)
-
-    list_by_resource_group.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces"}  # type: ignore
-
-    @distributed_trace
-    def get(self, resource_group_name: str, workspace_name: str, **kwargs: Any) -> _models.Workspace:
-        """Gets the properties of the specified workspace.
+    def list_by_workspace(
+        self, resource_group_name: str, workspace_name: str, **kwargs: Any
+    ) -> Iterable["_models.AnalyticsConnector"]:
+        """Lists all Analytics Connectors for the given workspace.
 
         :param resource_group_name: The name of the resource group that contains the service instance.
          Required.
@@ -398,8 +271,87 @@ class WorkspacesOperations:
         :param workspace_name: The name of workspace resource. Required.
         :type workspace_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: Workspace or the result of cls(response)
-        :rtype: ~azure.mgmt.healthcareapis.models.Workspace
+        :return: An iterator like instance of either AnalyticsConnector or the result of cls(response)
+        :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.healthcareapis.models.AnalyticsConnector]
+        :raises ~azure.core.exceptions.HttpResponseError:
+        """
+        _headers = kwargs.pop("headers", {}) or {}
+        _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
+
+        api_version = kwargs.pop("api_version", _params.pop("api-version", self._config.api_version))  # type: str
+        cls = kwargs.pop("cls", None)  # type: ClsType[_models.AnalyticsConnectorCollection]
+
+        error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
+        error_map.update(kwargs.pop("error_map", {}) or {})
+
+        def prepare_request(next_link=None):
+            if not next_link:
+
+                request = build_list_by_workspace_request(
+                    resource_group_name=resource_group_name,
+                    workspace_name=workspace_name,
+                    subscription_id=self._config.subscription_id,
+                    api_version=api_version,
+                    template_url=self.list_by_workspace.metadata["url"],
+                    headers=_headers,
+                    params=_params,
+                )
+                request = _convert_request(request)
+                request.url = self._client.format_url(request.url)  # type: ignore
+
+            else:
+                # make call to next link with the client's api-version
+                _parsed_next_link = urlparse(next_link)
+                _next_request_params = case_insensitive_dict(parse_qs(_parsed_next_link.query))
+                _next_request_params["api-version"] = self._config.api_version
+                request = HttpRequest("GET", urljoin(next_link, _parsed_next_link.path), params=_next_request_params)
+                request = _convert_request(request)
+                request.url = self._client.format_url(request.url)  # type: ignore
+                request.method = "GET"
+            return request
+
+        def extract_data(pipeline_response):
+            deserialized = self._deserialize("AnalyticsConnectorCollection", pipeline_response)
+            list_of_elem = deserialized.value
+            if cls:
+                list_of_elem = cls(list_of_elem)
+            return deserialized.next_link or None, iter(list_of_elem)
+
+        def get_next(next_link=None):
+            request = prepare_request(next_link)
+
+            pipeline_response = self._client._pipeline.run(  # type: ignore # pylint: disable=protected-access
+                request, stream=False, **kwargs
+            )
+            response = pipeline_response.http_response
+
+            if response.status_code not in [200]:
+                map_error(status_code=response.status_code, response=response, error_map=error_map)
+                error = self._deserialize.failsafe_deserialize(_models.ErrorDetails, pipeline_response)
+                raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
+
+            return pipeline_response
+
+        return ItemPaged(get_next, extract_data)
+
+    list_by_workspace.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/analyticsconnectors"}  # type: ignore
+
+    @distributed_trace
+    def get(
+        self, resource_group_name: str, workspace_name: str, analytics_connector_name: str, **kwargs: Any
+    ) -> _models.AnalyticsConnector:
+        """Gets the properties of the specified Analytics Connector.
+
+        :param resource_group_name: The name of the resource group that contains the service instance.
+         Required.
+        :type resource_group_name: str
+        :param workspace_name: The name of workspace resource. Required.
+        :type workspace_name: str
+        :param analytics_connector_name: The name of Analytics Connector resource. Required.
+        :type analytics_connector_name: str
+        :keyword callable cls: A custom type or function that will be passed the direct response
+        :return: AnalyticsConnector or the result of cls(response)
+        :rtype: ~azure.mgmt.healthcareapis.models.AnalyticsConnector
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
@@ -409,11 +361,12 @@ class WorkspacesOperations:
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
         api_version = kwargs.pop("api_version", _params.pop("api-version", self._config.api_version))  # type: str
-        cls = kwargs.pop("cls", None)  # type: ClsType[_models.Workspace]
+        cls = kwargs.pop("cls", None)  # type: ClsType[_models.AnalyticsConnector]
 
         request = build_get_request(
             resource_group_name=resource_group_name,
             workspace_name=workspace_name,
+            analytics_connector_name=analytics_connector_name,
             subscription_id=self._config.subscription_id,
             api_version=api_version,
             template_url=self.get.metadata["url"],
@@ -434,18 +387,23 @@ class WorkspacesOperations:
             error = self._deserialize.failsafe_deserialize(_models.ErrorDetails, pipeline_response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize("Workspace", pipeline_response)
+        deserialized = self._deserialize("AnalyticsConnector", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
 
-    get.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}"}  # type: ignore
+    get.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/analyticsconnectors/{analyticsConnectorName}"}  # type: ignore
 
     def _create_or_update_initial(
-        self, resource_group_name: str, workspace_name: str, workspace: Union[_models.Workspace, IO], **kwargs: Any
-    ) -> _models.Workspace:
+        self,
+        resource_group_name: str,
+        workspace_name: str,
+        analytics_connector_name: str,
+        analytics_connector: Union[_models.AnalyticsConnector, IO],
+        **kwargs: Any
+    ) -> _models.AnalyticsConnector:
         error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop("error_map", {}) or {})
 
@@ -454,19 +412,20 @@ class WorkspacesOperations:
 
         api_version = kwargs.pop("api_version", _params.pop("api-version", self._config.api_version))  # type: str
         content_type = kwargs.pop("content_type", _headers.pop("Content-Type", None))  # type: Optional[str]
-        cls = kwargs.pop("cls", None)  # type: ClsType[_models.Workspace]
+        cls = kwargs.pop("cls", None)  # type: ClsType[_models.AnalyticsConnector]
 
         content_type = content_type or "application/json"
         _json = None
         _content = None
-        if isinstance(workspace, (IO, bytes)):
-            _content = workspace
+        if isinstance(analytics_connector, (IO, bytes)):
+            _content = analytics_connector
         else:
-            _json = self._serialize.body(workspace, "Workspace")
+            _json = self._serialize.body(analytics_connector, "AnalyticsConnector")
 
         request = build_create_or_update_request(
             resource_group_name=resource_group_name,
             workspace_name=workspace_name,
+            analytics_connector_name=analytics_connector_name,
             subscription_id=self._config.subscription_id,
             api_version=api_version,
             content_type=content_type,
@@ -485,46 +444,47 @@ class WorkspacesOperations:
 
         response = pipeline_response.http_response
 
-        if response.status_code not in [200, 201, 202]:
+        if response.status_code not in [200, 201]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
             error = self._deserialize.failsafe_deserialize(_models.ErrorDetails, pipeline_response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         if response.status_code == 200:
-            deserialized = self._deserialize("Workspace", pipeline_response)
+            deserialized = self._deserialize("AnalyticsConnector", pipeline_response)
 
         if response.status_code == 201:
-            deserialized = self._deserialize("Workspace", pipeline_response)
-
-        if response.status_code == 202:
-            deserialized = self._deserialize("Workspace", pipeline_response)
+            deserialized = self._deserialize("AnalyticsConnector", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
 
-    _create_or_update_initial.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}"}  # type: ignore
+    _create_or_update_initial.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/analyticsconnectors/{analyticsConnectorName}"}  # type: ignore
 
     @overload
     def begin_create_or_update(
         self,
         resource_group_name: str,
         workspace_name: str,
-        workspace: _models.Workspace,
+        analytics_connector_name: str,
+        analytics_connector: _models.AnalyticsConnector,
         *,
         content_type: str = "application/json",
         **kwargs: Any
-    ) -> LROPoller[_models.Workspace]:
-        """Creates or updates a workspace resource with the specified parameters.
+    ) -> LROPoller[_models.AnalyticsConnector]:
+        """Creates or updates a Analytics Connector resource with the specified parameters.
 
         :param resource_group_name: The name of the resource group that contains the service instance.
          Required.
         :type resource_group_name: str
         :param workspace_name: The name of workspace resource. Required.
         :type workspace_name: str
-        :param workspace: The parameters for creating or updating a healthcare workspace. Required.
-        :type workspace: ~azure.mgmt.healthcareapis.models.Workspace
+        :param analytics_connector_name: The name of Analytics Connector resource. Required.
+        :type analytics_connector_name: str
+        :param analytics_connector: The parameters for creating or updating a Analytics Connector
+         resource. Required.
+        :type analytics_connector: ~azure.mgmt.healthcareapis.models.AnalyticsConnector
         :keyword content_type: Body Parameter content-type. Content type parameter for JSON body.
          Default value is "application/json".
         :paramtype content_type: str
@@ -536,8 +496,9 @@ class WorkspacesOperations:
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no
          Retry-After header is present.
-        :return: An instance of LROPoller that returns either Workspace or the result of cls(response)
-        :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.healthcareapis.models.Workspace]
+        :return: An instance of LROPoller that returns either AnalyticsConnector or the result of
+         cls(response)
+        :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.healthcareapis.models.AnalyticsConnector]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
 
@@ -546,20 +507,24 @@ class WorkspacesOperations:
         self,
         resource_group_name: str,
         workspace_name: str,
-        workspace: IO,
+        analytics_connector_name: str,
+        analytics_connector: IO,
         *,
         content_type: str = "application/json",
         **kwargs: Any
-    ) -> LROPoller[_models.Workspace]:
-        """Creates or updates a workspace resource with the specified parameters.
+    ) -> LROPoller[_models.AnalyticsConnector]:
+        """Creates or updates a Analytics Connector resource with the specified parameters.
 
         :param resource_group_name: The name of the resource group that contains the service instance.
          Required.
         :type resource_group_name: str
         :param workspace_name: The name of workspace resource. Required.
         :type workspace_name: str
-        :param workspace: The parameters for creating or updating a healthcare workspace. Required.
-        :type workspace: IO
+        :param analytics_connector_name: The name of Analytics Connector resource. Required.
+        :type analytics_connector_name: str
+        :param analytics_connector: The parameters for creating or updating a Analytics Connector
+         resource. Required.
+        :type analytics_connector: IO
         :keyword content_type: Body Parameter content-type. Content type parameter for binary body.
          Default value is "application/json".
         :paramtype content_type: str
@@ -571,25 +536,33 @@ class WorkspacesOperations:
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no
          Retry-After header is present.
-        :return: An instance of LROPoller that returns either Workspace or the result of cls(response)
-        :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.healthcareapis.models.Workspace]
+        :return: An instance of LROPoller that returns either AnalyticsConnector or the result of
+         cls(response)
+        :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.healthcareapis.models.AnalyticsConnector]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
 
     @distributed_trace
     def begin_create_or_update(
-        self, resource_group_name: str, workspace_name: str, workspace: Union[_models.Workspace, IO], **kwargs: Any
-    ) -> LROPoller[_models.Workspace]:
-        """Creates or updates a workspace resource with the specified parameters.
+        self,
+        resource_group_name: str,
+        workspace_name: str,
+        analytics_connector_name: str,
+        analytics_connector: Union[_models.AnalyticsConnector, IO],
+        **kwargs: Any
+    ) -> LROPoller[_models.AnalyticsConnector]:
+        """Creates or updates a Analytics Connector resource with the specified parameters.
 
         :param resource_group_name: The name of the resource group that contains the service instance.
          Required.
         :type resource_group_name: str
         :param workspace_name: The name of workspace resource. Required.
         :type workspace_name: str
-        :param workspace: The parameters for creating or updating a healthcare workspace. Is either a
-         model type or a IO type. Required.
-        :type workspace: ~azure.mgmt.healthcareapis.models.Workspace or IO
+        :param analytics_connector_name: The name of Analytics Connector resource. Required.
+        :type analytics_connector_name: str
+        :param analytics_connector: The parameters for creating or updating a Analytics Connector
+         resource. Is either a model type or a IO type. Required.
+        :type analytics_connector: ~azure.mgmt.healthcareapis.models.AnalyticsConnector or IO
         :keyword content_type: Body Parameter content-type. Known values are: 'application/json'.
          Default value is None.
         :paramtype content_type: str
@@ -601,8 +574,9 @@ class WorkspacesOperations:
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no
          Retry-After header is present.
-        :return: An instance of LROPoller that returns either Workspace or the result of cls(response)
-        :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.healthcareapis.models.Workspace]
+        :return: An instance of LROPoller that returns either AnalyticsConnector or the result of
+         cls(response)
+        :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.healthcareapis.models.AnalyticsConnector]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
@@ -610,7 +584,7 @@ class WorkspacesOperations:
 
         api_version = kwargs.pop("api_version", _params.pop("api-version", self._config.api_version))  # type: str
         content_type = kwargs.pop("content_type", _headers.pop("Content-Type", None))  # type: Optional[str]
-        cls = kwargs.pop("cls", None)  # type: ClsType[_models.Workspace]
+        cls = kwargs.pop("cls", None)  # type: ClsType[_models.AnalyticsConnector]
         polling = kwargs.pop("polling", True)  # type: Union[bool, PollingMethod]
         lro_delay = kwargs.pop("polling_interval", self._config.polling_interval)
         cont_token = kwargs.pop("continuation_token", None)  # type: Optional[str]
@@ -618,7 +592,8 @@ class WorkspacesOperations:
             raw_result = self._create_or_update_initial(  # type: ignore
                 resource_group_name=resource_group_name,
                 workspace_name=workspace_name,
-                workspace=workspace,
+                analytics_connector_name=analytics_connector_name,
+                analytics_connector=analytics_connector,
                 api_version=api_version,
                 content_type=content_type,
                 cls=lambda x, y, z: x,
@@ -629,13 +604,15 @@ class WorkspacesOperations:
         kwargs.pop("error_map", None)
 
         def get_long_running_output(pipeline_response):
-            deserialized = self._deserialize("Workspace", pipeline_response)
+            deserialized = self._deserialize("AnalyticsConnector", pipeline_response)
             if cls:
                 return cls(pipeline_response, deserialized, {})
             return deserialized
 
         if polling is True:
-            polling_method = cast(PollingMethod, ARMPolling(lro_delay, **kwargs))  # type: PollingMethod
+            polling_method = cast(
+                PollingMethod, ARMPolling(lro_delay, lro_options={"final-state-via": "azure-async-operation"}, **kwargs)
+            )  # type: PollingMethod
         elif polling is False:
             polling_method = cast(PollingMethod, NoPolling())
         else:
@@ -649,15 +626,16 @@ class WorkspacesOperations:
             )
         return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
 
-    begin_create_or_update.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}"}  # type: ignore
+    begin_create_or_update.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/analyticsconnectors/{analyticsConnectorName}"}  # type: ignore
 
     def _update_initial(
         self,
         resource_group_name: str,
         workspace_name: str,
-        workspace_patch_resource: Union[_models.WorkspacePatchResource, IO],
+        analytics_connector_name: str,
+        analytics_connector_patch_resource: Union[_models.AnalyticsConnectorPatchResource, IO],
         **kwargs: Any
-    ) -> _models.Workspace:
+    ) -> _models.AnalyticsConnector:
         error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop("error_map", {}) or {})
 
@@ -666,19 +644,20 @@ class WorkspacesOperations:
 
         api_version = kwargs.pop("api_version", _params.pop("api-version", self._config.api_version))  # type: str
         content_type = kwargs.pop("content_type", _headers.pop("Content-Type", None))  # type: Optional[str]
-        cls = kwargs.pop("cls", None)  # type: ClsType[_models.Workspace]
+        cls = kwargs.pop("cls", None)  # type: ClsType[_models.AnalyticsConnector]
 
         content_type = content_type or "application/json"
         _json = None
         _content = None
-        if isinstance(workspace_patch_resource, (IO, bytes)):
-            _content = workspace_patch_resource
+        if isinstance(analytics_connector_patch_resource, (IO, bytes)):
+            _content = analytics_connector_patch_resource
         else:
-            _json = self._serialize.body(workspace_patch_resource, "WorkspacePatchResource")
+            _json = self._serialize.body(analytics_connector_patch_resource, "AnalyticsConnectorPatchResource")
 
         request = build_update_request(
             resource_group_name=resource_group_name,
             workspace_name=workspace_name,
+            analytics_connector_name=analytics_connector_name,
             subscription_id=self._config.subscription_id,
             api_version=api_version,
             content_type=content_type,
@@ -703,37 +682,42 @@ class WorkspacesOperations:
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
         if response.status_code == 200:
-            deserialized = self._deserialize("Workspace", pipeline_response)
+            deserialized = self._deserialize("AnalyticsConnector", pipeline_response)
 
         if response.status_code == 202:
-            deserialized = self._deserialize("Workspace", pipeline_response)
+            deserialized = self._deserialize("AnalyticsConnector", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
 
-    _update_initial.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}"}  # type: ignore
+    _update_initial.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/analyticsconnectors/{analyticsConnectorName}"}  # type: ignore
 
     @overload
     def begin_update(
         self,
         resource_group_name: str,
         workspace_name: str,
-        workspace_patch_resource: _models.WorkspacePatchResource,
+        analytics_connector_name: str,
+        analytics_connector_patch_resource: _models.AnalyticsConnectorPatchResource,
         *,
         content_type: str = "application/json",
         **kwargs: Any
-    ) -> LROPoller[_models.Workspace]:
-        """Patch workspace details.
+    ) -> LROPoller[_models.AnalyticsConnector]:
+        """Patch Analytics Connector Service details.
 
         :param resource_group_name: The name of the resource group that contains the service instance.
          Required.
         :type resource_group_name: str
         :param workspace_name: The name of workspace resource. Required.
         :type workspace_name: str
-        :param workspace_patch_resource: The parameters for updating a specified workspace. Required.
-        :type workspace_patch_resource: ~azure.mgmt.healthcareapis.models.WorkspacePatchResource
+        :param analytics_connector_name: The name of Analytics Connector resource. Required.
+        :type analytics_connector_name: str
+        :param analytics_connector_patch_resource: The parameters for updating a Analytics Connector.
+         Required.
+        :type analytics_connector_patch_resource:
+         ~azure.mgmt.healthcareapis.models.AnalyticsConnectorPatchResource
         :keyword content_type: Body Parameter content-type. Content type parameter for JSON body.
          Default value is "application/json".
         :paramtype content_type: str
@@ -745,8 +729,9 @@ class WorkspacesOperations:
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no
          Retry-After header is present.
-        :return: An instance of LROPoller that returns either Workspace or the result of cls(response)
-        :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.healthcareapis.models.Workspace]
+        :return: An instance of LROPoller that returns either AnalyticsConnector or the result of
+         cls(response)
+        :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.healthcareapis.models.AnalyticsConnector]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
 
@@ -755,20 +740,24 @@ class WorkspacesOperations:
         self,
         resource_group_name: str,
         workspace_name: str,
-        workspace_patch_resource: IO,
+        analytics_connector_name: str,
+        analytics_connector_patch_resource: IO,
         *,
         content_type: str = "application/json",
         **kwargs: Any
-    ) -> LROPoller[_models.Workspace]:
-        """Patch workspace details.
+    ) -> LROPoller[_models.AnalyticsConnector]:
+        """Patch Analytics Connector Service details.
 
         :param resource_group_name: The name of the resource group that contains the service instance.
          Required.
         :type resource_group_name: str
         :param workspace_name: The name of workspace resource. Required.
         :type workspace_name: str
-        :param workspace_patch_resource: The parameters for updating a specified workspace. Required.
-        :type workspace_patch_resource: IO
+        :param analytics_connector_name: The name of Analytics Connector resource. Required.
+        :type analytics_connector_name: str
+        :param analytics_connector_patch_resource: The parameters for updating a Analytics Connector.
+         Required.
+        :type analytics_connector_patch_resource: IO
         :keyword content_type: Body Parameter content-type. Content type parameter for binary body.
          Default value is "application/json".
         :paramtype content_type: str
@@ -780,8 +769,9 @@ class WorkspacesOperations:
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no
          Retry-After header is present.
-        :return: An instance of LROPoller that returns either Workspace or the result of cls(response)
-        :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.healthcareapis.models.Workspace]
+        :return: An instance of LROPoller that returns either AnalyticsConnector or the result of
+         cls(response)
+        :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.healthcareapis.models.AnalyticsConnector]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
 
@@ -790,19 +780,23 @@ class WorkspacesOperations:
         self,
         resource_group_name: str,
         workspace_name: str,
-        workspace_patch_resource: Union[_models.WorkspacePatchResource, IO],
+        analytics_connector_name: str,
+        analytics_connector_patch_resource: Union[_models.AnalyticsConnectorPatchResource, IO],
         **kwargs: Any
-    ) -> LROPoller[_models.Workspace]:
-        """Patch workspace details.
+    ) -> LROPoller[_models.AnalyticsConnector]:
+        """Patch Analytics Connector Service details.
 
         :param resource_group_name: The name of the resource group that contains the service instance.
          Required.
         :type resource_group_name: str
         :param workspace_name: The name of workspace resource. Required.
         :type workspace_name: str
-        :param workspace_patch_resource: The parameters for updating a specified workspace. Is either a
-         model type or a IO type. Required.
-        :type workspace_patch_resource: ~azure.mgmt.healthcareapis.models.WorkspacePatchResource or IO
+        :param analytics_connector_name: The name of Analytics Connector resource. Required.
+        :type analytics_connector_name: str
+        :param analytics_connector_patch_resource: The parameters for updating a Analytics Connector.
+         Is either a model type or a IO type. Required.
+        :type analytics_connector_patch_resource:
+         ~azure.mgmt.healthcareapis.models.AnalyticsConnectorPatchResource or IO
         :keyword content_type: Body Parameter content-type. Known values are: 'application/json'.
          Default value is None.
         :paramtype content_type: str
@@ -814,8 +808,9 @@ class WorkspacesOperations:
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no
          Retry-After header is present.
-        :return: An instance of LROPoller that returns either Workspace or the result of cls(response)
-        :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.healthcareapis.models.Workspace]
+        :return: An instance of LROPoller that returns either AnalyticsConnector or the result of
+         cls(response)
+        :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.healthcareapis.models.AnalyticsConnector]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
@@ -823,7 +818,7 @@ class WorkspacesOperations:
 
         api_version = kwargs.pop("api_version", _params.pop("api-version", self._config.api_version))  # type: str
         content_type = kwargs.pop("content_type", _headers.pop("Content-Type", None))  # type: Optional[str]
-        cls = kwargs.pop("cls", None)  # type: ClsType[_models.Workspace]
+        cls = kwargs.pop("cls", None)  # type: ClsType[_models.AnalyticsConnector]
         polling = kwargs.pop("polling", True)  # type: Union[bool, PollingMethod]
         lro_delay = kwargs.pop("polling_interval", self._config.polling_interval)
         cont_token = kwargs.pop("continuation_token", None)  # type: Optional[str]
@@ -831,7 +826,8 @@ class WorkspacesOperations:
             raw_result = self._update_initial(  # type: ignore
                 resource_group_name=resource_group_name,
                 workspace_name=workspace_name,
-                workspace_patch_resource=workspace_patch_resource,
+                analytics_connector_name=analytics_connector_name,
+                analytics_connector_patch_resource=analytics_connector_patch_resource,
                 api_version=api_version,
                 content_type=content_type,
                 cls=lambda x, y, z: x,
@@ -842,13 +838,15 @@ class WorkspacesOperations:
         kwargs.pop("error_map", None)
 
         def get_long_running_output(pipeline_response):
-            deserialized = self._deserialize("Workspace", pipeline_response)
+            deserialized = self._deserialize("AnalyticsConnector", pipeline_response)
             if cls:
                 return cls(pipeline_response, deserialized, {})
             return deserialized
 
         if polling is True:
-            polling_method = cast(PollingMethod, ARMPolling(lro_delay, **kwargs))  # type: PollingMethod
+            polling_method = cast(
+                PollingMethod, ARMPolling(lro_delay, lro_options={"final-state-via": "azure-async-operation"}, **kwargs)
+            )  # type: PollingMethod
         elif polling is False:
             polling_method = cast(PollingMethod, NoPolling())
         else:
@@ -862,10 +860,10 @@ class WorkspacesOperations:
             )
         return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
 
-    begin_update.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}"}  # type: ignore
+    begin_update.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/analyticsconnectors/{analyticsConnectorName}"}  # type: ignore
 
     def _delete_initial(  # pylint: disable=inconsistent-return-statements
-        self, resource_group_name: str, workspace_name: str, **kwargs: Any
+        self, resource_group_name: str, workspace_name: str, analytics_connector_name: str, **kwargs: Any
     ) -> None:
         error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop("error_map", {}) or {})
@@ -879,6 +877,7 @@ class WorkspacesOperations:
         request = build_delete_request(
             resource_group_name=resource_group_name,
             workspace_name=workspace_name,
+            analytics_connector_name=analytics_connector_name,
             subscription_id=self._config.subscription_id,
             api_version=api_version,
             template_url=self._delete_initial.metadata["url"],
@@ -902,17 +901,21 @@ class WorkspacesOperations:
         if cls:
             return cls(pipeline_response, None, {})
 
-    _delete_initial.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}"}  # type: ignore
+    _delete_initial.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/analyticsconnectors/{analyticsConnectorName}"}  # type: ignore
 
     @distributed_trace
-    def begin_delete(self, resource_group_name: str, workspace_name: str, **kwargs: Any) -> LROPoller[None]:
-        """Deletes a specified workspace.
+    def begin_delete(
+        self, resource_group_name: str, workspace_name: str, analytics_connector_name: str, **kwargs: Any
+    ) -> LROPoller[None]:
+        """Deletes a Analytics Connector.
 
         :param resource_group_name: The name of the resource group that contains the service instance.
          Required.
         :type resource_group_name: str
         :param workspace_name: The name of workspace resource. Required.
         :type workspace_name: str
+        :param analytics_connector_name: The name of Analytics Connector resource. Required.
+        :type analytics_connector_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :keyword str continuation_token: A continuation token to restart a poller from a saved state.
         :keyword polling: By default, your polling method will be ARMPolling. Pass in False for this
@@ -937,6 +940,7 @@ class WorkspacesOperations:
             raw_result = self._delete_initial(  # type: ignore
                 resource_group_name=resource_group_name,
                 workspace_name=workspace_name,
+                analytics_connector_name=analytics_connector_name,
                 api_version=api_version,
                 cls=lambda x, y, z: x,
                 headers=_headers,
@@ -950,7 +954,9 @@ class WorkspacesOperations:
                 return cls(pipeline_response, None, {})
 
         if polling is True:
-            polling_method = cast(PollingMethod, ARMPolling(lro_delay, **kwargs))  # type: PollingMethod
+            polling_method = cast(
+                PollingMethod, ARMPolling(lro_delay, lro_options={"final-state-via": "location"}, **kwargs)
+            )  # type: PollingMethod
         elif polling is False:
             polling_method = cast(PollingMethod, NoPolling())
         else:
@@ -964,4 +970,4 @@ class WorkspacesOperations:
             )
         return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
 
-    begin_delete.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}"}  # type: ignore
+    begin_delete.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/analyticsconnectors/{analyticsConnectorName}"}  # type: ignore
