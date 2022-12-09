@@ -7,6 +7,7 @@
 # Changes may cause incorrect behavior and will be lost if the code is regenerated.
 # --------------------------------------------------------------------------
 from typing import Any, Callable, Dict, Iterable, Optional, TypeVar
+from urllib.parse import parse_qs, urljoin, urlparse
 
 from azure.core.exceptions import (
     ClientAuthenticationError,
@@ -34,21 +35,28 @@ _SERIALIZER = Serializer()
 _SERIALIZER.client_side_validation = False
 
 
-def build_list_request(location_name: str, subscription_id: str, **kwargs: Any) -> HttpRequest:
+def build_list_by_server_request(
+    resource_group_name: str, server_name: str, subscription_id: str, **kwargs: Any
+) -> HttpRequest:
     _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
     _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
-    api_version = kwargs.pop("api_version", _params.pop("api-version", "2017-12-01"))  # type: str
+    api_version = kwargs.pop("api_version", _params.pop("api-version", "2022-03-08-preview"))  # type: str
     accept = _headers.pop("Accept", "application/json")
 
     # Construct URL
     _url = kwargs.pop(
         "template_url",
-        "/subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/locations/{locationName}/performanceTiers",
+        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/replicas",
     )  # pylint: disable=line-too-long
     path_format_arguments = {
         "subscriptionId": _SERIALIZER.url("subscription_id", subscription_id, "str", min_length=1),
-        "locationName": _SERIALIZER.url("location_name", location_name, "str"),
+        "resourceGroupName": _SERIALIZER.url(
+            "resource_group_name", resource_group_name, "str", max_length=90, min_length=1
+        ),
+        "serverName": _SERIALIZER.url(
+            "server_name", server_name, "str", max_length=63, min_length=3, pattern=r"^[a-z][a-z0-9]*$"
+        ),
     }
 
     _url = _format_url_section(_url, **path_format_arguments)
@@ -62,14 +70,14 @@ def build_list_request(location_name: str, subscription_id: str, **kwargs: Any) 
     return HttpRequest(method="GET", url=_url, params=_params, headers=_headers, **kwargs)
 
 
-class LocationBasedPerformanceTierOperations:
+class ReplicasOperations:
     """
     .. warning::
         **DO NOT** instantiate this class directly.
 
         Instead, you should access the following operations through
-        :class:`~azure.mgmt.rdbms.postgresql.PostgreSQLManagementClient`'s
-        :attr:`location_based_performance_tier` attribute.
+        :class:`~azure.mgmt.rdbms.postgresql_flexibleservers.PostgreSQLManagementClient`'s
+        :attr:`replicas` attribute.
     """
 
     models = _models
@@ -82,23 +90,25 @@ class LocationBasedPerformanceTierOperations:
         self._deserialize = input_args.pop(0) if input_args else kwargs.pop("deserializer")
 
     @distributed_trace
-    def list(self, location_name: str, **kwargs: Any) -> Iterable["_models.PerformanceTierProperties"]:
-        """List all the performance tiers at specified location in a given subscription.
+    def list_by_server(self, resource_group_name: str, server_name: str, **kwargs: Any) -> Iterable["_models.Server"]:
+        """List all the replicas for a given server.
 
-        :param location_name: The name of the location. Required.
-        :type location_name: str
+        :param resource_group_name: The name of the resource group. The name is case insensitive.
+         Required.
+        :type resource_group_name: str
+        :param server_name: The name of the server. Required.
+        :type server_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either PerformanceTierProperties or the result of
-         cls(response)
+        :return: An iterator like instance of either Server or the result of cls(response)
         :rtype:
-         ~azure.core.paging.ItemPaged[~azure.mgmt.rdbms.postgresql.models.PerformanceTierProperties]
+         ~azure.core.paging.ItemPaged[~azure.mgmt.rdbms.postgresql_flexibleservers.models.Server]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         _headers = kwargs.pop("headers", {}) or {}
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
         api_version = kwargs.pop("api_version", _params.pop("api-version", self._config.api_version))  # type: str
-        cls = kwargs.pop("cls", None)  # type: ClsType[_models.PerformanceTierListResult]
+        cls = kwargs.pop("cls", None)  # type: ClsType[_models.ServerListResult]
 
         error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop("error_map", {}) or {})
@@ -106,11 +116,12 @@ class LocationBasedPerformanceTierOperations:
         def prepare_request(next_link=None):
             if not next_link:
 
-                request = build_list_request(
-                    location_name=location_name,
+                request = build_list_by_server_request(
+                    resource_group_name=resource_group_name,
+                    server_name=server_name,
                     subscription_id=self._config.subscription_id,
                     api_version=api_version,
-                    template_url=self.list.metadata["url"],
+                    template_url=self.list_by_server.metadata["url"],
                     headers=_headers,
                     params=_params,
                 )
@@ -118,14 +129,18 @@ class LocationBasedPerformanceTierOperations:
                 request.url = self._client.format_url(request.url)  # type: ignore
 
             else:
-                request = HttpRequest("GET", next_link)
+                # make call to next link with the client's api-version
+                _parsed_next_link = urlparse(next_link)
+                _next_request_params = case_insensitive_dict(parse_qs(_parsed_next_link.query))
+                _next_request_params["api-version"] = self._config.api_version
+                request = HttpRequest("GET", urljoin(next_link, _parsed_next_link.path), params=_next_request_params)
                 request = _convert_request(request)
                 request.url = self._client.format_url(request.url)  # type: ignore
                 request.method = "GET"
             return request
 
         def extract_data(pipeline_response):
-            deserialized = self._deserialize("PerformanceTierListResult", pipeline_response)
+            deserialized = self._deserialize("ServerListResult", pipeline_response)
             list_of_elem = deserialized.value
             if cls:
                 list_of_elem = cls(list_of_elem)
@@ -141,10 +156,11 @@ class LocationBasedPerformanceTierOperations:
 
             if response.status_code not in [200]:
                 map_error(status_code=response.status_code, response=response, error_map=error_map)
-                raise HttpResponseError(response=response, error_format=ARMErrorFormat)
+                error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, pipeline_response)
+                raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
             return pipeline_response
 
         return ItemPaged(get_next, extract_data)
 
-    list.metadata = {"url": "/subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/locations/{locationName}/performanceTiers"}  # type: ignore
+    list_by_server.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/replicas"}  # type: ignore
