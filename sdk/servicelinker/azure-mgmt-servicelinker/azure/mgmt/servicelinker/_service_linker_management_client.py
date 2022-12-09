@@ -9,42 +9,51 @@
 from copy import deepcopy
 from typing import Any, TYPE_CHECKING
 
-from msrest import Deserializer, Serializer
-
 from azure.core.rest import HttpRequest, HttpResponse
 from azure.mgmt.core import ARMPipelineClient
 
 from . import models
 from ._configuration import ServiceLinkerManagementClientConfiguration
-from .operations import LinkerOperations, Operations
+from ._serialization import Deserializer, Serializer
+from .operations import (
+    ConfigurationNamesOperations,
+    ConnectorOperations,
+    LinkerOperations,
+    LinkersOperations,
+    Operations,
+)
 
 if TYPE_CHECKING:
     # pylint: disable=unused-import,ungrouped-imports
     from azure.core.credentials import TokenCredential
 
-class ServiceLinkerManagementClient:
+
+class ServiceLinkerManagementClient:  # pylint: disable=client-accepts-api-version-keyword
     """Microsoft.ServiceLinker provider.
 
+    :ivar connector: ConnectorOperations operations
+    :vartype connector: azure.mgmt.servicelinker.operations.ConnectorOperations
     :ivar linker: LinkerOperations operations
     :vartype linker: azure.mgmt.servicelinker.operations.LinkerOperations
+    :ivar linkers: LinkersOperations operations
+    :vartype linkers: azure.mgmt.servicelinker.operations.LinkersOperations
     :ivar operations: Operations operations
     :vartype operations: azure.mgmt.servicelinker.operations.Operations
-    :param credential: Credential needed for the client to connect to Azure.
+    :ivar configuration_names: ConfigurationNamesOperations operations
+    :vartype configuration_names: azure.mgmt.servicelinker.operations.ConfigurationNamesOperations
+    :param credential: Credential needed for the client to connect to Azure. Required.
     :type credential: ~azure.core.credentials.TokenCredential
     :param base_url: Service URL. Default value is "https://management.azure.com".
     :type base_url: str
-    :keyword api_version: Api Version. Default value is "2022-05-01". Note that overriding this
-     default value may result in unsupported behavior.
+    :keyword api_version: Api Version. Default value is "2022-11-01-preview". Note that overriding
+     this default value may result in unsupported behavior.
     :paramtype api_version: str
     :keyword int polling_interval: Default waiting time between two polls for LRO operations if no
      Retry-After header is present.
     """
 
     def __init__(
-        self,
-        credential: "TokenCredential",
-        base_url: str = "https://management.azure.com",
-        **kwargs: Any
+        self, credential: "TokenCredential", base_url: str = "https://management.azure.com", **kwargs: Any
     ) -> None:
         self._config = ServiceLinkerManagementClientConfiguration(credential=credential, **kwargs)
         self._client = ARMPipelineClient(base_url=base_url, config=self._config, **kwargs)
@@ -53,15 +62,15 @@ class ServiceLinkerManagementClient:
         self._serialize = Serializer(client_models)
         self._deserialize = Deserializer(client_models)
         self._serialize.client_side_validation = False
+        self.connector = ConnectorOperations(self._client, self._config, self._serialize, self._deserialize)
         self.linker = LinkerOperations(self._client, self._config, self._serialize, self._deserialize)
+        self.linkers = LinkersOperations(self._client, self._config, self._serialize, self._deserialize)
         self.operations = Operations(self._client, self._config, self._serialize, self._deserialize)
+        self.configuration_names = ConfigurationNamesOperations(
+            self._client, self._config, self._serialize, self._deserialize
+        )
 
-
-    def _send_request(
-        self,
-        request: HttpRequest,
-        **kwargs: Any
-    ) -> HttpResponse:
+    def _send_request(self, request: HttpRequest, **kwargs: Any) -> HttpResponse:
         """Runs the network request through the client's chained policies.
 
         >>> from azure.core.rest import HttpRequest
@@ -70,7 +79,7 @@ class ServiceLinkerManagementClient:
         >>> response = client._send_request(request)
         <HttpResponse: 200 OK>
 
-        For more information on this code flow, see https://aka.ms/azsdk/python/protocol/quickstart
+        For more information on this code flow, see https://aka.ms/azsdk/dpcodegen/python/send_request
 
         :param request: The network request you want to make. Required.
         :type request: ~azure.core.rest.HttpRequest
