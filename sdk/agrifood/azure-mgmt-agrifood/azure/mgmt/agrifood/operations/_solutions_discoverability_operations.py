@@ -37,10 +37,8 @@ _SERIALIZER.client_side_validation = False
 
 def build_list_request(
     *,
-    farm_beats_extension_ids: Optional[List[str]] = None,
-    farm_beats_extension_names: Optional[List[str]] = None,
-    extension_categories: Optional[List[str]] = None,
-    publisher_ids: Optional[List[str]] = None,
+    farm_beats_solution_ids: Optional[List[str]] = None,
+    farm_beats_solution_names: Optional[List[str]] = None,
     max_page_size: int = 50,
     **kwargs: Any
 ) -> HttpRequest:
@@ -51,26 +49,18 @@ def build_list_request(
     accept = _headers.pop("Accept", "application/json")
 
     # Construct URL
-    _url = kwargs.pop("template_url", "/providers/Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions")
+    _url = kwargs.pop("template_url", "/providers/Microsoft.AgFoodPlatform/farmBeatsSolutionDefinitions")
 
     # Construct parameters
-    if farm_beats_extension_ids is not None:
-        _params["farmBeatsExtensionIds"] = [
-            _SERIALIZER.query("farm_beats_extension_ids", q, "str") if q is not None else ""
-            for q in farm_beats_extension_ids
+    if farm_beats_solution_ids is not None:
+        _params["farmBeatsSolutionIds"] = [
+            _SERIALIZER.query("farm_beats_solution_ids", q, "str") if q is not None else ""
+            for q in farm_beats_solution_ids
         ]
-    if farm_beats_extension_names is not None:
-        _params["farmBeatsExtensionNames"] = [
-            _SERIALIZER.query("farm_beats_extension_names", q, "str") if q is not None else ""
-            for q in farm_beats_extension_names
-        ]
-    if extension_categories is not None:
-        _params["extensionCategories"] = [
-            _SERIALIZER.query("extension_categories", q, "str") if q is not None else "" for q in extension_categories
-        ]
-    if publisher_ids is not None:
-        _params["publisherIds"] = [
-            _SERIALIZER.query("publisher_ids", q, "str") if q is not None else "" for q in publisher_ids
+    if farm_beats_solution_names is not None:
+        _params["farmBeatsSolutionNames"] = [
+            _SERIALIZER.query("farm_beats_solution_names", q, "str") if q is not None else ""
+            for q in farm_beats_solution_names
         ]
     if max_page_size is not None:
         _params["$maxPageSize"] = _SERIALIZER.query("max_page_size", max_page_size, "int", maximum=1000, minimum=10)
@@ -82,7 +72,7 @@ def build_list_request(
     return HttpRequest(method="GET", url=_url, params=_params, headers=_headers, **kwargs)
 
 
-def build_get_request(farm_beats_extension_id: str, **kwargs: Any) -> HttpRequest:
+def build_get_request(farm_beats_solution_id: str, **kwargs: Any) -> HttpRequest:
     _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
     _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
@@ -91,11 +81,11 @@ def build_get_request(farm_beats_extension_id: str, **kwargs: Any) -> HttpReques
 
     # Construct URL
     _url = kwargs.pop(
-        "template_url", "/providers/Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions/{farmBeatsExtensionId}"
+        "template_url", "/providers/Microsoft.AgFoodPlatform/farmBeatsSolutionDefinitions/{farmBeatsSolutionId}"
     )  # pylint: disable=line-too-long
     path_format_arguments = {
-        "farmBeatsExtensionId": _SERIALIZER.url(
-            "farm_beats_extension_id", farm_beats_extension_id, "str", pattern=r"^[a-zA-Z]{3,50}[.][a-zA-Z]{3,100}$"
+        "farmBeatsSolutionId": _SERIALIZER.url(
+            "farm_beats_solution_id", farm_beats_solution_id, "str", pattern=r"^[a-zA-Z]{3,50}[.][a-zA-Z]{3,100}$"
         ),
     }
 
@@ -110,14 +100,14 @@ def build_get_request(farm_beats_extension_id: str, **kwargs: Any) -> HttpReques
     return HttpRequest(method="GET", url=_url, params=_params, headers=_headers, **kwargs)
 
 
-class FarmBeatsExtensionsOperations:
+class SolutionsDiscoverabilityOperations:
     """
     .. warning::
         **DO NOT** instantiate this class directly.
 
         Instead, you should access the following operations through
         :class:`~azure.mgmt.agrifood.AgriFoodMgmtClient`'s
-        :attr:`farm_beats_extensions` attribute.
+        :attr:`solutions_discoverability` attribute.
     """
 
     models = _models
@@ -132,36 +122,32 @@ class FarmBeatsExtensionsOperations:
     @distributed_trace
     def list(
         self,
-        farm_beats_extension_ids: Optional[List[str]] = None,
-        farm_beats_extension_names: Optional[List[str]] = None,
-        extension_categories: Optional[List[str]] = None,
-        publisher_ids: Optional[List[str]] = None,
+        farm_beats_solution_ids: Optional[List[str]] = None,
+        farm_beats_solution_names: Optional[List[str]] = None,
         max_page_size: int = 50,
         **kwargs: Any
-    ) -> Iterable["_models.FarmBeatsExtension"]:
-        """Get list of farmBeats extension.
+    ) -> Iterable["_models.FarmBeatsSolution"]:
+        """Get list of farmBeats solutions.
 
-        :param farm_beats_extension_ids: FarmBeatsExtension ids. Default value is None.
-        :type farm_beats_extension_ids: list[str]
-        :param farm_beats_extension_names: FarmBeats extension names. Default value is None.
-        :type farm_beats_extension_names: list[str]
-        :param extension_categories: Extension categories. Default value is None.
-        :type extension_categories: list[str]
-        :param publisher_ids: Publisher ids. Default value is None.
-        :type publisher_ids: list[str]
+        :param farm_beats_solution_ids: Ids of FarmBeats Solutions which the customer requests to
+         fetch. Default value is None.
+        :type farm_beats_solution_ids: list[str]
+        :param farm_beats_solution_names: Names of FarmBeats Solutions which the customer requests to
+         fetch. Default value is None.
+        :type farm_beats_solution_names: list[str]
         :param max_page_size: Maximum number of items needed (inclusive).
          Minimum = 10, Maximum = 1000, Default value = 50. Default value is 50.
         :type max_page_size: int
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: An iterator like instance of either FarmBeatsExtension or the result of cls(response)
-        :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.agrifood.models.FarmBeatsExtension]
+        :return: An iterator like instance of either FarmBeatsSolution or the result of cls(response)
+        :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.agrifood.models.FarmBeatsSolution]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         _headers = kwargs.pop("headers", {}) or {}
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
         api_version = kwargs.pop("api_version", _params.pop("api-version", self._config.api_version))  # type: str
-        cls = kwargs.pop("cls", None)  # type: ClsType[_models.FarmBeatsExtensionListResponse]
+        cls = kwargs.pop("cls", None)  # type: ClsType[_models.FarmBeatsSolutionListResponse]
 
         error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
         error_map.update(kwargs.pop("error_map", {}) or {})
@@ -170,10 +156,8 @@ class FarmBeatsExtensionsOperations:
             if not next_link:
 
                 request = build_list_request(
-                    farm_beats_extension_ids=farm_beats_extension_ids,
-                    farm_beats_extension_names=farm_beats_extension_names,
-                    extension_categories=extension_categories,
-                    publisher_ids=publisher_ids,
+                    farm_beats_solution_ids=farm_beats_solution_ids,
+                    farm_beats_solution_names=farm_beats_solution_names,
                     max_page_size=max_page_size,
                     api_version=api_version,
                     template_url=self.list.metadata["url"],
@@ -195,7 +179,7 @@ class FarmBeatsExtensionsOperations:
             return request
 
         def extract_data(pipeline_response):
-            deserialized = self._deserialize("FarmBeatsExtensionListResponse", pipeline_response)
+            deserialized = self._deserialize("FarmBeatsSolutionListResponse", pipeline_response)
             list_of_elem = deserialized.value
             if cls:
                 list_of_elem = cls(list_of_elem)
@@ -218,17 +202,17 @@ class FarmBeatsExtensionsOperations:
 
         return ItemPaged(get_next, extract_data)
 
-    list.metadata = {"url": "/providers/Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions"}  # type: ignore
+    list.metadata = {"url": "/providers/Microsoft.AgFoodPlatform/farmBeatsSolutionDefinitions"}  # type: ignore
 
     @distributed_trace
-    def get(self, farm_beats_extension_id: str, **kwargs: Any) -> _models.FarmBeatsExtension:
-        """Get farmBeats extension.
+    def get(self, farm_beats_solution_id: str, **kwargs: Any) -> _models.FarmBeatsSolution:
+        """Get farmBeats solution by id.
 
-        :param farm_beats_extension_id: farmBeatsExtensionId to be queried. Required.
-        :type farm_beats_extension_id: str
+        :param farm_beats_solution_id: farmBeatsSolutionId to be queried. Required.
+        :type farm_beats_solution_id: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: FarmBeatsExtension or the result of cls(response)
-        :rtype: ~azure.mgmt.agrifood.models.FarmBeatsExtension
+        :return: FarmBeatsSolution or the result of cls(response)
+        :rtype: ~azure.mgmt.agrifood.models.FarmBeatsSolution
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         error_map = {401: ClientAuthenticationError, 404: ResourceNotFoundError, 409: ResourceExistsError}
@@ -238,10 +222,10 @@ class FarmBeatsExtensionsOperations:
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
         api_version = kwargs.pop("api_version", _params.pop("api-version", self._config.api_version))  # type: str
-        cls = kwargs.pop("cls", None)  # type: ClsType[_models.FarmBeatsExtension]
+        cls = kwargs.pop("cls", None)  # type: ClsType[_models.FarmBeatsSolution]
 
         request = build_get_request(
-            farm_beats_extension_id=farm_beats_extension_id,
+            farm_beats_solution_id=farm_beats_solution_id,
             api_version=api_version,
             template_url=self.get.metadata["url"],
             headers=_headers,
@@ -261,11 +245,11 @@ class FarmBeatsExtensionsOperations:
             error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, pipeline_response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize("FarmBeatsExtension", pipeline_response)
+        deserialized = self._deserialize("FarmBeatsSolution", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
 
         return deserialized
 
-    get.metadata = {"url": "/providers/Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions/{farmBeatsExtensionId}"}  # type: ignore
+    get.metadata = {"url": "/providers/Microsoft.AgFoodPlatform/farmBeatsSolutionDefinitions/{farmBeatsSolutionId}"}  # type: ignore
