@@ -1,0 +1,15 @@
+{
+  "commit": "aca7b0a54283adb64ee3b0ca34839ff38583247b",
+  "repository_url": "https://github.com/openapi-env-test/azure-rest-api-specs",
+  "cadl_src": "specification/sdkreleaseplannertest/SDKReleasePlannerTest",
+  "@azure-tools/cadl-python": {
+    "version": "0.4.10",
+    "resolved": "https://registry.npmjs.org/@azure-tools/cadl-python/-/cadl-python-0.4.10.tgz",
+    "dependencies": {
+      "@autorest/python": {
+        "version": "6.2.9",
+        "resolved": "https://registry.npmjs.org/@autorest/python/-/python-6.2.9.tgz"
+      }
+    }
+  }
+}
