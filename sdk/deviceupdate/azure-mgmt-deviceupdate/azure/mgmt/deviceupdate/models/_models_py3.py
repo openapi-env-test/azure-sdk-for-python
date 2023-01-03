@@ -32,7 +32,7 @@ class Resource(_serialization.Model):
     :vartype type: str
     :ivar system_data: Azure Resource Manager metadata containing createdBy and modifiedBy
      information.
-    :vartype system_data: ~azure.mgmt.deviceupdate.models.SystemData
+    :vartype system_data: ~device_update.models.SystemData
     """
 
     _validation = {
@@ -75,7 +75,7 @@ class TrackedResource(Resource):
     :vartype type: str
     :ivar system_data: Azure Resource Manager metadata containing createdBy and modifiedBy
      information.
-    :vartype system_data: ~azure.mgmt.deviceupdate.models.SystemData
+    :vartype system_data: ~device_update.models.SystemData
     :ivar tags: Resource tags.
     :vartype tags: dict[str, str]
     :ivar location: The geo-location where the resource lives. Required.
@@ -128,29 +128,28 @@ class Account(TrackedResource):  # pylint: disable=too-many-instance-attributes
     :vartype type: str
     :ivar system_data: Azure Resource Manager metadata containing createdBy and modifiedBy
      information.
-    :vartype system_data: ~azure.mgmt.deviceupdate.models.SystemData
+    :vartype system_data: ~device_update.models.SystemData
     :ivar tags: Resource tags.
     :vartype tags: dict[str, str]
     :ivar location: The geo-location where the resource lives. Required.
     :vartype location: str
     :ivar identity: The type of identity used for the resource.
-    :vartype identity: ~azure.mgmt.deviceupdate.models.ManagedServiceIdentity
+    :vartype identity: ~device_update.models.ManagedServiceIdentity
     :ivar provisioning_state: Provisioning state. Known values are: "Succeeded", "Deleted",
      "Failed", "Canceled", "Accepted", and "Creating".
-    :vartype provisioning_state: str or ~azure.mgmt.deviceupdate.models.ProvisioningState
-    :ivar host_name: API host name.
-    :vartype host_name: str
+    :vartype provisioning_state: str or ~device_update.models.ProvisioningState
+    :ivar host_name_sz: API host name.
+    :vartype host_name_sz: str
     :ivar public_network_access: Whether or not public network access is allowed for the account.
      Known values are: "Enabled" and "Disabled".
-    :vartype public_network_access: str or ~azure.mgmt.deviceupdate.models.PublicNetworkAccess
+    :vartype public_network_access: str or ~device_update.models.PublicNetworkAccess
     :ivar private_endpoint_connections: List of private endpoint connections associated with the
      account.
-    :vartype private_endpoint_connections:
-     list[~azure.mgmt.deviceupdate.models.PrivateEndpointConnection]
+    :vartype private_endpoint_connections: list[~device_update.models.PrivateEndpointConnection]
     :ivar sku: Device Update Sku. Known values are: "Free" and "Standard".
-    :vartype sku: str or ~azure.mgmt.deviceupdate.models.SKU
+    :vartype sku: str or ~device_update.models.SKU
     :ivar locations: Device Update account primary and failover location details.
-    :vartype locations: list[~azure.mgmt.deviceupdate.models.Location]
+    :vartype locations: list[~device_update.models.Location]
     """
 
     _validation = {
@@ -160,7 +159,7 @@ class Account(TrackedResource):  # pylint: disable=too-many-instance-attributes
         "system_data": {"readonly": True},
         "location": {"required": True},
         "provisioning_state": {"readonly": True},
-        "host_name": {"readonly": True},
+        "host_name_sz": {"readonly": True},
         "locations": {"readonly": True},
     }
 
@@ -173,7 +172,7 @@ class Account(TrackedResource):  # pylint: disable=too-many-instance-attributes
         "location": {"key": "location", "type": "str"},
         "identity": {"key": "identity", "type": "ManagedServiceIdentity"},
         "provisioning_state": {"key": "properties.provisioningState", "type": "str"},
-        "host_name": {"key": "properties.hostName", "type": "str"},
+        "host_name_sz": {"key": "properties.hostNameSZ", "type": "str"},
         "public_network_access": {"key": "properties.publicNetworkAccess", "type": "str"},
         "private_endpoint_connections": {
             "key": "properties.privateEndpointConnections",
@@ -200,21 +199,20 @@ class Account(TrackedResource):  # pylint: disable=too-many-instance-attributes
         :keyword location: The geo-location where the resource lives. Required.
         :paramtype location: str
         :keyword identity: The type of identity used for the resource.
-        :paramtype identity: ~azure.mgmt.deviceupdate.models.ManagedServiceIdentity
+        :paramtype identity: ~device_update.models.ManagedServiceIdentity
         :keyword public_network_access: Whether or not public network access is allowed for the
          account. Known values are: "Enabled" and "Disabled".
-        :paramtype public_network_access: str or ~azure.mgmt.deviceupdate.models.PublicNetworkAccess
+        :paramtype public_network_access: str or ~device_update.models.PublicNetworkAccess
         :keyword private_endpoint_connections: List of private endpoint connections associated with the
          account.
-        :paramtype private_endpoint_connections:
-         list[~azure.mgmt.deviceupdate.models.PrivateEndpointConnection]
+        :paramtype private_endpoint_connections: list[~device_update.models.PrivateEndpointConnection]
         :keyword sku: Device Update Sku. Known values are: "Free" and "Standard".
-        :paramtype sku: str or ~azure.mgmt.deviceupdate.models.SKU
+        :paramtype sku: str or ~device_update.models.SKU
         """
         super().__init__(tags=tags, location=location, **kwargs)
         self.identity = identity
         self.provisioning_state = None
-        self.host_name = None
+        self.host_name_sz = None
         self.public_network_access = public_network_access
         self.private_endpoint_connections = private_endpoint_connections
         self.sku = sku
@@ -227,7 +225,7 @@ class AccountList(_serialization.Model):
     :ivar next_link: The link used to get the next page of Accounts list.
     :vartype next_link: str
     :ivar value: List of Accounts.
-    :vartype value: list[~azure.mgmt.deviceupdate.models.Account]
+    :vartype value: list[~device_update.models.Account]
     """
 
     _attribute_map = {
@@ -240,7 +238,7 @@ class AccountList(_serialization.Model):
         :keyword next_link: The link used to get the next page of Accounts list.
         :paramtype next_link: str
         :keyword value: List of Accounts.
-        :paramtype value: list[~azure.mgmt.deviceupdate.models.Account]
+        :paramtype value: list[~device_update.models.Account]
         """
         super().__init__(**kwargs)
         self.next_link = next_link
@@ -276,7 +274,7 @@ class AccountUpdate(TagUpdate):
      existing tags.
     :vartype tags: dict[str, str]
     :ivar identity: The type of identity used for the resource.
-    :vartype identity: ~azure.mgmt.deviceupdate.models.ManagedServiceIdentity
+    :vartype identity: ~device_update.models.ManagedServiceIdentity
     :ivar location: The geo-location where the resource lives.
     :vartype location: str
     """
@@ -300,7 +298,7 @@ class AccountUpdate(TagUpdate):
          existing tags.
         :paramtype tags: dict[str, str]
         :keyword identity: The type of identity used for the resource.
-        :paramtype identity: ~azure.mgmt.deviceupdate.models.ManagedServiceIdentity
+        :paramtype identity: ~device_update.models.ManagedServiceIdentity
         :keyword location: The geo-location where the resource lives.
         :paramtype location: str
         """
@@ -342,7 +340,7 @@ class CheckNameAvailabilityResponse(_serialization.Model):
     :vartype name_available: bool
     :ivar reason: The reason why the given name is not available. Known values are: "Invalid" and
      "AlreadyExists".
-    :vartype reason: str or ~azure.mgmt.deviceupdate.models.CheckNameAvailabilityReason
+    :vartype reason: str or ~device_update.models.CheckNameAvailabilityReason
     :ivar message: Detailed reason why the given name is available.
     :vartype message: str
     """
@@ -366,7 +364,7 @@ class CheckNameAvailabilityResponse(_serialization.Model):
         :paramtype name_available: bool
         :keyword reason: The reason why the given name is not available. Known values are: "Invalid"
          and "AlreadyExists".
-        :paramtype reason: str or ~azure.mgmt.deviceupdate.models.CheckNameAvailabilityReason
+        :paramtype reason: str or ~device_update.models.CheckNameAvailabilityReason
         :keyword message: Detailed reason why the given name is available.
         :paramtype message: str
         """
@@ -425,7 +423,7 @@ class DiagnosticStorageProperties(_serialization.Model):
     All required parameters must be populated in order to send to Azure.
 
     :ivar authentication_type: Authentication Type. Required. "KeyBased"
-    :vartype authentication_type: str or ~azure.mgmt.deviceupdate.models.AuthenticationType
+    :vartype authentication_type: str or ~device_update.models.AuthenticationType
     :ivar connection_string: ConnectionString of the diagnostic storage account.
     :vartype connection_string: str
     :ivar resource_id: ResourceId of the diagnostic storage account. Required.
@@ -453,7 +451,7 @@ class DiagnosticStorageProperties(_serialization.Model):
     ):
         """
         :keyword authentication_type: Authentication Type. Required. "KeyBased"
-        :paramtype authentication_type: str or ~azure.mgmt.deviceupdate.models.AuthenticationType
+        :paramtype authentication_type: str or ~device_update.models.AuthenticationType
         :keyword connection_string: ConnectionString of the diagnostic storage account.
         :paramtype connection_string: str
         :keyword resource_id: ResourceId of the diagnostic storage account. Required.
@@ -505,9 +503,9 @@ class ErrorDetail(_serialization.Model):
     :ivar target: The error target.
     :vartype target: str
     :ivar details: The error details.
-    :vartype details: list[~azure.mgmt.deviceupdate.models.ErrorDetail]
+    :vartype details: list[~device_update.models.ErrorDetail]
     :ivar additional_info: The error additional info.
-    :vartype additional_info: list[~azure.mgmt.deviceupdate.models.ErrorAdditionalInfo]
+    :vartype additional_info: list[~device_update.models.ErrorAdditionalInfo]
     """
 
     _validation = {
@@ -540,7 +538,7 @@ class ErrorResponse(_serialization.Model):
     """Common error response for all Azure Resource Manager APIs to return error details for failed operations. (This also follows the OData error response format.).
 
     :ivar error: The error object.
-    :vartype error: ~azure.mgmt.deviceupdate.models.ErrorDetail
+    :vartype error: ~device_update.models.ErrorDetail
     """
 
     _attribute_map = {
@@ -550,7 +548,7 @@ class ErrorResponse(_serialization.Model):
     def __init__(self, *, error: Optional["_models.ErrorDetail"] = None, **kwargs):
         """
         :keyword error: The error object.
-        :paramtype error: ~azure.mgmt.deviceupdate.models.ErrorDetail
+        :paramtype error: ~device_update.models.ErrorDetail
         """
         super().__init__(**kwargs)
         self.error = error
@@ -630,7 +628,7 @@ class ProxyResource(Resource):
     :vartype type: str
     :ivar system_data: Azure Resource Manager metadata containing createdBy and modifiedBy
      information.
-    :vartype system_data: ~azure.mgmt.deviceupdate.models.SystemData
+    :vartype system_data: ~device_update.models.SystemData
     """
 
     _validation = {
@@ -667,7 +665,7 @@ class GroupInformation(ProxyResource):
     :vartype type: str
     :ivar system_data: Azure Resource Manager metadata containing createdBy and modifiedBy
      information.
-    :vartype system_data: ~azure.mgmt.deviceupdate.models.SystemData
+    :vartype system_data: ~device_update.models.SystemData
     :ivar group_id: The private link resource group id.
     :vartype group_id: str
     :ivar required_members: The private link resource required member names.
@@ -676,7 +674,7 @@ class GroupInformation(ProxyResource):
     :vartype required_zone_names: list[str]
     :ivar provisioning_state: The provisioning state of private link group ID. Known values are:
      "Succeeded", "Failed", and "Canceled".
-    :vartype provisioning_state: str or ~azure.mgmt.deviceupdate.models.GroupIdProvisioningState
+    :vartype provisioning_state: str or ~device_update.models.GroupIdProvisioningState
     """
 
     _validation = {
@@ -760,7 +758,7 @@ class GroupInformationProperties(PrivateLinkResourceProperties):
     :vartype required_zone_names: list[str]
     :ivar provisioning_state: The provisioning state of private link group ID. Known values are:
      "Succeeded", "Failed", and "Canceled".
-    :vartype provisioning_state: str or ~azure.mgmt.deviceupdate.models.GroupIdProvisioningState
+    :vartype provisioning_state: str or ~device_update.models.GroupIdProvisioningState
     """
 
     _validation = {
@@ -802,24 +800,23 @@ class Instance(TrackedResource):  # pylint: disable=too-many-instance-attributes
     :vartype type: str
     :ivar system_data: Azure Resource Manager metadata containing createdBy and modifiedBy
      information.
-    :vartype system_data: ~azure.mgmt.deviceupdate.models.SystemData
+    :vartype system_data: ~device_update.models.SystemData
     :ivar tags: Resource tags.
     :vartype tags: dict[str, str]
     :ivar location: The geo-location where the resource lives. Required.
     :vartype location: str
     :ivar provisioning_state: Provisioning state. Known values are: "Succeeded", "Deleted",
      "Failed", "Canceled", "Accepted", and "Creating".
-    :vartype provisioning_state: str or ~azure.mgmt.deviceupdate.models.ProvisioningState
+    :vartype provisioning_state: str or ~device_update.models.ProvisioningState
     :ivar account_name: Parent Device Update Account name which Instance belongs to.
     :vartype account_name: str
     :ivar iot_hubs: List of IoT Hubs associated with the account.
-    :vartype iot_hubs: list[~azure.mgmt.deviceupdate.models.IotHubSettings]
+    :vartype iot_hubs: list[~device_update.models.IotHubSettings]
     :ivar enable_diagnostics: Enables or Disables the diagnostic logs collection.
     :vartype enable_diagnostics: bool
     :ivar diagnostic_storage_properties: Customer-initiated diagnostic log collection storage
      properties.
-    :vartype diagnostic_storage_properties:
-     ~azure.mgmt.deviceupdate.models.DiagnosticStorageProperties
+    :vartype diagnostic_storage_properties: ~device_update.models.DiagnosticStorageProperties
     """
 
     _validation = {
@@ -865,13 +862,12 @@ class Instance(TrackedResource):  # pylint: disable=too-many-instance-attributes
         :keyword location: The geo-location where the resource lives. Required.
         :paramtype location: str
         :keyword iot_hubs: List of IoT Hubs associated with the account.
-        :paramtype iot_hubs: list[~azure.mgmt.deviceupdate.models.IotHubSettings]
+        :paramtype iot_hubs: list[~device_update.models.IotHubSettings]
         :keyword enable_diagnostics: Enables or Disables the diagnostic logs collection.
         :paramtype enable_diagnostics: bool
         :keyword diagnostic_storage_properties: Customer-initiated diagnostic log collection storage
          properties.
-        :paramtype diagnostic_storage_properties:
-         ~azure.mgmt.deviceupdate.models.DiagnosticStorageProperties
+        :paramtype diagnostic_storage_properties: ~device_update.models.DiagnosticStorageProperties
         """
         super().__init__(tags=tags, location=location, **kwargs)
         self.provisioning_state = None
@@ -887,7 +883,7 @@ class InstanceList(_serialization.Model):
     :ivar next_link: The link used to get the next page of Instances list.
     :vartype next_link: str
     :ivar value: List of Instances.
-    :vartype value: list[~azure.mgmt.deviceupdate.models.Instance]
+    :vartype value: list[~device_update.models.Instance]
     """
 
     _attribute_map = {
@@ -900,7 +896,7 @@ class InstanceList(_serialization.Model):
         :keyword next_link: The link used to get the next page of Instances list.
         :paramtype next_link: str
         :keyword value: List of Instances.
-        :paramtype value: list[~azure.mgmt.deviceupdate.models.Instance]
+        :paramtype value: list[~device_update.models.Instance]
         """
         super().__init__(**kwargs)
         self.next_link = next_link
@@ -940,7 +936,7 @@ class Location(_serialization.Model):
     :vartype name: str
     :ivar role: Whether the location is primary or failover. Known values are: "Primary" and
      "Failover".
-    :vartype role: str or ~azure.mgmt.deviceupdate.models.Role
+    :vartype role: str or ~device_update.models.Role
     """
 
     _attribute_map = {
@@ -954,7 +950,7 @@ class Location(_serialization.Model):
         :paramtype name: str
         :keyword role: Whether the location is primary or failover. Known values are: "Primary" and
          "Failover".
-        :paramtype role: str or ~azure.mgmt.deviceupdate.models.Role
+        :paramtype role: str or ~device_update.models.Role
         """
         super().__init__(**kwargs)
         self.name = name
@@ -977,13 +973,12 @@ class ManagedServiceIdentity(_serialization.Model):
     :ivar type: Type of managed service identity (where both SystemAssigned and UserAssigned types
      are allowed). Required. Known values are: "None", "SystemAssigned", "UserAssigned", and
      "SystemAssigned,UserAssigned".
-    :vartype type: str or ~azure.mgmt.deviceupdate.models.ManagedServiceIdentityType
+    :vartype type: str or ~device_update.models.ManagedServiceIdentityType
     :ivar user_assigned_identities: The set of user assigned identities associated with the
      resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form:
      '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}.
      The dictionary values can be empty objects ({}) in requests.
-    :vartype user_assigned_identities: dict[str,
-     ~azure.mgmt.deviceupdate.models.UserAssignedIdentity]
+    :vartype user_assigned_identities: dict[str, ~device_update.models.UserAssignedIdentity]
     """
 
     _validation = {
@@ -1010,13 +1005,12 @@ class ManagedServiceIdentity(_serialization.Model):
         :keyword type: Type of managed service identity (where both SystemAssigned and UserAssigned
          types are allowed). Required. Known values are: "None", "SystemAssigned", "UserAssigned", and
          "SystemAssigned,UserAssigned".
-        :paramtype type: str or ~azure.mgmt.deviceupdate.models.ManagedServiceIdentityType
+        :paramtype type: str or ~device_update.models.ManagedServiceIdentityType
         :keyword user_assigned_identities: The set of user assigned identities associated with the
          resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form:
          '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}.
          The dictionary values can be empty objects ({}) in requests.
-        :paramtype user_assigned_identities: dict[str,
-         ~azure.mgmt.deviceupdate.models.UserAssignedIdentity]
+        :paramtype user_assigned_identities: dict[str, ~device_update.models.UserAssignedIdentity]
         """
         super().__init__(**kwargs)
         self.principal_id = None
@@ -1037,14 +1031,14 @@ class Operation(_serialization.Model):
      data-plane operations and "false" for ARM/control-plane operations.
     :vartype is_data_action: bool
     :ivar display: Localized display information for this particular operation.
-    :vartype display: ~azure.mgmt.deviceupdate.models.OperationDisplay
+    :vartype display: ~device_update.models.OperationDisplay
     :ivar origin: The intended executor of the operation; as in Resource Based Access Control
      (RBAC) and audit logs UX. Default value is "user,system". Known values are: "user", "system",
      and "user,system".
-    :vartype origin: str or ~azure.mgmt.deviceupdate.models.Origin
+    :vartype origin: str or ~device_update.models.Origin
     :ivar action_type: Enum. Indicates the action type. "Internal" refers to actions that are for
      internal only APIs. "Internal"
-    :vartype action_type: str or ~azure.mgmt.deviceupdate.models.ActionType
+    :vartype action_type: str or ~device_update.models.ActionType
     """
 
     _validation = {
@@ -1065,7 +1059,7 @@ class Operation(_serialization.Model):
     def __init__(self, *, display: Optional["_models.OperationDisplay"] = None, **kwargs):
         """
         :keyword display: Localized display information for this particular operation.
-        :paramtype display: ~azure.mgmt.deviceupdate.models.OperationDisplay
+        :paramtype display: ~device_update.models.OperationDisplay
         """
         super().__init__(**kwargs)
         self.name = None
@@ -1123,7 +1117,7 @@ class OperationListResult(_serialization.Model):
     Variables are only populated by the server, and will be ignored when sending a request.
 
     :ivar value: List of operations supported by the resource provider.
-    :vartype value: list[~azure.mgmt.deviceupdate.models.Operation]
+    :vartype value: list[~device_update.models.Operation]
     :ivar next_link: URL to get the next set of operation list results (if there are any).
     :vartype next_link: str
     """
@@ -1185,19 +1179,19 @@ class PrivateEndpointConnection(Resource):
     :vartype type: str
     :ivar system_data: Azure Resource Manager metadata containing createdBy and modifiedBy
      information.
-    :vartype system_data: ~azure.mgmt.deviceupdate.models.SystemData
+    :vartype system_data: ~device_update.models.SystemData
     :ivar private_endpoint: The resource of private end point.
-    :vartype private_endpoint: ~azure.mgmt.deviceupdate.models.PrivateEndpoint
+    :vartype private_endpoint: ~device_update.models.PrivateEndpoint
     :ivar private_link_service_connection_state: A collection of information about the state of the
      connection between service consumer and provider. Required.
     :vartype private_link_service_connection_state:
-     ~azure.mgmt.deviceupdate.models.PrivateLinkServiceConnectionState
+     ~device_update.models.PrivateLinkServiceConnectionState
     :ivar group_ids: Array of group IDs.
     :vartype group_ids: list[str]
     :ivar provisioning_state: The provisioning state of the private endpoint connection resource.
      Known values are: "Succeeded", "Creating", "Deleting", and "Failed".
     :vartype provisioning_state: str or
-     ~azure.mgmt.deviceupdate.models.PrivateEndpointConnectionProvisioningState
+     ~device_update.models.PrivateEndpointConnectionProvisioningState
     """
 
     _validation = {
@@ -1233,11 +1227,11 @@ class PrivateEndpointConnection(Resource):
     ):
         """
         :keyword private_endpoint: The resource of private end point.
-        :paramtype private_endpoint: ~azure.mgmt.deviceupdate.models.PrivateEndpoint
+        :paramtype private_endpoint: ~device_update.models.PrivateEndpoint
         :keyword private_link_service_connection_state: A collection of information about the state of
          the connection between service consumer and provider. Required.
         :paramtype private_link_service_connection_state:
-         ~azure.mgmt.deviceupdate.models.PrivateLinkServiceConnectionState
+         ~device_update.models.PrivateLinkServiceConnectionState
         :keyword group_ids: Array of group IDs.
         :paramtype group_ids: list[str]
         """
@@ -1252,7 +1246,7 @@ class PrivateEndpointConnectionListResult(_serialization.Model):
     """List of private endpoint connection associated with the specified storage account.
 
     :ivar value: Array of private endpoint connections.
-    :vartype value: list[~azure.mgmt.deviceupdate.models.PrivateEndpointConnection]
+    :vartype value: list[~device_update.models.PrivateEndpointConnection]
     """
 
     _attribute_map = {
@@ -1262,7 +1256,7 @@ class PrivateEndpointConnectionListResult(_serialization.Model):
     def __init__(self, *, value: Optional[List["_models.PrivateEndpointConnection"]] = None, **kwargs):
         """
         :keyword value: Array of private endpoint connections.
-        :paramtype value: list[~azure.mgmt.deviceupdate.models.PrivateEndpointConnection]
+        :paramtype value: list[~device_update.models.PrivateEndpointConnection]
         """
         super().__init__(**kwargs)
         self.value = value
@@ -1276,7 +1270,7 @@ class PrivateEndpointConnectionProxyProperties(_serialization.Model):
     :ivar e_tag: ETag from NRP.
     :vartype e_tag: str
     :ivar remote_private_endpoint: Remote private endpoint details.
-    :vartype remote_private_endpoint: ~azure.mgmt.deviceupdate.models.RemotePrivateEndpoint
+    :vartype remote_private_endpoint: ~device_update.models.RemotePrivateEndpoint
     :ivar status: Operation status.
     :vartype status: str
     """
@@ -1300,7 +1294,7 @@ class PrivateEndpointConnectionProxyProperties(_serialization.Model):
     ):
         """
         :keyword remote_private_endpoint: Remote private endpoint details.
-        :paramtype remote_private_endpoint: ~azure.mgmt.deviceupdate.models.RemotePrivateEndpoint
+        :paramtype remote_private_endpoint: ~device_update.models.RemotePrivateEndpoint
         :keyword status: Operation status.
         :paramtype status: str
         """
@@ -1318,7 +1312,7 @@ class PrivateEndpointConnectionProxy(ProxyResource, PrivateEndpointConnectionPro
     :ivar e_tag: ETag from NRP.
     :vartype e_tag: str
     :ivar remote_private_endpoint: Remote private endpoint details.
-    :vartype remote_private_endpoint: ~azure.mgmt.deviceupdate.models.RemotePrivateEndpoint
+    :vartype remote_private_endpoint: ~device_update.models.RemotePrivateEndpoint
     :ivar status: Operation status.
     :vartype status: str
     :ivar id: Fully qualified resource ID for the resource. Ex -
@@ -1331,11 +1325,11 @@ class PrivateEndpointConnectionProxy(ProxyResource, PrivateEndpointConnectionPro
     :vartype type: str
     :ivar system_data: Azure Resource Manager metadata containing createdBy and modifiedBy
      information.
-    :vartype system_data: ~azure.mgmt.deviceupdate.models.SystemData
+    :vartype system_data: ~device_update.models.SystemData
     :ivar provisioning_state: The provisioning state of the private endpoint connection proxy
      resource. Known values are: "Succeeded", "Creating", "Deleting", and "Failed".
     :vartype provisioning_state: str or
-     ~azure.mgmt.deviceupdate.models.PrivateEndpointConnectionProxyProvisioningState
+     ~device_update.models.PrivateEndpointConnectionProxyProvisioningState
     """
 
     _validation = {
@@ -1367,7 +1361,7 @@ class PrivateEndpointConnectionProxy(ProxyResource, PrivateEndpointConnectionPro
     ):
         """
         :keyword remote_private_endpoint: Remote private endpoint details.
-        :paramtype remote_private_endpoint: ~azure.mgmt.deviceupdate.models.RemotePrivateEndpoint
+        :paramtype remote_private_endpoint: ~device_update.models.RemotePrivateEndpoint
         :keyword status: Operation status.
         :paramtype status: str
         """
@@ -1386,7 +1380,7 @@ class PrivateEndpointConnectionProxyListResult(_serialization.Model):
     """The available private endpoint connection proxies for an Account (not to be used by anyone, here because of ARM requirements).
 
     :ivar value: The list of available private endpoint connection proxies for an Account.
-    :vartype value: list[~azure.mgmt.deviceupdate.models.PrivateEndpointConnectionProxy]
+    :vartype value: list[~device_update.models.PrivateEndpointConnectionProxy]
     :ivar next_link: The URI that can be used to request the next list of private endpoint
      connection proxies.
     :vartype next_link: str
@@ -1406,7 +1400,7 @@ class PrivateEndpointConnectionProxyListResult(_serialization.Model):
     ):
         """
         :keyword value: The list of available private endpoint connection proxies for an Account.
-        :paramtype value: list[~azure.mgmt.deviceupdate.models.PrivateEndpointConnectionProxy]
+        :paramtype value: list[~device_update.models.PrivateEndpointConnectionProxy]
         :keyword next_link: The URI that can be used to request the next list of private endpoint
          connection proxies.
         :paramtype next_link: str
@@ -1473,7 +1467,7 @@ class PrivateLinkResourceListResult(_serialization.Model):
     """The available private link resources for an Account.
 
     :ivar value: The list of available private link resources for an Account.
-    :vartype value: list[~azure.mgmt.deviceupdate.models.GroupInformation]
+    :vartype value: list[~device_update.models.GroupInformation]
     :ivar next_link: The URI that can be used to request the next list of private link resources.
     :vartype next_link: str
     """
@@ -1488,7 +1482,7 @@ class PrivateLinkResourceListResult(_serialization.Model):
     ):
         """
         :keyword value: The list of available private link resources for an Account.
-        :paramtype value: list[~azure.mgmt.deviceupdate.models.GroupInformation]
+        :paramtype value: list[~device_update.models.GroupInformation]
         :keyword next_link: The URI that can be used to request the next list of private link
          resources.
         :paramtype next_link: str
@@ -1542,7 +1536,7 @@ class PrivateLinkServiceConnectionState(_serialization.Model):
 
     :ivar status: Indicates whether the connection has been Approved/Rejected/Removed by the owner
      of the service. Known values are: "Pending", "Approved", and "Rejected".
-    :vartype status: str or ~azure.mgmt.deviceupdate.models.PrivateEndpointServiceConnectionStatus
+    :vartype status: str or ~device_update.models.PrivateEndpointServiceConnectionStatus
     :ivar description: The reason for approval/rejection of the connection.
     :vartype description: str
     :ivar actions_required: A message indicating if changes on the service provider require any
@@ -1567,8 +1561,7 @@ class PrivateLinkServiceConnectionState(_serialization.Model):
         """
         :keyword status: Indicates whether the connection has been Approved/Rejected/Removed by the
          owner of the service. Known values are: "Pending", "Approved", and "Rejected".
-        :paramtype status: str or
-         ~azure.mgmt.deviceupdate.models.PrivateEndpointServiceConnectionStatus
+        :paramtype status: str or ~device_update.models.PrivateEndpointServiceConnectionStatus
         :keyword description: The reason for approval/rejection of the connection.
         :paramtype description: str
         :keyword actions_required: A message indicating if changes on the service provider require any
@@ -1589,13 +1582,13 @@ class PrivateLinkServiceProxy(_serialization.Model):
     :ivar remote_private_link_service_connection_state: Remote private link service connection
      state.
     :vartype remote_private_link_service_connection_state:
-     ~azure.mgmt.deviceupdate.models.PrivateLinkServiceConnectionState
+     ~device_update.models.PrivateLinkServiceConnectionState
     :ivar remote_private_endpoint_connection: Remote private endpoint connection details.
     :vartype remote_private_endpoint_connection:
-     ~azure.mgmt.deviceupdate.models.PrivateLinkServiceProxyRemotePrivateEndpointConnection
+     ~device_update.models.PrivateLinkServiceProxyRemotePrivateEndpointConnection
     :ivar group_connectivity_information: Group connectivity information.
     :vartype group_connectivity_information:
-     list[~azure.mgmt.deviceupdate.models.GroupConnectivityInformation]
+     list[~device_update.models.GroupConnectivityInformation]
     """
 
     _attribute_map = {
@@ -1631,13 +1624,13 @@ class PrivateLinkServiceProxy(_serialization.Model):
         :keyword remote_private_link_service_connection_state: Remote private link service connection
          state.
         :paramtype remote_private_link_service_connection_state:
-         ~azure.mgmt.deviceupdate.models.PrivateLinkServiceConnectionState
+         ~device_update.models.PrivateLinkServiceConnectionState
         :keyword remote_private_endpoint_connection: Remote private endpoint connection details.
         :paramtype remote_private_endpoint_connection:
-         ~azure.mgmt.deviceupdate.models.PrivateLinkServiceProxyRemotePrivateEndpointConnection
+         ~device_update.models.PrivateLinkServiceProxyRemotePrivateEndpointConnection
         :keyword group_connectivity_information: Group connectivity information.
         :paramtype group_connectivity_information:
-         list[~azure.mgmt.deviceupdate.models.GroupConnectivityInformation]
+         list[~device_update.models.GroupConnectivityInformation]
         """
         super().__init__(**kwargs)
         self.id = id
@@ -1707,16 +1700,15 @@ class RemotePrivateEndpoint(_serialization.Model):
     :ivar manual_private_link_service_connections: List of private link service connections that
      need manual approval.
     :vartype manual_private_link_service_connections:
-     list[~azure.mgmt.deviceupdate.models.PrivateLinkServiceConnection]
+     list[~device_update.models.PrivateLinkServiceConnection]
     :ivar private_link_service_connections: List of automatically approved private link service
      connections.
     :vartype private_link_service_connections:
-     list[~azure.mgmt.deviceupdate.models.PrivateLinkServiceConnection]
+     list[~device_update.models.PrivateLinkServiceConnection]
     :ivar private_link_service_proxies: List of private link service proxies.
-    :vartype private_link_service_proxies:
-     list[~azure.mgmt.deviceupdate.models.PrivateLinkServiceProxy]
+    :vartype private_link_service_proxies: list[~device_update.models.PrivateLinkServiceProxy]
     :ivar connection_details: List of connection details.
-    :vartype connection_details: list[~azure.mgmt.deviceupdate.models.ConnectionDetails]
+    :vartype connection_details: list[~device_update.models.ConnectionDetails]
     """
 
     _attribute_map = {
@@ -1765,16 +1757,15 @@ class RemotePrivateEndpoint(_serialization.Model):
         :keyword manual_private_link_service_connections: List of private link service connections that
          need manual approval.
         :paramtype manual_private_link_service_connections:
-         list[~azure.mgmt.deviceupdate.models.PrivateLinkServiceConnection]
+         list[~device_update.models.PrivateLinkServiceConnection]
         :keyword private_link_service_connections: List of automatically approved private link service
          connections.
         :paramtype private_link_service_connections:
-         list[~azure.mgmt.deviceupdate.models.PrivateLinkServiceConnection]
+         list[~device_update.models.PrivateLinkServiceConnection]
         :keyword private_link_service_proxies: List of private link service proxies.
-        :paramtype private_link_service_proxies:
-         list[~azure.mgmt.deviceupdate.models.PrivateLinkServiceProxy]
+        :paramtype private_link_service_proxies: list[~device_update.models.PrivateLinkServiceProxy]
         :keyword connection_details: List of connection details.
-        :paramtype connection_details: list[~azure.mgmt.deviceupdate.models.ConnectionDetails]
+        :paramtype connection_details: list[~device_update.models.ConnectionDetails]
         """
         super().__init__(**kwargs)
         self.id = id
@@ -1795,14 +1786,14 @@ class SystemData(_serialization.Model):
     :vartype created_by: str
     :ivar created_by_type: The type of identity that created the resource. Known values are:
      "User", "Application", "ManagedIdentity", and "Key".
-    :vartype created_by_type: str or ~azure.mgmt.deviceupdate.models.CreatedByType
+    :vartype created_by_type: str or ~device_update.models.CreatedByType
     :ivar created_at: The timestamp of resource creation (UTC).
     :vartype created_at: ~datetime.datetime
     :ivar last_modified_by: The identity that last modified the resource.
     :vartype last_modified_by: str
     :ivar last_modified_by_type: The type of identity that last modified the resource. Known values
      are: "User", "Application", "ManagedIdentity", and "Key".
-    :vartype last_modified_by_type: str or ~azure.mgmt.deviceupdate.models.CreatedByType
+    :vartype last_modified_by_type: str or ~device_update.models.CreatedByType
     :ivar last_modified_at: The timestamp of resource last modification (UTC).
     :vartype last_modified_at: ~datetime.datetime
     """
@@ -1832,14 +1823,14 @@ class SystemData(_serialization.Model):
         :paramtype created_by: str
         :keyword created_by_type: The type of identity that created the resource. Known values are:
          "User", "Application", "ManagedIdentity", and "Key".
-        :paramtype created_by_type: str or ~azure.mgmt.deviceupdate.models.CreatedByType
+        :paramtype created_by_type: str or ~device_update.models.CreatedByType
         :keyword created_at: The timestamp of resource creation (UTC).
         :paramtype created_at: ~datetime.datetime
         :keyword last_modified_by: The identity that last modified the resource.
         :paramtype last_modified_by: str
         :keyword last_modified_by_type: The type of identity that last modified the resource. Known
          values are: "User", "Application", "ManagedIdentity", and "Key".
-        :paramtype last_modified_by_type: str or ~azure.mgmt.deviceupdate.models.CreatedByType
+        :paramtype last_modified_by_type: str or ~device_update.models.CreatedByType
         :keyword last_modified_at: The timestamp of resource last modification (UTC).
         :paramtype last_modified_at: ~datetime.datetime
         """

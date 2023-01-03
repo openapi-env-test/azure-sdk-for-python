@@ -10,7 +10,7 @@ from typing import TYPE_CHECKING
 
 from azure.core.pipeline.transport import HttpRequest
 
-from ._configuration import DeviceUpdateMgmtClientConfiguration
+from ._configuration import DeviceUpdateConfiguration
 
 if TYPE_CHECKING:
     # pylint: disable=unused-import,ungrouped-imports
@@ -38,10 +38,10 @@ def _format_url_section(template, **kwargs):
             template = "/".join(components)
 
 
-class MixinABC(ABC):
+class DeviceUpdateMixinABC(ABC):
     """DO NOT use this class. It is for internal typing use only."""
 
     _client: "PipelineClient"
-    _config: DeviceUpdateMgmtClientConfiguration
+    _config: DeviceUpdateConfiguration
     _serialize: "Serializer"
     _deserialize: "Deserializer"
