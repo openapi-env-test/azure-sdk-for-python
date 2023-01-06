@@ -12,7 +12,7 @@ from typing import Any, Awaitable, TYPE_CHECKING
 from azure.core.rest import AsyncHttpResponse, HttpRequest
 from azure.mgmt.core import AsyncARMPipelineClient
 
-from .. import models
+from .. import models as _models
 from .._serialization import Deserializer, Serializer
 from ._configuration import AgriFoodMgmtClientConfiguration
 from .operations import (
@@ -23,6 +23,8 @@ from .operations import (
     Operations,
     PrivateEndpointConnectionsOperations,
     PrivateLinkResourcesOperations,
+    SolutionsDiscoverabilityOperations,
+    SolutionsOperations,
 )
 
 if TYPE_CHECKING:
@@ -50,9 +52,14 @@ class AgriFoodMgmtClient:  # pylint: disable=client-accepts-api-version-keyword,
     :ivar private_link_resources: PrivateLinkResourcesOperations operations
     :vartype private_link_resources:
      azure.mgmt.agrifood.aio.operations.PrivateLinkResourcesOperations
+    :ivar solutions: SolutionsOperations operations
+    :vartype solutions: azure.mgmt.agrifood.aio.operations.SolutionsOperations
+    :ivar solutions_discoverability: SolutionsDiscoverabilityOperations operations
+    :vartype solutions_discoverability:
+     azure.mgmt.agrifood.aio.operations.SolutionsDiscoverabilityOperations
     :param credential: Credential needed for the client to connect to Azure. Required.
     :type credential: ~azure.core.credentials_async.AsyncTokenCredential
-    :param subscription_id: The ID of the target subscription. Required.
+    :param subscription_id: The ID of the target subscription. The value must be an UUID. Required.
     :type subscription_id: str
     :param base_url: Service URL. Default value is "https://management.azure.com".
     :type base_url: str
@@ -73,7 +80,7 @@ class AgriFoodMgmtClient:  # pylint: disable=client-accepts-api-version-keyword,
         self._config = AgriFoodMgmtClientConfiguration(credential=credential, subscription_id=subscription_id, **kwargs)
         self._client = AsyncARMPipelineClient(base_url=base_url, config=self._config, **kwargs)
 
-        client_models = {k: v for k, v in models.__dict__.items() if isinstance(v, type)}
+        client_models = {k: v for k, v in _models.__dict__.items() if isinstance(v, type)}
         self._serialize = Serializer(client_models)
         self._deserialize = Deserializer(client_models)
         self._serialize.client_side_validation = False
@@ -90,6 +97,10 @@ class AgriFoodMgmtClient:  # pylint: disable=client-accepts-api-version-keyword,
             self._client, self._config, self._serialize, self._deserialize
         )
         self.private_link_resources = PrivateLinkResourcesOperations(
+            self._client, self._config, self._serialize, self._deserialize
+        )
+        self.solutions = SolutionsOperations(self._client, self._config, self._serialize, self._deserialize)
+        self.solutions_discoverability = SolutionsDiscoverabilityOperations(
             self._client, self._config, self._serialize, self._deserialize
         )
 
