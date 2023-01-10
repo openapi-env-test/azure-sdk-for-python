@@ -40,19 +40,21 @@ class APIVersion(str, Enum, metaclass=CaseInsensitiveEnumMeta):
 
 
 class DataSchema(str, Enum, metaclass=CaseInsensitiveEnumMeta):
-    """DataSchema."""
+    """Data schema of input data source: OneTable or MultiTable. The default DataSchema is OneTable."""
 
-    #: OneTable means that your input data are all in one CSV file, which contains one 'timestamp'
-    #: column and several variable columns. The default DataSchema is OneTable.
     ONE_TABLE = "OneTable"
-    #: MultiTable means that your input data are separated in multiple CSV files, in each file
-    #: containing one 'timestamp' column and one 'variable' column, and the CSV file name should
-    #: indicate the name of the variable. The default DataSchema is OneTable.
+    """OneTable means that your input data are all in one CSV file, which contains one 'timestamp'
+    #: column and several variable columns. The default DataSchema is OneTable."""
     MULTI_TABLE = "MultiTable"
+    """MultiTable means that your input data are separated in multiple CSV files, in each file
+    #: containing one 'timestamp' column and one 'variable' column, and the CSV file name should
+    #: indicate the name of the variable. The default DataSchema is OneTable."""
 
 
 class FillNAMethod(str, Enum, metaclass=CaseInsensitiveEnumMeta):
-    """FillNAMethod."""
+    """An optional field, indicating how missing values will be filled. One of Previous, Subsequent,
+    Linear, Zero, Fixed.
+    """
 
     PREVIOUS = "Previous"
     SUBSEQUENT = "Subsequent"

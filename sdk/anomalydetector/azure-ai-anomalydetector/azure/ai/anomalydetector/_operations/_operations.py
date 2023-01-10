@@ -249,13 +249,13 @@ class AnomalyDetectorClientOperationsMixin(AnomalyDetectorClientMixinABC):
         user an overall status of the time series.
 
         :param options: Method of univariate anomaly detection. Required.
-        :type options: ~anomalydetector.models.UnivariateDetectionOptions
+        :type options: ~azure.ai.anomalydetector.models.UnivariateDetectionOptions
         :keyword content_type: Body Parameter content-type. Content type parameter for JSON body.
          Default value is "application/json".
         :paramtype content_type: str
         :return: UnivariateEntireDetectionResult. The UnivariateEntireDetectionResult is compatible
          with MutableMapping
-        :rtype: ~anomalydetector.models.UnivariateEntireDetectionResult
+        :rtype: ~azure.ai.anomalydetector.models.UnivariateEntireDetectionResult
         :raises ~azure.core.exceptions.HttpResponseError:
         """
 
@@ -277,7 +277,7 @@ class AnomalyDetectorClientOperationsMixin(AnomalyDetectorClientMixinABC):
         :paramtype content_type: str
         :return: UnivariateEntireDetectionResult. The UnivariateEntireDetectionResult is compatible
          with MutableMapping
-        :rtype: ~anomalydetector.models.UnivariateEntireDetectionResult
+        :rtype: ~azure.ai.anomalydetector.models.UnivariateEntireDetectionResult
         :raises ~azure.core.exceptions.HttpResponseError:
         """
 
@@ -299,7 +299,7 @@ class AnomalyDetectorClientOperationsMixin(AnomalyDetectorClientMixinABC):
         :paramtype content_type: str
         :return: UnivariateEntireDetectionResult. The UnivariateEntireDetectionResult is compatible
          with MutableMapping
-        :rtype: ~anomalydetector.models.UnivariateEntireDetectionResult
+        :rtype: ~azure.ai.anomalydetector.models.UnivariateEntireDetectionResult
         :raises ~azure.core.exceptions.HttpResponseError:
         """
 
@@ -316,13 +316,13 @@ class AnomalyDetectorClientOperationsMixin(AnomalyDetectorClientMixinABC):
 
         :param options: Method of univariate anomaly detection. Is one of the following types: model,
          JSON, IO Required.
-        :type options: ~anomalydetector.models.UnivariateDetectionOptions or JSON or IO
+        :type options: ~azure.ai.anomalydetector.models.UnivariateDetectionOptions or JSON or IO
         :keyword content_type: Body parameter Content-Type. Known values are: application/json. Default
          value is None.
         :paramtype content_type: str
         :return: UnivariateEntireDetectionResult. The UnivariateEntireDetectionResult is compatible
          with MutableMapping
-        :rtype: ~anomalydetector.models.UnivariateEntireDetectionResult
+        :rtype: ~azure.ai.anomalydetector.models.UnivariateEntireDetectionResult
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         error_map = {
@@ -344,7 +344,7 @@ class AnomalyDetectorClientOperationsMixin(AnomalyDetectorClientMixinABC):
         if isinstance(options, (IO, bytes)):
             _content = options
         else:
-            _content = json.dumps(options, cls=AzureJSONEncoder)
+            _content = json.dumps(options, cls=AzureJSONEncoder)  # type: ignore
 
         request = build_anomaly_detector_detect_univariate_entire_series_request(
             content_type=content_type,
@@ -388,13 +388,13 @@ class AnomalyDetectorClientOperationsMixin(AnomalyDetectorClientMixinABC):
         and based on all data to determine whether the last point is anomalous.
 
         :param options: Method of univariate anomaly detection. Required.
-        :type options: ~anomalydetector.models.UnivariateDetectionOptions
+        :type options: ~azure.ai.anomalydetector.models.UnivariateDetectionOptions
         :keyword content_type: Body Parameter content-type. Content type parameter for JSON body.
          Default value is "application/json".
         :paramtype content_type: str
         :return: UnivariateLastDetectionResult. The UnivariateLastDetectionResult is compatible with
          MutableMapping
-        :rtype: ~anomalydetector.models.UnivariateLastDetectionResult
+        :rtype: ~azure.ai.anomalydetector.models.UnivariateLastDetectionResult
         :raises ~azure.core.exceptions.HttpResponseError:
         """
 
@@ -414,7 +414,7 @@ class AnomalyDetectorClientOperationsMixin(AnomalyDetectorClientMixinABC):
         :paramtype content_type: str
         :return: UnivariateLastDetectionResult. The UnivariateLastDetectionResult is compatible with
          MutableMapping
-        :rtype: ~anomalydetector.models.UnivariateLastDetectionResult
+        :rtype: ~azure.ai.anomalydetector.models.UnivariateLastDetectionResult
         :raises ~azure.core.exceptions.HttpResponseError:
         """
 
@@ -434,7 +434,7 @@ class AnomalyDetectorClientOperationsMixin(AnomalyDetectorClientMixinABC):
         :paramtype content_type: str
         :return: UnivariateLastDetectionResult. The UnivariateLastDetectionResult is compatible with
          MutableMapping
-        :rtype: ~anomalydetector.models.UnivariateLastDetectionResult
+        :rtype: ~azure.ai.anomalydetector.models.UnivariateLastDetectionResult
         :raises ~azure.core.exceptions.HttpResponseError:
         """
 
@@ -449,13 +449,13 @@ class AnomalyDetectorClientOperationsMixin(AnomalyDetectorClientMixinABC):
 
         :param options: Method of univariate anomaly detection. Is one of the following types: model,
          JSON, IO Required.
-        :type options: ~anomalydetector.models.UnivariateDetectionOptions or JSON or IO
+        :type options: ~azure.ai.anomalydetector.models.UnivariateDetectionOptions or JSON or IO
         :keyword content_type: Body parameter Content-Type. Known values are: application/json. Default
          value is None.
         :paramtype content_type: str
         :return: UnivariateLastDetectionResult. The UnivariateLastDetectionResult is compatible with
          MutableMapping
-        :rtype: ~anomalydetector.models.UnivariateLastDetectionResult
+        :rtype: ~azure.ai.anomalydetector.models.UnivariateLastDetectionResult
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         error_map = {
@@ -477,7 +477,7 @@ class AnomalyDetectorClientOperationsMixin(AnomalyDetectorClientMixinABC):
         if isinstance(options, (IO, bytes)):
             _content = options
         else:
-            _content = json.dumps(options, cls=AzureJSONEncoder)
+            _content = json.dumps(options, cls=AzureJSONEncoder)  # type: ignore
 
         request = build_anomaly_detector_detect_univariate_last_point_request(
             content_type=content_type,
@@ -524,13 +524,13 @@ class AnomalyDetectorClientOperationsMixin(AnomalyDetectorClientMixinABC):
         Evaluate change point score of every series point.
 
         :param options: Method of univariate anomaly detection. Required.
-        :type options: ~anomalydetector.models.UnivariateChangePointDetectionOptions
+        :type options: ~azure.ai.anomalydetector.models.UnivariateChangePointDetectionOptions
         :keyword content_type: Body Parameter content-type. Content type parameter for JSON body.
          Default value is "application/json".
         :paramtype content_type: str
         :return: UnivariateChangePointDetectionResult. The UnivariateChangePointDetectionResult is
          compatible with MutableMapping
-        :rtype: ~anomalydetector.models.UnivariateChangePointDetectionResult
+        :rtype: ~azure.ai.anomalydetector.models.UnivariateChangePointDetectionResult
         :raises ~azure.core.exceptions.HttpResponseError:
         """
 
@@ -549,7 +549,7 @@ class AnomalyDetectorClientOperationsMixin(AnomalyDetectorClientMixinABC):
         :paramtype content_type: str
         :return: UnivariateChangePointDetectionResult. The UnivariateChangePointDetectionResult is
          compatible with MutableMapping
-        :rtype: ~anomalydetector.models.UnivariateChangePointDetectionResult
+        :rtype: ~azure.ai.anomalydetector.models.UnivariateChangePointDetectionResult
         :raises ~azure.core.exceptions.HttpResponseError:
         """
 
@@ -568,7 +568,7 @@ class AnomalyDetectorClientOperationsMixin(AnomalyDetectorClientMixinABC):
         :paramtype content_type: str
         :return: UnivariateChangePointDetectionResult. The UnivariateChangePointDetectionResult is
          compatible with MutableMapping
-        :rtype: ~anomalydetector.models.UnivariateChangePointDetectionResult
+        :rtype: ~azure.ai.anomalydetector.models.UnivariateChangePointDetectionResult
         :raises ~azure.core.exceptions.HttpResponseError:
         """
 
@@ -582,13 +582,14 @@ class AnomalyDetectorClientOperationsMixin(AnomalyDetectorClientMixinABC):
 
         :param options: Method of univariate anomaly detection. Is one of the following types: model,
          JSON, IO Required.
-        :type options: ~anomalydetector.models.UnivariateChangePointDetectionOptions or JSON or IO
+        :type options: ~azure.ai.anomalydetector.models.UnivariateChangePointDetectionOptions or JSON
+         or IO
         :keyword content_type: Body parameter Content-Type. Known values are: application/json. Default
          value is None.
         :paramtype content_type: str
         :return: UnivariateChangePointDetectionResult. The UnivariateChangePointDetectionResult is
          compatible with MutableMapping
-        :rtype: ~anomalydetector.models.UnivariateChangePointDetectionResult
+        :rtype: ~azure.ai.anomalydetector.models.UnivariateChangePointDetectionResult
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         error_map = {
@@ -610,7 +611,7 @@ class AnomalyDetectorClientOperationsMixin(AnomalyDetectorClientMixinABC):
         if isinstance(options, (IO, bytes)):
             _content = options
         else:
-            _content = json.dumps(options, cls=AzureJSONEncoder)
+            _content = json.dumps(options, cls=AzureJSONEncoder)  # type: ignore
 
         request = build_anomaly_detector_detect_univariate_change_point_request(
             content_type=content_type,
@@ -657,7 +658,7 @@ class AnomalyDetectorClientOperationsMixin(AnomalyDetectorClientMixinABC):
         :type result_id: str
         :return: MultivariateDetectionResult. The MultivariateDetectionResult is compatible with
          MutableMapping
-        :rtype: ~anomalydetector.models.MultivariateDetectionResult
+        :rtype: ~azure.ai.anomalydetector.models.MultivariateDetectionResult
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         error_map = {
@@ -694,7 +695,7 @@ class AnomalyDetectorClientOperationsMixin(AnomalyDetectorClientMixinABC):
 
         if response.status_code not in [200]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = _deserialize(_models.ResponseError, response.json())
+            error = _deserialize(_models.ErrorResponse, response.json())
             raise HttpResponseError(response=response, model=error)
 
         deserialized = _deserialize(_models.MultivariateDetectionResult, response.json())
@@ -719,12 +720,12 @@ class AnomalyDetectorClientOperationsMixin(AnomalyDetectorClientMixinABC):
         timestamp column.
 
         :param model_info: Model information. Required.
-        :type model_info: ~anomalydetector.models.ModelInfo
+        :type model_info: ~azure.ai.anomalydetector.models.ModelInfo
         :keyword content_type: Body Parameter content-type. Content type parameter for JSON body.
          Default value is "application/json".
         :paramtype content_type: str
         :return: AnomalyDetectionModel. The AnomalyDetectionModel is compatible with MutableMapping
-        :rtype: ~anomalydetector.models.AnomalyDetectionModel
+        :rtype: ~azure.ai.anomalydetector.models.AnomalyDetectionModel
         :raises ~azure.core.exceptions.HttpResponseError:
         """
 
@@ -748,7 +749,7 @@ class AnomalyDetectorClientOperationsMixin(AnomalyDetectorClientMixinABC):
          Default value is "application/json".
         :paramtype content_type: str
         :return: AnomalyDetectionModel. The AnomalyDetectionModel is compatible with MutableMapping
-        :rtype: ~anomalydetector.models.AnomalyDetectionModel
+        :rtype: ~azure.ai.anomalydetector.models.AnomalyDetectionModel
         :raises ~azure.core.exceptions.HttpResponseError:
         """
 
@@ -772,7 +773,7 @@ class AnomalyDetectorClientOperationsMixin(AnomalyDetectorClientMixinABC):
          Default value is "application/json".
         :paramtype content_type: str
         :return: AnomalyDetectionModel. The AnomalyDetectionModel is compatible with MutableMapping
-        :rtype: ~anomalydetector.models.AnomalyDetectionModel
+        :rtype: ~azure.ai.anomalydetector.models.AnomalyDetectionModel
         :raises ~azure.core.exceptions.HttpResponseError:
         """
 
@@ -791,12 +792,12 @@ class AnomalyDetectorClientOperationsMixin(AnomalyDetectorClientMixinABC):
         timestamp column.
 
         :param model_info: Model information. Is one of the following types: model, JSON, IO Required.
-        :type model_info: ~anomalydetector.models.ModelInfo or JSON or IO
+        :type model_info: ~azure.ai.anomalydetector.models.ModelInfo or JSON or IO
         :keyword content_type: Body parameter Content-Type. Known values are: application/json. Default
          value is None.
         :paramtype content_type: str
         :return: AnomalyDetectionModel. The AnomalyDetectionModel is compatible with MutableMapping
-        :rtype: ~anomalydetector.models.AnomalyDetectionModel
+        :rtype: ~azure.ai.anomalydetector.models.AnomalyDetectionModel
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         error_map = {
@@ -818,7 +819,7 @@ class AnomalyDetectorClientOperationsMixin(AnomalyDetectorClientMixinABC):
         if isinstance(model_info, (IO, bytes)):
             _content = model_info
         else:
-            _content = json.dumps(model_info, cls=AzureJSONEncoder)
+            _content = json.dumps(model_info, cls=AzureJSONEncoder)  # type: ignore
 
         request = build_anomaly_detector_train_multivariate_model_request(
             content_type=content_type,
@@ -842,7 +843,7 @@ class AnomalyDetectorClientOperationsMixin(AnomalyDetectorClientMixinABC):
 
         if response.status_code not in [201]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = _deserialize(_models.ResponseError, response.json())
+            error = _deserialize(_models.ErrorResponse, response.json())
             raise HttpResponseError(response=response, model=error)
 
         response_headers = {}
@@ -869,7 +870,7 @@ class AnomalyDetectorClientOperationsMixin(AnomalyDetectorClientMixinABC):
         :paramtype top: int
         :return: An iterator like instance of AnomalyDetectionModel. The AnomalyDetectionModel is
          compatible with MutableMapping
-        :rtype: ~azure.core.paging.ItemPaged[~anomalydetector.models.AnomalyDetectionModel]
+        :rtype: ~azure.core.paging.ItemPaged[~azure.ai.anomalydetector.models.AnomalyDetectionModel]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         _headers = kwargs.pop("headers", {}) or {}
@@ -919,7 +920,9 @@ class AnomalyDetectorClientOperationsMixin(AnomalyDetectorClientMixinABC):
             return request
 
         def extract_data(pipeline_response):
-            deserialized = _deserialize(_models._models.ModelList, pipeline_response)
+            deserialized: _models._models.ModelList = _deserialize(  # pylint: disable=protected-access
+                _models._models.ModelList, pipeline_response  # pylint: disable=protected-access
+            )
             list_of_elem = deserialized.models
             if cls:
                 list_of_elem = cls(list_of_elem)  # type: ignore
@@ -935,7 +938,7 @@ class AnomalyDetectorClientOperationsMixin(AnomalyDetectorClientMixinABC):
 
             if response.status_code not in [200]:
                 map_error(status_code=response.status_code, response=response, error_map=error_map)
-                error = _deserialize(_models.ResponseError, response.json())
+                error = _deserialize(_models.ErrorResponse, response.json())
                 raise HttpResponseError(response=response, model=error)
 
             return pipeline_response
@@ -990,7 +993,7 @@ class AnomalyDetectorClientOperationsMixin(AnomalyDetectorClientMixinABC):
 
         if response.status_code not in [204]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = _deserialize(_models.ResponseError, response.json())
+            error = _deserialize(_models.ErrorResponse, response.json())
             raise HttpResponseError(response=response, model=error)
 
         if cls:
@@ -1006,7 +1009,7 @@ class AnomalyDetectorClientOperationsMixin(AnomalyDetectorClientMixinABC):
         :param model_id: Model identifier. Required.
         :type model_id: str
         :return: AnomalyDetectionModel. The AnomalyDetectionModel is compatible with MutableMapping
-        :rtype: ~anomalydetector.models.AnomalyDetectionModel
+        :rtype: ~azure.ai.anomalydetector.models.AnomalyDetectionModel
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         error_map = {
@@ -1043,7 +1046,7 @@ class AnomalyDetectorClientOperationsMixin(AnomalyDetectorClientMixinABC):
 
         if response.status_code not in [200]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = _deserialize(_models.ResponseError, response.json())
+            error = _deserialize(_models.ErrorResponse, response.json())
             raise HttpResponseError(response=response, model=error)
 
         deserialized = _deserialize(_models.AnomalyDetectionModel, response.json())
@@ -1074,13 +1077,13 @@ class AnomalyDetectorClientOperationsMixin(AnomalyDetectorClientMixinABC):
         :param model_id: Model identifier. Required.
         :type model_id: str
         :param options: Request of multivariate anomaly detection. Required.
-        :type options: ~anomalydetector.models.MultivariateBatchDetectionOptions
+        :type options: ~azure.ai.anomalydetector.models.MultivariateBatchDetectionOptions
         :keyword content_type: Body Parameter content-type. Content type parameter for JSON body.
          Default value is "application/json".
         :paramtype content_type: str
         :return: MultivariateDetectionResult. The MultivariateDetectionResult is compatible with
          MutableMapping
-        :rtype: ~anomalydetector.models.MultivariateDetectionResult
+        :rtype: ~azure.ai.anomalydetector.models.MultivariateDetectionResult
         :raises ~azure.core.exceptions.HttpResponseError:
         """
 
@@ -1106,7 +1109,7 @@ class AnomalyDetectorClientOperationsMixin(AnomalyDetectorClientMixinABC):
         :paramtype content_type: str
         :return: MultivariateDetectionResult. The MultivariateDetectionResult is compatible with
          MutableMapping
-        :rtype: ~anomalydetector.models.MultivariateDetectionResult
+        :rtype: ~azure.ai.anomalydetector.models.MultivariateDetectionResult
         :raises ~azure.core.exceptions.HttpResponseError:
         """
 
@@ -1132,7 +1135,7 @@ class AnomalyDetectorClientOperationsMixin(AnomalyDetectorClientMixinABC):
         :paramtype content_type: str
         :return: MultivariateDetectionResult. The MultivariateDetectionResult is compatible with
          MutableMapping
-        :rtype: ~anomalydetector.models.MultivariateDetectionResult
+        :rtype: ~azure.ai.anomalydetector.models.MultivariateDetectionResult
         :raises ~azure.core.exceptions.HttpResponseError:
         """
 
@@ -1153,13 +1156,13 @@ class AnomalyDetectorClientOperationsMixin(AnomalyDetectorClientMixinABC):
         :type model_id: str
         :param options: Request of multivariate anomaly detection. Is one of the following types:
          model, JSON, IO Required.
-        :type options: ~anomalydetector.models.MultivariateBatchDetectionOptions or JSON or IO
+        :type options: ~azure.ai.anomalydetector.models.MultivariateBatchDetectionOptions or JSON or IO
         :keyword content_type: Body parameter Content-Type. Known values are: application/json. Default
          value is None.
         :paramtype content_type: str
         :return: MultivariateDetectionResult. The MultivariateDetectionResult is compatible with
          MutableMapping
-        :rtype: ~anomalydetector.models.MultivariateDetectionResult
+        :rtype: ~azure.ai.anomalydetector.models.MultivariateDetectionResult
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         error_map = {
@@ -1181,7 +1184,7 @@ class AnomalyDetectorClientOperationsMixin(AnomalyDetectorClientMixinABC):
         if isinstance(options, (IO, bytes)):
             _content = options
         else:
-            _content = json.dumps(options, cls=AzureJSONEncoder)
+            _content = json.dumps(options, cls=AzureJSONEncoder)  # type: ignore
 
         request = build_anomaly_detector_detect_multivariate_batch_anomaly_request(
             model_id=model_id,
@@ -1206,7 +1209,7 @@ class AnomalyDetectorClientOperationsMixin(AnomalyDetectorClientMixinABC):
 
         if response.status_code not in [202]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = _deserialize(_models.ResponseError, response.json())
+            error = _deserialize(_models.ErrorResponse, response.json())
             raise HttpResponseError(response=response, model=error)
 
         response_headers = {}
@@ -1239,13 +1242,13 @@ class AnomalyDetectorClientOperationsMixin(AnomalyDetectorClientMixinABC):
         :param model_id: Model identifier. Required.
         :type model_id: str
         :param options: Request of last detection. Required.
-        :type options: ~anomalydetector.models.MultivariateLastDetectionOptions
+        :type options: ~azure.ai.anomalydetector.models.MultivariateLastDetectionOptions
         :keyword content_type: Body Parameter content-type. Content type parameter for JSON body.
          Default value is "application/json".
         :paramtype content_type: str
         :return: MultivariateLastDetectionResult. The MultivariateLastDetectionResult is compatible
          with MutableMapping
-        :rtype: ~anomalydetector.models.MultivariateLastDetectionResult
+        :rtype: ~azure.ai.anomalydetector.models.MultivariateLastDetectionResult
         :raises ~azure.core.exceptions.HttpResponseError:
         """
 
@@ -1269,7 +1272,7 @@ class AnomalyDetectorClientOperationsMixin(AnomalyDetectorClientMixinABC):
         :paramtype content_type: str
         :return: MultivariateLastDetectionResult. The MultivariateLastDetectionResult is compatible
          with MutableMapping
-        :rtype: ~anomalydetector.models.MultivariateLastDetectionResult
+        :rtype: ~azure.ai.anomalydetector.models.MultivariateLastDetectionResult
         :raises ~azure.core.exceptions.HttpResponseError:
         """
 
@@ -1293,7 +1296,7 @@ class AnomalyDetectorClientOperationsMixin(AnomalyDetectorClientMixinABC):
         :paramtype content_type: str
         :return: MultivariateLastDetectionResult. The MultivariateLastDetectionResult is compatible
          with MutableMapping
-        :rtype: ~anomalydetector.models.MultivariateLastDetectionResult
+        :rtype: ~azure.ai.anomalydetector.models.MultivariateLastDetectionResult
         :raises ~azure.core.exceptions.HttpResponseError:
         """
 
@@ -1312,13 +1315,13 @@ class AnomalyDetectorClientOperationsMixin(AnomalyDetectorClientMixinABC):
         :type model_id: str
         :param options: Request of last detection. Is one of the following types: model, JSON, IO
          Required.
-        :type options: ~anomalydetector.models.MultivariateLastDetectionOptions or JSON or IO
+        :type options: ~azure.ai.anomalydetector.models.MultivariateLastDetectionOptions or JSON or IO
         :keyword content_type: Body parameter Content-Type. Known values are: application/json. Default
          value is None.
         :paramtype content_type: str
         :return: MultivariateLastDetectionResult. The MultivariateLastDetectionResult is compatible
          with MutableMapping
-        :rtype: ~anomalydetector.models.MultivariateLastDetectionResult
+        :rtype: ~azure.ai.anomalydetector.models.MultivariateLastDetectionResult
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         error_map = {
@@ -1340,7 +1343,7 @@ class AnomalyDetectorClientOperationsMixin(AnomalyDetectorClientMixinABC):
         if isinstance(options, (IO, bytes)):
             _content = options
         else:
-            _content = json.dumps(options, cls=AzureJSONEncoder)
+            _content = json.dumps(options, cls=AzureJSONEncoder)  # type: ignore
 
         request = build_anomaly_detector_detect_multivariate_last_anomaly_request(
             model_id=model_id,
@@ -1365,7 +1368,7 @@ class AnomalyDetectorClientOperationsMixin(AnomalyDetectorClientMixinABC):
 
         if response.status_code not in [200]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = _deserialize(_models.ResponseError, response.json())
+            error = _deserialize(_models.ErrorResponse, response.json())
             raise HttpResponseError(response=response, model=error)
 
         deserialized = _deserialize(_models.MultivariateLastDetectionResult, response.json())
