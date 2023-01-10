@@ -42,35 +42,8 @@ class Origin(str, Enum, metaclass=CaseInsensitiveEnumMeta):
     USER_SYSTEM = "user,system"
 
 
-class PrivateEndpointConnectionProvisioningState(str, Enum, metaclass=CaseInsensitiveEnumMeta):
-    """The current provisioning state."""
-
-    SUCCEEDED = "Succeeded"
-    CREATING = "Creating"
-    DELETING = "Deleting"
-    FAILED = "Failed"
-
-
-class PrivateEndpointServiceConnectionStatus(str, Enum, metaclass=CaseInsensitiveEnumMeta):
-    """The private endpoint connection status."""
-
-    PENDING = "Pending"
-    APPROVED = "Approved"
-    REJECTED = "Rejected"
-
-
 class ProvisioningState(str, Enum, metaclass=CaseInsensitiveEnumMeta):
-    """Sensor integration instance provisioning state."""
+    """FarmBeats instance provisioning state."""
 
-    CREATING = "Creating"
-    UPDATING = "Updating"
-    DELETING = "Deleting"
     SUCCEEDED = "Succeeded"
     FAILED = "Failed"
-
-
-class PublicNetworkAccess(str, Enum, metaclass=CaseInsensitiveEnumMeta):
-    """Property to allow or block public traffic for an Azure FarmBeats resource."""
-
-    ENABLED = "Enabled"
-    HYBRID = "Hybrid"

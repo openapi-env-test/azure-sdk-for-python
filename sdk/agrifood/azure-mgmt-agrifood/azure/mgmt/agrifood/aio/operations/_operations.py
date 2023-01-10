@@ -44,7 +44,7 @@ class Operations:
         **DO NOT** instantiate this class directly.
 
         Instead, you should access the following operations through
-        :class:`~azure.mgmt.agrifood.aio.AgriFoodMgmtClient`'s
+        :class:`~azure.mgmt.agrifood.aio.AzureAgriFoodRPService`'s
         :attr:`operations` attribute.
     """
 
@@ -69,7 +69,7 @@ class Operations:
         _headers = kwargs.pop("headers", {}) or {}
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
-        api_version: Literal["2021-09-01-preview"] = kwargs.pop(
+        api_version: Literal["2020-05-12-preview"] = kwargs.pop(
             "api_version", _params.pop("api-version", self._config.api_version)
         )
         cls: ClsType[_models.OperationListResult] = kwargs.pop("cls", None)

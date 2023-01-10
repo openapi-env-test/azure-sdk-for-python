@@ -7,7 +7,7 @@
 # --------------------------------------------------------------------------
 
 from azure.identity import DefaultAzureCredential
-from azure.mgmt.agrifood import AgriFoodMgmtClient
+from azure.mgmt.agrifood import AzureAgriFoodRPService
 
 """
 # PREREQUISITES
@@ -24,20 +24,19 @@ from azure.mgmt.agrifood import AgriFoodMgmtClient
 
 
 def main():
-    client = AgriFoodMgmtClient(
+    client = AzureAgriFoodRPService(
         credential=DefaultAzureCredential(),
-        solution_id="SOLUTION_ID",
         subscription_id="11111111-2222-3333-4444-555555555555",
     )
 
-    response = client.farm_beats_models.begin_update(
-        resource_group_name="examples-rg",
+    response = client.farm_beats_models.update(
         farm_beats_resource_name="examples-farmBeatsResourceName",
+        resource_group_name="examples-rg",
         body={"tags": {"key1": "value1", "key2": "value2"}},
-    ).result()
+    )
     print(response)
 
 
-# x-ms-original-file: specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/FarmBeatsModels_Update.json
+# x-ms-original-file: specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/FarmBeatsModels_Update.json
 if __name__ == "__main__":
     main()
