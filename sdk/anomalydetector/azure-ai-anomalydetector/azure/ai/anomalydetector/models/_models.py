@@ -8,21 +8,14 @@
 # --------------------------------------------------------------------------
 
 import datetime
-import sys
 from typing import Any, List, Mapping, Optional, TYPE_CHECKING, Union, overload
 
 from .. import _model_base
 from .._model_base import rest_field
 
-if sys.version_info >= (3, 9):
-    from collections.abc import MutableMapping
-else:
-    from typing import MutableMapping  # type: ignore  # pylint: disable=ungrouped-imports
-
 if TYPE_CHECKING:
     # pylint: disable=unused-import,ungrouped-imports
     from .. import models as _models
-JSON = MutableMapping[str, Any]  # pylint: disable=unsubscriptable-object
 
 
 class AlignPolicy(_model_base.Model):
@@ -30,11 +23,11 @@ class AlignPolicy(_model_base.Model):
 
     :ivar align_mode: An optional field, indicating how to align different variables to the same
      time-range. Either Inner or Outer. Known values are: "Inner" and "Outer".
-    :vartype align_mode: str or ~anomalydetector.models.AlignMode
+    :vartype align_mode: str or ~azure.ai.anomalydetector.models.AlignMode
     :ivar fill_n_a_method: An optional field, indicating how missing values will be filled. One of
      Previous, Subsequent, Linear, Zero, Fixed. Known values are: "Previous", "Subsequent",
      "Linear", "Zero", and "Fixed".
-    :vartype fill_n_a_method: str or ~anomalydetector.models.FillNAMethod
+    :vartype fill_n_a_method: str or ~azure.ai.anomalydetector.models.FillNAMethod
     :ivar padding_value: An optional field. Required when fillNAMethod is Fixed.
     :vartype padding_value: float
     """
@@ -64,9 +57,8 @@ Previous, Subsequent, Linear, Zero, Fixed. Known values are: \"Previous\", \"Sub
         :param mapping: raw JSON to initialize the model.
         :type mapping: Mapping[str, Any]
         """
-        ...
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs):  # pylint: disable=useless-super-delegation
         super().__init__(*args, **kwargs)
 
 
@@ -85,7 +77,7 @@ class AnomalyDetectionModel(_model_base.Model):
     :vartype last_updated_time: ~datetime.datetime
     :ivar model_info: Training result of a model including its status, errors and diagnostics
      information.
-    :vartype model_info: ~anomalydetector.models.ModelInfo
+    :vartype model_info: ~azure.ai.anomalydetector.models.ModelInfo
     """
 
     model_id: str = rest_field(name="modelId", readonly=True)
@@ -114,9 +106,8 @@ information. """
         :param mapping: raw JSON to initialize the model.
         :type mapping: Mapping[str, Any]
         """
-        ...
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs):  # pylint: disable=useless-super-delegation
         super().__init__(*args, **kwargs)
 
 
@@ -129,7 +120,7 @@ class AnomalyDetectorError(_model_base.Model):
      "InvalidGranularity", "InvalidPeriod", "InvalidModelArgument", "InvalidSeries",
      "InvalidJsonFormat", "RequiredGranularity", "RequiredSeries", "InvalidImputeMode", and
      "InvalidImputeFixedValue".
-    :vartype code: str or ~anomalydetector.models.AnomalyDetectorErrorCodes
+    :vartype code: str or ~azure.ai.anomalydetector.models.AnomalyDetectorErrorCodes
     :ivar message: A message explaining the error reported by the service.
     :vartype message: str
     """
@@ -157,9 +148,8 @@ class AnomalyDetectorError(_model_base.Model):
         :param mapping: raw JSON to initialize the model.
         :type mapping: Mapping[str, Any]
         """
-        ...
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs):  # pylint: disable=useless-super-delegation
         super().__init__(*args, **kwargs)
 
 
@@ -173,7 +163,7 @@ class AnomalyInterpretation(_model_base.Model):
      number between 0 and 1.
     :vartype contribution_score: float
     :ivar correlation_changes: Correlation changes among the anomalous variables.
-    :vartype correlation_changes: ~anomalydetector.models.CorrelationChanges
+    :vartype correlation_changes: ~azure.ai.anomalydetector.models.CorrelationChanges
     """
 
     variable: Optional[str] = rest_field()
@@ -200,9 +190,8 @@ number between 0 and 1. """
         :param mapping: raw JSON to initialize the model.
         :type mapping: Mapping[str, Any]
         """
-        ...
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs):  # pylint: disable=useless-super-delegation
         super().__init__(*args, **kwargs)
 
 
@@ -214,9 +203,9 @@ class AnomalyState(_model_base.Model):
     :ivar timestamp: The timestamp for this anomaly. Required.
     :vartype timestamp: ~datetime.datetime
     :ivar value: The detailed value of this anomalous timestamp.
-    :vartype value: ~anomalydetector.models.AnomalyValue
+    :vartype value: ~azure.ai.anomalydetector.models.AnomalyValue
     :ivar errors: Error message for the current timestamp.
-    :vartype errors: list[~anomalydetector.models.ErrorResponse]
+    :vartype errors: list[~azure.ai.anomalydetector.models.ErrorResponse]
     """
 
     timestamp: datetime.datetime = rest_field()
@@ -242,9 +231,8 @@ class AnomalyState(_model_base.Model):
         :param mapping: raw JSON to initialize the model.
         :type mapping: Mapping[str, Any]
         """
-        ...
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs):  # pylint: disable=useless-super-delegation
         super().__init__(*args, **kwargs)
 
 
@@ -262,7 +250,7 @@ class AnomalyValue(_model_base.Model):
      well. Required.
     :vartype score: float
     :ivar interpretation: Interpretation of this anomalous timestamp.
-    :vartype interpretation: list[~anomalydetector.models.AnomalyInterpretation]
+    :vartype interpretation: list[~azure.ai.anomalydetector.models.AnomalyInterpretation]
     """
 
     is_anomaly: bool = rest_field(name="isAnomaly")
@@ -293,9 +281,8 @@ well. Required. """
         :param mapping: raw JSON to initialize the model.
         :type mapping: Mapping[str, Any]
         """
-        ...
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs):  # pylint: disable=useless-super-delegation
         super().__init__(*args, **kwargs)
 
 
@@ -324,9 +311,8 @@ class CorrelationChanges(_model_base.Model):
         :param mapping: raw JSON to initialize the model.
         :type mapping: Mapping[str, Any]
         """
-        ...
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs):  # pylint: disable=useless-super-delegation
         super().__init__(*args, **kwargs)
 
 
@@ -334,9 +320,9 @@ class DiagnosticsInfo(_model_base.Model):
     """Diagnostics information to help inspect the states of model or variable.
 
     :ivar model_state: Model status.
-    :vartype model_state: ~anomalydetector.models.ModelState
+    :vartype model_state: ~azure.ai.anomalydetector.models.ModelState
     :ivar variable_states: Variable Status.
-    :vartype variable_states: list[~anomalydetector.models.VariableState]
+    :vartype variable_states: list[~azure.ai.anomalydetector.models.VariableState]
     """
 
     model_state: Optional["_models.ModelState"] = rest_field(name="modelState")
@@ -359,9 +345,8 @@ class DiagnosticsInfo(_model_base.Model):
         :param mapping: raw JSON to initialize the model.
         :type mapping: Mapping[str, Any]
         """
-        ...
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs):  # pylint: disable=useless-super-delegation
         super().__init__(*args, **kwargs)
 
 
@@ -396,9 +381,8 @@ class ErrorResponse(_model_base.Model):
         :param mapping: raw JSON to initialize the model.
         :type mapping: Mapping[str, Any]
         """
-        ...
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs):  # pylint: disable=useless-super-delegation
         super().__init__(*args, **kwargs)
 
 
@@ -416,7 +400,7 @@ class ModelInfo(_model_base.Model):
     :vartype data_source: str
     :ivar data_schema: Data schema of input data source: OneTable or MultiTable. The default
      DataSchema is OneTable. Known values are: "OneTable" and "MultiTable".
-    :vartype data_schema: str or ~anomalydetector.models.DataSchema
+    :vartype data_schema: str or ~azure.ai.anomalydetector.models.DataSchema
     :ivar start_time: A required field, indicating the start time of training data, which should be
      date-time of ISO 8601 format. Required.
     :vartype start_time: ~datetime.datetime
@@ -431,15 +415,15 @@ class ModelInfo(_model_base.Model):
      detect whether the timestamp is anomaly or not.
     :vartype sliding_window: int
     :ivar align_policy: An optional field, indicating the manner to align multiple variables.
-    :vartype align_policy: ~anomalydetector.models.AlignPolicy
+    :vartype align_policy: ~azure.ai.anomalydetector.models.AlignPolicy
     :ivar status: Model status. One of CREATED, RUNNING, READY, and FAILED. Known values are:
      "CREATED", "RUNNING", "READY", and "FAILED".
-    :vartype status: str or ~anomalydetector.models.ModelStatus
+    :vartype status: str or ~azure.ai.anomalydetector.models.ModelStatus
     :ivar errors: Error messages when failed to create a model.
-    :vartype errors: list[~anomalydetector.models.ErrorResponse]
+    :vartype errors: list[~azure.ai.anomalydetector.models.ErrorResponse]
     :ivar diagnostics_info: Diagnostics information to help inspect the states of model or
      variable.
-    :vartype diagnostics_info: ~anomalydetector.models.DiagnosticsInfo
+    :vartype diagnostics_info: ~azure.ai.anomalydetector.models.DiagnosticsInfo
     """
 
     data_source: str = rest_field(name="dataSource")
@@ -492,9 +476,8 @@ detect whether the timestamp is anomaly or not. """
         :param mapping: raw JSON to initialize the model.
         :type mapping: Mapping[str, Any]
         """
-        ...
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs):  # pylint: disable=useless-super-delegation
         super().__init__(*args, **kwargs)
 
 
@@ -504,7 +487,7 @@ class ModelList(_model_base.Model):
     All required parameters must be populated in order to send to Azure.
 
     :ivar models: List of models. Required.
-    :vartype models: list[~anomalydetector.models.AnomalyDetectionModel]
+    :vartype models: list[~azure.ai.anomalydetector.models.AnomalyDetectionModel]
     :ivar current_count: Number of trained multivariate models. Required.
     :vartype current_count: int
     :ivar max_count: Maximum number of models that can be trained for this Anomaly Detector
@@ -522,9 +505,6 @@ class ModelList(_model_base.Model):
     """Maximum number of models that can be trained for this Anomaly Detector resource. Required. """
     next_link: Optional[str] = rest_field(name="nextLink")
     """The link to fetch more models. """
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
 
 
 class ModelState(_model_base.Model):
@@ -574,9 +554,8 @@ epoch. """
         :param mapping: raw JSON to initialize the model.
         :type mapping: Mapping[str, Any]
         """
-        ...
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs):  # pylint: disable=useless-super-delegation
         super().__init__(*args, **kwargs)
 
 
@@ -638,9 +617,8 @@ be date-time of ISO 8601 format. Required. """
         :param mapping: raw JSON to initialize the model.
         :type mapping: Mapping[str, Any]
         """
-        ...
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs):  # pylint: disable=useless-super-delegation
         super().__init__(*args, **kwargs)
 
 
@@ -651,15 +629,15 @@ class MultivariateBatchDetectionResultSummary(_model_base.Model):
 
     :ivar status: Status of detection results. One of CREATED, RUNNING, READY, and FAILED.
      Required. Known values are: "CREATED", "RUNNING", "READY", and "FAILED".
-    :vartype status: str or ~anomalydetector.models.MultivariateBatchDetectionStatus
+    :vartype status: str or ~azure.ai.anomalydetector.models.MultivariateBatchDetectionStatus
     :ivar errors: Error message when detection is failed.
-    :vartype errors: list[~anomalydetector.models.ErrorResponse]
+    :vartype errors: list[~azure.ai.anomalydetector.models.ErrorResponse]
     :ivar variable_states: Variable Status.
-    :vartype variable_states: list[~anomalydetector.models.VariableState]
+    :vartype variable_states: list[~azure.ai.anomalydetector.models.VariableState]
     :ivar setup_info: Detection request for batch inference. This is an asynchronous inference
      which
      will need another API to get detection results. Required.
-    :vartype setup_info: ~anomalydetector.models.MultivariateBatchDetectionOptions
+    :vartype setup_info: ~azure.ai.anomalydetector.models.MultivariateBatchDetectionOptions
     """
 
     status: Union[str, "_models.MultivariateBatchDetectionStatus"] = rest_field()
@@ -689,9 +667,8 @@ will need another API to get detection results. Required. """
         :param mapping: raw JSON to initialize the model.
         :type mapping: Mapping[str, Any]
         """
-        ...
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs):  # pylint: disable=useless-super-delegation
         super().__init__(*args, **kwargs)
 
 
@@ -706,9 +683,9 @@ class MultivariateDetectionResult(_model_base.Model):
      Required.
     :vartype result_id: str
     :ivar summary: Multivariate anomaly detection status. Required.
-    :vartype summary: ~anomalydetector.models.MultivariateBatchDetectionResultSummary
+    :vartype summary: ~azure.ai.anomalydetector.models.MultivariateBatchDetectionResultSummary
     :ivar results: Detection result for each timestamp. Required.
-    :vartype results: list[~anomalydetector.models.AnomalyState]
+    :vartype results: list[~azure.ai.anomalydetector.models.AnomalyState]
     """
 
     result_id: str = rest_field(name="resultId", readonly=True)
@@ -733,9 +710,8 @@ class MultivariateDetectionResult(_model_base.Model):
         :param mapping: raw JSON to initialize the model.
         :type mapping: Mapping[str, Any]
         """
-        ...
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs):  # pylint: disable=useless-super-delegation
         super().__init__(*args, **kwargs)
 
 
@@ -746,7 +722,7 @@ class MultivariateLastDetectionOptions(_model_base.Model):
 
     :ivar variables: This contains the inference data, including the name, timestamps(ISO 8601) and
      values of variables. Required.
-    :vartype variables: list[~anomalydetector.models.VariableValues]
+    :vartype variables: list[~azure.ai.anomalydetector.models.VariableValues]
     :ivar top_contributor_count: An optional field, which is used to specify the number of top
      contributed
      variables for one anomalous timestamp in the response. The default number is
@@ -777,9 +753,8 @@ variables for one anomalous timestamp in the response. The default number is
         :param mapping: raw JSON to initialize the model.
         :type mapping: Mapping[str, Any]
         """
-        ...
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs):  # pylint: disable=useless-super-delegation
         super().__init__(*args, **kwargs)
 
 
@@ -787,9 +762,9 @@ class MultivariateLastDetectionResult(_model_base.Model):
     """Results of last detection.
 
     :ivar variable_states: Variable Status.
-    :vartype variable_states: list[~anomalydetector.models.VariableState]
+    :vartype variable_states: list[~azure.ai.anomalydetector.models.VariableState]
     :ivar results: Anomaly status and information.
-    :vartype results: list[~anomalydetector.models.AnomalyState]
+    :vartype results: list[~azure.ai.anomalydetector.models.AnomalyState]
     """
 
     variable_states: Optional[List["_models.VariableState"]] = rest_field(name="variableStates")
@@ -812,51 +787,8 @@ class MultivariateLastDetectionResult(_model_base.Model):
         :param mapping: raw JSON to initialize the model.
         :type mapping: Mapping[str, Any]
         """
-        ...
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-
-class ResponseError(_model_base.Model):
-    """Error response.
-
-    All required parameters must be populated in order to send to Azure.
-
-    :ivar x_ms_error_code: Error code.
-    :vartype x_ms_error_code: str
-    :ivar code: The error code. Required.
-    :vartype code: str
-    :ivar message: The message explaining the error reported by the service. Required.
-    :vartype message: str
-    """
-
-    x_ms_error_code: Optional[str] = rest_field(name="x-ms-error-code")
-    """Error code. """
-    code: str = rest_field()
-    """The error code. Required. """
-    message: str = rest_field()
-    """The message explaining the error reported by the service. Required. """
-
-    @overload
-    def __init__(
-        self,
-        *,
-        code: str,
-        message: str,
-        x_ms_error_code: Optional[str] = None,
-    ):
-        ...
-
-    @overload
-    def __init__(self, mapping: Mapping[str, Any]):
-        """
-        :param mapping: raw JSON to initialize the model.
-        :type mapping: Mapping[str, Any]
-        """
-        ...
-
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs):  # pylint: disable=useless-super-delegation
         super().__init__(*args, **kwargs)
 
 
@@ -891,9 +823,8 @@ class TimeSeriesPoint(_model_base.Model):
         :param mapping: raw JSON to initialize the model.
         :type mapping: Mapping[str, Any]
         """
-        ...
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs):  # pylint: disable=useless-super-delegation
         super().__init__(*args, **kwargs)
 
 
@@ -904,12 +835,12 @@ class UnivariateChangePointDetectionOptions(_model_base.Model):
 
     :ivar series: Time series data points. Points should be sorted by timestamp in ascending
      order to match the change point detection result. Required.
-    :vartype series: list[~anomalydetector.models.TimeSeriesPoint]
+    :vartype series: list[~azure.ai.anomalydetector.models.TimeSeriesPoint]
     :ivar granularity: Can only be one of yearly, monthly, weekly, daily, hourly, minutely or
      secondly. Granularity is used for verify whether input series is valid. Required. Known values
      are: "yearly", "monthly", "weekly", "daily", "hourly", "minutely", "secondly", "microsecond",
      and "none".
-    :vartype granularity: str or ~anomalydetector.models.TimeGranularity
+    :vartype granularity: str or ~azure.ai.anomalydetector.models.TimeGranularity
     :ivar custom_interval: Custom Interval is used to set non-standard time interval, for example,
      if the
      series is 5 minutes, request can be set as {"granularity":"minutely",
@@ -968,9 +899,8 @@ be accepted. """
         :param mapping: raw JSON to initialize the model.
         :type mapping: Mapping[str, Any]
         """
-        ...
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs):  # pylint: disable=useless-super-delegation
         super().__init__(*args, **kwargs)
 
 
@@ -1016,9 +946,8 @@ array is consistent with the input series. """
         :param mapping: raw JSON to initialize the model.
         :type mapping: Mapping[str, Any]
         """
-        ...
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs):  # pylint: disable=useless-super-delegation
         super().__init__(*args, **kwargs)
 
 
@@ -1031,13 +960,13 @@ class UnivariateDetectionOptions(_model_base.Model):
      order to match the anomaly detection result. If the data is not sorted
      correctly or there is duplicated timestamp, the API will not work. In such
      case, an error message will be returned. Required.
-    :vartype series: list[~anomalydetector.models.TimeSeriesPoint]
+    :vartype series: list[~azure.ai.anomalydetector.models.TimeSeriesPoint]
     :ivar granularity: Optional argument, can be one of yearly, monthly, weekly, daily, hourly,
      minutely, secondly, microsecond or none. If granularity is not present, it will
      be none by default. If granularity is none, the timestamp property in time
      series point can be absent. Known values are: "yearly", "monthly", "weekly", "daily",
      "hourly", "minutely", "secondly", "microsecond", and "none".
-    :vartype granularity: str or ~anomalydetector.models.TimeGranularity
+    :vartype granularity: str or ~azure.ai.anomalydetector.models.TimeGranularity
     :ivar custom_interval: Custom Interval is used to set non-standard time interval, for example,
      if the
      series is 5 minutes, request can be set as {"granularity":"minutely",
@@ -1058,7 +987,7 @@ class UnivariateDetectionOptions(_model_base.Model):
      used
      when granularity is not "none". Known values are: "auto", "previous", "linear", "fixed",
      "zero", and "notFill".
-    :vartype impute_mode: str or ~anomalydetector.models.ImputeMode
+    :vartype impute_mode: str or ~azure.ai.anomalydetector.models.ImputeMode
     :ivar impute_fixed_value: Used to specify the value to fill, it's used when granularity is not
      "none"
      and imputeMode is "fixed".
@@ -1116,9 +1045,8 @@ and imputeMode is \"fixed\". """
         :param mapping: raw JSON to initialize the model.
         :type mapping: Mapping[str, Any]
         """
-        ...
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs):  # pylint: disable=useless-super-delegation
         super().__init__(*args, **kwargs)
 
 
@@ -1228,9 +1156,8 @@ sever the anomaly is. For normal points, the \"severity\" is always 0. """
         :param mapping: raw JSON to initialize the model.
         :type mapping: Mapping[str, Any]
         """
-        ...
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs):  # pylint: disable=useless-super-delegation
         super().__init__(*args, **kwargs)
 
 
@@ -1323,9 +1250,8 @@ sever the anomaly is. For normal points, the \"severity\" is always 0. """
         :param mapping: raw JSON to initialize the model.
         :type mapping: Mapping[str, Any]
         """
-        ...
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs):  # pylint: disable=useless-super-delegation
         super().__init__(*args, **kwargs)
 
 
@@ -1373,9 +1299,8 @@ class VariableState(_model_base.Model):
         :param mapping: raw JSON to initialize the model.
         :type mapping: Mapping[str, Any]
         """
-        ...
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs):  # pylint: disable=useless-super-delegation
         super().__init__(*args, **kwargs)
 
 
@@ -1415,7 +1340,6 @@ class VariableValues(_model_base.Model):
         :param mapping: raw JSON to initialize the model.
         :type mapping: Mapping[str, Any]
         """
-        ...
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs):  # pylint: disable=useless-super-delegation
         super().__init__(*args, **kwargs)
