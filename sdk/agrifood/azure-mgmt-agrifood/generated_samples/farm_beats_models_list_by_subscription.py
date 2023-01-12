@@ -7,7 +7,7 @@
 # --------------------------------------------------------------------------
 
 from azure.identity import DefaultAzureCredential
-from azure.mgmt.agrifood import AgriFoodMgmtClient
+from azure.mgmt.agrifood import AzureAgriFoodRPService
 
 """
 # PREREQUISITES
@@ -24,9 +24,8 @@ from azure.mgmt.agrifood import AgriFoodMgmtClient
 
 
 def main():
-    client = AgriFoodMgmtClient(
+    client = AzureAgriFoodRPService(
         credential=DefaultAzureCredential(),
-        solution_id="SOLUTION_ID",
         subscription_id="11111111-2222-3333-4444-555555555555",
     )
 
@@ -35,6 +34,6 @@ def main():
         print(item)
 
 
-# x-ms-original-file: specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/FarmBeatsModels_ListBySubscription.json
+# x-ms-original-file: specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/FarmBeatsModels_ListBySubscription.json
 if __name__ == "__main__":
     main()
