@@ -43,8 +43,8 @@ def build_check_name_availability_request(subscription_id: str, **kwargs: Any) -
     _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
     _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
-    api_version: Literal["2021-09-01-preview"] = kwargs.pop(
-        "api_version", _params.pop("api-version", "2021-09-01-preview")
+    api_version: Literal["2020-05-12-preview"] = kwargs.pop(
+        "api_version", _params.pop("api-version", "2020-05-12-preview")
     )
     content_type: Optional[str] = kwargs.pop("content_type", _headers.pop("Content-Type", None))
     accept = _headers.pop("Accept", "application/json")
@@ -54,7 +54,7 @@ def build_check_name_availability_request(subscription_id: str, **kwargs: Any) -
         "template_url", "/subscriptions/{subscriptionId}/providers/Microsoft.AgFoodPlatform/checkNameAvailability"
     )  # pylint: disable=line-too-long
     path_format_arguments = {
-        "subscriptionId": _SERIALIZER.url("subscription_id", subscription_id, "str"),
+        "subscriptionId": _SERIALIZER.url("subscription_id", subscription_id, "str", min_length=1),
     }
 
     _url: str = _format_url_section(_url, **path_format_arguments)  # type: ignore
@@ -76,7 +76,7 @@ class LocationsOperations:
         **DO NOT** instantiate this class directly.
 
         Instead, you should access the following operations through
-        :class:`~azure.mgmt.agrifood.AgriFoodMgmtClient`'s
+        :class:`~azure.mgmt.agrifood.AzureAgriFoodRPService`'s
         :attr:`locations` attribute.
     """
 
@@ -150,7 +150,7 @@ class LocationsOperations:
         _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
-        api_version: Literal["2021-09-01-preview"] = kwargs.pop(
+        api_version: Literal["2020-05-12-preview"] = kwargs.pop(
             "api_version", _params.pop("api-version", self._config.api_version)
         )
         content_type: Optional[str] = kwargs.pop("content_type", _headers.pop("Content-Type", None))

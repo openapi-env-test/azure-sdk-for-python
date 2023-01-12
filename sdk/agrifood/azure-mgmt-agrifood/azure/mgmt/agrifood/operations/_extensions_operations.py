@@ -7,7 +7,7 @@
 # Changes may cause incorrect behavior and will be lost if the code is regenerated.
 # --------------------------------------------------------------------------
 import sys
-from typing import Any, Callable, Dict, IO, Iterable, List, Optional, TypeVar, Union, overload
+from typing import Any, Callable, Dict, Iterable, List, Optional, TypeVar
 import urllib.parse
 
 from azure.core.exceptions import (
@@ -41,16 +41,15 @@ _SERIALIZER = Serializer()
 _SERIALIZER.client_side_validation = False
 
 
-def build_create_or_update_request(
-    resource_group_name: str, farm_beats_resource_name: str, extension_id: str, subscription_id: str, **kwargs: Any
+def build_create_request(
+    extension_id: str, farm_beats_resource_name: str, resource_group_name: str, subscription_id: str, **kwargs: Any
 ) -> HttpRequest:
     _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
     _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
-    api_version: Literal["2021-09-01-preview"] = kwargs.pop(
-        "api_version", _params.pop("api-version", "2021-09-01-preview")
+    api_version: Literal["2020-05-12-preview"] = kwargs.pop(
+        "api_version", _params.pop("api-version", "2020-05-12-preview")
     )
-    content_type: Optional[str] = kwargs.pop("content_type", _headers.pop("Content-Type", None))
     accept = _headers.pop("Accept", "application/json")
 
     # Construct URL
@@ -59,12 +58,12 @@ def build_create_or_update_request(
         "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}/extensions/{extensionId}",
     )  # pylint: disable=line-too-long
     path_format_arguments = {
-        "subscriptionId": _SERIALIZER.url("subscription_id", subscription_id, "str"),
+        "extensionId": _SERIALIZER.url("extension_id", extension_id, "str"),
+        "farmBeatsResourceName": _SERIALIZER.url("farm_beats_resource_name", farm_beats_resource_name, "str"),
         "resourceGroupName": _SERIALIZER.url(
             "resource_group_name", resource_group_name, "str", max_length=90, min_length=1
         ),
-        "farmBeatsResourceName": _SERIALIZER.url("farm_beats_resource_name", farm_beats_resource_name, "str"),
-        "extensionId": _SERIALIZER.url("extension_id", extension_id, "str"),
+        "subscriptionId": _SERIALIZER.url("subscription_id", subscription_id, "str", min_length=1),
     }
 
     _url: str = _format_url_section(_url, **path_format_arguments)  # type: ignore
@@ -73,21 +72,19 @@ def build_create_or_update_request(
     _params["api-version"] = _SERIALIZER.query("api_version", api_version, "str")
 
     # Construct headers
-    if content_type is not None:
-        _headers["Content-Type"] = _SERIALIZER.header("content_type", content_type, "str")
     _headers["Accept"] = _SERIALIZER.header("accept", accept, "str")
 
     return HttpRequest(method="PUT", url=_url, params=_params, headers=_headers, **kwargs)
 
 
 def build_get_request(
-    resource_group_name: str, farm_beats_resource_name: str, extension_id: str, subscription_id: str, **kwargs: Any
+    extension_id: str, farm_beats_resource_name: str, resource_group_name: str, subscription_id: str, **kwargs: Any
 ) -> HttpRequest:
     _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
     _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
-    api_version: Literal["2021-09-01-preview"] = kwargs.pop(
-        "api_version", _params.pop("api-version", "2021-09-01-preview")
+    api_version: Literal["2020-05-12-preview"] = kwargs.pop(
+        "api_version", _params.pop("api-version", "2020-05-12-preview")
     )
     accept = _headers.pop("Accept", "application/json")
 
@@ -97,12 +94,12 @@ def build_get_request(
         "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}/extensions/{extensionId}",
     )  # pylint: disable=line-too-long
     path_format_arguments = {
-        "subscriptionId": _SERIALIZER.url("subscription_id", subscription_id, "str"),
+        "extensionId": _SERIALIZER.url("extension_id", extension_id, "str"),
+        "farmBeatsResourceName": _SERIALIZER.url("farm_beats_resource_name", farm_beats_resource_name, "str"),
         "resourceGroupName": _SERIALIZER.url(
             "resource_group_name", resource_group_name, "str", max_length=90, min_length=1
         ),
-        "farmBeatsResourceName": _SERIALIZER.url("farm_beats_resource_name", farm_beats_resource_name, "str"),
-        "extensionId": _SERIALIZER.url("extension_id", extension_id, "str"),
+        "subscriptionId": _SERIALIZER.url("subscription_id", subscription_id, "str", min_length=1),
     }
 
     _url: str = _format_url_section(_url, **path_format_arguments)  # type: ignore
@@ -116,14 +113,14 @@ def build_get_request(
     return HttpRequest(method="GET", url=_url, params=_params, headers=_headers, **kwargs)
 
 
-def build_delete_request(
-    resource_group_name: str, farm_beats_resource_name: str, extension_id: str, subscription_id: str, **kwargs: Any
+def build_update_request(
+    extension_id: str, farm_beats_resource_name: str, resource_group_name: str, subscription_id: str, **kwargs: Any
 ) -> HttpRequest:
     _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
     _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
-    api_version: Literal["2021-09-01-preview"] = kwargs.pop(
-        "api_version", _params.pop("api-version", "2021-09-01-preview")
+    api_version: Literal["2020-05-12-preview"] = kwargs.pop(
+        "api_version", _params.pop("api-version", "2020-05-12-preview")
     )
     accept = _headers.pop("Accept", "application/json")
 
@@ -133,12 +130,48 @@ def build_delete_request(
         "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}/extensions/{extensionId}",
     )  # pylint: disable=line-too-long
     path_format_arguments = {
-        "subscriptionId": _SERIALIZER.url("subscription_id", subscription_id, "str"),
+        "extensionId": _SERIALIZER.url("extension_id", extension_id, "str"),
+        "farmBeatsResourceName": _SERIALIZER.url("farm_beats_resource_name", farm_beats_resource_name, "str"),
         "resourceGroupName": _SERIALIZER.url(
             "resource_group_name", resource_group_name, "str", max_length=90, min_length=1
         ),
-        "farmBeatsResourceName": _SERIALIZER.url("farm_beats_resource_name", farm_beats_resource_name, "str"),
+        "subscriptionId": _SERIALIZER.url("subscription_id", subscription_id, "str", min_length=1),
+    }
+
+    _url: str = _format_url_section(_url, **path_format_arguments)  # type: ignore
+
+    # Construct parameters
+    _params["api-version"] = _SERIALIZER.query("api_version", api_version, "str")
+
+    # Construct headers
+    _headers["Accept"] = _SERIALIZER.header("accept", accept, "str")
+
+    return HttpRequest(method="PATCH", url=_url, params=_params, headers=_headers, **kwargs)
+
+
+def build_delete_request(
+    extension_id: str, farm_beats_resource_name: str, resource_group_name: str, subscription_id: str, **kwargs: Any
+) -> HttpRequest:
+    _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
+    _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
+
+    api_version: Literal["2020-05-12-preview"] = kwargs.pop(
+        "api_version", _params.pop("api-version", "2020-05-12-preview")
+    )
+    accept = _headers.pop("Accept", "application/json")
+
+    # Construct URL
+    _url = kwargs.pop(
+        "template_url",
+        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}/extensions/{extensionId}",
+    )  # pylint: disable=line-too-long
+    path_format_arguments = {
         "extensionId": _SERIALIZER.url("extension_id", extension_id, "str"),
+        "farmBeatsResourceName": _SERIALIZER.url("farm_beats_resource_name", farm_beats_resource_name, "str"),
+        "resourceGroupName": _SERIALIZER.url(
+            "resource_group_name", resource_group_name, "str", max_length=90, min_length=1
+        ),
+        "subscriptionId": _SERIALIZER.url("subscription_id", subscription_id, "str", min_length=1),
     }
 
     _url: str = _format_url_section(_url, **path_format_arguments)  # type: ignore
@@ -166,8 +199,8 @@ def build_list_by_farm_beats_request(
     _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
     _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
-    api_version: Literal["2021-09-01-preview"] = kwargs.pop(
-        "api_version", _params.pop("api-version", "2021-09-01-preview")
+    api_version: Literal["2020-05-12-preview"] = kwargs.pop(
+        "api_version", _params.pop("api-version", "2020-05-12-preview")
     )
     accept = _headers.pop("Accept", "application/json")
 
@@ -177,10 +210,10 @@ def build_list_by_farm_beats_request(
         "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}/extensions",
     )  # pylint: disable=line-too-long
     path_format_arguments = {
-        "subscriptionId": _SERIALIZER.url("subscription_id", subscription_id, "str"),
         "resourceGroupName": _SERIALIZER.url(
             "resource_group_name", resource_group_name, "str", max_length=90, min_length=1
         ),
+        "subscriptionId": _SERIALIZER.url("subscription_id", subscription_id, "str", min_length=1),
         "farmBeatsResourceName": _SERIALIZER.url("farm_beats_resource_name", farm_beats_resource_name, "str"),
     }
 
@@ -213,7 +246,7 @@ class ExtensionsOperations:
         **DO NOT** instantiate this class directly.
 
         Instead, you should access the following operations through
-        :class:`~azure.mgmt.agrifood.AgriFoodMgmtClient`'s
+        :class:`~azure.mgmt.agrifood.AzureAgriFoodRPService`'s
         :attr:`extensions` attribute.
     """
 
@@ -226,186 +259,19 @@ class ExtensionsOperations:
         self._serialize = input_args.pop(0) if input_args else kwargs.pop("serializer")
         self._deserialize = input_args.pop(0) if input_args else kwargs.pop("deserializer")
 
-    @overload
-    def create_or_update(
-        self,
-        resource_group_name: str,
-        farm_beats_resource_name: str,
-        extension_id: str,
-        request_body: Optional[_models.ExtensionInstallationRequest] = None,
-        *,
-        content_type: str = "application/json",
-        **kwargs: Any
-    ) -> _models.Extension:
-        """Install or Update extension. AdditionalApiProperties are merged patch and if the extension is
-        updated to a new version then the obsolete entries will be auto deleted from
-        AdditionalApiProperties.
-
-        :param resource_group_name: The name of the resource group. The name is case insensitive.
-         Required.
-        :type resource_group_name: str
-        :param farm_beats_resource_name: FarmBeats resource name. Required.
-        :type farm_beats_resource_name: str
-        :param extension_id: Id of extension resource. Required.
-        :type extension_id: str
-        :param request_body: Extension resource request body. Default value is None.
-        :type request_body: ~azure.mgmt.agrifood.models.ExtensionInstallationRequest
-        :keyword content_type: Body Parameter content-type. Content type parameter for JSON body.
-         Default value is "application/json".
-        :paramtype content_type: str
-        :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: Extension or the result of cls(response)
-        :rtype: ~azure.mgmt.agrifood.models.Extension
-        :raises ~azure.core.exceptions.HttpResponseError:
-        """
-
-    @overload
-    def create_or_update(
-        self,
-        resource_group_name: str,
-        farm_beats_resource_name: str,
-        extension_id: str,
-        request_body: Optional[IO] = None,
-        *,
-        content_type: str = "application/json",
-        **kwargs: Any
-    ) -> _models.Extension:
-        """Install or Update extension. AdditionalApiProperties are merged patch and if the extension is
-        updated to a new version then the obsolete entries will be auto deleted from
-        AdditionalApiProperties.
-
-        :param resource_group_name: The name of the resource group. The name is case insensitive.
-         Required.
-        :type resource_group_name: str
-        :param farm_beats_resource_name: FarmBeats resource name. Required.
-        :type farm_beats_resource_name: str
-        :param extension_id: Id of extension resource. Required.
-        :type extension_id: str
-        :param request_body: Extension resource request body. Default value is None.
-        :type request_body: IO
-        :keyword content_type: Body Parameter content-type. Content type parameter for binary body.
-         Default value is "application/json".
-        :paramtype content_type: str
-        :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: Extension or the result of cls(response)
-        :rtype: ~azure.mgmt.agrifood.models.Extension
-        :raises ~azure.core.exceptions.HttpResponseError:
-        """
-
     @distributed_trace
-    def create_or_update(
-        self,
-        resource_group_name: str,
-        farm_beats_resource_name: str,
-        extension_id: str,
-        request_body: Optional[Union[_models.ExtensionInstallationRequest, IO]] = None,
-        **kwargs: Any
+    def create(
+        self, extension_id: str, farm_beats_resource_name: str, resource_group_name: str, **kwargs: Any
     ) -> _models.Extension:
-        """Install or Update extension. AdditionalApiProperties are merged patch and if the extension is
-        updated to a new version then the obsolete entries will be auto deleted from
-        AdditionalApiProperties.
+        """Install extension.
 
+        :param extension_id: Id of extension resource. Required.
+        :type extension_id: str
+        :param farm_beats_resource_name: FarmBeats resource name. Required.
+        :type farm_beats_resource_name: str
         :param resource_group_name: The name of the resource group. The name is case insensitive.
          Required.
         :type resource_group_name: str
-        :param farm_beats_resource_name: FarmBeats resource name. Required.
-        :type farm_beats_resource_name: str
-        :param extension_id: Id of extension resource. Required.
-        :type extension_id: str
-        :param request_body: Extension resource request body. Is either a model type or a IO type.
-         Default value is None.
-        :type request_body: ~azure.mgmt.agrifood.models.ExtensionInstallationRequest or IO
-        :keyword content_type: Body Parameter content-type. Known values are: 'application/json'.
-         Default value is None.
-        :paramtype content_type: str
-        :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: Extension or the result of cls(response)
-        :rtype: ~azure.mgmt.agrifood.models.Extension
-        :raises ~azure.core.exceptions.HttpResponseError:
-        """
-        error_map = {
-            401: ClientAuthenticationError,
-            404: ResourceNotFoundError,
-            409: ResourceExistsError,
-            304: ResourceNotModifiedError,
-        }
-        error_map.update(kwargs.pop("error_map", {}) or {})
-
-        _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
-        _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
-
-        api_version: Literal["2021-09-01-preview"] = kwargs.pop(
-            "api_version", _params.pop("api-version", self._config.api_version)
-        )
-        content_type: Optional[str] = kwargs.pop("content_type", _headers.pop("Content-Type", None))
-        cls: ClsType[_models.Extension] = kwargs.pop("cls", None)
-
-        content_type = content_type or "application/json"
-        _json = None
-        _content = None
-        if isinstance(request_body, (IO, bytes)):
-            _content = request_body
-        else:
-            if request_body is not None:
-                _json = self._serialize.body(request_body, "ExtensionInstallationRequest")
-            else:
-                _json = None
-
-        request = build_create_or_update_request(
-            resource_group_name=resource_group_name,
-            farm_beats_resource_name=farm_beats_resource_name,
-            extension_id=extension_id,
-            subscription_id=self._config.subscription_id,
-            api_version=api_version,
-            content_type=content_type,
-            json=_json,
-            content=_content,
-            template_url=self.create_or_update.metadata["url"],
-            headers=_headers,
-            params=_params,
-        )
-        request = _convert_request(request)
-        request.url = self._client.format_url(request.url)
-
-        pipeline_response: PipelineResponse = self._client._pipeline.run(  # pylint: disable=protected-access
-            request, stream=False, **kwargs
-        )
-
-        response = pipeline_response.http_response
-
-        if response.status_code not in [200, 201]:
-            map_error(status_code=response.status_code, response=response, error_map=error_map)
-            error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, pipeline_response)
-            raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
-
-        if response.status_code == 200:
-            deserialized = self._deserialize("Extension", pipeline_response)
-
-        if response.status_code == 201:
-            deserialized = self._deserialize("Extension", pipeline_response)
-
-        if cls:
-            return cls(pipeline_response, deserialized, {})  # type: ignore
-
-        return deserialized  # type: ignore
-
-    create_or_update.metadata = {
-        "url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}/extensions/{extensionId}"
-    }
-
-    @distributed_trace
-    def get(
-        self, resource_group_name: str, farm_beats_resource_name: str, extension_id: str, **kwargs: Any
-    ) -> _models.Extension:
-        """Get installed extension details by extension id.
-
-        :param resource_group_name: The name of the resource group. The name is case insensitive.
-         Required.
-        :type resource_group_name: str
-        :param farm_beats_resource_name: FarmBeats resource name. Required.
-        :type farm_beats_resource_name: str
-        :param extension_id: Id of extension resource. Required.
-        :type extension_id: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: Extension or the result of cls(response)
         :rtype: ~azure.mgmt.agrifood.models.Extension
@@ -422,15 +288,84 @@ class ExtensionsOperations:
         _headers = kwargs.pop("headers", {}) or {}
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
-        api_version: Literal["2021-09-01-preview"] = kwargs.pop(
+        api_version: Literal["2020-05-12-preview"] = kwargs.pop(
+            "api_version", _params.pop("api-version", self._config.api_version)
+        )
+        cls: ClsType[_models.Extension] = kwargs.pop("cls", None)
+
+        request = build_create_request(
+            extension_id=extension_id,
+            farm_beats_resource_name=farm_beats_resource_name,
+            resource_group_name=resource_group_name,
+            subscription_id=self._config.subscription_id,
+            api_version=api_version,
+            template_url=self.create.metadata["url"],
+            headers=_headers,
+            params=_params,
+        )
+        request = _convert_request(request)
+        request.url = self._client.format_url(request.url)
+
+        pipeline_response: PipelineResponse = self._client._pipeline.run(  # pylint: disable=protected-access
+            request, stream=False, **kwargs
+        )
+
+        response = pipeline_response.http_response
+
+        if response.status_code not in [201]:
+            map_error(status_code=response.status_code, response=response, error_map=error_map)
+            error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, pipeline_response)
+            raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
+
+        deserialized = self._deserialize("Extension", pipeline_response)
+
+        if cls:
+            return cls(pipeline_response, deserialized, {})
+
+        return deserialized
+
+    create.metadata = {
+        "url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}/extensions/{extensionId}"
+    }
+
+    @distributed_trace
+    def get(
+        self, extension_id: str, farm_beats_resource_name: str, resource_group_name: str, **kwargs: Any
+    ) -> _models.Extension:
+        """Get installed extension details by extension id.
+
+        :param extension_id: Id of extension resource. Required.
+        :type extension_id: str
+        :param farm_beats_resource_name: FarmBeats resource name. Required.
+        :type farm_beats_resource_name: str
+        :param resource_group_name: The name of the resource group. The name is case insensitive.
+         Required.
+        :type resource_group_name: str
+        :keyword callable cls: A custom type or function that will be passed the direct response
+        :return: Extension or the result of cls(response)
+        :rtype: ~azure.mgmt.agrifood.models.Extension
+        :raises ~azure.core.exceptions.HttpResponseError:
+        """
+        error_map = {
+            401: ClientAuthenticationError,
+            404: ResourceNotFoundError,
+            409: ResourceExistsError,
+            304: ResourceNotModifiedError,
+        }
+        error_map.update(kwargs.pop("error_map", {}) or {})
+
+        _headers = kwargs.pop("headers", {}) or {}
+        _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
+
+        api_version: Literal["2020-05-12-preview"] = kwargs.pop(
             "api_version", _params.pop("api-version", self._config.api_version)
         )
         cls: ClsType[_models.Extension] = kwargs.pop("cls", None)
 
         request = build_get_request(
-            resource_group_name=resource_group_name,
-            farm_beats_resource_name=farm_beats_resource_name,
             extension_id=extension_id,
+            farm_beats_resource_name=farm_beats_resource_name,
+            resource_group_name=resource_group_name,
             subscription_id=self._config.subscription_id,
             api_version=api_version,
             template_url=self.get.metadata["url"],
@@ -463,18 +398,87 @@ class ExtensionsOperations:
     }
 
     @distributed_trace
-    def delete(  # pylint: disable=inconsistent-return-statements
-        self, resource_group_name: str, farm_beats_resource_name: str, extension_id: str, **kwargs: Any
-    ) -> None:
-        """Uninstall extension.
+    def update(
+        self, extension_id: str, farm_beats_resource_name: str, resource_group_name: str, **kwargs: Any
+    ) -> _models.Extension:
+        """Upgrade to latest extension.
 
+        :param extension_id: Id of extension resource. Required.
+        :type extension_id: str
+        :param farm_beats_resource_name: FarmBeats resource name. Required.
+        :type farm_beats_resource_name: str
         :param resource_group_name: The name of the resource group. The name is case insensitive.
          Required.
         :type resource_group_name: str
-        :param farm_beats_resource_name: FarmBeats resource name. Required.
-        :type farm_beats_resource_name: str
+        :keyword callable cls: A custom type or function that will be passed the direct response
+        :return: Extension or the result of cls(response)
+        :rtype: ~azure.mgmt.agrifood.models.Extension
+        :raises ~azure.core.exceptions.HttpResponseError:
+        """
+        error_map = {
+            401: ClientAuthenticationError,
+            404: ResourceNotFoundError,
+            409: ResourceExistsError,
+            304: ResourceNotModifiedError,
+        }
+        error_map.update(kwargs.pop("error_map", {}) or {})
+
+        _headers = kwargs.pop("headers", {}) or {}
+        _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
+
+        api_version: Literal["2020-05-12-preview"] = kwargs.pop(
+            "api_version", _params.pop("api-version", self._config.api_version)
+        )
+        cls: ClsType[_models.Extension] = kwargs.pop("cls", None)
+
+        request = build_update_request(
+            extension_id=extension_id,
+            farm_beats_resource_name=farm_beats_resource_name,
+            resource_group_name=resource_group_name,
+            subscription_id=self._config.subscription_id,
+            api_version=api_version,
+            template_url=self.update.metadata["url"],
+            headers=_headers,
+            params=_params,
+        )
+        request = _convert_request(request)
+        request.url = self._client.format_url(request.url)
+
+        pipeline_response: PipelineResponse = self._client._pipeline.run(  # pylint: disable=protected-access
+            request, stream=False, **kwargs
+        )
+
+        response = pipeline_response.http_response
+
+        if response.status_code not in [200]:
+            map_error(status_code=response.status_code, response=response, error_map=error_map)
+            error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, pipeline_response)
+            raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
+
+        deserialized = self._deserialize("Extension", pipeline_response)
+
+        if cls:
+            return cls(pipeline_response, deserialized, {})
+
+        return deserialized
+
+    update.metadata = {
+        "url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}/extensions/{extensionId}"
+    }
+
+    @distributed_trace
+    def delete(  # pylint: disable=inconsistent-return-statements
+        self, extension_id: str, farm_beats_resource_name: str, resource_group_name: str, **kwargs: Any
+    ) -> None:
+        """Uninstall extension.
+
         :param extension_id: Id of extension resource. Required.
         :type extension_id: str
+        :param farm_beats_resource_name: FarmBeats resource name. Required.
+        :type farm_beats_resource_name: str
+        :param resource_group_name: The name of the resource group. The name is case insensitive.
+         Required.
+        :type resource_group_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: None or the result of cls(response)
         :rtype: None
@@ -491,15 +495,15 @@ class ExtensionsOperations:
         _headers = kwargs.pop("headers", {}) or {}
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
-        api_version: Literal["2021-09-01-preview"] = kwargs.pop(
+        api_version: Literal["2020-05-12-preview"] = kwargs.pop(
             "api_version", _params.pop("api-version", self._config.api_version)
         )
         cls: ClsType[None] = kwargs.pop("cls", None)
 
         request = build_delete_request(
-            resource_group_name=resource_group_name,
-            farm_beats_resource_name=farm_beats_resource_name,
             extension_id=extension_id,
+            farm_beats_resource_name=farm_beats_resource_name,
+            resource_group_name=resource_group_name,
             subscription_id=self._config.subscription_id,
             api_version=api_version,
             template_url=self.delete.metadata["url"],
@@ -562,7 +566,7 @@ class ExtensionsOperations:
         _headers = kwargs.pop("headers", {}) or {}
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
-        api_version: Literal["2021-09-01-preview"] = kwargs.pop(
+        api_version: Literal["2020-05-12-preview"] = kwargs.pop(
             "api_version", _params.pop("api-version", self._config.api_version)
         )
         cls: ClsType[_models.ExtensionListResponse] = kwargs.pop("cls", None)

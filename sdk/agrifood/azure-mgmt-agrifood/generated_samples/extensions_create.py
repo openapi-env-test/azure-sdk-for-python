@@ -7,14 +7,14 @@
 # --------------------------------------------------------------------------
 
 from azure.identity import DefaultAzureCredential
-from azure.mgmt.agrifood import AgriFoodMgmtClient
+from azure.mgmt.agrifood import AzureAgriFoodRPService
 
 """
 # PREREQUISITES
     pip install azure-identity
     pip install azure-mgmt-agrifood
 # USAGE
-    python private_link_resources_get.py
+    python extensions_create.py
 
     Before run the sample, please set the values of the client ID, tenant ID and client secret
     of the AAD application as environment variables: AZURE_CLIENT_ID, AZURE_TENANT_ID,
@@ -24,20 +24,19 @@ from azure.mgmt.agrifood import AgriFoodMgmtClient
 
 
 def main():
-    client = AgriFoodMgmtClient(
+    client = AzureAgriFoodRPService(
         credential=DefaultAzureCredential(),
-        solution_id="SOLUTION_ID",
         subscription_id="11111111-2222-3333-4444-555555555555",
     )
 
-    response = client.private_link_resources.get(
-        resource_group_name="examples-rg",
+    response = client.extensions.create(
+        extension_id="provider.extension",
         farm_beats_resource_name="examples-farmbeatsResourceName",
-        sub_resource_name="farmbeats",
+        resource_group_name="examples-rg",
     )
     print(response)
 
 
-# x-ms-original-file: specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2021-09-01-preview/examples/PrivateLinkResources_Get.json
+# x-ms-original-file: specification/agrifood/resource-manager/Microsoft.AgFoodPlatform/preview/2020-05-12-preview/examples/Extensions_Create.json
 if __name__ == "__main__":
     main()
