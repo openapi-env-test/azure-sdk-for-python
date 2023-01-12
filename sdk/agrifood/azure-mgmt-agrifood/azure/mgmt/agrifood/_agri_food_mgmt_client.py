@@ -23,8 +23,6 @@ from .operations import (
     Operations,
     PrivateEndpointConnectionsOperations,
     PrivateLinkResourcesOperations,
-    SolutionsDiscoverabilityOperations,
-    SolutionsOperations,
 )
 
 if TYPE_CHECKING:
@@ -50,16 +48,9 @@ class AgriFoodMgmtClient:  # pylint: disable=client-accepts-api-version-keyword,
      azure.mgmt.agrifood.operations.PrivateEndpointConnectionsOperations
     :ivar private_link_resources: PrivateLinkResourcesOperations operations
     :vartype private_link_resources: azure.mgmt.agrifood.operations.PrivateLinkResourcesOperations
-    :ivar solutions: SolutionsOperations operations
-    :vartype solutions: azure.mgmt.agrifood.operations.SolutionsOperations
-    :ivar solutions_discoverability: SolutionsDiscoverabilityOperations operations
-    :vartype solutions_discoverability:
-     azure.mgmt.agrifood.operations.SolutionsDiscoverabilityOperations
     :param credential: Credential needed for the client to connect to Azure. Required.
     :type credential: ~azure.core.credentials.TokenCredential
-    :param solution_id: Solution Id of the solution. Required.
-    :type solution_id: str
-    :param subscription_id: The ID of the target subscription. The value must be an UUID. Required.
+    :param subscription_id: The ID of the target subscription. Required.
     :type subscription_id: str
     :param base_url: Service URL. Default value is "https://management.azure.com".
     :type base_url: str
@@ -73,14 +64,11 @@ class AgriFoodMgmtClient:  # pylint: disable=client-accepts-api-version-keyword,
     def __init__(
         self,
         credential: "TokenCredential",
-        solution_id: str,
         subscription_id: str,
         base_url: str = "https://management.azure.com",
         **kwargs: Any
     ) -> None:
-        self._config = AgriFoodMgmtClientConfiguration(
-            credential=credential, solution_id=solution_id, subscription_id=subscription_id, **kwargs
-        )
+        self._config = AgriFoodMgmtClientConfiguration(credential=credential, subscription_id=subscription_id, **kwargs)
         self._client = ARMPipelineClient(base_url=base_url, config=self._config, **kwargs)
 
         client_models = {k: v for k, v in _models.__dict__.items() if isinstance(v, type)}
@@ -100,10 +88,6 @@ class AgriFoodMgmtClient:  # pylint: disable=client-accepts-api-version-keyword,
             self._client, self._config, self._serialize, self._deserialize
         )
         self.private_link_resources = PrivateLinkResourcesOperations(
-            self._client, self._config, self._serialize, self._deserialize
-        )
-        self.solutions = SolutionsOperations(self._client, self._config, self._serialize, self._deserialize)
-        self.solutions_discoverability = SolutionsDiscoverabilityOperations(
             self._client, self._config, self._serialize, self._deserialize
         )
 

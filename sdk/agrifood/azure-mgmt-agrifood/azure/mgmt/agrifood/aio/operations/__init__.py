@@ -13,8 +13,6 @@ from ._locations_operations import LocationsOperations
 from ._operations import Operations
 from ._private_endpoint_connections_operations import PrivateEndpointConnectionsOperations
 from ._private_link_resources_operations import PrivateLinkResourcesOperations
-from ._solutions_operations import SolutionsOperations
-from ._solutions_discoverability_operations import SolutionsDiscoverabilityOperations
 
 from ._patch import __all__ as _patch_all
 from ._patch import *  # pylint: disable=unused-wildcard-import
@@ -28,8 +26,6 @@ __all__ = [
     "Operations",
     "PrivateEndpointConnectionsOperations",
     "PrivateLinkResourcesOperations",
-    "SolutionsOperations",
-    "SolutionsDiscoverabilityOperations",
 ]
 __all__.extend([p for p in _patch_all if p not in __all__])
 _patch_sdk()
