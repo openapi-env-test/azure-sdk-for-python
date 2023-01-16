@@ -1,0 +1,18 @@
+{
+  "commit": "72ccf309a1b2b41613d81a4a8c229073414d6c7e",
+  "repository_url": "https://github.com/openapi-env-test/azure-rest-api-specs",
+  "cadl_src": "specification/contosowidgetmanager/Contoso.WidgetManager",
+  "@autorest/python": {
+    "version": "6.2.16",
+    "resolved": "https://registry.npmjs.org/@autorest/python/-/python-6.2.16.tgz"
+  },
+  "@azure-tools/cadl-python": {
+    "version": "0.4.17",
+    "resolved": "https://registry.npmjs.org/@azure-tools/cadl-python/-/cadl-python-0.4.17.tgz",
+    "dependencies": {
+      "@autorest/python": {
+        "version": "6.2.16"
+      }
+    }
+  }
+}
