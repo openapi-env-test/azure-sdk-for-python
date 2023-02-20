@@ -51,8 +51,8 @@ def build_deploy_request(
     _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
     _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
-    api_version = kwargs.pop("api_version", _params.pop("api-version", "2021-08-01"))  # type: Literal["2021-08-01"]
-    content_type = kwargs.pop("content_type", _headers.pop("Content-Type", None))  # type: Optional[str]
+    api_version: Literal["2021-08-01"] = kwargs.pop("api_version", _params.pop("api-version", "2021-08-01"))
+    content_type: Optional[str] = kwargs.pop("content_type", _headers.pop("Content-Type", None))
     accept = _headers.pop("Accept", "application/json")
 
     # Construct URL
@@ -74,7 +74,7 @@ def build_deploy_request(
         "configurationName": _SERIALIZER.url("configuration_name", configuration_name, "str"),
     }
 
-    _url = _format_url_section(_url, **path_format_arguments)
+    _url: str = _format_url_section(_url, **path_format_arguments)  # type: ignore
 
     # Construct parameters
     _params["api-version"] = _SERIALIZER.query("api_version", api_version, "str")
@@ -97,8 +97,8 @@ def build_save_request(
     _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
     _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
-    api_version = kwargs.pop("api_version", _params.pop("api-version", "2021-08-01"))  # type: Literal["2021-08-01"]
-    content_type = kwargs.pop("content_type", _headers.pop("Content-Type", None))  # type: Optional[str]
+    api_version: Literal["2021-08-01"] = kwargs.pop("api_version", _params.pop("api-version", "2021-08-01"))
+    content_type: Optional[str] = kwargs.pop("content_type", _headers.pop("Content-Type", None))
     accept = _headers.pop("Accept", "application/json")
 
     # Construct URL
@@ -120,7 +120,7 @@ def build_save_request(
         "configurationName": _SERIALIZER.url("configuration_name", configuration_name, "str"),
     }
 
-    _url = _format_url_section(_url, **path_format_arguments)
+    _url: str = _format_url_section(_url, **path_format_arguments)  # type: ignore
 
     # Construct parameters
     _params["api-version"] = _SERIALIZER.query("api_version", api_version, "str")
@@ -143,8 +143,8 @@ def build_validate_request(
     _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
     _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
-    api_version = kwargs.pop("api_version", _params.pop("api-version", "2021-08-01"))  # type: Literal["2021-08-01"]
-    content_type = kwargs.pop("content_type", _headers.pop("Content-Type", None))  # type: Optional[str]
+    api_version: Literal["2021-08-01"] = kwargs.pop("api_version", _params.pop("api-version", "2021-08-01"))
+    content_type: Optional[str] = kwargs.pop("content_type", _headers.pop("Content-Type", None))
     accept = _headers.pop("Accept", "application/json")
 
     # Construct URL
@@ -166,7 +166,7 @@ def build_validate_request(
         "configurationName": _SERIALIZER.url("configuration_name", configuration_name, "str"),
     }
 
-    _url = _format_url_section(_url, **path_format_arguments)
+    _url: str = _format_url_section(_url, **path_format_arguments)  # type: ignore
 
     # Construct parameters
     _params["api-version"] = _SERIALIZER.query("api_version", api_version, "str")
@@ -189,7 +189,7 @@ def build_get_sync_state_request(
     _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
     _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
-    api_version = kwargs.pop("api_version", _params.pop("api-version", "2021-08-01"))  # type: Literal["2021-08-01"]
+    api_version: Literal["2021-08-01"] = kwargs.pop("api_version", _params.pop("api-version", "2021-08-01"))
     accept = _headers.pop("Accept", "application/json")
 
     # Construct URL
@@ -211,7 +211,7 @@ def build_get_sync_state_request(
         "configurationName": _SERIALIZER.url("configuration_name", configuration_name, "str"),
     }
 
-    _url = _format_url_section(_url, **path_format_arguments)
+    _url: str = _format_url_section(_url, **path_format_arguments)  # type: ignore
 
     # Construct parameters
     _params["api-version"] = _SERIALIZER.query("api_version", api_version, "str")
@@ -260,11 +260,11 @@ class TenantConfigurationOperations:
         _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
-        api_version = kwargs.pop(
+        api_version: Literal["2021-08-01"] = kwargs.pop(
             "api_version", _params.pop("api-version", self._config.api_version)
-        )  # type: Literal["2021-08-01"]
-        content_type = kwargs.pop("content_type", _headers.pop("Content-Type", None))  # type: Optional[str]
-        cls = kwargs.pop("cls", None)  # type: ClsType[Optional[_models.OperationResultContract]]
+        )
+        content_type: Optional[str] = kwargs.pop("content_type", _headers.pop("Content-Type", None))
+        cls: ClsType[Optional[_models.OperationResultContract]] = kwargs.pop("cls", None)
 
         content_type = content_type or "application/json"
         _json = None
@@ -288,9 +288,9 @@ class TenantConfigurationOperations:
             params=_params,
         )
         request = _convert_request(request)
-        request.url = self._client.format_url(request.url)  # type: ignore
+        request.url = self._client.format_url(request.url)
 
-        pipeline_response = self._client._pipeline.run(  # type: ignore # pylint: disable=protected-access
+        pipeline_response: PipelineResponse = self._client._pipeline.run(  # pylint: disable=protected-access
             request, stream=False, **kwargs
         )
 
@@ -310,7 +310,9 @@ class TenantConfigurationOperations:
 
         return deserialized
 
-    _deploy_initial.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant/{configurationName}/deploy"}  # type: ignore
+    _deploy_initial.metadata = {
+        "url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant/{configurationName}/deploy"
+    }
 
     @overload
     def begin_deploy(
@@ -325,6 +327,10 @@ class TenantConfigurationOperations:
     ) -> LROPoller[_models.OperationResultContract]:
         """This operation applies changes from the specified Git branch to the configuration database.
         This is a long running operation and could take several minutes to complete.
+
+        .. seealso::
+           -
+        https://azure.microsoft.com/en-us/documentation/articles/api-management-configuration-repository-git/#to-deploy-any-service-configuration-changes-to-the-api-management-service-instance
 
         :param resource_group_name: The name of the resource group. Required.
         :type resource_group_name: str
@@ -366,6 +372,10 @@ class TenantConfigurationOperations:
         """This operation applies changes from the specified Git branch to the configuration database.
         This is a long running operation and could take several minutes to complete.
 
+        .. seealso::
+           -
+        https://azure.microsoft.com/en-us/documentation/articles/api-management-configuration-repository-git/#to-deploy-any-service-configuration-changes-to-the-api-management-service-instance
+
         :param resource_group_name: The name of the resource group. Required.
         :type resource_group_name: str
         :param service_name: The name of the API Management service. Required.
@@ -404,6 +414,10 @@ class TenantConfigurationOperations:
         """This operation applies changes from the specified Git branch to the configuration database.
         This is a long running operation and could take several minutes to complete.
 
+        .. seealso::
+           -
+        https://azure.microsoft.com/en-us/documentation/articles/api-management-configuration-repository-git/#to-deploy-any-service-configuration-changes-to-the-api-management-service-instance
+
         :param resource_group_name: The name of the resource group. Required.
         :type resource_group_name: str
         :param service_name: The name of the API Management service. Required.
@@ -411,8 +425,8 @@ class TenantConfigurationOperations:
         :param configuration_name: The identifier of the Git Configuration Operation. "configuration"
          Required.
         :type configuration_name: str or ~azure.mgmt.apimanagement.models.ConfigurationIdName
-        :param parameters: Deploy Configuration parameters. Is either a model type or a IO type.
-         Required.
+        :param parameters: Deploy Configuration parameters. Is either a DeployConfigurationParameters
+         type or a IO type. Required.
         :type parameters: ~azure.mgmt.apimanagement.models.DeployConfigurationParameters or IO
         :keyword content_type: Body Parameter content-type. Known values are: 'application/json'.
          Default value is None.
@@ -433,16 +447,16 @@ class TenantConfigurationOperations:
         _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
-        api_version = kwargs.pop(
+        api_version: Literal["2021-08-01"] = kwargs.pop(
             "api_version", _params.pop("api-version", self._config.api_version)
-        )  # type: Literal["2021-08-01"]
-        content_type = kwargs.pop("content_type", _headers.pop("Content-Type", None))  # type: Optional[str]
-        cls = kwargs.pop("cls", None)  # type: ClsType[_models.OperationResultContract]
-        polling = kwargs.pop("polling", True)  # type: Union[bool, PollingMethod]
+        )
+        content_type: Optional[str] = kwargs.pop("content_type", _headers.pop("Content-Type", None))
+        cls: ClsType[_models.OperationResultContract] = kwargs.pop("cls", None)
+        polling: Union[bool, PollingMethod] = kwargs.pop("polling", True)
         lro_delay = kwargs.pop("polling_interval", self._config.polling_interval)
-        cont_token = kwargs.pop("continuation_token", None)  # type: Optional[str]
+        cont_token: Optional[str] = kwargs.pop("continuation_token", None)
         if cont_token is None:
-            raw_result = self._deploy_initial(  # type: ignore
+            raw_result = self._deploy_initial(
                 resource_group_name=resource_group_name,
                 service_name=service_name,
                 configuration_name=configuration_name,
@@ -463,9 +477,9 @@ class TenantConfigurationOperations:
             return deserialized
 
         if polling is True:
-            polling_method = cast(
+            polling_method: PollingMethod = cast(
                 PollingMethod, ARMPolling(lro_delay, lro_options={"final-state-via": "location"}, **kwargs)
-            )  # type: PollingMethod
+            )
         elif polling is False:
             polling_method = cast(PollingMethod, NoPolling())
         else:
@@ -477,9 +491,11 @@ class TenantConfigurationOperations:
                 client=self._client,
                 deserialization_callback=get_long_running_output,
             )
-        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)  # type: ignore
 
-    begin_deploy.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant/{configurationName}/deploy"}  # type: ignore
+    begin_deploy.metadata = {
+        "url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant/{configurationName}/deploy"
+    }
 
     def _save_initial(
         self,
@@ -500,11 +516,11 @@ class TenantConfigurationOperations:
         _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
-        api_version = kwargs.pop(
+        api_version: Literal["2021-08-01"] = kwargs.pop(
             "api_version", _params.pop("api-version", self._config.api_version)
-        )  # type: Literal["2021-08-01"]
-        content_type = kwargs.pop("content_type", _headers.pop("Content-Type", None))  # type: Optional[str]
-        cls = kwargs.pop("cls", None)  # type: ClsType[Optional[_models.OperationResultContract]]
+        )
+        content_type: Optional[str] = kwargs.pop("content_type", _headers.pop("Content-Type", None))
+        cls: ClsType[Optional[_models.OperationResultContract]] = kwargs.pop("cls", None)
 
         content_type = content_type or "application/json"
         _json = None
@@ -528,9 +544,9 @@ class TenantConfigurationOperations:
             params=_params,
         )
         request = _convert_request(request)
-        request.url = self._client.format_url(request.url)  # type: ignore
+        request.url = self._client.format_url(request.url)
 
-        pipeline_response = self._client._pipeline.run(  # type: ignore # pylint: disable=protected-access
+        pipeline_response: PipelineResponse = self._client._pipeline.run(  # pylint: disable=protected-access
             request, stream=False, **kwargs
         )
 
@@ -550,7 +566,9 @@ class TenantConfigurationOperations:
 
         return deserialized
 
-    _save_initial.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant/{configurationName}/save"}  # type: ignore
+    _save_initial.metadata = {
+        "url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant/{configurationName}/save"
+    }
 
     @overload
     def begin_save(
@@ -565,6 +583,10 @@ class TenantConfigurationOperations:
     ) -> LROPoller[_models.OperationResultContract]:
         """This operation creates a commit with the current configuration snapshot to the specified branch
         in the repository. This is a long running operation and could take several minutes to complete.
+
+        .. seealso::
+           -
+        https://azure.microsoft.com/en-us/documentation/articles/api-management-configuration-repository-git/#to-save-the-service-configuration-to-the-git-repository
 
         :param resource_group_name: The name of the resource group. Required.
         :type resource_group_name: str
@@ -606,6 +628,10 @@ class TenantConfigurationOperations:
         """This operation creates a commit with the current configuration snapshot to the specified branch
         in the repository. This is a long running operation and could take several minutes to complete.
 
+        .. seealso::
+           -
+        https://azure.microsoft.com/en-us/documentation/articles/api-management-configuration-repository-git/#to-save-the-service-configuration-to-the-git-repository
+
         :param resource_group_name: The name of the resource group. Required.
         :type resource_group_name: str
         :param service_name: The name of the API Management service. Required.
@@ -644,6 +670,10 @@ class TenantConfigurationOperations:
         """This operation creates a commit with the current configuration snapshot to the specified branch
         in the repository. This is a long running operation and could take several minutes to complete.
 
+        .. seealso::
+           -
+        https://azure.microsoft.com/en-us/documentation/articles/api-management-configuration-repository-git/#to-save-the-service-configuration-to-the-git-repository
+
         :param resource_group_name: The name of the resource group. Required.
         :type resource_group_name: str
         :param service_name: The name of the API Management service. Required.
@@ -651,8 +681,8 @@ class TenantConfigurationOperations:
         :param configuration_name: The identifier of the Git Configuration Operation. "configuration"
          Required.
         :type configuration_name: str or ~azure.mgmt.apimanagement.models.ConfigurationIdName
-        :param parameters: Save Configuration parameters. Is either a model type or a IO type.
-         Required.
+        :param parameters: Save Configuration parameters. Is either a SaveConfigurationParameter type
+         or a IO type. Required.
         :type parameters: ~azure.mgmt.apimanagement.models.SaveConfigurationParameter or IO
         :keyword content_type: Body Parameter content-type. Known values are: 'application/json'.
          Default value is None.
@@ -673,16 +703,16 @@ class TenantConfigurationOperations:
         _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
-        api_version = kwargs.pop(
+        api_version: Literal["2021-08-01"] = kwargs.pop(
             "api_version", _params.pop("api-version", self._config.api_version)
-        )  # type: Literal["2021-08-01"]
-        content_type = kwargs.pop("content_type", _headers.pop("Content-Type", None))  # type: Optional[str]
-        cls = kwargs.pop("cls", None)  # type: ClsType[_models.OperationResultContract]
-        polling = kwargs.pop("polling", True)  # type: Union[bool, PollingMethod]
+        )
+        content_type: Optional[str] = kwargs.pop("content_type", _headers.pop("Content-Type", None))
+        cls: ClsType[_models.OperationResultContract] = kwargs.pop("cls", None)
+        polling: Union[bool, PollingMethod] = kwargs.pop("polling", True)
         lro_delay = kwargs.pop("polling_interval", self._config.polling_interval)
-        cont_token = kwargs.pop("continuation_token", None)  # type: Optional[str]
+        cont_token: Optional[str] = kwargs.pop("continuation_token", None)
         if cont_token is None:
-            raw_result = self._save_initial(  # type: ignore
+            raw_result = self._save_initial(
                 resource_group_name=resource_group_name,
                 service_name=service_name,
                 configuration_name=configuration_name,
@@ -703,9 +733,9 @@ class TenantConfigurationOperations:
             return deserialized
 
         if polling is True:
-            polling_method = cast(
+            polling_method: PollingMethod = cast(
                 PollingMethod, ARMPolling(lro_delay, lro_options={"final-state-via": "location"}, **kwargs)
-            )  # type: PollingMethod
+            )
         elif polling is False:
             polling_method = cast(PollingMethod, NoPolling())
         else:
@@ -717,9 +747,11 @@ class TenantConfigurationOperations:
                 client=self._client,
                 deserialization_callback=get_long_running_output,
             )
-        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)  # type: ignore
 
-    begin_save.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant/{configurationName}/save"}  # type: ignore
+    begin_save.metadata = {
+        "url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant/{configurationName}/save"
+    }
 
     def _validate_initial(
         self,
@@ -740,11 +772,11 @@ class TenantConfigurationOperations:
         _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
-        api_version = kwargs.pop(
+        api_version: Literal["2021-08-01"] = kwargs.pop(
             "api_version", _params.pop("api-version", self._config.api_version)
-        )  # type: Literal["2021-08-01"]
-        content_type = kwargs.pop("content_type", _headers.pop("Content-Type", None))  # type: Optional[str]
-        cls = kwargs.pop("cls", None)  # type: ClsType[Optional[_models.OperationResultContract]]
+        )
+        content_type: Optional[str] = kwargs.pop("content_type", _headers.pop("Content-Type", None))
+        cls: ClsType[Optional[_models.OperationResultContract]] = kwargs.pop("cls", None)
 
         content_type = content_type or "application/json"
         _json = None
@@ -768,9 +800,9 @@ class TenantConfigurationOperations:
             params=_params,
         )
         request = _convert_request(request)
-        request.url = self._client.format_url(request.url)  # type: ignore
+        request.url = self._client.format_url(request.url)
 
-        pipeline_response = self._client._pipeline.run(  # type: ignore # pylint: disable=protected-access
+        pipeline_response: PipelineResponse = self._client._pipeline.run(  # pylint: disable=protected-access
             request, stream=False, **kwargs
         )
 
@@ -790,7 +822,9 @@ class TenantConfigurationOperations:
 
         return deserialized
 
-    _validate_initial.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant/{configurationName}/validate"}  # type: ignore
+    _validate_initial.metadata = {
+        "url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant/{configurationName}/validate"
+    }
 
     @overload
     def begin_validate(
@@ -891,8 +925,8 @@ class TenantConfigurationOperations:
         :param configuration_name: The identifier of the Git Configuration Operation. "configuration"
          Required.
         :type configuration_name: str or ~azure.mgmt.apimanagement.models.ConfigurationIdName
-        :param parameters: Validate Configuration parameters. Is either a model type or a IO type.
-         Required.
+        :param parameters: Validate Configuration parameters. Is either a DeployConfigurationParameters
+         type or a IO type. Required.
         :type parameters: ~azure.mgmt.apimanagement.models.DeployConfigurationParameters or IO
         :keyword content_type: Body Parameter content-type. Known values are: 'application/json'.
          Default value is None.
@@ -913,16 +947,16 @@ class TenantConfigurationOperations:
         _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
-        api_version = kwargs.pop(
+        api_version: Literal["2021-08-01"] = kwargs.pop(
             "api_version", _params.pop("api-version", self._config.api_version)
-        )  # type: Literal["2021-08-01"]
-        content_type = kwargs.pop("content_type", _headers.pop("Content-Type", None))  # type: Optional[str]
-        cls = kwargs.pop("cls", None)  # type: ClsType[_models.OperationResultContract]
-        polling = kwargs.pop("polling", True)  # type: Union[bool, PollingMethod]
+        )
+        content_type: Optional[str] = kwargs.pop("content_type", _headers.pop("Content-Type", None))
+        cls: ClsType[_models.OperationResultContract] = kwargs.pop("cls", None)
+        polling: Union[bool, PollingMethod] = kwargs.pop("polling", True)
         lro_delay = kwargs.pop("polling_interval", self._config.polling_interval)
-        cont_token = kwargs.pop("continuation_token", None)  # type: Optional[str]
+        cont_token: Optional[str] = kwargs.pop("continuation_token", None)
         if cont_token is None:
-            raw_result = self._validate_initial(  # type: ignore
+            raw_result = self._validate_initial(
                 resource_group_name=resource_group_name,
                 service_name=service_name,
                 configuration_name=configuration_name,
@@ -943,9 +977,9 @@ class TenantConfigurationOperations:
             return deserialized
 
         if polling is True:
-            polling_method = cast(
+            polling_method: PollingMethod = cast(
                 PollingMethod, ARMPolling(lro_delay, lro_options={"final-state-via": "location"}, **kwargs)
-            )  # type: PollingMethod
+            )
         elif polling is False:
             polling_method = cast(PollingMethod, NoPolling())
         else:
@@ -957,9 +991,11 @@ class TenantConfigurationOperations:
                 client=self._client,
                 deserialization_callback=get_long_running_output,
             )
-        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)
+        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)  # type: ignore
 
-    begin_validate.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant/{configurationName}/validate"}  # type: ignore
+    begin_validate.metadata = {
+        "url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant/{configurationName}/validate"
+    }
 
     @distributed_trace
     def get_sync_state(
@@ -995,10 +1031,10 @@ class TenantConfigurationOperations:
         _headers = kwargs.pop("headers", {}) or {}
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
-        api_version = kwargs.pop(
+        api_version: Literal["2021-08-01"] = kwargs.pop(
             "api_version", _params.pop("api-version", self._config.api_version)
-        )  # type: Literal["2021-08-01"]
-        cls = kwargs.pop("cls", None)  # type: ClsType[_models.TenantConfigurationSyncStateContract]
+        )
+        cls: ClsType[_models.TenantConfigurationSyncStateContract] = kwargs.pop("cls", None)
 
         request = build_get_sync_state_request(
             resource_group_name=resource_group_name,
@@ -1011,9 +1047,9 @@ class TenantConfigurationOperations:
             params=_params,
         )
         request = _convert_request(request)
-        request.url = self._client.format_url(request.url)  # type: ignore
+        request.url = self._client.format_url(request.url)
 
-        pipeline_response = self._client._pipeline.run(  # type: ignore # pylint: disable=protected-access
+        pipeline_response: PipelineResponse = self._client._pipeline.run(  # pylint: disable=protected-access
             request, stream=False, **kwargs
         )
 
@@ -1031,4 +1067,6 @@ class TenantConfigurationOperations:
 
         return deserialized
 
-    get_sync_state.metadata = {"url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant/{configurationName}/syncState"}  # type: ignore
+    get_sync_state.metadata = {
+        "url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tenant/{configurationName}/syncState"
+    }
