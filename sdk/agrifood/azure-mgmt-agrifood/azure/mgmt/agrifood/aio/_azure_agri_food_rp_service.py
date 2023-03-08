@@ -14,17 +14,13 @@ from azure.mgmt.core import AsyncARMPipelineClient
 
 from .. import models as _models
 from .._serialization import Deserializer, Serializer
-from ._configuration import AgriFoodMgmtClientConfiguration
+from ._configuration import AzureAgriFoodRPServiceConfiguration
 from .operations import (
     ExtensionsOperations,
     FarmBeatsExtensionsOperations,
     FarmBeatsModelsOperations,
     LocationsOperations,
     Operations,
-    PrivateEndpointConnectionsOperations,
-    PrivateLinkResourcesOperations,
-    SolutionsDiscoverabilityOperations,
-    SolutionsOperations,
 )
 
 if TYPE_CHECKING:
@@ -32,8 +28,8 @@ if TYPE_CHECKING:
     from azure.core.credentials_async import AsyncTokenCredential
 
 
-class AgriFoodMgmtClient:  # pylint: disable=client-accepts-api-version-keyword,too-many-instance-attributes
-    """APIs documentation for Azure AgFoodPlatform Resource Provider Service.
+class AzureAgriFoodRPService:  # pylint: disable=client-accepts-api-version-keyword
+    """APIs documentation for Azure AgriFood Resosurce Provider Service.
 
     :ivar extensions: ExtensionsOperations operations
     :vartype extensions: azure.mgmt.agrifood.aio.operations.ExtensionsOperations
@@ -46,42 +42,26 @@ class AgriFoodMgmtClient:  # pylint: disable=client-accepts-api-version-keyword,
     :vartype locations: azure.mgmt.agrifood.aio.operations.LocationsOperations
     :ivar operations: Operations operations
     :vartype operations: azure.mgmt.agrifood.aio.operations.Operations
-    :ivar private_endpoint_connections: PrivateEndpointConnectionsOperations operations
-    :vartype private_endpoint_connections:
-     azure.mgmt.agrifood.aio.operations.PrivateEndpointConnectionsOperations
-    :ivar private_link_resources: PrivateLinkResourcesOperations operations
-    :vartype private_link_resources:
-     azure.mgmt.agrifood.aio.operations.PrivateLinkResourcesOperations
-    :ivar solutions: SolutionsOperations operations
-    :vartype solutions: azure.mgmt.agrifood.aio.operations.SolutionsOperations
-    :ivar solutions_discoverability: SolutionsDiscoverabilityOperations operations
-    :vartype solutions_discoverability:
-     azure.mgmt.agrifood.aio.operations.SolutionsDiscoverabilityOperations
     :param credential: Credential needed for the client to connect to Azure. Required.
     :type credential: ~azure.core.credentials_async.AsyncTokenCredential
-    :param solution_id: Solution Id of the solution. Required.
-    :type solution_id: str
-    :param subscription_id: The ID of the target subscription. The value must be an UUID. Required.
+    :param subscription_id: The ID of the target subscription. Required.
     :type subscription_id: str
     :param base_url: Service URL. Default value is "https://management.azure.com".
     :type base_url: str
-    :keyword api_version: Api Version. Default value is "2021-09-01-preview". Note that overriding
+    :keyword api_version: Api Version. Default value is "2020-05-12-preview". Note that overriding
      this default value may result in unsupported behavior.
     :paramtype api_version: str
-    :keyword int polling_interval: Default waiting time between two polls for LRO operations if no
-     Retry-After header is present.
     """
 
     def __init__(
         self,
         credential: "AsyncTokenCredential",
-        solution_id: str,
         subscription_id: str,
         base_url: str = "https://management.azure.com",
         **kwargs: Any
     ) -> None:
-        self._config = AgriFoodMgmtClientConfiguration(
-            credential=credential, solution_id=solution_id, subscription_id=subscription_id, **kwargs
+        self._config = AzureAgriFoodRPServiceConfiguration(
+            credential=credential, subscription_id=subscription_id, **kwargs
         )
         self._client = AsyncARMPipelineClient(base_url=base_url, config=self._config, **kwargs)
 
@@ -98,16 +78,6 @@ class AgriFoodMgmtClient:  # pylint: disable=client-accepts-api-version-keyword,
         )
         self.locations = LocationsOperations(self._client, self._config, self._serialize, self._deserialize)
         self.operations = Operations(self._client, self._config, self._serialize, self._deserialize)
-        self.private_endpoint_connections = PrivateEndpointConnectionsOperations(
-            self._client, self._config, self._serialize, self._deserialize
-        )
-        self.private_link_resources = PrivateLinkResourcesOperations(
-            self._client, self._config, self._serialize, self._deserialize
-        )
-        self.solutions = SolutionsOperations(self._client, self._config, self._serialize, self._deserialize)
-        self.solutions_discoverability = SolutionsDiscoverabilityOperations(
-            self._client, self._config, self._serialize, self._deserialize
-        )
 
     def _send_request(self, request: HttpRequest, **kwargs: Any) -> Awaitable[AsyncHttpResponse]:
         """Runs the network request through the client's chained policies.
@@ -134,9 +104,9 @@ class AgriFoodMgmtClient:  # pylint: disable=client-accepts-api-version-keyword,
     async def close(self) -> None:
         await self._client.close()
 
-    async def __aenter__(self) -> "AgriFoodMgmtClient":
+    async def __aenter__(self) -> "AzureAgriFoodRPService":
         await self._client.__aenter__()
         return self
 
-    async def __aexit__(self, *exc_details) -> None:
+    async def __aexit__(self, *exc_details: Any) -> None:
         await self._client.__aexit__(*exc_details)
