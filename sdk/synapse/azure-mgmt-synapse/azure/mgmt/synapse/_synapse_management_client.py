@@ -39,7 +39,6 @@ from .operations import (
     KustoPoolDatabasePrincipalAssignmentsOperations,
     KustoPoolDatabasesOperations,
     KustoPoolPrincipalAssignmentsOperations,
-    KustoPoolPrivateLinkResourcesOperations,
     KustoPoolsOperations,
     LibrariesOperations,
     LibraryOperations,
@@ -313,9 +312,6 @@ class SynapseManagementClient:  # pylint: disable=client-accepts-api-version-key
      KustoPoolDatabasePrincipalAssignmentsOperations operations
     :vartype kusto_pool_database_principal_assignments:
      azure.mgmt.synapse.operations.KustoPoolDatabasePrincipalAssignmentsOperations
-    :ivar kusto_pool_private_link_resources: KustoPoolPrivateLinkResourcesOperations operations
-    :vartype kusto_pool_private_link_resources:
-     azure.mgmt.synapse.operations.KustoPoolPrivateLinkResourcesOperations
     :param credential: Credential needed for the client to connect to Azure. Required.
     :type credential: ~azure.core.credentials.TokenCredential
     :param subscription_id: The ID of the target subscription. Required.
@@ -549,9 +545,6 @@ class SynapseManagementClient:  # pylint: disable=client-accepts-api-version-key
         self.kusto_pool_database_principal_assignments = KustoPoolDatabasePrincipalAssignmentsOperations(
             self._client, self._config, self._serialize, self._deserialize
         )
-        self.kusto_pool_private_link_resources = KustoPoolPrivateLinkResourcesOperations(
-            self._client, self._config, self._serialize, self._deserialize
-        )
 
     def _send_request(self, request: HttpRequest, **kwargs: Any) -> HttpResponse:
         """Runs the network request through the client's chained policies.
@@ -582,5 +575,5 @@ class SynapseManagementClient:  # pylint: disable=client-accepts-api-version-key
         self._client.__enter__()
         return self
 
-    def __exit__(self, *exc_details) -> None:
+    def __exit__(self, *exc_details: Any) -> None:
         self._client.__exit__(*exc_details)

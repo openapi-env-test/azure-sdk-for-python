@@ -99,7 +99,6 @@ from ._kusto_pool_databases_operations import KustoPoolDatabasesOperations
 from ._kusto_pool_data_connections_operations import KustoPoolDataConnectionsOperations
 from ._kusto_pool_principal_assignments_operations import KustoPoolPrincipalAssignmentsOperations
 from ._kusto_pool_database_principal_assignments_operations import KustoPoolDatabasePrincipalAssignmentsOperations
-from ._kusto_pool_private_link_resources_operations import KustoPoolPrivateLinkResourcesOperations
 
 from ._patch import __all__ as _patch_all
 from ._patch import *  # pylint: disable=unused-wildcard-import
@@ -179,7 +178,6 @@ __all__ = [
     "KustoPoolDataConnectionsOperations",
     "KustoPoolPrincipalAssignmentsOperations",
     "KustoPoolDatabasePrincipalAssignmentsOperations",
-    "KustoPoolPrivateLinkResourcesOperations",
 ]
 __all__.extend([p for p in _patch_all if p not in __all__])
 _patch_sdk()

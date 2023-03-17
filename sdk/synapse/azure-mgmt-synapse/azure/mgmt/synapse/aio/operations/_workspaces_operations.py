@@ -39,10 +39,15 @@ from ...operations._workspaces_operations import (
     build_update_request,
 )
 
+if sys.version_info >= (3, 9):
+    from collections.abc import MutableMapping
+else:
+    from typing import MutableMapping  # type: ignore  # pylint: disable=ungrouped-imports
 if sys.version_info >= (3, 8):
     from typing import Literal  # pylint: disable=no-name-in-module, ungrouped-imports
 else:
     from typing_extensions import Literal  # type: ignore  # pylint: disable=ungrouped-imports
+JSON = MutableMapping[str, Any]  # pylint: disable=unsubscriptable-object
 T = TypeVar("T")
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
 
@@ -361,8 +366,8 @@ class WorkspacesOperations:
         :type resource_group_name: str
         :param workspace_name: The name of the workspace. Required.
         :type workspace_name: str
-        :param workspace_patch_info: Workspace patch request properties. Is either a model type or a IO
-         type. Required.
+        :param workspace_patch_info: Workspace patch request properties. Is either a WorkspacePatchInfo
+         type or a IO type. Required.
         :type workspace_patch_info: ~azure.mgmt.synapse.models.WorkspacePatchInfo or IO
         :keyword content_type: Body Parameter content-type. Known values are: 'application/json'.
          Default value is None.
@@ -580,8 +585,8 @@ class WorkspacesOperations:
         :type resource_group_name: str
         :param workspace_name: The name of the workspace. Required.
         :type workspace_name: str
-        :param workspace_info: Workspace create or update request properties. Is either a model type or
-         a IO type. Required.
+        :param workspace_info: Workspace create or update request properties. Is either a Workspace
+         type or a IO type. Required.
         :type workspace_info: ~azure.mgmt.synapse.models.Workspace or IO
         :keyword content_type: Body Parameter content-type. Known values are: 'application/json'.
          Default value is None.
@@ -649,9 +654,7 @@ class WorkspacesOperations:
         "url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}"
     }
 
-    async def _delete_initial(
-        self, resource_group_name: str, workspace_name: str, **kwargs: Any
-    ) -> Optional[_models.Workspace]:
+    async def _delete_initial(self, resource_group_name: str, workspace_name: str, **kwargs: Any) -> Optional[JSON]:
         error_map = {
             401: ClientAuthenticationError,
             404: ResourceNotFoundError,
@@ -664,7 +667,7 @@ class WorkspacesOperations:
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
         api_version: Literal["2021-06-01"] = kwargs.pop("api_version", _params.pop("api-version", "2021-06-01"))
-        cls: ClsType[Optional[_models.Workspace]] = kwargs.pop("cls", None)
+        cls: ClsType[Optional[JSON]] = kwargs.pop("cls", None)
 
         request = build_delete_request(
             resource_group_name=resource_group_name,
@@ -691,10 +694,10 @@ class WorkspacesOperations:
 
         deserialized = None
         if response.status_code == 200:
-            deserialized = self._deserialize("Workspace", pipeline_response)
+            deserialized = self._deserialize("object", pipeline_response)
 
         if response.status_code == 202:
-            deserialized = self._deserialize("Workspace", pipeline_response)
+            deserialized = self._deserialize("object", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
@@ -706,9 +709,7 @@ class WorkspacesOperations:
     }
 
     @distributed_trace_async
-    async def begin_delete(
-        self, resource_group_name: str, workspace_name: str, **kwargs: Any
-    ) -> AsyncLROPoller[_models.Workspace]:
+    async def begin_delete(self, resource_group_name: str, workspace_name: str, **kwargs: Any) -> AsyncLROPoller[JSON]:
         """Deletes a workspace.
 
         :param resource_group_name: The name of the resource group. The name is case insensitive.
@@ -724,16 +725,15 @@ class WorkspacesOperations:
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no
          Retry-After header is present.
-        :return: An instance of AsyncLROPoller that returns either Workspace or the result of
-         cls(response)
-        :rtype: ~azure.core.polling.AsyncLROPoller[~azure.mgmt.synapse.models.Workspace]
+        :return: An instance of AsyncLROPoller that returns either JSON or the result of cls(response)
+        :rtype: ~azure.core.polling.AsyncLROPoller[JSON]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         _headers = kwargs.pop("headers", {}) or {}
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
         api_version: Literal["2021-06-01"] = kwargs.pop("api_version", _params.pop("api-version", "2021-06-01"))
-        cls: ClsType[_models.Workspace] = kwargs.pop("cls", None)
+        cls: ClsType[JSON] = kwargs.pop("cls", None)
         polling: Union[bool, AsyncPollingMethod] = kwargs.pop("polling", True)
         lro_delay = kwargs.pop("polling_interval", self._config.polling_interval)
         cont_token: Optional[str] = kwargs.pop("continuation_token", None)
@@ -750,7 +750,7 @@ class WorkspacesOperations:
         kwargs.pop("error_map", None)
 
         def get_long_running_output(pipeline_response):
-            deserialized = self._deserialize("Workspace", pipeline_response)
+            deserialized = self._deserialize("object", pipeline_response)
             if cls:
                 return cls(pipeline_response, deserialized, {})
             return deserialized
