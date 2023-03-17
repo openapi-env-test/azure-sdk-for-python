@@ -39,7 +39,6 @@ def main():
                 "autoPause": {"delayInMinutes": 15, "enabled": True},
                 "autoScale": {"enabled": True, "maxNodeCount": 50, "minNodeCount": 3},
                 "defaultSparkLogFolder": "/logs",
-                "isAutotuneEnabled": False,
                 "libraryRequirements": {"content": "", "filename": "requirements.txt"},
                 "nodeCount": 4,
                 "nodeSize": "Medium",
