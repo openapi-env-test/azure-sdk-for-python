@@ -38,10 +38,15 @@ from ...operations._big_data_pools_operations import (
     build_update_request,
 )
 
+if sys.version_info >= (3, 9):
+    from collections.abc import MutableMapping
+else:
+    from typing import MutableMapping  # type: ignore  # pylint: disable=ungrouped-imports
 if sys.version_info >= (3, 8):
     from typing import Literal  # pylint: disable=no-name-in-module, ungrouped-imports
 else:
     from typing_extensions import Literal  # type: ignore  # pylint: disable=ungrouped-imports
+JSON = MutableMapping[str, Any]  # pylint: disable=unsubscriptable-object
 T = TypeVar("T")
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, AsyncHttpResponse], T, Dict[str, Any]], Any]]
 
@@ -222,8 +227,8 @@ class BigDataPoolsOperations:
         :type workspace_name: str
         :param big_data_pool_name: Big Data pool name. Required.
         :type big_data_pool_name: str
-        :param big_data_pool_patch_info: The updated Big Data pool properties. Is either a model type
-         or a IO type. Required.
+        :param big_data_pool_patch_info: The updated Big Data pool properties. Is either a
+         BigDataPoolPatchInfo type or a IO type. Required.
         :type big_data_pool_patch_info: ~azure.mgmt.synapse.models.BigDataPoolPatchInfo or IO
         :keyword content_type: Body Parameter content-type. Known values are: 'application/json'.
          Default value is None.
@@ -482,8 +487,8 @@ class BigDataPoolsOperations:
         :type workspace_name: str
         :param big_data_pool_name: Big Data pool name. Required.
         :type big_data_pool_name: str
-        :param big_data_pool_info: The Big Data pool to create. Is either a model type or a IO type.
-         Required.
+        :param big_data_pool_info: The Big Data pool to create. Is either a BigDataPoolResourceInfo
+         type or a IO type. Required.
         :type big_data_pool_info: ~azure.mgmt.synapse.models.BigDataPoolResourceInfo or IO
         :param force: Whether to stop any running jobs in the Big Data pool. Default value is False.
         :type force: bool
@@ -560,7 +565,7 @@ class BigDataPoolsOperations:
 
     async def _delete_initial(
         self, resource_group_name: str, workspace_name: str, big_data_pool_name: str, **kwargs: Any
-    ) -> Optional[_models.BigDataPoolResourceInfo]:
+    ) -> Optional[JSON]:
         error_map = {
             401: ClientAuthenticationError,
             404: ResourceNotFoundError,
@@ -575,7 +580,7 @@ class BigDataPoolsOperations:
         api_version: Literal["2021-06-01-preview"] = kwargs.pop(
             "api_version", _params.pop("api-version", "2021-06-01-preview")
         )
-        cls: ClsType[Optional[_models.BigDataPoolResourceInfo]] = kwargs.pop("cls", None)
+        cls: ClsType[Optional[JSON]] = kwargs.pop("cls", None)
 
         request = build_delete_request(
             resource_group_name=resource_group_name,
@@ -603,10 +608,10 @@ class BigDataPoolsOperations:
 
         deserialized = None
         if response.status_code == 200:
-            deserialized = self._deserialize("BigDataPoolResourceInfo", pipeline_response)
+            deserialized = self._deserialize("object", pipeline_response)
 
         if response.status_code == 202:
-            deserialized = self._deserialize("BigDataPoolResourceInfo", pipeline_response)
+            deserialized = self._deserialize("object", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
@@ -620,7 +625,7 @@ class BigDataPoolsOperations:
     @distributed_trace_async
     async def begin_delete(
         self, resource_group_name: str, workspace_name: str, big_data_pool_name: str, **kwargs: Any
-    ) -> AsyncLROPoller[_models.BigDataPoolResourceInfo]:
+    ) -> AsyncLROPoller[JSON]:
         """Delete a Big Data pool.
 
         Delete a Big Data pool from the workspace.
@@ -640,9 +645,8 @@ class BigDataPoolsOperations:
         :paramtype polling: bool or ~azure.core.polling.AsyncPollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no
          Retry-After header is present.
-        :return: An instance of AsyncLROPoller that returns either BigDataPoolResourceInfo or the
-         result of cls(response)
-        :rtype: ~azure.core.polling.AsyncLROPoller[~azure.mgmt.synapse.models.BigDataPoolResourceInfo]
+        :return: An instance of AsyncLROPoller that returns either JSON or the result of cls(response)
+        :rtype: ~azure.core.polling.AsyncLROPoller[JSON]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         _headers = kwargs.pop("headers", {}) or {}
@@ -651,7 +655,7 @@ class BigDataPoolsOperations:
         api_version: Literal["2021-06-01-preview"] = kwargs.pop(
             "api_version", _params.pop("api-version", "2021-06-01-preview")
         )
-        cls: ClsType[_models.BigDataPoolResourceInfo] = kwargs.pop("cls", None)
+        cls: ClsType[JSON] = kwargs.pop("cls", None)
         polling: Union[bool, AsyncPollingMethod] = kwargs.pop("polling", True)
         lro_delay = kwargs.pop("polling_interval", self._config.polling_interval)
         cont_token: Optional[str] = kwargs.pop("continuation_token", None)
@@ -669,7 +673,7 @@ class BigDataPoolsOperations:
         kwargs.pop("error_map", None)
 
         def get_long_running_output(pipeline_response):
-            deserialized = self._deserialize("BigDataPoolResourceInfo", pipeline_response)
+            deserialized = self._deserialize("object", pipeline_response)
             if cls:
                 return cls(pipeline_response, deserialized, {})
             return deserialized

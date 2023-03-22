@@ -58,7 +58,7 @@ class SqlPoolMetadataSyncConfigsOperations:
     @distributed_trace_async
     async def get(
         self, resource_group_name: str, workspace_name: str, sql_pool_name: str, **kwargs: Any
-    ) -> _models.MetadataSyncConfig:
+    ) -> Optional[_models.MetadataSyncConfig]:
         """Get SQL pool metadata sync config.
 
         Get the metadata sync configuration for a SQL pool.
@@ -71,15 +71,15 @@ class SqlPoolMetadataSyncConfigsOperations:
         :param sql_pool_name: SQL pool name. Required.
         :type sql_pool_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: MetadataSyncConfig or the result of cls(response)
-        :rtype: ~azure.mgmt.synapse.models.MetadataSyncConfig
+        :return: MetadataSyncConfig or None or the result of cls(response)
+        :rtype: ~azure.mgmt.synapse.models.MetadataSyncConfig or None
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         error_map = {
             401: ClientAuthenticationError,
+            404: ResourceNotFoundError,
             409: ResourceExistsError,
             304: ResourceNotModifiedError,
-            404: lambda response: ResourceNotFoundError(response=response, error_format=ARMErrorFormat),
         }
         error_map.update(kwargs.pop("error_map", {}) or {})
 
@@ -87,7 +87,7 @@ class SqlPoolMetadataSyncConfigsOperations:
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
         api_version: Literal["2021-06-01"] = kwargs.pop("api_version", _params.pop("api-version", "2021-06-01"))
-        cls: ClsType[_models.MetadataSyncConfig] = kwargs.pop("cls", None)
+        cls: ClsType[Optional[_models.MetadataSyncConfig]] = kwargs.pop("cls", None)
 
         request = build_get_request(
             resource_group_name=resource_group_name,
@@ -108,12 +108,14 @@ class SqlPoolMetadataSyncConfigsOperations:
 
         response = pipeline_response.http_response
 
-        if response.status_code not in [200]:
+        if response.status_code not in [200, 404]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
             error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, pipeline_response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize("MetadataSyncConfig", pipeline_response)
+        deserialized = None
+        if response.status_code == 200:
+            deserialized = self._deserialize("MetadataSyncConfig", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
@@ -134,7 +136,7 @@ class SqlPoolMetadataSyncConfigsOperations:
         *,
         content_type: str = "application/json",
         **kwargs: Any
-    ) -> _models.MetadataSyncConfig:
+    ) -> Optional[_models.MetadataSyncConfig]:
         """Set SQL pool metadata sync config.
 
         Set the metadata sync configuration for a SQL pool.
@@ -152,8 +154,8 @@ class SqlPoolMetadataSyncConfigsOperations:
          Default value is "application/json".
         :paramtype content_type: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: MetadataSyncConfig or the result of cls(response)
-        :rtype: ~azure.mgmt.synapse.models.MetadataSyncConfig
+        :return: MetadataSyncConfig or None or the result of cls(response)
+        :rtype: ~azure.mgmt.synapse.models.MetadataSyncConfig or None
         :raises ~azure.core.exceptions.HttpResponseError:
         """
 
@@ -167,7 +169,7 @@ class SqlPoolMetadataSyncConfigsOperations:
         *,
         content_type: str = "application/json",
         **kwargs: Any
-    ) -> _models.MetadataSyncConfig:
+    ) -> Optional[_models.MetadataSyncConfig]:
         """Set SQL pool metadata sync config.
 
         Set the metadata sync configuration for a SQL pool.
@@ -185,8 +187,8 @@ class SqlPoolMetadataSyncConfigsOperations:
          Default value is "application/json".
         :paramtype content_type: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: MetadataSyncConfig or the result of cls(response)
-        :rtype: ~azure.mgmt.synapse.models.MetadataSyncConfig
+        :return: MetadataSyncConfig or None or the result of cls(response)
+        :rtype: ~azure.mgmt.synapse.models.MetadataSyncConfig or None
         :raises ~azure.core.exceptions.HttpResponseError:
         """
 
@@ -198,7 +200,7 @@ class SqlPoolMetadataSyncConfigsOperations:
         sql_pool_name: str,
         metadata_sync_configuration: Union[_models.MetadataSyncConfig, IO],
         **kwargs: Any
-    ) -> _models.MetadataSyncConfig:
+    ) -> Optional[_models.MetadataSyncConfig]:
         """Set SQL pool metadata sync config.
 
         Set the metadata sync configuration for a SQL pool.
@@ -210,22 +212,22 @@ class SqlPoolMetadataSyncConfigsOperations:
         :type workspace_name: str
         :param sql_pool_name: SQL pool name. Required.
         :type sql_pool_name: str
-        :param metadata_sync_configuration: Metadata sync configuration. Is either a model type or a IO
-         type. Required.
+        :param metadata_sync_configuration: Metadata sync configuration. Is either a MetadataSyncConfig
+         type or a IO type. Required.
         :type metadata_sync_configuration: ~azure.mgmt.synapse.models.MetadataSyncConfig or IO
         :keyword content_type: Body Parameter content-type. Known values are: 'application/json'.
          Default value is None.
         :paramtype content_type: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: MetadataSyncConfig or the result of cls(response)
-        :rtype: ~azure.mgmt.synapse.models.MetadataSyncConfig
+        :return: MetadataSyncConfig or None or the result of cls(response)
+        :rtype: ~azure.mgmt.synapse.models.MetadataSyncConfig or None
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         error_map = {
             401: ClientAuthenticationError,
+            404: ResourceNotFoundError,
             409: ResourceExistsError,
             304: ResourceNotModifiedError,
-            404: lambda response: ResourceNotFoundError(response=response, error_format=ARMErrorFormat),
         }
         error_map.update(kwargs.pop("error_map", {}) or {})
 
@@ -234,7 +236,7 @@ class SqlPoolMetadataSyncConfigsOperations:
 
         api_version: Literal["2021-06-01"] = kwargs.pop("api_version", _params.pop("api-version", "2021-06-01"))
         content_type: Optional[str] = kwargs.pop("content_type", _headers.pop("Content-Type", None))
-        cls: ClsType[_models.MetadataSyncConfig] = kwargs.pop("cls", None)
+        cls: ClsType[Optional[_models.MetadataSyncConfig]] = kwargs.pop("cls", None)
 
         content_type = content_type or "application/json"
         _json = None
@@ -266,12 +268,14 @@ class SqlPoolMetadataSyncConfigsOperations:
 
         response = pipeline_response.http_response
 
-        if response.status_code not in [200]:
+        if response.status_code not in [200, 404]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
             error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, pipeline_response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize("MetadataSyncConfig", pipeline_response)
+        deserialized = None
+        if response.status_code == 200:
+            deserialized = self._deserialize("MetadataSyncConfig", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})

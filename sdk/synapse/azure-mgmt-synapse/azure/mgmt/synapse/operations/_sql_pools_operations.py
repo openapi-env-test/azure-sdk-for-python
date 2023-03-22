@@ -31,10 +31,15 @@ from .. import models as _models
 from .._serialization import Serializer
 from .._vendor import _convert_request, _format_url_section
 
+if sys.version_info >= (3, 9):
+    from collections.abc import MutableMapping
+else:
+    from typing import MutableMapping  # type: ignore  # pylint: disable=ungrouped-imports
 if sys.version_info >= (3, 8):
     from typing import Literal  # pylint: disable=no-name-in-module, ungrouped-imports
 else:
     from typing_extensions import Literal  # type: ignore  # pylint: disable=ungrouped-imports
+JSON = MutableMapping[str, Any]  # pylint: disable=unsubscriptable-object
 T = TypeVar("T")
 ClsType = Optional[Callable[[PipelineResponse[HttpRequest, HttpResponse], T, Dict[str, Any]], Any]]
 
@@ -405,7 +410,74 @@ class SqlPoolsOperations:
         "url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}"
     }
 
-    def _update_initial(
+    @overload
+    def update(
+        self,
+        resource_group_name: str,
+        workspace_name: str,
+        sql_pool_name: str,
+        sql_pool_info: _models.SqlPoolPatchInfo,
+        *,
+        content_type: str = "application/json",
+        **kwargs: Any
+    ) -> Optional[_models.SqlPool]:
+        """Update SQL pool.
+
+        Apply a partial update to a SQL pool.
+
+        :param resource_group_name: The name of the resource group. The name is case insensitive.
+         Required.
+        :type resource_group_name: str
+        :param workspace_name: The name of the workspace. Required.
+        :type workspace_name: str
+        :param sql_pool_name: SQL pool name. Required.
+        :type sql_pool_name: str
+        :param sql_pool_info: The updated SQL pool properties. Required.
+        :type sql_pool_info: ~azure.mgmt.synapse.models.SqlPoolPatchInfo
+        :keyword content_type: Body Parameter content-type. Content type parameter for JSON body.
+         Default value is "application/json".
+        :paramtype content_type: str
+        :keyword callable cls: A custom type or function that will be passed the direct response
+        :return: SqlPool or None or the result of cls(response)
+        :rtype: ~azure.mgmt.synapse.models.SqlPool or None
+        :raises ~azure.core.exceptions.HttpResponseError:
+        """
+
+    @overload
+    def update(
+        self,
+        resource_group_name: str,
+        workspace_name: str,
+        sql_pool_name: str,
+        sql_pool_info: IO,
+        *,
+        content_type: str = "application/json",
+        **kwargs: Any
+    ) -> Optional[_models.SqlPool]:
+        """Update SQL pool.
+
+        Apply a partial update to a SQL pool.
+
+        :param resource_group_name: The name of the resource group. The name is case insensitive.
+         Required.
+        :type resource_group_name: str
+        :param workspace_name: The name of the workspace. Required.
+        :type workspace_name: str
+        :param sql_pool_name: SQL pool name. Required.
+        :type sql_pool_name: str
+        :param sql_pool_info: The updated SQL pool properties. Required.
+        :type sql_pool_info: IO
+        :keyword content_type: Body Parameter content-type. Content type parameter for binary body.
+         Default value is "application/json".
+        :paramtype content_type: str
+        :keyword callable cls: A custom type or function that will be passed the direct response
+        :return: SqlPool or None or the result of cls(response)
+        :rtype: ~azure.mgmt.synapse.models.SqlPool or None
+        :raises ~azure.core.exceptions.HttpResponseError:
+        """
+
+    @distributed_trace
+    def update(
         self,
         resource_group_name: str,
         workspace_name: str,
@@ -413,6 +485,28 @@ class SqlPoolsOperations:
         sql_pool_info: Union[_models.SqlPoolPatchInfo, IO],
         **kwargs: Any
     ) -> Optional[_models.SqlPool]:
+        """Update SQL pool.
+
+        Apply a partial update to a SQL pool.
+
+        :param resource_group_name: The name of the resource group. The name is case insensitive.
+         Required.
+        :type resource_group_name: str
+        :param workspace_name: The name of the workspace. Required.
+        :type workspace_name: str
+        :param sql_pool_name: SQL pool name. Required.
+        :type sql_pool_name: str
+        :param sql_pool_info: The updated SQL pool properties. Is either a SqlPoolPatchInfo type or a
+         IO type. Required.
+        :type sql_pool_info: ~azure.mgmt.synapse.models.SqlPoolPatchInfo or IO
+        :keyword content_type: Body Parameter content-type. Known values are: 'application/json'.
+         Default value is None.
+        :paramtype content_type: str
+        :keyword callable cls: A custom type or function that will be passed the direct response
+        :return: SqlPool or None or the result of cls(response)
+        :rtype: ~azure.mgmt.synapse.models.SqlPool or None
+        :raises ~azure.core.exceptions.HttpResponseError:
+        """
         error_map = {
             401: ClientAuthenticationError,
             404: ResourceNotFoundError,
@@ -445,7 +539,7 @@ class SqlPoolsOperations:
             content_type=content_type,
             json=_json,
             content=_content,
-            template_url=self._update_initial.metadata["url"],
+            template_url=self.update.metadata["url"],
             headers=_headers,
             params=_params,
         )
@@ -472,174 +566,7 @@ class SqlPoolsOperations:
 
         return deserialized
 
-    _update_initial.metadata = {
-        "url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}"
-    }
-
-    @overload
-    def begin_update(
-        self,
-        resource_group_name: str,
-        workspace_name: str,
-        sql_pool_name: str,
-        sql_pool_info: _models.SqlPoolPatchInfo,
-        *,
-        content_type: str = "application/json",
-        **kwargs: Any
-    ) -> LROPoller[_models.SqlPool]:
-        """Update SQL pool.
-
-        Apply a partial update to a SQL pool.
-
-        :param resource_group_name: The name of the resource group. The name is case insensitive.
-         Required.
-        :type resource_group_name: str
-        :param workspace_name: The name of the workspace. Required.
-        :type workspace_name: str
-        :param sql_pool_name: SQL pool name. Required.
-        :type sql_pool_name: str
-        :param sql_pool_info: The updated SQL pool properties. Required.
-        :type sql_pool_info: ~azure.mgmt.synapse.models.SqlPoolPatchInfo
-        :keyword content_type: Body Parameter content-type. Content type parameter for JSON body.
-         Default value is "application/json".
-        :paramtype content_type: str
-        :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: By default, your polling method will be ARMPolling. Pass in False for this
-         operation to not poll, or pass in your own initialized polling object for a personal polling
-         strategy.
-        :paramtype polling: bool or ~azure.core.polling.PollingMethod
-        :keyword int polling_interval: Default waiting time between two polls for LRO operations if no
-         Retry-After header is present.
-        :return: An instance of LROPoller that returns either SqlPool or the result of cls(response)
-        :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.synapse.models.SqlPool]
-        :raises ~azure.core.exceptions.HttpResponseError:
-        """
-
-    @overload
-    def begin_update(
-        self,
-        resource_group_name: str,
-        workspace_name: str,
-        sql_pool_name: str,
-        sql_pool_info: IO,
-        *,
-        content_type: str = "application/json",
-        **kwargs: Any
-    ) -> LROPoller[_models.SqlPool]:
-        """Update SQL pool.
-
-        Apply a partial update to a SQL pool.
-
-        :param resource_group_name: The name of the resource group. The name is case insensitive.
-         Required.
-        :type resource_group_name: str
-        :param workspace_name: The name of the workspace. Required.
-        :type workspace_name: str
-        :param sql_pool_name: SQL pool name. Required.
-        :type sql_pool_name: str
-        :param sql_pool_info: The updated SQL pool properties. Required.
-        :type sql_pool_info: IO
-        :keyword content_type: Body Parameter content-type. Content type parameter for binary body.
-         Default value is "application/json".
-        :paramtype content_type: str
-        :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: By default, your polling method will be ARMPolling. Pass in False for this
-         operation to not poll, or pass in your own initialized polling object for a personal polling
-         strategy.
-        :paramtype polling: bool or ~azure.core.polling.PollingMethod
-        :keyword int polling_interval: Default waiting time between two polls for LRO operations if no
-         Retry-After header is present.
-        :return: An instance of LROPoller that returns either SqlPool or the result of cls(response)
-        :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.synapse.models.SqlPool]
-        :raises ~azure.core.exceptions.HttpResponseError:
-        """
-
-    @distributed_trace
-    def begin_update(
-        self,
-        resource_group_name: str,
-        workspace_name: str,
-        sql_pool_name: str,
-        sql_pool_info: Union[_models.SqlPoolPatchInfo, IO],
-        **kwargs: Any
-    ) -> LROPoller[_models.SqlPool]:
-        """Update SQL pool.
-
-        Apply a partial update to a SQL pool.
-
-        :param resource_group_name: The name of the resource group. The name is case insensitive.
-         Required.
-        :type resource_group_name: str
-        :param workspace_name: The name of the workspace. Required.
-        :type workspace_name: str
-        :param sql_pool_name: SQL pool name. Required.
-        :type sql_pool_name: str
-        :param sql_pool_info: The updated SQL pool properties. Is either a model type or a IO type.
-         Required.
-        :type sql_pool_info: ~azure.mgmt.synapse.models.SqlPoolPatchInfo or IO
-        :keyword content_type: Body Parameter content-type. Known values are: 'application/json'.
-         Default value is None.
-        :paramtype content_type: str
-        :keyword callable cls: A custom type or function that will be passed the direct response
-        :keyword str continuation_token: A continuation token to restart a poller from a saved state.
-        :keyword polling: By default, your polling method will be ARMPolling. Pass in False for this
-         operation to not poll, or pass in your own initialized polling object for a personal polling
-         strategy.
-        :paramtype polling: bool or ~azure.core.polling.PollingMethod
-        :keyword int polling_interval: Default waiting time between two polls for LRO operations if no
-         Retry-After header is present.
-        :return: An instance of LROPoller that returns either SqlPool or the result of cls(response)
-        :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.synapse.models.SqlPool]
-        :raises ~azure.core.exceptions.HttpResponseError:
-        """
-        _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
-        _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
-
-        api_version: Literal["2021-06-01"] = kwargs.pop("api_version", _params.pop("api-version", "2021-06-01"))
-        content_type: Optional[str] = kwargs.pop("content_type", _headers.pop("Content-Type", None))
-        cls: ClsType[_models.SqlPool] = kwargs.pop("cls", None)
-        polling: Union[bool, PollingMethod] = kwargs.pop("polling", True)
-        lro_delay = kwargs.pop("polling_interval", self._config.polling_interval)
-        cont_token: Optional[str] = kwargs.pop("continuation_token", None)
-        if cont_token is None:
-            raw_result = self._update_initial(
-                resource_group_name=resource_group_name,
-                workspace_name=workspace_name,
-                sql_pool_name=sql_pool_name,
-                sql_pool_info=sql_pool_info,
-                api_version=api_version,
-                content_type=content_type,
-                cls=lambda x, y, z: x,
-                headers=_headers,
-                params=_params,
-                **kwargs
-            )
-        kwargs.pop("error_map", None)
-
-        def get_long_running_output(pipeline_response):
-            deserialized = self._deserialize("SqlPool", pipeline_response)
-            if cls:
-                return cls(pipeline_response, deserialized, {})
-            return deserialized
-
-        if polling is True:
-            polling_method: PollingMethod = cast(PollingMethod, ARMPolling(lro_delay, **kwargs))
-        elif polling is False:
-            polling_method = cast(PollingMethod, NoPolling())
-        else:
-            polling_method = polling
-        if cont_token:
-            return LROPoller.from_continuation_token(
-                polling_method=polling_method,
-                continuation_token=cont_token,
-                client=self._client,
-                deserialization_callback=get_long_running_output,
-            )
-        return LROPoller(self._client, raw_result, get_long_running_output, polling_method)  # type: ignore
-
-    begin_update.metadata = {
+    update.metadata = {
         "url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}"
     }
 
@@ -653,9 +580,9 @@ class SqlPoolsOperations:
     ) -> Optional[_models.SqlPool]:
         error_map = {
             401: ClientAuthenticationError,
+            404: ResourceNotFoundError,
             409: ResourceExistsError,
             304: ResourceNotModifiedError,
-            404: lambda response: ResourceNotFoundError(response=response, error_format=ARMErrorFormat),
         }
         error_map.update(kwargs.pop("error_map", {}) or {})
 
@@ -696,7 +623,7 @@ class SqlPoolsOperations:
 
         response = pipeline_response.http_response
 
-        if response.status_code not in [200, 202]:
+        if response.status_code not in [200, 202, 404]:
             map_error(status_code=response.status_code, response=response, error_map=error_map)
             error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, pipeline_response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
@@ -814,7 +741,7 @@ class SqlPoolsOperations:
         :type workspace_name: str
         :param sql_pool_name: SQL pool name. Required.
         :type sql_pool_name: str
-        :param sql_pool_info: The SQL pool to create. Is either a model type or a IO type. Required.
+        :param sql_pool_info: The SQL pool to create. Is either a SqlPool type or a IO type. Required.
         :type sql_pool_info: ~azure.mgmt.synapse.models.SqlPool or IO
         :keyword content_type: Body Parameter content-type. Known values are: 'application/json'.
          Default value is None.
@@ -884,7 +811,7 @@ class SqlPoolsOperations:
 
     def _delete_initial(
         self, resource_group_name: str, workspace_name: str, sql_pool_name: str, **kwargs: Any
-    ) -> Optional[_models.SqlPool]:
+    ) -> Optional[JSON]:
         error_map = {
             401: ClientAuthenticationError,
             404: ResourceNotFoundError,
@@ -897,7 +824,7 @@ class SqlPoolsOperations:
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
         api_version: Literal["2021-06-01"] = kwargs.pop("api_version", _params.pop("api-version", "2021-06-01"))
-        cls: ClsType[Optional[_models.SqlPool]] = kwargs.pop("cls", None)
+        cls: ClsType[Optional[JSON]] = kwargs.pop("cls", None)
 
         request = build_delete_request(
             resource_group_name=resource_group_name,
@@ -925,10 +852,10 @@ class SqlPoolsOperations:
 
         deserialized = None
         if response.status_code == 200:
-            deserialized = self._deserialize("SqlPool", pipeline_response)
+            deserialized = self._deserialize("object", pipeline_response)
 
         if response.status_code == 202:
-            deserialized = self._deserialize("SqlPool", pipeline_response)
+            deserialized = self._deserialize("object", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
@@ -942,7 +869,7 @@ class SqlPoolsOperations:
     @distributed_trace
     def begin_delete(
         self, resource_group_name: str, workspace_name: str, sql_pool_name: str, **kwargs: Any
-    ) -> LROPoller[_models.SqlPool]:
+    ) -> LROPoller[JSON]:
         """Delete SQL pool.
 
         Delete a SQL pool.
@@ -962,15 +889,15 @@ class SqlPoolsOperations:
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no
          Retry-After header is present.
-        :return: An instance of LROPoller that returns either SqlPool or the result of cls(response)
-        :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.synapse.models.SqlPool]
+        :return: An instance of LROPoller that returns either JSON or the result of cls(response)
+        :rtype: ~azure.core.polling.LROPoller[JSON]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         _headers = kwargs.pop("headers", {}) or {}
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
         api_version: Literal["2021-06-01"] = kwargs.pop("api_version", _params.pop("api-version", "2021-06-01"))
-        cls: ClsType[_models.SqlPool] = kwargs.pop("cls", None)
+        cls: ClsType[JSON] = kwargs.pop("cls", None)
         polling: Union[bool, PollingMethod] = kwargs.pop("polling", True)
         lro_delay = kwargs.pop("polling_interval", self._config.polling_interval)
         cont_token: Optional[str] = kwargs.pop("continuation_token", None)
@@ -988,7 +915,7 @@ class SqlPoolsOperations:
         kwargs.pop("error_map", None)
 
         def get_long_running_output(pipeline_response):
-            deserialized = self._deserialize("SqlPool", pipeline_response)
+            deserialized = self._deserialize("object", pipeline_response)
             if cls:
                 return cls(pipeline_response, deserialized, {})
             return deserialized
@@ -1098,7 +1025,7 @@ class SqlPoolsOperations:
 
     def _pause_initial(
         self, resource_group_name: str, workspace_name: str, sql_pool_name: str, **kwargs: Any
-    ) -> _models.SqlPool:
+    ) -> Optional[JSON]:
         error_map = {
             401: ClientAuthenticationError,
             404: ResourceNotFoundError,
@@ -1111,7 +1038,7 @@ class SqlPoolsOperations:
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
         api_version: Literal["2021-06-01"] = kwargs.pop("api_version", _params.pop("api-version", "2021-06-01"))
-        cls: ClsType[_models.SqlPool] = kwargs.pop("cls", None)
+        cls: ClsType[Optional[JSON]] = kwargs.pop("cls", None)
 
         request = build_pause_request(
             resource_group_name=resource_group_name,
@@ -1137,16 +1064,14 @@ class SqlPoolsOperations:
             error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, pipeline_response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
+        deserialized = None
         if response.status_code == 200:
-            deserialized = self._deserialize("SqlPool", pipeline_response)
-
-        if response.status_code == 202:
-            deserialized = self._deserialize("SqlPool", pipeline_response)
+            deserialized = self._deserialize("object", pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})  # type: ignore
+            return cls(pipeline_response, deserialized, {})
 
-        return deserialized  # type: ignore
+        return deserialized
 
     _pause_initial.metadata = {
         "url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/pause"
@@ -1155,7 +1080,7 @@ class SqlPoolsOperations:
     @distributed_trace
     def begin_pause(
         self, resource_group_name: str, workspace_name: str, sql_pool_name: str, **kwargs: Any
-    ) -> LROPoller[_models.SqlPool]:
+    ) -> LROPoller[JSON]:
         """Pause SQL pool.
 
         Pause a SQL pool.
@@ -1175,15 +1100,15 @@ class SqlPoolsOperations:
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no
          Retry-After header is present.
-        :return: An instance of LROPoller that returns either SqlPool or the result of cls(response)
-        :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.synapse.models.SqlPool]
+        :return: An instance of LROPoller that returns either JSON or the result of cls(response)
+        :rtype: ~azure.core.polling.LROPoller[JSON]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         _headers = kwargs.pop("headers", {}) or {}
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
         api_version: Literal["2021-06-01"] = kwargs.pop("api_version", _params.pop("api-version", "2021-06-01"))
-        cls: ClsType[_models.SqlPool] = kwargs.pop("cls", None)
+        cls: ClsType[JSON] = kwargs.pop("cls", None)
         polling: Union[bool, PollingMethod] = kwargs.pop("polling", True)
         lro_delay = kwargs.pop("polling_interval", self._config.polling_interval)
         cont_token: Optional[str] = kwargs.pop("continuation_token", None)
@@ -1201,7 +1126,7 @@ class SqlPoolsOperations:
         kwargs.pop("error_map", None)
 
         def get_long_running_output(pipeline_response):
-            deserialized = self._deserialize("SqlPool", pipeline_response)
+            deserialized = self._deserialize("object", pipeline_response)
             if cls:
                 return cls(pipeline_response, deserialized, {})
             return deserialized
@@ -1229,7 +1154,7 @@ class SqlPoolsOperations:
 
     def _resume_initial(
         self, resource_group_name: str, workspace_name: str, sql_pool_name: str, **kwargs: Any
-    ) -> _models.SqlPool:
+    ) -> Optional[JSON]:
         error_map = {
             401: ClientAuthenticationError,
             404: ResourceNotFoundError,
@@ -1242,7 +1167,7 @@ class SqlPoolsOperations:
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
         api_version: Literal["2021-06-01"] = kwargs.pop("api_version", _params.pop("api-version", "2021-06-01"))
-        cls: ClsType[_models.SqlPool] = kwargs.pop("cls", None)
+        cls: ClsType[Optional[JSON]] = kwargs.pop("cls", None)
 
         request = build_resume_request(
             resource_group_name=resource_group_name,
@@ -1268,16 +1193,14 @@ class SqlPoolsOperations:
             error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, pipeline_response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
+        deserialized = None
         if response.status_code == 200:
-            deserialized = self._deserialize("SqlPool", pipeline_response)
-
-        if response.status_code == 202:
-            deserialized = self._deserialize("SqlPool", pipeline_response)
+            deserialized = self._deserialize("object", pipeline_response)
 
         if cls:
-            return cls(pipeline_response, deserialized, {})  # type: ignore
+            return cls(pipeline_response, deserialized, {})
 
-        return deserialized  # type: ignore
+        return deserialized
 
     _resume_initial.metadata = {
         "url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/resume"
@@ -1286,7 +1209,7 @@ class SqlPoolsOperations:
     @distributed_trace
     def begin_resume(
         self, resource_group_name: str, workspace_name: str, sql_pool_name: str, **kwargs: Any
-    ) -> LROPoller[_models.SqlPool]:
+    ) -> LROPoller[JSON]:
         """Resume SQL pool.
 
         Resume a SQL pool.
@@ -1306,15 +1229,15 @@ class SqlPoolsOperations:
         :paramtype polling: bool or ~azure.core.polling.PollingMethod
         :keyword int polling_interval: Default waiting time between two polls for LRO operations if no
          Retry-After header is present.
-        :return: An instance of LROPoller that returns either SqlPool or the result of cls(response)
-        :rtype: ~azure.core.polling.LROPoller[~azure.mgmt.synapse.models.SqlPool]
+        :return: An instance of LROPoller that returns either JSON or the result of cls(response)
+        :rtype: ~azure.core.polling.LROPoller[JSON]
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         _headers = kwargs.pop("headers", {}) or {}
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
         api_version: Literal["2021-06-01"] = kwargs.pop("api_version", _params.pop("api-version", "2021-06-01"))
-        cls: ClsType[_models.SqlPool] = kwargs.pop("cls", None)
+        cls: ClsType[JSON] = kwargs.pop("cls", None)
         polling: Union[bool, PollingMethod] = kwargs.pop("polling", True)
         lro_delay = kwargs.pop("polling_interval", self._config.polling_interval)
         cont_token: Optional[str] = kwargs.pop("continuation_token", None)
@@ -1332,7 +1255,7 @@ class SqlPoolsOperations:
         kwargs.pop("error_map", None)
 
         def get_long_running_output(pipeline_response):
-            deserialized = self._deserialize("SqlPool", pipeline_response)
+            deserialized = self._deserialize("object", pipeline_response)
             if cls:
                 return cls(pipeline_response, deserialized, {})
             return deserialized
@@ -1444,8 +1367,8 @@ class SqlPoolsOperations:
         :type workspace_name: str
         :param sql_pool_name: SQL pool name. Required.
         :type sql_pool_name: str
-        :param parameters: The resource move definition for renaming this Sql pool. Is either a model
-         type or a IO type. Required.
+        :param parameters: The resource move definition for renaming this Sql pool. Is either a
+         ResourceMoveDefinition type or a IO type. Required.
         :type parameters: ~azure.mgmt.synapse.models.ResourceMoveDefinition or IO
         :keyword content_type: Body Parameter content-type. Known values are: 'application/json'.
          Default value is None.
