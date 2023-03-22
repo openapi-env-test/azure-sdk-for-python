@@ -29,7 +29,7 @@ def main():
         subscription_id="01234567-89ab-4def-0123-456789abcdef",
     )
 
-    response = client.sql_pools.begin_update(
+    response = client.sql_pools.update(
         resource_group_name="ExampleResourceGroup",
         workspace_name="ExampleWorkspace",
         sql_pool_name="ExampleSqlPool",
@@ -39,7 +39,7 @@ def main():
             "sku": {"name": "", "tier": ""},
             "tags": {},
         },
-    ).result()
+    )
     print(response)
 
 

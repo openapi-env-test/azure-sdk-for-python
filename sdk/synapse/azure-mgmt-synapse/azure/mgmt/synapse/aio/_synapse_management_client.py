@@ -39,7 +39,6 @@ from .operations import (
     KustoPoolDatabasePrincipalAssignmentsOperations,
     KustoPoolDatabasesOperations,
     KustoPoolPrincipalAssignmentsOperations,
-    KustoPoolPrivateLinkResourcesOperations,
     KustoPoolsOperations,
     LibrariesOperations,
     LibraryOperations,
@@ -317,9 +316,6 @@ class SynapseManagementClient:  # pylint: disable=client-accepts-api-version-key
      KustoPoolDatabasePrincipalAssignmentsOperations operations
     :vartype kusto_pool_database_principal_assignments:
      azure.mgmt.synapse.aio.operations.KustoPoolDatabasePrincipalAssignmentsOperations
-    :ivar kusto_pool_private_link_resources: KustoPoolPrivateLinkResourcesOperations operations
-    :vartype kusto_pool_private_link_resources:
-     azure.mgmt.synapse.aio.operations.KustoPoolPrivateLinkResourcesOperations
     :param credential: Credential needed for the client to connect to Azure. Required.
     :type credential: ~azure.core.credentials_async.AsyncTokenCredential
     :param subscription_id: The ID of the target subscription. Required.
@@ -553,9 +549,6 @@ class SynapseManagementClient:  # pylint: disable=client-accepts-api-version-key
         self.kusto_pool_database_principal_assignments = KustoPoolDatabasePrincipalAssignmentsOperations(
             self._client, self._config, self._serialize, self._deserialize
         )
-        self.kusto_pool_private_link_resources = KustoPoolPrivateLinkResourcesOperations(
-            self._client, self._config, self._serialize, self._deserialize
-        )
 
     def _send_request(self, request: HttpRequest, **kwargs: Any) -> Awaitable[AsyncHttpResponse]:
         """Runs the network request through the client's chained policies.
@@ -586,5 +579,5 @@ class SynapseManagementClient:  # pylint: disable=client-accepts-api-version-key
         await self._client.__aenter__()
         return self
 
-    async def __aexit__(self, *exc_details) -> None:
+    async def __aexit__(self, *exc_details: Any) -> None:
         await self._client.__aexit__(*exc_details)

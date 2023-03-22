@@ -132,7 +132,7 @@ class WorkspaceManagedIdentitySqlControlSettingsOperations:
         workspace_name: str,
         managed_identity_sql_control_settings: Union[_models.ManagedIdentitySqlControlSettingsModel, IO],
         **kwargs: Any
-    ) -> _models.ManagedIdentitySqlControlSettingsModel:
+    ) -> Optional[_models.ManagedIdentitySqlControlSettingsModel]:
         error_map = {
             401: ClientAuthenticationError,
             404: ResourceNotFoundError,
@@ -146,7 +146,7 @@ class WorkspaceManagedIdentitySqlControlSettingsOperations:
 
         api_version: Literal["2021-06-01"] = kwargs.pop("api_version", _params.pop("api-version", "2021-06-01"))
         content_type: Optional[str] = kwargs.pop("content_type", _headers.pop("Content-Type", None))
-        cls: ClsType[_models.ManagedIdentitySqlControlSettingsModel] = kwargs.pop("cls", None)
+        cls: ClsType[Optional[_models.ManagedIdentitySqlControlSettingsModel]] = kwargs.pop("cls", None)
 
         content_type = content_type or "application/json"
         _json = None
@@ -184,16 +184,14 @@ class WorkspaceManagedIdentitySqlControlSettingsOperations:
             error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, pipeline_response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
+        deserialized = None
         if response.status_code == 200:
             deserialized = self._deserialize("ManagedIdentitySqlControlSettingsModel", pipeline_response)
 
-        if response.status_code == 201:
-            deserialized = self._deserialize("ManagedIdentitySqlControlSettingsModel", pipeline_response)
-
         if cls:
-            return cls(pipeline_response, deserialized, {})  # type: ignore
+            return cls(pipeline_response, deserialized, {})
 
-        return deserialized  # type: ignore
+        return deserialized
 
     _create_or_update_initial.metadata = {
         "url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/managedIdentitySqlControlSettings/default"
@@ -296,7 +294,7 @@ class WorkspaceManagedIdentitySqlControlSettingsOperations:
         :param workspace_name: The name of the workspace. Required.
         :type workspace_name: str
         :param managed_identity_sql_control_settings: Managed Identity Sql Control Settings. Is either
-         a model type or a IO type. Required.
+         a ManagedIdentitySqlControlSettingsModel type or a IO type. Required.
         :type managed_identity_sql_control_settings:
          ~azure.mgmt.synapse.models.ManagedIdentitySqlControlSettingsModel or IO
         :keyword content_type: Body Parameter content-type. Known values are: 'application/json'.

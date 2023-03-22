@@ -146,7 +146,7 @@ class IntegrationRuntimeObjectMetadataOperations:
         :param integration_runtime_name: Integration runtime name. Required.
         :type integration_runtime_name: str
         :param get_metadata_request: The parameters for getting a SSIS object metadata. Is either a
-         model type or a IO type. Default value is None.
+         GetSsisObjectMetadataRequest type or a IO type. Default value is None.
         :type get_metadata_request: ~azure.mgmt.synapse.models.GetSsisObjectMetadataRequest or IO
         :keyword content_type: Body Parameter content-type. Known values are: 'application/json'.
          Default value is None.
@@ -337,10 +337,7 @@ class IntegrationRuntimeObjectMetadataOperations:
             return deserialized
 
         if polling is True:
-            polling_method: AsyncPollingMethod = cast(
-                AsyncPollingMethod,
-                AsyncARMPolling(lro_delay, lro_options={"final-state-via": "azure-async-operation"}, **kwargs),
-            )
+            polling_method: AsyncPollingMethod = cast(AsyncPollingMethod, AsyncARMPolling(lro_delay, **kwargs))
         elif polling is False:
             polling_method = cast(AsyncPollingMethod, AsyncNoPolling())
         else:
