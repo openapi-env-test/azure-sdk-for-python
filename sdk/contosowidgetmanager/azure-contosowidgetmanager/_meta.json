@@ -1,0 +1,15 @@
+{
+  "commit": "79f61400e962035a9b2f7ef1cc9b9ab9108ccee7",
+  "repository_url": "https://github.com/openapi-env-test/azure-rest-api-specs",
+  "typespec_src": "specification/contosowidgetmanager/Contoso.WidgetManager",
+  "@azure-tools/typespec-python": {
+    "version": "0.7.0",
+    "resolved": "https://registry.npmjs.org/@azure-tools/typespec-python/-/typespec-python-0.7.0.tgz",
+    "dependencies": {
+      "@autorest/python": {
+        "version": "6.4.9",
+        "resolved": "https://registry.npmjs.org/@autorest/python/-/python-6.4.9.tgz"
+      }
+    }
+  }
+}
