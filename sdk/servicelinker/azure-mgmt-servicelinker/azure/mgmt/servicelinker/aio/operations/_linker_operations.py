@@ -70,8 +70,7 @@ class LinkerOperations:
 
     @distributed_trace
     def list(self, resource_uri: str, **kwargs: Any) -> AsyncIterable["_models.LinkerResource"]:
-        """Returns list of Linkers which connects to the resource. which supports to config both
-        application and target service during the resource provision.
+        """Returns list of Linkers which connect to the resource.
 
         :param resource_uri: The fully qualified Azure Resource manager identifier of the resource to
          be connected. Required.
@@ -85,10 +84,10 @@ class LinkerOperations:
         _headers = kwargs.pop("headers", {}) or {}
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
-        api_version: Literal["2022-11-01-preview"] = kwargs.pop(
+        api_version: Literal["2022-05-01"] = kwargs.pop(
             "api_version", _params.pop("api-version", self._config.api_version)
         )
-        cls: ClsType[_models.ResourceList] = kwargs.pop("cls", None)
+        cls: ClsType[_models.LinkerList] = kwargs.pop("cls", None)
 
         error_map = {
             401: ClientAuthenticationError,
@@ -130,7 +129,7 @@ class LinkerOperations:
             return request
 
         async def extract_data(pipeline_response):
-            deserialized = self._deserialize("ResourceList", pipeline_response)
+            deserialized = self._deserialize("LinkerList", pipeline_response)
             list_of_elem = deserialized.value
             if cls:
                 list_of_elem = cls(list_of_elem)  # type: ignore
@@ -139,8 +138,9 @@ class LinkerOperations:
         async def get_next(next_link=None):
             request = prepare_request(next_link)
 
+            _stream = False
             pipeline_response: PipelineResponse = await self._client._pipeline.run(  # pylint: disable=protected-access
-                request, stream=False, **kwargs
+                request, stream=_stream, **kwargs
             )
             response = pipeline_response.http_response
 
@@ -180,7 +180,7 @@ class LinkerOperations:
         _headers = kwargs.pop("headers", {}) or {}
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
-        api_version: Literal["2022-11-01-preview"] = kwargs.pop(
+        api_version: Literal["2022-05-01"] = kwargs.pop(
             "api_version", _params.pop("api-version", self._config.api_version)
         )
         cls: ClsType[_models.LinkerResource] = kwargs.pop("cls", None)
@@ -196,8 +196,9 @@ class LinkerOperations:
         request = _convert_request(request)
         request.url = self._client.format_url(request.url)
 
+        _stream = False
         pipeline_response: PipelineResponse = await self._client._pipeline.run(  # pylint: disable=protected-access
-            request, stream=False, **kwargs
+            request, stream=_stream, **kwargs
         )
 
         response = pipeline_response.http_response
@@ -230,7 +231,7 @@ class LinkerOperations:
         _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
-        api_version: Literal["2022-11-01-preview"] = kwargs.pop(
+        api_version: Literal["2022-05-01"] = kwargs.pop(
             "api_version", _params.pop("api-version", self._config.api_version)
         )
         content_type: Optional[str] = kwargs.pop("content_type", _headers.pop("Content-Type", None))
@@ -258,8 +259,9 @@ class LinkerOperations:
         request = _convert_request(request)
         request.url = self._client.format_url(request.url)
 
+        _stream = False
         pipeline_response: PipelineResponse = await self._client._pipeline.run(  # pylint: disable=protected-access
-            request, stream=False, **kwargs
+            request, stream=_stream, **kwargs
         )
 
         response = pipeline_response.http_response
@@ -294,7 +296,7 @@ class LinkerOperations:
         content_type: str = "application/json",
         **kwargs: Any
     ) -> AsyncLROPoller[_models.LinkerResource]:
-        """Create or update Linker resource.
+        """Create or update linker resource.
 
         :param resource_uri: The fully qualified Azure Resource manager identifier of the resource to
          be connected. Required.
@@ -330,7 +332,7 @@ class LinkerOperations:
         content_type: str = "application/json",
         **kwargs: Any
     ) -> AsyncLROPoller[_models.LinkerResource]:
-        """Create or update Linker resource.
+        """Create or update linker resource.
 
         :param resource_uri: The fully qualified Azure Resource manager identifier of the resource to
          be connected. Required.
@@ -360,14 +362,14 @@ class LinkerOperations:
     async def begin_create_or_update(
         self, resource_uri: str, linker_name: str, parameters: Union[_models.LinkerResource, IO], **kwargs: Any
     ) -> AsyncLROPoller[_models.LinkerResource]:
-        """Create or update Linker resource.
+        """Create or update linker resource.
 
         :param resource_uri: The fully qualified Azure Resource manager identifier of the resource to
          be connected. Required.
         :type resource_uri: str
         :param linker_name: The name Linker resource. Required.
         :type linker_name: str
-        :param parameters: Linker details. Is either a model type or a IO type. Required.
+        :param parameters: Linker details. Is either a LinkerResource type or a IO type. Required.
         :type parameters: ~azure.mgmt.servicelinker.models.LinkerResource or IO
         :keyword content_type: Body Parameter content-type. Known values are: 'application/json'.
          Default value is None.
@@ -388,7 +390,7 @@ class LinkerOperations:
         _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
-        api_version: Literal["2022-11-01-preview"] = kwargs.pop(
+        api_version: Literal["2022-05-01"] = kwargs.pop(
             "api_version", _params.pop("api-version", self._config.api_version)
         )
         content_type: Optional[str] = kwargs.pop("content_type", _headers.pop("Content-Type", None))
@@ -450,7 +452,7 @@ class LinkerOperations:
         _headers = kwargs.pop("headers", {}) or {}
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
-        api_version: Literal["2022-11-01-preview"] = kwargs.pop(
+        api_version: Literal["2022-05-01"] = kwargs.pop(
             "api_version", _params.pop("api-version", self._config.api_version)
         )
         cls: ClsType[None] = kwargs.pop("cls", None)
@@ -466,8 +468,9 @@ class LinkerOperations:
         request = _convert_request(request)
         request.url = self._client.format_url(request.url)
 
+        _stream = False
         pipeline_response: PipelineResponse = await self._client._pipeline.run(  # pylint: disable=protected-access
-            request, stream=False, **kwargs
+            request, stream=_stream, **kwargs
         )
 
         response = pipeline_response.http_response
@@ -484,7 +487,7 @@ class LinkerOperations:
 
     @distributed_trace_async
     async def begin_delete(self, resource_uri: str, linker_name: str, **kwargs: Any) -> AsyncLROPoller[None]:
-        """Delete a Linker.
+        """Delete a link.
 
         :param resource_uri: The fully qualified Azure Resource manager identifier of the resource to
          be connected. Required.
@@ -506,7 +509,7 @@ class LinkerOperations:
         _headers = kwargs.pop("headers", {}) or {}
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
-        api_version: Literal["2022-11-01-preview"] = kwargs.pop(
+        api_version: Literal["2022-05-01"] = kwargs.pop(
             "api_version", _params.pop("api-version", self._config.api_version)
         )
         cls: ClsType[None] = kwargs.pop("cls", None)
@@ -563,7 +566,7 @@ class LinkerOperations:
         _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
-        api_version: Literal["2022-11-01-preview"] = kwargs.pop(
+        api_version: Literal["2022-05-01"] = kwargs.pop(
             "api_version", _params.pop("api-version", self._config.api_version)
         )
         content_type: Optional[str] = kwargs.pop("content_type", _headers.pop("Content-Type", None))
@@ -591,8 +594,9 @@ class LinkerOperations:
         request = _convert_request(request)
         request.url = self._client.format_url(request.url)
 
+        _stream = False
         pipeline_response: PipelineResponse = await self._client._pipeline.run(  # pylint: disable=protected-access
-            request, stream=False, **kwargs
+            request, stream=_stream, **kwargs
         )
 
         response = pipeline_response.http_response
@@ -625,7 +629,7 @@ class LinkerOperations:
         content_type: str = "application/json",
         **kwargs: Any
     ) -> AsyncLROPoller[_models.LinkerResource]:
-        """Operation to update an existing Linker.
+        """Operation to update an existing link.
 
         :param resource_uri: The fully qualified Azure Resource manager identifier of the resource to
          be connected. Required.
@@ -661,7 +665,7 @@ class LinkerOperations:
         content_type: str = "application/json",
         **kwargs: Any
     ) -> AsyncLROPoller[_models.LinkerResource]:
-        """Operation to update an existing Linker.
+        """Operation to update an existing link.
 
         :param resource_uri: The fully qualified Azure Resource manager identifier of the resource to
          be connected. Required.
@@ -691,14 +695,14 @@ class LinkerOperations:
     async def begin_update(
         self, resource_uri: str, linker_name: str, parameters: Union[_models.LinkerPatch, IO], **kwargs: Any
     ) -> AsyncLROPoller[_models.LinkerResource]:
-        """Operation to update an existing Linker.
+        """Operation to update an existing link.
 
         :param resource_uri: The fully qualified Azure Resource manager identifier of the resource to
          be connected. Required.
         :type resource_uri: str
         :param linker_name: The name Linker resource. Required.
         :type linker_name: str
-        :param parameters: Linker details. Is either a model type or a IO type. Required.
+        :param parameters: Linker details. Is either a LinkerPatch type or a IO type. Required.
         :type parameters: ~azure.mgmt.servicelinker.models.LinkerPatch or IO
         :keyword content_type: Body Parameter content-type. Known values are: 'application/json'.
          Default value is None.
@@ -719,7 +723,7 @@ class LinkerOperations:
         _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
-        api_version: Literal["2022-11-01-preview"] = kwargs.pop(
+        api_version: Literal["2022-05-01"] = kwargs.pop(
             "api_version", _params.pop("api-version", self._config.api_version)
         )
         content_type: Optional[str] = kwargs.pop("content_type", _headers.pop("Content-Type", None))
@@ -781,7 +785,7 @@ class LinkerOperations:
         _headers = kwargs.pop("headers", {}) or {}
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
-        api_version: Literal["2022-11-01-preview"] = kwargs.pop(
+        api_version: Literal["2022-05-01"] = kwargs.pop(
             "api_version", _params.pop("api-version", self._config.api_version)
         )
         cls: ClsType[Optional[_models.ValidateOperationResult]] = kwargs.pop("cls", None)
@@ -797,8 +801,9 @@ class LinkerOperations:
         request = _convert_request(request)
         request.url = self._client.format_url(request.url)
 
+        _stream = False
         pipeline_response: PipelineResponse = await self._client._pipeline.run(  # pylint: disable=protected-access
-            request, stream=False, **kwargs
+            request, stream=_stream, **kwargs
         )
 
         response = pipeline_response.http_response
@@ -825,7 +830,7 @@ class LinkerOperations:
     async def begin_validate(
         self, resource_uri: str, linker_name: str, **kwargs: Any
     ) -> AsyncLROPoller[_models.ValidateOperationResult]:
-        """Validate a Linker.
+        """Validate a link.
 
         :param resource_uri: The fully qualified Azure Resource manager identifier of the resource to
          be connected. Required.
@@ -849,7 +854,7 @@ class LinkerOperations:
         _headers = kwargs.pop("headers", {}) or {}
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
-        api_version: Literal["2022-11-01-preview"] = kwargs.pop(
+        api_version: Literal["2022-05-01"] = kwargs.pop(
             "api_version", _params.pop("api-version", self._config.api_version)
         )
         cls: ClsType[_models.ValidateOperationResult] = kwargs.pop("cls", None)
@@ -876,7 +881,8 @@ class LinkerOperations:
 
         if polling is True:
             polling_method: AsyncPollingMethod = cast(
-                AsyncPollingMethod, AsyncARMPolling(lro_delay, lro_options={"final-state-via": "location"}, **kwargs)
+                AsyncPollingMethod,
+                AsyncARMPolling(lro_delay, lro_options={"final-state-via": "azure-async-operation"}, **kwargs),
             )
         elif polling is False:
             polling_method = cast(AsyncPollingMethod, AsyncNoPolling())
@@ -898,8 +904,8 @@ class LinkerOperations:
     @distributed_trace_async
     async def list_configurations(
         self, resource_uri: str, linker_name: str, **kwargs: Any
-    ) -> _models.ConfigurationResult:
-        """list source configurations for a Linker.
+    ) -> _models.SourceConfigurationResult:
+        """list source configurations for a linker.
 
         :param resource_uri: The fully qualified Azure Resource manager identifier of the resource to
          be connected. Required.
@@ -907,8 +913,8 @@ class LinkerOperations:
         :param linker_name: The name Linker resource. Required.
         :type linker_name: str
         :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ConfigurationResult or the result of cls(response)
-        :rtype: ~azure.mgmt.servicelinker.models.ConfigurationResult
+        :return: SourceConfigurationResult or the result of cls(response)
+        :rtype: ~azure.mgmt.servicelinker.models.SourceConfigurationResult
         :raises ~azure.core.exceptions.HttpResponseError:
         """
         error_map = {
@@ -922,10 +928,10 @@ class LinkerOperations:
         _headers = kwargs.pop("headers", {}) or {}
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
-        api_version: Literal["2022-11-01-preview"] = kwargs.pop(
+        api_version: Literal["2022-05-01"] = kwargs.pop(
             "api_version", _params.pop("api-version", self._config.api_version)
         )
-        cls: ClsType[_models.ConfigurationResult] = kwargs.pop("cls", None)
+        cls: ClsType[_models.SourceConfigurationResult] = kwargs.pop("cls", None)
 
         request = build_list_configurations_request(
             resource_uri=resource_uri,
@@ -938,8 +944,9 @@ class LinkerOperations:
         request = _convert_request(request)
         request.url = self._client.format_url(request.url)
 
+        _stream = False
         pipeline_response: PipelineResponse = await self._client._pipeline.run(  # pylint: disable=protected-access
-            request, stream=False, **kwargs
+            request, stream=_stream, **kwargs
         )
 
         response = pipeline_response.http_response
@@ -949,7 +956,7 @@ class LinkerOperations:
             error = self._deserialize.failsafe_deserialize(_models.ErrorResponse, pipeline_response)
             raise HttpResponseError(response=response, model=error, error_format=ARMErrorFormat)
 
-        deserialized = self._deserialize("ConfigurationResult", pipeline_response)
+        deserialized = self._deserialize("SourceConfigurationResult", pipeline_response)
 
         if cls:
             return cls(pipeline_response, deserialized, {})
