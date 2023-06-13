@@ -1,0 +1,6 @@
+{
+  "commit": "d1420427b41d653bcd2d482a4f28c9a08a49e691",
+  "repository_url": "https://github.com/openapi-env-test/azure-rest-api-specs",
+  "typespec_src": "specification/eventgrid/Azure.Messaging.EventGrid",
+  "@azure-tools/typespec-python": "0.10.0"
+}
