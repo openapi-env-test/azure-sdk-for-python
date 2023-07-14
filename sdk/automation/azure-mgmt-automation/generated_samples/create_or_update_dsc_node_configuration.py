@@ -53,6 +53,6 @@ def main():
     print(response)
 
 
-# x-ms-original-file: specification/automation/resource-manager/Microsoft.Automation/stable/2022-08-08/examples/createOrUpdateDscNodeConfiguration.json
+# x-ms-original-file: specification/automation/resource-manager/Microsoft.Automation/preview/2020-01-13-preview/examples/createOrUpdateDscNodeConfiguration.json
 if __name__ == "__main__":
     main()

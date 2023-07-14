@@ -26,6 +26,7 @@ from ._models_py3 import Certificate
 from ._models_py3 import CertificateCreateOrUpdateParameters
 from ._models_py3 import CertificateListResult
 from ._models_py3 import CertificateUpdateParameters
+from ._models_py3 import ComponentsSgqdofSchemasIdentityPropertiesUserassignedidentitiesAdditionalproperties
 from ._models_py3 import Connection
 from ._models_py3 import ConnectionCreateOrUpdateParameters
 from ._models_py3 import ConnectionListResult
@@ -43,7 +44,6 @@ from ._models_py3 import CredentialListResult
 from ._models_py3 import CredentialUpdateParameters
 from ._models_py3 import DeletedAutomationAccount
 from ._models_py3 import DeletedAutomationAccountListResult
-from ._models_py3 import Dimension
 from ._models_py3 import DscCompilationJob
 from ._models_py3 import DscCompilationJobCreateParameters
 from ._models_py3 import DscCompilationJobListResult
@@ -95,8 +95,6 @@ from ._models_py3 import KeyListResult
 from ._models_py3 import KeyVaultProperties
 from ._models_py3 import LinkedWorkspace
 from ._models_py3 import LinuxProperties
-from ._models_py3 import LogSpecification
-from ._models_py3 import MetricSpecification
 from ._models_py3 import Module
 from ._models_py3 import ModuleCreateOrUpdateParameters
 from ._models_py3 import ModuleErrorInfo
@@ -109,7 +107,6 @@ from ._models_py3 import NonAzureQueryProperties
 from ._models_py3 import Operation
 from ._models_py3 import OperationDisplay
 from ._models_py3 import OperationListResult
-from ._models_py3 import OperationPropertiesFormatServiceSpecification
 from ._models_py3 import PrivateEndpointConnection
 from ._models_py3 import PrivateEndpointConnectionListResult
 from ._models_py3 import PrivateEndpointProperty
@@ -177,7 +174,6 @@ from ._models_py3 import UpdateConfigurationNavigation
 from ._models_py3 import Usage
 from ._models_py3 import UsageCounterName
 from ._models_py3 import UsageListResult
-from ._models_py3 import UserAssignedIdentitiesProperties
 from ._models_py3 import Variable
 from ._models_py3 import VariableCreateOrUpdateParameters
 from ._models_py3 import VariableListResult
@@ -248,6 +244,7 @@ __all__ = [
     "CertificateCreateOrUpdateParameters",
     "CertificateListResult",
     "CertificateUpdateParameters",
+    "ComponentsSgqdofSchemasIdentityPropertiesUserassignedidentitiesAdditionalproperties",
     "Connection",
     "ConnectionCreateOrUpdateParameters",
     "ConnectionListResult",
@@ -265,7 +262,6 @@ __all__ = [
     "CredentialUpdateParameters",
     "DeletedAutomationAccount",
     "DeletedAutomationAccountListResult",
-    "Dimension",
     "DscCompilationJob",
     "DscCompilationJobCreateParameters",
     "DscCompilationJobListResult",
@@ -317,8 +313,6 @@ __all__ = [
     "KeyVaultProperties",
     "LinkedWorkspace",
     "LinuxProperties",
-    "LogSpecification",
-    "MetricSpecification",
     "Module",
     "ModuleCreateOrUpdateParameters",
     "ModuleErrorInfo",
@@ -331,7 +325,6 @@ __all__ = [
     "Operation",
     "OperationDisplay",
     "OperationListResult",
-    "OperationPropertiesFormatServiceSpecification",
     "PrivateEndpointConnection",
     "PrivateEndpointConnectionListResult",
     "PrivateEndpointProperty",
@@ -399,7 +392,6 @@ __all__ = [
     "Usage",
     "UsageCounterName",
     "UsageListResult",
-    "UserAssignedIdentitiesProperties",
     "Variable",
     "VariableCreateOrUpdateParameters",
     "VariableListResult",

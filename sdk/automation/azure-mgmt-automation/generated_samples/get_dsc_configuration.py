@@ -37,6 +37,6 @@ def main():
     print(response)
 
 
-# x-ms-original-file: specification/automation/resource-manager/Microsoft.Automation/stable/2022-08-08/examples/getDscConfiguration.json
+# x-ms-original-file: specification/automation/resource-manager/Microsoft.Automation/stable/2019-06-01/examples/getDscConfiguration.json
 if __name__ == "__main__":
     main()
