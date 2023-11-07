@@ -41,7 +41,7 @@ def build_get_request(
     _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
     _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
-    api_version: str = kwargs.pop("api_version", _params.pop("api-version", "2023-04-01"))
+    api_version: str = kwargs.pop("api_version", _params.pop("api-version", "2022-03-01"))
     accept = _headers.pop("Accept", "application/json")
 
     # Construct URL
@@ -73,8 +73,7 @@ def build_put_request(
     _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
     _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
-    api_version: str = kwargs.pop("api_version", _params.pop("api-version", "2023-04-01"))
-    content_type: Optional[str] = kwargs.pop("content_type", _headers.pop("Content-Type", None))
+    api_version: str = kwargs.pop("api_version", _params.pop("api-version", "2022-03-01"))
     accept = _headers.pop("Accept", "application/json")
 
     # Construct URL
@@ -95,8 +94,6 @@ def build_put_request(
     _params["api-version"] = _SERIALIZER.query("api_version", api_version, "str")
 
     # Construct headers
-    if content_type is not None:
-        _headers["Content-Type"] = _SERIALIZER.header("content_type", content_type, "str")
     _headers["Accept"] = _SERIALIZER.header("accept", accept, "str")
 
     return HttpRequest(method="PUT", url=_url, params=_params, headers=_headers, **kwargs)
@@ -108,7 +105,7 @@ def build_delete_request(
     _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
     _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
-    api_version: str = kwargs.pop("api_version", _params.pop("api-version", "2023-04-01"))
+    api_version: str = kwargs.pop("api_version", _params.pop("api-version", "2022-03-01"))
     accept = _headers.pop("Accept", "application/json")
 
     # Construct URL
@@ -140,7 +137,7 @@ def build_unlock_delete_request(
     _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
     _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
-    api_version: str = kwargs.pop("api_version", _params.pop("api-version", "2023-04-01"))
+    api_version: str = kwargs.pop("api_version", _params.pop("api-version", "2022-03-01"))
     content_type: Optional[str] = kwargs.pop("content_type", _headers.pop("Content-Type", None))
     accept = _headers.pop("Accept", "application/json")
 
@@ -255,79 +252,9 @@ class ResourceGuardProxyOperations:
         "url": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupResourceGuardProxies/{resourceGuardProxyName}"
     }
 
-    @overload
-    def put(
-        self,
-        vault_name: str,
-        resource_group_name: str,
-        resource_guard_proxy_name: str,
-        parameters: _models.ResourceGuardProxyBaseResource,
-        *,
-        content_type: str = "application/json",
-        **kwargs: Any
-    ) -> _models.ResourceGuardProxyBaseResource:
-        """Add or Update ResourceGuardProxy under vault
-        Secures vault critical operations.
-
-        :param vault_name: The name of the recovery services vault. Required.
-        :type vault_name: str
-        :param resource_group_name: The name of the resource group where the recovery services vault is
-         present. Required.
-        :type resource_group_name: str
-        :param resource_guard_proxy_name: Required.
-        :type resource_guard_proxy_name: str
-        :param parameters: Request body for operation. Required.
-        :type parameters:
-         ~azure.mgmt.recoveryservicesbackup.activestamp.models.ResourceGuardProxyBaseResource
-        :keyword content_type: Body Parameter content-type. Content type parameter for JSON body.
-         Default value is "application/json".
-        :paramtype content_type: str
-        :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ResourceGuardProxyBaseResource or the result of cls(response)
-        :rtype: ~azure.mgmt.recoveryservicesbackup.activestamp.models.ResourceGuardProxyBaseResource
-        :raises ~azure.core.exceptions.HttpResponseError:
-        """
-
-    @overload
-    def put(
-        self,
-        vault_name: str,
-        resource_group_name: str,
-        resource_guard_proxy_name: str,
-        parameters: IO,
-        *,
-        content_type: str = "application/json",
-        **kwargs: Any
-    ) -> _models.ResourceGuardProxyBaseResource:
-        """Add or Update ResourceGuardProxy under vault
-        Secures vault critical operations.
-
-        :param vault_name: The name of the recovery services vault. Required.
-        :type vault_name: str
-        :param resource_group_name: The name of the resource group where the recovery services vault is
-         present. Required.
-        :type resource_group_name: str
-        :param resource_guard_proxy_name: Required.
-        :type resource_guard_proxy_name: str
-        :param parameters: Request body for operation. Required.
-        :type parameters: IO
-        :keyword content_type: Body Parameter content-type. Content type parameter for binary body.
-         Default value is "application/json".
-        :paramtype content_type: str
-        :keyword callable cls: A custom type or function that will be passed the direct response
-        :return: ResourceGuardProxyBaseResource or the result of cls(response)
-        :rtype: ~azure.mgmt.recoveryservicesbackup.activestamp.models.ResourceGuardProxyBaseResource
-        :raises ~azure.core.exceptions.HttpResponseError:
-        """
-
     @distributed_trace
     def put(
-        self,
-        vault_name: str,
-        resource_group_name: str,
-        resource_guard_proxy_name: str,
-        parameters: Union[_models.ResourceGuardProxyBaseResource, IO],
-        **kwargs: Any
+        self, vault_name: str, resource_group_name: str, resource_guard_proxy_name: str, **kwargs: Any
     ) -> _models.ResourceGuardProxyBaseResource:
         """Add or Update ResourceGuardProxy under vault
         Secures vault critical operations.
@@ -339,13 +266,6 @@ class ResourceGuardProxyOperations:
         :type resource_group_name: str
         :param resource_guard_proxy_name: Required.
         :type resource_guard_proxy_name: str
-        :param parameters: Request body for operation. Is either a ResourceGuardProxyBaseResource type
-         or a IO type. Required.
-        :type parameters:
-         ~azure.mgmt.recoveryservicesbackup.activestamp.models.ResourceGuardProxyBaseResource or IO
-        :keyword content_type: Body Parameter content-type. Known values are: 'application/json'.
-         Default value is None.
-        :paramtype content_type: str
         :keyword callable cls: A custom type or function that will be passed the direct response
         :return: ResourceGuardProxyBaseResource or the result of cls(response)
         :rtype: ~azure.mgmt.recoveryservicesbackup.activestamp.models.ResourceGuardProxyBaseResource
@@ -359,20 +279,11 @@ class ResourceGuardProxyOperations:
         }
         error_map.update(kwargs.pop("error_map", {}) or {})
 
-        _headers = case_insensitive_dict(kwargs.pop("headers", {}) or {})
+        _headers = kwargs.pop("headers", {}) or {}
         _params = case_insensitive_dict(kwargs.pop("params", {}) or {})
 
         api_version: str = kwargs.pop("api_version", _params.pop("api-version", self._config.api_version))
-        content_type: Optional[str] = kwargs.pop("content_type", _headers.pop("Content-Type", None))
         cls: ClsType[_models.ResourceGuardProxyBaseResource] = kwargs.pop("cls", None)
-
-        content_type = content_type or "application/json"
-        _json = None
-        _content = None
-        if isinstance(parameters, (IOBase, bytes)):
-            _content = parameters
-        else:
-            _json = self._serialize.body(parameters, "ResourceGuardProxyBaseResource")
 
         request = build_put_request(
             vault_name=vault_name,
@@ -380,9 +291,6 @@ class ResourceGuardProxyOperations:
             resource_guard_proxy_name=resource_guard_proxy_name,
             subscription_id=self._config.subscription_id,
             api_version=api_version,
-            content_type=content_type,
-            json=_json,
-            content=_content,
             template_url=self.put.metadata["url"],
             headers=_headers,
             params=_params,

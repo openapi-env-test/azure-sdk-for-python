@@ -108,7 +108,7 @@ class ProtectionContainer(_serialization.Model):
      "Microsoft.ClassicCompute/virtualMachines", "Microsoft.Compute/virtualMachines", and
      "AzureWorkloadContainer".
     :vartype container_type: str or
-     ~azure.mgmt.recoveryservicesbackup.activestamp.models.ProtectableContainerType
+     ~azure.mgmt.recoveryservicesbackup.activestamp.models.ContainerType
     :ivar protectable_object_type: Type of the protectable object associated with this container.
     :vartype protectable_object_type: str
     """
@@ -207,7 +207,7 @@ class DpmContainer(ProtectionContainer):  # pylint: disable=too-many-instance-at
      "Microsoft.ClassicCompute/virtualMachines", "Microsoft.Compute/virtualMachines", and
      "AzureWorkloadContainer".
     :vartype container_type: str or
-     ~azure.mgmt.recoveryservicesbackup.activestamp.models.ProtectableContainerType
+     ~azure.mgmt.recoveryservicesbackup.activestamp.models.ContainerType
     :ivar protectable_object_type: Type of the protectable object associated with this container.
     :vartype protectable_object_type: str
     :ivar can_re_register: Specifies whether the container is re-registrable.
@@ -353,7 +353,7 @@ class AzureBackupServerContainer(DpmContainer):  # pylint: disable=too-many-inst
      "Microsoft.ClassicCompute/virtualMachines", "Microsoft.Compute/virtualMachines", and
      "AzureWorkloadContainer".
     :vartype container_type: str or
-     ~azure.mgmt.recoveryservicesbackup.activestamp.models.ProtectableContainerType
+     ~azure.mgmt.recoveryservicesbackup.activestamp.models.ContainerType
     :ivar protectable_object_type: Type of the protectable object associated with this container.
     :vartype protectable_object_type: str
     :ivar can_re_register: Specifies whether the container is re-registrable.
@@ -972,8 +972,6 @@ class ProtectedItem(_serialization.Model):  # pylint: disable=too-many-instance-
     AzureFileshareProtectedItem, AzureIaaSVMProtectedItem, AzureVmWorkloadProtectedItem,
     DPMProtectedItem, GenericProtectedItem, MabFileFolderProtectedItem, AzureSqlProtectedItem
 
-    Variables are only populated by the server, and will be ignored when sending a request.
-
     All required parameters must be populated in order to send to Azure.
 
     :ivar protected_item_type: backup item type. Required.
@@ -985,8 +983,8 @@ class ProtectedItem(_serialization.Model):  # pylint: disable=too-many-instance-
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.BackupManagementType
     :ivar workload_type: Type of workload this item represents. Known values are: "Invalid", "VM",
      "FileFolder", "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint", "VMwareVM", "SystemState",
-     "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase",
-     "SAPAseDatabase", and "SAPHanaDBInstance".
+     "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase", and
+     "SAPAseDatabase".
     :vartype workload_type: str or
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.DataSourceType
     :ivar container_name: Unique name of container.
@@ -1023,14 +1021,10 @@ class ProtectedItem(_serialization.Model):  # pylint: disable=too-many-instance-
     :vartype is_archive_enabled: bool
     :ivar policy_name: Name of the policy used for protection.
     :vartype policy_name: str
-    :ivar soft_delete_retention_period_in_days: Soft delete retention period in days.
-    :vartype soft_delete_retention_period_in_days: int
     """
 
     _validation = {
         "protected_item_type": {"required": True},
-        "backup_management_type": {"readonly": True},
-        "workload_type": {"readonly": True},
     }
 
     _attribute_map = {
@@ -1051,7 +1045,6 @@ class ProtectedItem(_serialization.Model):  # pylint: disable=too-many-instance-
         "resource_guard_operation_requests": {"key": "resourceGuardOperationRequests", "type": "[str]"},
         "is_archive_enabled": {"key": "isArchiveEnabled", "type": "bool"},
         "policy_name": {"key": "policyName", "type": "str"},
-        "soft_delete_retention_period_in_days": {"key": "softDeleteRetentionPeriodInDays", "type": "int"},
     }
 
     _subtype_map = {
@@ -1069,6 +1062,8 @@ class ProtectedItem(_serialization.Model):  # pylint: disable=too-many-instance-
     def __init__(
         self,
         *,
+        backup_management_type: Optional[Union[str, "_models.BackupManagementType"]] = None,
+        workload_type: Optional[Union[str, "_models.DataSourceType"]] = None,
         container_name: Optional[str] = None,
         source_resource_id: Optional[str] = None,
         policy_id: Optional[str] = None,
@@ -1083,10 +1078,20 @@ class ProtectedItem(_serialization.Model):  # pylint: disable=too-many-instance-
         resource_guard_operation_requests: Optional[List[str]] = None,
         is_archive_enabled: Optional[bool] = None,
         policy_name: Optional[str] = None,
-        soft_delete_retention_period_in_days: Optional[int] = None,
         **kwargs: Any
     ) -> None:
         """
+        :keyword backup_management_type: Type of backup management for the backed up item. Known values
+         are: "Invalid", "AzureIaasVM", "MAB", "DPM", "AzureBackupServer", "AzureSql", "AzureStorage",
+         "AzureWorkload", and "DefaultBackup".
+        :paramtype backup_management_type: str or
+         ~azure.mgmt.recoveryservicesbackup.activestamp.models.BackupManagementType
+        :keyword workload_type: Type of workload this item represents. Known values are: "Invalid",
+         "VM", "FileFolder", "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint", "VMwareVM", "SystemState",
+         "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase", and
+         "SAPAseDatabase".
+        :paramtype workload_type: str or
+         ~azure.mgmt.recoveryservicesbackup.activestamp.models.DataSourceType
         :keyword container_name: Unique name of container.
         :paramtype container_name: str
         :keyword source_resource_id: ARM ID of the resource to be backed up.
@@ -1122,13 +1127,11 @@ class ProtectedItem(_serialization.Model):  # pylint: disable=too-many-instance-
         :paramtype is_archive_enabled: bool
         :keyword policy_name: Name of the policy used for protection.
         :paramtype policy_name: str
-        :keyword soft_delete_retention_period_in_days: Soft delete retention period in days.
-        :paramtype soft_delete_retention_period_in_days: int
         """
         super().__init__(**kwargs)
         self.protected_item_type: Optional[str] = None
-        self.backup_management_type = None
-        self.workload_type = None
+        self.backup_management_type = backup_management_type
+        self.workload_type = workload_type
         self.container_name = container_name
         self.source_resource_id = source_resource_id
         self.policy_id = policy_id
@@ -1143,13 +1146,10 @@ class ProtectedItem(_serialization.Model):  # pylint: disable=too-many-instance-
         self.resource_guard_operation_requests = resource_guard_operation_requests
         self.is_archive_enabled = is_archive_enabled
         self.policy_name = policy_name
-        self.soft_delete_retention_period_in_days = soft_delete_retention_period_in_days
 
 
 class AzureFileshareProtectedItem(ProtectedItem):  # pylint: disable=too-many-instance-attributes
     """Azure File Share workload-specific backup item.
-
-    Variables are only populated by the server, and will be ignored when sending a request.
 
     All required parameters must be populated in order to send to Azure.
 
@@ -1162,8 +1162,8 @@ class AzureFileshareProtectedItem(ProtectedItem):  # pylint: disable=too-many-in
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.BackupManagementType
     :ivar workload_type: Type of workload this item represents. Known values are: "Invalid", "VM",
      "FileFolder", "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint", "VMwareVM", "SystemState",
-     "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase",
-     "SAPAseDatabase", and "SAPHanaDBInstance".
+     "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase", and
+     "SAPAseDatabase".
     :vartype workload_type: str or
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.DataSourceType
     :ivar container_name: Unique name of container.
@@ -1200,15 +1200,12 @@ class AzureFileshareProtectedItem(ProtectedItem):  # pylint: disable=too-many-in
     :vartype is_archive_enabled: bool
     :ivar policy_name: Name of the policy used for protection.
     :vartype policy_name: str
-    :ivar soft_delete_retention_period_in_days: Soft delete retention period in days.
-    :vartype soft_delete_retention_period_in_days: int
     :ivar friendly_name: Friendly name of the fileshare represented by this backup item.
     :vartype friendly_name: str
     :ivar protection_status: Backup status of this backup item.
     :vartype protection_status: str
     :ivar protection_state: Backup state of this backup item. Known values are: "Invalid",
-     "IRPending", "Protected", "ProtectionError", "ProtectionStopped", "ProtectionPaused", and
-     "BackupsSuspended".
+     "IRPending", "Protected", "ProtectionError", "ProtectionStopped", and "ProtectionPaused".
     :vartype protection_state: str or
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.ProtectionState
     :ivar last_backup_status: Last backup operation status. Possible values: Healthy, Unhealthy.
@@ -1225,8 +1222,6 @@ class AzureFileshareProtectedItem(ProtectedItem):  # pylint: disable=too-many-in
 
     _validation = {
         "protected_item_type": {"required": True},
-        "backup_management_type": {"readonly": True},
-        "workload_type": {"readonly": True},
     }
 
     _attribute_map = {
@@ -1247,7 +1242,6 @@ class AzureFileshareProtectedItem(ProtectedItem):  # pylint: disable=too-many-in
         "resource_guard_operation_requests": {"key": "resourceGuardOperationRequests", "type": "[str]"},
         "is_archive_enabled": {"key": "isArchiveEnabled", "type": "bool"},
         "policy_name": {"key": "policyName", "type": "str"},
-        "soft_delete_retention_period_in_days": {"key": "softDeleteRetentionPeriodInDays", "type": "int"},
         "friendly_name": {"key": "friendlyName", "type": "str"},
         "protection_status": {"key": "protectionStatus", "type": "str"},
         "protection_state": {"key": "protectionState", "type": "str"},
@@ -1260,6 +1254,8 @@ class AzureFileshareProtectedItem(ProtectedItem):  # pylint: disable=too-many-in
     def __init__(  # pylint: disable=too-many-locals
         self,
         *,
+        backup_management_type: Optional[Union[str, "_models.BackupManagementType"]] = None,
+        workload_type: Optional[Union[str, "_models.DataSourceType"]] = None,
         container_name: Optional[str] = None,
         source_resource_id: Optional[str] = None,
         policy_id: Optional[str] = None,
@@ -1274,7 +1270,6 @@ class AzureFileshareProtectedItem(ProtectedItem):  # pylint: disable=too-many-in
         resource_guard_operation_requests: Optional[List[str]] = None,
         is_archive_enabled: Optional[bool] = None,
         policy_name: Optional[str] = None,
-        soft_delete_retention_period_in_days: Optional[int] = None,
         friendly_name: Optional[str] = None,
         protection_status: Optional[str] = None,
         protection_state: Optional[Union[str, "_models.ProtectionState"]] = None,
@@ -1285,6 +1280,17 @@ class AzureFileshareProtectedItem(ProtectedItem):  # pylint: disable=too-many-in
         **kwargs: Any
     ) -> None:
         """
+        :keyword backup_management_type: Type of backup management for the backed up item. Known values
+         are: "Invalid", "AzureIaasVM", "MAB", "DPM", "AzureBackupServer", "AzureSql", "AzureStorage",
+         "AzureWorkload", and "DefaultBackup".
+        :paramtype backup_management_type: str or
+         ~azure.mgmt.recoveryservicesbackup.activestamp.models.BackupManagementType
+        :keyword workload_type: Type of workload this item represents. Known values are: "Invalid",
+         "VM", "FileFolder", "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint", "VMwareVM", "SystemState",
+         "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase", and
+         "SAPAseDatabase".
+        :paramtype workload_type: str or
+         ~azure.mgmt.recoveryservicesbackup.activestamp.models.DataSourceType
         :keyword container_name: Unique name of container.
         :paramtype container_name: str
         :keyword source_resource_id: ARM ID of the resource to be backed up.
@@ -1320,15 +1326,12 @@ class AzureFileshareProtectedItem(ProtectedItem):  # pylint: disable=too-many-in
         :paramtype is_archive_enabled: bool
         :keyword policy_name: Name of the policy used for protection.
         :paramtype policy_name: str
-        :keyword soft_delete_retention_period_in_days: Soft delete retention period in days.
-        :paramtype soft_delete_retention_period_in_days: int
         :keyword friendly_name: Friendly name of the fileshare represented by this backup item.
         :paramtype friendly_name: str
         :keyword protection_status: Backup status of this backup item.
         :paramtype protection_status: str
         :keyword protection_state: Backup state of this backup item. Known values are: "Invalid",
-         "IRPending", "Protected", "ProtectionError", "ProtectionStopped", "ProtectionPaused", and
-         "BackupsSuspended".
+         "IRPending", "Protected", "ProtectionError", "ProtectionStopped", and "ProtectionPaused".
         :paramtype protection_state: str or
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.ProtectionState
         :keyword last_backup_status: Last backup operation status. Possible values: Healthy, Unhealthy.
@@ -1343,6 +1346,8 @@ class AzureFileshareProtectedItem(ProtectedItem):  # pylint: disable=too-many-in
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.AzureFileshareProtectedItemExtendedInfo
         """
         super().__init__(
+            backup_management_type=backup_management_type,
+            workload_type=workload_type,
             container_name=container_name,
             source_resource_id=source_resource_id,
             policy_id=policy_id,
@@ -1357,7 +1362,6 @@ class AzureFileshareProtectedItem(ProtectedItem):  # pylint: disable=too-many-in
             resource_guard_operation_requests=resource_guard_operation_requests,
             is_archive_enabled=is_archive_enabled,
             policy_name=policy_name,
-            soft_delete_retention_period_in_days=soft_delete_retention_period_in_days,
             **kwargs
         )
         self.protected_item_type: str = "AzureFileShareProtectedItem"
@@ -1500,8 +1504,8 @@ class AzureFileShareProtectionPolicy(ProtectionPolicy):
     :vartype resource_guard_operation_requests: list[str]
     :ivar work_load_type: Type of workload for the backup management. Known values are: "Invalid",
      "VM", "FileFolder", "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint", "VMwareVM", "SystemState",
-     "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase",
-     "SAPAseDatabase", and "SAPHanaDBInstance".
+     "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase", and
+     "SAPAseDatabase".
     :vartype work_load_type: str or
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.WorkloadType
     :ivar schedule_policy: Backup schedule specified as part of backup policy.
@@ -1547,7 +1551,7 @@ class AzureFileShareProtectionPolicy(ProtectionPolicy):
         :keyword work_load_type: Type of workload for the backup management. Known values are:
          "Invalid", "VM", "FileFolder", "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint", "VMwareVM",
          "SystemState", "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare",
-         "SAPHanaDatabase", "SAPAseDatabase", and "SAPHanaDBInstance".
+         "SAPHanaDatabase", and "SAPAseDatabase".
         :paramtype work_load_type: str or
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.WorkloadType
         :keyword schedule_policy: Backup schedule specified as part of backup policy.
@@ -1699,9 +1703,6 @@ class AzureFileShareRecoveryPoint(RecoveryPoint):
     :vartype file_share_snapshot_uri: str
     :ivar recovery_point_size_in_gb: Contains recovery point size.
     :vartype recovery_point_size_in_gb: int
-    :ivar recovery_point_properties: Properties of Recovery Point.
-    :vartype recovery_point_properties:
-     ~azure.mgmt.recoveryservicesbackup.activestamp.models.RecoveryPointProperties
     """
 
     _validation = {
@@ -1714,7 +1715,6 @@ class AzureFileShareRecoveryPoint(RecoveryPoint):
         "recovery_point_time": {"key": "recoveryPointTime", "type": "iso-8601"},
         "file_share_snapshot_uri": {"key": "fileShareSnapshotUri", "type": "str"},
         "recovery_point_size_in_gb": {"key": "recoveryPointSizeInGB", "type": "int"},
-        "recovery_point_properties": {"key": "recoveryPointProperties", "type": "RecoveryPointProperties"},
     }
 
     def __init__(
@@ -1724,7 +1724,6 @@ class AzureFileShareRecoveryPoint(RecoveryPoint):
         recovery_point_time: Optional[datetime.datetime] = None,
         file_share_snapshot_uri: Optional[str] = None,
         recovery_point_size_in_gb: Optional[int] = None,
-        recovery_point_properties: Optional["_models.RecoveryPointProperties"] = None,
         **kwargs: Any
     ) -> None:
         """
@@ -1737,9 +1736,6 @@ class AzureFileShareRecoveryPoint(RecoveryPoint):
         :paramtype file_share_snapshot_uri: str
         :keyword recovery_point_size_in_gb: Contains recovery point size.
         :paramtype recovery_point_size_in_gb: int
-        :keyword recovery_point_properties: Properties of Recovery Point.
-        :paramtype recovery_point_properties:
-         ~azure.mgmt.recoveryservicesbackup.activestamp.models.RecoveryPointProperties
         """
         super().__init__(**kwargs)
         self.object_type: str = "AzureFileShareRecoveryPoint"
@@ -1747,7 +1743,6 @@ class AzureFileShareRecoveryPoint(RecoveryPoint):
         self.recovery_point_time = recovery_point_time
         self.file_share_snapshot_uri = file_share_snapshot_uri
         self.recovery_point_size_in_gb = recovery_point_size_in_gb
-        self.recovery_point_properties = recovery_point_properties
 
 
 class RestoreRequest(_serialization.Model):
@@ -1906,7 +1901,7 @@ class IaaSVMContainer(ProtectionContainer):
      "Microsoft.ClassicCompute/virtualMachines", "Microsoft.Compute/virtualMachines", and
      "AzureWorkloadContainer".
     :vartype container_type: str or
-     ~azure.mgmt.recoveryservicesbackup.activestamp.models.ProtectableContainerType
+     ~azure.mgmt.recoveryservicesbackup.activestamp.models.ContainerType
     :ivar protectable_object_type: Type of the protectable object associated with this container.
     :vartype protectable_object_type: str
     :ivar virtual_machine_id: Fully qualified ARM url of the virtual machine represented by this
@@ -2024,7 +2019,7 @@ class AzureIaaSClassicComputeVMContainer(IaaSVMContainer):
      "Microsoft.ClassicCompute/virtualMachines", "Microsoft.Compute/virtualMachines", and
      "AzureWorkloadContainer".
     :vartype container_type: str or
-     ~azure.mgmt.recoveryservicesbackup.activestamp.models.ProtectableContainerType
+     ~azure.mgmt.recoveryservicesbackup.activestamp.models.ContainerType
     :ivar protectable_object_type: Type of the protectable object associated with this container.
     :vartype protectable_object_type: str
     :ivar virtual_machine_id: Fully qualified ARM url of the virtual machine represented by this
@@ -2291,8 +2286,6 @@ class AzureIaaSVMProtectedItem(ProtectedItem):  # pylint: disable=too-many-insta
     You probably want to use the sub-classes and not this class directly. Known sub-classes are:
     AzureIaaSClassicComputeVMProtectedItem, AzureIaaSComputeVMProtectedItem
 
-    Variables are only populated by the server, and will be ignored when sending a request.
-
     All required parameters must be populated in order to send to Azure.
 
     :ivar protected_item_type: backup item type. Required.
@@ -2304,8 +2297,8 @@ class AzureIaaSVMProtectedItem(ProtectedItem):  # pylint: disable=too-many-insta
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.BackupManagementType
     :ivar workload_type: Type of workload this item represents. Known values are: "Invalid", "VM",
      "FileFolder", "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint", "VMwareVM", "SystemState",
-     "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase",
-     "SAPAseDatabase", and "SAPHanaDBInstance".
+     "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase", and
+     "SAPAseDatabase".
     :vartype workload_type: str or
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.DataSourceType
     :ivar container_name: Unique name of container.
@@ -2342,8 +2335,6 @@ class AzureIaaSVMProtectedItem(ProtectedItem):  # pylint: disable=too-many-insta
     :vartype is_archive_enabled: bool
     :ivar policy_name: Name of the policy used for protection.
     :vartype policy_name: str
-    :ivar soft_delete_retention_period_in_days: Soft delete retention period in days.
-    :vartype soft_delete_retention_period_in_days: int
     :ivar friendly_name: Friendly name of the VM represented by this backup item.
     :vartype friendly_name: str
     :ivar virtual_machine_id: Fully qualified ARM ID of the virtual machine represented by this
@@ -2352,8 +2343,7 @@ class AzureIaaSVMProtectedItem(ProtectedItem):  # pylint: disable=too-many-insta
     :ivar protection_status: Backup status of this backup item.
     :vartype protection_status: str
     :ivar protection_state: Backup state of this backup item. Known values are: "Invalid",
-     "IRPending", "Protected", "ProtectionError", "ProtectionStopped", "ProtectionPaused", and
-     "BackupsSuspended".
+     "IRPending", "Protected", "ProtectionError", "ProtectionStopped", and "ProtectionPaused".
     :vartype protection_state: str or
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.ProtectionState
     :ivar health_status: Health status of protected item. Known values are: "Passed",
@@ -2382,13 +2372,6 @@ class AzureIaaSVMProtectedItem(ProtectedItem):  # pylint: disable=too-many-insta
 
     _validation = {
         "protected_item_type": {"required": True},
-        "backup_management_type": {"readonly": True},
-        "workload_type": {"readonly": True},
-        "friendly_name": {"readonly": True},
-        "virtual_machine_id": {"readonly": True},
-        "health_status": {"readonly": True},
-        "last_backup_time": {"readonly": True},
-        "protected_item_data_id": {"readonly": True},
     }
 
     _attribute_map = {
@@ -2409,7 +2392,6 @@ class AzureIaaSVMProtectedItem(ProtectedItem):  # pylint: disable=too-many-insta
         "resource_guard_operation_requests": {"key": "resourceGuardOperationRequests", "type": "[str]"},
         "is_archive_enabled": {"key": "isArchiveEnabled", "type": "bool"},
         "policy_name": {"key": "policyName", "type": "str"},
-        "soft_delete_retention_period_in_days": {"key": "softDeleteRetentionPeriodInDays", "type": "int"},
         "friendly_name": {"key": "friendlyName", "type": "str"},
         "virtual_machine_id": {"key": "virtualMachineId", "type": "str"},
         "protection_status": {"key": "protectionStatus", "type": "str"},
@@ -2434,6 +2416,8 @@ class AzureIaaSVMProtectedItem(ProtectedItem):  # pylint: disable=too-many-insta
     def __init__(  # pylint: disable=too-many-locals
         self,
         *,
+        backup_management_type: Optional[Union[str, "_models.BackupManagementType"]] = None,
+        workload_type: Optional[Union[str, "_models.DataSourceType"]] = None,
         container_name: Optional[str] = None,
         source_resource_id: Optional[str] = None,
         policy_id: Optional[str] = None,
@@ -2448,17 +2432,32 @@ class AzureIaaSVMProtectedItem(ProtectedItem):  # pylint: disable=too-many-insta
         resource_guard_operation_requests: Optional[List[str]] = None,
         is_archive_enabled: Optional[bool] = None,
         policy_name: Optional[str] = None,
-        soft_delete_retention_period_in_days: Optional[int] = None,
+        friendly_name: Optional[str] = None,
+        virtual_machine_id: Optional[str] = None,
         protection_status: Optional[str] = None,
         protection_state: Optional[Union[str, "_models.ProtectionState"]] = None,
+        health_status: Optional[Union[str, "_models.HealthStatus"]] = None,
         health_details: Optional[List["_models.AzureIaaSVMHealthDetails"]] = None,
         kpis_healths: Optional[Dict[str, "_models.KPIResourceHealthDetails"]] = None,
         last_backup_status: Optional[str] = None,
+        last_backup_time: Optional[datetime.datetime] = None,
+        protected_item_data_id: Optional[str] = None,
         extended_info: Optional["_models.AzureIaaSVMProtectedItemExtendedInfo"] = None,
         extended_properties: Optional["_models.ExtendedProperties"] = None,
         **kwargs: Any
     ) -> None:
         """
+        :keyword backup_management_type: Type of backup management for the backed up item. Known values
+         are: "Invalid", "AzureIaasVM", "MAB", "DPM", "AzureBackupServer", "AzureSql", "AzureStorage",
+         "AzureWorkload", and "DefaultBackup".
+        :paramtype backup_management_type: str or
+         ~azure.mgmt.recoveryservicesbackup.activestamp.models.BackupManagementType
+        :keyword workload_type: Type of workload this item represents. Known values are: "Invalid",
+         "VM", "FileFolder", "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint", "VMwareVM", "SystemState",
+         "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase", and
+         "SAPAseDatabase".
+        :paramtype workload_type: str or
+         ~azure.mgmt.recoveryservicesbackup.activestamp.models.DataSourceType
         :keyword container_name: Unique name of container.
         :paramtype container_name: str
         :keyword source_resource_id: ARM ID of the resource to be backed up.
@@ -2494,15 +2493,21 @@ class AzureIaaSVMProtectedItem(ProtectedItem):  # pylint: disable=too-many-insta
         :paramtype is_archive_enabled: bool
         :keyword policy_name: Name of the policy used for protection.
         :paramtype policy_name: str
-        :keyword soft_delete_retention_period_in_days: Soft delete retention period in days.
-        :paramtype soft_delete_retention_period_in_days: int
+        :keyword friendly_name: Friendly name of the VM represented by this backup item.
+        :paramtype friendly_name: str
+        :keyword virtual_machine_id: Fully qualified ARM ID of the virtual machine represented by this
+         item.
+        :paramtype virtual_machine_id: str
         :keyword protection_status: Backup status of this backup item.
         :paramtype protection_status: str
         :keyword protection_state: Backup state of this backup item. Known values are: "Invalid",
-         "IRPending", "Protected", "ProtectionError", "ProtectionStopped", "ProtectionPaused", and
-         "BackupsSuspended".
+         "IRPending", "Protected", "ProtectionError", "ProtectionStopped", and "ProtectionPaused".
         :paramtype protection_state: str or
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.ProtectionState
+        :keyword health_status: Health status of protected item. Known values are: "Passed",
+         "ActionRequired", "ActionSuggested", and "Invalid".
+        :paramtype health_status: str or
+         ~azure.mgmt.recoveryservicesbackup.activestamp.models.HealthStatus
         :keyword health_details: Health details on this backup item.
         :paramtype health_details:
          list[~azure.mgmt.recoveryservicesbackup.activestamp.models.AzureIaaSVMHealthDetails]
@@ -2511,6 +2516,10 @@ class AzureIaaSVMProtectedItem(ProtectedItem):  # pylint: disable=too-many-insta
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.KPIResourceHealthDetails]
         :keyword last_backup_status: Last backup operation status.
         :paramtype last_backup_status: str
+        :keyword last_backup_time: Timestamp of the last backup operation on this backup item.
+        :paramtype last_backup_time: ~datetime.datetime
+        :keyword protected_item_data_id: Data ID of the protected item.
+        :paramtype protected_item_data_id: str
         :keyword extended_info: Additional information for this backup item.
         :paramtype extended_info:
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.AzureIaaSVMProtectedItemExtendedInfo
@@ -2519,6 +2528,8 @@ class AzureIaaSVMProtectedItem(ProtectedItem):  # pylint: disable=too-many-insta
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.ExtendedProperties
         """
         super().__init__(
+            backup_management_type=backup_management_type,
+            workload_type=workload_type,
             container_name=container_name,
             source_resource_id=source_resource_id,
             policy_id=policy_id,
@@ -2533,28 +2544,25 @@ class AzureIaaSVMProtectedItem(ProtectedItem):  # pylint: disable=too-many-insta
             resource_guard_operation_requests=resource_guard_operation_requests,
             is_archive_enabled=is_archive_enabled,
             policy_name=policy_name,
-            soft_delete_retention_period_in_days=soft_delete_retention_period_in_days,
             **kwargs
         )
         self.protected_item_type: str = "AzureIaaSVMProtectedItem"
-        self.friendly_name = None
-        self.virtual_machine_id = None
+        self.friendly_name = friendly_name
+        self.virtual_machine_id = virtual_machine_id
         self.protection_status = protection_status
         self.protection_state = protection_state
-        self.health_status = None
+        self.health_status = health_status
         self.health_details = health_details
         self.kpis_healths = kpis_healths
         self.last_backup_status = last_backup_status
-        self.last_backup_time = None
-        self.protected_item_data_id = None
+        self.last_backup_time = last_backup_time
+        self.protected_item_data_id = protected_item_data_id
         self.extended_info = extended_info
         self.extended_properties = extended_properties
 
 
 class AzureIaaSClassicComputeVMProtectedItem(AzureIaaSVMProtectedItem):  # pylint: disable=too-many-instance-attributes
     """IaaS VM workload-specific backup item representing the Classic Compute VM.
-
-    Variables are only populated by the server, and will be ignored when sending a request.
 
     All required parameters must be populated in order to send to Azure.
 
@@ -2567,8 +2575,8 @@ class AzureIaaSClassicComputeVMProtectedItem(AzureIaaSVMProtectedItem):  # pylin
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.BackupManagementType
     :ivar workload_type: Type of workload this item represents. Known values are: "Invalid", "VM",
      "FileFolder", "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint", "VMwareVM", "SystemState",
-     "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase",
-     "SAPAseDatabase", and "SAPHanaDBInstance".
+     "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase", and
+     "SAPAseDatabase".
     :vartype workload_type: str or
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.DataSourceType
     :ivar container_name: Unique name of container.
@@ -2605,8 +2613,6 @@ class AzureIaaSClassicComputeVMProtectedItem(AzureIaaSVMProtectedItem):  # pylin
     :vartype is_archive_enabled: bool
     :ivar policy_name: Name of the policy used for protection.
     :vartype policy_name: str
-    :ivar soft_delete_retention_period_in_days: Soft delete retention period in days.
-    :vartype soft_delete_retention_period_in_days: int
     :ivar friendly_name: Friendly name of the VM represented by this backup item.
     :vartype friendly_name: str
     :ivar virtual_machine_id: Fully qualified ARM ID of the virtual machine represented by this
@@ -2615,8 +2621,7 @@ class AzureIaaSClassicComputeVMProtectedItem(AzureIaaSVMProtectedItem):  # pylin
     :ivar protection_status: Backup status of this backup item.
     :vartype protection_status: str
     :ivar protection_state: Backup state of this backup item. Known values are: "Invalid",
-     "IRPending", "Protected", "ProtectionError", "ProtectionStopped", "ProtectionPaused", and
-     "BackupsSuspended".
+     "IRPending", "Protected", "ProtectionError", "ProtectionStopped", and "ProtectionPaused".
     :vartype protection_state: str or
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.ProtectionState
     :ivar health_status: Health status of protected item. Known values are: "Passed",
@@ -2645,13 +2650,6 @@ class AzureIaaSClassicComputeVMProtectedItem(AzureIaaSVMProtectedItem):  # pylin
 
     _validation = {
         "protected_item_type": {"required": True},
-        "backup_management_type": {"readonly": True},
-        "workload_type": {"readonly": True},
-        "friendly_name": {"readonly": True},
-        "virtual_machine_id": {"readonly": True},
-        "health_status": {"readonly": True},
-        "last_backup_time": {"readonly": True},
-        "protected_item_data_id": {"readonly": True},
     }
 
     _attribute_map = {
@@ -2672,7 +2670,6 @@ class AzureIaaSClassicComputeVMProtectedItem(AzureIaaSVMProtectedItem):  # pylin
         "resource_guard_operation_requests": {"key": "resourceGuardOperationRequests", "type": "[str]"},
         "is_archive_enabled": {"key": "isArchiveEnabled", "type": "bool"},
         "policy_name": {"key": "policyName", "type": "str"},
-        "soft_delete_retention_period_in_days": {"key": "softDeleteRetentionPeriodInDays", "type": "int"},
         "friendly_name": {"key": "friendlyName", "type": "str"},
         "virtual_machine_id": {"key": "virtualMachineId", "type": "str"},
         "protection_status": {"key": "protectionStatus", "type": "str"},
@@ -2690,6 +2687,8 @@ class AzureIaaSClassicComputeVMProtectedItem(AzureIaaSVMProtectedItem):  # pylin
     def __init__(  # pylint: disable=too-many-locals
         self,
         *,
+        backup_management_type: Optional[Union[str, "_models.BackupManagementType"]] = None,
+        workload_type: Optional[Union[str, "_models.DataSourceType"]] = None,
         container_name: Optional[str] = None,
         source_resource_id: Optional[str] = None,
         policy_id: Optional[str] = None,
@@ -2704,17 +2703,32 @@ class AzureIaaSClassicComputeVMProtectedItem(AzureIaaSVMProtectedItem):  # pylin
         resource_guard_operation_requests: Optional[List[str]] = None,
         is_archive_enabled: Optional[bool] = None,
         policy_name: Optional[str] = None,
-        soft_delete_retention_period_in_days: Optional[int] = None,
+        friendly_name: Optional[str] = None,
+        virtual_machine_id: Optional[str] = None,
         protection_status: Optional[str] = None,
         protection_state: Optional[Union[str, "_models.ProtectionState"]] = None,
+        health_status: Optional[Union[str, "_models.HealthStatus"]] = None,
         health_details: Optional[List["_models.AzureIaaSVMHealthDetails"]] = None,
         kpis_healths: Optional[Dict[str, "_models.KPIResourceHealthDetails"]] = None,
         last_backup_status: Optional[str] = None,
+        last_backup_time: Optional[datetime.datetime] = None,
+        protected_item_data_id: Optional[str] = None,
         extended_info: Optional["_models.AzureIaaSVMProtectedItemExtendedInfo"] = None,
         extended_properties: Optional["_models.ExtendedProperties"] = None,
         **kwargs: Any
     ) -> None:
         """
+        :keyword backup_management_type: Type of backup management for the backed up item. Known values
+         are: "Invalid", "AzureIaasVM", "MAB", "DPM", "AzureBackupServer", "AzureSql", "AzureStorage",
+         "AzureWorkload", and "DefaultBackup".
+        :paramtype backup_management_type: str or
+         ~azure.mgmt.recoveryservicesbackup.activestamp.models.BackupManagementType
+        :keyword workload_type: Type of workload this item represents. Known values are: "Invalid",
+         "VM", "FileFolder", "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint", "VMwareVM", "SystemState",
+         "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase", and
+         "SAPAseDatabase".
+        :paramtype workload_type: str or
+         ~azure.mgmt.recoveryservicesbackup.activestamp.models.DataSourceType
         :keyword container_name: Unique name of container.
         :paramtype container_name: str
         :keyword source_resource_id: ARM ID of the resource to be backed up.
@@ -2750,15 +2764,21 @@ class AzureIaaSClassicComputeVMProtectedItem(AzureIaaSVMProtectedItem):  # pylin
         :paramtype is_archive_enabled: bool
         :keyword policy_name: Name of the policy used for protection.
         :paramtype policy_name: str
-        :keyword soft_delete_retention_period_in_days: Soft delete retention period in days.
-        :paramtype soft_delete_retention_period_in_days: int
+        :keyword friendly_name: Friendly name of the VM represented by this backup item.
+        :paramtype friendly_name: str
+        :keyword virtual_machine_id: Fully qualified ARM ID of the virtual machine represented by this
+         item.
+        :paramtype virtual_machine_id: str
         :keyword protection_status: Backup status of this backup item.
         :paramtype protection_status: str
         :keyword protection_state: Backup state of this backup item. Known values are: "Invalid",
-         "IRPending", "Protected", "ProtectionError", "ProtectionStopped", "ProtectionPaused", and
-         "BackupsSuspended".
+         "IRPending", "Protected", "ProtectionError", "ProtectionStopped", and "ProtectionPaused".
         :paramtype protection_state: str or
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.ProtectionState
+        :keyword health_status: Health status of protected item. Known values are: "Passed",
+         "ActionRequired", "ActionSuggested", and "Invalid".
+        :paramtype health_status: str or
+         ~azure.mgmt.recoveryservicesbackup.activestamp.models.HealthStatus
         :keyword health_details: Health details on this backup item.
         :paramtype health_details:
          list[~azure.mgmt.recoveryservicesbackup.activestamp.models.AzureIaaSVMHealthDetails]
@@ -2767,6 +2787,10 @@ class AzureIaaSClassicComputeVMProtectedItem(AzureIaaSVMProtectedItem):  # pylin
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.KPIResourceHealthDetails]
         :keyword last_backup_status: Last backup operation status.
         :paramtype last_backup_status: str
+        :keyword last_backup_time: Timestamp of the last backup operation on this backup item.
+        :paramtype last_backup_time: ~datetime.datetime
+        :keyword protected_item_data_id: Data ID of the protected item.
+        :paramtype protected_item_data_id: str
         :keyword extended_info: Additional information for this backup item.
         :paramtype extended_info:
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.AzureIaaSVMProtectedItemExtendedInfo
@@ -2775,6 +2799,8 @@ class AzureIaaSClassicComputeVMProtectedItem(AzureIaaSVMProtectedItem):  # pylin
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.ExtendedProperties
         """
         super().__init__(
+            backup_management_type=backup_management_type,
+            workload_type=workload_type,
             container_name=container_name,
             source_resource_id=source_resource_id,
             policy_id=policy_id,
@@ -2789,12 +2815,16 @@ class AzureIaaSClassicComputeVMProtectedItem(AzureIaaSVMProtectedItem):  # pylin
             resource_guard_operation_requests=resource_guard_operation_requests,
             is_archive_enabled=is_archive_enabled,
             policy_name=policy_name,
-            soft_delete_retention_period_in_days=soft_delete_retention_period_in_days,
+            friendly_name=friendly_name,
+            virtual_machine_id=virtual_machine_id,
             protection_status=protection_status,
             protection_state=protection_state,
+            health_status=health_status,
             health_details=health_details,
             kpis_healths=kpis_healths,
             last_backup_status=last_backup_status,
+            last_backup_time=last_backup_time,
+            protected_item_data_id=protected_item_data_id,
             extended_info=extended_info,
             extended_properties=extended_properties,
             **kwargs
@@ -2832,7 +2862,7 @@ class AzureIaaSComputeVMContainer(IaaSVMContainer):
      "Microsoft.ClassicCompute/virtualMachines", "Microsoft.Compute/virtualMachines", and
      "AzureWorkloadContainer".
     :vartype container_type: str or
-     ~azure.mgmt.recoveryservicesbackup.activestamp.models.ProtectableContainerType
+     ~azure.mgmt.recoveryservicesbackup.activestamp.models.ContainerType
     :ivar protectable_object_type: Type of the protectable object associated with this container.
     :vartype protectable_object_type: str
     :ivar virtual_machine_id: Fully qualified ARM url of the virtual machine represented by this
@@ -3001,8 +3031,6 @@ class AzureIaaSComputeVMProtectableItem(IaaSVMProtectableItem):
 class AzureIaaSComputeVMProtectedItem(AzureIaaSVMProtectedItem):  # pylint: disable=too-many-instance-attributes
     """IaaS VM workload-specific backup item representing the Azure Resource Manager VM.
 
-    Variables are only populated by the server, and will be ignored when sending a request.
-
     All required parameters must be populated in order to send to Azure.
 
     :ivar protected_item_type: backup item type. Required.
@@ -3014,8 +3042,8 @@ class AzureIaaSComputeVMProtectedItem(AzureIaaSVMProtectedItem):  # pylint: disa
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.BackupManagementType
     :ivar workload_type: Type of workload this item represents. Known values are: "Invalid", "VM",
      "FileFolder", "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint", "VMwareVM", "SystemState",
-     "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase",
-     "SAPAseDatabase", and "SAPHanaDBInstance".
+     "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase", and
+     "SAPAseDatabase".
     :vartype workload_type: str or
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.DataSourceType
     :ivar container_name: Unique name of container.
@@ -3052,8 +3080,6 @@ class AzureIaaSComputeVMProtectedItem(AzureIaaSVMProtectedItem):  # pylint: disa
     :vartype is_archive_enabled: bool
     :ivar policy_name: Name of the policy used for protection.
     :vartype policy_name: str
-    :ivar soft_delete_retention_period_in_days: Soft delete retention period in days.
-    :vartype soft_delete_retention_period_in_days: int
     :ivar friendly_name: Friendly name of the VM represented by this backup item.
     :vartype friendly_name: str
     :ivar virtual_machine_id: Fully qualified ARM ID of the virtual machine represented by this
@@ -3062,8 +3088,7 @@ class AzureIaaSComputeVMProtectedItem(AzureIaaSVMProtectedItem):  # pylint: disa
     :ivar protection_status: Backup status of this backup item.
     :vartype protection_status: str
     :ivar protection_state: Backup state of this backup item. Known values are: "Invalid",
-     "IRPending", "Protected", "ProtectionError", "ProtectionStopped", "ProtectionPaused", and
-     "BackupsSuspended".
+     "IRPending", "Protected", "ProtectionError", "ProtectionStopped", and "ProtectionPaused".
     :vartype protection_state: str or
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.ProtectionState
     :ivar health_status: Health status of protected item. Known values are: "Passed",
@@ -3092,13 +3117,6 @@ class AzureIaaSComputeVMProtectedItem(AzureIaaSVMProtectedItem):  # pylint: disa
 
     _validation = {
         "protected_item_type": {"required": True},
-        "backup_management_type": {"readonly": True},
-        "workload_type": {"readonly": True},
-        "friendly_name": {"readonly": True},
-        "virtual_machine_id": {"readonly": True},
-        "health_status": {"readonly": True},
-        "last_backup_time": {"readonly": True},
-        "protected_item_data_id": {"readonly": True},
     }
 
     _attribute_map = {
@@ -3119,7 +3137,6 @@ class AzureIaaSComputeVMProtectedItem(AzureIaaSVMProtectedItem):  # pylint: disa
         "resource_guard_operation_requests": {"key": "resourceGuardOperationRequests", "type": "[str]"},
         "is_archive_enabled": {"key": "isArchiveEnabled", "type": "bool"},
         "policy_name": {"key": "policyName", "type": "str"},
-        "soft_delete_retention_period_in_days": {"key": "softDeleteRetentionPeriodInDays", "type": "int"},
         "friendly_name": {"key": "friendlyName", "type": "str"},
         "virtual_machine_id": {"key": "virtualMachineId", "type": "str"},
         "protection_status": {"key": "protectionStatus", "type": "str"},
@@ -3137,6 +3154,8 @@ class AzureIaaSComputeVMProtectedItem(AzureIaaSVMProtectedItem):  # pylint: disa
     def __init__(  # pylint: disable=too-many-locals
         self,
         *,
+        backup_management_type: Optional[Union[str, "_models.BackupManagementType"]] = None,
+        workload_type: Optional[Union[str, "_models.DataSourceType"]] = None,
         container_name: Optional[str] = None,
         source_resource_id: Optional[str] = None,
         policy_id: Optional[str] = None,
@@ -3151,17 +3170,32 @@ class AzureIaaSComputeVMProtectedItem(AzureIaaSVMProtectedItem):  # pylint: disa
         resource_guard_operation_requests: Optional[List[str]] = None,
         is_archive_enabled: Optional[bool] = None,
         policy_name: Optional[str] = None,
-        soft_delete_retention_period_in_days: Optional[int] = None,
+        friendly_name: Optional[str] = None,
+        virtual_machine_id: Optional[str] = None,
         protection_status: Optional[str] = None,
         protection_state: Optional[Union[str, "_models.ProtectionState"]] = None,
+        health_status: Optional[Union[str, "_models.HealthStatus"]] = None,
         health_details: Optional[List["_models.AzureIaaSVMHealthDetails"]] = None,
         kpis_healths: Optional[Dict[str, "_models.KPIResourceHealthDetails"]] = None,
         last_backup_status: Optional[str] = None,
+        last_backup_time: Optional[datetime.datetime] = None,
+        protected_item_data_id: Optional[str] = None,
         extended_info: Optional["_models.AzureIaaSVMProtectedItemExtendedInfo"] = None,
         extended_properties: Optional["_models.ExtendedProperties"] = None,
         **kwargs: Any
     ) -> None:
         """
+        :keyword backup_management_type: Type of backup management for the backed up item. Known values
+         are: "Invalid", "AzureIaasVM", "MAB", "DPM", "AzureBackupServer", "AzureSql", "AzureStorage",
+         "AzureWorkload", and "DefaultBackup".
+        :paramtype backup_management_type: str or
+         ~azure.mgmt.recoveryservicesbackup.activestamp.models.BackupManagementType
+        :keyword workload_type: Type of workload this item represents. Known values are: "Invalid",
+         "VM", "FileFolder", "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint", "VMwareVM", "SystemState",
+         "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase", and
+         "SAPAseDatabase".
+        :paramtype workload_type: str or
+         ~azure.mgmt.recoveryservicesbackup.activestamp.models.DataSourceType
         :keyword container_name: Unique name of container.
         :paramtype container_name: str
         :keyword source_resource_id: ARM ID of the resource to be backed up.
@@ -3197,15 +3231,21 @@ class AzureIaaSComputeVMProtectedItem(AzureIaaSVMProtectedItem):  # pylint: disa
         :paramtype is_archive_enabled: bool
         :keyword policy_name: Name of the policy used for protection.
         :paramtype policy_name: str
-        :keyword soft_delete_retention_period_in_days: Soft delete retention period in days.
-        :paramtype soft_delete_retention_period_in_days: int
+        :keyword friendly_name: Friendly name of the VM represented by this backup item.
+        :paramtype friendly_name: str
+        :keyword virtual_machine_id: Fully qualified ARM ID of the virtual machine represented by this
+         item.
+        :paramtype virtual_machine_id: str
         :keyword protection_status: Backup status of this backup item.
         :paramtype protection_status: str
         :keyword protection_state: Backup state of this backup item. Known values are: "Invalid",
-         "IRPending", "Protected", "ProtectionError", "ProtectionStopped", "ProtectionPaused", and
-         "BackupsSuspended".
+         "IRPending", "Protected", "ProtectionError", "ProtectionStopped", and "ProtectionPaused".
         :paramtype protection_state: str or
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.ProtectionState
+        :keyword health_status: Health status of protected item. Known values are: "Passed",
+         "ActionRequired", "ActionSuggested", and "Invalid".
+        :paramtype health_status: str or
+         ~azure.mgmt.recoveryservicesbackup.activestamp.models.HealthStatus
         :keyword health_details: Health details on this backup item.
         :paramtype health_details:
          list[~azure.mgmt.recoveryservicesbackup.activestamp.models.AzureIaaSVMHealthDetails]
@@ -3214,6 +3254,10 @@ class AzureIaaSComputeVMProtectedItem(AzureIaaSVMProtectedItem):  # pylint: disa
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.KPIResourceHealthDetails]
         :keyword last_backup_status: Last backup operation status.
         :paramtype last_backup_status: str
+        :keyword last_backup_time: Timestamp of the last backup operation on this backup item.
+        :paramtype last_backup_time: ~datetime.datetime
+        :keyword protected_item_data_id: Data ID of the protected item.
+        :paramtype protected_item_data_id: str
         :keyword extended_info: Additional information for this backup item.
         :paramtype extended_info:
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.AzureIaaSVMProtectedItemExtendedInfo
@@ -3222,6 +3266,8 @@ class AzureIaaSComputeVMProtectedItem(AzureIaaSVMProtectedItem):  # pylint: disa
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.ExtendedProperties
         """
         super().__init__(
+            backup_management_type=backup_management_type,
+            workload_type=workload_type,
             container_name=container_name,
             source_resource_id=source_resource_id,
             policy_id=policy_id,
@@ -3236,12 +3282,16 @@ class AzureIaaSComputeVMProtectedItem(AzureIaaSVMProtectedItem):  # pylint: disa
             resource_guard_operation_requests=resource_guard_operation_requests,
             is_archive_enabled=is_archive_enabled,
             policy_name=policy_name,
-            soft_delete_retention_period_in_days=soft_delete_retention_period_in_days,
+            friendly_name=friendly_name,
+            virtual_machine_id=virtual_machine_id,
             protection_status=protection_status,
             protection_state=protection_state,
+            health_status=health_status,
             health_details=health_details,
             kpis_healths=kpis_healths,
             last_backup_status=last_backup_status,
+            last_backup_time=last_backup_time,
+            protected_item_data_id=protected_item_data_id,
             extended_info=extended_info,
             extended_properties=extended_properties,
             **kwargs
@@ -3883,18 +3933,8 @@ class AzureIaaSVMJobV2(Job):  # pylint: disable=too-many-instance-attributes
 class AzureIaaSVMProtectedItemExtendedInfo(_serialization.Model):
     """Additional information on Azure IaaS VM specific backup item.
 
-    :ivar oldest_recovery_point: The oldest backup copy available for this backup item across all
-     tiers.
+    :ivar oldest_recovery_point: The oldest backup copy available for this backup item.
     :vartype oldest_recovery_point: ~datetime.datetime
-    :ivar oldest_recovery_point_in_vault: The oldest backup copy available for this backup item in
-     vault tier.
-    :vartype oldest_recovery_point_in_vault: ~datetime.datetime
-    :ivar oldest_recovery_point_in_archive: The oldest backup copy available for this backup item
-     in archive tier.
-    :vartype oldest_recovery_point_in_archive: ~datetime.datetime
-    :ivar newest_recovery_point_in_archive: The latest backup copy available for this backup item
-     in archive tier.
-    :vartype newest_recovery_point_in_archive: ~datetime.datetime
     :ivar recovery_point_count: Number of backup copies available for this backup item.
     :vartype recovery_point_count: int
     :ivar policy_inconsistent: Specifies if backup policy associated with the backup item is
@@ -3904,9 +3944,6 @@ class AzureIaaSVMProtectedItemExtendedInfo(_serialization.Model):
 
     _attribute_map = {
         "oldest_recovery_point": {"key": "oldestRecoveryPoint", "type": "iso-8601"},
-        "oldest_recovery_point_in_vault": {"key": "oldestRecoveryPointInVault", "type": "iso-8601"},
-        "oldest_recovery_point_in_archive": {"key": "oldestRecoveryPointInArchive", "type": "iso-8601"},
-        "newest_recovery_point_in_archive": {"key": "newestRecoveryPointInArchive", "type": "iso-8601"},
         "recovery_point_count": {"key": "recoveryPointCount", "type": "int"},
         "policy_inconsistent": {"key": "policyInconsistent", "type": "bool"},
     }
@@ -3915,26 +3952,13 @@ class AzureIaaSVMProtectedItemExtendedInfo(_serialization.Model):
         self,
         *,
         oldest_recovery_point: Optional[datetime.datetime] = None,
-        oldest_recovery_point_in_vault: Optional[datetime.datetime] = None,
-        oldest_recovery_point_in_archive: Optional[datetime.datetime] = None,
-        newest_recovery_point_in_archive: Optional[datetime.datetime] = None,
         recovery_point_count: Optional[int] = None,
         policy_inconsistent: Optional[bool] = None,
         **kwargs: Any
     ) -> None:
         """
-        :keyword oldest_recovery_point: The oldest backup copy available for this backup item across
-         all tiers.
+        :keyword oldest_recovery_point: The oldest backup copy available for this backup item.
         :paramtype oldest_recovery_point: ~datetime.datetime
-        :keyword oldest_recovery_point_in_vault: The oldest backup copy available for this backup item
-         in vault tier.
-        :paramtype oldest_recovery_point_in_vault: ~datetime.datetime
-        :keyword oldest_recovery_point_in_archive: The oldest backup copy available for this backup
-         item in archive tier.
-        :paramtype oldest_recovery_point_in_archive: ~datetime.datetime
-        :keyword newest_recovery_point_in_archive: The latest backup copy available for this backup
-         item in archive tier.
-        :paramtype newest_recovery_point_in_archive: ~datetime.datetime
         :keyword recovery_point_count: Number of backup copies available for this backup item.
         :paramtype recovery_point_count: int
         :keyword policy_inconsistent: Specifies if backup policy associated with the backup item is
@@ -3943,9 +3967,6 @@ class AzureIaaSVMProtectedItemExtendedInfo(_serialization.Model):
         """
         super().__init__(**kwargs)
         self.oldest_recovery_point = oldest_recovery_point
-        self.oldest_recovery_point_in_vault = oldest_recovery_point_in_vault
-        self.oldest_recovery_point_in_archive = oldest_recovery_point_in_archive
-        self.newest_recovery_point_in_archive = newest_recovery_point_in_archive
         self.recovery_point_count = recovery_point_count
         self.policy_inconsistent = policy_inconsistent
 
@@ -3970,11 +3991,6 @@ class AzureIaaSVMProtectionPolicy(ProtectionPolicy):
     :ivar retention_policy: Retention policy with the details on backup copy retention ranges.
     :vartype retention_policy:
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.RetentionPolicy
-    :ivar tiering_policy: Tiering policy to automatically move RPs to another tier
-     Key is Target Tier, defined in RecoveryPointTierType enum.
-     Tiering policy specifies the criteria to move RP to the target tier.
-    :vartype tiering_policy: dict[str,
-     ~azure.mgmt.recoveryservicesbackup.activestamp.models.TieringPolicy]
     :ivar instant_rp_retention_range_in_days: Instant RP retention policy range in days.
     :vartype instant_rp_retention_range_in_days: int
     :ivar time_zone: TimeZone optional input as string. For example: TimeZone = "Pacific Standard
@@ -3996,7 +4012,6 @@ class AzureIaaSVMProtectionPolicy(ProtectionPolicy):
         "instant_rp_details": {"key": "instantRPDetails", "type": "InstantRPAdditionalDetails"},
         "schedule_policy": {"key": "schedulePolicy", "type": "SchedulePolicy"},
         "retention_policy": {"key": "retentionPolicy", "type": "RetentionPolicy"},
-        "tiering_policy": {"key": "tieringPolicy", "type": "{TieringPolicy}"},
         "instant_rp_retention_range_in_days": {"key": "instantRpRetentionRangeInDays", "type": "int"},
         "time_zone": {"key": "timeZone", "type": "str"},
         "policy_type": {"key": "policyType", "type": "str"},
@@ -4010,7 +4025,6 @@ class AzureIaaSVMProtectionPolicy(ProtectionPolicy):
         instant_rp_details: Optional["_models.InstantRPAdditionalDetails"] = None,
         schedule_policy: Optional["_models.SchedulePolicy"] = None,
         retention_policy: Optional["_models.RetentionPolicy"] = None,
-        tiering_policy: Optional[Dict[str, "_models.TieringPolicy"]] = None,
         instant_rp_retention_range_in_days: Optional[int] = None,
         time_zone: Optional[str] = None,
         policy_type: Optional[Union[str, "_models.IAASVMPolicyType"]] = None,
@@ -4030,11 +4044,6 @@ class AzureIaaSVMProtectionPolicy(ProtectionPolicy):
         :keyword retention_policy: Retention policy with the details on backup copy retention ranges.
         :paramtype retention_policy:
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.RetentionPolicy
-        :keyword tiering_policy: Tiering policy to automatically move RPs to another tier
-         Key is Target Tier, defined in RecoveryPointTierType enum.
-         Tiering policy specifies the criteria to move RP to the target tier.
-        :paramtype tiering_policy: dict[str,
-         ~azure.mgmt.recoveryservicesbackup.activestamp.models.TieringPolicy]
         :keyword instant_rp_retention_range_in_days: Instant RP retention policy range in days.
         :paramtype instant_rp_retention_range_in_days: int
         :keyword time_zone: TimeZone optional input as string. For example: TimeZone = "Pacific
@@ -4053,7 +4062,6 @@ class AzureIaaSVMProtectionPolicy(ProtectionPolicy):
         self.instant_rp_details = instant_rp_details
         self.schedule_policy = schedule_policy
         self.retention_policy = retention_policy
-        self.tiering_policy = tiering_policy
         self.instant_rp_retention_range_in_days = instant_rp_retention_range_in_days
         self.time_zone = time_zone
         self.policy_type = policy_type
@@ -4359,7 +4367,7 @@ class AzureWorkloadContainer(ProtectionContainer):  # pylint: disable=too-many-i
      "Microsoft.ClassicCompute/virtualMachines", "Microsoft.Compute/virtualMachines", and
      "AzureWorkloadContainer".
     :vartype container_type: str or
-     ~azure.mgmt.recoveryservicesbackup.activestamp.models.ProtectableContainerType
+     ~azure.mgmt.recoveryservicesbackup.activestamp.models.ContainerType
     :ivar protectable_object_type: Type of the protectable object associated with this container.
     :vartype protectable_object_type: str
     :ivar source_resource_id: ARM ID of the virtual machine represented by this Azure Workload
@@ -4373,7 +4381,7 @@ class AzureWorkloadContainer(ProtectionContainer):  # pylint: disable=too-many-i
     :ivar workload_type: Workload type for which registration was sent. Known values are:
      "Invalid", "VM", "FileFolder", "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint", "VMwareVM",
      "SystemState", "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare",
-     "SAPHanaDatabase", "SAPAseDatabase", and "SAPHanaDBInstance".
+     "SAPHanaDatabase", and "SAPAseDatabase".
     :vartype workload_type: str or
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.WorkloadType
     :ivar operation_type: Re-Do Operation. Known values are: "Invalid", "Register", and
@@ -4449,7 +4457,7 @@ class AzureWorkloadContainer(ProtectionContainer):  # pylint: disable=too-many-i
         :keyword workload_type: Workload type for which registration was sent. Known values are:
          "Invalid", "VM", "FileFolder", "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint", "VMwareVM",
          "SystemState", "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare",
-         "SAPHanaDatabase", "SAPAseDatabase", and "SAPHanaDBInstance".
+         "SAPHanaDatabase", and "SAPAseDatabase".
         :paramtype workload_type: str or
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.WorkloadType
         :keyword operation_type: Re-Do Operation. Known values are: "Invalid", "Register", and
@@ -4505,7 +4513,7 @@ class AzureSQLAGWorkloadContainerProtectionContainer(
      "Microsoft.ClassicCompute/virtualMachines", "Microsoft.Compute/virtualMachines", and
      "AzureWorkloadContainer".
     :vartype container_type: str or
-     ~azure.mgmt.recoveryservicesbackup.activestamp.models.ProtectableContainerType
+     ~azure.mgmt.recoveryservicesbackup.activestamp.models.ContainerType
     :ivar protectable_object_type: Type of the protectable object associated with this container.
     :vartype protectable_object_type: str
     :ivar source_resource_id: ARM ID of the virtual machine represented by this Azure Workload
@@ -4519,7 +4527,7 @@ class AzureSQLAGWorkloadContainerProtectionContainer(
     :ivar workload_type: Workload type for which registration was sent. Known values are:
      "Invalid", "VM", "FileFolder", "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint", "VMwareVM",
      "SystemState", "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare",
-     "SAPHanaDatabase", "SAPAseDatabase", and "SAPHanaDBInstance".
+     "SAPHanaDatabase", and "SAPAseDatabase".
     :vartype workload_type: str or
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.WorkloadType
     :ivar operation_type: Re-Do Operation. Known values are: "Invalid", "Register", and
@@ -4588,7 +4596,7 @@ class AzureSQLAGWorkloadContainerProtectionContainer(
         :keyword workload_type: Workload type for which registration was sent. Known values are:
          "Invalid", "VM", "FileFolder", "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint", "VMwareVM",
          "SystemState", "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare",
-         "SAPHanaDatabase", "SAPAseDatabase", and "SAPHanaDBInstance".
+         "SAPHanaDatabase", and "SAPAseDatabase".
         :paramtype workload_type: str or
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.WorkloadType
         :keyword operation_type: Re-Do Operation. Known values are: "Invalid", "Register", and
@@ -4642,7 +4650,7 @@ class AzureSqlContainer(ProtectionContainer):
      "Microsoft.ClassicCompute/virtualMachines", "Microsoft.Compute/virtualMachines", and
      "AzureWorkloadContainer".
     :vartype container_type: str or
-     ~azure.mgmt.recoveryservicesbackup.activestamp.models.ProtectableContainerType
+     ~azure.mgmt.recoveryservicesbackup.activestamp.models.ContainerType
     :ivar protectable_object_type: Type of the protectable object associated with this container.
     :vartype protectable_object_type: str
     """
@@ -4701,8 +4709,6 @@ class AzureSqlContainer(ProtectionContainer):
 class AzureSqlProtectedItem(ProtectedItem):  # pylint: disable=too-many-instance-attributes
     """Azure SQL workload-specific backup item.
 
-    Variables are only populated by the server, and will be ignored when sending a request.
-
     All required parameters must be populated in order to send to Azure.
 
     :ivar protected_item_type: backup item type. Required.
@@ -4714,8 +4720,8 @@ class AzureSqlProtectedItem(ProtectedItem):  # pylint: disable=too-many-instance
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.BackupManagementType
     :ivar workload_type: Type of workload this item represents. Known values are: "Invalid", "VM",
      "FileFolder", "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint", "VMwareVM", "SystemState",
-     "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase",
-     "SAPAseDatabase", and "SAPHanaDBInstance".
+     "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase", and
+     "SAPAseDatabase".
     :vartype workload_type: str or
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.DataSourceType
     :ivar container_name: Unique name of container.
@@ -4752,14 +4758,11 @@ class AzureSqlProtectedItem(ProtectedItem):  # pylint: disable=too-many-instance
     :vartype is_archive_enabled: bool
     :ivar policy_name: Name of the policy used for protection.
     :vartype policy_name: str
-    :ivar soft_delete_retention_period_in_days: Soft delete retention period in days.
-    :vartype soft_delete_retention_period_in_days: int
     :ivar protected_item_data_id: Internal ID of a backup item. Used by Azure SQL Backup engine to
      contact Recovery Services.
     :vartype protected_item_data_id: str
     :ivar protection_state: Backup state of the backed up item. Known values are: "Invalid",
-     "IRPending", "Protected", "ProtectionError", "ProtectionStopped", "ProtectionPaused", and
-     "BackupsSuspended".
+     "IRPending", "Protected", "ProtectionError", "ProtectionStopped", and "ProtectionPaused".
     :vartype protection_state: str or
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.ProtectedItemState
     :ivar extended_info: Additional information for this backup item.
@@ -4769,8 +4772,6 @@ class AzureSqlProtectedItem(ProtectedItem):  # pylint: disable=too-many-instance
 
     _validation = {
         "protected_item_type": {"required": True},
-        "backup_management_type": {"readonly": True},
-        "workload_type": {"readonly": True},
     }
 
     _attribute_map = {
@@ -4791,7 +4792,6 @@ class AzureSqlProtectedItem(ProtectedItem):  # pylint: disable=too-many-instance
         "resource_guard_operation_requests": {"key": "resourceGuardOperationRequests", "type": "[str]"},
         "is_archive_enabled": {"key": "isArchiveEnabled", "type": "bool"},
         "policy_name": {"key": "policyName", "type": "str"},
-        "soft_delete_retention_period_in_days": {"key": "softDeleteRetentionPeriodInDays", "type": "int"},
         "protected_item_data_id": {"key": "protectedItemDataId", "type": "str"},
         "protection_state": {"key": "protectionState", "type": "str"},
         "extended_info": {"key": "extendedInfo", "type": "AzureSqlProtectedItemExtendedInfo"},
@@ -4800,6 +4800,8 @@ class AzureSqlProtectedItem(ProtectedItem):  # pylint: disable=too-many-instance
     def __init__(
         self,
         *,
+        backup_management_type: Optional[Union[str, "_models.BackupManagementType"]] = None,
+        workload_type: Optional[Union[str, "_models.DataSourceType"]] = None,
         container_name: Optional[str] = None,
         source_resource_id: Optional[str] = None,
         policy_id: Optional[str] = None,
@@ -4814,13 +4816,23 @@ class AzureSqlProtectedItem(ProtectedItem):  # pylint: disable=too-many-instance
         resource_guard_operation_requests: Optional[List[str]] = None,
         is_archive_enabled: Optional[bool] = None,
         policy_name: Optional[str] = None,
-        soft_delete_retention_period_in_days: Optional[int] = None,
         protected_item_data_id: Optional[str] = None,
         protection_state: Optional[Union[str, "_models.ProtectedItemState"]] = None,
         extended_info: Optional["_models.AzureSqlProtectedItemExtendedInfo"] = None,
         **kwargs: Any
     ) -> None:
         """
+        :keyword backup_management_type: Type of backup management for the backed up item. Known values
+         are: "Invalid", "AzureIaasVM", "MAB", "DPM", "AzureBackupServer", "AzureSql", "AzureStorage",
+         "AzureWorkload", and "DefaultBackup".
+        :paramtype backup_management_type: str or
+         ~azure.mgmt.recoveryservicesbackup.activestamp.models.BackupManagementType
+        :keyword workload_type: Type of workload this item represents. Known values are: "Invalid",
+         "VM", "FileFolder", "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint", "VMwareVM", "SystemState",
+         "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase", and
+         "SAPAseDatabase".
+        :paramtype workload_type: str or
+         ~azure.mgmt.recoveryservicesbackup.activestamp.models.DataSourceType
         :keyword container_name: Unique name of container.
         :paramtype container_name: str
         :keyword source_resource_id: ARM ID of the resource to be backed up.
@@ -4856,14 +4868,11 @@ class AzureSqlProtectedItem(ProtectedItem):  # pylint: disable=too-many-instance
         :paramtype is_archive_enabled: bool
         :keyword policy_name: Name of the policy used for protection.
         :paramtype policy_name: str
-        :keyword soft_delete_retention_period_in_days: Soft delete retention period in days.
-        :paramtype soft_delete_retention_period_in_days: int
         :keyword protected_item_data_id: Internal ID of a backup item. Used by Azure SQL Backup engine
          to contact Recovery Services.
         :paramtype protected_item_data_id: str
         :keyword protection_state: Backup state of the backed up item. Known values are: "Invalid",
-         "IRPending", "Protected", "ProtectionError", "ProtectionStopped", "ProtectionPaused", and
-         "BackupsSuspended".
+         "IRPending", "Protected", "ProtectionError", "ProtectionStopped", and "ProtectionPaused".
         :paramtype protection_state: str or
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.ProtectedItemState
         :keyword extended_info: Additional information for this backup item.
@@ -4871,6 +4880,8 @@ class AzureSqlProtectedItem(ProtectedItem):  # pylint: disable=too-many-instance
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.AzureSqlProtectedItemExtendedInfo
         """
         super().__init__(
+            backup_management_type=backup_management_type,
+            workload_type=workload_type,
             container_name=container_name,
             source_resource_id=source_resource_id,
             policy_id=policy_id,
@@ -4885,7 +4896,6 @@ class AzureSqlProtectedItem(ProtectedItem):  # pylint: disable=too-many-instance
             resource_guard_operation_requests=resource_guard_operation_requests,
             is_archive_enabled=is_archive_enabled,
             policy_name=policy_name,
-            soft_delete_retention_period_in_days=soft_delete_retention_period_in_days,
             **kwargs
         )
         self.protected_item_type: str = "Microsoft.Sql/servers/databases"
@@ -5018,7 +5028,7 @@ class AzureStorageContainer(ProtectionContainer):  # pylint: disable=too-many-in
      "Microsoft.ClassicCompute/virtualMachines", "Microsoft.Compute/virtualMachines", and
      "AzureWorkloadContainer".
     :vartype container_type: str or
-     ~azure.mgmt.recoveryservicesbackup.activestamp.models.ProtectableContainerType
+     ~azure.mgmt.recoveryservicesbackup.activestamp.models.ContainerType
     :ivar protectable_object_type: Type of the protectable object associated with this container.
     :vartype protectable_object_type: str
     :ivar source_resource_id: Fully qualified ARM url.
@@ -5389,7 +5399,7 @@ class ProtectableContainer(_serialization.Model):
      "Microsoft.ClassicCompute/virtualMachines", "Microsoft.Compute/virtualMachines", and
      "AzureWorkloadContainer".
     :vartype protectable_container_type: str or
-     ~azure.mgmt.recoveryservicesbackup.activestamp.models.ProtectableContainerType
+     ~azure.mgmt.recoveryservicesbackup.activestamp.models.ContainerType
     :ivar health_status: Status of health of the container.
     :vartype health_status: str
     :ivar container_id: Fabric Id of the container such as ARM Id.
@@ -5468,7 +5478,7 @@ class AzureStorageProtectableContainer(ProtectableContainer):
      "Microsoft.ClassicCompute/virtualMachines", "Microsoft.Compute/virtualMachines", and
      "AzureWorkloadContainer".
     :vartype protectable_container_type: str or
-     ~azure.mgmt.recoveryservicesbackup.activestamp.models.ProtectableContainerType
+     ~azure.mgmt.recoveryservicesbackup.activestamp.models.ContainerType
     :ivar health_status: Status of health of the container.
     :vartype health_status: str
     :ivar container_id: Fabric Id of the container such as ARM Id.
@@ -5542,7 +5552,7 @@ class AzureVMAppContainerProtectableContainer(ProtectableContainer):
      "Microsoft.ClassicCompute/virtualMachines", "Microsoft.Compute/virtualMachines", and
      "AzureWorkloadContainer".
     :vartype protectable_container_type: str or
-     ~azure.mgmt.recoveryservicesbackup.activestamp.models.ProtectableContainerType
+     ~azure.mgmt.recoveryservicesbackup.activestamp.models.ContainerType
     :ivar health_status: Status of health of the container.
     :vartype health_status: str
     :ivar container_id: Fabric Id of the container such as ARM Id.
@@ -5623,7 +5633,7 @@ class AzureVMAppContainerProtectionContainer(AzureWorkloadContainer):  # pylint:
      "Microsoft.ClassicCompute/virtualMachines", "Microsoft.Compute/virtualMachines", and
      "AzureWorkloadContainer".
     :vartype container_type: str or
-     ~azure.mgmt.recoveryservicesbackup.activestamp.models.ProtectableContainerType
+     ~azure.mgmt.recoveryservicesbackup.activestamp.models.ContainerType
     :ivar protectable_object_type: Type of the protectable object associated with this container.
     :vartype protectable_object_type: str
     :ivar source_resource_id: ARM ID of the virtual machine represented by this Azure Workload
@@ -5637,7 +5647,7 @@ class AzureVMAppContainerProtectionContainer(AzureWorkloadContainer):  # pylint:
     :ivar workload_type: Workload type for which registration was sent. Known values are:
      "Invalid", "VM", "FileFolder", "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint", "VMwareVM",
      "SystemState", "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare",
-     "SAPHanaDatabase", "SAPAseDatabase", and "SAPHanaDBInstance".
+     "SAPHanaDatabase", and "SAPAseDatabase".
     :vartype workload_type: str or
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.WorkloadType
     :ivar operation_type: Re-Do Operation. Known values are: "Invalid", "Register", and
@@ -5706,7 +5716,7 @@ class AzureVMAppContainerProtectionContainer(AzureWorkloadContainer):  # pylint:
         :keyword workload_type: Workload type for which registration was sent. Known values are:
          "Invalid", "VM", "FileFolder", "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint", "VMwareVM",
          "SystemState", "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare",
-         "SAPHanaDatabase", "SAPAseDatabase", and "SAPHanaDBInstance".
+         "SAPHanaDatabase", and "SAPAseDatabase".
         :paramtype workload_type: str or
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.WorkloadType
         :keyword operation_type: Re-Do Operation. Known values are: "Invalid", "Register", and
@@ -5972,8 +5982,7 @@ class AzureVmWorkloadProtectableItem(WorkloadProtectableItem):  # pylint: disabl
     """Azure VM workload-specific protectable item.
 
     You probably want to use the sub-classes and not this class directly. Known sub-classes are:
-    AzureVmWorkloadSAPHanaHSRProtectableItem, AzureVmWorkloadSAPAseSystemProtectableItem,
-    AzureVmWorkloadSAPHanaDBInstance, AzureVmWorkloadSAPHanaDatabaseProtectableItem,
+    AzureVmWorkloadSAPAseSystemProtectableItem, AzureVmWorkloadSAPHanaDatabaseProtectableItem,
     AzureVmWorkloadSAPHanaSystemProtectableItem,
     AzureVmWorkloadSQLAvailabilityGroupProtectableItem, AzureVmWorkloadSQLDatabaseProtectableItem,
     AzureVmWorkloadSQLInstanceProtectableItem
@@ -6011,8 +6020,6 @@ class AzureVmWorkloadProtectableItem(WorkloadProtectableItem):  # pylint: disabl
     :ivar prebackupvalidation: Pre-backup validation for protectable objects.
     :vartype prebackupvalidation:
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.PreBackupValidation
-    :ivar is_protectable: Indicates if item is protectable.
-    :vartype is_protectable: bool
     """
 
     _validation = {
@@ -6033,14 +6040,11 @@ class AzureVmWorkloadProtectableItem(WorkloadProtectableItem):  # pylint: disabl
         "subinquireditemcount": {"key": "subinquireditemcount", "type": "int"},
         "subprotectableitemcount": {"key": "subprotectableitemcount", "type": "int"},
         "prebackupvalidation": {"key": "prebackupvalidation", "type": "PreBackupValidation"},
-        "is_protectable": {"key": "isProtectable", "type": "bool"},
     }
 
     _subtype_map = {
         "protectable_item_type": {
-            "HanaHSRContainer": "AzureVmWorkloadSAPHanaHSRProtectableItem",
             "SAPAseSystem": "AzureVmWorkloadSAPAseSystemProtectableItem",
-            "SAPHanaDBInstance": "AzureVmWorkloadSAPHanaDBInstance",
             "SAPHanaDatabase": "AzureVmWorkloadSAPHanaDatabaseProtectableItem",
             "SAPHanaSystem": "AzureVmWorkloadSAPHanaSystemProtectableItem",
             "SQLAvailabilityGroupContainer": "AzureVmWorkloadSQLAvailabilityGroupProtectableItem",
@@ -6064,7 +6068,6 @@ class AzureVmWorkloadProtectableItem(WorkloadProtectableItem):  # pylint: disabl
         subinquireditemcount: Optional[int] = None,
         subprotectableitemcount: Optional[int] = None,
         prebackupvalidation: Optional["_models.PreBackupValidation"] = None,
-        is_protectable: Optional[bool] = None,
         **kwargs: Any
     ) -> None:
         """
@@ -6097,8 +6100,6 @@ class AzureVmWorkloadProtectableItem(WorkloadProtectableItem):  # pylint: disabl
         :keyword prebackupvalidation: Pre-backup validation for protectable objects.
         :paramtype prebackupvalidation:
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.PreBackupValidation
-        :keyword is_protectable: Indicates if item is protectable.
-        :paramtype is_protectable: bool
         """
         super().__init__(
             backup_management_type=backup_management_type,
@@ -6116,17 +6117,14 @@ class AzureVmWorkloadProtectableItem(WorkloadProtectableItem):  # pylint: disabl
         self.subinquireditemcount = subinquireditemcount
         self.subprotectableitemcount = subprotectableitemcount
         self.prebackupvalidation = prebackupvalidation
-        self.is_protectable = is_protectable
 
 
 class AzureVmWorkloadProtectedItem(ProtectedItem):  # pylint: disable=too-many-instance-attributes
     """Azure VM workload-specific protected item.
 
     You probably want to use the sub-classes and not this class directly. Known sub-classes are:
-    AzureVmWorkloadSAPAseDatabaseProtectedItem, AzureVmWorkloadSAPHanaDBInstanceProtectedItem,
-    AzureVmWorkloadSAPHanaDatabaseProtectedItem, AzureVmWorkloadSQLDatabaseProtectedItem
-
-    Variables are only populated by the server, and will be ignored when sending a request.
+    AzureVmWorkloadSAPAseDatabaseProtectedItem, AzureVmWorkloadSAPHanaDatabaseProtectedItem,
+    AzureVmWorkloadSQLDatabaseProtectedItem
 
     All required parameters must be populated in order to send to Azure.
 
@@ -6139,8 +6137,8 @@ class AzureVmWorkloadProtectedItem(ProtectedItem):  # pylint: disable=too-many-i
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.BackupManagementType
     :ivar workload_type: Type of workload this item represents. Known values are: "Invalid", "VM",
      "FileFolder", "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint", "VMwareVM", "SystemState",
-     "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase",
-     "SAPAseDatabase", and "SAPHanaDBInstance".
+     "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase", and
+     "SAPAseDatabase".
     :vartype workload_type: str or
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.DataSourceType
     :ivar container_name: Unique name of container.
@@ -6177,8 +6175,6 @@ class AzureVmWorkloadProtectedItem(ProtectedItem):  # pylint: disable=too-many-i
     :vartype is_archive_enabled: bool
     :ivar policy_name: Name of the policy used for protection.
     :vartype policy_name: str
-    :ivar soft_delete_retention_period_in_days: Soft delete retention period in days.
-    :vartype soft_delete_retention_period_in_days: int
     :ivar friendly_name: Friendly name of the DB represented by this backup item.
     :vartype friendly_name: str
     :ivar server_name: Host/Cluster Name for instance or AG.
@@ -6191,8 +6187,7 @@ class AzureVmWorkloadProtectedItem(ProtectedItem):  # pylint: disable=too-many-i
     :ivar protection_status: Backup status of this backup item.
     :vartype protection_status: str
     :ivar protection_state: Backup state of this backup item. Known values are: "Invalid",
-     "IRPending", "Protected", "ProtectionError", "ProtectionStopped", "ProtectionPaused", and
-     "BackupsSuspended".
+     "IRPending", "Protected", "ProtectionError", "ProtectionStopped", and "ProtectionPaused".
     :vartype protection_state: str or
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.ProtectionState
     :ivar last_backup_status: Last backup operation status. Possible values: Healthy, Unhealthy.
@@ -6217,17 +6212,10 @@ class AzureVmWorkloadProtectedItem(ProtectedItem):  # pylint: disable=too-many-i
     :ivar kpis_healths: Health details of different KPIs.
     :vartype kpis_healths: dict[str,
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.KPIResourceHealthDetails]
-    :ivar nodes_list: List of the nodes in case of distributed container.
-    :vartype nodes_list:
-     list[~azure.mgmt.recoveryservicesbackup.activestamp.models.DistributedNodesInfo]
     """
 
     _validation = {
         "protected_item_type": {"required": True},
-        "backup_management_type": {"readonly": True},
-        "workload_type": {"readonly": True},
-        "friendly_name": {"readonly": True},
-        "protection_status": {"readonly": True},
     }
 
     _attribute_map = {
@@ -6248,7 +6236,6 @@ class AzureVmWorkloadProtectedItem(ProtectedItem):  # pylint: disable=too-many-i
         "resource_guard_operation_requests": {"key": "resourceGuardOperationRequests", "type": "[str]"},
         "is_archive_enabled": {"key": "isArchiveEnabled", "type": "bool"},
         "policy_name": {"key": "policyName", "type": "str"},
-        "soft_delete_retention_period_in_days": {"key": "softDeleteRetentionPeriodInDays", "type": "int"},
         "friendly_name": {"key": "friendlyName", "type": "str"},
         "server_name": {"key": "serverName", "type": "str"},
         "parent_name": {"key": "parentName", "type": "str"},
@@ -6262,13 +6249,11 @@ class AzureVmWorkloadProtectedItem(ProtectedItem):  # pylint: disable=too-many-i
         "protected_item_health_status": {"key": "protectedItemHealthStatus", "type": "str"},
         "extended_info": {"key": "extendedInfo", "type": "AzureVmWorkloadProtectedItemExtendedInfo"},
         "kpis_healths": {"key": "kpisHealths", "type": "{KPIResourceHealthDetails}"},
-        "nodes_list": {"key": "nodesList", "type": "[DistributedNodesInfo]"},
     }
 
     _subtype_map = {
         "protected_item_type": {
             "AzureVmWorkloadSAPAseDatabase": "AzureVmWorkloadSAPAseDatabaseProtectedItem",
-            "AzureVmWorkloadSAPHanaDBInstance": "AzureVmWorkloadSAPHanaDBInstanceProtectedItem",
             "AzureVmWorkloadSAPHanaDatabase": "AzureVmWorkloadSAPHanaDatabaseProtectedItem",
             "AzureVmWorkloadSQLDatabase": "AzureVmWorkloadSQLDatabaseProtectedItem",
         }
@@ -6277,6 +6262,8 @@ class AzureVmWorkloadProtectedItem(ProtectedItem):  # pylint: disable=too-many-i
     def __init__(  # pylint: disable=too-many-locals
         self,
         *,
+        backup_management_type: Optional[Union[str, "_models.BackupManagementType"]] = None,
+        workload_type: Optional[Union[str, "_models.DataSourceType"]] = None,
         container_name: Optional[str] = None,
         source_resource_id: Optional[str] = None,
         policy_id: Optional[str] = None,
@@ -6291,10 +6278,11 @@ class AzureVmWorkloadProtectedItem(ProtectedItem):  # pylint: disable=too-many-i
         resource_guard_operation_requests: Optional[List[str]] = None,
         is_archive_enabled: Optional[bool] = None,
         policy_name: Optional[str] = None,
-        soft_delete_retention_period_in_days: Optional[int] = None,
+        friendly_name: Optional[str] = None,
         server_name: Optional[str] = None,
         parent_name: Optional[str] = None,
         parent_type: Optional[str] = None,
+        protection_status: Optional[str] = None,
         protection_state: Optional[Union[str, "_models.ProtectionState"]] = None,
         last_backup_status: Optional[Union[str, "_models.LastBackupStatus"]] = None,
         last_backup_time: Optional[datetime.datetime] = None,
@@ -6303,10 +6291,20 @@ class AzureVmWorkloadProtectedItem(ProtectedItem):  # pylint: disable=too-many-i
         protected_item_health_status: Optional[Union[str, "_models.ProtectedItemHealthStatus"]] = None,
         extended_info: Optional["_models.AzureVmWorkloadProtectedItemExtendedInfo"] = None,
         kpis_healths: Optional[Dict[str, "_models.KPIResourceHealthDetails"]] = None,
-        nodes_list: Optional[List["_models.DistributedNodesInfo"]] = None,
         **kwargs: Any
     ) -> None:
         """
+        :keyword backup_management_type: Type of backup management for the backed up item. Known values
+         are: "Invalid", "AzureIaasVM", "MAB", "DPM", "AzureBackupServer", "AzureSql", "AzureStorage",
+         "AzureWorkload", and "DefaultBackup".
+        :paramtype backup_management_type: str or
+         ~azure.mgmt.recoveryservicesbackup.activestamp.models.BackupManagementType
+        :keyword workload_type: Type of workload this item represents. Known values are: "Invalid",
+         "VM", "FileFolder", "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint", "VMwareVM", "SystemState",
+         "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase", and
+         "SAPAseDatabase".
+        :paramtype workload_type: str or
+         ~azure.mgmt.recoveryservicesbackup.activestamp.models.DataSourceType
         :keyword container_name: Unique name of container.
         :paramtype container_name: str
         :keyword source_resource_id: ARM ID of the resource to be backed up.
@@ -6342,8 +6340,8 @@ class AzureVmWorkloadProtectedItem(ProtectedItem):  # pylint: disable=too-many-i
         :paramtype is_archive_enabled: bool
         :keyword policy_name: Name of the policy used for protection.
         :paramtype policy_name: str
-        :keyword soft_delete_retention_period_in_days: Soft delete retention period in days.
-        :paramtype soft_delete_retention_period_in_days: int
+        :keyword friendly_name: Friendly name of the DB represented by this backup item.
+        :paramtype friendly_name: str
         :keyword server_name: Host/Cluster Name for instance or AG.
         :paramtype server_name: str
         :keyword parent_name: Parent name of the DB such as Instance or Availability Group.
@@ -6351,9 +6349,10 @@ class AzureVmWorkloadProtectedItem(ProtectedItem):  # pylint: disable=too-many-i
         :keyword parent_type: Parent type of protected item, example: for a DB, standalone server or
          distributed.
         :paramtype parent_type: str
+        :keyword protection_status: Backup status of this backup item.
+        :paramtype protection_status: str
         :keyword protection_state: Backup state of this backup item. Known values are: "Invalid",
-         "IRPending", "Protected", "ProtectionError", "ProtectionStopped", "ProtectionPaused", and
-         "BackupsSuspended".
+         "IRPending", "Protected", "ProtectionError", "ProtectionStopped", and "ProtectionPaused".
         :paramtype protection_state: str or
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.ProtectionState
         :keyword last_backup_status: Last backup operation status. Possible values: Healthy, Unhealthy.
@@ -6378,11 +6377,10 @@ class AzureVmWorkloadProtectedItem(ProtectedItem):  # pylint: disable=too-many-i
         :keyword kpis_healths: Health details of different KPIs.
         :paramtype kpis_healths: dict[str,
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.KPIResourceHealthDetails]
-        :keyword nodes_list: List of the nodes in case of distributed container.
-        :paramtype nodes_list:
-         list[~azure.mgmt.recoveryservicesbackup.activestamp.models.DistributedNodesInfo]
         """
         super().__init__(
+            backup_management_type=backup_management_type,
+            workload_type=workload_type,
             container_name=container_name,
             source_resource_id=source_resource_id,
             policy_id=policy_id,
@@ -6397,15 +6395,14 @@ class AzureVmWorkloadProtectedItem(ProtectedItem):  # pylint: disable=too-many-i
             resource_guard_operation_requests=resource_guard_operation_requests,
             is_archive_enabled=is_archive_enabled,
             policy_name=policy_name,
-            soft_delete_retention_period_in_days=soft_delete_retention_period_in_days,
             **kwargs
         )
         self.protected_item_type: str = "AzureVmWorkloadProtectedItem"
-        self.friendly_name = None
+        self.friendly_name = friendly_name
         self.server_name = server_name
         self.parent_name = parent_name
         self.parent_type = parent_type
-        self.protection_status = None
+        self.protection_status = protection_status
         self.protection_state = protection_state
         self.last_backup_status = last_backup_status
         self.last_backup_time = last_backup_time
@@ -6414,24 +6411,13 @@ class AzureVmWorkloadProtectedItem(ProtectedItem):  # pylint: disable=too-many-i
         self.protected_item_health_status = protected_item_health_status
         self.extended_info = extended_info
         self.kpis_healths = kpis_healths
-        self.nodes_list = nodes_list
 
 
 class AzureVmWorkloadProtectedItemExtendedInfo(_serialization.Model):
     """Additional information on Azure Workload for SQL specific backup item.
 
-    :ivar oldest_recovery_point: The oldest backup copy available for this backup item across all
-     tiers.
+    :ivar oldest_recovery_point: The oldest backup copy available for this backup item.
     :vartype oldest_recovery_point: ~datetime.datetime
-    :ivar oldest_recovery_point_in_vault: The oldest backup copy available for this backup item in
-     vault tier.
-    :vartype oldest_recovery_point_in_vault: ~datetime.datetime
-    :ivar oldest_recovery_point_in_archive: The oldest backup copy available for this backup item
-     in archive tier.
-    :vartype oldest_recovery_point_in_archive: ~datetime.datetime
-    :ivar newest_recovery_point_in_archive: The latest backup copy available for this backup item
-     in archive tier.
-    :vartype newest_recovery_point_in_archive: ~datetime.datetime
     :ivar recovery_point_count: Number of backup copies available for this backup item.
     :vartype recovery_point_count: int
     :ivar policy_state: Indicates consistency of policy object and policy applied to this backup
@@ -6444,9 +6430,6 @@ class AzureVmWorkloadProtectedItemExtendedInfo(_serialization.Model):
 
     _attribute_map = {
         "oldest_recovery_point": {"key": "oldestRecoveryPoint", "type": "iso-8601"},
-        "oldest_recovery_point_in_vault": {"key": "oldestRecoveryPointInVault", "type": "iso-8601"},
-        "oldest_recovery_point_in_archive": {"key": "oldestRecoveryPointInArchive", "type": "iso-8601"},
-        "newest_recovery_point_in_archive": {"key": "newestRecoveryPointInArchive", "type": "iso-8601"},
         "recovery_point_count": {"key": "recoveryPointCount", "type": "int"},
         "policy_state": {"key": "policyState", "type": "str"},
         "recovery_model": {"key": "recoveryModel", "type": "str"},
@@ -6456,27 +6439,14 @@ class AzureVmWorkloadProtectedItemExtendedInfo(_serialization.Model):
         self,
         *,
         oldest_recovery_point: Optional[datetime.datetime] = None,
-        oldest_recovery_point_in_vault: Optional[datetime.datetime] = None,
-        oldest_recovery_point_in_archive: Optional[datetime.datetime] = None,
-        newest_recovery_point_in_archive: Optional[datetime.datetime] = None,
         recovery_point_count: Optional[int] = None,
         policy_state: Optional[str] = None,
         recovery_model: Optional[str] = None,
         **kwargs: Any
     ) -> None:
         """
-        :keyword oldest_recovery_point: The oldest backup copy available for this backup item across
-         all tiers.
+        :keyword oldest_recovery_point: The oldest backup copy available for this backup item.
         :paramtype oldest_recovery_point: ~datetime.datetime
-        :keyword oldest_recovery_point_in_vault: The oldest backup copy available for this backup item
-         in vault tier.
-        :paramtype oldest_recovery_point_in_vault: ~datetime.datetime
-        :keyword oldest_recovery_point_in_archive: The oldest backup copy available for this backup
-         item in archive tier.
-        :paramtype oldest_recovery_point_in_archive: ~datetime.datetime
-        :keyword newest_recovery_point_in_archive: The latest backup copy available for this backup
-         item in archive tier.
-        :paramtype newest_recovery_point_in_archive: ~datetime.datetime
         :keyword recovery_point_count: Number of backup copies available for this backup item.
         :paramtype recovery_point_count: int
         :keyword policy_state: Indicates consistency of policy object and policy applied to this backup
@@ -6488,9 +6458,6 @@ class AzureVmWorkloadProtectedItemExtendedInfo(_serialization.Model):
         """
         super().__init__(**kwargs)
         self.oldest_recovery_point = oldest_recovery_point
-        self.oldest_recovery_point_in_vault = oldest_recovery_point_in_vault
-        self.oldest_recovery_point_in_archive = oldest_recovery_point_in_archive
-        self.newest_recovery_point_in_archive = newest_recovery_point_in_archive
         self.recovery_point_count = recovery_point_count
         self.policy_state = policy_state
         self.recovery_model = recovery_model
@@ -6510,8 +6477,8 @@ class AzureVmWorkloadProtectionPolicy(ProtectionPolicy):
     :vartype resource_guard_operation_requests: list[str]
     :ivar work_load_type: Type of workload for the backup management. Known values are: "Invalid",
      "VM", "FileFolder", "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint", "VMwareVM", "SystemState",
-     "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase",
-     "SAPAseDatabase", and "SAPHanaDBInstance".
+     "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase", and
+     "SAPAseDatabase".
     :vartype work_load_type: str or
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.WorkloadType
     :ivar settings: Common settings for the backup management.
@@ -6557,7 +6524,7 @@ class AzureVmWorkloadProtectionPolicy(ProtectionPolicy):
         :keyword work_load_type: Type of workload for the backup management. Known values are:
          "Invalid", "VM", "FileFolder", "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint", "VMwareVM",
          "SystemState", "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare",
-         "SAPHanaDatabase", "SAPAseDatabase", and "SAPHanaDBInstance".
+         "SAPHanaDatabase", and "SAPAseDatabase".
         :paramtype work_load_type: str or
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.WorkloadType
         :keyword settings: Common settings for the backup management.
@@ -6586,8 +6553,6 @@ class AzureVmWorkloadSAPAseDatabaseProtectedItem(
 ):  # pylint: disable=too-many-instance-attributes
     """Azure VM workload-specific protected item representing SAP ASE Database.
 
-    Variables are only populated by the server, and will be ignored when sending a request.
-
     All required parameters must be populated in order to send to Azure.
 
     :ivar protected_item_type: backup item type. Required.
@@ -6599,8 +6564,8 @@ class AzureVmWorkloadSAPAseDatabaseProtectedItem(
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.BackupManagementType
     :ivar workload_type: Type of workload this item represents. Known values are: "Invalid", "VM",
      "FileFolder", "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint", "VMwareVM", "SystemState",
-     "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase",
-     "SAPAseDatabase", and "SAPHanaDBInstance".
+     "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase", and
+     "SAPAseDatabase".
     :vartype workload_type: str or
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.DataSourceType
     :ivar container_name: Unique name of container.
@@ -6637,8 +6602,6 @@ class AzureVmWorkloadSAPAseDatabaseProtectedItem(
     :vartype is_archive_enabled: bool
     :ivar policy_name: Name of the policy used for protection.
     :vartype policy_name: str
-    :ivar soft_delete_retention_period_in_days: Soft delete retention period in days.
-    :vartype soft_delete_retention_period_in_days: int
     :ivar friendly_name: Friendly name of the DB represented by this backup item.
     :vartype friendly_name: str
     :ivar server_name: Host/Cluster Name for instance or AG.
@@ -6651,8 +6614,7 @@ class AzureVmWorkloadSAPAseDatabaseProtectedItem(
     :ivar protection_status: Backup status of this backup item.
     :vartype protection_status: str
     :ivar protection_state: Backup state of this backup item. Known values are: "Invalid",
-     "IRPending", "Protected", "ProtectionError", "ProtectionStopped", "ProtectionPaused", and
-     "BackupsSuspended".
+     "IRPending", "Protected", "ProtectionError", "ProtectionStopped", and "ProtectionPaused".
     :vartype protection_state: str or
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.ProtectionState
     :ivar last_backup_status: Last backup operation status. Possible values: Healthy, Unhealthy.
@@ -6677,17 +6639,10 @@ class AzureVmWorkloadSAPAseDatabaseProtectedItem(
     :ivar kpis_healths: Health details of different KPIs.
     :vartype kpis_healths: dict[str,
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.KPIResourceHealthDetails]
-    :ivar nodes_list: List of the nodes in case of distributed container.
-    :vartype nodes_list:
-     list[~azure.mgmt.recoveryservicesbackup.activestamp.models.DistributedNodesInfo]
     """
 
     _validation = {
         "protected_item_type": {"required": True},
-        "backup_management_type": {"readonly": True},
-        "workload_type": {"readonly": True},
-        "friendly_name": {"readonly": True},
-        "protection_status": {"readonly": True},
     }
 
     _attribute_map = {
@@ -6708,7 +6663,6 @@ class AzureVmWorkloadSAPAseDatabaseProtectedItem(
         "resource_guard_operation_requests": {"key": "resourceGuardOperationRequests", "type": "[str]"},
         "is_archive_enabled": {"key": "isArchiveEnabled", "type": "bool"},
         "policy_name": {"key": "policyName", "type": "str"},
-        "soft_delete_retention_period_in_days": {"key": "softDeleteRetentionPeriodInDays", "type": "int"},
         "friendly_name": {"key": "friendlyName", "type": "str"},
         "server_name": {"key": "serverName", "type": "str"},
         "parent_name": {"key": "parentName", "type": "str"},
@@ -6722,12 +6676,13 @@ class AzureVmWorkloadSAPAseDatabaseProtectedItem(
         "protected_item_health_status": {"key": "protectedItemHealthStatus", "type": "str"},
         "extended_info": {"key": "extendedInfo", "type": "AzureVmWorkloadProtectedItemExtendedInfo"},
         "kpis_healths": {"key": "kpisHealths", "type": "{KPIResourceHealthDetails}"},
-        "nodes_list": {"key": "nodesList", "type": "[DistributedNodesInfo]"},
     }
 
     def __init__(  # pylint: disable=too-many-locals
         self,
         *,
+        backup_management_type: Optional[Union[str, "_models.BackupManagementType"]] = None,
+        workload_type: Optional[Union[str, "_models.DataSourceType"]] = None,
         container_name: Optional[str] = None,
         source_resource_id: Optional[str] = None,
         policy_id: Optional[str] = None,
@@ -6742,10 +6697,11 @@ class AzureVmWorkloadSAPAseDatabaseProtectedItem(
         resource_guard_operation_requests: Optional[List[str]] = None,
         is_archive_enabled: Optional[bool] = None,
         policy_name: Optional[str] = None,
-        soft_delete_retention_period_in_days: Optional[int] = None,
+        friendly_name: Optional[str] = None,
         server_name: Optional[str] = None,
         parent_name: Optional[str] = None,
         parent_type: Optional[str] = None,
+        protection_status: Optional[str] = None,
         protection_state: Optional[Union[str, "_models.ProtectionState"]] = None,
         last_backup_status: Optional[Union[str, "_models.LastBackupStatus"]] = None,
         last_backup_time: Optional[datetime.datetime] = None,
@@ -6754,10 +6710,20 @@ class AzureVmWorkloadSAPAseDatabaseProtectedItem(
         protected_item_health_status: Optional[Union[str, "_models.ProtectedItemHealthStatus"]] = None,
         extended_info: Optional["_models.AzureVmWorkloadProtectedItemExtendedInfo"] = None,
         kpis_healths: Optional[Dict[str, "_models.KPIResourceHealthDetails"]] = None,
-        nodes_list: Optional[List["_models.DistributedNodesInfo"]] = None,
         **kwargs: Any
     ) -> None:
         """
+        :keyword backup_management_type: Type of backup management for the backed up item. Known values
+         are: "Invalid", "AzureIaasVM", "MAB", "DPM", "AzureBackupServer", "AzureSql", "AzureStorage",
+         "AzureWorkload", and "DefaultBackup".
+        :paramtype backup_management_type: str or
+         ~azure.mgmt.recoveryservicesbackup.activestamp.models.BackupManagementType
+        :keyword workload_type: Type of workload this item represents. Known values are: "Invalid",
+         "VM", "FileFolder", "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint", "VMwareVM", "SystemState",
+         "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase", and
+         "SAPAseDatabase".
+        :paramtype workload_type: str or
+         ~azure.mgmt.recoveryservicesbackup.activestamp.models.DataSourceType
         :keyword container_name: Unique name of container.
         :paramtype container_name: str
         :keyword source_resource_id: ARM ID of the resource to be backed up.
@@ -6793,8 +6759,8 @@ class AzureVmWorkloadSAPAseDatabaseProtectedItem(
         :paramtype is_archive_enabled: bool
         :keyword policy_name: Name of the policy used for protection.
         :paramtype policy_name: str
-        :keyword soft_delete_retention_period_in_days: Soft delete retention period in days.
-        :paramtype soft_delete_retention_period_in_days: int
+        :keyword friendly_name: Friendly name of the DB represented by this backup item.
+        :paramtype friendly_name: str
         :keyword server_name: Host/Cluster Name for instance or AG.
         :paramtype server_name: str
         :keyword parent_name: Parent name of the DB such as Instance or Availability Group.
@@ -6802,9 +6768,10 @@ class AzureVmWorkloadSAPAseDatabaseProtectedItem(
         :keyword parent_type: Parent type of protected item, example: for a DB, standalone server or
          distributed.
         :paramtype parent_type: str
+        :keyword protection_status: Backup status of this backup item.
+        :paramtype protection_status: str
         :keyword protection_state: Backup state of this backup item. Known values are: "Invalid",
-         "IRPending", "Protected", "ProtectionError", "ProtectionStopped", "ProtectionPaused", and
-         "BackupsSuspended".
+         "IRPending", "Protected", "ProtectionError", "ProtectionStopped", and "ProtectionPaused".
         :paramtype protection_state: str or
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.ProtectionState
         :keyword last_backup_status: Last backup operation status. Possible values: Healthy, Unhealthy.
@@ -6829,11 +6796,10 @@ class AzureVmWorkloadSAPAseDatabaseProtectedItem(
         :keyword kpis_healths: Health details of different KPIs.
         :paramtype kpis_healths: dict[str,
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.KPIResourceHealthDetails]
-        :keyword nodes_list: List of the nodes in case of distributed container.
-        :paramtype nodes_list:
-         list[~azure.mgmt.recoveryservicesbackup.activestamp.models.DistributedNodesInfo]
         """
         super().__init__(
+            backup_management_type=backup_management_type,
+            workload_type=workload_type,
             container_name=container_name,
             source_resource_id=source_resource_id,
             policy_id=policy_id,
@@ -6848,10 +6814,11 @@ class AzureVmWorkloadSAPAseDatabaseProtectedItem(
             resource_guard_operation_requests=resource_guard_operation_requests,
             is_archive_enabled=is_archive_enabled,
             policy_name=policy_name,
-            soft_delete_retention_period_in_days=soft_delete_retention_period_in_days,
+            friendly_name=friendly_name,
             server_name=server_name,
             parent_name=parent_name,
             parent_type=parent_type,
+            protection_status=protection_status,
             protection_state=protection_state,
             last_backup_status=last_backup_status,
             last_backup_time=last_backup_time,
@@ -6860,7 +6827,6 @@ class AzureVmWorkloadSAPAseDatabaseProtectedItem(
             protected_item_health_status=protected_item_health_status,
             extended_info=extended_info,
             kpis_healths=kpis_healths,
-            nodes_list=nodes_list,
             **kwargs
         )
         self.protected_item_type: str = "AzureVmWorkloadSAPAseDatabase"
@@ -7001,8 +6967,6 @@ class AzureVmWorkloadSAPAseSystemProtectableItem(
     :ivar prebackupvalidation: Pre-backup validation for protectable objects.
     :vartype prebackupvalidation:
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.PreBackupValidation
-    :ivar is_protectable: Indicates if item is protectable.
-    :vartype is_protectable: bool
     """
 
     _validation = {
@@ -7023,7 +6987,6 @@ class AzureVmWorkloadSAPAseSystemProtectableItem(
         "subinquireditemcount": {"key": "subinquireditemcount", "type": "int"},
         "subprotectableitemcount": {"key": "subprotectableitemcount", "type": "int"},
         "prebackupvalidation": {"key": "prebackupvalidation", "type": "PreBackupValidation"},
-        "is_protectable": {"key": "isProtectable", "type": "bool"},
     }
 
     def __init__(
@@ -7041,7 +7004,6 @@ class AzureVmWorkloadSAPAseSystemProtectableItem(
         subinquireditemcount: Optional[int] = None,
         subprotectableitemcount: Optional[int] = None,
         prebackupvalidation: Optional["_models.PreBackupValidation"] = None,
-        is_protectable: Optional[bool] = None,
         **kwargs: Any
     ) -> None:
         """
@@ -7074,8 +7036,6 @@ class AzureVmWorkloadSAPAseSystemProtectableItem(
         :keyword prebackupvalidation: Pre-backup validation for protectable objects.
         :paramtype prebackupvalidation:
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.PreBackupValidation
-        :keyword is_protectable: Indicates if item is protectable.
-        :paramtype is_protectable: bool
         """
         super().__init__(
             backup_management_type=backup_management_type,
@@ -7090,7 +7050,6 @@ class AzureVmWorkloadSAPAseSystemProtectableItem(
             subinquireditemcount=subinquireditemcount,
             subprotectableitemcount=subprotectableitemcount,
             prebackupvalidation=prebackupvalidation,
-            is_protectable=is_protectable,
             **kwargs
         )
         self.protectable_item_type: str = "SAPAseSystem"
@@ -7231,8 +7190,6 @@ class AzureVmWorkloadSAPHanaDatabaseProtectableItem(
     :ivar prebackupvalidation: Pre-backup validation for protectable objects.
     :vartype prebackupvalidation:
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.PreBackupValidation
-    :ivar is_protectable: Indicates if item is protectable.
-    :vartype is_protectable: bool
     """
 
     _validation = {
@@ -7253,7 +7210,6 @@ class AzureVmWorkloadSAPHanaDatabaseProtectableItem(
         "subinquireditemcount": {"key": "subinquireditemcount", "type": "int"},
         "subprotectableitemcount": {"key": "subprotectableitemcount", "type": "int"},
         "prebackupvalidation": {"key": "prebackupvalidation", "type": "PreBackupValidation"},
-        "is_protectable": {"key": "isProtectable", "type": "bool"},
     }
 
     def __init__(
@@ -7271,7 +7227,6 @@ class AzureVmWorkloadSAPHanaDatabaseProtectableItem(
         subinquireditemcount: Optional[int] = None,
         subprotectableitemcount: Optional[int] = None,
         prebackupvalidation: Optional["_models.PreBackupValidation"] = None,
-        is_protectable: Optional[bool] = None,
         **kwargs: Any
     ) -> None:
         """
@@ -7304,8 +7259,6 @@ class AzureVmWorkloadSAPHanaDatabaseProtectableItem(
         :keyword prebackupvalidation: Pre-backup validation for protectable objects.
         :paramtype prebackupvalidation:
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.PreBackupValidation
-        :keyword is_protectable: Indicates if item is protectable.
-        :paramtype is_protectable: bool
         """
         super().__init__(
             backup_management_type=backup_management_type,
@@ -7320,7 +7273,6 @@ class AzureVmWorkloadSAPHanaDatabaseProtectableItem(
             subinquireditemcount=subinquireditemcount,
             subprotectableitemcount=subprotectableitemcount,
             prebackupvalidation=prebackupvalidation,
-            is_protectable=is_protectable,
             **kwargs
         )
         self.protectable_item_type: str = "SAPHanaDatabase"
@@ -7330,8 +7282,6 @@ class AzureVmWorkloadSAPHanaDatabaseProtectedItem(
     AzureVmWorkloadProtectedItem
 ):  # pylint: disable=too-many-instance-attributes
     """Azure VM workload-specific protected item representing SAP HANA Database.
-
-    Variables are only populated by the server, and will be ignored when sending a request.
 
     All required parameters must be populated in order to send to Azure.
 
@@ -7344,8 +7294,8 @@ class AzureVmWorkloadSAPHanaDatabaseProtectedItem(
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.BackupManagementType
     :ivar workload_type: Type of workload this item represents. Known values are: "Invalid", "VM",
      "FileFolder", "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint", "VMwareVM", "SystemState",
-     "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase",
-     "SAPAseDatabase", and "SAPHanaDBInstance".
+     "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase", and
+     "SAPAseDatabase".
     :vartype workload_type: str or
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.DataSourceType
     :ivar container_name: Unique name of container.
@@ -7382,8 +7332,6 @@ class AzureVmWorkloadSAPHanaDatabaseProtectedItem(
     :vartype is_archive_enabled: bool
     :ivar policy_name: Name of the policy used for protection.
     :vartype policy_name: str
-    :ivar soft_delete_retention_period_in_days: Soft delete retention period in days.
-    :vartype soft_delete_retention_period_in_days: int
     :ivar friendly_name: Friendly name of the DB represented by this backup item.
     :vartype friendly_name: str
     :ivar server_name: Host/Cluster Name for instance or AG.
@@ -7396,8 +7344,7 @@ class AzureVmWorkloadSAPHanaDatabaseProtectedItem(
     :ivar protection_status: Backup status of this backup item.
     :vartype protection_status: str
     :ivar protection_state: Backup state of this backup item. Known values are: "Invalid",
-     "IRPending", "Protected", "ProtectionError", "ProtectionStopped", "ProtectionPaused", and
-     "BackupsSuspended".
+     "IRPending", "Protected", "ProtectionError", "ProtectionStopped", and "ProtectionPaused".
     :vartype protection_state: str or
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.ProtectionState
     :ivar last_backup_status: Last backup operation status. Possible values: Healthy, Unhealthy.
@@ -7422,17 +7369,10 @@ class AzureVmWorkloadSAPHanaDatabaseProtectedItem(
     :ivar kpis_healths: Health details of different KPIs.
     :vartype kpis_healths: dict[str,
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.KPIResourceHealthDetails]
-    :ivar nodes_list: List of the nodes in case of distributed container.
-    :vartype nodes_list:
-     list[~azure.mgmt.recoveryservicesbackup.activestamp.models.DistributedNodesInfo]
     """
 
     _validation = {
         "protected_item_type": {"required": True},
-        "backup_management_type": {"readonly": True},
-        "workload_type": {"readonly": True},
-        "friendly_name": {"readonly": True},
-        "protection_status": {"readonly": True},
     }
 
     _attribute_map = {
@@ -7453,7 +7393,6 @@ class AzureVmWorkloadSAPHanaDatabaseProtectedItem(
         "resource_guard_operation_requests": {"key": "resourceGuardOperationRequests", "type": "[str]"},
         "is_archive_enabled": {"key": "isArchiveEnabled", "type": "bool"},
         "policy_name": {"key": "policyName", "type": "str"},
-        "soft_delete_retention_period_in_days": {"key": "softDeleteRetentionPeriodInDays", "type": "int"},
         "friendly_name": {"key": "friendlyName", "type": "str"},
         "server_name": {"key": "serverName", "type": "str"},
         "parent_name": {"key": "parentName", "type": "str"},
@@ -7467,12 +7406,13 @@ class AzureVmWorkloadSAPHanaDatabaseProtectedItem(
         "protected_item_health_status": {"key": "protectedItemHealthStatus", "type": "str"},
         "extended_info": {"key": "extendedInfo", "type": "AzureVmWorkloadProtectedItemExtendedInfo"},
         "kpis_healths": {"key": "kpisHealths", "type": "{KPIResourceHealthDetails}"},
-        "nodes_list": {"key": "nodesList", "type": "[DistributedNodesInfo]"},
     }
 
     def __init__(  # pylint: disable=too-many-locals
         self,
         *,
+        backup_management_type: Optional[Union[str, "_models.BackupManagementType"]] = None,
+        workload_type: Optional[Union[str, "_models.DataSourceType"]] = None,
         container_name: Optional[str] = None,
         source_resource_id: Optional[str] = None,
         policy_id: Optional[str] = None,
@@ -7487,10 +7427,11 @@ class AzureVmWorkloadSAPHanaDatabaseProtectedItem(
         resource_guard_operation_requests: Optional[List[str]] = None,
         is_archive_enabled: Optional[bool] = None,
         policy_name: Optional[str] = None,
-        soft_delete_retention_period_in_days: Optional[int] = None,
+        friendly_name: Optional[str] = None,
         server_name: Optional[str] = None,
         parent_name: Optional[str] = None,
         parent_type: Optional[str] = None,
+        protection_status: Optional[str] = None,
         protection_state: Optional[Union[str, "_models.ProtectionState"]] = None,
         last_backup_status: Optional[Union[str, "_models.LastBackupStatus"]] = None,
         last_backup_time: Optional[datetime.datetime] = None,
@@ -7499,10 +7440,20 @@ class AzureVmWorkloadSAPHanaDatabaseProtectedItem(
         protected_item_health_status: Optional[Union[str, "_models.ProtectedItemHealthStatus"]] = None,
         extended_info: Optional["_models.AzureVmWorkloadProtectedItemExtendedInfo"] = None,
         kpis_healths: Optional[Dict[str, "_models.KPIResourceHealthDetails"]] = None,
-        nodes_list: Optional[List["_models.DistributedNodesInfo"]] = None,
         **kwargs: Any
     ) -> None:
         """
+        :keyword backup_management_type: Type of backup management for the backed up item. Known values
+         are: "Invalid", "AzureIaasVM", "MAB", "DPM", "AzureBackupServer", "AzureSql", "AzureStorage",
+         "AzureWorkload", and "DefaultBackup".
+        :paramtype backup_management_type: str or
+         ~azure.mgmt.recoveryservicesbackup.activestamp.models.BackupManagementType
+        :keyword workload_type: Type of workload this item represents. Known values are: "Invalid",
+         "VM", "FileFolder", "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint", "VMwareVM", "SystemState",
+         "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase", and
+         "SAPAseDatabase".
+        :paramtype workload_type: str or
+         ~azure.mgmt.recoveryservicesbackup.activestamp.models.DataSourceType
         :keyword container_name: Unique name of container.
         :paramtype container_name: str
         :keyword source_resource_id: ARM ID of the resource to be backed up.
@@ -7538,8 +7489,8 @@ class AzureVmWorkloadSAPHanaDatabaseProtectedItem(
         :paramtype is_archive_enabled: bool
         :keyword policy_name: Name of the policy used for protection.
         :paramtype policy_name: str
-        :keyword soft_delete_retention_period_in_days: Soft delete retention period in days.
-        :paramtype soft_delete_retention_period_in_days: int
+        :keyword friendly_name: Friendly name of the DB represented by this backup item.
+        :paramtype friendly_name: str
         :keyword server_name: Host/Cluster Name for instance or AG.
         :paramtype server_name: str
         :keyword parent_name: Parent name of the DB such as Instance or Availability Group.
@@ -7547,9 +7498,10 @@ class AzureVmWorkloadSAPHanaDatabaseProtectedItem(
         :keyword parent_type: Parent type of protected item, example: for a DB, standalone server or
          distributed.
         :paramtype parent_type: str
+        :keyword protection_status: Backup status of this backup item.
+        :paramtype protection_status: str
         :keyword protection_state: Backup state of this backup item. Known values are: "Invalid",
-         "IRPending", "Protected", "ProtectionError", "ProtectionStopped", "ProtectionPaused", and
-         "BackupsSuspended".
+         "IRPending", "Protected", "ProtectionError", "ProtectionStopped", and "ProtectionPaused".
         :paramtype protection_state: str or
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.ProtectionState
         :keyword last_backup_status: Last backup operation status. Possible values: Healthy, Unhealthy.
@@ -7574,11 +7526,10 @@ class AzureVmWorkloadSAPHanaDatabaseProtectedItem(
         :keyword kpis_healths: Health details of different KPIs.
         :paramtype kpis_healths: dict[str,
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.KPIResourceHealthDetails]
-        :keyword nodes_list: List of the nodes in case of distributed container.
-        :paramtype nodes_list:
-         list[~azure.mgmt.recoveryservicesbackup.activestamp.models.DistributedNodesInfo]
         """
         super().__init__(
+            backup_management_type=backup_management_type,
+            workload_type=workload_type,
             container_name=container_name,
             source_resource_id=source_resource_id,
             policy_id=policy_id,
@@ -7593,10 +7544,11 @@ class AzureVmWorkloadSAPHanaDatabaseProtectedItem(
             resource_guard_operation_requests=resource_guard_operation_requests,
             is_archive_enabled=is_archive_enabled,
             policy_name=policy_name,
-            soft_delete_retention_period_in_days=soft_delete_retention_period_in_days,
+            friendly_name=friendly_name,
             server_name=server_name,
             parent_name=parent_name,
             parent_type=parent_type,
+            protection_status=protection_status,
             protection_state=protection_state,
             last_backup_status=last_backup_status,
             last_backup_time=last_backup_time,
@@ -7605,7 +7557,6 @@ class AzureVmWorkloadSAPHanaDatabaseProtectedItem(
             protected_item_health_status=protected_item_health_status,
             extended_info=extended_info,
             kpis_healths=kpis_healths,
-            nodes_list=nodes_list,
             **kwargs
         )
         self.protected_item_type: str = "AzureVmWorkloadSAPHanaDatabase"
@@ -7708,555 +7659,6 @@ class AzureVmWorkloadSAPHanaDatabaseWorkloadItem(AzureVmWorkloadItem):
         self.workload_item_type: str = "SAPHanaDatabase"
 
 
-class AzureVmWorkloadSAPHanaDBInstance(AzureVmWorkloadProtectableItem):  # pylint: disable=too-many-instance-attributes
-    """Azure VM workload-specific protectable item representing SAP HANA Dbinstance.
-
-    All required parameters must be populated in order to send to Azure.
-
-    :ivar backup_management_type: Type of backup management to backup an item.
-    :vartype backup_management_type: str
-    :ivar workload_type: Type of workload for the backup management.
-    :vartype workload_type: str
-    :ivar protectable_item_type: Type of the backup item. Required.
-    :vartype protectable_item_type: str
-    :ivar friendly_name: Friendly name of the backup item.
-    :vartype friendly_name: str
-    :ivar protection_state: State of the back up item. Known values are: "Invalid", "NotProtected",
-     "Protecting", "Protected", and "ProtectionFailed".
-    :vartype protection_state: str or
-     ~azure.mgmt.recoveryservicesbackup.activestamp.models.ProtectionStatus
-    :ivar parent_name: Name for instance or AG.
-    :vartype parent_name: str
-    :ivar parent_unique_name: Parent Unique Name is added to provide the service formatted URI Name
-     of the Parent
-     Only Applicable for data bases where the parent would be either Instance or a SQL AG.
-    :vartype parent_unique_name: str
-    :ivar server_name: Host/Cluster Name for instance or AG.
-    :vartype server_name: str
-    :ivar is_auto_protectable: Indicates if protectable item is auto-protectable.
-    :vartype is_auto_protectable: bool
-    :ivar is_auto_protected: Indicates if protectable item is auto-protected.
-    :vartype is_auto_protected: bool
-    :ivar subinquireditemcount: For instance or AG, indicates number of DB's present.
-    :vartype subinquireditemcount: int
-    :ivar subprotectableitemcount: For instance or AG, indicates number of DB's to be protected.
-    :vartype subprotectableitemcount: int
-    :ivar prebackupvalidation: Pre-backup validation for protectable objects.
-    :vartype prebackupvalidation:
-     ~azure.mgmt.recoveryservicesbackup.activestamp.models.PreBackupValidation
-    :ivar is_protectable: Indicates if item is protectable.
-    :vartype is_protectable: bool
-    """
-
-    _validation = {
-        "protectable_item_type": {"required": True},
-    }
-
-    _attribute_map = {
-        "backup_management_type": {"key": "backupManagementType", "type": "str"},
-        "workload_type": {"key": "workloadType", "type": "str"},
-        "protectable_item_type": {"key": "protectableItemType", "type": "str"},
-        "friendly_name": {"key": "friendlyName", "type": "str"},
-        "protection_state": {"key": "protectionState", "type": "str"},
-        "parent_name": {"key": "parentName", "type": "str"},
-        "parent_unique_name": {"key": "parentUniqueName", "type": "str"},
-        "server_name": {"key": "serverName", "type": "str"},
-        "is_auto_protectable": {"key": "isAutoProtectable", "type": "bool"},
-        "is_auto_protected": {"key": "isAutoProtected", "type": "bool"},
-        "subinquireditemcount": {"key": "subinquireditemcount", "type": "int"},
-        "subprotectableitemcount": {"key": "subprotectableitemcount", "type": "int"},
-        "prebackupvalidation": {"key": "prebackupvalidation", "type": "PreBackupValidation"},
-        "is_protectable": {"key": "isProtectable", "type": "bool"},
-    }
-
-    def __init__(
-        self,
-        *,
-        backup_management_type: Optional[str] = None,
-        workload_type: Optional[str] = None,
-        friendly_name: Optional[str] = None,
-        protection_state: Optional[Union[str, "_models.ProtectionStatus"]] = None,
-        parent_name: Optional[str] = None,
-        parent_unique_name: Optional[str] = None,
-        server_name: Optional[str] = None,
-        is_auto_protectable: Optional[bool] = None,
-        is_auto_protected: Optional[bool] = None,
-        subinquireditemcount: Optional[int] = None,
-        subprotectableitemcount: Optional[int] = None,
-        prebackupvalidation: Optional["_models.PreBackupValidation"] = None,
-        is_protectable: Optional[bool] = None,
-        **kwargs: Any
-    ) -> None:
-        """
-        :keyword backup_management_type: Type of backup management to backup an item.
-        :paramtype backup_management_type: str
-        :keyword workload_type: Type of workload for the backup management.
-        :paramtype workload_type: str
-        :keyword friendly_name: Friendly name of the backup item.
-        :paramtype friendly_name: str
-        :keyword protection_state: State of the back up item. Known values are: "Invalid",
-         "NotProtected", "Protecting", "Protected", and "ProtectionFailed".
-        :paramtype protection_state: str or
-         ~azure.mgmt.recoveryservicesbackup.activestamp.models.ProtectionStatus
-        :keyword parent_name: Name for instance or AG.
-        :paramtype parent_name: str
-        :keyword parent_unique_name: Parent Unique Name is added to provide the service formatted URI
-         Name of the Parent
-         Only Applicable for data bases where the parent would be either Instance or a SQL AG.
-        :paramtype parent_unique_name: str
-        :keyword server_name: Host/Cluster Name for instance or AG.
-        :paramtype server_name: str
-        :keyword is_auto_protectable: Indicates if protectable item is auto-protectable.
-        :paramtype is_auto_protectable: bool
-        :keyword is_auto_protected: Indicates if protectable item is auto-protected.
-        :paramtype is_auto_protected: bool
-        :keyword subinquireditemcount: For instance or AG, indicates number of DB's present.
-        :paramtype subinquireditemcount: int
-        :keyword subprotectableitemcount: For instance or AG, indicates number of DB's to be protected.
-        :paramtype subprotectableitemcount: int
-        :keyword prebackupvalidation: Pre-backup validation for protectable objects.
-        :paramtype prebackupvalidation:
-         ~azure.mgmt.recoveryservicesbackup.activestamp.models.PreBackupValidation
-        :keyword is_protectable: Indicates if item is protectable.
-        :paramtype is_protectable: bool
-        """
-        super().__init__(
-            backup_management_type=backup_management_type,
-            workload_type=workload_type,
-            friendly_name=friendly_name,
-            protection_state=protection_state,
-            parent_name=parent_name,
-            parent_unique_name=parent_unique_name,
-            server_name=server_name,
-            is_auto_protectable=is_auto_protectable,
-            is_auto_protected=is_auto_protected,
-            subinquireditemcount=subinquireditemcount,
-            subprotectableitemcount=subprotectableitemcount,
-            prebackupvalidation=prebackupvalidation,
-            is_protectable=is_protectable,
-            **kwargs
-        )
-        self.protectable_item_type: str = "SAPHanaDBInstance"
-
-
-class AzureVmWorkloadSAPHanaDBInstanceProtectedItem(
-    AzureVmWorkloadProtectedItem
-):  # pylint: disable=too-many-instance-attributes
-    """Azure VM workload-specific protected item representing SAP HANA DBInstance.
-
-    Variables are only populated by the server, and will be ignored when sending a request.
-
-    All required parameters must be populated in order to send to Azure.
-
-    :ivar protected_item_type: backup item type. Required.
-    :vartype protected_item_type: str
-    :ivar backup_management_type: Type of backup management for the backed up item. Known values
-     are: "Invalid", "AzureIaasVM", "MAB", "DPM", "AzureBackupServer", "AzureSql", "AzureStorage",
-     "AzureWorkload", and "DefaultBackup".
-    :vartype backup_management_type: str or
-     ~azure.mgmt.recoveryservicesbackup.activestamp.models.BackupManagementType
-    :ivar workload_type: Type of workload this item represents. Known values are: "Invalid", "VM",
-     "FileFolder", "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint", "VMwareVM", "SystemState",
-     "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase",
-     "SAPAseDatabase", and "SAPHanaDBInstance".
-    :vartype workload_type: str or
-     ~azure.mgmt.recoveryservicesbackup.activestamp.models.DataSourceType
-    :ivar container_name: Unique name of container.
-    :vartype container_name: str
-    :ivar source_resource_id: ARM ID of the resource to be backed up.
-    :vartype source_resource_id: str
-    :ivar policy_id: ID of the backup policy with which this item is backed up.
-    :vartype policy_id: str
-    :ivar last_recovery_point: Timestamp when the last (latest) backup copy was created for this
-     backup item.
-    :vartype last_recovery_point: ~datetime.datetime
-    :ivar backup_set_name: Name of the backup set the backup item belongs to.
-    :vartype backup_set_name: str
-    :ivar create_mode: Create mode to indicate recovery of existing soft deleted data source or
-     creation of new data source. Known values are: "Invalid", "Default", and "Recover".
-    :vartype create_mode: str or ~azure.mgmt.recoveryservicesbackup.activestamp.models.CreateMode
-    :ivar deferred_delete_time_in_utc: Time for deferred deletion in UTC.
-    :vartype deferred_delete_time_in_utc: ~datetime.datetime
-    :ivar is_scheduled_for_deferred_delete: Flag to identify whether the DS is scheduled for
-     deferred delete.
-    :vartype is_scheduled_for_deferred_delete: bool
-    :ivar deferred_delete_time_remaining: Time remaining before the DS marked for deferred delete
-     is permanently deleted.
-    :vartype deferred_delete_time_remaining: str
-    :ivar is_deferred_delete_schedule_upcoming: Flag to identify whether the deferred deleted DS is
-     to be purged soon.
-    :vartype is_deferred_delete_schedule_upcoming: bool
-    :ivar is_rehydrate: Flag to identify that deferred deleted DS is to be moved into Pause state.
-    :vartype is_rehydrate: bool
-    :ivar resource_guard_operation_requests: ResourceGuardOperationRequests on which LAC check will
-     be performed.
-    :vartype resource_guard_operation_requests: list[str]
-    :ivar is_archive_enabled: Flag to identify whether datasource is protected in archive.
-    :vartype is_archive_enabled: bool
-    :ivar policy_name: Name of the policy used for protection.
-    :vartype policy_name: str
-    :ivar soft_delete_retention_period_in_days: Soft delete retention period in days.
-    :vartype soft_delete_retention_period_in_days: int
-    :ivar friendly_name: Friendly name of the DB represented by this backup item.
-    :vartype friendly_name: str
-    :ivar server_name: Host/Cluster Name for instance or AG.
-    :vartype server_name: str
-    :ivar parent_name: Parent name of the DB such as Instance or Availability Group.
-    :vartype parent_name: str
-    :ivar parent_type: Parent type of protected item, example: for a DB, standalone server or
-     distributed.
-    :vartype parent_type: str
-    :ivar protection_status: Backup status of this backup item.
-    :vartype protection_status: str
-    :ivar protection_state: Backup state of this backup item. Known values are: "Invalid",
-     "IRPending", "Protected", "ProtectionError", "ProtectionStopped", "ProtectionPaused", and
-     "BackupsSuspended".
-    :vartype protection_state: str or
-     ~azure.mgmt.recoveryservicesbackup.activestamp.models.ProtectionState
-    :ivar last_backup_status: Last backup operation status. Possible values: Healthy, Unhealthy.
-     Known values are: "Invalid", "Healthy", "Unhealthy", and "IRPending".
-    :vartype last_backup_status: str or
-     ~azure.mgmt.recoveryservicesbackup.activestamp.models.LastBackupStatus
-    :ivar last_backup_time: Timestamp of the last backup operation on this backup item.
-    :vartype last_backup_time: ~datetime.datetime
-    :ivar last_backup_error_detail: Error details in last backup.
-    :vartype last_backup_error_detail:
-     ~azure.mgmt.recoveryservicesbackup.activestamp.models.ErrorDetail
-    :ivar protected_item_data_source_id: Data ID of the protected item.
-    :vartype protected_item_data_source_id: str
-    :ivar protected_item_health_status: Health status of the backup item, evaluated based on last
-     heartbeat received. Known values are: "Invalid", "Healthy", "Unhealthy", "NotReachable", and
-     "IRPending".
-    :vartype protected_item_health_status: str or
-     ~azure.mgmt.recoveryservicesbackup.activestamp.models.ProtectedItemHealthStatus
-    :ivar extended_info: Additional information for this backup item.
-    :vartype extended_info:
-     ~azure.mgmt.recoveryservicesbackup.activestamp.models.AzureVmWorkloadProtectedItemExtendedInfo
-    :ivar kpis_healths: Health details of different KPIs.
-    :vartype kpis_healths: dict[str,
-     ~azure.mgmt.recoveryservicesbackup.activestamp.models.KPIResourceHealthDetails]
-    :ivar nodes_list: List of the nodes in case of distributed container.
-    :vartype nodes_list:
-     list[~azure.mgmt.recoveryservicesbackup.activestamp.models.DistributedNodesInfo]
-    """
-
-    _validation = {
-        "protected_item_type": {"required": True},
-        "backup_management_type": {"readonly": True},
-        "workload_type": {"readonly": True},
-        "friendly_name": {"readonly": True},
-        "protection_status": {"readonly": True},
-    }
-
-    _attribute_map = {
-        "protected_item_type": {"key": "protectedItemType", "type": "str"},
-        "backup_management_type": {"key": "backupManagementType", "type": "str"},
-        "workload_type": {"key": "workloadType", "type": "str"},
-        "container_name": {"key": "containerName", "type": "str"},
-        "source_resource_id": {"key": "sourceResourceId", "type": "str"},
-        "policy_id": {"key": "policyId", "type": "str"},
-        "last_recovery_point": {"key": "lastRecoveryPoint", "type": "iso-8601"},
-        "backup_set_name": {"key": "backupSetName", "type": "str"},
-        "create_mode": {"key": "createMode", "type": "str"},
-        "deferred_delete_time_in_utc": {"key": "deferredDeleteTimeInUTC", "type": "iso-8601"},
-        "is_scheduled_for_deferred_delete": {"key": "isScheduledForDeferredDelete", "type": "bool"},
-        "deferred_delete_time_remaining": {"key": "deferredDeleteTimeRemaining", "type": "str"},
-        "is_deferred_delete_schedule_upcoming": {"key": "isDeferredDeleteScheduleUpcoming", "type": "bool"},
-        "is_rehydrate": {"key": "isRehydrate", "type": "bool"},
-        "resource_guard_operation_requests": {"key": "resourceGuardOperationRequests", "type": "[str]"},
-        "is_archive_enabled": {"key": "isArchiveEnabled", "type": "bool"},
-        "policy_name": {"key": "policyName", "type": "str"},
-        "soft_delete_retention_period_in_days": {"key": "softDeleteRetentionPeriodInDays", "type": "int"},
-        "friendly_name": {"key": "friendlyName", "type": "str"},
-        "server_name": {"key": "serverName", "type": "str"},
-        "parent_name": {"key": "parentName", "type": "str"},
-        "parent_type": {"key": "parentType", "type": "str"},
-        "protection_status": {"key": "protectionStatus", "type": "str"},
-        "protection_state": {"key": "protectionState", "type": "str"},
-        "last_backup_status": {"key": "lastBackupStatus", "type": "str"},
-        "last_backup_time": {"key": "lastBackupTime", "type": "iso-8601"},
-        "last_backup_error_detail": {"key": "lastBackupErrorDetail", "type": "ErrorDetail"},
-        "protected_item_data_source_id": {"key": "protectedItemDataSourceId", "type": "str"},
-        "protected_item_health_status": {"key": "protectedItemHealthStatus", "type": "str"},
-        "extended_info": {"key": "extendedInfo", "type": "AzureVmWorkloadProtectedItemExtendedInfo"},
-        "kpis_healths": {"key": "kpisHealths", "type": "{KPIResourceHealthDetails}"},
-        "nodes_list": {"key": "nodesList", "type": "[DistributedNodesInfo]"},
-    }
-
-    def __init__(  # pylint: disable=too-many-locals
-        self,
-        *,
-        container_name: Optional[str] = None,
-        source_resource_id: Optional[str] = None,
-        policy_id: Optional[str] = None,
-        last_recovery_point: Optional[datetime.datetime] = None,
-        backup_set_name: Optional[str] = None,
-        create_mode: Optional[Union[str, "_models.CreateMode"]] = None,
-        deferred_delete_time_in_utc: Optional[datetime.datetime] = None,
-        is_scheduled_for_deferred_delete: Optional[bool] = None,
-        deferred_delete_time_remaining: Optional[str] = None,
-        is_deferred_delete_schedule_upcoming: Optional[bool] = None,
-        is_rehydrate: Optional[bool] = None,
-        resource_guard_operation_requests: Optional[List[str]] = None,
-        is_archive_enabled: Optional[bool] = None,
-        policy_name: Optional[str] = None,
-        soft_delete_retention_period_in_days: Optional[int] = None,
-        server_name: Optional[str] = None,
-        parent_name: Optional[str] = None,
-        parent_type: Optional[str] = None,
-        protection_state: Optional[Union[str, "_models.ProtectionState"]] = None,
-        last_backup_status: Optional[Union[str, "_models.LastBackupStatus"]] = None,
-        last_backup_time: Optional[datetime.datetime] = None,
-        last_backup_error_detail: Optional["_models.ErrorDetail"] = None,
-        protected_item_data_source_id: Optional[str] = None,
-        protected_item_health_status: Optional[Union[str, "_models.ProtectedItemHealthStatus"]] = None,
-        extended_info: Optional["_models.AzureVmWorkloadProtectedItemExtendedInfo"] = None,
-        kpis_healths: Optional[Dict[str, "_models.KPIResourceHealthDetails"]] = None,
-        nodes_list: Optional[List["_models.DistributedNodesInfo"]] = None,
-        **kwargs: Any
-    ) -> None:
-        """
-        :keyword container_name: Unique name of container.
-        :paramtype container_name: str
-        :keyword source_resource_id: ARM ID of the resource to be backed up.
-        :paramtype source_resource_id: str
-        :keyword policy_id: ID of the backup policy with which this item is backed up.
-        :paramtype policy_id: str
-        :keyword last_recovery_point: Timestamp when the last (latest) backup copy was created for this
-         backup item.
-        :paramtype last_recovery_point: ~datetime.datetime
-        :keyword backup_set_name: Name of the backup set the backup item belongs to.
-        :paramtype backup_set_name: str
-        :keyword create_mode: Create mode to indicate recovery of existing soft deleted data source or
-         creation of new data source. Known values are: "Invalid", "Default", and "Recover".
-        :paramtype create_mode: str or ~azure.mgmt.recoveryservicesbackup.activestamp.models.CreateMode
-        :keyword deferred_delete_time_in_utc: Time for deferred deletion in UTC.
-        :paramtype deferred_delete_time_in_utc: ~datetime.datetime
-        :keyword is_scheduled_for_deferred_delete: Flag to identify whether the DS is scheduled for
-         deferred delete.
-        :paramtype is_scheduled_for_deferred_delete: bool
-        :keyword deferred_delete_time_remaining: Time remaining before the DS marked for deferred
-         delete is permanently deleted.
-        :paramtype deferred_delete_time_remaining: str
-        :keyword is_deferred_delete_schedule_upcoming: Flag to identify whether the deferred deleted DS
-         is to be purged soon.
-        :paramtype is_deferred_delete_schedule_upcoming: bool
-        :keyword is_rehydrate: Flag to identify that deferred deleted DS is to be moved into Pause
-         state.
-        :paramtype is_rehydrate: bool
-        :keyword resource_guard_operation_requests: ResourceGuardOperationRequests on which LAC check
-         will be performed.
-        :paramtype resource_guard_operation_requests: list[str]
-        :keyword is_archive_enabled: Flag to identify whether datasource is protected in archive.
-        :paramtype is_archive_enabled: bool
-        :keyword policy_name: Name of the policy used for protection.
-        :paramtype policy_name: str
-        :keyword soft_delete_retention_period_in_days: Soft delete retention period in days.
-        :paramtype soft_delete_retention_period_in_days: int
-        :keyword server_name: Host/Cluster Name for instance or AG.
-        :paramtype server_name: str
-        :keyword parent_name: Parent name of the DB such as Instance or Availability Group.
-        :paramtype parent_name: str
-        :keyword parent_type: Parent type of protected item, example: for a DB, standalone server or
-         distributed.
-        :paramtype parent_type: str
-        :keyword protection_state: Backup state of this backup item. Known values are: "Invalid",
-         "IRPending", "Protected", "ProtectionError", "ProtectionStopped", "ProtectionPaused", and
-         "BackupsSuspended".
-        :paramtype protection_state: str or
-         ~azure.mgmt.recoveryservicesbackup.activestamp.models.ProtectionState
-        :keyword last_backup_status: Last backup operation status. Possible values: Healthy, Unhealthy.
-         Known values are: "Invalid", "Healthy", "Unhealthy", and "IRPending".
-        :paramtype last_backup_status: str or
-         ~azure.mgmt.recoveryservicesbackup.activestamp.models.LastBackupStatus
-        :keyword last_backup_time: Timestamp of the last backup operation on this backup item.
-        :paramtype last_backup_time: ~datetime.datetime
-        :keyword last_backup_error_detail: Error details in last backup.
-        :paramtype last_backup_error_detail:
-         ~azure.mgmt.recoveryservicesbackup.activestamp.models.ErrorDetail
-        :keyword protected_item_data_source_id: Data ID of the protected item.
-        :paramtype protected_item_data_source_id: str
-        :keyword protected_item_health_status: Health status of the backup item, evaluated based on
-         last heartbeat received. Known values are: "Invalid", "Healthy", "Unhealthy", "NotReachable",
-         and "IRPending".
-        :paramtype protected_item_health_status: str or
-         ~azure.mgmt.recoveryservicesbackup.activestamp.models.ProtectedItemHealthStatus
-        :keyword extended_info: Additional information for this backup item.
-        :paramtype extended_info:
-         ~azure.mgmt.recoveryservicesbackup.activestamp.models.AzureVmWorkloadProtectedItemExtendedInfo
-        :keyword kpis_healths: Health details of different KPIs.
-        :paramtype kpis_healths: dict[str,
-         ~azure.mgmt.recoveryservicesbackup.activestamp.models.KPIResourceHealthDetails]
-        :keyword nodes_list: List of the nodes in case of distributed container.
-        :paramtype nodes_list:
-         list[~azure.mgmt.recoveryservicesbackup.activestamp.models.DistributedNodesInfo]
-        """
-        super().__init__(
-            container_name=container_name,
-            source_resource_id=source_resource_id,
-            policy_id=policy_id,
-            last_recovery_point=last_recovery_point,
-            backup_set_name=backup_set_name,
-            create_mode=create_mode,
-            deferred_delete_time_in_utc=deferred_delete_time_in_utc,
-            is_scheduled_for_deferred_delete=is_scheduled_for_deferred_delete,
-            deferred_delete_time_remaining=deferred_delete_time_remaining,
-            is_deferred_delete_schedule_upcoming=is_deferred_delete_schedule_upcoming,
-            is_rehydrate=is_rehydrate,
-            resource_guard_operation_requests=resource_guard_operation_requests,
-            is_archive_enabled=is_archive_enabled,
-            policy_name=policy_name,
-            soft_delete_retention_period_in_days=soft_delete_retention_period_in_days,
-            server_name=server_name,
-            parent_name=parent_name,
-            parent_type=parent_type,
-            protection_state=protection_state,
-            last_backup_status=last_backup_status,
-            last_backup_time=last_backup_time,
-            last_backup_error_detail=last_backup_error_detail,
-            protected_item_data_source_id=protected_item_data_source_id,
-            protected_item_health_status=protected_item_health_status,
-            extended_info=extended_info,
-            kpis_healths=kpis_healths,
-            nodes_list=nodes_list,
-            **kwargs
-        )
-        self.protected_item_type: str = "AzureVmWorkloadSAPHanaDBInstance"
-
-
-class AzureVmWorkloadSAPHanaHSRProtectableItem(
-    AzureVmWorkloadProtectableItem
-):  # pylint: disable=too-many-instance-attributes
-    """Azure VM workload-specific protectable item representing HANA HSR.
-
-    All required parameters must be populated in order to send to Azure.
-
-    :ivar backup_management_type: Type of backup management to backup an item.
-    :vartype backup_management_type: str
-    :ivar workload_type: Type of workload for the backup management.
-    :vartype workload_type: str
-    :ivar protectable_item_type: Type of the backup item. Required.
-    :vartype protectable_item_type: str
-    :ivar friendly_name: Friendly name of the backup item.
-    :vartype friendly_name: str
-    :ivar protection_state: State of the back up item. Known values are: "Invalid", "NotProtected",
-     "Protecting", "Protected", and "ProtectionFailed".
-    :vartype protection_state: str or
-     ~azure.mgmt.recoveryservicesbackup.activestamp.models.ProtectionStatus
-    :ivar parent_name: Name for instance or AG.
-    :vartype parent_name: str
-    :ivar parent_unique_name: Parent Unique Name is added to provide the service formatted URI Name
-     of the Parent
-     Only Applicable for data bases where the parent would be either Instance or a SQL AG.
-    :vartype parent_unique_name: str
-    :ivar server_name: Host/Cluster Name for instance or AG.
-    :vartype server_name: str
-    :ivar is_auto_protectable: Indicates if protectable item is auto-protectable.
-    :vartype is_auto_protectable: bool
-    :ivar is_auto_protected: Indicates if protectable item is auto-protected.
-    :vartype is_auto_protected: bool
-    :ivar subinquireditemcount: For instance or AG, indicates number of DB's present.
-    :vartype subinquireditemcount: int
-    :ivar subprotectableitemcount: For instance or AG, indicates number of DB's to be protected.
-    :vartype subprotectableitemcount: int
-    :ivar prebackupvalidation: Pre-backup validation for protectable objects.
-    :vartype prebackupvalidation:
-     ~azure.mgmt.recoveryservicesbackup.activestamp.models.PreBackupValidation
-    :ivar is_protectable: Indicates if item is protectable.
-    :vartype is_protectable: bool
-    """
-
-    _validation = {
-        "protectable_item_type": {"required": True},
-    }
-
-    _attribute_map = {
-        "backup_management_type": {"key": "backupManagementType", "type": "str"},
-        "workload_type": {"key": "workloadType", "type": "str"},
-        "protectable_item_type": {"key": "protectableItemType", "type": "str"},
-        "friendly_name": {"key": "friendlyName", "type": "str"},
-        "protection_state": {"key": "protectionState", "type": "str"},
-        "parent_name": {"key": "parentName", "type": "str"},
-        "parent_unique_name": {"key": "parentUniqueName", "type": "str"},
-        "server_name": {"key": "serverName", "type": "str"},
-        "is_auto_protectable": {"key": "isAutoProtectable", "type": "bool"},
-        "is_auto_protected": {"key": "isAutoProtected", "type": "bool"},
-        "subinquireditemcount": {"key": "subinquireditemcount", "type": "int"},
-        "subprotectableitemcount": {"key": "subprotectableitemcount", "type": "int"},
-        "prebackupvalidation": {"key": "prebackupvalidation", "type": "PreBackupValidation"},
-        "is_protectable": {"key": "isProtectable", "type": "bool"},
-    }
-
-    def __init__(
-        self,
-        *,
-        backup_management_type: Optional[str] = None,
-        workload_type: Optional[str] = None,
-        friendly_name: Optional[str] = None,
-        protection_state: Optional[Union[str, "_models.ProtectionStatus"]] = None,
-        parent_name: Optional[str] = None,
-        parent_unique_name: Optional[str] = None,
-        server_name: Optional[str] = None,
-        is_auto_protectable: Optional[bool] = None,
-        is_auto_protected: Optional[bool] = None,
-        subinquireditemcount: Optional[int] = None,
-        subprotectableitemcount: Optional[int] = None,
-        prebackupvalidation: Optional["_models.PreBackupValidation"] = None,
-        is_protectable: Optional[bool] = None,
-        **kwargs: Any
-    ) -> None:
-        """
-        :keyword backup_management_type: Type of backup management to backup an item.
-        :paramtype backup_management_type: str
-        :keyword workload_type: Type of workload for the backup management.
-        :paramtype workload_type: str
-        :keyword friendly_name: Friendly name of the backup item.
-        :paramtype friendly_name: str
-        :keyword protection_state: State of the back up item. Known values are: "Invalid",
-         "NotProtected", "Protecting", "Protected", and "ProtectionFailed".
-        :paramtype protection_state: str or
-         ~azure.mgmt.recoveryservicesbackup.activestamp.models.ProtectionStatus
-        :keyword parent_name: Name for instance or AG.
-        :paramtype parent_name: str
-        :keyword parent_unique_name: Parent Unique Name is added to provide the service formatted URI
-         Name of the Parent
-         Only Applicable for data bases where the parent would be either Instance or a SQL AG.
-        :paramtype parent_unique_name: str
-        :keyword server_name: Host/Cluster Name for instance or AG.
-        :paramtype server_name: str
-        :keyword is_auto_protectable: Indicates if protectable item is auto-protectable.
-        :paramtype is_auto_protectable: bool
-        :keyword is_auto_protected: Indicates if protectable item is auto-protected.
-        :paramtype is_auto_protected: bool
-        :keyword subinquireditemcount: For instance or AG, indicates number of DB's present.
-        :paramtype subinquireditemcount: int
-        :keyword subprotectableitemcount: For instance or AG, indicates number of DB's to be protected.
-        :paramtype subprotectableitemcount: int
-        :keyword prebackupvalidation: Pre-backup validation for protectable objects.
-        :paramtype prebackupvalidation:
-         ~azure.mgmt.recoveryservicesbackup.activestamp.models.PreBackupValidation
-        :keyword is_protectable: Indicates if item is protectable.
-        :paramtype is_protectable: bool
-        """
-        super().__init__(
-            backup_management_type=backup_management_type,
-            workload_type=workload_type,
-            friendly_name=friendly_name,
-            protection_state=protection_state,
-            parent_name=parent_name,
-            parent_unique_name=parent_unique_name,
-            server_name=server_name,
-            is_auto_protectable=is_auto_protectable,
-            is_auto_protected=is_auto_protected,
-            subinquireditemcount=subinquireditemcount,
-            subprotectableitemcount=subprotectableitemcount,
-            prebackupvalidation=prebackupvalidation,
-            is_protectable=is_protectable,
-            **kwargs
-        )
-        self.protectable_item_type: str = "HanaHSRContainer"
-
-
 class AzureVmWorkloadSAPHanaSystemProtectableItem(
     AzureVmWorkloadProtectableItem
 ):  # pylint: disable=too-many-instance-attributes
@@ -8295,8 +7697,6 @@ class AzureVmWorkloadSAPHanaSystemProtectableItem(
     :ivar prebackupvalidation: Pre-backup validation for protectable objects.
     :vartype prebackupvalidation:
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.PreBackupValidation
-    :ivar is_protectable: Indicates if item is protectable.
-    :vartype is_protectable: bool
     """
 
     _validation = {
@@ -8317,7 +7717,6 @@ class AzureVmWorkloadSAPHanaSystemProtectableItem(
         "subinquireditemcount": {"key": "subinquireditemcount", "type": "int"},
         "subprotectableitemcount": {"key": "subprotectableitemcount", "type": "int"},
         "prebackupvalidation": {"key": "prebackupvalidation", "type": "PreBackupValidation"},
-        "is_protectable": {"key": "isProtectable", "type": "bool"},
     }
 
     def __init__(
@@ -8335,7 +7734,6 @@ class AzureVmWorkloadSAPHanaSystemProtectableItem(
         subinquireditemcount: Optional[int] = None,
         subprotectableitemcount: Optional[int] = None,
         prebackupvalidation: Optional["_models.PreBackupValidation"] = None,
-        is_protectable: Optional[bool] = None,
         **kwargs: Any
     ) -> None:
         """
@@ -8368,8 +7766,6 @@ class AzureVmWorkloadSAPHanaSystemProtectableItem(
         :keyword prebackupvalidation: Pre-backup validation for protectable objects.
         :paramtype prebackupvalidation:
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.PreBackupValidation
-        :keyword is_protectable: Indicates if item is protectable.
-        :paramtype is_protectable: bool
         """
         super().__init__(
             backup_management_type=backup_management_type,
@@ -8384,7 +7780,6 @@ class AzureVmWorkloadSAPHanaSystemProtectableItem(
             subinquireditemcount=subinquireditemcount,
             subprotectableitemcount=subprotectableitemcount,
             prebackupvalidation=prebackupvalidation,
-            is_protectable=is_protectable,
             **kwargs
         )
         self.protectable_item_type: str = "SAPHanaSystem"
@@ -8525,11 +7920,6 @@ class AzureVmWorkloadSQLAvailabilityGroupProtectableItem(
     :ivar prebackupvalidation: Pre-backup validation for protectable objects.
     :vartype prebackupvalidation:
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.PreBackupValidation
-    :ivar is_protectable: Indicates if item is protectable.
-    :vartype is_protectable: bool
-    :ivar nodes_list: List of the nodes in case of distributed container.
-    :vartype nodes_list:
-     list[~azure.mgmt.recoveryservicesbackup.activestamp.models.DistributedNodesInfo]
     """
 
     _validation = {
@@ -8550,8 +7940,6 @@ class AzureVmWorkloadSQLAvailabilityGroupProtectableItem(
         "subinquireditemcount": {"key": "subinquireditemcount", "type": "int"},
         "subprotectableitemcount": {"key": "subprotectableitemcount", "type": "int"},
         "prebackupvalidation": {"key": "prebackupvalidation", "type": "PreBackupValidation"},
-        "is_protectable": {"key": "isProtectable", "type": "bool"},
-        "nodes_list": {"key": "nodesList", "type": "[DistributedNodesInfo]"},
     }
 
     def __init__(
@@ -8569,8 +7957,6 @@ class AzureVmWorkloadSQLAvailabilityGroupProtectableItem(
         subinquireditemcount: Optional[int] = None,
         subprotectableitemcount: Optional[int] = None,
         prebackupvalidation: Optional["_models.PreBackupValidation"] = None,
-        is_protectable: Optional[bool] = None,
-        nodes_list: Optional[List["_models.DistributedNodesInfo"]] = None,
         **kwargs: Any
     ) -> None:
         """
@@ -8603,11 +7989,6 @@ class AzureVmWorkloadSQLAvailabilityGroupProtectableItem(
         :keyword prebackupvalidation: Pre-backup validation for protectable objects.
         :paramtype prebackupvalidation:
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.PreBackupValidation
-        :keyword is_protectable: Indicates if item is protectable.
-        :paramtype is_protectable: bool
-        :keyword nodes_list: List of the nodes in case of distributed container.
-        :paramtype nodes_list:
-         list[~azure.mgmt.recoveryservicesbackup.activestamp.models.DistributedNodesInfo]
         """
         super().__init__(
             backup_management_type=backup_management_type,
@@ -8622,11 +8003,9 @@ class AzureVmWorkloadSQLAvailabilityGroupProtectableItem(
             subinquireditemcount=subinquireditemcount,
             subprotectableitemcount=subprotectableitemcount,
             prebackupvalidation=prebackupvalidation,
-            is_protectable=is_protectable,
             **kwargs
         )
         self.protectable_item_type: str = "SQLAvailabilityGroupContainer"
-        self.nodes_list = nodes_list
 
 
 class AzureVmWorkloadSQLDatabaseProtectableItem(
@@ -8667,8 +8046,6 @@ class AzureVmWorkloadSQLDatabaseProtectableItem(
     :ivar prebackupvalidation: Pre-backup validation for protectable objects.
     :vartype prebackupvalidation:
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.PreBackupValidation
-    :ivar is_protectable: Indicates if item is protectable.
-    :vartype is_protectable: bool
     """
 
     _validation = {
@@ -8689,7 +8066,6 @@ class AzureVmWorkloadSQLDatabaseProtectableItem(
         "subinquireditemcount": {"key": "subinquireditemcount", "type": "int"},
         "subprotectableitemcount": {"key": "subprotectableitemcount", "type": "int"},
         "prebackupvalidation": {"key": "prebackupvalidation", "type": "PreBackupValidation"},
-        "is_protectable": {"key": "isProtectable", "type": "bool"},
     }
 
     def __init__(
@@ -8707,7 +8083,6 @@ class AzureVmWorkloadSQLDatabaseProtectableItem(
         subinquireditemcount: Optional[int] = None,
         subprotectableitemcount: Optional[int] = None,
         prebackupvalidation: Optional["_models.PreBackupValidation"] = None,
-        is_protectable: Optional[bool] = None,
         **kwargs: Any
     ) -> None:
         """
@@ -8740,8 +8115,6 @@ class AzureVmWorkloadSQLDatabaseProtectableItem(
         :keyword prebackupvalidation: Pre-backup validation for protectable objects.
         :paramtype prebackupvalidation:
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.PreBackupValidation
-        :keyword is_protectable: Indicates if item is protectable.
-        :paramtype is_protectable: bool
         """
         super().__init__(
             backup_management_type=backup_management_type,
@@ -8756,7 +8129,6 @@ class AzureVmWorkloadSQLDatabaseProtectableItem(
             subinquireditemcount=subinquireditemcount,
             subprotectableitemcount=subprotectableitemcount,
             prebackupvalidation=prebackupvalidation,
-            is_protectable=is_protectable,
             **kwargs
         )
         self.protectable_item_type: str = "SQLDataBase"
@@ -8766,8 +8138,6 @@ class AzureVmWorkloadSQLDatabaseProtectedItem(
     AzureVmWorkloadProtectedItem
 ):  # pylint: disable=too-many-instance-attributes
     """Azure VM workload-specific protected item representing SQL Database.
-
-    Variables are only populated by the server, and will be ignored when sending a request.
 
     All required parameters must be populated in order to send to Azure.
 
@@ -8780,8 +8150,8 @@ class AzureVmWorkloadSQLDatabaseProtectedItem(
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.BackupManagementType
     :ivar workload_type: Type of workload this item represents. Known values are: "Invalid", "VM",
      "FileFolder", "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint", "VMwareVM", "SystemState",
-     "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase",
-     "SAPAseDatabase", and "SAPHanaDBInstance".
+     "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase", and
+     "SAPAseDatabase".
     :vartype workload_type: str or
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.DataSourceType
     :ivar container_name: Unique name of container.
@@ -8818,8 +8188,6 @@ class AzureVmWorkloadSQLDatabaseProtectedItem(
     :vartype is_archive_enabled: bool
     :ivar policy_name: Name of the policy used for protection.
     :vartype policy_name: str
-    :ivar soft_delete_retention_period_in_days: Soft delete retention period in days.
-    :vartype soft_delete_retention_period_in_days: int
     :ivar friendly_name: Friendly name of the DB represented by this backup item.
     :vartype friendly_name: str
     :ivar server_name: Host/Cluster Name for instance or AG.
@@ -8832,8 +8200,7 @@ class AzureVmWorkloadSQLDatabaseProtectedItem(
     :ivar protection_status: Backup status of this backup item.
     :vartype protection_status: str
     :ivar protection_state: Backup state of this backup item. Known values are: "Invalid",
-     "IRPending", "Protected", "ProtectionError", "ProtectionStopped", "ProtectionPaused", and
-     "BackupsSuspended".
+     "IRPending", "Protected", "ProtectionError", "ProtectionStopped", and "ProtectionPaused".
     :vartype protection_state: str or
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.ProtectionState
     :ivar last_backup_status: Last backup operation status. Possible values: Healthy, Unhealthy.
@@ -8858,17 +8225,10 @@ class AzureVmWorkloadSQLDatabaseProtectedItem(
     :ivar kpis_healths: Health details of different KPIs.
     :vartype kpis_healths: dict[str,
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.KPIResourceHealthDetails]
-    :ivar nodes_list: List of the nodes in case of distributed container.
-    :vartype nodes_list:
-     list[~azure.mgmt.recoveryservicesbackup.activestamp.models.DistributedNodesInfo]
     """
 
     _validation = {
         "protected_item_type": {"required": True},
-        "backup_management_type": {"readonly": True},
-        "workload_type": {"readonly": True},
-        "friendly_name": {"readonly": True},
-        "protection_status": {"readonly": True},
     }
 
     _attribute_map = {
@@ -8889,7 +8249,6 @@ class AzureVmWorkloadSQLDatabaseProtectedItem(
         "resource_guard_operation_requests": {"key": "resourceGuardOperationRequests", "type": "[str]"},
         "is_archive_enabled": {"key": "isArchiveEnabled", "type": "bool"},
         "policy_name": {"key": "policyName", "type": "str"},
-        "soft_delete_retention_period_in_days": {"key": "softDeleteRetentionPeriodInDays", "type": "int"},
         "friendly_name": {"key": "friendlyName", "type": "str"},
         "server_name": {"key": "serverName", "type": "str"},
         "parent_name": {"key": "parentName", "type": "str"},
@@ -8903,12 +8262,13 @@ class AzureVmWorkloadSQLDatabaseProtectedItem(
         "protected_item_health_status": {"key": "protectedItemHealthStatus", "type": "str"},
         "extended_info": {"key": "extendedInfo", "type": "AzureVmWorkloadProtectedItemExtendedInfo"},
         "kpis_healths": {"key": "kpisHealths", "type": "{KPIResourceHealthDetails}"},
-        "nodes_list": {"key": "nodesList", "type": "[DistributedNodesInfo]"},
     }
 
     def __init__(  # pylint: disable=too-many-locals
         self,
         *,
+        backup_management_type: Optional[Union[str, "_models.BackupManagementType"]] = None,
+        workload_type: Optional[Union[str, "_models.DataSourceType"]] = None,
         container_name: Optional[str] = None,
         source_resource_id: Optional[str] = None,
         policy_id: Optional[str] = None,
@@ -8923,10 +8283,11 @@ class AzureVmWorkloadSQLDatabaseProtectedItem(
         resource_guard_operation_requests: Optional[List[str]] = None,
         is_archive_enabled: Optional[bool] = None,
         policy_name: Optional[str] = None,
-        soft_delete_retention_period_in_days: Optional[int] = None,
+        friendly_name: Optional[str] = None,
         server_name: Optional[str] = None,
         parent_name: Optional[str] = None,
         parent_type: Optional[str] = None,
+        protection_status: Optional[str] = None,
         protection_state: Optional[Union[str, "_models.ProtectionState"]] = None,
         last_backup_status: Optional[Union[str, "_models.LastBackupStatus"]] = None,
         last_backup_time: Optional[datetime.datetime] = None,
@@ -8935,10 +8296,20 @@ class AzureVmWorkloadSQLDatabaseProtectedItem(
         protected_item_health_status: Optional[Union[str, "_models.ProtectedItemHealthStatus"]] = None,
         extended_info: Optional["_models.AzureVmWorkloadProtectedItemExtendedInfo"] = None,
         kpis_healths: Optional[Dict[str, "_models.KPIResourceHealthDetails"]] = None,
-        nodes_list: Optional[List["_models.DistributedNodesInfo"]] = None,
         **kwargs: Any
     ) -> None:
         """
+        :keyword backup_management_type: Type of backup management for the backed up item. Known values
+         are: "Invalid", "AzureIaasVM", "MAB", "DPM", "AzureBackupServer", "AzureSql", "AzureStorage",
+         "AzureWorkload", and "DefaultBackup".
+        :paramtype backup_management_type: str or
+         ~azure.mgmt.recoveryservicesbackup.activestamp.models.BackupManagementType
+        :keyword workload_type: Type of workload this item represents. Known values are: "Invalid",
+         "VM", "FileFolder", "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint", "VMwareVM", "SystemState",
+         "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase", and
+         "SAPAseDatabase".
+        :paramtype workload_type: str or
+         ~azure.mgmt.recoveryservicesbackup.activestamp.models.DataSourceType
         :keyword container_name: Unique name of container.
         :paramtype container_name: str
         :keyword source_resource_id: ARM ID of the resource to be backed up.
@@ -8974,8 +8345,8 @@ class AzureVmWorkloadSQLDatabaseProtectedItem(
         :paramtype is_archive_enabled: bool
         :keyword policy_name: Name of the policy used for protection.
         :paramtype policy_name: str
-        :keyword soft_delete_retention_period_in_days: Soft delete retention period in days.
-        :paramtype soft_delete_retention_period_in_days: int
+        :keyword friendly_name: Friendly name of the DB represented by this backup item.
+        :paramtype friendly_name: str
         :keyword server_name: Host/Cluster Name for instance or AG.
         :paramtype server_name: str
         :keyword parent_name: Parent name of the DB such as Instance or Availability Group.
@@ -8983,9 +8354,10 @@ class AzureVmWorkloadSQLDatabaseProtectedItem(
         :keyword parent_type: Parent type of protected item, example: for a DB, standalone server or
          distributed.
         :paramtype parent_type: str
+        :keyword protection_status: Backup status of this backup item.
+        :paramtype protection_status: str
         :keyword protection_state: Backup state of this backup item. Known values are: "Invalid",
-         "IRPending", "Protected", "ProtectionError", "ProtectionStopped", "ProtectionPaused", and
-         "BackupsSuspended".
+         "IRPending", "Protected", "ProtectionError", "ProtectionStopped", and "ProtectionPaused".
         :paramtype protection_state: str or
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.ProtectionState
         :keyword last_backup_status: Last backup operation status. Possible values: Healthy, Unhealthy.
@@ -9010,11 +8382,10 @@ class AzureVmWorkloadSQLDatabaseProtectedItem(
         :keyword kpis_healths: Health details of different KPIs.
         :paramtype kpis_healths: dict[str,
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.KPIResourceHealthDetails]
-        :keyword nodes_list: List of the nodes in case of distributed container.
-        :paramtype nodes_list:
-         list[~azure.mgmt.recoveryservicesbackup.activestamp.models.DistributedNodesInfo]
         """
         super().__init__(
+            backup_management_type=backup_management_type,
+            workload_type=workload_type,
             container_name=container_name,
             source_resource_id=source_resource_id,
             policy_id=policy_id,
@@ -9029,10 +8400,11 @@ class AzureVmWorkloadSQLDatabaseProtectedItem(
             resource_guard_operation_requests=resource_guard_operation_requests,
             is_archive_enabled=is_archive_enabled,
             policy_name=policy_name,
-            soft_delete_retention_period_in_days=soft_delete_retention_period_in_days,
+            friendly_name=friendly_name,
             server_name=server_name,
             parent_name=parent_name,
             parent_type=parent_type,
+            protection_status=protection_status,
             protection_state=protection_state,
             last_backup_status=last_backup_status,
             last_backup_time=last_backup_time,
@@ -9041,7 +8413,6 @@ class AzureVmWorkloadSQLDatabaseProtectedItem(
             protected_item_health_status=protected_item_health_status,
             extended_info=extended_info,
             kpis_healths=kpis_healths,
-            nodes_list=nodes_list,
             **kwargs
         )
         self.protected_item_type: str = "AzureVmWorkloadSQLDatabase"
@@ -9182,8 +8553,6 @@ class AzureVmWorkloadSQLInstanceProtectableItem(
     :ivar prebackupvalidation: Pre-backup validation for protectable objects.
     :vartype prebackupvalidation:
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.PreBackupValidation
-    :ivar is_protectable: Indicates if item is protectable.
-    :vartype is_protectable: bool
     """
 
     _validation = {
@@ -9204,7 +8573,6 @@ class AzureVmWorkloadSQLInstanceProtectableItem(
         "subinquireditemcount": {"key": "subinquireditemcount", "type": "int"},
         "subprotectableitemcount": {"key": "subprotectableitemcount", "type": "int"},
         "prebackupvalidation": {"key": "prebackupvalidation", "type": "PreBackupValidation"},
-        "is_protectable": {"key": "isProtectable", "type": "bool"},
     }
 
     def __init__(
@@ -9222,7 +8590,6 @@ class AzureVmWorkloadSQLInstanceProtectableItem(
         subinquireditemcount: Optional[int] = None,
         subprotectableitemcount: Optional[int] = None,
         prebackupvalidation: Optional["_models.PreBackupValidation"] = None,
-        is_protectable: Optional[bool] = None,
         **kwargs: Any
     ) -> None:
         """
@@ -9255,8 +8622,6 @@ class AzureVmWorkloadSQLInstanceProtectableItem(
         :keyword prebackupvalidation: Pre-backup validation for protectable objects.
         :paramtype prebackupvalidation:
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.PreBackupValidation
-        :keyword is_protectable: Indicates if item is protectable.
-        :paramtype is_protectable: bool
         """
         super().__init__(
             backup_management_type=backup_management_type,
@@ -9271,7 +8636,6 @@ class AzureVmWorkloadSQLInstanceProtectableItem(
             subinquireditemcount=subinquireditemcount,
             subprotectableitemcount=subprotectableitemcount,
             prebackupvalidation=prebackupvalidation,
-            is_protectable=is_protectable,
             **kwargs
         )
         self.protectable_item_type: str = "SQLInstance"
@@ -9480,8 +8844,7 @@ class AzureWorkloadBackupRequest(BackupRequest):
      types in the polymorphic chain of types. Required.
     :vartype object_type: str
     :ivar backup_type: Type of backup, viz. Full, Differential, Log or CopyOnlyFull. Known values
-     are: "Invalid", "Full", "Differential", "Log", "CopyOnlyFull", "Incremental", "SnapshotFull",
-     and "SnapshotCopyOnlyFull".
+     are: "Invalid", "Full", "Differential", "Log", "CopyOnlyFull", and "Incremental".
     :vartype backup_type: str or ~azure.mgmt.recoveryservicesbackup.activestamp.models.BackupType
     :ivar enable_compression: Bool for Compression setting.
     :vartype enable_compression: bool
@@ -9511,8 +8874,7 @@ class AzureWorkloadBackupRequest(BackupRequest):
     ) -> None:
         """
         :keyword backup_type: Type of backup, viz. Full, Differential, Log or CopyOnlyFull. Known
-         values are: "Invalid", "Full", "Differential", "Log", "CopyOnlyFull", "Incremental",
-         "SnapshotFull", and "SnapshotCopyOnlyFull".
+         values are: "Invalid", "Full", "Differential", "Log", "CopyOnlyFull", and "Incremental".
         :paramtype backup_type: str or ~azure.mgmt.recoveryservicesbackup.activestamp.models.BackupType
         :keyword enable_compression: Bool for Compression setting.
         :paramtype enable_compression: bool
@@ -9914,7 +9276,7 @@ class AzureWorkloadRecoveryPoint(RecoveryPoint):
     :ivar recovery_point_time_in_utc: UTC time at which recovery point was created.
     :vartype recovery_point_time_in_utc: ~datetime.datetime
     :ivar type: Type of restore point. Known values are: "Invalid", "Full", "Log", "Differential",
-     "Incremental", "SnapshotFull", and "SnapshotCopyOnlyFull".
+     and "Incremental".
     :vartype type: str or ~azure.mgmt.recoveryservicesbackup.activestamp.models.RestorePointType
     :ivar recovery_point_tier_details: Recovery point tier information.
     :vartype recovery_point_tier_details:
@@ -9922,9 +9284,6 @@ class AzureWorkloadRecoveryPoint(RecoveryPoint):
     :ivar recovery_point_move_readiness_info: Eligibility of RP to be moved to another tier.
     :vartype recovery_point_move_readiness_info: dict[str,
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.RecoveryPointMoveReadinessInfo]
-    :ivar recovery_point_properties: Properties of Recovery Point.
-    :vartype recovery_point_properties:
-     ~azure.mgmt.recoveryservicesbackup.activestamp.models.RecoveryPointProperties
     """
 
     _validation = {
@@ -9940,7 +9299,6 @@ class AzureWorkloadRecoveryPoint(RecoveryPoint):
             "key": "recoveryPointMoveReadinessInfo",
             "type": "{RecoveryPointMoveReadinessInfo}",
         },
-        "recovery_point_properties": {"key": "recoveryPointProperties", "type": "RecoveryPointProperties"},
     }
 
     _subtype_map = {
@@ -9958,14 +9316,13 @@ class AzureWorkloadRecoveryPoint(RecoveryPoint):
         type: Optional[Union[str, "_models.RestorePointType"]] = None,
         recovery_point_tier_details: Optional[List["_models.RecoveryPointTierInformationV2"]] = None,
         recovery_point_move_readiness_info: Optional[Dict[str, "_models.RecoveryPointMoveReadinessInfo"]] = None,
-        recovery_point_properties: Optional["_models.RecoveryPointProperties"] = None,
         **kwargs: Any
     ) -> None:
         """
         :keyword recovery_point_time_in_utc: UTC time at which recovery point was created.
         :paramtype recovery_point_time_in_utc: ~datetime.datetime
         :keyword type: Type of restore point. Known values are: "Invalid", "Full", "Log",
-         "Differential", "Incremental", "SnapshotFull", and "SnapshotCopyOnlyFull".
+         "Differential", and "Incremental".
         :paramtype type: str or ~azure.mgmt.recoveryservicesbackup.activestamp.models.RestorePointType
         :keyword recovery_point_tier_details: Recovery point tier information.
         :paramtype recovery_point_tier_details:
@@ -9973,9 +9330,6 @@ class AzureWorkloadRecoveryPoint(RecoveryPoint):
         :keyword recovery_point_move_readiness_info: Eligibility of RP to be moved to another tier.
         :paramtype recovery_point_move_readiness_info: dict[str,
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.RecoveryPointMoveReadinessInfo]
-        :keyword recovery_point_properties: Properties of Recovery Point.
-        :paramtype recovery_point_properties:
-         ~azure.mgmt.recoveryservicesbackup.activestamp.models.RecoveryPointProperties
         """
         super().__init__(**kwargs)
         self.object_type: str = "AzureWorkloadRecoveryPoint"
@@ -9983,7 +9337,6 @@ class AzureWorkloadRecoveryPoint(RecoveryPoint):
         self.type = type
         self.recovery_point_tier_details = recovery_point_tier_details
         self.recovery_point_move_readiness_info = recovery_point_move_readiness_info
-        self.recovery_point_properties = recovery_point_properties
 
 
 class AzureWorkloadPointInTimeRecoveryPoint(AzureWorkloadRecoveryPoint):
@@ -10000,7 +9353,7 @@ class AzureWorkloadPointInTimeRecoveryPoint(AzureWorkloadRecoveryPoint):
     :ivar recovery_point_time_in_utc: UTC time at which recovery point was created.
     :vartype recovery_point_time_in_utc: ~datetime.datetime
     :ivar type: Type of restore point. Known values are: "Invalid", "Full", "Log", "Differential",
-     "Incremental", "SnapshotFull", and "SnapshotCopyOnlyFull".
+     and "Incremental".
     :vartype type: str or ~azure.mgmt.recoveryservicesbackup.activestamp.models.RestorePointType
     :ivar recovery_point_tier_details: Recovery point tier information.
     :vartype recovery_point_tier_details:
@@ -10008,9 +9361,6 @@ class AzureWorkloadPointInTimeRecoveryPoint(AzureWorkloadRecoveryPoint):
     :ivar recovery_point_move_readiness_info: Eligibility of RP to be moved to another tier.
     :vartype recovery_point_move_readiness_info: dict[str,
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.RecoveryPointMoveReadinessInfo]
-    :ivar recovery_point_properties: Properties of Recovery Point.
-    :vartype recovery_point_properties:
-     ~azure.mgmt.recoveryservicesbackup.activestamp.models.RecoveryPointProperties
     :ivar time_ranges: List of log ranges.
     :vartype time_ranges:
      list[~azure.mgmt.recoveryservicesbackup.activestamp.models.PointInTimeRange]
@@ -10029,7 +9379,6 @@ class AzureWorkloadPointInTimeRecoveryPoint(AzureWorkloadRecoveryPoint):
             "key": "recoveryPointMoveReadinessInfo",
             "type": "{RecoveryPointMoveReadinessInfo}",
         },
-        "recovery_point_properties": {"key": "recoveryPointProperties", "type": "RecoveryPointProperties"},
         "time_ranges": {"key": "timeRanges", "type": "[PointInTimeRange]"},
     }
 
@@ -10044,7 +9393,6 @@ class AzureWorkloadPointInTimeRecoveryPoint(AzureWorkloadRecoveryPoint):
         type: Optional[Union[str, "_models.RestorePointType"]] = None,
         recovery_point_tier_details: Optional[List["_models.RecoveryPointTierInformationV2"]] = None,
         recovery_point_move_readiness_info: Optional[Dict[str, "_models.RecoveryPointMoveReadinessInfo"]] = None,
-        recovery_point_properties: Optional["_models.RecoveryPointProperties"] = None,
         time_ranges: Optional[List["_models.PointInTimeRange"]] = None,
         **kwargs: Any
     ) -> None:
@@ -10052,7 +9400,7 @@ class AzureWorkloadPointInTimeRecoveryPoint(AzureWorkloadRecoveryPoint):
         :keyword recovery_point_time_in_utc: UTC time at which recovery point was created.
         :paramtype recovery_point_time_in_utc: ~datetime.datetime
         :keyword type: Type of restore point. Known values are: "Invalid", "Full", "Log",
-         "Differential", "Incremental", "SnapshotFull", and "SnapshotCopyOnlyFull".
+         "Differential", and "Incremental".
         :paramtype type: str or ~azure.mgmt.recoveryservicesbackup.activestamp.models.RestorePointType
         :keyword recovery_point_tier_details: Recovery point tier information.
         :paramtype recovery_point_tier_details:
@@ -10060,9 +9408,6 @@ class AzureWorkloadPointInTimeRecoveryPoint(AzureWorkloadRecoveryPoint):
         :keyword recovery_point_move_readiness_info: Eligibility of RP to be moved to another tier.
         :paramtype recovery_point_move_readiness_info: dict[str,
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.RecoveryPointMoveReadinessInfo]
-        :keyword recovery_point_properties: Properties of Recovery Point.
-        :paramtype recovery_point_properties:
-         ~azure.mgmt.recoveryservicesbackup.activestamp.models.RecoveryPointProperties
         :keyword time_ranges: List of log ranges.
         :paramtype time_ranges:
          list[~azure.mgmt.recoveryservicesbackup.activestamp.models.PointInTimeRange]
@@ -10072,7 +9417,6 @@ class AzureWorkloadPointInTimeRecoveryPoint(AzureWorkloadRecoveryPoint):
             type=type,
             recovery_point_tier_details=recovery_point_tier_details,
             recovery_point_move_readiness_info=recovery_point_move_readiness_info,
-            recovery_point_properties=recovery_point_properties,
             **kwargs
         )
         self.object_type: str = "AzureWorkloadPointInTimeRecoveryPoint"
@@ -10281,7 +9625,7 @@ class AzureWorkloadSAPHanaPointInTimeRecoveryPoint(AzureWorkloadPointInTimeRecov
     :ivar recovery_point_time_in_utc: UTC time at which recovery point was created.
     :vartype recovery_point_time_in_utc: ~datetime.datetime
     :ivar type: Type of restore point. Known values are: "Invalid", "Full", "Log", "Differential",
-     "Incremental", "SnapshotFull", and "SnapshotCopyOnlyFull".
+     and "Incremental".
     :vartype type: str or ~azure.mgmt.recoveryservicesbackup.activestamp.models.RestorePointType
     :ivar recovery_point_tier_details: Recovery point tier information.
     :vartype recovery_point_tier_details:
@@ -10289,9 +9633,6 @@ class AzureWorkloadSAPHanaPointInTimeRecoveryPoint(AzureWorkloadPointInTimeRecov
     :ivar recovery_point_move_readiness_info: Eligibility of RP to be moved to another tier.
     :vartype recovery_point_move_readiness_info: dict[str,
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.RecoveryPointMoveReadinessInfo]
-    :ivar recovery_point_properties: Properties of Recovery Point.
-    :vartype recovery_point_properties:
-     ~azure.mgmt.recoveryservicesbackup.activestamp.models.RecoveryPointProperties
     :ivar time_ranges: List of log ranges.
     :vartype time_ranges:
      list[~azure.mgmt.recoveryservicesbackup.activestamp.models.PointInTimeRange]
@@ -10310,7 +9651,6 @@ class AzureWorkloadSAPHanaPointInTimeRecoveryPoint(AzureWorkloadPointInTimeRecov
             "key": "recoveryPointMoveReadinessInfo",
             "type": "{RecoveryPointMoveReadinessInfo}",
         },
-        "recovery_point_properties": {"key": "recoveryPointProperties", "type": "RecoveryPointProperties"},
         "time_ranges": {"key": "timeRanges", "type": "[PointInTimeRange]"},
     }
 
@@ -10321,7 +9661,6 @@ class AzureWorkloadSAPHanaPointInTimeRecoveryPoint(AzureWorkloadPointInTimeRecov
         type: Optional[Union[str, "_models.RestorePointType"]] = None,
         recovery_point_tier_details: Optional[List["_models.RecoveryPointTierInformationV2"]] = None,
         recovery_point_move_readiness_info: Optional[Dict[str, "_models.RecoveryPointMoveReadinessInfo"]] = None,
-        recovery_point_properties: Optional["_models.RecoveryPointProperties"] = None,
         time_ranges: Optional[List["_models.PointInTimeRange"]] = None,
         **kwargs: Any
     ) -> None:
@@ -10329,7 +9668,7 @@ class AzureWorkloadSAPHanaPointInTimeRecoveryPoint(AzureWorkloadPointInTimeRecov
         :keyword recovery_point_time_in_utc: UTC time at which recovery point was created.
         :paramtype recovery_point_time_in_utc: ~datetime.datetime
         :keyword type: Type of restore point. Known values are: "Invalid", "Full", "Log",
-         "Differential", "Incremental", "SnapshotFull", and "SnapshotCopyOnlyFull".
+         "Differential", and "Incremental".
         :paramtype type: str or ~azure.mgmt.recoveryservicesbackup.activestamp.models.RestorePointType
         :keyword recovery_point_tier_details: Recovery point tier information.
         :paramtype recovery_point_tier_details:
@@ -10337,9 +9676,6 @@ class AzureWorkloadSAPHanaPointInTimeRecoveryPoint(AzureWorkloadPointInTimeRecov
         :keyword recovery_point_move_readiness_info: Eligibility of RP to be moved to another tier.
         :paramtype recovery_point_move_readiness_info: dict[str,
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.RecoveryPointMoveReadinessInfo]
-        :keyword recovery_point_properties: Properties of Recovery Point.
-        :paramtype recovery_point_properties:
-         ~azure.mgmt.recoveryservicesbackup.activestamp.models.RecoveryPointProperties
         :keyword time_ranges: List of log ranges.
         :paramtype time_ranges:
          list[~azure.mgmt.recoveryservicesbackup.activestamp.models.PointInTimeRange]
@@ -10349,7 +9685,6 @@ class AzureWorkloadSAPHanaPointInTimeRecoveryPoint(AzureWorkloadPointInTimeRecov
             type=type,
             recovery_point_tier_details=recovery_point_tier_details,
             recovery_point_move_readiness_info=recovery_point_move_readiness_info,
-            recovery_point_properties=recovery_point_properties,
             time_ranges=time_ranges,
             **kwargs
         )
@@ -10673,7 +10008,7 @@ class AzureWorkloadSAPHanaRecoveryPoint(AzureWorkloadRecoveryPoint):
     :ivar recovery_point_time_in_utc: UTC time at which recovery point was created.
     :vartype recovery_point_time_in_utc: ~datetime.datetime
     :ivar type: Type of restore point. Known values are: "Invalid", "Full", "Log", "Differential",
-     "Incremental", "SnapshotFull", and "SnapshotCopyOnlyFull".
+     and "Incremental".
     :vartype type: str or ~azure.mgmt.recoveryservicesbackup.activestamp.models.RestorePointType
     :ivar recovery_point_tier_details: Recovery point tier information.
     :vartype recovery_point_tier_details:
@@ -10681,9 +10016,6 @@ class AzureWorkloadSAPHanaRecoveryPoint(AzureWorkloadRecoveryPoint):
     :ivar recovery_point_move_readiness_info: Eligibility of RP to be moved to another tier.
     :vartype recovery_point_move_readiness_info: dict[str,
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.RecoveryPointMoveReadinessInfo]
-    :ivar recovery_point_properties: Properties of Recovery Point.
-    :vartype recovery_point_properties:
-     ~azure.mgmt.recoveryservicesbackup.activestamp.models.RecoveryPointProperties
     """
 
     _validation = {
@@ -10699,7 +10031,6 @@ class AzureWorkloadSAPHanaRecoveryPoint(AzureWorkloadRecoveryPoint):
             "key": "recoveryPointMoveReadinessInfo",
             "type": "{RecoveryPointMoveReadinessInfo}",
         },
-        "recovery_point_properties": {"key": "recoveryPointProperties", "type": "RecoveryPointProperties"},
     }
 
     def __init__(
@@ -10709,14 +10040,13 @@ class AzureWorkloadSAPHanaRecoveryPoint(AzureWorkloadRecoveryPoint):
         type: Optional[Union[str, "_models.RestorePointType"]] = None,
         recovery_point_tier_details: Optional[List["_models.RecoveryPointTierInformationV2"]] = None,
         recovery_point_move_readiness_info: Optional[Dict[str, "_models.RecoveryPointMoveReadinessInfo"]] = None,
-        recovery_point_properties: Optional["_models.RecoveryPointProperties"] = None,
         **kwargs: Any
     ) -> None:
         """
         :keyword recovery_point_time_in_utc: UTC time at which recovery point was created.
         :paramtype recovery_point_time_in_utc: ~datetime.datetime
         :keyword type: Type of restore point. Known values are: "Invalid", "Full", "Log",
-         "Differential", "Incremental", "SnapshotFull", and "SnapshotCopyOnlyFull".
+         "Differential", and "Incremental".
         :paramtype type: str or ~azure.mgmt.recoveryservicesbackup.activestamp.models.RestorePointType
         :keyword recovery_point_tier_details: Recovery point tier information.
         :paramtype recovery_point_tier_details:
@@ -10724,16 +10054,12 @@ class AzureWorkloadSAPHanaRecoveryPoint(AzureWorkloadRecoveryPoint):
         :keyword recovery_point_move_readiness_info: Eligibility of RP to be moved to another tier.
         :paramtype recovery_point_move_readiness_info: dict[str,
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.RecoveryPointMoveReadinessInfo]
-        :keyword recovery_point_properties: Properties of Recovery Point.
-        :paramtype recovery_point_properties:
-         ~azure.mgmt.recoveryservicesbackup.activestamp.models.RecoveryPointProperties
         """
         super().__init__(
             recovery_point_time_in_utc=recovery_point_time_in_utc,
             type=type,
             recovery_point_tier_details=recovery_point_tier_details,
             recovery_point_move_readiness_info=recovery_point_move_readiness_info,
-            recovery_point_properties=recovery_point_properties,
             **kwargs
         )
         self.object_type: str = "AzureWorkloadSAPHanaRecoveryPoint"
@@ -10867,7 +10193,7 @@ class AzureWorkloadSQLAutoProtectionIntent(AzureWorkloadAutoProtectionIntent):
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.ProtectionStatus
     :ivar workload_item_type: Workload item type of the item for which intent is to be set. Known
      values are: "Invalid", "SQLInstance", "SQLDataBase", "SAPHanaSystem", "SAPHanaDatabase",
-     "SAPAseSystem", "SAPAseDatabase", and "SAPHanaDBInstance".
+     "SAPAseSystem", and "SAPAseDatabase".
     :vartype workload_item_type: str or
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.WorkloadItemType
     """
@@ -10916,7 +10242,7 @@ class AzureWorkloadSQLAutoProtectionIntent(AzureWorkloadAutoProtectionIntent):
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.ProtectionStatus
         :keyword workload_item_type: Workload item type of the item for which intent is to be set.
          Known values are: "Invalid", "SQLInstance", "SQLDataBase", "SAPHanaSystem", "SAPHanaDatabase",
-         "SAPAseSystem", "SAPAseDatabase", and "SAPHanaDBInstance".
+         "SAPAseSystem", and "SAPAseDatabase".
         :paramtype workload_item_type: str or
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.WorkloadItemType
         """
@@ -10947,7 +10273,7 @@ class AzureWorkloadSQLRecoveryPoint(AzureWorkloadRecoveryPoint):
     :ivar recovery_point_time_in_utc: UTC time at which recovery point was created.
     :vartype recovery_point_time_in_utc: ~datetime.datetime
     :ivar type: Type of restore point. Known values are: "Invalid", "Full", "Log", "Differential",
-     "Incremental", "SnapshotFull", and "SnapshotCopyOnlyFull".
+     and "Incremental".
     :vartype type: str or ~azure.mgmt.recoveryservicesbackup.activestamp.models.RestorePointType
     :ivar recovery_point_tier_details: Recovery point tier information.
     :vartype recovery_point_tier_details:
@@ -10955,9 +10281,6 @@ class AzureWorkloadSQLRecoveryPoint(AzureWorkloadRecoveryPoint):
     :ivar recovery_point_move_readiness_info: Eligibility of RP to be moved to another tier.
     :vartype recovery_point_move_readiness_info: dict[str,
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.RecoveryPointMoveReadinessInfo]
-    :ivar recovery_point_properties: Properties of Recovery Point.
-    :vartype recovery_point_properties:
-     ~azure.mgmt.recoveryservicesbackup.activestamp.models.RecoveryPointProperties
     :ivar extended_info: Extended Info that provides data directory details. Will be populated in
      two cases:
      When a specific recovery point is accessed using GetRecoveryPoint
@@ -10979,7 +10302,6 @@ class AzureWorkloadSQLRecoveryPoint(AzureWorkloadRecoveryPoint):
             "key": "recoveryPointMoveReadinessInfo",
             "type": "{RecoveryPointMoveReadinessInfo}",
         },
-        "recovery_point_properties": {"key": "recoveryPointProperties", "type": "RecoveryPointProperties"},
         "extended_info": {"key": "extendedInfo", "type": "AzureWorkloadSQLRecoveryPointExtendedInfo"},
     }
 
@@ -10994,7 +10316,6 @@ class AzureWorkloadSQLRecoveryPoint(AzureWorkloadRecoveryPoint):
         type: Optional[Union[str, "_models.RestorePointType"]] = None,
         recovery_point_tier_details: Optional[List["_models.RecoveryPointTierInformationV2"]] = None,
         recovery_point_move_readiness_info: Optional[Dict[str, "_models.RecoveryPointMoveReadinessInfo"]] = None,
-        recovery_point_properties: Optional["_models.RecoveryPointProperties"] = None,
         extended_info: Optional["_models.AzureWorkloadSQLRecoveryPointExtendedInfo"] = None,
         **kwargs: Any
     ) -> None:
@@ -11002,7 +10323,7 @@ class AzureWorkloadSQLRecoveryPoint(AzureWorkloadRecoveryPoint):
         :keyword recovery_point_time_in_utc: UTC time at which recovery point was created.
         :paramtype recovery_point_time_in_utc: ~datetime.datetime
         :keyword type: Type of restore point. Known values are: "Invalid", "Full", "Log",
-         "Differential", "Incremental", "SnapshotFull", and "SnapshotCopyOnlyFull".
+         "Differential", and "Incremental".
         :paramtype type: str or ~azure.mgmt.recoveryservicesbackup.activestamp.models.RestorePointType
         :keyword recovery_point_tier_details: Recovery point tier information.
         :paramtype recovery_point_tier_details:
@@ -11010,9 +10331,6 @@ class AzureWorkloadSQLRecoveryPoint(AzureWorkloadRecoveryPoint):
         :keyword recovery_point_move_readiness_info: Eligibility of RP to be moved to another tier.
         :paramtype recovery_point_move_readiness_info: dict[str,
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.RecoveryPointMoveReadinessInfo]
-        :keyword recovery_point_properties: Properties of Recovery Point.
-        :paramtype recovery_point_properties:
-         ~azure.mgmt.recoveryservicesbackup.activestamp.models.RecoveryPointProperties
         :keyword extended_info: Extended Info that provides data directory details. Will be populated
          in two cases:
          When a specific recovery point is accessed using GetRecoveryPoint
@@ -11025,7 +10343,6 @@ class AzureWorkloadSQLRecoveryPoint(AzureWorkloadRecoveryPoint):
             type=type,
             recovery_point_tier_details=recovery_point_tier_details,
             recovery_point_move_readiness_info=recovery_point_move_readiness_info,
-            recovery_point_properties=recovery_point_properties,
             **kwargs
         )
         self.object_type: str = "AzureWorkloadSQLRecoveryPoint"
@@ -11043,7 +10360,7 @@ class AzureWorkloadSQLPointInTimeRecoveryPoint(AzureWorkloadSQLRecoveryPoint):
     :ivar recovery_point_time_in_utc: UTC time at which recovery point was created.
     :vartype recovery_point_time_in_utc: ~datetime.datetime
     :ivar type: Type of restore point. Known values are: "Invalid", "Full", "Log", "Differential",
-     "Incremental", "SnapshotFull", and "SnapshotCopyOnlyFull".
+     and "Incremental".
     :vartype type: str or ~azure.mgmt.recoveryservicesbackup.activestamp.models.RestorePointType
     :ivar recovery_point_tier_details: Recovery point tier information.
     :vartype recovery_point_tier_details:
@@ -11051,9 +10368,6 @@ class AzureWorkloadSQLPointInTimeRecoveryPoint(AzureWorkloadSQLRecoveryPoint):
     :ivar recovery_point_move_readiness_info: Eligibility of RP to be moved to another tier.
     :vartype recovery_point_move_readiness_info: dict[str,
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.RecoveryPointMoveReadinessInfo]
-    :ivar recovery_point_properties: Properties of Recovery Point.
-    :vartype recovery_point_properties:
-     ~azure.mgmt.recoveryservicesbackup.activestamp.models.RecoveryPointProperties
     :ivar extended_info: Extended Info that provides data directory details. Will be populated in
      two cases:
      When a specific recovery point is accessed using GetRecoveryPoint
@@ -11078,7 +10392,6 @@ class AzureWorkloadSQLPointInTimeRecoveryPoint(AzureWorkloadSQLRecoveryPoint):
             "key": "recoveryPointMoveReadinessInfo",
             "type": "{RecoveryPointMoveReadinessInfo}",
         },
-        "recovery_point_properties": {"key": "recoveryPointProperties", "type": "RecoveryPointProperties"},
         "extended_info": {"key": "extendedInfo", "type": "AzureWorkloadSQLRecoveryPointExtendedInfo"},
         "time_ranges": {"key": "timeRanges", "type": "[PointInTimeRange]"},
     }
@@ -11090,7 +10403,6 @@ class AzureWorkloadSQLPointInTimeRecoveryPoint(AzureWorkloadSQLRecoveryPoint):
         type: Optional[Union[str, "_models.RestorePointType"]] = None,
         recovery_point_tier_details: Optional[List["_models.RecoveryPointTierInformationV2"]] = None,
         recovery_point_move_readiness_info: Optional[Dict[str, "_models.RecoveryPointMoveReadinessInfo"]] = None,
-        recovery_point_properties: Optional["_models.RecoveryPointProperties"] = None,
         extended_info: Optional["_models.AzureWorkloadSQLRecoveryPointExtendedInfo"] = None,
         time_ranges: Optional[List["_models.PointInTimeRange"]] = None,
         **kwargs: Any
@@ -11099,7 +10411,7 @@ class AzureWorkloadSQLPointInTimeRecoveryPoint(AzureWorkloadSQLRecoveryPoint):
         :keyword recovery_point_time_in_utc: UTC time at which recovery point was created.
         :paramtype recovery_point_time_in_utc: ~datetime.datetime
         :keyword type: Type of restore point. Known values are: "Invalid", "Full", "Log",
-         "Differential", "Incremental", "SnapshotFull", and "SnapshotCopyOnlyFull".
+         "Differential", and "Incremental".
         :paramtype type: str or ~azure.mgmt.recoveryservicesbackup.activestamp.models.RestorePointType
         :keyword recovery_point_tier_details: Recovery point tier information.
         :paramtype recovery_point_tier_details:
@@ -11107,9 +10419,6 @@ class AzureWorkloadSQLPointInTimeRecoveryPoint(AzureWorkloadSQLRecoveryPoint):
         :keyword recovery_point_move_readiness_info: Eligibility of RP to be moved to another tier.
         :paramtype recovery_point_move_readiness_info: dict[str,
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.RecoveryPointMoveReadinessInfo]
-        :keyword recovery_point_properties: Properties of Recovery Point.
-        :paramtype recovery_point_properties:
-         ~azure.mgmt.recoveryservicesbackup.activestamp.models.RecoveryPointProperties
         :keyword extended_info: Extended Info that provides data directory details. Will be populated
          in two cases:
          When a specific recovery point is accessed using GetRecoveryPoint
@@ -11125,7 +10434,6 @@ class AzureWorkloadSQLPointInTimeRecoveryPoint(AzureWorkloadSQLRecoveryPoint):
             type=type,
             recovery_point_tier_details=recovery_point_tier_details,
             recovery_point_move_readiness_info=recovery_point_move_readiness_info,
-            recovery_point_properties=recovery_point_properties,
             extended_info=extended_info,
             **kwargs
         )
@@ -12510,15 +11818,12 @@ class BackupResourceVaultConfig(_serialization.Model):
     :vartype enhanced_security_state: str or
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.EnhancedSecurityState
     :ivar soft_delete_feature_state: Soft Delete feature state. Known values are: "Invalid",
-     "Enabled", "Disabled", and "AlwaysON".
+     "Enabled", and "Disabled".
     :vartype soft_delete_feature_state: str or
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.SoftDeleteFeatureState
-    :ivar soft_delete_retention_period_in_days: Soft delete retention period in days.
-    :vartype soft_delete_retention_period_in_days: int
     :ivar resource_guard_operation_requests: ResourceGuard Operation Requests.
     :vartype resource_guard_operation_requests: list[str]
-    :ivar is_soft_delete_feature_state_editable: This flag is no longer in use. Please use
-     'softDeleteFeatureState' to set the soft delete state for the vault.
+    :ivar is_soft_delete_feature_state_editable: Is soft delete feature state editable.
     :vartype is_soft_delete_feature_state_editable: bool
     """
 
@@ -12528,7 +11833,6 @@ class BackupResourceVaultConfig(_serialization.Model):
         "storage_type_state": {"key": "storageTypeState", "type": "str"},
         "enhanced_security_state": {"key": "enhancedSecurityState", "type": "str"},
         "soft_delete_feature_state": {"key": "softDeleteFeatureState", "type": "str"},
-        "soft_delete_retention_period_in_days": {"key": "softDeleteRetentionPeriodInDays", "type": "int"},
         "resource_guard_operation_requests": {"key": "resourceGuardOperationRequests", "type": "[str]"},
         "is_soft_delete_feature_state_editable": {"key": "isSoftDeleteFeatureStateEditable", "type": "bool"},
     }
@@ -12541,7 +11845,6 @@ class BackupResourceVaultConfig(_serialization.Model):
         storage_type_state: Optional[Union[str, "_models.StorageTypeState"]] = None,
         enhanced_security_state: Optional[Union[str, "_models.EnhancedSecurityState"]] = None,
         soft_delete_feature_state: Optional[Union[str, "_models.SoftDeleteFeatureState"]] = None,
-        soft_delete_retention_period_in_days: Optional[int] = None,
         resource_guard_operation_requests: Optional[List[str]] = None,
         is_soft_delete_feature_state_editable: Optional[bool] = None,
         **kwargs: Any
@@ -12565,15 +11868,12 @@ class BackupResourceVaultConfig(_serialization.Model):
         :paramtype enhanced_security_state: str or
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.EnhancedSecurityState
         :keyword soft_delete_feature_state: Soft Delete feature state. Known values are: "Invalid",
-         "Enabled", "Disabled", and "AlwaysON".
+         "Enabled", and "Disabled".
         :paramtype soft_delete_feature_state: str or
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.SoftDeleteFeatureState
-        :keyword soft_delete_retention_period_in_days: Soft delete retention period in days.
-        :paramtype soft_delete_retention_period_in_days: int
         :keyword resource_guard_operation_requests: ResourceGuard Operation Requests.
         :paramtype resource_guard_operation_requests: list[str]
-        :keyword is_soft_delete_feature_state_editable: This flag is no longer in use. Please use
-         'softDeleteFeatureState' to set the soft delete state for the vault.
+        :keyword is_soft_delete_feature_state_editable: Is soft delete feature state editable.
         :paramtype is_soft_delete_feature_state_editable: bool
         """
         super().__init__(**kwargs)
@@ -12582,7 +11882,6 @@ class BackupResourceVaultConfig(_serialization.Model):
         self.storage_type_state = storage_type_state
         self.enhanced_security_state = enhanced_security_state
         self.soft_delete_feature_state = soft_delete_feature_state
-        self.soft_delete_retention_period_in_days = soft_delete_retention_period_in_days
         self.resource_guard_operation_requests = resource_guard_operation_requests
         self.is_soft_delete_feature_state_editable = is_soft_delete_feature_state_editable
 
@@ -12656,7 +11955,7 @@ class BackupStatusRequest(_serialization.Model):
     :ivar resource_type: Container Type - VM, SQLPaaS, DPM, AzureFileShare... Known values are:
      "Invalid", "VM", "FileFolder", "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint", "VMwareVM",
      "SystemState", "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare",
-     "SAPHanaDatabase", "SAPAseDatabase", and "SAPHanaDBInstance".
+     "SAPHanaDatabase", and "SAPAseDatabase".
     :vartype resource_type: str or
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.DataSourceType
     :ivar resource_id: Entire ARM resource id of the resource.
@@ -12683,7 +11982,7 @@ class BackupStatusRequest(_serialization.Model):
         :keyword resource_type: Container Type - VM, SQLPaaS, DPM, AzureFileShare... Known values are:
          "Invalid", "VM", "FileFolder", "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint", "VMwareVM",
          "SystemState", "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare",
-         "SAPHanaDatabase", "SAPAseDatabase", and "SAPHanaDBInstance".
+         "SAPHanaDatabase", and "SAPAseDatabase".
         :paramtype resource_type: str or
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.DataSourceType
         :keyword resource_id: Entire ARM resource id of the resource.
@@ -12927,7 +12226,9 @@ class BMSContainerQueryObject(_serialization.Model):
     :ivar container_type: Type of container for filter. Known values are: "Invalid", "Unknown",
      "IaasVMContainer", "IaasVMServiceContainer", "DPMContainer", "AzureBackupServerContainer",
      "MABContainer", "Cluster", "AzureSqlContainer", "Windows", "VCenter", "VMAppContainer",
-     "SQLAGWorkLoadContainer", "StorageContainer", "GenericContainer", and "HanaHSRContainer".
+     "SQLAGWorkLoadContainer", "StorageContainer", "GenericContainer",
+     "Microsoft.ClassicCompute/virtualMachines", "Microsoft.Compute/virtualMachines", and
+     "AzureWorkloadContainer".
     :vartype container_type: str or
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.ContainerType
     :ivar backup_engine_name: Backup engine name.
@@ -12973,7 +12274,9 @@ class BMSContainerQueryObject(_serialization.Model):
         :keyword container_type: Type of container for filter. Known values are: "Invalid", "Unknown",
          "IaasVMContainer", "IaasVMServiceContainer", "DPMContainer", "AzureBackupServerContainer",
          "MABContainer", "Cluster", "AzureSqlContainer", "Windows", "VCenter", "VMAppContainer",
-         "SQLAGWorkLoadContainer", "StorageContainer", "GenericContainer", and "HanaHSRContainer".
+         "SQLAGWorkLoadContainer", "StorageContainer", "GenericContainer",
+         "Microsoft.ClassicCompute/virtualMachines", "Microsoft.Compute/virtualMachines", and
+         "AzureWorkloadContainer".
         :paramtype container_type: str or
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.ContainerType
         :keyword backup_engine_name: Backup engine name.
@@ -13004,8 +12307,8 @@ class BMSContainersInquiryQueryObject(_serialization.Model):
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.BackupManagementType
     :ivar workload_type: Workload type for this container. Known values are: "Invalid", "VM",
      "FileFolder", "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint", "VMwareVM", "SystemState",
-     "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase",
-     "SAPAseDatabase", and "SAPHanaDBInstance".
+     "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase", and
+     "SAPAseDatabase".
     :vartype workload_type: str or
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.WorkloadType
     """
@@ -13030,8 +12333,8 @@ class BMSContainersInquiryQueryObject(_serialization.Model):
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.BackupManagementType
         :keyword workload_type: Workload type for this container. Known values are: "Invalid", "VM",
          "FileFolder", "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint", "VMwareVM", "SystemState",
-         "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase",
-         "SAPAseDatabase", and "SAPHanaDBInstance".
+         "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase", and
+         "SAPAseDatabase".
         :paramtype workload_type: str or
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.WorkloadType
         """
@@ -13050,8 +12353,7 @@ class BMSPOQueryObject(_serialization.Model):
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.BackupManagementType
     :ivar workload_type: Workload type. Known values are: "Invalid", "VM", "FileFolder",
      "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint", "VMwareVM", "SystemState", "Client",
-     "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase", "SAPAseDatabase", and
-     "SAPHanaDBInstance".
+     "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase", and "SAPAseDatabase".
     :vartype workload_type: str or
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.WorkloadType
     :ivar container_name: Full name of the container whose Protectable Objects should be returned.
@@ -13088,8 +12390,7 @@ class BMSPOQueryObject(_serialization.Model):
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.BackupManagementType
         :keyword workload_type: Workload type. Known values are: "Invalid", "VM", "FileFolder",
          "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint", "VMwareVM", "SystemState", "Client",
-         "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase", "SAPAseDatabase", and
-         "SAPHanaDBInstance".
+         "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase", and "SAPAseDatabase".
         :paramtype workload_type: str or
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.WorkloadType
         :keyword container_name: Full name of the container whose Protectable Objects should be
@@ -13144,8 +12445,7 @@ class BMSRPQueryObject(_serialization.Model):
     :ivar end_date: Backup copies created before this time.
     :vartype end_date: ~datetime.datetime
     :ivar restore_point_query_type: RestorePoint type. Known values are: "Invalid", "Full", "Log",
-     "Differential", "FullAndDifferential", "All", "Incremental", "SnapshotFull", and
-     "SnapshotCopyOnlyFull".
+     "Differential", "FullAndDifferential", "All", and "Incremental".
     :vartype restore_point_query_type: str or
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.RestorePointQueryType
     :ivar extended_info: In Get Recovery Point, it tells whether extended information about
@@ -13153,9 +12453,6 @@ class BMSRPQueryObject(_serialization.Model):
     :vartype extended_info: bool
     :ivar move_ready_rp_only: Whether the RP can be moved to another tier.
     :vartype move_ready_rp_only: bool
-    :ivar include_soft_deleted_rp: Flag to indicate whether Soft Deleted RPs should be
-     included/excluded from result.
-    :vartype include_soft_deleted_rp: bool
     """
 
     _attribute_map = {
@@ -13164,7 +12461,6 @@ class BMSRPQueryObject(_serialization.Model):
         "restore_point_query_type": {"key": "restorePointQueryType", "type": "str"},
         "extended_info": {"key": "extendedInfo", "type": "bool"},
         "move_ready_rp_only": {"key": "moveReadyRPOnly", "type": "bool"},
-        "include_soft_deleted_rp": {"key": "includeSoftDeletedRP", "type": "bool"},
     }
 
     def __init__(
@@ -13175,7 +12471,6 @@ class BMSRPQueryObject(_serialization.Model):
         restore_point_query_type: Optional[Union[str, "_models.RestorePointQueryType"]] = None,
         extended_info: Optional[bool] = None,
         move_ready_rp_only: Optional[bool] = None,
-        include_soft_deleted_rp: Optional[bool] = None,
         **kwargs: Any
     ) -> None:
         """
@@ -13184,8 +12479,7 @@ class BMSRPQueryObject(_serialization.Model):
         :keyword end_date: Backup copies created before this time.
         :paramtype end_date: ~datetime.datetime
         :keyword restore_point_query_type: RestorePoint type. Known values are: "Invalid", "Full",
-         "Log", "Differential", "FullAndDifferential", "All", "Incremental", "SnapshotFull", and
-         "SnapshotCopyOnlyFull".
+         "Log", "Differential", "FullAndDifferential", "All", and "Incremental".
         :paramtype restore_point_query_type: str or
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.RestorePointQueryType
         :keyword extended_info: In Get Recovery Point, it tells whether extended information about
@@ -13193,9 +12487,6 @@ class BMSRPQueryObject(_serialization.Model):
         :paramtype extended_info: bool
         :keyword move_ready_rp_only: Whether the RP can be moved to another tier.
         :paramtype move_ready_rp_only: bool
-        :keyword include_soft_deleted_rp: Flag to indicate whether Soft Deleted RPs should be
-         included/excluded from result.
-        :paramtype include_soft_deleted_rp: bool
         """
         super().__init__(**kwargs)
         self.start_date = start_date
@@ -13203,7 +12494,6 @@ class BMSRPQueryObject(_serialization.Model):
         self.restore_point_query_type = restore_point_query_type
         self.extended_info = extended_info
         self.move_ready_rp_only = move_ready_rp_only
-        self.include_soft_deleted_rp = include_soft_deleted_rp
 
 
 class BMSWorkloadItemQueryObject(_serialization.Model):
@@ -13215,14 +12505,12 @@ class BMSWorkloadItemQueryObject(_serialization.Model):
     :vartype backup_management_type: str or
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.BackupManagementType
     :ivar workload_item_type: Workload Item type. Known values are: "Invalid", "SQLInstance",
-     "SQLDataBase", "SAPHanaSystem", "SAPHanaDatabase", "SAPAseSystem", "SAPAseDatabase", and
-     "SAPHanaDBInstance".
+     "SQLDataBase", "SAPHanaSystem", "SAPHanaDatabase", "SAPAseSystem", and "SAPAseDatabase".
     :vartype workload_item_type: str or
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.WorkloadItemType
     :ivar workload_type: Workload type. Known values are: "Invalid", "VM", "FileFolder",
      "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint", "VMwareVM", "SystemState", "Client",
-     "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase", "SAPAseDatabase", and
-     "SAPHanaDBInstance".
+     "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase", and "SAPAseDatabase".
     :vartype workload_type: str or
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.WorkloadType
     :ivar protection_status: Backup status query parameter. Known values are: "Invalid",
@@ -13254,14 +12542,12 @@ class BMSWorkloadItemQueryObject(_serialization.Model):
         :paramtype backup_management_type: str or
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.BackupManagementType
         :keyword workload_item_type: Workload Item type. Known values are: "Invalid", "SQLInstance",
-         "SQLDataBase", "SAPHanaSystem", "SAPHanaDatabase", "SAPAseSystem", "SAPAseDatabase", and
-         "SAPHanaDBInstance".
+         "SQLDataBase", "SAPHanaSystem", "SAPHanaDatabase", "SAPAseSystem", and "SAPAseDatabase".
         :paramtype workload_item_type: str or
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.WorkloadItemType
         :keyword workload_type: Workload type. Known values are: "Invalid", "VM", "FileFolder",
          "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint", "VMwareVM", "SystemState", "Client",
-         "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase", "SAPAseDatabase", and
-         "SAPHanaDBInstance".
+         "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase", and "SAPAseDatabase".
         :paramtype workload_type: str or
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.WorkloadType
         :keyword protection_status: Backup status query parameter. Known values are: "Invalid",
@@ -13816,15 +13102,12 @@ class DistributedNodesInfo(_serialization.Model):
     :vartype status: str
     :ivar error_detail: Error Details if the Status is non-success.
     :vartype error_detail: ~azure.mgmt.recoveryservicesbackup.activestamp.models.ErrorDetail
-    :ivar source_resource_id: ARM resource id of the node.
-    :vartype source_resource_id: str
     """
 
     _attribute_map = {
         "node_name": {"key": "nodeName", "type": "str"},
         "status": {"key": "status", "type": "str"},
         "error_detail": {"key": "errorDetail", "type": "ErrorDetail"},
-        "source_resource_id": {"key": "sourceResourceId", "type": "str"},
     }
 
     def __init__(
@@ -13833,7 +13116,6 @@ class DistributedNodesInfo(_serialization.Model):
         node_name: Optional[str] = None,
         status: Optional[str] = None,
         error_detail: Optional["_models.ErrorDetail"] = None,
-        source_resource_id: Optional[str] = None,
         **kwargs: Any
     ) -> None:
         """
@@ -13844,14 +13126,11 @@ class DistributedNodesInfo(_serialization.Model):
         :paramtype status: str
         :keyword error_detail: Error Details if the Status is non-success.
         :paramtype error_detail: ~azure.mgmt.recoveryservicesbackup.activestamp.models.ErrorDetail
-        :keyword source_resource_id: ARM resource id of the node.
-        :paramtype source_resource_id: str
         """
         super().__init__(**kwargs)
         self.node_name = node_name
         self.status = status
         self.error_detail = error_detail
-        self.source_resource_id = source_resource_id
 
 
 class DpmBackupEngine(BackupEngineBase):  # pylint: disable=too-many-instance-attributes
@@ -14278,8 +13557,6 @@ class DpmJobTaskDetails(_serialization.Model):
 class DPMProtectedItem(ProtectedItem):  # pylint: disable=too-many-instance-attributes
     """Additional information on Backup engine specific backup item.
 
-    Variables are only populated by the server, and will be ignored when sending a request.
-
     All required parameters must be populated in order to send to Azure.
 
     :ivar protected_item_type: backup item type. Required.
@@ -14291,8 +13568,8 @@ class DPMProtectedItem(ProtectedItem):  # pylint: disable=too-many-instance-attr
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.BackupManagementType
     :ivar workload_type: Type of workload this item represents. Known values are: "Invalid", "VM",
      "FileFolder", "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint", "VMwareVM", "SystemState",
-     "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase",
-     "SAPAseDatabase", and "SAPHanaDBInstance".
+     "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase", and
+     "SAPAseDatabase".
     :vartype workload_type: str or
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.DataSourceType
     :ivar container_name: Unique name of container.
@@ -14329,15 +13606,12 @@ class DPMProtectedItem(ProtectedItem):  # pylint: disable=too-many-instance-attr
     :vartype is_archive_enabled: bool
     :ivar policy_name: Name of the policy used for protection.
     :vartype policy_name: str
-    :ivar soft_delete_retention_period_in_days: Soft delete retention period in days.
-    :vartype soft_delete_retention_period_in_days: int
     :ivar friendly_name: Friendly name of the managed item.
     :vartype friendly_name: str
     :ivar backup_engine_name: Backup Management server protecting this backup item.
     :vartype backup_engine_name: str
     :ivar protection_state: Protection state of the backup engine. Known values are: "Invalid",
-     "IRPending", "Protected", "ProtectionError", "ProtectionStopped", "ProtectionPaused", and
-     "BackupsSuspended".
+     "IRPending", "Protected", "ProtectionError", "ProtectionStopped", and "ProtectionPaused".
     :vartype protection_state: str or
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.ProtectedItemState
     :ivar extended_info: Extended info of the backup item.
@@ -14347,8 +13621,6 @@ class DPMProtectedItem(ProtectedItem):  # pylint: disable=too-many-instance-attr
 
     _validation = {
         "protected_item_type": {"required": True},
-        "backup_management_type": {"readonly": True},
-        "workload_type": {"readonly": True},
     }
 
     _attribute_map = {
@@ -14369,7 +13641,6 @@ class DPMProtectedItem(ProtectedItem):  # pylint: disable=too-many-instance-attr
         "resource_guard_operation_requests": {"key": "resourceGuardOperationRequests", "type": "[str]"},
         "is_archive_enabled": {"key": "isArchiveEnabled", "type": "bool"},
         "policy_name": {"key": "policyName", "type": "str"},
-        "soft_delete_retention_period_in_days": {"key": "softDeleteRetentionPeriodInDays", "type": "int"},
         "friendly_name": {"key": "friendlyName", "type": "str"},
         "backup_engine_name": {"key": "backupEngineName", "type": "str"},
         "protection_state": {"key": "protectionState", "type": "str"},
@@ -14379,6 +13650,8 @@ class DPMProtectedItem(ProtectedItem):  # pylint: disable=too-many-instance-attr
     def __init__(
         self,
         *,
+        backup_management_type: Optional[Union[str, "_models.BackupManagementType"]] = None,
+        workload_type: Optional[Union[str, "_models.DataSourceType"]] = None,
         container_name: Optional[str] = None,
         source_resource_id: Optional[str] = None,
         policy_id: Optional[str] = None,
@@ -14393,7 +13666,6 @@ class DPMProtectedItem(ProtectedItem):  # pylint: disable=too-many-instance-attr
         resource_guard_operation_requests: Optional[List[str]] = None,
         is_archive_enabled: Optional[bool] = None,
         policy_name: Optional[str] = None,
-        soft_delete_retention_period_in_days: Optional[int] = None,
         friendly_name: Optional[str] = None,
         backup_engine_name: Optional[str] = None,
         protection_state: Optional[Union[str, "_models.ProtectedItemState"]] = None,
@@ -14401,6 +13673,17 @@ class DPMProtectedItem(ProtectedItem):  # pylint: disable=too-many-instance-attr
         **kwargs: Any
     ) -> None:
         """
+        :keyword backup_management_type: Type of backup management for the backed up item. Known values
+         are: "Invalid", "AzureIaasVM", "MAB", "DPM", "AzureBackupServer", "AzureSql", "AzureStorage",
+         "AzureWorkload", and "DefaultBackup".
+        :paramtype backup_management_type: str or
+         ~azure.mgmt.recoveryservicesbackup.activestamp.models.BackupManagementType
+        :keyword workload_type: Type of workload this item represents. Known values are: "Invalid",
+         "VM", "FileFolder", "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint", "VMwareVM", "SystemState",
+         "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase", and
+         "SAPAseDatabase".
+        :paramtype workload_type: str or
+         ~azure.mgmt.recoveryservicesbackup.activestamp.models.DataSourceType
         :keyword container_name: Unique name of container.
         :paramtype container_name: str
         :keyword source_resource_id: ARM ID of the resource to be backed up.
@@ -14436,15 +13719,12 @@ class DPMProtectedItem(ProtectedItem):  # pylint: disable=too-many-instance-attr
         :paramtype is_archive_enabled: bool
         :keyword policy_name: Name of the policy used for protection.
         :paramtype policy_name: str
-        :keyword soft_delete_retention_period_in_days: Soft delete retention period in days.
-        :paramtype soft_delete_retention_period_in_days: int
         :keyword friendly_name: Friendly name of the managed item.
         :paramtype friendly_name: str
         :keyword backup_engine_name: Backup Management server protecting this backup item.
         :paramtype backup_engine_name: str
         :keyword protection_state: Protection state of the backup engine. Known values are: "Invalid",
-         "IRPending", "Protected", "ProtectionError", "ProtectionStopped", "ProtectionPaused", and
-         "BackupsSuspended".
+         "IRPending", "Protected", "ProtectionError", "ProtectionStopped", and "ProtectionPaused".
         :paramtype protection_state: str or
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.ProtectedItemState
         :keyword extended_info: Extended info of the backup item.
@@ -14452,6 +13732,8 @@ class DPMProtectedItem(ProtectedItem):  # pylint: disable=too-many-instance-attr
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.DPMProtectedItemExtendedInfo
         """
         super().__init__(
+            backup_management_type=backup_management_type,
+            workload_type=workload_type,
             container_name=container_name,
             source_resource_id=source_resource_id,
             policy_id=policy_id,
@@ -14466,7 +13748,6 @@ class DPMProtectedItem(ProtectedItem):  # pylint: disable=too-many-instance-attr
             resource_guard_operation_requests=resource_guard_operation_requests,
             is_archive_enabled=is_archive_enabled,
             policy_name=policy_name,
-            soft_delete_retention_period_in_days=soft_delete_retention_period_in_days,
             **kwargs
         )
         self.protected_item_type: str = "DPMProtectedItem"
@@ -14800,32 +14081,6 @@ class ExportJobsOperationResultInfo(OperationResultInfoBase):
         self.excel_file_blob_sas_key = excel_file_blob_sas_key
 
 
-class ExtendedLocation(_serialization.Model):
-    """The extended location of Recovery point where VM was present.
-
-    :ivar name: Name of the extended location.
-    :vartype name: str
-    :ivar type: Type of the extended location. Possible values include: 'EdgeZone'.
-    :vartype type: str
-    """
-
-    _attribute_map = {
-        "name": {"key": "name", "type": "str"},
-        "type": {"key": "type", "type": "str"},
-    }
-
-    def __init__(self, *, name: Optional[str] = None, type: Optional[str] = None, **kwargs: Any) -> None:
-        """
-        :keyword name: Name of the extended location.
-        :paramtype name: str
-        :keyword type: Type of the extended location. Possible values include: 'EdgeZone'.
-        :paramtype type: str
-        """
-        super().__init__(**kwargs)
-        self.name = name
-        self.type = type
-
-
 class ExtendedProperties(_serialization.Model):
     """Extended Properties for Azure IaasVM Backup.
 
@@ -14890,7 +14145,7 @@ class GenericContainer(ProtectionContainer):
      "Microsoft.ClassicCompute/virtualMachines", "Microsoft.Compute/virtualMachines", and
      "AzureWorkloadContainer".
     :vartype container_type: str or
-     ~azure.mgmt.recoveryservicesbackup.activestamp.models.ProtectableContainerType
+     ~azure.mgmt.recoveryservicesbackup.activestamp.models.ContainerType
     :ivar protectable_object_type: Type of the protectable object associated with this container.
     :vartype protectable_object_type: str
     :ivar fabric_name: Name of the container's fabric.
@@ -15006,8 +14261,6 @@ class GenericContainerExtendedInfo(_serialization.Model):
 class GenericProtectedItem(ProtectedItem):  # pylint: disable=too-many-instance-attributes
     """Base class for backup items.
 
-    Variables are only populated by the server, and will be ignored when sending a request.
-
     All required parameters must be populated in order to send to Azure.
 
     :ivar protected_item_type: backup item type. Required.
@@ -15019,8 +14272,8 @@ class GenericProtectedItem(ProtectedItem):  # pylint: disable=too-many-instance-
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.BackupManagementType
     :ivar workload_type: Type of workload this item represents. Known values are: "Invalid", "VM",
      "FileFolder", "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint", "VMwareVM", "SystemState",
-     "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase",
-     "SAPAseDatabase", and "SAPHanaDBInstance".
+     "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase", and
+     "SAPAseDatabase".
     :vartype workload_type: str or
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.DataSourceType
     :ivar container_name: Unique name of container.
@@ -15057,16 +14310,13 @@ class GenericProtectedItem(ProtectedItem):  # pylint: disable=too-many-instance-
     :vartype is_archive_enabled: bool
     :ivar policy_name: Name of the policy used for protection.
     :vartype policy_name: str
-    :ivar soft_delete_retention_period_in_days: Soft delete retention period in days.
-    :vartype soft_delete_retention_period_in_days: int
     :ivar friendly_name: Friendly name of the container.
     :vartype friendly_name: str
     :ivar policy_state: Indicates consistency of policy object and policy applied to this backup
      item.
     :vartype policy_state: str
     :ivar protection_state: Backup state of this backup item. Known values are: "Invalid",
-     "IRPending", "Protected", "ProtectionError", "ProtectionStopped", "ProtectionPaused", and
-     "BackupsSuspended".
+     "IRPending", "Protected", "ProtectionError", "ProtectionStopped", and "ProtectionPaused".
     :vartype protection_state: str or
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.ProtectionState
     :ivar protected_item_id: Data Plane Service ID of the protected item.
@@ -15080,8 +14330,6 @@ class GenericProtectedItem(ProtectedItem):  # pylint: disable=too-many-instance-
 
     _validation = {
         "protected_item_type": {"required": True},
-        "backup_management_type": {"readonly": True},
-        "workload_type": {"readonly": True},
     }
 
     _attribute_map = {
@@ -15102,7 +14350,6 @@ class GenericProtectedItem(ProtectedItem):  # pylint: disable=too-many-instance-
         "resource_guard_operation_requests": {"key": "resourceGuardOperationRequests", "type": "[str]"},
         "is_archive_enabled": {"key": "isArchiveEnabled", "type": "bool"},
         "policy_name": {"key": "policyName", "type": "str"},
-        "soft_delete_retention_period_in_days": {"key": "softDeleteRetentionPeriodInDays", "type": "int"},
         "friendly_name": {"key": "friendlyName", "type": "str"},
         "policy_state": {"key": "policyState", "type": "str"},
         "protection_state": {"key": "protectionState", "type": "str"},
@@ -15111,9 +14358,11 @@ class GenericProtectedItem(ProtectedItem):  # pylint: disable=too-many-instance-
         "fabric_name": {"key": "fabricName", "type": "str"},
     }
 
-    def __init__(  # pylint: disable=too-many-locals
+    def __init__(
         self,
         *,
+        backup_management_type: Optional[Union[str, "_models.BackupManagementType"]] = None,
+        workload_type: Optional[Union[str, "_models.DataSourceType"]] = None,
         container_name: Optional[str] = None,
         source_resource_id: Optional[str] = None,
         policy_id: Optional[str] = None,
@@ -15128,7 +14377,6 @@ class GenericProtectedItem(ProtectedItem):  # pylint: disable=too-many-instance-
         resource_guard_operation_requests: Optional[List[str]] = None,
         is_archive_enabled: Optional[bool] = None,
         policy_name: Optional[str] = None,
-        soft_delete_retention_period_in_days: Optional[int] = None,
         friendly_name: Optional[str] = None,
         policy_state: Optional[str] = None,
         protection_state: Optional[Union[str, "_models.ProtectionState"]] = None,
@@ -15138,6 +14386,17 @@ class GenericProtectedItem(ProtectedItem):  # pylint: disable=too-many-instance-
         **kwargs: Any
     ) -> None:
         """
+        :keyword backup_management_type: Type of backup management for the backed up item. Known values
+         are: "Invalid", "AzureIaasVM", "MAB", "DPM", "AzureBackupServer", "AzureSql", "AzureStorage",
+         "AzureWorkload", and "DefaultBackup".
+        :paramtype backup_management_type: str or
+         ~azure.mgmt.recoveryservicesbackup.activestamp.models.BackupManagementType
+        :keyword workload_type: Type of workload this item represents. Known values are: "Invalid",
+         "VM", "FileFolder", "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint", "VMwareVM", "SystemState",
+         "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase", and
+         "SAPAseDatabase".
+        :paramtype workload_type: str or
+         ~azure.mgmt.recoveryservicesbackup.activestamp.models.DataSourceType
         :keyword container_name: Unique name of container.
         :paramtype container_name: str
         :keyword source_resource_id: ARM ID of the resource to be backed up.
@@ -15173,16 +14432,13 @@ class GenericProtectedItem(ProtectedItem):  # pylint: disable=too-many-instance-
         :paramtype is_archive_enabled: bool
         :keyword policy_name: Name of the policy used for protection.
         :paramtype policy_name: str
-        :keyword soft_delete_retention_period_in_days: Soft delete retention period in days.
-        :paramtype soft_delete_retention_period_in_days: int
         :keyword friendly_name: Friendly name of the container.
         :paramtype friendly_name: str
         :keyword policy_state: Indicates consistency of policy object and policy applied to this backup
          item.
         :paramtype policy_state: str
         :keyword protection_state: Backup state of this backup item. Known values are: "Invalid",
-         "IRPending", "Protected", "ProtectionError", "ProtectionStopped", "ProtectionPaused", and
-         "BackupsSuspended".
+         "IRPending", "Protected", "ProtectionError", "ProtectionStopped", and "ProtectionPaused".
         :paramtype protection_state: str or
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.ProtectionState
         :keyword protected_item_id: Data Plane Service ID of the protected item.
@@ -15194,6 +14450,8 @@ class GenericProtectedItem(ProtectedItem):  # pylint: disable=too-many-instance-
         :paramtype fabric_name: str
         """
         super().__init__(
+            backup_management_type=backup_management_type,
+            workload_type=workload_type,
             container_name=container_name,
             source_resource_id=source_resource_id,
             policy_id=policy_id,
@@ -15208,7 +14466,6 @@ class GenericProtectedItem(ProtectedItem):  # pylint: disable=too-many-instance-
             resource_guard_operation_requests=resource_guard_operation_requests,
             is_archive_enabled=is_archive_enabled,
             policy_name=policy_name,
-            soft_delete_retention_period_in_days=soft_delete_retention_period_in_days,
             **kwargs
         )
         self.protected_item_type: str = "GenericProtectedItem"
@@ -15308,9 +14565,6 @@ class GenericRecoveryPoint(RecoveryPoint):
     :vartype recovery_point_time: ~datetime.datetime
     :ivar recovery_point_additional_info: Additional information associated with this backup copy.
     :vartype recovery_point_additional_info: str
-    :ivar recovery_point_properties: Properties of Recovery Point.
-    :vartype recovery_point_properties:
-     ~azure.mgmt.recoveryservicesbackup.activestamp.models.RecoveryPointProperties
     """
 
     _validation = {
@@ -15323,7 +14577,6 @@ class GenericRecoveryPoint(RecoveryPoint):
         "recovery_point_type": {"key": "recoveryPointType", "type": "str"},
         "recovery_point_time": {"key": "recoveryPointTime", "type": "iso-8601"},
         "recovery_point_additional_info": {"key": "recoveryPointAdditionalInfo", "type": "str"},
-        "recovery_point_properties": {"key": "recoveryPointProperties", "type": "RecoveryPointProperties"},
     }
 
     def __init__(
@@ -15333,7 +14586,6 @@ class GenericRecoveryPoint(RecoveryPoint):
         recovery_point_type: Optional[str] = None,
         recovery_point_time: Optional[datetime.datetime] = None,
         recovery_point_additional_info: Optional[str] = None,
-        recovery_point_properties: Optional["_models.RecoveryPointProperties"] = None,
         **kwargs: Any
     ) -> None:
         """
@@ -15346,9 +14598,6 @@ class GenericRecoveryPoint(RecoveryPoint):
         :keyword recovery_point_additional_info: Additional information associated with this backup
          copy.
         :paramtype recovery_point_additional_info: str
-        :keyword recovery_point_properties: Properties of Recovery Point.
-        :paramtype recovery_point_properties:
-         ~azure.mgmt.recoveryservicesbackup.activestamp.models.RecoveryPointProperties
         """
         super().__init__(**kwargs)
         self.object_type: str = "GenericRecoveryPoint"
@@ -15356,7 +14605,6 @@ class GenericRecoveryPoint(RecoveryPoint):
         self.recovery_point_type = recovery_point_type
         self.recovery_point_time = recovery_point_time
         self.recovery_point_additional_info = recovery_point_additional_info
-        self.recovery_point_properties = recovery_point_properties
 
 
 class GetProtectedItemQueryObject(_serialization.Model):
@@ -15562,14 +14810,6 @@ class IaasVMRecoveryPoint(RecoveryPoint):  # pylint: disable=too-many-instance-a
     :ivar recovery_point_move_readiness_info: Eligibility of RP to be moved to another tier.
     :vartype recovery_point_move_readiness_info: dict[str,
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.RecoveryPointMoveReadinessInfo]
-    :ivar security_type: Security Type of the Disk.
-    :vartype security_type: str
-    :ivar recovery_point_properties: Properties of Recovery Point.
-    :vartype recovery_point_properties:
-     ~azure.mgmt.recoveryservicesbackup.activestamp.models.RecoveryPointProperties
-    :ivar is_private_access_enabled_on_any_disk: This flag denotes if any of the disks in the VM
-     are using Private access network setting.
-    :vartype is_private_access_enabled_on_any_disk: bool
     """
 
     _validation = {
@@ -15599,9 +14839,6 @@ class IaasVMRecoveryPoint(RecoveryPoint):  # pylint: disable=too-many-instance-a
             "key": "recoveryPointMoveReadinessInfo",
             "type": "{RecoveryPointMoveReadinessInfo}",
         },
-        "security_type": {"key": "securityType", "type": "str"},
-        "recovery_point_properties": {"key": "recoveryPointProperties", "type": "RecoveryPointProperties"},
-        "is_private_access_enabled_on_any_disk": {"key": "isPrivateAccessEnabledOnAnyDisk", "type": "bool"},
     }
 
     def __init__(
@@ -15622,9 +14859,6 @@ class IaasVMRecoveryPoint(RecoveryPoint):  # pylint: disable=too-many-instance-a
         recovery_point_disk_configuration: Optional["_models.RecoveryPointDiskConfiguration"] = None,
         zones: Optional[List[str]] = None,
         recovery_point_move_readiness_info: Optional[Dict[str, "_models.RecoveryPointMoveReadinessInfo"]] = None,
-        security_type: Optional[str] = None,
-        recovery_point_properties: Optional["_models.RecoveryPointProperties"] = None,
-        is_private_access_enabled_on_any_disk: Optional[bool] = None,
         **kwargs: Any
     ) -> None:
         """
@@ -15667,14 +14901,6 @@ class IaasVMRecoveryPoint(RecoveryPoint):  # pylint: disable=too-many-instance-a
         :keyword recovery_point_move_readiness_info: Eligibility of RP to be moved to another tier.
         :paramtype recovery_point_move_readiness_info: dict[str,
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.RecoveryPointMoveReadinessInfo]
-        :keyword security_type: Security Type of the Disk.
-        :paramtype security_type: str
-        :keyword recovery_point_properties: Properties of Recovery Point.
-        :paramtype recovery_point_properties:
-         ~azure.mgmt.recoveryservicesbackup.activestamp.models.RecoveryPointProperties
-        :keyword is_private_access_enabled_on_any_disk: This flag denotes if any of the disks in the VM
-         are using Private access network setting.
-        :paramtype is_private_access_enabled_on_any_disk: bool
         """
         super().__init__(**kwargs)
         self.object_type: str = "IaasVMRecoveryPoint"
@@ -15693,9 +14919,6 @@ class IaasVMRecoveryPoint(RecoveryPoint):  # pylint: disable=too-many-instance-a
         self.recovery_point_disk_configuration = recovery_point_disk_configuration
         self.zones = zones
         self.recovery_point_move_readiness_info = recovery_point_move_readiness_info
-        self.security_type = security_type
-        self.recovery_point_properties = recovery_point_properties
-        self.is_private_access_enabled_on_any_disk = is_private_access_enabled_on_any_disk
 
 
 class IaasVMRestoreRequest(RestoreRequest):  # pylint: disable=too-many-instance-attributes
@@ -15772,17 +14995,6 @@ class IaasVMRestoreRequest(RestoreRequest):  # pylint: disable=too-many-instance
      using managed identity.
     :vartype identity_based_restore_details:
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.IdentityBasedRestoreDetails
-    :ivar extended_location: Target extended location where the VM should be restored,
-     should be null if restore is to be done in public cloud.
-    :vartype extended_location:
-     ~azure.mgmt.recoveryservicesbackup.activestamp.models.ExtendedLocation
-    :ivar secured_vm_details: Stores Secured VM Details.
-    :vartype secured_vm_details:
-     ~azure.mgmt.recoveryservicesbackup.activestamp.models.SecuredVMDetails
-    :ivar target_disk_network_access_settings: Specifies target network access settings for disks
-     of VM to be restored,.
-    :vartype target_disk_network_access_settings:
-     ~azure.mgmt.recoveryservicesbackup.activestamp.models.TargetDiskNetworkAccessSettings
     """
 
     _validation = {
@@ -15811,17 +15023,11 @@ class IaasVMRestoreRequest(RestoreRequest):  # pylint: disable=too-many-instance
         "zones": {"key": "zones", "type": "[str]"},
         "identity_info": {"key": "identityInfo", "type": "IdentityInfo"},
         "identity_based_restore_details": {"key": "identityBasedRestoreDetails", "type": "IdentityBasedRestoreDetails"},
-        "extended_location": {"key": "extendedLocation", "type": "ExtendedLocation"},
-        "secured_vm_details": {"key": "securedVMDetails", "type": "SecuredVMDetails"},
-        "target_disk_network_access_settings": {
-            "key": "targetDiskNetworkAccessSettings",
-            "type": "TargetDiskNetworkAccessSettings",
-        },
     }
 
     _subtype_map = {"object_type": {"IaasVMRestoreWithRehydrationRequest": "IaasVMRestoreWithRehydrationRequest"}}
 
-    def __init__(  # pylint: disable=too-many-locals
+    def __init__(
         self,
         *,
         recovery_point_id: Optional[str] = None,
@@ -15844,9 +15050,6 @@ class IaasVMRestoreRequest(RestoreRequest):  # pylint: disable=too-many-instance
         zones: Optional[List[str]] = None,
         identity_info: Optional["_models.IdentityInfo"] = None,
         identity_based_restore_details: Optional["_models.IdentityBasedRestoreDetails"] = None,
-        extended_location: Optional["_models.ExtendedLocation"] = None,
-        secured_vm_details: Optional["_models.SecuredVMDetails"] = None,
-        target_disk_network_access_settings: Optional["_models.TargetDiskNetworkAccessSettings"] = None,
         **kwargs: Any
     ) -> None:
         """
@@ -15914,17 +15117,6 @@ class IaasVMRestoreRequest(RestoreRequest):  # pylint: disable=too-many-instance
          using managed identity.
         :paramtype identity_based_restore_details:
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.IdentityBasedRestoreDetails
-        :keyword extended_location: Target extended location where the VM should be restored,
-         should be null if restore is to be done in public cloud.
-        :paramtype extended_location:
-         ~azure.mgmt.recoveryservicesbackup.activestamp.models.ExtendedLocation
-        :keyword secured_vm_details: Stores Secured VM Details.
-        :paramtype secured_vm_details:
-         ~azure.mgmt.recoveryservicesbackup.activestamp.models.SecuredVMDetails
-        :keyword target_disk_network_access_settings: Specifies target network access settings for
-         disks of VM to be restored,.
-        :paramtype target_disk_network_access_settings:
-         ~azure.mgmt.recoveryservicesbackup.activestamp.models.TargetDiskNetworkAccessSettings
         """
         super().__init__(**kwargs)
         self.object_type: str = "IaasVMRestoreRequest"
@@ -15948,9 +15140,6 @@ class IaasVMRestoreRequest(RestoreRequest):  # pylint: disable=too-many-instance
         self.zones = zones
         self.identity_info = identity_info
         self.identity_based_restore_details = identity_based_restore_details
-        self.extended_location = extended_location
-        self.secured_vm_details = secured_vm_details
-        self.target_disk_network_access_settings = target_disk_network_access_settings
 
 
 class IaasVMRestoreWithRehydrationRequest(IaasVMRestoreRequest):  # pylint: disable=too-many-instance-attributes
@@ -16024,17 +15213,6 @@ class IaasVMRestoreWithRehydrationRequest(IaasVMRestoreRequest):  # pylint: disa
      using managed identity.
     :vartype identity_based_restore_details:
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.IdentityBasedRestoreDetails
-    :ivar extended_location: Target extended location where the VM should be restored,
-     should be null if restore is to be done in public cloud.
-    :vartype extended_location:
-     ~azure.mgmt.recoveryservicesbackup.activestamp.models.ExtendedLocation
-    :ivar secured_vm_details: Stores Secured VM Details.
-    :vartype secured_vm_details:
-     ~azure.mgmt.recoveryservicesbackup.activestamp.models.SecuredVMDetails
-    :ivar target_disk_network_access_settings: Specifies target network access settings for disks
-     of VM to be restored,.
-    :vartype target_disk_network_access_settings:
-     ~azure.mgmt.recoveryservicesbackup.activestamp.models.TargetDiskNetworkAccessSettings
     :ivar recovery_point_rehydration_info: RP Rehydration Info.
     :vartype recovery_point_rehydration_info:
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.RecoveryPointRehydrationInfo
@@ -16066,19 +15244,13 @@ class IaasVMRestoreWithRehydrationRequest(IaasVMRestoreRequest):  # pylint: disa
         "zones": {"key": "zones", "type": "[str]"},
         "identity_info": {"key": "identityInfo", "type": "IdentityInfo"},
         "identity_based_restore_details": {"key": "identityBasedRestoreDetails", "type": "IdentityBasedRestoreDetails"},
-        "extended_location": {"key": "extendedLocation", "type": "ExtendedLocation"},
-        "secured_vm_details": {"key": "securedVMDetails", "type": "SecuredVMDetails"},
-        "target_disk_network_access_settings": {
-            "key": "targetDiskNetworkAccessSettings",
-            "type": "TargetDiskNetworkAccessSettings",
-        },
         "recovery_point_rehydration_info": {
             "key": "recoveryPointRehydrationInfo",
             "type": "RecoveryPointRehydrationInfo",
         },
     }
 
-    def __init__(  # pylint: disable=too-many-locals
+    def __init__(
         self,
         *,
         recovery_point_id: Optional[str] = None,
@@ -16101,9 +15273,6 @@ class IaasVMRestoreWithRehydrationRequest(IaasVMRestoreRequest):  # pylint: disa
         zones: Optional[List[str]] = None,
         identity_info: Optional["_models.IdentityInfo"] = None,
         identity_based_restore_details: Optional["_models.IdentityBasedRestoreDetails"] = None,
-        extended_location: Optional["_models.ExtendedLocation"] = None,
-        secured_vm_details: Optional["_models.SecuredVMDetails"] = None,
-        target_disk_network_access_settings: Optional["_models.TargetDiskNetworkAccessSettings"] = None,
         recovery_point_rehydration_info: Optional["_models.RecoveryPointRehydrationInfo"] = None,
         **kwargs: Any
     ) -> None:
@@ -16172,17 +15341,6 @@ class IaasVMRestoreWithRehydrationRequest(IaasVMRestoreRequest):  # pylint: disa
          using managed identity.
         :paramtype identity_based_restore_details:
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.IdentityBasedRestoreDetails
-        :keyword extended_location: Target extended location where the VM should be restored,
-         should be null if restore is to be done in public cloud.
-        :paramtype extended_location:
-         ~azure.mgmt.recoveryservicesbackup.activestamp.models.ExtendedLocation
-        :keyword secured_vm_details: Stores Secured VM Details.
-        :paramtype secured_vm_details:
-         ~azure.mgmt.recoveryservicesbackup.activestamp.models.SecuredVMDetails
-        :keyword target_disk_network_access_settings: Specifies target network access settings for
-         disks of VM to be restored,.
-        :paramtype target_disk_network_access_settings:
-         ~azure.mgmt.recoveryservicesbackup.activestamp.models.TargetDiskNetworkAccessSettings
         :keyword recovery_point_rehydration_info: RP Rehydration Info.
         :paramtype recovery_point_rehydration_info:
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.RecoveryPointRehydrationInfo
@@ -16208,9 +15366,6 @@ class IaasVMRestoreWithRehydrationRequest(IaasVMRestoreRequest):  # pylint: disa
             zones=zones,
             identity_info=identity_info,
             identity_based_restore_details=identity_based_restore_details,
-            extended_location=extended_location,
-            secured_vm_details=secured_vm_details,
-            target_disk_network_access_settings=target_disk_network_access_settings,
             **kwargs
         )
         self.object_type: str = "IaasVMRestoreWithRehydrationRequest"
@@ -16398,21 +15553,16 @@ class InquiryValidation(_serialization.Model):
     :vartype error_detail: ~azure.mgmt.recoveryservicesbackup.activestamp.models.ErrorDetail
     :ivar additional_detail: Error Additional Detail in case the status is non-success.
     :vartype additional_detail: str
-    :ivar protectable_item_count: Dictionary to store the count of ProtectableItems with key
-     POType.
-    :vartype protectable_item_count: JSON
     """
 
     _validation = {
         "additional_detail": {"readonly": True},
-        "protectable_item_count": {"readonly": True},
     }
 
     _attribute_map = {
         "status": {"key": "status", "type": "str"},
         "error_detail": {"key": "errorDetail", "type": "ErrorDetail"},
         "additional_detail": {"key": "additionalDetail", "type": "str"},
-        "protectable_item_count": {"key": "protectableItemCount", "type": "object"},
     }
 
     def __init__(
@@ -16428,7 +15578,6 @@ class InquiryValidation(_serialization.Model):
         self.status = status
         self.error_detail = error_detail
         self.additional_detail = None
-        self.protectable_item_count = None
 
 
 class InstantItemRecoveryTarget(_serialization.Model):
@@ -17027,7 +16176,7 @@ class MabContainer(ProtectionContainer):  # pylint: disable=too-many-instance-at
      "Microsoft.ClassicCompute/virtualMachines", "Microsoft.Compute/virtualMachines", and
      "AzureWorkloadContainer".
     :vartype container_type: str or
-     ~azure.mgmt.recoveryservicesbackup.activestamp.models.ProtectableContainerType
+     ~azure.mgmt.recoveryservicesbackup.activestamp.models.ContainerType
     :ivar protectable_object_type: Type of the protectable object associated with this container.
     :vartype protectable_object_type: str
     :ivar can_re_register: Can the container be registered one more time.
@@ -17144,7 +16293,7 @@ class MabContainerExtendedInfo(_serialization.Model):
     :ivar backup_item_type: Type of backup items associated with this container. Known values are:
      "Invalid", "VM", "FileFolder", "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint", "VMwareVM",
      "SystemState", "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare",
-     "SAPHanaDatabase", "SAPAseDatabase", and "SAPHanaDBInstance".
+     "SAPHanaDatabase", and "SAPAseDatabase".
     :vartype backup_item_type: str or
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.BackupItemType
     :ivar backup_items: List of backup items associated with this container.
@@ -17179,7 +16328,7 @@ class MabContainerExtendedInfo(_serialization.Model):
         :keyword backup_item_type: Type of backup items associated with this container. Known values
          are: "Invalid", "VM", "FileFolder", "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint",
          "VMwareVM", "SystemState", "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare",
-         "SAPHanaDatabase", "SAPAseDatabase", and "SAPHanaDBInstance".
+         "SAPHanaDatabase", and "SAPAseDatabase".
         :paramtype backup_item_type: str or
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.BackupItemType
         :keyword backup_items: List of backup items associated with this container.
@@ -17274,8 +16423,6 @@ class MabErrorInfo(_serialization.Model):
 class MabFileFolderProtectedItem(ProtectedItem):  # pylint: disable=too-many-instance-attributes
     """MAB workload-specific backup item.
 
-    Variables are only populated by the server, and will be ignored when sending a request.
-
     All required parameters must be populated in order to send to Azure.
 
     :ivar protected_item_type: backup item type. Required.
@@ -17287,8 +16434,8 @@ class MabFileFolderProtectedItem(ProtectedItem):  # pylint: disable=too-many-ins
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.BackupManagementType
     :ivar workload_type: Type of workload this item represents. Known values are: "Invalid", "VM",
      "FileFolder", "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint", "VMwareVM", "SystemState",
-     "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase",
-     "SAPAseDatabase", and "SAPHanaDBInstance".
+     "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase", and
+     "SAPAseDatabase".
     :vartype workload_type: str or
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.DataSourceType
     :ivar container_name: Unique name of container.
@@ -17325,8 +16472,6 @@ class MabFileFolderProtectedItem(ProtectedItem):  # pylint: disable=too-many-ins
     :vartype is_archive_enabled: bool
     :ivar policy_name: Name of the policy used for protection.
     :vartype policy_name: str
-    :ivar soft_delete_retention_period_in_days: Soft delete retention period in days.
-    :vartype soft_delete_retention_period_in_days: int
     :ivar friendly_name: Friendly name of this backup item.
     :vartype friendly_name: str
     :ivar computer_name: Name of the computer associated with this backup item.
@@ -17346,8 +16491,6 @@ class MabFileFolderProtectedItem(ProtectedItem):  # pylint: disable=too-many-ins
 
     _validation = {
         "protected_item_type": {"required": True},
-        "backup_management_type": {"readonly": True},
-        "workload_type": {"readonly": True},
     }
 
     _attribute_map = {
@@ -17368,7 +16511,6 @@ class MabFileFolderProtectedItem(ProtectedItem):  # pylint: disable=too-many-ins
         "resource_guard_operation_requests": {"key": "resourceGuardOperationRequests", "type": "[str]"},
         "is_archive_enabled": {"key": "isArchiveEnabled", "type": "bool"},
         "policy_name": {"key": "policyName", "type": "str"},
-        "soft_delete_retention_period_in_days": {"key": "softDeleteRetentionPeriodInDays", "type": "int"},
         "friendly_name": {"key": "friendlyName", "type": "str"},
         "computer_name": {"key": "computerName", "type": "str"},
         "last_backup_status": {"key": "lastBackupStatus", "type": "str"},
@@ -17381,6 +16523,8 @@ class MabFileFolderProtectedItem(ProtectedItem):  # pylint: disable=too-many-ins
     def __init__(  # pylint: disable=too-many-locals
         self,
         *,
+        backup_management_type: Optional[Union[str, "_models.BackupManagementType"]] = None,
+        workload_type: Optional[Union[str, "_models.DataSourceType"]] = None,
         container_name: Optional[str] = None,
         source_resource_id: Optional[str] = None,
         policy_id: Optional[str] = None,
@@ -17395,7 +16539,6 @@ class MabFileFolderProtectedItem(ProtectedItem):  # pylint: disable=too-many-ins
         resource_guard_operation_requests: Optional[List[str]] = None,
         is_archive_enabled: Optional[bool] = None,
         policy_name: Optional[str] = None,
-        soft_delete_retention_period_in_days: Optional[int] = None,
         friendly_name: Optional[str] = None,
         computer_name: Optional[str] = None,
         last_backup_status: Optional[str] = None,
@@ -17406,6 +16549,17 @@ class MabFileFolderProtectedItem(ProtectedItem):  # pylint: disable=too-many-ins
         **kwargs: Any
     ) -> None:
         """
+        :keyword backup_management_type: Type of backup management for the backed up item. Known values
+         are: "Invalid", "AzureIaasVM", "MAB", "DPM", "AzureBackupServer", "AzureSql", "AzureStorage",
+         "AzureWorkload", and "DefaultBackup".
+        :paramtype backup_management_type: str or
+         ~azure.mgmt.recoveryservicesbackup.activestamp.models.BackupManagementType
+        :keyword workload_type: Type of workload this item represents. Known values are: "Invalid",
+         "VM", "FileFolder", "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint", "VMwareVM", "SystemState",
+         "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase", and
+         "SAPAseDatabase".
+        :paramtype workload_type: str or
+         ~azure.mgmt.recoveryservicesbackup.activestamp.models.DataSourceType
         :keyword container_name: Unique name of container.
         :paramtype container_name: str
         :keyword source_resource_id: ARM ID of the resource to be backed up.
@@ -17441,8 +16595,6 @@ class MabFileFolderProtectedItem(ProtectedItem):  # pylint: disable=too-many-ins
         :paramtype is_archive_enabled: bool
         :keyword policy_name: Name of the policy used for protection.
         :paramtype policy_name: str
-        :keyword soft_delete_retention_period_in_days: Soft delete retention period in days.
-        :paramtype soft_delete_retention_period_in_days: int
         :keyword friendly_name: Friendly name of this backup item.
         :paramtype friendly_name: str
         :keyword computer_name: Name of the computer associated with this backup item.
@@ -17460,6 +16612,8 @@ class MabFileFolderProtectedItem(ProtectedItem):  # pylint: disable=too-many-ins
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.MabFileFolderProtectedItemExtendedInfo
         """
         super().__init__(
+            backup_management_type=backup_management_type,
+            workload_type=workload_type,
             container_name=container_name,
             source_resource_id=source_resource_id,
             policy_id=policy_id,
@@ -17474,7 +16628,6 @@ class MabFileFolderProtectedItem(ProtectedItem):  # pylint: disable=too-many-ins
             resource_guard_operation_requests=resource_guard_operation_requests,
             is_archive_enabled=is_archive_enabled,
             policy_name=policy_name,
-            soft_delete_retention_period_in_days=soft_delete_retention_period_in_days,
             **kwargs
         )
         self.protected_item_type: str = "MabFileFolderProtectedItem"
@@ -17566,8 +16719,8 @@ class MabJob(Job):  # pylint: disable=too-many-instance-attributes
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.MabServerType
     :ivar workload_type: Workload type of backup item. Known values are: "Invalid", "VM",
      "FileFolder", "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint", "VMwareVM", "SystemState",
-     "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase",
-     "SAPAseDatabase", and "SAPHanaDBInstance".
+     "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase", and
+     "SAPAseDatabase".
     :vartype workload_type: str or
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.WorkloadType
     :ivar error_details: The errors.
@@ -17653,8 +16806,8 @@ class MabJob(Job):  # pylint: disable=too-many-instance-attributes
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.MabServerType
         :keyword workload_type: Workload type of backup item. Known values are: "Invalid", "VM",
          "FileFolder", "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint", "VMwareVM", "SystemState",
-         "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase",
-         "SAPAseDatabase", and "SAPHanaDBInstance".
+         "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase", and
+         "SAPAseDatabase".
         :paramtype workload_type: str or
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.WorkloadType
         :keyword error_details: The errors.
@@ -18686,7 +17839,7 @@ class PreValidateEnableBackupRequest(_serialization.Model):
     :ivar resource_type: ProtectedItem Type- VM, SqlDataBase, AzureFileShare etc. Known values are:
      "Invalid", "VM", "FileFolder", "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint", "VMwareVM",
      "SystemState", "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare",
-     "SAPHanaDatabase", "SAPAseDatabase", and "SAPHanaDBInstance".
+     "SAPHanaDatabase", and "SAPAseDatabase".
     :vartype resource_type: str or
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.DataSourceType
     :ivar resource_id: ARM Virtual Machine Id.
@@ -18717,7 +17870,7 @@ class PreValidateEnableBackupRequest(_serialization.Model):
         :keyword resource_type: ProtectedItem Type- VM, SqlDataBase, AzureFileShare etc. Known values
          are: "Invalid", "VM", "FileFolder", "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint",
          "VMwareVM", "SystemState", "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare",
-         "SAPHanaDatabase", "SAPAseDatabase", and "SAPHanaDBInstance".
+         "SAPHanaDatabase", and "SAPAseDatabase".
         :paramtype resource_type: str or
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.DataSourceType
         :keyword resource_id: ARM Virtual Machine Id.
@@ -18832,9 +17985,6 @@ class PrivateEndpointConnection(_serialization.Model):
      connection.
     :vartype private_endpoint:
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.PrivateEndpoint
-    :ivar group_ids: Group Ids for the Private Endpoint.
-    :vartype group_ids: list[str or
-     ~azure.mgmt.recoveryservicesbackup.activestamp.models.VaultSubResourceType]
     :ivar private_link_service_connection_state: Gets or sets private link service connection
      state.
     :vartype private_link_service_connection_state:
@@ -18844,7 +17994,6 @@ class PrivateEndpointConnection(_serialization.Model):
     _attribute_map = {
         "provisioning_state": {"key": "provisioningState", "type": "str"},
         "private_endpoint": {"key": "privateEndpoint", "type": "PrivateEndpoint"},
-        "group_ids": {"key": "groupIds", "type": "[str]"},
         "private_link_service_connection_state": {
             "key": "privateLinkServiceConnectionState",
             "type": "PrivateLinkServiceConnectionState",
@@ -18856,7 +18005,6 @@ class PrivateEndpointConnection(_serialization.Model):
         *,
         provisioning_state: Optional[Union[str, "_models.ProvisioningState"]] = None,
         private_endpoint: Optional["_models.PrivateEndpoint"] = None,
-        group_ids: Optional[List[Union[str, "_models.VaultSubResourceType"]]] = None,
         private_link_service_connection_state: Optional["_models.PrivateLinkServiceConnectionState"] = None,
         **kwargs: Any
     ) -> None:
@@ -18869,9 +18017,6 @@ class PrivateEndpointConnection(_serialization.Model):
          connection.
         :paramtype private_endpoint:
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.PrivateEndpoint
-        :keyword group_ids: Group Ids for the Private Endpoint.
-        :paramtype group_ids: list[str or
-         ~azure.mgmt.recoveryservicesbackup.activestamp.models.VaultSubResourceType]
         :keyword private_link_service_connection_state: Gets or sets private link service connection
          state.
         :paramtype private_link_service_connection_state:
@@ -18880,7 +18025,6 @@ class PrivateEndpointConnection(_serialization.Model):
         super().__init__(**kwargs)
         self.provisioning_state = provisioning_state
         self.private_endpoint = private_endpoint
-        self.group_ids = group_ids
         self.private_link_service_connection_state = private_link_service_connection_state
 
 
@@ -18956,14 +18100,14 @@ class PrivateLinkServiceConnectionState(_serialization.Model):
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.PrivateEndpointConnectionStatus
     :ivar description: Gets or sets description.
     :vartype description: str
-    :ivar actions_required: Gets or sets actions required.
-    :vartype actions_required: str
+    :ivar action_required: Gets or sets actions required.
+    :vartype action_required: str
     """
 
     _attribute_map = {
         "status": {"key": "status", "type": "str"},
         "description": {"key": "description", "type": "str"},
-        "actions_required": {"key": "actionsRequired", "type": "str"},
+        "action_required": {"key": "actionRequired", "type": "str"},
     }
 
     def __init__(
@@ -18971,7 +18115,7 @@ class PrivateLinkServiceConnectionState(_serialization.Model):
         *,
         status: Optional[Union[str, "_models.PrivateEndpointConnectionStatus"]] = None,
         description: Optional[str] = None,
-        actions_required: Optional[str] = None,
+        action_required: Optional[str] = None,
         **kwargs: Any
     ) -> None:
         """
@@ -18981,13 +18125,13 @@ class PrivateLinkServiceConnectionState(_serialization.Model):
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.PrivateEndpointConnectionStatus
         :keyword description: Gets or sets description.
         :paramtype description: str
-        :keyword actions_required: Gets or sets actions required.
-        :paramtype actions_required: str
+        :keyword action_required: Gets or sets actions required.
+        :paramtype action_required: str
         """
         super().__init__(**kwargs)
         self.status = status
         self.description = description
-        self.actions_required = actions_required
+        self.action_required = action_required
 
 
 class ProtectableContainerResource(Resource):
@@ -19100,8 +18244,8 @@ class ProtectedItemQueryObject(_serialization.Model):
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.BackupManagementType
     :ivar item_type: Type of workload this item represents. Known values are: "Invalid", "VM",
      "FileFolder", "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint", "VMwareVM", "SystemState",
-     "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase",
-     "SAPAseDatabase", and "SAPHanaDBInstance".
+     "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase", and
+     "SAPAseDatabase".
     :vartype item_type: str or ~azure.mgmt.recoveryservicesbackup.activestamp.models.DataSourceType
     :ivar policy_name: Backup policy name associated with the backup item.
     :vartype policy_name: str
@@ -19155,8 +18299,8 @@ class ProtectedItemQueryObject(_serialization.Model):
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.BackupManagementType
         :keyword item_type: Type of workload this item represents. Known values are: "Invalid", "VM",
          "FileFolder", "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint", "VMwareVM", "SystemState",
-         "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase",
-         "SAPAseDatabase", and "SAPHanaDBInstance".
+         "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase", and
+         "SAPAseDatabase".
         :paramtype item_type: str or
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.DataSourceType
         :keyword policy_name: Backup policy name associated with the backup item.
@@ -19541,8 +18685,8 @@ class ProtectionPolicyQueryObject(_serialization.Model):
     :vartype fabric_name: str
     :ivar workload_type: Workload type for the backup policy. Known values are: "Invalid", "VM",
      "FileFolder", "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint", "VMwareVM", "SystemState",
-     "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase",
-     "SAPAseDatabase", and "SAPHanaDBInstance".
+     "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase", and
+     "SAPAseDatabase".
     :vartype workload_type: str or
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.WorkloadType
     """
@@ -19571,8 +18715,8 @@ class ProtectionPolicyQueryObject(_serialization.Model):
         :paramtype fabric_name: str
         :keyword workload_type: Workload type for the backup policy. Known values are: "Invalid", "VM",
          "FileFolder", "AzureSqlDb", "SQLDB", "Exchange", "Sharepoint", "VMwareVM", "SystemState",
-         "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase",
-         "SAPAseDatabase", and "SAPHanaDBInstance".
+         "Client", "GenericDataSource", "SQLDataBase", "AzureFileShare", "SAPHanaDatabase", and
+         "SAPAseDatabase".
         :paramtype workload_type: str or
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.WorkloadType
         """
@@ -19754,45 +18898,6 @@ class RecoveryPointMoveReadinessInfo(_serialization.Model):
         super().__init__(**kwargs)
         self.is_ready_for_move = is_ready_for_move
         self.additional_info = additional_info
-
-
-class RecoveryPointProperties(_serialization.Model):
-    """Properties of Recovery Point.
-
-    :ivar expiry_time: Expiry time of Recovery Point in UTC.
-    :vartype expiry_time: str
-    :ivar rule_name: Rule name tagged on Recovery Point that governs life cycle.
-    :vartype rule_name: str
-    :ivar is_soft_deleted: Bool to indicate whether RP is in soft delete state or not.
-    :vartype is_soft_deleted: bool
-    """
-
-    _attribute_map = {
-        "expiry_time": {"key": "expiryTime", "type": "str"},
-        "rule_name": {"key": "ruleName", "type": "str"},
-        "is_soft_deleted": {"key": "isSoftDeleted", "type": "bool"},
-    }
-
-    def __init__(
-        self,
-        *,
-        expiry_time: Optional[str] = None,
-        rule_name: Optional[str] = None,
-        is_soft_deleted: Optional[bool] = None,
-        **kwargs: Any
-    ) -> None:
-        """
-        :keyword expiry_time: Expiry time of Recovery Point in UTC.
-        :paramtype expiry_time: str
-        :keyword rule_name: Rule name tagged on Recovery Point that governs life cycle.
-        :paramtype rule_name: str
-        :keyword is_soft_deleted: Bool to indicate whether RP is in soft delete state or not.
-        :paramtype is_soft_deleted: bool
-        """
-        super().__init__(**kwargs)
-        self.expiry_time = expiry_time
-        self.rule_name = rule_name
-        self.is_soft_deleted = is_soft_deleted
 
 
 class RecoveryPointRehydrationInfo(_serialization.Model):
@@ -20339,28 +19444,6 @@ class RetentionDuration(_serialization.Model):
         self.duration_type = duration_type
 
 
-class SecuredVMDetails(_serialization.Model):
-    """Restore request parameters for Secured VMs.
-
-    :ivar secured_vmos_disk_encryption_set_id: Gets or Sets Disk Encryption Set Id for Secured VM
-     OS Disk.
-    :vartype secured_vmos_disk_encryption_set_id: str
-    """
-
-    _attribute_map = {
-        "secured_vmos_disk_encryption_set_id": {"key": "securedVMOsDiskEncryptionSetId", "type": "str"},
-    }
-
-    def __init__(self, *, secured_vmos_disk_encryption_set_id: Optional[str] = None, **kwargs: Any) -> None:
-        """
-        :keyword secured_vmos_disk_encryption_set_id: Gets or Sets Disk Encryption Set Id for Secured
-         VM OS Disk.
-        :paramtype secured_vmos_disk_encryption_set_id: str
-        """
-        super().__init__(**kwargs)
-        self.secured_vmos_disk_encryption_set_id = secured_vmos_disk_encryption_set_id
-
-
 class SecurityPinBase(_serialization.Model):
     """Base class for get security pin request body.
 
@@ -20687,26 +19770,19 @@ class SubProtectionPolicy(_serialization.Model):
     """Sub-protection policy which includes schedule and retention.
 
     :ivar policy_type: Type of backup policy type. Known values are: "Invalid", "Full",
-     "Differential", "Log", "CopyOnlyFull", "Incremental", "SnapshotFull", and
-     "SnapshotCopyOnlyFull".
+     "Differential", "Log", "CopyOnlyFull", and "Incremental".
     :vartype policy_type: str or ~azure.mgmt.recoveryservicesbackup.activestamp.models.PolicyType
     :ivar schedule_policy: Backup schedule specified as part of backup policy.
     :vartype schedule_policy: ~azure.mgmt.recoveryservicesbackup.activestamp.models.SchedulePolicy
     :ivar retention_policy: Retention policy with the details on backup copy retention ranges.
     :vartype retention_policy:
      ~azure.mgmt.recoveryservicesbackup.activestamp.models.RetentionPolicy
-    :ivar tiering_policy: Tiering policy to automatically move RPs to another tier.
-     Key is Target Tier, defined in RecoveryPointTierType enum.
-     Tiering policy specifies the criteria to move RP to the target tier.
-    :vartype tiering_policy: dict[str,
-     ~azure.mgmt.recoveryservicesbackup.activestamp.models.TieringPolicy]
     """
 
     _attribute_map = {
         "policy_type": {"key": "policyType", "type": "str"},
         "schedule_policy": {"key": "schedulePolicy", "type": "SchedulePolicy"},
         "retention_policy": {"key": "retentionPolicy", "type": "RetentionPolicy"},
-        "tiering_policy": {"key": "tieringPolicy", "type": "{TieringPolicy}"},
     }
 
     def __init__(
@@ -20715,13 +19791,11 @@ class SubProtectionPolicy(_serialization.Model):
         policy_type: Optional[Union[str, "_models.PolicyType"]] = None,
         schedule_policy: Optional["_models.SchedulePolicy"] = None,
         retention_policy: Optional["_models.RetentionPolicy"] = None,
-        tiering_policy: Optional[Dict[str, "_models.TieringPolicy"]] = None,
         **kwargs: Any
     ) -> None:
         """
         :keyword policy_type: Type of backup policy type. Known values are: "Invalid", "Full",
-         "Differential", "Log", "CopyOnlyFull", "Incremental", "SnapshotFull", and
-         "SnapshotCopyOnlyFull".
+         "Differential", "Log", "CopyOnlyFull", and "Incremental".
         :paramtype policy_type: str or ~azure.mgmt.recoveryservicesbackup.activestamp.models.PolicyType
         :keyword schedule_policy: Backup schedule specified as part of backup policy.
         :paramtype schedule_policy:
@@ -20729,17 +19803,11 @@ class SubProtectionPolicy(_serialization.Model):
         :keyword retention_policy: Retention policy with the details on backup copy retention ranges.
         :paramtype retention_policy:
          ~azure.mgmt.recoveryservicesbackup.activestamp.models.RetentionPolicy
-        :keyword tiering_policy: Tiering policy to automatically move RPs to another tier.
-         Key is Target Tier, defined in RecoveryPointTierType enum.
-         Tiering policy specifies the criteria to move RP to the target tier.
-        :paramtype tiering_policy: dict[str,
-         ~azure.mgmt.recoveryservicesbackup.activestamp.models.TieringPolicy]
         """
         super().__init__(**kwargs)
         self.policy_type = policy_type
         self.schedule_policy = schedule_policy
         self.retention_policy = retention_policy
-        self.tiering_policy = tiering_policy
 
 
 class TargetAFSRestoreInfo(_serialization.Model):
@@ -20766,46 +19834,6 @@ class TargetAFSRestoreInfo(_serialization.Model):
         super().__init__(**kwargs)
         self.name = name
         self.target_resource_id = target_resource_id
-
-
-class TargetDiskNetworkAccessSettings(_serialization.Model):
-    """Specifies target network access settings for disks of VM to be restored.
-
-    :ivar target_disk_network_access_option: Network access settings to be used for restored disks.
-     Known values are: "SameAsOnSourceDisks", "EnablePrivateAccessForAllDisks", and
-     "EnablePublicAccessForAllDisks".
-    :vartype target_disk_network_access_option: str or
-     ~azure.mgmt.recoveryservicesbackup.activestamp.models.TargetDiskNetworkAccessOption
-    :ivar target_disk_access_id: Gets or sets the ARM resource ID of the target disk access to be
-     used when TargetDiskNetworkAccessOption is set to TargetDiskNetworkAccessOption.UseNew.
-    :vartype target_disk_access_id: str
-    """
-
-    _attribute_map = {
-        "target_disk_network_access_option": {"key": "targetDiskNetworkAccessOption", "type": "str"},
-        "target_disk_access_id": {"key": "targetDiskAccessId", "type": "str"},
-    }
-
-    def __init__(
-        self,
-        *,
-        target_disk_network_access_option: Optional[Union[str, "_models.TargetDiskNetworkAccessOption"]] = None,
-        target_disk_access_id: Optional[str] = None,
-        **kwargs: Any
-    ) -> None:
-        """
-        :keyword target_disk_network_access_option: Network access settings to be used for restored
-         disks. Known values are: "SameAsOnSourceDisks", "EnablePrivateAccessForAllDisks", and
-         "EnablePublicAccessForAllDisks".
-        :paramtype target_disk_network_access_option: str or
-         ~azure.mgmt.recoveryservicesbackup.activestamp.models.TargetDiskNetworkAccessOption
-        :keyword target_disk_access_id: Gets or sets the ARM resource ID of the target disk access to
-         be used when TargetDiskNetworkAccessOption is set to TargetDiskNetworkAccessOption.UseNew.
-        :paramtype target_disk_access_id: str
-        """
-        super().__init__(**kwargs)
-        self.target_disk_network_access_option = target_disk_network_access_option
-        self.target_disk_access_id = target_disk_access_id
 
 
 class TargetRestoreInfo(_serialization.Model):
@@ -20858,74 +19886,6 @@ class TargetRestoreInfo(_serialization.Model):
         self.container_id = container_id
         self.database_name = database_name
         self.target_directory_for_file_restore = target_directory_for_file_restore
-
-
-class TieringPolicy(_serialization.Model):
-    """Tiering Policy for a target tier.
-    If the policy is not specified for a given target tier, service retains the existing configured
-    tiering policy for that tier.
-
-    :ivar tiering_mode: Tiering Mode to control automatic tiering of recovery points. Supported
-     values are:
-
-
-     #. TierRecommended: Tier all recovery points recommended to be tiered
-     #. TierAfter: Tier all recovery points after a fixed period, as specified in duration +
-     durationType below.
-     #. DoNotTier: Do not tier any recovery points. Known values are: "Invalid", "TierRecommended",
-     "TierAfter", and "DoNotTier".
-    :vartype tiering_mode: str or ~azure.mgmt.recoveryservicesbackup.activestamp.models.TieringMode
-    :ivar duration: Number of days/weeks/months/years to retain backups in current tier before
-     tiering.
-     Used only if TieringMode is set to TierAfter.
-    :vartype duration: int
-    :ivar duration_type: Retention duration type: days/weeks/months/years
-     Used only if TieringMode is set to TierAfter. Known values are: "Invalid", "Days", "Weeks",
-     "Months", and "Years".
-    :vartype duration_type: str or
-     ~azure.mgmt.recoveryservicesbackup.activestamp.models.RetentionDurationType
-    """
-
-    _attribute_map = {
-        "tiering_mode": {"key": "tieringMode", "type": "str"},
-        "duration": {"key": "duration", "type": "int"},
-        "duration_type": {"key": "durationType", "type": "str"},
-    }
-
-    def __init__(
-        self,
-        *,
-        tiering_mode: Optional[Union[str, "_models.TieringMode"]] = None,
-        duration: Optional[int] = None,
-        duration_type: Optional[Union[str, "_models.RetentionDurationType"]] = None,
-        **kwargs: Any
-    ) -> None:
-        """
-        :keyword tiering_mode: Tiering Mode to control automatic tiering of recovery points. Supported
-         values are:
-
-
-         #. TierRecommended: Tier all recovery points recommended to be tiered
-         #. TierAfter: Tier all recovery points after a fixed period, as specified in duration +
-         durationType below.
-         #. DoNotTier: Do not tier any recovery points. Known values are: "Invalid", "TierRecommended",
-         "TierAfter", and "DoNotTier".
-        :paramtype tiering_mode: str or
-         ~azure.mgmt.recoveryservicesbackup.activestamp.models.TieringMode
-        :keyword duration: Number of days/weeks/months/years to retain backups in current tier before
-         tiering.
-         Used only if TieringMode is set to TierAfter.
-        :paramtype duration: int
-        :keyword duration_type: Retention duration type: days/weeks/months/years
-         Used only if TieringMode is set to TierAfter. Known values are: "Invalid", "Days", "Weeks",
-         "Months", and "Years".
-        :paramtype duration_type: str or
-         ~azure.mgmt.recoveryservicesbackup.activestamp.models.RetentionDurationType
-        """
-        super().__init__(**kwargs)
-        self.tiering_mode = tiering_mode
-        self.duration = duration
-        self.duration_type = duration_type
 
 
 class TokenInformation(_serialization.Model):

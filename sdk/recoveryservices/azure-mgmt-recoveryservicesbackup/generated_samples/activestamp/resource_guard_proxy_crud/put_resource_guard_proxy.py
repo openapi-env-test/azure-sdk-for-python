@@ -33,15 +33,10 @@ def main():
         vault_name="sampleVault",
         resource_group_name="SampleResourceGroup",
         resource_guard_proxy_name="swaggerExample",
-        parameters={
-            "properties": {
-                "resourceGuardResourceId": "/subscriptions/c999d45b-944f-418c-a0d8-c3fcfd1802c8/resourceGroups/vaultguardRGNew/providers/Microsoft.DataProtection/resourceGuards/VaultGuardTestNew"
-            }
-        },
     )
     print(response)
 
 
-# x-ms-original-file: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-04-01/examples/ResourceGuardProxyCRUD/PutResourceGuardProxy.json
+# x-ms-original-file: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2022-03-01/examples/ResourceGuardProxyCRUD/PutResourceGuardProxy.json
 if __name__ == "__main__":
     main()

@@ -51,7 +51,6 @@ class BackupItemType(str, Enum, metaclass=CaseInsensitiveEnumMeta):
     AZURE_FILE_SHARE = "AzureFileShare"
     SAP_HANA_DATABASE = "SAPHanaDatabase"
     SAP_ASE_DATABASE = "SAPAseDatabase"
-    SAP_HANA_DB_INSTANCE = "SAPHanaDBInstance"
 
 
 class BackupManagementType(str, Enum, metaclass=CaseInsensitiveEnumMeta):
@@ -77,8 +76,6 @@ class BackupType(str, Enum, metaclass=CaseInsensitiveEnumMeta):
     LOG = "Log"
     COPY_ONLY_FULL = "CopyOnlyFull"
     INCREMENTAL = "Incremental"
-    SNAPSHOT_FULL = "SnapshotFull"
-    SNAPSHOT_COPY_ONLY_FULL = "SnapshotCopyOnlyFull"
 
 
 class ContainerType(str, Enum, metaclass=CaseInsensitiveEnumMeta):
@@ -99,7 +96,9 @@ class ContainerType(str, Enum, metaclass=CaseInsensitiveEnumMeta):
     SQLAG_WORK_LOAD_CONTAINER = "SQLAGWorkLoadContainer"
     STORAGE_CONTAINER = "StorageContainer"
     GENERIC_CONTAINER = "GenericContainer"
-    HANA_HSR_CONTAINER = "HanaHSRContainer"
+    MICROSOFT_CLASSIC_COMPUTE_VIRTUAL_MACHINES = "Microsoft.ClassicCompute/virtualMachines"
+    MICROSOFT_COMPUTE_VIRTUAL_MACHINES = "Microsoft.Compute/virtualMachines"
+    AZURE_WORKLOAD_CONTAINER = "AzureWorkloadContainer"
 
 
 class CopyOptions(str, Enum, metaclass=CaseInsensitiveEnumMeta):
@@ -148,7 +147,6 @@ class DataSourceType(str, Enum, metaclass=CaseInsensitiveEnumMeta):
     AZURE_FILE_SHARE = "AzureFileShare"
     SAP_HANA_DATABASE = "SAPHanaDatabase"
     SAP_ASE_DATABASE = "SAPAseDatabase"
-    SAP_HANA_DB_INSTANCE = "SAPHanaDBInstance"
 
 
 class DayOfWeek(str, Enum, metaclass=CaseInsensitiveEnumMeta):
@@ -428,8 +426,6 @@ class PolicyType(str, Enum, metaclass=CaseInsensitiveEnumMeta):
     LOG = "Log"
     COPY_ONLY_FULL = "CopyOnlyFull"
     INCREMENTAL = "Incremental"
-    SNAPSHOT_FULL = "SnapshotFull"
-    SNAPSHOT_COPY_ONLY_FULL = "SnapshotCopyOnlyFull"
 
 
 class PrivateEndpointConnectionStatus(str, Enum, metaclass=CaseInsensitiveEnumMeta):
@@ -439,34 +435,6 @@ class PrivateEndpointConnectionStatus(str, Enum, metaclass=CaseInsensitiveEnumMe
     APPROVED = "Approved"
     REJECTED = "Rejected"
     DISCONNECTED = "Disconnected"
-
-
-class ProtectableContainerType(str, Enum, metaclass=CaseInsensitiveEnumMeta):
-    """Type of the container. The value of this property for
-
-
-    #. Compute Azure VM is Microsoft.Compute/virtualMachines
-    #. Classic Compute Azure VM is Microsoft.ClassicCompute/virtualMachines.
-    """
-
-    INVALID = "Invalid"
-    UNKNOWN = "Unknown"
-    IAAS_VM_CONTAINER = "IaasVMContainer"
-    IAAS_VM_SERVICE_CONTAINER = "IaasVMServiceContainer"
-    DPM_CONTAINER = "DPMContainer"
-    AZURE_BACKUP_SERVER_CONTAINER = "AzureBackupServerContainer"
-    MAB_CONTAINER = "MABContainer"
-    CLUSTER = "Cluster"
-    AZURE_SQL_CONTAINER = "AzureSqlContainer"
-    WINDOWS = "Windows"
-    V_CENTER = "VCenter"
-    VM_APP_CONTAINER = "VMAppContainer"
-    SQLAG_WORK_LOAD_CONTAINER = "SQLAGWorkLoadContainer"
-    STORAGE_CONTAINER = "StorageContainer"
-    GENERIC_CONTAINER = "GenericContainer"
-    MICROSOFT_CLASSIC_COMPUTE_VIRTUAL_MACHINES = "Microsoft.ClassicCompute/virtualMachines"
-    MICROSOFT_COMPUTE_VIRTUAL_MACHINES = "Microsoft.Compute/virtualMachines"
-    AZURE_WORKLOAD_CONTAINER = "AzureWorkloadContainer"
 
 
 class ProtectedItemHealthStatus(str, Enum, metaclass=CaseInsensitiveEnumMeta):
@@ -488,7 +456,6 @@ class ProtectedItemState(str, Enum, metaclass=CaseInsensitiveEnumMeta):
     PROTECTION_ERROR = "ProtectionError"
     PROTECTION_STOPPED = "ProtectionStopped"
     PROTECTION_PAUSED = "ProtectionPaused"
-    BACKUPS_SUSPENDED = "BackupsSuspended"
 
 
 class ProtectionIntentItemType(str, Enum, metaclass=CaseInsensitiveEnumMeta):
@@ -511,7 +478,6 @@ class ProtectionState(str, Enum, metaclass=CaseInsensitiveEnumMeta):
     PROTECTION_ERROR = "ProtectionError"
     PROTECTION_STOPPED = "ProtectionStopped"
     PROTECTION_PAUSED = "ProtectionPaused"
-    BACKUPS_SUSPENDED = "BackupsSuspended"
 
 
 class ProtectionStatus(str, Enum, metaclass=CaseInsensitiveEnumMeta):
@@ -598,8 +564,6 @@ class RestorePointQueryType(str, Enum, metaclass=CaseInsensitiveEnumMeta):
     FULL_AND_DIFFERENTIAL = "FullAndDifferential"
     ALL = "All"
     INCREMENTAL = "Incremental"
-    SNAPSHOT_FULL = "SnapshotFull"
-    SNAPSHOT_COPY_ONLY_FULL = "SnapshotCopyOnlyFull"
 
 
 class RestorePointType(str, Enum, metaclass=CaseInsensitiveEnumMeta):
@@ -610,8 +574,6 @@ class RestorePointType(str, Enum, metaclass=CaseInsensitiveEnumMeta):
     LOG = "Log"
     DIFFERENTIAL = "Differential"
     INCREMENTAL = "Incremental"
-    SNAPSHOT_FULL = "SnapshotFull"
-    SNAPSHOT_COPY_ONLY_FULL = "SnapshotCopyOnlyFull"
 
 
 class RestoreRequestType(str, Enum, metaclass=CaseInsensitiveEnumMeta):
@@ -655,7 +617,6 @@ class SoftDeleteFeatureState(str, Enum, metaclass=CaseInsensitiveEnumMeta):
     INVALID = "Invalid"
     ENABLED = "Enabled"
     DISABLED = "Disabled"
-    ALWAYS_ON = "AlwaysON"
 
 
 class SQLDataDirectoryType(str, Enum, metaclass=CaseInsensitiveEnumMeta):
@@ -696,30 +657,6 @@ class SupportStatus(str, Enum, metaclass=CaseInsensitiveEnumMeta):
     NOT_SUPPORTED = "NotSupported"
 
 
-class TargetDiskNetworkAccessOption(str, Enum, metaclass=CaseInsensitiveEnumMeta):
-    """Network access settings to be used for restored disks."""
-
-    SAME_AS_ON_SOURCE_DISKS = "SameAsOnSourceDisks"
-    ENABLE_PRIVATE_ACCESS_FOR_ALL_DISKS = "EnablePrivateAccessForAllDisks"
-    ENABLE_PUBLIC_ACCESS_FOR_ALL_DISKS = "EnablePublicAccessForAllDisks"
-
-
-class TieringMode(str, Enum, metaclass=CaseInsensitiveEnumMeta):
-    """Tiering Mode to control automatic tiering of recovery points. Supported values are:
-
-
-    #. TierRecommended: Tier all recovery points recommended to be tiered
-    #. TierAfter: Tier all recovery points after a fixed period, as specified in duration +
-    durationType below.
-    #. DoNotTier: Do not tier any recovery points.
-    """
-
-    INVALID = "Invalid"
-    TIER_RECOMMENDED = "TierRecommended"
-    TIER_AFTER = "TierAfter"
-    DO_NOT_TIER = "DoNotTier"
-
-
 class Type(str, Enum, metaclass=CaseInsensitiveEnumMeta):
     """Backup management type for this container."""
 
@@ -747,16 +684,6 @@ class ValidationStatus(str, Enum, metaclass=CaseInsensitiveEnumMeta):
     FAILED = "Failed"
 
 
-class VaultSubResourceType(str, Enum, metaclass=CaseInsensitiveEnumMeta):
-    """GroupId for the PrivateEndpointConnection - AzureBackup, AzureBackup_secondary or
-    AzureSiteRecovery.
-    """
-
-    AZURE_BACKUP = "AzureBackup"
-    AZURE_BACKUP_SECONDARY = "AzureBackup_secondary"
-    AZURE_SITE_RECOVERY = "AzureSiteRecovery"
-
-
 class WeekOfMonth(str, Enum, metaclass=CaseInsensitiveEnumMeta):
     """WeekOfMonth."""
 
@@ -778,7 +705,6 @@ class WorkloadItemType(str, Enum, metaclass=CaseInsensitiveEnumMeta):
     SAP_HANA_DATABASE = "SAPHanaDatabase"
     SAP_ASE_SYSTEM = "SAPAseSystem"
     SAP_ASE_DATABASE = "SAPAseDatabase"
-    SAP_HANA_DB_INSTANCE = "SAPHanaDBInstance"
 
 
 class WorkloadType(str, Enum, metaclass=CaseInsensitiveEnumMeta):
@@ -799,7 +725,6 @@ class WorkloadType(str, Enum, metaclass=CaseInsensitiveEnumMeta):
     AZURE_FILE_SHARE = "AzureFileShare"
     SAP_HANA_DATABASE = "SAPHanaDatabase"
     SAP_ASE_DATABASE = "SAPAseDatabase"
-    SAP_HANA_DB_INSTANCE = "SAPHanaDBInstance"
 
 
 class XcoolState(str, Enum, metaclass=CaseInsensitiveEnumMeta):

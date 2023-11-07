@@ -33,7 +33,6 @@ from .operations import (
     BackupUsageSummariesOperations,
     BackupWorkloadItemsOperations,
     BackupsOperations,
-    DeletedProtectionContainersOperations,
     ExportJobsOperationResultsOperations,
     FeatureSupportOperations,
     ItemLevelRecoveryConnectionsOperations,
@@ -214,9 +213,6 @@ class RecoveryServicesBackupClient(
     :ivar backup_protection_containers: BackupProtectionContainersOperations operations
     :vartype backup_protection_containers:
      azure.mgmt.recoveryservicesbackup.activestamp.aio.operations.BackupProtectionContainersOperations
-    :ivar deleted_protection_containers: DeletedProtectionContainersOperations operations
-    :vartype deleted_protection_containers:
-     azure.mgmt.recoveryservicesbackup.activestamp.aio.operations.DeletedProtectionContainersOperations
     :ivar security_pins: SecurityPINsOperations operations
     :vartype security_pins:
      azure.mgmt.recoveryservicesbackup.activestamp.aio.operations.SecurityPINsOperations
@@ -236,7 +232,7 @@ class RecoveryServicesBackupClient(
     :type subscription_id: str
     :param base_url: Service URL. Default value is "https://management.azure.com".
     :type base_url: str
-    :keyword api_version: Api Version. Default value is "2023-04-01". Note that overriding this
+    :keyword api_version: Api Version. Default value is "2022-03-01". Note that overriding this
      default value may result in unsupported behavior.
     :paramtype api_version: str
     :keyword int polling_interval: Default waiting time between two polls for LRO operations if no
@@ -363,9 +359,6 @@ class RecoveryServicesBackupClient(
             self._client, self._config, self._serialize, self._deserialize
         )
         self.backup_protection_containers = BackupProtectionContainersOperations(
-            self._client, self._config, self._serialize, self._deserialize
-        )
-        self.deleted_protection_containers = DeletedProtectionContainersOperations(
             self._client, self._config, self._serialize, self._deserialize
         )
         self.security_pins = SecurityPINsOperations(self._client, self._config, self._serialize, self._deserialize)

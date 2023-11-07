@@ -53,7 +53,6 @@ from ._backup_operation_statuses_operations import BackupOperationStatusesOperat
 from ._protection_policy_operation_statuses_operations import ProtectionPolicyOperationStatusesOperations
 from ._backup_protectable_items_operations import BackupProtectableItemsOperations
 from ._backup_protection_containers_operations import BackupProtectionContainersOperations
-from ._deleted_protection_containers_operations import DeletedProtectionContainersOperations
 from ._security_pins_operations import SecurityPINsOperations
 from ._recovery_points_recommended_for_move_operations import RecoveryPointsRecommendedForMoveOperations
 from ._resource_guard_proxies_operations import ResourceGuardProxiesOperations
@@ -109,7 +108,6 @@ __all__ = [
     "ProtectionPolicyOperationStatusesOperations",
     "BackupProtectableItemsOperations",
     "BackupProtectionContainersOperations",
-    "DeletedProtectionContainersOperations",
     "SecurityPINsOperations",
     "RecoveryPointsRecommendedForMoveOperations",
     "ResourceGuardProxiesOperations",

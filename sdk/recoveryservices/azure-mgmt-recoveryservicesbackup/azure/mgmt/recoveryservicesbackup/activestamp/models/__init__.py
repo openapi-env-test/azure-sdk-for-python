@@ -58,12 +58,9 @@ from ._models_py3 import AzureVmWorkloadSAPAseDatabaseProtectedItem
 from ._models_py3 import AzureVmWorkloadSAPAseDatabaseWorkloadItem
 from ._models_py3 import AzureVmWorkloadSAPAseSystemProtectableItem
 from ._models_py3 import AzureVmWorkloadSAPAseSystemWorkloadItem
-from ._models_py3 import AzureVmWorkloadSAPHanaDBInstance
-from ._models_py3 import AzureVmWorkloadSAPHanaDBInstanceProtectedItem
 from ._models_py3 import AzureVmWorkloadSAPHanaDatabaseProtectableItem
 from ._models_py3 import AzureVmWorkloadSAPHanaDatabaseProtectedItem
 from ._models_py3 import AzureVmWorkloadSAPHanaDatabaseWorkloadItem
-from ._models_py3 import AzureVmWorkloadSAPHanaHSRProtectableItem
 from ._models_py3 import AzureVmWorkloadSAPHanaSystemProtectableItem
 from ._models_py3 import AzureVmWorkloadSAPHanaSystemWorkloadItem
 from ._models_py3 import AzureVmWorkloadSQLAvailabilityGroupProtectableItem
@@ -156,7 +153,6 @@ from ._models_py3 import EncryptionDetails
 from ._models_py3 import ErrorAdditionalInfo
 from ._models_py3 import ErrorDetail
 from ._models_py3 import ExportJobsOperationResultInfo
-from ._models_py3 import ExtendedLocation
 from ._models_py3 import ExtendedProperties
 from ._models_py3 import FeatureSupportRequest
 from ._models_py3 import GenericContainer
@@ -249,7 +245,6 @@ from ._models_py3 import ProtectionPolicyResourceList
 from ._models_py3 import RecoveryPoint
 from ._models_py3 import RecoveryPointDiskConfiguration
 from ._models_py3 import RecoveryPointMoveReadinessInfo
-from ._models_py3 import RecoveryPointProperties
 from ._models_py3 import RecoveryPointRehydrationInfo
 from ._models_py3 import RecoveryPointResource
 from ._models_py3 import RecoveryPointResourceList
@@ -270,7 +265,6 @@ from ._models_py3 import RetentionPolicy
 from ._models_py3 import SQLDataDirectory
 from ._models_py3 import SQLDataDirectoryMapping
 from ._models_py3 import SchedulePolicy
-from ._models_py3 import SecuredVMDetails
 from ._models_py3 import SecurityPinBase
 from ._models_py3 import Settings
 from ._models_py3 import SimpleRetentionPolicy
@@ -278,9 +272,7 @@ from ._models_py3 import SimpleSchedulePolicy
 from ._models_py3 import SimpleSchedulePolicyV2
 from ._models_py3 import SubProtectionPolicy
 from ._models_py3 import TargetAFSRestoreInfo
-from ._models_py3 import TargetDiskNetworkAccessSettings
 from ._models_py3 import TargetRestoreInfo
-from ._models_py3 import TieringPolicy
 from ._models_py3 import TokenInformation
 from ._models_py3 import TriggerDataMoveRequest
 from ._models_py3 import UnlockDeleteRequest
@@ -341,7 +333,6 @@ from ._recovery_services_backup_client_enums import OperationType
 from ._recovery_services_backup_client_enums import OverwriteOptions
 from ._recovery_services_backup_client_enums import PolicyType
 from ._recovery_services_backup_client_enums import PrivateEndpointConnectionStatus
-from ._recovery_services_backup_client_enums import ProtectableContainerType
 from ._recovery_services_backup_client_enums import ProtectedItemHealthStatus
 from ._recovery_services_backup_client_enums import ProtectedItemState
 from ._recovery_services_backup_client_enums import ProtectionIntentItemType
@@ -365,12 +356,9 @@ from ._recovery_services_backup_client_enums import SoftDeleteFeatureState
 from ._recovery_services_backup_client_enums import StorageType
 from ._recovery_services_backup_client_enums import StorageTypeState
 from ._recovery_services_backup_client_enums import SupportStatus
-from ._recovery_services_backup_client_enums import TargetDiskNetworkAccessOption
-from ._recovery_services_backup_client_enums import TieringMode
 from ._recovery_services_backup_client_enums import Type
 from ._recovery_services_backup_client_enums import UsagesUnit
 from ._recovery_services_backup_client_enums import ValidationStatus
-from ._recovery_services_backup_client_enums import VaultSubResourceType
 from ._recovery_services_backup_client_enums import WeekOfMonth
 from ._recovery_services_backup_client_enums import WorkloadItemType
 from ._recovery_services_backup_client_enums import WorkloadType
@@ -432,12 +420,9 @@ __all__ = [
     "AzureVmWorkloadSAPAseDatabaseWorkloadItem",
     "AzureVmWorkloadSAPAseSystemProtectableItem",
     "AzureVmWorkloadSAPAseSystemWorkloadItem",
-    "AzureVmWorkloadSAPHanaDBInstance",
-    "AzureVmWorkloadSAPHanaDBInstanceProtectedItem",
     "AzureVmWorkloadSAPHanaDatabaseProtectableItem",
     "AzureVmWorkloadSAPHanaDatabaseProtectedItem",
     "AzureVmWorkloadSAPHanaDatabaseWorkloadItem",
-    "AzureVmWorkloadSAPHanaHSRProtectableItem",
     "AzureVmWorkloadSAPHanaSystemProtectableItem",
     "AzureVmWorkloadSAPHanaSystemWorkloadItem",
     "AzureVmWorkloadSQLAvailabilityGroupProtectableItem",
@@ -530,7 +515,6 @@ __all__ = [
     "ErrorAdditionalInfo",
     "ErrorDetail",
     "ExportJobsOperationResultInfo",
-    "ExtendedLocation",
     "ExtendedProperties",
     "FeatureSupportRequest",
     "GenericContainer",
@@ -623,7 +607,6 @@ __all__ = [
     "RecoveryPoint",
     "RecoveryPointDiskConfiguration",
     "RecoveryPointMoveReadinessInfo",
-    "RecoveryPointProperties",
     "RecoveryPointRehydrationInfo",
     "RecoveryPointResource",
     "RecoveryPointResourceList",
@@ -644,7 +627,6 @@ __all__ = [
     "SQLDataDirectory",
     "SQLDataDirectoryMapping",
     "SchedulePolicy",
-    "SecuredVMDetails",
     "SecurityPinBase",
     "Settings",
     "SimpleRetentionPolicy",
@@ -652,9 +634,7 @@ __all__ = [
     "SimpleSchedulePolicyV2",
     "SubProtectionPolicy",
     "TargetAFSRestoreInfo",
-    "TargetDiskNetworkAccessSettings",
     "TargetRestoreInfo",
-    "TieringPolicy",
     "TokenInformation",
     "TriggerDataMoveRequest",
     "UnlockDeleteRequest",
@@ -714,7 +694,6 @@ __all__ = [
     "OverwriteOptions",
     "PolicyType",
     "PrivateEndpointConnectionStatus",
-    "ProtectableContainerType",
     "ProtectedItemHealthStatus",
     "ProtectedItemState",
     "ProtectionIntentItemType",
@@ -738,12 +717,9 @@ __all__ = [
     "StorageType",
     "StorageTypeState",
     "SupportStatus",
-    "TargetDiskNetworkAccessOption",
-    "TieringMode",
     "Type",
     "UsagesUnit",
     "ValidationStatus",
-    "VaultSubResourceType",
     "WeekOfMonth",
     "WorkloadItemType",
     "WorkloadType",
