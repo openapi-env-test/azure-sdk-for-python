@@ -462,17 +462,17 @@ class LinkedService(_serialization.Model):
     CustomDataSourceLinkedService, DataworldLinkedService, Db2LinkedService, DrillLinkedService,
     DynamicsLinkedService, DynamicsAXLinkedService, DynamicsCrmLinkedService, EloquaLinkedService,
     FileServerLinkedService, FtpServerLinkedService, GoogleAdWordsLinkedService,
-    GoogleBigQueryLinkedService, GoogleCloudStorageLinkedService, GoogleSheetsLinkedService,
-    GreenplumLinkedService, HBaseLinkedService, HDInsightLinkedService,
-    HDInsightOnDemandLinkedService, HdfsLinkedService, HiveLinkedService, HttpLinkedService,
-    HubspotLinkedService, ImpalaLinkedService, InformixLinkedService, JiraLinkedService,
-    MagentoLinkedService, MariaDBLinkedService, MarketoLinkedService, MicrosoftAccessLinkedService,
-    MongoDbLinkedService, MongoDbAtlasLinkedService, MongoDbV2LinkedService, MySqlLinkedService,
-    NetezzaLinkedService, ODataLinkedService, OdbcLinkedService, Office365LinkedService,
-    OracleLinkedService, OracleCloudStorageLinkedService, OracleServiceCloudLinkedService,
-    PaypalLinkedService, PhoenixLinkedService, PostgreSqlLinkedService, PrestoLinkedService,
-    QuickBooksLinkedService, QuickbaseLinkedService, ResponsysLinkedService,
-    RestServiceLinkedService, SalesforceLinkedService, SalesforceMarketingCloudLinkedService,
+    GoogleBigQueryLinkedService, GoogleCloudStorageLinkedService, GreenplumLinkedService,
+    HBaseLinkedService, HDInsightLinkedService, HDInsightOnDemandLinkedService, HdfsLinkedService,
+    HiveLinkedService, HttpLinkedService, HubspotLinkedService, ImpalaLinkedService,
+    InformixLinkedService, JiraLinkedService, LakeHouseLinkedService, MagentoLinkedService,
+    MariaDBLinkedService, MarketoLinkedService, MicrosoftAccessLinkedService, MongoDbLinkedService,
+    MongoDbAtlasLinkedService, MongoDbV2LinkedService, MySqlLinkedService, NetezzaLinkedService,
+    ODataLinkedService, OdbcLinkedService, Office365LinkedService, OracleLinkedService,
+    OracleCloudStorageLinkedService, OracleServiceCloudLinkedService, PaypalLinkedService,
+    PhoenixLinkedService, PostgreSqlLinkedService, PrestoLinkedService, QuickBooksLinkedService,
+    QuickbaseLinkedService, ResponsysLinkedService, RestServiceLinkedService,
+    SalesforceLinkedService, SalesforceMarketingCloudLinkedService,
     SalesforceServiceCloudLinkedService, SapBWLinkedService, SapCloudForCustomerLinkedService,
     SapEccLinkedService, SapHanaLinkedService, SapOdpLinkedService, SapOpenHubLinkedService,
     SapTableLinkedService, ServiceNowLinkedService, SftpServerLinkedService,
@@ -564,7 +564,6 @@ class LinkedService(_serialization.Model):
             "GoogleAdWords": "GoogleAdWordsLinkedService",
             "GoogleBigQuery": "GoogleBigQueryLinkedService",
             "GoogleCloudStorage": "GoogleCloudStorageLinkedService",
-            "GoogleSheets": "GoogleSheetsLinkedService",
             "Greenplum": "GreenplumLinkedService",
             "HBase": "HBaseLinkedService",
             "HDInsight": "HDInsightLinkedService",
@@ -576,6 +575,7 @@ class LinkedService(_serialization.Model):
             "Impala": "ImpalaLinkedService",
             "Informix": "InformixLinkedService",
             "Jira": "JiraLinkedService",
+            "LakeHouse": "LakeHouseLinkedService",
             "Magento": "MagentoLinkedService",
             "MariaDB": "MariaDBLinkedService",
             "Marketo": "MarketoLinkedService",
@@ -2078,7 +2078,8 @@ class AmazonRdsForSqlServerSource(TabularSource):  # pylint: disable=too-many-in
     :vartype sql_reader_stored_procedure_name: JSON
     :ivar stored_procedure_parameters: Value and type setting for stored procedure parameters.
      Example: "{Parameter1: {value: "1", type: "int"}}".
-    :vartype stored_procedure_parameters: JSON
+    :vartype stored_procedure_parameters: dict[str,
+     ~azure.mgmt.datafactory.models.StoredProcedureParameter]
     :ivar produce_additional_types: Which additional types to produce.
     :vartype produce_additional_types: JSON
     :ivar partition_option: The partition mechanism that will be used for Sql read in parallel.
@@ -2103,7 +2104,7 @@ class AmazonRdsForSqlServerSource(TabularSource):  # pylint: disable=too-many-in
         "additional_columns": {"key": "additionalColumns", "type": "object"},
         "sql_reader_query": {"key": "sqlReaderQuery", "type": "object"},
         "sql_reader_stored_procedure_name": {"key": "sqlReaderStoredProcedureName", "type": "object"},
-        "stored_procedure_parameters": {"key": "storedProcedureParameters", "type": "object"},
+        "stored_procedure_parameters": {"key": "storedProcedureParameters", "type": "{StoredProcedureParameter}"},
         "produce_additional_types": {"key": "produceAdditionalTypes", "type": "object"},
         "partition_option": {"key": "partitionOption", "type": "object"},
         "partition_settings": {"key": "partitionSettings", "type": "SqlPartitionSettings"},
@@ -2121,7 +2122,7 @@ class AmazonRdsForSqlServerSource(TabularSource):  # pylint: disable=too-many-in
         additional_columns: Optional[JSON] = None,
         sql_reader_query: Optional[JSON] = None,
         sql_reader_stored_procedure_name: Optional[JSON] = None,
-        stored_procedure_parameters: Optional[JSON] = None,
+        stored_procedure_parameters: Optional[Dict[str, "_models.StoredProcedureParameter"]] = None,
         produce_additional_types: Optional[JSON] = None,
         partition_option: Optional[JSON] = None,
         partition_settings: Optional["_models.SqlPartitionSettings"] = None,
@@ -2158,7 +2159,8 @@ class AmazonRdsForSqlServerSource(TabularSource):  # pylint: disable=too-many-in
         :paramtype sql_reader_stored_procedure_name: JSON
         :keyword stored_procedure_parameters: Value and type setting for stored procedure parameters.
          Example: "{Parameter1: {value: "1", type: "int"}}".
-        :paramtype stored_procedure_parameters: JSON
+        :paramtype stored_procedure_parameters: dict[str,
+         ~azure.mgmt.datafactory.models.StoredProcedureParameter]
         :keyword produce_additional_types: Which additional types to produce.
         :paramtype produce_additional_types: JSON
         :keyword partition_option: The partition mechanism that will be used for Sql read in parallel.
@@ -2779,8 +2781,8 @@ class DatasetLocation(_serialization.Model):
     You probably want to use the sub-classes and not this class directly. Known sub-classes are:
     AmazonS3CompatibleLocation, AmazonS3Location, AzureBlobFSLocation, AzureBlobStorageLocation,
     AzureDataLakeStoreLocation, AzureFileStorageLocation, FileServerLocation, FtpServerLocation,
-    GoogleCloudStorageLocation, HdfsLocation, HttpServerLocation, OracleCloudStorageLocation,
-    SftpLocation
+    GoogleCloudStorageLocation, HdfsLocation, HttpServerLocation, LakeHouseLocation,
+    OracleCloudStorageLocation, SftpLocation
 
     All required parameters must be populated in order to send to Azure.
 
@@ -2821,6 +2823,7 @@ class DatasetLocation(_serialization.Model):
             "GoogleCloudStorageLocation": "GoogleCloudStorageLocation",
             "HdfsLocation": "HdfsLocation",
             "HttpServerLocation": "HttpServerLocation",
+            "LakeHouseLocation": "LakeHouseLocation",
             "OracleCloudStorageLocation": "OracleCloudStorageLocation",
             "SftpLocation": "SftpLocation",
         }
@@ -2931,7 +2934,7 @@ class StoreReadSettings(_serialization.Model):
     AmazonS3CompatibleReadSettings, AmazonS3ReadSettings, AzureBlobFSReadSettings,
     AzureBlobStorageReadSettings, AzureDataLakeStoreReadSettings, AzureFileStorageReadSettings,
     FileServerReadSettings, FtpReadSettings, GoogleCloudStorageReadSettings, HdfsReadSettings,
-    HttpReadSettings, OracleCloudStorageReadSettings, SftpReadSettings
+    HttpReadSettings, LakeHouseReadSettings, OracleCloudStorageReadSettings, SftpReadSettings
 
     All required parameters must be populated in order to send to Azure.
 
@@ -2972,6 +2975,7 @@ class StoreReadSettings(_serialization.Model):
             "GoogleCloudStorageReadSettings": "GoogleCloudStorageReadSettings",
             "HdfsReadSettings": "HdfsReadSettings",
             "HttpReadSettings": "HttpReadSettings",
+            "LakeHouseReadSettings": "LakeHouseReadSettings",
             "OracleCloudStorageReadSettings": "OracleCloudStorageReadSettings",
             "SftpReadSettings": "SftpReadSettings",
         }
@@ -5216,7 +5220,7 @@ class AzureBlobFSLinkedService(LinkedService):  # pylint: disable=too-many-insta
     :ivar annotations: List of tags that can be used for describing the linked service.
     :vartype annotations: list[JSON]
     :ivar url: Endpoint for the Azure Data Lake Storage Gen2 service. Type: string (or Expression
-     with resultType string).
+     with resultType string). Required.
     :vartype url: JSON
     :ivar account_key: Account key for the Azure Data Lake Storage Gen2 service. Type: string (or
      Expression with resultType string).
@@ -5250,15 +5254,11 @@ class AzureBlobFSLinkedService(LinkedService):  # pylint: disable=too-many-insta
      servicePrincipalCredentialType is 'ServicePrincipalCert', servicePrincipalCredential can only
      be AzureKeyVaultSecretReference.
     :vartype service_principal_credential: ~azure.mgmt.datafactory.models.SecretBase
-    :ivar sas_uri: SAS URI of the Azure Data Lake Storage Gen2 service. Type: string, SecureString
-     or AzureKeyVaultSecretReference.
-    :vartype sas_uri: JSON
-    :ivar sas_token: The Azure key vault secret reference of sasToken in sas uri.
-    :vartype sas_token: ~azure.mgmt.datafactory.models.SecretBase
     """
 
     _validation = {
         "type": {"required": True},
+        "url": {"required": True},
     }
 
     _attribute_map = {
@@ -5278,19 +5278,17 @@ class AzureBlobFSLinkedService(LinkedService):  # pylint: disable=too-many-insta
         "credential": {"key": "typeProperties.credential", "type": "CredentialReference"},
         "service_principal_credential_type": {"key": "typeProperties.servicePrincipalCredentialType", "type": "object"},
         "service_principal_credential": {"key": "typeProperties.servicePrincipalCredential", "type": "SecretBase"},
-        "sas_uri": {"key": "typeProperties.sasUri", "type": "object"},
-        "sas_token": {"key": "typeProperties.sasToken", "type": "SecretBase"},
     }
 
     def __init__(
         self,
         *,
+        url: JSON,
         additional_properties: Optional[Dict[str, JSON]] = None,
         connect_via: Optional["_models.IntegrationRuntimeReference"] = None,
         description: Optional[str] = None,
         parameters: Optional[Dict[str, "_models.ParameterSpecification"]] = None,
         annotations: Optional[List[JSON]] = None,
-        url: Optional[JSON] = None,
         account_key: Optional[JSON] = None,
         service_principal_id: Optional[JSON] = None,
         service_principal_key: Optional["_models.SecretBase"] = None,
@@ -5300,8 +5298,6 @@ class AzureBlobFSLinkedService(LinkedService):  # pylint: disable=too-many-insta
         credential: Optional["_models.CredentialReference"] = None,
         service_principal_credential_type: Optional[JSON] = None,
         service_principal_credential: Optional["_models.SecretBase"] = None,
-        sas_uri: Optional[JSON] = None,
-        sas_token: Optional["_models.SecretBase"] = None,
         **kwargs: Any
     ) -> None:
         """
@@ -5317,7 +5313,7 @@ class AzureBlobFSLinkedService(LinkedService):  # pylint: disable=too-many-insta
         :keyword annotations: List of tags that can be used for describing the linked service.
         :paramtype annotations: list[JSON]
         :keyword url: Endpoint for the Azure Data Lake Storage Gen2 service. Type: string (or
-         Expression with resultType string).
+         Expression with resultType string). Required.
         :paramtype url: JSON
         :keyword account_key: Account key for the Azure Data Lake Storage Gen2 service. Type: string
          (or Expression with resultType string).
@@ -5351,11 +5347,6 @@ class AzureBlobFSLinkedService(LinkedService):  # pylint: disable=too-many-insta
          servicePrincipalCredentialType is 'ServicePrincipalCert', servicePrincipalCredential can only
          be AzureKeyVaultSecretReference.
         :paramtype service_principal_credential: ~azure.mgmt.datafactory.models.SecretBase
-        :keyword sas_uri: SAS URI of the Azure Data Lake Storage Gen2 service. Type: string,
-         SecureString or AzureKeyVaultSecretReference.
-        :paramtype sas_uri: JSON
-        :keyword sas_token: The Azure key vault secret reference of sasToken in sas uri.
-        :paramtype sas_token: ~azure.mgmt.datafactory.models.SecretBase
         """
         super().__init__(
             additional_properties=additional_properties,
@@ -5376,8 +5367,6 @@ class AzureBlobFSLinkedService(LinkedService):  # pylint: disable=too-many-insta
         self.credential = credential
         self.service_principal_credential_type = service_principal_credential_type
         self.service_principal_credential = service_principal_credential
-        self.sas_uri = sas_uri
-        self.sas_token = sas_token
 
 
 class AzureBlobFSLocation(DatasetLocation):
@@ -5997,13 +5986,6 @@ class AzureBlobStorageLinkedService(LinkedService):  # pylint: disable=too-many-
     :vartype encrypted_credential: str
     :ivar credential: The credential reference containing authentication information.
     :vartype credential: ~azure.mgmt.datafactory.models.CredentialReference
-    :ivar authentication_type: The type used for authentication. Type: string. Known values are:
-     "Anonymous", "AccountKey", "SasUri", "ServicePrincipal", and "Msi".
-    :vartype authentication_type: str or
-     ~azure.mgmt.datafactory.models.AzureStorageAuthenticationType
-    :ivar container_uri: Container uri of the Azure Blob Storage resource only support for
-     anonymous access. Type: string (or Expression with resultType string).
-    :vartype container_uri: JSON
     """
 
     _validation = {
@@ -6029,8 +6011,6 @@ class AzureBlobStorageLinkedService(LinkedService):  # pylint: disable=too-many-
         "account_kind": {"key": "typeProperties.accountKind", "type": "str"},
         "encrypted_credential": {"key": "typeProperties.encryptedCredential", "type": "str"},
         "credential": {"key": "typeProperties.credential", "type": "CredentialReference"},
-        "authentication_type": {"key": "typeProperties.authenticationType", "type": "str"},
-        "container_uri": {"key": "typeProperties.containerUri", "type": "object"},
     }
 
     def __init__(
@@ -6053,8 +6033,6 @@ class AzureBlobStorageLinkedService(LinkedService):  # pylint: disable=too-many-
         account_kind: Optional[str] = None,
         encrypted_credential: Optional[str] = None,
         credential: Optional["_models.CredentialReference"] = None,
-        authentication_type: Optional[Union[str, "_models.AzureStorageAuthenticationType"]] = None,
-        container_uri: Optional[JSON] = None,
         **kwargs: Any
     ) -> None:
         """
@@ -6106,13 +6084,6 @@ class AzureBlobStorageLinkedService(LinkedService):  # pylint: disable=too-many-
         :paramtype encrypted_credential: str
         :keyword credential: The credential reference containing authentication information.
         :paramtype credential: ~azure.mgmt.datafactory.models.CredentialReference
-        :keyword authentication_type: The type used for authentication. Type: string. Known values are:
-         "Anonymous", "AccountKey", "SasUri", "ServicePrincipal", and "Msi".
-        :paramtype authentication_type: str or
-         ~azure.mgmt.datafactory.models.AzureStorageAuthenticationType
-        :keyword container_uri: Container uri of the Azure Blob Storage resource only support for
-         anonymous access. Type: string (or Expression with resultType string).
-        :paramtype container_uri: JSON
         """
         super().__init__(
             additional_properties=additional_properties,
@@ -6135,8 +6106,6 @@ class AzureBlobStorageLinkedService(LinkedService):  # pylint: disable=too-many-
         self.account_kind = account_kind
         self.encrypted_credential = encrypted_credential
         self.credential = credential
-        self.authentication_type = authentication_type
-        self.container_uri = container_uri
 
 
 class AzureBlobStorageLocation(DatasetLocation):
@@ -12704,7 +12673,8 @@ class AzureSqlSink(CopySink):  # pylint: disable=too-many-instance-attributes
      string).
     :vartype pre_copy_script: JSON
     :ivar stored_procedure_parameters: SQL stored procedure parameters.
-    :vartype stored_procedure_parameters: JSON
+    :vartype stored_procedure_parameters: dict[str,
+     ~azure.mgmt.datafactory.models.StoredProcedureParameter]
     :ivar stored_procedure_table_type_parameter_name: The stored procedure parameter name of the
      table type. Type: string (or Expression with resultType string).
     :vartype stored_procedure_table_type_parameter_name: JSON
@@ -12737,7 +12707,7 @@ class AzureSqlSink(CopySink):  # pylint: disable=too-many-instance-attributes
         "sql_writer_stored_procedure_name": {"key": "sqlWriterStoredProcedureName", "type": "object"},
         "sql_writer_table_type": {"key": "sqlWriterTableType", "type": "object"},
         "pre_copy_script": {"key": "preCopyScript", "type": "object"},
-        "stored_procedure_parameters": {"key": "storedProcedureParameters", "type": "object"},
+        "stored_procedure_parameters": {"key": "storedProcedureParameters", "type": "{StoredProcedureParameter}"},
         "stored_procedure_table_type_parameter_name": {
             "key": "storedProcedureTableTypeParameterName",
             "type": "object",
@@ -12761,7 +12731,7 @@ class AzureSqlSink(CopySink):  # pylint: disable=too-many-instance-attributes
         sql_writer_stored_procedure_name: Optional[JSON] = None,
         sql_writer_table_type: Optional[JSON] = None,
         pre_copy_script: Optional[JSON] = None,
-        stored_procedure_parameters: Optional[JSON] = None,
+        stored_procedure_parameters: Optional[Dict[str, "_models.StoredProcedureParameter"]] = None,
         stored_procedure_table_type_parameter_name: Optional[JSON] = None,
         table_option: Optional[JSON] = None,
         sql_writer_use_table_lock: Optional[JSON] = None,
@@ -12801,7 +12771,8 @@ class AzureSqlSink(CopySink):  # pylint: disable=too-many-instance-attributes
          string).
         :paramtype pre_copy_script: JSON
         :keyword stored_procedure_parameters: SQL stored procedure parameters.
-        :paramtype stored_procedure_parameters: JSON
+        :paramtype stored_procedure_parameters: dict[str,
+         ~azure.mgmt.datafactory.models.StoredProcedureParameter]
         :keyword stored_procedure_table_type_parameter_name: The stored procedure parameter name of the
          table type. Type: string (or Expression with resultType string).
         :paramtype stored_procedure_table_type_parameter_name: JSON
@@ -12875,7 +12846,8 @@ class AzureSqlSource(TabularSource):  # pylint: disable=too-many-instance-attrib
     :vartype sql_reader_stored_procedure_name: JSON
     :ivar stored_procedure_parameters: Value and type setting for stored procedure parameters.
      Example: "{Parameter1: {value: "1", type: "int"}}".
-    :vartype stored_procedure_parameters: JSON
+    :vartype stored_procedure_parameters: dict[str,
+     ~azure.mgmt.datafactory.models.StoredProcedureParameter]
     :ivar produce_additional_types: Which additional types to produce.
     :vartype produce_additional_types: JSON
     :ivar partition_option: The partition mechanism that will be used for Sql read in parallel.
@@ -12900,7 +12872,7 @@ class AzureSqlSource(TabularSource):  # pylint: disable=too-many-instance-attrib
         "additional_columns": {"key": "additionalColumns", "type": "object"},
         "sql_reader_query": {"key": "sqlReaderQuery", "type": "object"},
         "sql_reader_stored_procedure_name": {"key": "sqlReaderStoredProcedureName", "type": "object"},
-        "stored_procedure_parameters": {"key": "storedProcedureParameters", "type": "object"},
+        "stored_procedure_parameters": {"key": "storedProcedureParameters", "type": "{StoredProcedureParameter}"},
         "produce_additional_types": {"key": "produceAdditionalTypes", "type": "object"},
         "partition_option": {"key": "partitionOption", "type": "object"},
         "partition_settings": {"key": "partitionSettings", "type": "SqlPartitionSettings"},
@@ -12918,7 +12890,7 @@ class AzureSqlSource(TabularSource):  # pylint: disable=too-many-instance-attrib
         additional_columns: Optional[JSON] = None,
         sql_reader_query: Optional[JSON] = None,
         sql_reader_stored_procedure_name: Optional[JSON] = None,
-        stored_procedure_parameters: Optional[JSON] = None,
+        stored_procedure_parameters: Optional[Dict[str, "_models.StoredProcedureParameter"]] = None,
         produce_additional_types: Optional[JSON] = None,
         partition_option: Optional[JSON] = None,
         partition_settings: Optional["_models.SqlPartitionSettings"] = None,
@@ -12955,7 +12927,8 @@ class AzureSqlSource(TabularSource):  # pylint: disable=too-many-instance-attrib
         :paramtype sql_reader_stored_procedure_name: JSON
         :keyword stored_procedure_parameters: Value and type setting for stored procedure parameters.
          Example: "{Parameter1: {value: "1", type: "int"}}".
-        :paramtype stored_procedure_parameters: JSON
+        :paramtype stored_procedure_parameters: dict[str,
+         ~azure.mgmt.datafactory.models.StoredProcedureParameter]
         :keyword produce_additional_types: Which additional types to produce.
         :paramtype produce_additional_types: JSON
         :keyword partition_option: The partition mechanism that will be used for Sql read in parallel.
@@ -13239,10 +13212,6 @@ class AzureSynapseArtifactsLinkedService(LinkedService):
     :ivar authentication: Required to specify MSI, if using system assigned managed identity as
      authentication method. Type: string (or Expression with resultType string).
     :vartype authentication: JSON
-    :ivar workspace_resource_id: The resource ID of the Synapse workspace. The format should be:
-     /subscriptions/{subscriptionID}/resourceGroups/{resourceGroup}/providers/Microsoft.Synapse/workspaces/{workspaceName}.
-     Type: string (or Expression with resultType string).
-    :vartype workspace_resource_id: JSON
     """
 
     _validation = {
@@ -13259,7 +13228,6 @@ class AzureSynapseArtifactsLinkedService(LinkedService):
         "annotations": {"key": "annotations", "type": "[object]"},
         "endpoint": {"key": "typeProperties.endpoint", "type": "object"},
         "authentication": {"key": "typeProperties.authentication", "type": "object"},
-        "workspace_resource_id": {"key": "typeProperties.workspaceResourceId", "type": "object"},
     }
 
     def __init__(
@@ -13272,7 +13240,6 @@ class AzureSynapseArtifactsLinkedService(LinkedService):
         parameters: Optional[Dict[str, "_models.ParameterSpecification"]] = None,
         annotations: Optional[List[JSON]] = None,
         authentication: Optional[JSON] = None,
-        workspace_resource_id: Optional[JSON] = None,
         **kwargs: Any
     ) -> None:
         """
@@ -13293,10 +13260,6 @@ class AzureSynapseArtifactsLinkedService(LinkedService):
         :keyword authentication: Required to specify MSI, if using system assigned managed identity as
          authentication method. Type: string (or Expression with resultType string).
         :paramtype authentication: JSON
-        :keyword workspace_resource_id: The resource ID of the Synapse workspace. The format should be:
-         /subscriptions/{subscriptionID}/resourceGroups/{resourceGroup}/providers/Microsoft.Synapse/workspaces/{workspaceName}.
-         Type: string (or Expression with resultType string).
-        :paramtype workspace_resource_id: JSON
         """
         super().__init__(
             additional_properties=additional_properties,
@@ -13309,7 +13272,6 @@ class AzureSynapseArtifactsLinkedService(LinkedService):
         self.type: str = "AzureSynapseArtifacts"
         self.endpoint = endpoint
         self.authentication = authentication
-        self.workspace_resource_id = workspace_resource_id
 
 
 class AzureTableDataset(Dataset):
@@ -16582,56 +16544,6 @@ class CopyActivityLogSettings(_serialization.Model):
         self.enable_reliable_logging = enable_reliable_logging
 
 
-class CopyComputeScaleProperties(_serialization.Model):
-    """CopyComputeScale properties for managed integration runtime.
-
-    :ivar additional_properties: Unmatched properties from the message are deserialized to this
-     collection.
-    :vartype additional_properties: dict[str, JSON]
-    :ivar data_integration_unit: DIU number setting reserved for copy activity execution. Supported
-     values are multiples of 4 in range 4-256.
-    :vartype data_integration_unit: int
-    :ivar time_to_live: Time to live (in minutes) setting of integration runtime which will execute
-     copy activity.
-    :vartype time_to_live: int
-    """
-
-    _validation = {
-        "data_integration_unit": {"minimum": 4},
-        "time_to_live": {"minimum": 5},
-    }
-
-    _attribute_map = {
-        "additional_properties": {"key": "", "type": "{object}"},
-        "data_integration_unit": {"key": "dataIntegrationUnit", "type": "int"},
-        "time_to_live": {"key": "timeToLive", "type": "int"},
-    }
-
-    def __init__(
-        self,
-        *,
-        additional_properties: Optional[Dict[str, JSON]] = None,
-        data_integration_unit: Optional[int] = None,
-        time_to_live: Optional[int] = None,
-        **kwargs: Any
-    ) -> None:
-        """
-        :keyword additional_properties: Unmatched properties from the message are deserialized to this
-         collection.
-        :paramtype additional_properties: dict[str, JSON]
-        :keyword data_integration_unit: DIU number setting reserved for copy activity execution.
-         Supported values are multiples of 4 in range 4-256.
-        :paramtype data_integration_unit: int
-        :keyword time_to_live: Time to live (in minutes) setting of integration runtime which will
-         execute copy activity.
-        :paramtype time_to_live: int
-        """
-        super().__init__(**kwargs)
-        self.additional_properties = additional_properties
-        self.data_integration_unit = data_integration_unit
-        self.time_to_live = time_to_live
-
-
 class CopyTranslator(_serialization.Model):
     """A copy activity translator.
 
@@ -18125,44 +18037,6 @@ class Credential(_serialization.Model):
         self.type: Optional[str] = None
         self.description = description
         self.annotations = annotations
-
-
-class CredentialListResponse(_serialization.Model):
-    """A list of credential resources.
-
-    All required parameters must be populated in order to send to Azure.
-
-    :ivar value: List of credentials. Required.
-    :vartype value: list[~azure.mgmt.datafactory.models.ManagedIdentityCredentialResource]
-    :ivar next_link: The link to the next page of results, if any remaining results exist.
-    :vartype next_link: str
-    """
-
-    _validation = {
-        "value": {"required": True},
-    }
-
-    _attribute_map = {
-        "value": {"key": "value", "type": "[ManagedIdentityCredentialResource]"},
-        "next_link": {"key": "nextLink", "type": "str"},
-    }
-
-    def __init__(
-        self,
-        *,
-        value: List["_models.ManagedIdentityCredentialResource"],
-        next_link: Optional[str] = None,
-        **kwargs: Any
-    ) -> None:
-        """
-        :keyword value: List of credentials. Required.
-        :paramtype value: list[~azure.mgmt.datafactory.models.ManagedIdentityCredentialResource]
-        :keyword next_link: The link to the next page of results, if any remaining results exist.
-        :paramtype next_link: str
-        """
-        super().__init__(**kwargs)
-        self.value = value
-        self.next_link = next_link
 
 
 class CredentialReference(_serialization.Model):
@@ -25612,9 +25486,6 @@ class FactoryRepoConfiguration(_serialization.Model):
     :vartype root_folder: str
     :ivar last_commit_id: Last commit id.
     :vartype last_commit_id: str
-    :ivar disable_publish: Disable manual publish operation in ADF studio to favor automated
-     publish.
-    :vartype disable_publish: bool
     """
 
     _validation = {
@@ -25632,7 +25503,6 @@ class FactoryRepoConfiguration(_serialization.Model):
         "collaboration_branch": {"key": "collaborationBranch", "type": "str"},
         "root_folder": {"key": "rootFolder", "type": "str"},
         "last_commit_id": {"key": "lastCommitId", "type": "str"},
-        "disable_publish": {"key": "disablePublish", "type": "bool"},
     }
 
     _subtype_map = {
@@ -25650,7 +25520,6 @@ class FactoryRepoConfiguration(_serialization.Model):
         collaboration_branch: str,
         root_folder: str,
         last_commit_id: Optional[str] = None,
-        disable_publish: Optional[bool] = None,
         **kwargs: Any
     ) -> None:
         """
@@ -25664,9 +25533,6 @@ class FactoryRepoConfiguration(_serialization.Model):
         :paramtype root_folder: str
         :keyword last_commit_id: Last commit id.
         :paramtype last_commit_id: str
-        :keyword disable_publish: Disable manual publish operation in ADF studio to favor automated
-         publish.
-        :paramtype disable_publish: bool
         """
         super().__init__(**kwargs)
         self.type: Optional[str] = None
@@ -25675,7 +25541,6 @@ class FactoryRepoConfiguration(_serialization.Model):
         self.collaboration_branch = collaboration_branch
         self.root_folder = root_folder
         self.last_commit_id = last_commit_id
-        self.disable_publish = disable_publish
 
 
 class FactoryGitHubConfiguration(FactoryRepoConfiguration):
@@ -25695,9 +25560,6 @@ class FactoryGitHubConfiguration(FactoryRepoConfiguration):
     :vartype root_folder: str
     :ivar last_commit_id: Last commit id.
     :vartype last_commit_id: str
-    :ivar disable_publish: Disable manual publish operation in ADF studio to favor automated
-     publish.
-    :vartype disable_publish: bool
     :ivar host_name: GitHub Enterprise host name. For example: ``https://github.mydomain.com``.
     :vartype host_name: str
     :ivar client_id: GitHub bring your own app client id.
@@ -25721,7 +25583,6 @@ class FactoryGitHubConfiguration(FactoryRepoConfiguration):
         "collaboration_branch": {"key": "collaborationBranch", "type": "str"},
         "root_folder": {"key": "rootFolder", "type": "str"},
         "last_commit_id": {"key": "lastCommitId", "type": "str"},
-        "disable_publish": {"key": "disablePublish", "type": "bool"},
         "host_name": {"key": "hostName", "type": "str"},
         "client_id": {"key": "clientId", "type": "str"},
         "client_secret": {"key": "clientSecret", "type": "GitHubClientSecret"},
@@ -25735,7 +25596,6 @@ class FactoryGitHubConfiguration(FactoryRepoConfiguration):
         collaboration_branch: str,
         root_folder: str,
         last_commit_id: Optional[str] = None,
-        disable_publish: Optional[bool] = None,
         host_name: Optional[str] = None,
         client_id: Optional[str] = None,
         client_secret: Optional["_models.GitHubClientSecret"] = None,
@@ -25752,9 +25612,6 @@ class FactoryGitHubConfiguration(FactoryRepoConfiguration):
         :paramtype root_folder: str
         :keyword last_commit_id: Last commit id.
         :paramtype last_commit_id: str
-        :keyword disable_publish: Disable manual publish operation in ADF studio to favor automated
-         publish.
-        :paramtype disable_publish: bool
         :keyword host_name: GitHub Enterprise host name. For example: ``https://github.mydomain.com``.
         :paramtype host_name: str
         :keyword client_id: GitHub bring your own app client id.
@@ -25768,7 +25625,6 @@ class FactoryGitHubConfiguration(FactoryRepoConfiguration):
             collaboration_branch=collaboration_branch,
             root_folder=root_folder,
             last_commit_id=last_commit_id,
-            disable_publish=disable_publish,
             **kwargs
         )
         self.type: str = "FactoryGitHubConfiguration"
@@ -25951,9 +25807,6 @@ class FactoryVSTSConfiguration(FactoryRepoConfiguration):
     :vartype root_folder: str
     :ivar last_commit_id: Last commit id.
     :vartype last_commit_id: str
-    :ivar disable_publish: Disable manual publish operation in ADF studio to favor automated
-     publish.
-    :vartype disable_publish: bool
     :ivar project_name: VSTS project name. Required.
     :vartype project_name: str
     :ivar tenant_id: VSTS tenant id.
@@ -25976,7 +25829,6 @@ class FactoryVSTSConfiguration(FactoryRepoConfiguration):
         "collaboration_branch": {"key": "collaborationBranch", "type": "str"},
         "root_folder": {"key": "rootFolder", "type": "str"},
         "last_commit_id": {"key": "lastCommitId", "type": "str"},
-        "disable_publish": {"key": "disablePublish", "type": "bool"},
         "project_name": {"key": "projectName", "type": "str"},
         "tenant_id": {"key": "tenantId", "type": "str"},
     }
@@ -25990,7 +25842,6 @@ class FactoryVSTSConfiguration(FactoryRepoConfiguration):
         root_folder: str,
         project_name: str,
         last_commit_id: Optional[str] = None,
-        disable_publish: Optional[bool] = None,
         tenant_id: Optional[str] = None,
         **kwargs: Any
     ) -> None:
@@ -26005,9 +25856,6 @@ class FactoryVSTSConfiguration(FactoryRepoConfiguration):
         :paramtype root_folder: str
         :keyword last_commit_id: Last commit id.
         :paramtype last_commit_id: str
-        :keyword disable_publish: Disable manual publish operation in ADF studio to favor automated
-         publish.
-        :paramtype disable_publish: bool
         :keyword project_name: VSTS project name. Required.
         :paramtype project_name: str
         :keyword tenant_id: VSTS tenant id.
@@ -26019,7 +25867,6 @@ class FactoryVSTSConfiguration(FactoryRepoConfiguration):
             collaboration_branch=collaboration_branch,
             root_folder=root_folder,
             last_commit_id=last_commit_id,
-            disable_publish=disable_publish,
             **kwargs
         )
         self.type: str = "FactoryVSTSConfiguration"
@@ -28936,92 +28783,6 @@ class GoogleCloudStorageReadSettings(StoreReadSettings):  # pylint: disable=too-
         self.delete_files_after_completion = delete_files_after_completion
         self.modified_datetime_start = modified_datetime_start
         self.modified_datetime_end = modified_datetime_end
-
-
-class GoogleSheetsLinkedService(LinkedService):
-    """Linked service for GoogleSheets.
-
-    All required parameters must be populated in order to send to Azure.
-
-    :ivar additional_properties: Unmatched properties from the message are deserialized to this
-     collection.
-    :vartype additional_properties: dict[str, JSON]
-    :ivar type: Type of linked service. Required.
-    :vartype type: str
-    :ivar connect_via: The integration runtime reference.
-    :vartype connect_via: ~azure.mgmt.datafactory.models.IntegrationRuntimeReference
-    :ivar description: Linked service description.
-    :vartype description: str
-    :ivar parameters: Parameters for linked service.
-    :vartype parameters: dict[str, ~azure.mgmt.datafactory.models.ParameterSpecification]
-    :ivar annotations: List of tags that can be used for describing the linked service.
-    :vartype annotations: list[JSON]
-    :ivar api_token: The api token for the GoogleSheets source. Required.
-    :vartype api_token: ~azure.mgmt.datafactory.models.SecretBase
-    :ivar encrypted_credential: The encrypted credential used for authentication. Credentials are
-     encrypted using the integration runtime credential manager. Type: string (or Expression with
-     resultType string).
-    :vartype encrypted_credential: JSON
-    """
-
-    _validation = {
-        "type": {"required": True},
-        "api_token": {"required": True},
-    }
-
-    _attribute_map = {
-        "additional_properties": {"key": "", "type": "{object}"},
-        "type": {"key": "type", "type": "str"},
-        "connect_via": {"key": "connectVia", "type": "IntegrationRuntimeReference"},
-        "description": {"key": "description", "type": "str"},
-        "parameters": {"key": "parameters", "type": "{ParameterSpecification}"},
-        "annotations": {"key": "annotations", "type": "[object]"},
-        "api_token": {"key": "typeProperties.apiToken", "type": "SecretBase"},
-        "encrypted_credential": {"key": "typeProperties.encryptedCredential", "type": "object"},
-    }
-
-    def __init__(
-        self,
-        *,
-        api_token: "_models.SecretBase",
-        additional_properties: Optional[Dict[str, JSON]] = None,
-        connect_via: Optional["_models.IntegrationRuntimeReference"] = None,
-        description: Optional[str] = None,
-        parameters: Optional[Dict[str, "_models.ParameterSpecification"]] = None,
-        annotations: Optional[List[JSON]] = None,
-        encrypted_credential: Optional[JSON] = None,
-        **kwargs: Any
-    ) -> None:
-        """
-        :keyword additional_properties: Unmatched properties from the message are deserialized to this
-         collection.
-        :paramtype additional_properties: dict[str, JSON]
-        :keyword connect_via: The integration runtime reference.
-        :paramtype connect_via: ~azure.mgmt.datafactory.models.IntegrationRuntimeReference
-        :keyword description: Linked service description.
-        :paramtype description: str
-        :keyword parameters: Parameters for linked service.
-        :paramtype parameters: dict[str, ~azure.mgmt.datafactory.models.ParameterSpecification]
-        :keyword annotations: List of tags that can be used for describing the linked service.
-        :paramtype annotations: list[JSON]
-        :keyword api_token: The api token for the GoogleSheets source. Required.
-        :paramtype api_token: ~azure.mgmt.datafactory.models.SecretBase
-        :keyword encrypted_credential: The encrypted credential used for authentication. Credentials
-         are encrypted using the integration runtime credential manager. Type: string (or Expression
-         with resultType string).
-        :paramtype encrypted_credential: JSON
-        """
-        super().__init__(
-            additional_properties=additional_properties,
-            connect_via=connect_via,
-            description=description,
-            parameters=parameters,
-            annotations=annotations,
-            **kwargs
-        )
-        self.type: str = "GoogleSheets"
-        self.api_token = api_token
-        self.encrypted_credential = encrypted_credential
 
 
 class GreenplumLinkedService(LinkedService):
@@ -33759,14 +33520,6 @@ class IntegrationRuntimeComputeProperties(_serialization.Model):
      ~azure.mgmt.datafactory.models.IntegrationRuntimeDataFlowProperties
     :ivar v_net_properties: VNet properties for managed integration runtime.
     :vartype v_net_properties: ~azure.mgmt.datafactory.models.IntegrationRuntimeVNetProperties
-    :ivar copy_compute_scale_properties: CopyComputeScale properties for managed integration
-     runtime.
-    :vartype copy_compute_scale_properties:
-     ~azure.mgmt.datafactory.models.CopyComputeScaleProperties
-    :ivar pipeline_external_compute_scale_properties: PipelineExternalComputeScale properties for
-     managed integration runtime.
-    :vartype pipeline_external_compute_scale_properties:
-     ~azure.mgmt.datafactory.models.PipelineExternalComputeScaleProperties
     """
 
     _validation = {
@@ -33782,11 +33535,6 @@ class IntegrationRuntimeComputeProperties(_serialization.Model):
         "max_parallel_executions_per_node": {"key": "maxParallelExecutionsPerNode", "type": "int"},
         "data_flow_properties": {"key": "dataFlowProperties", "type": "IntegrationRuntimeDataFlowProperties"},
         "v_net_properties": {"key": "vNetProperties", "type": "IntegrationRuntimeVNetProperties"},
-        "copy_compute_scale_properties": {"key": "copyComputeScaleProperties", "type": "CopyComputeScaleProperties"},
-        "pipeline_external_compute_scale_properties": {
-            "key": "pipelineExternalComputeScaleProperties",
-            "type": "PipelineExternalComputeScaleProperties",
-        },
     }
 
     def __init__(
@@ -33799,8 +33547,6 @@ class IntegrationRuntimeComputeProperties(_serialization.Model):
         max_parallel_executions_per_node: Optional[int] = None,
         data_flow_properties: Optional["_models.IntegrationRuntimeDataFlowProperties"] = None,
         v_net_properties: Optional["_models.IntegrationRuntimeVNetProperties"] = None,
-        copy_compute_scale_properties: Optional["_models.CopyComputeScaleProperties"] = None,
-        pipeline_external_compute_scale_properties: Optional["_models.PipelineExternalComputeScaleProperties"] = None,
         **kwargs: Any
     ) -> None:
         """
@@ -33823,14 +33569,6 @@ class IntegrationRuntimeComputeProperties(_serialization.Model):
          ~azure.mgmt.datafactory.models.IntegrationRuntimeDataFlowProperties
         :keyword v_net_properties: VNet properties for managed integration runtime.
         :paramtype v_net_properties: ~azure.mgmt.datafactory.models.IntegrationRuntimeVNetProperties
-        :keyword copy_compute_scale_properties: CopyComputeScale properties for managed integration
-         runtime.
-        :paramtype copy_compute_scale_properties:
-         ~azure.mgmt.datafactory.models.CopyComputeScaleProperties
-        :keyword pipeline_external_compute_scale_properties: PipelineExternalComputeScale properties
-         for managed integration runtime.
-        :paramtype pipeline_external_compute_scale_properties:
-         ~azure.mgmt.datafactory.models.PipelineExternalComputeScaleProperties
         """
         super().__init__(**kwargs)
         self.additional_properties = additional_properties
@@ -33840,8 +33578,6 @@ class IntegrationRuntimeComputeProperties(_serialization.Model):
         self.max_parallel_executions_per_node = max_parallel_executions_per_node
         self.data_flow_properties = data_flow_properties
         self.v_net_properties = v_net_properties
-        self.copy_compute_scale_properties = copy_compute_scale_properties
-        self.pipeline_external_compute_scale_properties = pipeline_external_compute_scale_properties
 
 
 class IntegrationRuntimeConnectionInfo(_serialization.Model):
@@ -35710,6 +35446,347 @@ class JsonWriteSettings(FormatWriteSettings):
         self.file_pattern = file_pattern
 
 
+class LakeHouseLinkedService(LinkedService):  # pylint: disable=too-many-instance-attributes
+    """Microsoft Fabric LakeHouse linked service.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :ivar additional_properties: Unmatched properties from the message are deserialized to this
+     collection.
+    :vartype additional_properties: dict[str, JSON]
+    :ivar type: Type of linked service. Required.
+    :vartype type: str
+    :ivar connect_via: The integration runtime reference.
+    :vartype connect_via: ~azure.mgmt.datafactory.models.IntegrationRuntimeReference
+    :ivar description: Linked service description.
+    :vartype description: str
+    :ivar parameters: Parameters for linked service.
+    :vartype parameters: dict[str, ~azure.mgmt.datafactory.models.ParameterSpecification]
+    :ivar annotations: List of tags that can be used for describing the linked service.
+    :vartype annotations: list[JSON]
+    :ivar workspace_id: The ID of Microsoft Fabric workspace. Type: string (or Expression with
+     resultType string).
+    :vartype workspace_id: JSON
+    :ivar artifact_id: The ID of Microsoft Fabric LakeHouse artifact. Type: string (or Expression
+     with resultType string).
+    :vartype artifact_id: JSON
+    :ivar service_principal_id: The ID of the application used to authenticate against Microsoft
+     Fabric LakeHouse. Type: string (or Expression with resultType string).
+    :vartype service_principal_id: JSON
+    :ivar service_principal_key: The Key of the application used to authenticate against Microsoft
+     Fabric LakeHouse.
+    :vartype service_principal_key: ~azure.mgmt.datafactory.models.SecretBase
+    :ivar tenant: The name or ID of the tenant to which the service principal belongs. Type: string
+     (or Expression with resultType string).
+    :vartype tenant: JSON
+    :ivar encrypted_credential: The encrypted credential used for authentication. Credentials are
+     encrypted using the integration runtime credential manager. Type: string.
+    :vartype encrypted_credential: str
+    :ivar service_principal_credential_type: The service principal credential type to use in
+     Server-To-Server authentication. 'ServicePrincipalKey' for key/secret, 'ServicePrincipalCert'
+     for certificate. Type: string (or Expression with resultType string).
+    :vartype service_principal_credential_type: JSON
+    :ivar service_principal_credential: The credential of the service principal object in Azure
+     Active Directory. If servicePrincipalCredentialType is 'ServicePrincipalKey',
+     servicePrincipalCredential can be SecureString or AzureKeyVaultSecretReference. If
+     servicePrincipalCredentialType is 'ServicePrincipalCert', servicePrincipalCredential can only
+     be AzureKeyVaultSecretReference.
+    :vartype service_principal_credential: ~azure.mgmt.datafactory.models.SecretBase
+    """
+
+    _validation = {
+        "type": {"required": True},
+    }
+
+    _attribute_map = {
+        "additional_properties": {"key": "", "type": "{object}"},
+        "type": {"key": "type", "type": "str"},
+        "connect_via": {"key": "connectVia", "type": "IntegrationRuntimeReference"},
+        "description": {"key": "description", "type": "str"},
+        "parameters": {"key": "parameters", "type": "{ParameterSpecification}"},
+        "annotations": {"key": "annotations", "type": "[object]"},
+        "workspace_id": {"key": "typeProperties.workspaceId", "type": "object"},
+        "artifact_id": {"key": "typeProperties.artifactId", "type": "object"},
+        "service_principal_id": {"key": "typeProperties.servicePrincipalId", "type": "object"},
+        "service_principal_key": {"key": "typeProperties.servicePrincipalKey", "type": "SecretBase"},
+        "tenant": {"key": "typeProperties.tenant", "type": "object"},
+        "encrypted_credential": {"key": "typeProperties.encryptedCredential", "type": "str"},
+        "service_principal_credential_type": {"key": "typeProperties.servicePrincipalCredentialType", "type": "object"},
+        "service_principal_credential": {"key": "typeProperties.servicePrincipalCredential", "type": "SecretBase"},
+    }
+
+    def __init__(
+        self,
+        *,
+        additional_properties: Optional[Dict[str, JSON]] = None,
+        connect_via: Optional["_models.IntegrationRuntimeReference"] = None,
+        description: Optional[str] = None,
+        parameters: Optional[Dict[str, "_models.ParameterSpecification"]] = None,
+        annotations: Optional[List[JSON]] = None,
+        workspace_id: Optional[JSON] = None,
+        artifact_id: Optional[JSON] = None,
+        service_principal_id: Optional[JSON] = None,
+        service_principal_key: Optional["_models.SecretBase"] = None,
+        tenant: Optional[JSON] = None,
+        encrypted_credential: Optional[str] = None,
+        service_principal_credential_type: Optional[JSON] = None,
+        service_principal_credential: Optional["_models.SecretBase"] = None,
+        **kwargs: Any
+    ) -> None:
+        """
+        :keyword additional_properties: Unmatched properties from the message are deserialized to this
+         collection.
+        :paramtype additional_properties: dict[str, JSON]
+        :keyword connect_via: The integration runtime reference.
+        :paramtype connect_via: ~azure.mgmt.datafactory.models.IntegrationRuntimeReference
+        :keyword description: Linked service description.
+        :paramtype description: str
+        :keyword parameters: Parameters for linked service.
+        :paramtype parameters: dict[str, ~azure.mgmt.datafactory.models.ParameterSpecification]
+        :keyword annotations: List of tags that can be used for describing the linked service.
+        :paramtype annotations: list[JSON]
+        :keyword workspace_id: The ID of Microsoft Fabric workspace. Type: string (or Expression with
+         resultType string).
+        :paramtype workspace_id: JSON
+        :keyword artifact_id: The ID of Microsoft Fabric LakeHouse artifact. Type: string (or
+         Expression with resultType string).
+        :paramtype artifact_id: JSON
+        :keyword service_principal_id: The ID of the application used to authenticate against Microsoft
+         Fabric LakeHouse. Type: string (or Expression with resultType string).
+        :paramtype service_principal_id: JSON
+        :keyword service_principal_key: The Key of the application used to authenticate against
+         Microsoft Fabric LakeHouse.
+        :paramtype service_principal_key: ~azure.mgmt.datafactory.models.SecretBase
+        :keyword tenant: The name or ID of the tenant to which the service principal belongs. Type:
+         string (or Expression with resultType string).
+        :paramtype tenant: JSON
+        :keyword encrypted_credential: The encrypted credential used for authentication. Credentials
+         are encrypted using the integration runtime credential manager. Type: string.
+        :paramtype encrypted_credential: str
+        :keyword service_principal_credential_type: The service principal credential type to use in
+         Server-To-Server authentication. 'ServicePrincipalKey' for key/secret, 'ServicePrincipalCert'
+         for certificate. Type: string (or Expression with resultType string).
+        :paramtype service_principal_credential_type: JSON
+        :keyword service_principal_credential: The credential of the service principal object in Azure
+         Active Directory. If servicePrincipalCredentialType is 'ServicePrincipalKey',
+         servicePrincipalCredential can be SecureString or AzureKeyVaultSecretReference. If
+         servicePrincipalCredentialType is 'ServicePrincipalCert', servicePrincipalCredential can only
+         be AzureKeyVaultSecretReference.
+        :paramtype service_principal_credential: ~azure.mgmt.datafactory.models.SecretBase
+        """
+        super().__init__(
+            additional_properties=additional_properties,
+            connect_via=connect_via,
+            description=description,
+            parameters=parameters,
+            annotations=annotations,
+            **kwargs
+        )
+        self.type: str = "LakeHouse"
+        self.workspace_id = workspace_id
+        self.artifact_id = artifact_id
+        self.service_principal_id = service_principal_id
+        self.service_principal_key = service_principal_key
+        self.tenant = tenant
+        self.encrypted_credential = encrypted_credential
+        self.service_principal_credential_type = service_principal_credential_type
+        self.service_principal_credential = service_principal_credential
+
+
+class LakeHouseLocation(DatasetLocation):
+    """The location of Microsoft Fabric LakeHouse Files dataset.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :ivar additional_properties: Unmatched properties from the message are deserialized to this
+     collection.
+    :vartype additional_properties: dict[str, JSON]
+    :ivar type: Type of dataset storage location. Required.
+    :vartype type: str
+    :ivar folder_path: Specify the folder path of dataset. Type: string (or Expression with
+     resultType string).
+    :vartype folder_path: JSON
+    :ivar file_name: Specify the file name of dataset. Type: string (or Expression with resultType
+     string).
+    :vartype file_name: JSON
+    """
+
+    _validation = {
+        "type": {"required": True},
+    }
+
+    _attribute_map = {
+        "additional_properties": {"key": "", "type": "{object}"},
+        "type": {"key": "type", "type": "str"},
+        "folder_path": {"key": "folderPath", "type": "object"},
+        "file_name": {"key": "fileName", "type": "object"},
+    }
+
+    def __init__(
+        self,
+        *,
+        additional_properties: Optional[Dict[str, JSON]] = None,
+        folder_path: Optional[JSON] = None,
+        file_name: Optional[JSON] = None,
+        **kwargs: Any
+    ) -> None:
+        """
+        :keyword additional_properties: Unmatched properties from the message are deserialized to this
+         collection.
+        :paramtype additional_properties: dict[str, JSON]
+        :keyword folder_path: Specify the folder path of dataset. Type: string (or Expression with
+         resultType string).
+        :paramtype folder_path: JSON
+        :keyword file_name: Specify the file name of dataset. Type: string (or Expression with
+         resultType string).
+        :paramtype file_name: JSON
+        """
+        super().__init__(
+            additional_properties=additional_properties, folder_path=folder_path, file_name=file_name, **kwargs
+        )
+        self.type: str = "LakeHouseLocation"
+
+
+class LakeHouseReadSettings(StoreReadSettings):  # pylint: disable=too-many-instance-attributes
+    """Microsoft Fabric LakeHouse Files read settings.
+
+    All required parameters must be populated in order to send to Azure.
+
+    :ivar additional_properties: Unmatched properties from the message are deserialized to this
+     collection.
+    :vartype additional_properties: dict[str, JSON]
+    :ivar type: The read setting type. Required.
+    :vartype type: str
+    :ivar max_concurrent_connections: The maximum concurrent connection count for the source data
+     store. Type: integer (or Expression with resultType integer).
+    :vartype max_concurrent_connections: JSON
+    :ivar disable_metrics_collection: If true, disable data store metrics collection. Default is
+     false. Type: boolean (or Expression with resultType boolean).
+    :vartype disable_metrics_collection: JSON
+    :ivar recursive: If true, files under the folder path will be read recursively. Default is
+     true. Type: boolean (or Expression with resultType boolean).
+    :vartype recursive: JSON
+    :ivar wildcard_folder_path: Microsoft Fabric LakeHouse Files wildcardFolderPath. Type: string
+     (or Expression with resultType string).
+    :vartype wildcard_folder_path: JSON
+    :ivar wildcard_file_name: Microsoft Fabric LakeHouse Files wildcardFileName. Type: string (or
+     Expression with resultType string).
+    :vartype wildcard_file_name: JSON
+    :ivar file_list_path: Point to a text file that lists each file (relative path to the path
+     configured in the dataset) that you want to copy. Type: string (or Expression with resultType
+     string).
+    :vartype file_list_path: JSON
+    :ivar enable_partition_discovery: Indicates whether to enable partition discovery. Type:
+     boolean (or Expression with resultType boolean).
+    :vartype enable_partition_discovery: JSON
+    :ivar partition_root_path: Specify the root path where partition discovery starts from. Type:
+     string (or Expression with resultType string).
+    :vartype partition_root_path: JSON
+    :ivar delete_files_after_completion: Indicates whether the source files need to be deleted
+     after copy completion. Default is false. Type: boolean (or Expression with resultType boolean).
+    :vartype delete_files_after_completion: JSON
+    :ivar modified_datetime_start: The start of file's modified datetime. Type: string (or
+     Expression with resultType string).
+    :vartype modified_datetime_start: JSON
+    :ivar modified_datetime_end: The end of file's modified datetime. Type: string (or Expression
+     with resultType string).
+    :vartype modified_datetime_end: JSON
+    """
+
+    _validation = {
+        "type": {"required": True},
+    }
+
+    _attribute_map = {
+        "additional_properties": {"key": "", "type": "{object}"},
+        "type": {"key": "type", "type": "str"},
+        "max_concurrent_connections": {"key": "maxConcurrentConnections", "type": "object"},
+        "disable_metrics_collection": {"key": "disableMetricsCollection", "type": "object"},
+        "recursive": {"key": "recursive", "type": "object"},
+        "wildcard_folder_path": {"key": "wildcardFolderPath", "type": "object"},
+        "wildcard_file_name": {"key": "wildcardFileName", "type": "object"},
+        "file_list_path": {"key": "fileListPath", "type": "object"},
+        "enable_partition_discovery": {"key": "enablePartitionDiscovery", "type": "object"},
+        "partition_root_path": {"key": "partitionRootPath", "type": "object"},
+        "delete_files_after_completion": {"key": "deleteFilesAfterCompletion", "type": "object"},
+        "modified_datetime_start": {"key": "modifiedDatetimeStart", "type": "object"},
+        "modified_datetime_end": {"key": "modifiedDatetimeEnd", "type": "object"},
+    }
+
+    def __init__(
+        self,
+        *,
+        additional_properties: Optional[Dict[str, JSON]] = None,
+        max_concurrent_connections: Optional[JSON] = None,
+        disable_metrics_collection: Optional[JSON] = None,
+        recursive: Optional[JSON] = None,
+        wildcard_folder_path: Optional[JSON] = None,
+        wildcard_file_name: Optional[JSON] = None,
+        file_list_path: Optional[JSON] = None,
+        enable_partition_discovery: Optional[JSON] = None,
+        partition_root_path: Optional[JSON] = None,
+        delete_files_after_completion: Optional[JSON] = None,
+        modified_datetime_start: Optional[JSON] = None,
+        modified_datetime_end: Optional[JSON] = None,
+        **kwargs: Any
+    ) -> None:
+        """
+        :keyword additional_properties: Unmatched properties from the message are deserialized to this
+         collection.
+        :paramtype additional_properties: dict[str, JSON]
+        :keyword max_concurrent_connections: The maximum concurrent connection count for the source
+         data store. Type: integer (or Expression with resultType integer).
+        :paramtype max_concurrent_connections: JSON
+        :keyword disable_metrics_collection: If true, disable data store metrics collection. Default is
+         false. Type: boolean (or Expression with resultType boolean).
+        :paramtype disable_metrics_collection: JSON
+        :keyword recursive: If true, files under the folder path will be read recursively. Default is
+         true. Type: boolean (or Expression with resultType boolean).
+        :paramtype recursive: JSON
+        :keyword wildcard_folder_path: Microsoft Fabric LakeHouse Files wildcardFolderPath. Type:
+         string (or Expression with resultType string).
+        :paramtype wildcard_folder_path: JSON
+        :keyword wildcard_file_name: Microsoft Fabric LakeHouse Files wildcardFileName. Type: string
+         (or Expression with resultType string).
+        :paramtype wildcard_file_name: JSON
+        :keyword file_list_path: Point to a text file that lists each file (relative path to the path
+         configured in the dataset) that you want to copy. Type: string (or Expression with resultType
+         string).
+        :paramtype file_list_path: JSON
+        :keyword enable_partition_discovery: Indicates whether to enable partition discovery. Type:
+         boolean (or Expression with resultType boolean).
+        :paramtype enable_partition_discovery: JSON
+        :keyword partition_root_path: Specify the root path where partition discovery starts from.
+         Type: string (or Expression with resultType string).
+        :paramtype partition_root_path: JSON
+        :keyword delete_files_after_completion: Indicates whether the source files need to be deleted
+         after copy completion. Default is false. Type: boolean (or Expression with resultType boolean).
+        :paramtype delete_files_after_completion: JSON
+        :keyword modified_datetime_start: The start of file's modified datetime. Type: string (or
+         Expression with resultType string).
+        :paramtype modified_datetime_start: JSON
+        :keyword modified_datetime_end: The end of file's modified datetime. Type: string (or
+         Expression with resultType string).
+        :paramtype modified_datetime_end: JSON
+        """
+        super().__init__(
+            additional_properties=additional_properties,
+            max_concurrent_connections=max_concurrent_connections,
+            disable_metrics_collection=disable_metrics_collection,
+            **kwargs
+        )
+        self.type: str = "LakeHouseReadSettings"
+        self.recursive = recursive
+        self.wildcard_folder_path = wildcard_folder_path
+        self.wildcard_file_name = wildcard_file_name
+        self.file_list_path = file_list_path
+        self.enable_partition_discovery = enable_partition_discovery
+        self.partition_root_path = partition_root_path
+        self.delete_files_after_completion = delete_files_after_completion
+        self.modified_datetime_start = modified_datetime_start
+        self.modified_datetime_end = modified_datetime_end
+
+
 class LinkedIntegrationRuntime(_serialization.Model):
     """The linked integration runtime information.
 
@@ -36680,50 +36757,6 @@ class ManagedIdentityCredential(Credential):
         )
         self.type: str = "ManagedIdentity"
         self.resource_id = resource_id
-
-
-class ManagedIdentityCredentialResource(SubResource):
-    """Credential resource type.
-
-    Variables are only populated by the server, and will be ignored when sending a request.
-
-    All required parameters must be populated in order to send to Azure.
-
-    :ivar id: The resource identifier.
-    :vartype id: str
-    :ivar name: The resource name.
-    :vartype name: str
-    :ivar type: The resource type.
-    :vartype type: str
-    :ivar etag: Etag identifies change in the resource.
-    :vartype etag: str
-    :ivar properties: Managed Identity Credential properties. Required.
-    :vartype properties: ~azure.mgmt.datafactory.models.ManagedIdentityCredential
-    """
-
-    _validation = {
-        "id": {"readonly": True},
-        "name": {"readonly": True},
-        "type": {"readonly": True},
-        "etag": {"readonly": True},
-        "properties": {"required": True},
-    }
-
-    _attribute_map = {
-        "id": {"key": "id", "type": "str"},
-        "name": {"key": "name", "type": "str"},
-        "type": {"key": "type", "type": "str"},
-        "etag": {"key": "etag", "type": "str"},
-        "properties": {"key": "properties", "type": "ManagedIdentityCredential"},
-    }
-
-    def __init__(self, *, properties: "_models.ManagedIdentityCredential", **kwargs: Any) -> None:
-        """
-        :keyword properties: Managed Identity Credential properties. Required.
-        :paramtype properties: ~azure.mgmt.datafactory.models.ManagedIdentityCredential
-        """
-        super().__init__(**kwargs)
-        self.properties = properties
 
 
 class ManagedIntegrationRuntime(IntegrationRuntime):
@@ -44863,46 +44896,6 @@ class PipelineElapsedTimeMetricPolicy(_serialization.Model):
         self.duration = duration
 
 
-class PipelineExternalComputeScaleProperties(_serialization.Model):
-    """PipelineExternalComputeScale properties for managed integration runtime.
-
-    :ivar additional_properties: Unmatched properties from the message are deserialized to this
-     collection.
-    :vartype additional_properties: dict[str, JSON]
-    :ivar time_to_live: Time to live (in minutes) setting of integration runtime which will execute
-     pipeline and external activity.
-    :vartype time_to_live: int
-    """
-
-    _validation = {
-        "time_to_live": {"minimum": 5},
-    }
-
-    _attribute_map = {
-        "additional_properties": {"key": "", "type": "{object}"},
-        "time_to_live": {"key": "timeToLive", "type": "int"},
-    }
-
-    def __init__(
-        self,
-        *,
-        additional_properties: Optional[Dict[str, JSON]] = None,
-        time_to_live: Optional[int] = None,
-        **kwargs: Any
-    ) -> None:
-        """
-        :keyword additional_properties: Unmatched properties from the message are deserialized to this
-         collection.
-        :paramtype additional_properties: dict[str, JSON]
-        :keyword time_to_live: Time to live (in minutes) setting of integration runtime which will
-         execute pipeline and external activity.
-        :paramtype time_to_live: int
-        """
-        super().__init__(**kwargs)
-        self.additional_properties = additional_properties
-        self.time_to_live = time_to_live
-
-
 class PipelineFolder(_serialization.Model):
     """The folder that this Pipeline is in. If not specified, Pipeline will appear at the root level.
 
@@ -48751,7 +48744,7 @@ class RunQueryFilter(_serialization.Model):
      "ActivityType", "TriggerName", "TriggerRunTimestamp", "RunGroupId", and "LatestOnly".
     :vartype operand: str or ~azure.mgmt.datafactory.models.RunQueryFilterOperand
     :ivar operator: Operator to be used for filter. Required. Known values are: "Equals",
-     "NotEquals", "In", and "NotIn".
+     "NotEquals", "In", "NotIn", and "In".
     :vartype operator: str or ~azure.mgmt.datafactory.models.RunQueryFilterOperator
     :ivar values: List of filter values. Required.
     :vartype values: list[str]
@@ -48786,7 +48779,7 @@ class RunQueryFilter(_serialization.Model):
          "ActivityType", "TriggerName", "TriggerRunTimestamp", "RunGroupId", and "LatestOnly".
         :paramtype operand: str or ~azure.mgmt.datafactory.models.RunQueryFilterOperand
         :keyword operator: Operator to be used for filter. Required. Known values are: "Equals",
-         "NotEquals", "In", and "NotIn".
+         "NotEquals", "In", "NotIn", and "In".
         :paramtype operator: str or ~azure.mgmt.datafactory.models.RunQueryFilterOperator
         :keyword values: List of filter values. Required.
         :paramtype values: list[str]
@@ -53239,7 +53232,7 @@ class ScriptAction(_serialization.Model):
         self.parameters = parameters
 
 
-class ScriptActivity(ExecutionActivity):  # pylint: disable=too-many-instance-attributes
+class ScriptActivity(ExecutionActivity):
     """Script activity type.
 
     All required parameters must be populated in order to send to Azure.
@@ -53261,10 +53254,6 @@ class ScriptActivity(ExecutionActivity):  # pylint: disable=too-many-instance-at
     :vartype linked_service_name: ~azure.mgmt.datafactory.models.LinkedServiceReference
     :ivar policy: Activity policy.
     :vartype policy: ~azure.mgmt.datafactory.models.ActivityPolicy
-    :ivar script_block_execution_timeout: ScriptBlock execution timeout. Type: string (or
-     Expression with resultType string), pattern:
-     ((\d+).)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
-    :vartype script_block_execution_timeout: JSON
     :ivar scripts: Array of script blocks. Type: array.
     :vartype scripts: list[~azure.mgmt.datafactory.models.ScriptActivityScriptBlock]
     :ivar log_settings: Log settings of script activity.
@@ -53285,7 +53274,6 @@ class ScriptActivity(ExecutionActivity):  # pylint: disable=too-many-instance-at
         "user_properties": {"key": "userProperties", "type": "[UserProperty]"},
         "linked_service_name": {"key": "linkedServiceName", "type": "LinkedServiceReference"},
         "policy": {"key": "policy", "type": "ActivityPolicy"},
-        "script_block_execution_timeout": {"key": "typeProperties.scriptBlockExecutionTimeout", "type": "object"},
         "scripts": {"key": "typeProperties.scripts", "type": "[ScriptActivityScriptBlock]"},
         "log_settings": {"key": "typeProperties.logSettings", "type": "ScriptActivityTypePropertiesLogSettings"},
     }
@@ -53300,7 +53288,6 @@ class ScriptActivity(ExecutionActivity):  # pylint: disable=too-many-instance-at
         user_properties: Optional[List["_models.UserProperty"]] = None,
         linked_service_name: Optional["_models.LinkedServiceReference"] = None,
         policy: Optional["_models.ActivityPolicy"] = None,
-        script_block_execution_timeout: Optional[JSON] = None,
         scripts: Optional[List["_models.ScriptActivityScriptBlock"]] = None,
         log_settings: Optional["_models.ScriptActivityTypePropertiesLogSettings"] = None,
         **kwargs: Any
@@ -53321,10 +53308,6 @@ class ScriptActivity(ExecutionActivity):  # pylint: disable=too-many-instance-at
         :paramtype linked_service_name: ~azure.mgmt.datafactory.models.LinkedServiceReference
         :keyword policy: Activity policy.
         :paramtype policy: ~azure.mgmt.datafactory.models.ActivityPolicy
-        :keyword script_block_execution_timeout: ScriptBlock execution timeout. Type: string (or
-         Expression with resultType string), pattern:
-         ((\d+).)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
-        :paramtype script_block_execution_timeout: JSON
         :keyword scripts: Array of script blocks. Type: array.
         :paramtype scripts: list[~azure.mgmt.datafactory.models.ScriptActivityScriptBlock]
         :keyword log_settings: Log settings of script activity.
@@ -53341,7 +53324,6 @@ class ScriptActivity(ExecutionActivity):  # pylint: disable=too-many-instance-at
             **kwargs
         )
         self.type: str = "Script"
-        self.script_block_execution_timeout = script_block_execution_timeout
         self.scripts = scripts
         self.log_settings = log_settings
 
@@ -56100,13 +56082,12 @@ class SnowflakeSource(CopySource):
     :vartype disable_metrics_collection: JSON
     :ivar query: Snowflake Sql query. Type: string (or Expression with resultType string).
     :vartype query: JSON
-    :ivar export_settings: Snowflake export settings. Required.
+    :ivar export_settings: Snowflake export settings.
     :vartype export_settings: ~azure.mgmt.datafactory.models.SnowflakeExportCopyCommand
     """
 
     _validation = {
         "type": {"required": True},
-        "export_settings": {"required": True},
     }
 
     _attribute_map = {
@@ -56123,13 +56104,13 @@ class SnowflakeSource(CopySource):
     def __init__(
         self,
         *,
-        export_settings: "_models.SnowflakeExportCopyCommand",
         additional_properties: Optional[Dict[str, JSON]] = None,
         source_retry_count: Optional[JSON] = None,
         source_retry_wait: Optional[JSON] = None,
         max_concurrent_connections: Optional[JSON] = None,
         disable_metrics_collection: Optional[JSON] = None,
         query: Optional[JSON] = None,
+        export_settings: Optional["_models.SnowflakeExportCopyCommand"] = None,
         **kwargs: Any
     ) -> None:
         """
@@ -56150,7 +56131,7 @@ class SnowflakeSource(CopySource):
         :paramtype disable_metrics_collection: JSON
         :keyword query: Snowflake Sql query. Type: string (or Expression with resultType string).
         :paramtype query: JSON
-        :keyword export_settings: Snowflake export settings. Required.
+        :keyword export_settings: Snowflake export settings.
         :paramtype export_settings: ~azure.mgmt.datafactory.models.SnowflakeExportCopyCommand
         """
         super().__init__(
@@ -56164,43 +56145,6 @@ class SnowflakeSource(CopySource):
         self.type: str = "SnowflakeSource"
         self.query = query
         self.export_settings = export_settings
-
-
-class SparkConfigurationParametrizationReference(_serialization.Model):
-    """Spark configuration reference.
-
-    All required parameters must be populated in order to send to Azure.
-
-    :ivar type: Spark configuration reference type. Required. "SparkConfigurationReference"
-    :vartype type: str or ~azure.mgmt.datafactory.models.SparkConfigurationReferenceType
-    :ivar reference_name: Reference spark configuration name. Type: string (or Expression with
-     resultType string). Required.
-    :vartype reference_name: JSON
-    """
-
-    _validation = {
-        "type": {"required": True},
-        "reference_name": {"required": True},
-    }
-
-    _attribute_map = {
-        "type": {"key": "type", "type": "str"},
-        "reference_name": {"key": "referenceName", "type": "object"},
-    }
-
-    def __init__(
-        self, *, type: Union[str, "_models.SparkConfigurationReferenceType"], reference_name: JSON, **kwargs: Any
-    ) -> None:
-        """
-        :keyword type: Spark configuration reference type. Required. "SparkConfigurationReference"
-        :paramtype type: str or ~azure.mgmt.datafactory.models.SparkConfigurationReferenceType
-        :keyword reference_name: Reference spark configuration name. Type: string (or Expression with
-         resultType string). Required.
-        :paramtype reference_name: JSON
-        """
-        super().__init__(**kwargs)
-        self.type = type
-        self.reference_name = reference_name
 
 
 class SparkLinkedService(LinkedService):  # pylint: disable=too-many-instance-attributes
@@ -57065,7 +57009,8 @@ class SqlMISink(CopySink):  # pylint: disable=too-many-instance-attributes
      string).
     :vartype pre_copy_script: JSON
     :ivar stored_procedure_parameters: SQL stored procedure parameters.
-    :vartype stored_procedure_parameters: JSON
+    :vartype stored_procedure_parameters: dict[str,
+     ~azure.mgmt.datafactory.models.StoredProcedureParameter]
     :ivar stored_procedure_table_type_parameter_name: The stored procedure parameter name of the
      table type. Type: string (or Expression with resultType string).
     :vartype stored_procedure_table_type_parameter_name: JSON
@@ -57098,7 +57043,7 @@ class SqlMISink(CopySink):  # pylint: disable=too-many-instance-attributes
         "sql_writer_stored_procedure_name": {"key": "sqlWriterStoredProcedureName", "type": "object"},
         "sql_writer_table_type": {"key": "sqlWriterTableType", "type": "object"},
         "pre_copy_script": {"key": "preCopyScript", "type": "object"},
-        "stored_procedure_parameters": {"key": "storedProcedureParameters", "type": "object"},
+        "stored_procedure_parameters": {"key": "storedProcedureParameters", "type": "{StoredProcedureParameter}"},
         "stored_procedure_table_type_parameter_name": {
             "key": "storedProcedureTableTypeParameterName",
             "type": "object",
@@ -57122,7 +57067,7 @@ class SqlMISink(CopySink):  # pylint: disable=too-many-instance-attributes
         sql_writer_stored_procedure_name: Optional[JSON] = None,
         sql_writer_table_type: Optional[JSON] = None,
         pre_copy_script: Optional[JSON] = None,
-        stored_procedure_parameters: Optional[JSON] = None,
+        stored_procedure_parameters: Optional[Dict[str, "_models.StoredProcedureParameter"]] = None,
         stored_procedure_table_type_parameter_name: Optional[JSON] = None,
         table_option: Optional[JSON] = None,
         sql_writer_use_table_lock: Optional[JSON] = None,
@@ -57162,7 +57107,8 @@ class SqlMISink(CopySink):  # pylint: disable=too-many-instance-attributes
          string).
         :paramtype pre_copy_script: JSON
         :keyword stored_procedure_parameters: SQL stored procedure parameters.
-        :paramtype stored_procedure_parameters: JSON
+        :paramtype stored_procedure_parameters: dict[str,
+         ~azure.mgmt.datafactory.models.StoredProcedureParameter]
         :keyword stored_procedure_table_type_parameter_name: The stored procedure parameter name of the
          table type. Type: string (or Expression with resultType string).
         :paramtype stored_procedure_table_type_parameter_name: JSON
@@ -57236,7 +57182,8 @@ class SqlMISource(TabularSource):  # pylint: disable=too-many-instance-attribute
     :vartype sql_reader_stored_procedure_name: JSON
     :ivar stored_procedure_parameters: Value and type setting for stored procedure parameters.
      Example: "{Parameter1: {value: "1", type: "int"}}".
-    :vartype stored_procedure_parameters: JSON
+    :vartype stored_procedure_parameters: dict[str,
+     ~azure.mgmt.datafactory.models.StoredProcedureParameter]
     :ivar produce_additional_types: Which additional types to produce.
     :vartype produce_additional_types: JSON
     :ivar partition_option: The partition mechanism that will be used for Sql read in parallel.
@@ -57261,7 +57208,7 @@ class SqlMISource(TabularSource):  # pylint: disable=too-many-instance-attribute
         "additional_columns": {"key": "additionalColumns", "type": "object"},
         "sql_reader_query": {"key": "sqlReaderQuery", "type": "object"},
         "sql_reader_stored_procedure_name": {"key": "sqlReaderStoredProcedureName", "type": "object"},
-        "stored_procedure_parameters": {"key": "storedProcedureParameters", "type": "object"},
+        "stored_procedure_parameters": {"key": "storedProcedureParameters", "type": "{StoredProcedureParameter}"},
         "produce_additional_types": {"key": "produceAdditionalTypes", "type": "object"},
         "partition_option": {"key": "partitionOption", "type": "object"},
         "partition_settings": {"key": "partitionSettings", "type": "SqlPartitionSettings"},
@@ -57279,7 +57226,7 @@ class SqlMISource(TabularSource):  # pylint: disable=too-many-instance-attribute
         additional_columns: Optional[JSON] = None,
         sql_reader_query: Optional[JSON] = None,
         sql_reader_stored_procedure_name: Optional[JSON] = None,
-        stored_procedure_parameters: Optional[JSON] = None,
+        stored_procedure_parameters: Optional[Dict[str, "_models.StoredProcedureParameter"]] = None,
         produce_additional_types: Optional[JSON] = None,
         partition_option: Optional[JSON] = None,
         partition_settings: Optional["_models.SqlPartitionSettings"] = None,
@@ -57316,7 +57263,8 @@ class SqlMISource(TabularSource):  # pylint: disable=too-many-instance-attribute
         :paramtype sql_reader_stored_procedure_name: JSON
         :keyword stored_procedure_parameters: Value and type setting for stored procedure parameters.
          Example: "{Parameter1: {value: "1", type: "int"}}".
-        :paramtype stored_procedure_parameters: JSON
+        :paramtype stored_procedure_parameters: dict[str,
+         ~azure.mgmt.datafactory.models.StoredProcedureParameter]
         :keyword produce_additional_types: Which additional types to produce.
         :paramtype produce_additional_types: JSON
         :keyword partition_option: The partition mechanism that will be used for Sql read in parallel.
@@ -57554,7 +57502,8 @@ class SqlServerSink(CopySink):  # pylint: disable=too-many-instance-attributes
      string).
     :vartype pre_copy_script: JSON
     :ivar stored_procedure_parameters: SQL stored procedure parameters.
-    :vartype stored_procedure_parameters: JSON
+    :vartype stored_procedure_parameters: dict[str,
+     ~azure.mgmt.datafactory.models.StoredProcedureParameter]
     :ivar stored_procedure_table_type_parameter_name: The stored procedure parameter name of the
      table type. Type: string (or Expression with resultType string).
     :vartype stored_procedure_table_type_parameter_name: JSON
@@ -57587,7 +57536,7 @@ class SqlServerSink(CopySink):  # pylint: disable=too-many-instance-attributes
         "sql_writer_stored_procedure_name": {"key": "sqlWriterStoredProcedureName", "type": "object"},
         "sql_writer_table_type": {"key": "sqlWriterTableType", "type": "object"},
         "pre_copy_script": {"key": "preCopyScript", "type": "object"},
-        "stored_procedure_parameters": {"key": "storedProcedureParameters", "type": "object"},
+        "stored_procedure_parameters": {"key": "storedProcedureParameters", "type": "{StoredProcedureParameter}"},
         "stored_procedure_table_type_parameter_name": {
             "key": "storedProcedureTableTypeParameterName",
             "type": "object",
@@ -57611,7 +57560,7 @@ class SqlServerSink(CopySink):  # pylint: disable=too-many-instance-attributes
         sql_writer_stored_procedure_name: Optional[JSON] = None,
         sql_writer_table_type: Optional[JSON] = None,
         pre_copy_script: Optional[JSON] = None,
-        stored_procedure_parameters: Optional[JSON] = None,
+        stored_procedure_parameters: Optional[Dict[str, "_models.StoredProcedureParameter"]] = None,
         stored_procedure_table_type_parameter_name: Optional[JSON] = None,
         table_option: Optional[JSON] = None,
         sql_writer_use_table_lock: Optional[JSON] = None,
@@ -57651,7 +57600,8 @@ class SqlServerSink(CopySink):  # pylint: disable=too-many-instance-attributes
          string).
         :paramtype pre_copy_script: JSON
         :keyword stored_procedure_parameters: SQL stored procedure parameters.
-        :paramtype stored_procedure_parameters: JSON
+        :paramtype stored_procedure_parameters: dict[str,
+         ~azure.mgmt.datafactory.models.StoredProcedureParameter]
         :keyword stored_procedure_table_type_parameter_name: The stored procedure parameter name of the
          table type. Type: string (or Expression with resultType string).
         :paramtype stored_procedure_table_type_parameter_name: JSON
@@ -57725,7 +57675,8 @@ class SqlServerSource(TabularSource):  # pylint: disable=too-many-instance-attri
     :vartype sql_reader_stored_procedure_name: JSON
     :ivar stored_procedure_parameters: Value and type setting for stored procedure parameters.
      Example: "{Parameter1: {value: "1", type: "int"}}".
-    :vartype stored_procedure_parameters: JSON
+    :vartype stored_procedure_parameters: dict[str,
+     ~azure.mgmt.datafactory.models.StoredProcedureParameter]
     :ivar produce_additional_types: Which additional types to produce.
     :vartype produce_additional_types: JSON
     :ivar partition_option: The partition mechanism that will be used for Sql read in parallel.
@@ -57750,7 +57701,7 @@ class SqlServerSource(TabularSource):  # pylint: disable=too-many-instance-attri
         "additional_columns": {"key": "additionalColumns", "type": "object"},
         "sql_reader_query": {"key": "sqlReaderQuery", "type": "object"},
         "sql_reader_stored_procedure_name": {"key": "sqlReaderStoredProcedureName", "type": "object"},
-        "stored_procedure_parameters": {"key": "storedProcedureParameters", "type": "object"},
+        "stored_procedure_parameters": {"key": "storedProcedureParameters", "type": "{StoredProcedureParameter}"},
         "produce_additional_types": {"key": "produceAdditionalTypes", "type": "object"},
         "partition_option": {"key": "partitionOption", "type": "object"},
         "partition_settings": {"key": "partitionSettings", "type": "SqlPartitionSettings"},
@@ -57768,7 +57719,7 @@ class SqlServerSource(TabularSource):  # pylint: disable=too-many-instance-attri
         additional_columns: Optional[JSON] = None,
         sql_reader_query: Optional[JSON] = None,
         sql_reader_stored_procedure_name: Optional[JSON] = None,
-        stored_procedure_parameters: Optional[JSON] = None,
+        stored_procedure_parameters: Optional[Dict[str, "_models.StoredProcedureParameter"]] = None,
         produce_additional_types: Optional[JSON] = None,
         partition_option: Optional[JSON] = None,
         partition_settings: Optional["_models.SqlPartitionSettings"] = None,
@@ -57805,7 +57756,8 @@ class SqlServerSource(TabularSource):  # pylint: disable=too-many-instance-attri
         :paramtype sql_reader_stored_procedure_name: JSON
         :keyword stored_procedure_parameters: Value and type setting for stored procedure parameters.
          Example: "{Parameter1: {value: "1", type: "int"}}".
-        :paramtype stored_procedure_parameters: JSON
+        :paramtype stored_procedure_parameters: dict[str,
+         ~azure.mgmt.datafactory.models.StoredProcedureParameter]
         :keyword produce_additional_types: Which additional types to produce.
         :paramtype produce_additional_types: JSON
         :keyword partition_option: The partition mechanism that will be used for Sql read in parallel.
@@ -58094,7 +58046,8 @@ class SqlSink(CopySink):  # pylint: disable=too-many-instance-attributes
      string).
     :vartype pre_copy_script: JSON
     :ivar stored_procedure_parameters: SQL stored procedure parameters.
-    :vartype stored_procedure_parameters: JSON
+    :vartype stored_procedure_parameters: dict[str,
+     ~azure.mgmt.datafactory.models.StoredProcedureParameter]
     :ivar stored_procedure_table_type_parameter_name: The stored procedure parameter name of the
      table type. Type: string (or Expression with resultType string).
     :vartype stored_procedure_table_type_parameter_name: JSON
@@ -58127,7 +58080,7 @@ class SqlSink(CopySink):  # pylint: disable=too-many-instance-attributes
         "sql_writer_stored_procedure_name": {"key": "sqlWriterStoredProcedureName", "type": "object"},
         "sql_writer_table_type": {"key": "sqlWriterTableType", "type": "object"},
         "pre_copy_script": {"key": "preCopyScript", "type": "object"},
-        "stored_procedure_parameters": {"key": "storedProcedureParameters", "type": "object"},
+        "stored_procedure_parameters": {"key": "storedProcedureParameters", "type": "{StoredProcedureParameter}"},
         "stored_procedure_table_type_parameter_name": {
             "key": "storedProcedureTableTypeParameterName",
             "type": "object",
@@ -58151,7 +58104,7 @@ class SqlSink(CopySink):  # pylint: disable=too-many-instance-attributes
         sql_writer_stored_procedure_name: Optional[JSON] = None,
         sql_writer_table_type: Optional[JSON] = None,
         pre_copy_script: Optional[JSON] = None,
-        stored_procedure_parameters: Optional[JSON] = None,
+        stored_procedure_parameters: Optional[Dict[str, "_models.StoredProcedureParameter"]] = None,
         stored_procedure_table_type_parameter_name: Optional[JSON] = None,
         table_option: Optional[JSON] = None,
         sql_writer_use_table_lock: Optional[JSON] = None,
@@ -58191,7 +58144,8 @@ class SqlSink(CopySink):  # pylint: disable=too-many-instance-attributes
          string).
         :paramtype pre_copy_script: JSON
         :keyword stored_procedure_parameters: SQL stored procedure parameters.
-        :paramtype stored_procedure_parameters: JSON
+        :paramtype stored_procedure_parameters: dict[str,
+         ~azure.mgmt.datafactory.models.StoredProcedureParameter]
         :keyword stored_procedure_table_type_parameter_name: The stored procedure parameter name of the
          table type. Type: string (or Expression with resultType string).
         :paramtype stored_procedure_table_type_parameter_name: JSON
@@ -58265,7 +58219,8 @@ class SqlSource(TabularSource):  # pylint: disable=too-many-instance-attributes
     :vartype sql_reader_stored_procedure_name: JSON
     :ivar stored_procedure_parameters: Value and type setting for stored procedure parameters.
      Example: "{Parameter1: {value: "1", type: "int"}}".
-    :vartype stored_procedure_parameters: JSON
+    :vartype stored_procedure_parameters: dict[str,
+     ~azure.mgmt.datafactory.models.StoredProcedureParameter]
     :ivar isolation_level: Specifies the transaction locking behavior for the SQL source. Allowed
      values: ReadCommitted/ReadUncommitted/RepeatableRead/Serializable/Snapshot. The default value
      is ReadCommitted. Type: string (or Expression with resultType string).
@@ -58292,7 +58247,7 @@ class SqlSource(TabularSource):  # pylint: disable=too-many-instance-attributes
         "additional_columns": {"key": "additionalColumns", "type": "object"},
         "sql_reader_query": {"key": "sqlReaderQuery", "type": "object"},
         "sql_reader_stored_procedure_name": {"key": "sqlReaderStoredProcedureName", "type": "object"},
-        "stored_procedure_parameters": {"key": "storedProcedureParameters", "type": "object"},
+        "stored_procedure_parameters": {"key": "storedProcedureParameters", "type": "{StoredProcedureParameter}"},
         "isolation_level": {"key": "isolationLevel", "type": "object"},
         "partition_option": {"key": "partitionOption", "type": "object"},
         "partition_settings": {"key": "partitionSettings", "type": "SqlPartitionSettings"},
@@ -58310,7 +58265,7 @@ class SqlSource(TabularSource):  # pylint: disable=too-many-instance-attributes
         additional_columns: Optional[JSON] = None,
         sql_reader_query: Optional[JSON] = None,
         sql_reader_stored_procedure_name: Optional[JSON] = None,
-        stored_procedure_parameters: Optional[JSON] = None,
+        stored_procedure_parameters: Optional[Dict[str, "_models.StoredProcedureParameter"]] = None,
         isolation_level: Optional[JSON] = None,
         partition_option: Optional[JSON] = None,
         partition_settings: Optional["_models.SqlPartitionSettings"] = None,
@@ -58347,7 +58302,8 @@ class SqlSource(TabularSource):  # pylint: disable=too-many-instance-attributes
         :paramtype sql_reader_stored_procedure_name: JSON
         :keyword stored_procedure_parameters: Value and type setting for stored procedure parameters.
          Example: "{Parameter1: {value: "1", type: "int"}}".
-        :paramtype stored_procedure_parameters: JSON
+        :paramtype stored_procedure_parameters: dict[str,
+         ~azure.mgmt.datafactory.models.StoredProcedureParameter]
         :keyword isolation_level: Specifies the transaction locking behavior for the SQL source.
          Allowed values: ReadCommitted/ReadUncommitted/RepeatableRead/Serializable/Snapshot. The default
          value is ReadCommitted. Type: string (or Expression with resultType string).
@@ -60511,25 +60467,13 @@ class SynapseSparkJobDefinitionActivity(ExecutionActivity):  # pylint: disable=t
     :ivar file: The main file used for the job, which will override the 'file' of the spark job
      definition you provide. Type: string (or Expression with resultType string).
     :vartype file: JSON
-    :ivar scan_folder: Scanning subfolders from the root folder of the main definition file, these
-     files will be added as reference files. The folders named 'jars', 'pyFiles', 'files' or
-     'archives' will be scanned, and the folders name are case sensitive. Type: boolean (or
-     Expression with resultType boolean).
-    :vartype scan_folder: JSON
     :ivar class_name: The fully-qualified identifier or the main class that is in the main
      definition file, which will override the 'className' of the spark job definition you provide.
      Type: string (or Expression with resultType string).
     :vartype class_name: JSON
-    :ivar files: (Deprecated. Please use pythonCodeReference and filesV2) Additional files used for
-     reference in the main definition file, which will override the 'files' of the spark job
-     definition you provide.
-    :vartype files: list[JSON]
-    :ivar python_code_reference: Additional python code files used for reference in the main
-     definition file, which will override the 'pyFiles' of the spark job definition you provide.
-    :vartype python_code_reference: list[JSON]
-    :ivar files_v2: Additional files used for reference in the main definition file, which will
-     override the 'jars' and 'files' of the spark job definition you provide.
-    :vartype files_v2: list[JSON]
+    :ivar files: Additional files used for reference in the main definition file, which will
+     override the 'files' of the spark job definition you provide.
+    :vartype files: list[any]
     :ivar target_big_data_pool: The name of the big data pool which will be used to execute the
      spark batch job, which will override the 'targetBigDataPool' of the spark job definition you
      provide.
@@ -60548,17 +60492,8 @@ class SynapseSparkJobDefinitionActivity(ExecutionActivity):  # pylint: disable=t
      the spark job definition you provide. Type: string (or Expression with resultType string).
     :vartype driver_size: JSON
     :ivar num_executors: Number of executors to launch for this job, which will override the
-     'numExecutors' of the spark job definition you provide. Type: integer (or Expression with
-     resultType integer).
-    :vartype num_executors: JSON
-    :ivar configuration_type: The type of the spark config. Known values are: "Default",
-     "Customized", and "Artifact".
-    :vartype configuration_type: str or ~azure.mgmt.datafactory.models.ConfigurationType
-    :ivar target_spark_configuration: The spark configuration of the spark job.
-    :vartype target_spark_configuration:
-     ~azure.mgmt.datafactory.models.SparkConfigurationParametrizationReference
-    :ivar spark_config: Spark configuration property.
-    :vartype spark_config: dict[str, JSON]
+     'numExecutors' of the spark job definition you provide.
+    :vartype num_executors: int
     """
 
     _validation = {
@@ -60579,11 +60514,8 @@ class SynapseSparkJobDefinitionActivity(ExecutionActivity):  # pylint: disable=t
         "spark_job": {"key": "typeProperties.sparkJob", "type": "SynapseSparkJobReference"},
         "arguments": {"key": "typeProperties.args", "type": "[object]"},
         "file": {"key": "typeProperties.file", "type": "object"},
-        "scan_folder": {"key": "typeProperties.scanFolder", "type": "object"},
         "class_name": {"key": "typeProperties.className", "type": "object"},
         "files": {"key": "typeProperties.files", "type": "[object]"},
-        "python_code_reference": {"key": "typeProperties.pythonCodeReference", "type": "[object]"},
-        "files_v2": {"key": "typeProperties.filesV2", "type": "[object]"},
         "target_big_data_pool": {
             "key": "typeProperties.targetBigDataPool",
             "type": "BigDataPoolParametrizationReference",
@@ -60591,16 +60523,10 @@ class SynapseSparkJobDefinitionActivity(ExecutionActivity):  # pylint: disable=t
         "executor_size": {"key": "typeProperties.executorSize", "type": "object"},
         "conf": {"key": "typeProperties.conf", "type": "object"},
         "driver_size": {"key": "typeProperties.driverSize", "type": "object"},
-        "num_executors": {"key": "typeProperties.numExecutors", "type": "object"},
-        "configuration_type": {"key": "typeProperties.configurationType", "type": "str"},
-        "target_spark_configuration": {
-            "key": "typeProperties.targetSparkConfiguration",
-            "type": "SparkConfigurationParametrizationReference",
-        },
-        "spark_config": {"key": "typeProperties.sparkConfig", "type": "{object}"},
+        "num_executors": {"key": "typeProperties.numExecutors", "type": "int"},
     }
 
-    def __init__(  # pylint: disable=too-many-locals
+    def __init__(
         self,
         *,
         name: str,
@@ -60613,19 +60539,13 @@ class SynapseSparkJobDefinitionActivity(ExecutionActivity):  # pylint: disable=t
         policy: Optional["_models.ActivityPolicy"] = None,
         arguments: Optional[List[Any]] = None,
         file: Optional[JSON] = None,
-        scan_folder: Optional[JSON] = None,
         class_name: Optional[JSON] = None,
-        files: Optional[List[JSON]] = None,
-        python_code_reference: Optional[List[JSON]] = None,
-        files_v2: Optional[List[JSON]] = None,
+        files: Optional[List[Any]] = None,
         target_big_data_pool: Optional["_models.BigDataPoolParametrizationReference"] = None,
         executor_size: Optional[JSON] = None,
         conf: Optional[JSON] = None,
         driver_size: Optional[JSON] = None,
-        num_executors: Optional[JSON] = None,
-        configuration_type: Optional[Union[str, "_models.ConfigurationType"]] = None,
-        target_spark_configuration: Optional["_models.SparkConfigurationParametrizationReference"] = None,
-        spark_config: Optional[Dict[str, JSON]] = None,
+        num_executors: Optional[int] = None,
         **kwargs: Any
     ) -> None:
         """
@@ -60651,25 +60571,13 @@ class SynapseSparkJobDefinitionActivity(ExecutionActivity):  # pylint: disable=t
         :keyword file: The main file used for the job, which will override the 'file' of the spark job
          definition you provide. Type: string (or Expression with resultType string).
         :paramtype file: JSON
-        :keyword scan_folder: Scanning subfolders from the root folder of the main definition file,
-         these files will be added as reference files. The folders named 'jars', 'pyFiles', 'files' or
-         'archives' will be scanned, and the folders name are case sensitive. Type: boolean (or
-         Expression with resultType boolean).
-        :paramtype scan_folder: JSON
         :keyword class_name: The fully-qualified identifier or the main class that is in the main
          definition file, which will override the 'className' of the spark job definition you provide.
          Type: string (or Expression with resultType string).
         :paramtype class_name: JSON
-        :keyword files: (Deprecated. Please use pythonCodeReference and filesV2) Additional files used
-         for reference in the main definition file, which will override the 'files' of the spark job
-         definition you provide.
-        :paramtype files: list[JSON]
-        :keyword python_code_reference: Additional python code files used for reference in the main
-         definition file, which will override the 'pyFiles' of the spark job definition you provide.
-        :paramtype python_code_reference: list[JSON]
-        :keyword files_v2: Additional files used for reference in the main definition file, which will
-         override the 'jars' and 'files' of the spark job definition you provide.
-        :paramtype files_v2: list[JSON]
+        :keyword files: Additional files used for reference in the main definition file, which will
+         override the 'files' of the spark job definition you provide.
+        :paramtype files: list[any]
         :keyword target_big_data_pool: The name of the big data pool which will be used to execute the
          spark batch job, which will override the 'targetBigDataPool' of the spark job definition you
          provide.
@@ -60689,17 +60597,8 @@ class SynapseSparkJobDefinitionActivity(ExecutionActivity):  # pylint: disable=t
          resultType string).
         :paramtype driver_size: JSON
         :keyword num_executors: Number of executors to launch for this job, which will override the
-         'numExecutors' of the spark job definition you provide. Type: integer (or Expression with
-         resultType integer).
-        :paramtype num_executors: JSON
-        :keyword configuration_type: The type of the spark config. Known values are: "Default",
-         "Customized", and "Artifact".
-        :paramtype configuration_type: str or ~azure.mgmt.datafactory.models.ConfigurationType
-        :keyword target_spark_configuration: The spark configuration of the spark job.
-        :paramtype target_spark_configuration:
-         ~azure.mgmt.datafactory.models.SparkConfigurationParametrizationReference
-        :keyword spark_config: Spark configuration property.
-        :paramtype spark_config: dict[str, JSON]
+         'numExecutors' of the spark job definition you provide.
+        :paramtype num_executors: int
         """
         super().__init__(
             additional_properties=additional_properties,
@@ -60715,19 +60614,13 @@ class SynapseSparkJobDefinitionActivity(ExecutionActivity):  # pylint: disable=t
         self.spark_job = spark_job
         self.arguments = arguments
         self.file = file
-        self.scan_folder = scan_folder
         self.class_name = class_name
         self.files = files
-        self.python_code_reference = python_code_reference
-        self.files_v2 = files_v2
         self.target_big_data_pool = target_big_data_pool
         self.executor_size = executor_size
         self.conf = conf
         self.driver_size = driver_size
         self.num_executors = num_executors
-        self.configuration_type = configuration_type
-        self.target_spark_configuration = target_spark_configuration
-        self.spark_config = spark_config
 
 
 class SynapseSparkJobReference(_serialization.Model):
@@ -60737,8 +60630,8 @@ class SynapseSparkJobReference(_serialization.Model):
 
     :ivar type: Synapse spark job reference type. Required. "SparkJobDefinitionReference"
     :vartype type: str or ~azure.mgmt.datafactory.models.SparkJobReferenceType
-    :ivar reference_name: Reference spark job name. Expression with resultType string. Required.
-    :vartype reference_name: JSON
+    :ivar reference_name: Reference spark job name. Required.
+    :vartype reference_name: str
     """
 
     _validation = {
@@ -60748,17 +60641,17 @@ class SynapseSparkJobReference(_serialization.Model):
 
     _attribute_map = {
         "type": {"key": "type", "type": "str"},
-        "reference_name": {"key": "referenceName", "type": "object"},
+        "reference_name": {"key": "referenceName", "type": "str"},
     }
 
     def __init__(
-        self, *, type: Union[str, "_models.SparkJobReferenceType"], reference_name: JSON, **kwargs: Any
+        self, *, type: Union[str, "_models.SparkJobReferenceType"], reference_name: str, **kwargs: Any
     ) -> None:
         """
         :keyword type: Synapse spark job reference type. Required. "SparkJobDefinitionReference"
         :paramtype type: str or ~azure.mgmt.datafactory.models.SparkJobReferenceType
-        :keyword reference_name: Reference spark job name. Expression with resultType string. Required.
-        :paramtype reference_name: JSON
+        :keyword reference_name: Reference spark job name. Required.
+        :paramtype reference_name: str
         """
         super().__init__(**kwargs)
         self.type = type
