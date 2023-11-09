@@ -27,7 +27,7 @@ class AssignmentType(str, Enum, metaclass=CaseInsensitiveEnumMeta):
 
 
 class EnablementRules(str, Enum, metaclass=CaseInsensitiveEnumMeta):
-    """The type of enablement rule."""
+    """The type of enable rules."""
 
     MULTI_FACTOR_AUTHENTICATION = "MultiFactorAuthentication"
     JUSTIFICATION = "Justification"

@@ -20,13 +20,12 @@ if TYPE_CHECKING:
 class ApprovalSettings(_serialization.Model):
     """The approval settings.
 
-    :ivar is_approval_required: Determines whether approval is required or not.
+    :ivar is_approval_required: Determine whether approval is required or not.
     :vartype is_approval_required: bool
-    :ivar is_approval_required_for_extension: Determines whether approval is required for
-     assignment extension.
+    :ivar is_approval_required_for_extension: Determine whether approval is required for assignment
+     extension.
     :vartype is_approval_required_for_extension: bool
-    :ivar is_requestor_justification_required: Determine whether requestor justification is
-     required.
+    :ivar is_requestor_justification_required: Determine whether requestor justification required.
     :vartype is_requestor_justification_required: bool
     :ivar approval_mode: The type of rule. Known values are: "SingleStage", "Serial", "Parallel",
      and "NoApproval".
@@ -56,12 +55,12 @@ class ApprovalSettings(_serialization.Model):
         **kwargs: Any
     ) -> None:
         """
-        :keyword is_approval_required: Determines whether approval is required or not.
+        :keyword is_approval_required: Determine whether approval is required or not.
         :paramtype is_approval_required: bool
-        :keyword is_approval_required_for_extension: Determines whether approval is required for
+        :keyword is_approval_required_for_extension: Determine whether approval is required for
          assignment extension.
         :paramtype is_approval_required_for_extension: bool
-        :keyword is_requestor_justification_required: Determine whether requestor justification is
+        :keyword is_requestor_justification_required: Determine whether requestor justification
          required.
         :paramtype is_requestor_justification_required: bool
         :keyword approval_mode: The type of rule. Known values are: "SingleStage", "Serial",
@@ -86,11 +85,11 @@ class ApprovalStage(_serialization.Model):
     :ivar approval_stage_time_out_in_days: The time in days when approval request would be timed
      out.
     :vartype approval_stage_time_out_in_days: int
-    :ivar is_approver_justification_required: Determines whether approver need to provide
+    :ivar is_approver_justification_required: Determine whether approver need to provide
      justification for his decision.
     :vartype is_approver_justification_required: bool
     :ivar escalation_time_in_minutes: The time in minutes when the approval request would be
-     escalated if the primary approver does not approve.
+     escalated if the primary approver does not approves.
     :vartype escalation_time_in_minutes: int
     :ivar primary_approvers: The primary approver of the request.
     :vartype primary_approvers: list[~azure.mgmt.authorization.v2020_10_01_preview.models.UserSet]
@@ -125,11 +124,11 @@ class ApprovalStage(_serialization.Model):
         :keyword approval_stage_time_out_in_days: The time in days when approval request would be timed
          out.
         :paramtype approval_stage_time_out_in_days: int
-        :keyword is_approver_justification_required: Determines whether approver need to provide
+        :keyword is_approver_justification_required: Determine whether approver need to provide
          justification for his decision.
         :paramtype is_approver_justification_required: bool
         :keyword escalation_time_in_minutes: The time in minutes when the approval request would be
-         escalated if the primary approver does not approve.
+         escalated if the primary approver does not approves.
         :paramtype escalation_time_in_minutes: int
         :keyword primary_approvers: The primary approver of the request.
         :paramtype primary_approvers:
@@ -3003,7 +3002,7 @@ class RoleManagementPolicyRule(_serialization.Model):
 
 
 class RoleManagementPolicyApprovalRule(RoleManagementPolicyRule):
-    """The role management policy approval rule.
+    """The role management policy rule.
 
     All required parameters must be populated in order to send to Azure.
 
@@ -3158,7 +3157,7 @@ class RoleManagementPolicyAssignmentListResult(_serialization.Model):
 
 
 class RoleManagementPolicyAuthenticationContextRule(RoleManagementPolicyRule):
-    """The role management policy authentication context rule.
+    """The role management policy rule.
 
     All required parameters must be populated in order to send to Azure.
 
@@ -3273,7 +3272,7 @@ class RoleManagementPolicyEnablementRule(RoleManagementPolicyRule):
 
 
 class RoleManagementPolicyExpirationRule(RoleManagementPolicyRule):
-    """The role management policy expiration rule.
+    """The role management policy rule.
 
     All required parameters must be populated in order to send to Azure.
 
@@ -3366,7 +3365,7 @@ class RoleManagementPolicyListResult(_serialization.Model):
 
 
 class RoleManagementPolicyNotificationRule(RoleManagementPolicyRule):
-    """The role management policy notification rule.
+    """The role management policy rule.
 
     All required parameters must be populated in order to send to Azure.
 
@@ -3392,10 +3391,10 @@ class RoleManagementPolicyNotificationRule(RoleManagementPolicyRule):
      "Admin".
     :vartype recipient_type: str or
      ~azure.mgmt.authorization.v2020_10_01_preview.models.RecipientType
-    :ivar notification_recipients: The list of notification recipients.
+    :ivar notification_recipients: The list notification recipients.
     :vartype notification_recipients: list[str]
-    :ivar is_default_recipients_enabled: Determines if the notification will be sent to the
-     recipient type specified in the policy rule.
+    :ivar is_default_recipients_enabled: Its value determine if the notification need to be sent to
+     the recipient type specified in policy rule.
     :vartype is_default_recipients_enabled: bool
     """
 
@@ -3443,10 +3442,10 @@ class RoleManagementPolicyNotificationRule(RoleManagementPolicyRule):
          "Admin".
         :paramtype recipient_type: str or
          ~azure.mgmt.authorization.v2020_10_01_preview.models.RecipientType
-        :keyword notification_recipients: The list of notification recipients.
+        :keyword notification_recipients: The list notification recipients.
         :paramtype notification_recipients: list[str]
-        :keyword is_default_recipients_enabled: Determines if the notification will be sent to the
-         recipient type specified in the policy rule.
+        :keyword is_default_recipients_enabled: Its value determine if the notification need to be sent
+         to the recipient type specified in policy rule.
         :paramtype is_default_recipients_enabled: bool
         """
         super().__init__(id=id, target=target, **kwargs)
@@ -3465,7 +3464,7 @@ class RoleManagementPolicyRuleTarget(_serialization.Model):
     :vartype caller: str
     :ivar operations: The type of operation.
     :vartype operations: list[str]
-    :ivar level: The assignment level to which rule is applied.
+    :ivar level: The assignment level to which it is applied.
     :vartype level: str
     :ivar target_objects: The list of target objects.
     :vartype target_objects: list[str]
@@ -3500,7 +3499,7 @@ class RoleManagementPolicyRuleTarget(_serialization.Model):
         :paramtype caller: str
         :keyword operations: The type of operation.
         :paramtype operations: list[str]
-        :keyword level: The assignment level to which rule is applied.
+        :keyword level: The assignment level to which it is applied.
         :paramtype level: str
         :keyword target_objects: The list of target objects.
         :paramtype target_objects: list[str]
