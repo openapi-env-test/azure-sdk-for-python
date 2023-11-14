@@ -8,7 +8,7 @@
 # --------------------------------------------------------------------------
 
 import datetime
-from typing import Dict, List, Optional, TYPE_CHECKING, Union
+from typing import Any, Dict, List, Optional, TYPE_CHECKING, Union
 
 from .. import _serialization
 
@@ -44,7 +44,7 @@ class Resource(_serialization.Model):
         "type": {"key": "type", "type": "str"},
     }
 
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs: Any) -> None:
         """ """
         super().__init__(**kwargs)
         self.id = None
@@ -53,7 +53,8 @@ class Resource(_serialization.Model):
 
 
 class TrackedResource(Resource):
-    """The resource model definition for an Azure Resource Manager tracked top level resource which has 'tags' and a 'location'.
+    """The resource model definition for an Azure Resource Manager tracked top level resource which
+    has 'tags' and a 'location'.
 
     Variables are only populated by the server, and will be ignored when sending a request.
 
@@ -88,7 +89,7 @@ class TrackedResource(Resource):
         "location": {"key": "location", "type": "str"},
     }
 
-    def __init__(self, *, location: str, tags: Optional[Dict[str, str]] = None, **kwargs):
+    def __init__(self, *, location: str, tags: Optional[Dict[str, str]] = None, **kwargs: Any) -> None:
         """
         :keyword tags: Resource tags.
         :paramtype tags: dict[str, str]
@@ -190,8 +191,8 @@ class AzureBareMetalInstance(TrackedResource):  # pylint: disable=too-many-insta
         os_profile: Optional["_models.OSProfile"] = None,
         network_profile: Optional["_models.NetworkProfile"] = None,
         partner_node_id: Optional[str] = None,
-        **kwargs
-    ):
+        **kwargs: Any
+    ) -> None:
         """
         :keyword tags: Resource tags.
         :paramtype tags: dict[str, str]
@@ -242,8 +243,8 @@ class AzureBareMetalInstancesListResult(_serialization.Model):
         *,
         value: Optional[List["_models.AzureBareMetalInstance"]] = None,
         next_link: Optional[str] = None,
-        **kwargs
-    ):
+        **kwargs: Any
+    ) -> None:
         """
         :keyword value: The list of Azure BareMetal instances.
         :paramtype value: list[~azure.mgmt.baremetalinfrastructure.models.AzureBareMetalInstance]
@@ -279,7 +280,7 @@ class Disk(_serialization.Model):
         "lun": {"key": "lun", "type": "int"},
     }
 
-    def __init__(self, *, name: Optional[str] = None, disk_size_gb: Optional[int] = None, **kwargs):
+    def __init__(self, *, name: Optional[str] = None, disk_size_gb: Optional[int] = None, **kwargs: Any) -> None:
         """
         :keyword name: The disk name.
         :paramtype name: str
@@ -322,7 +323,7 @@ class Display(_serialization.Model):
         "description": {"key": "description", "type": "str"},
     }
 
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs: Any) -> None:
         """ """
         super().__init__(**kwargs)
         self.provider = None
@@ -356,7 +357,7 @@ class ErrorDefinition(_serialization.Model):
         "details": {"key": "details", "type": "[ErrorDefinition]"},
     }
 
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs: Any) -> None:
         """ """
         super().__init__(**kwargs)
         self.code = None
@@ -375,7 +376,7 @@ class ErrorResponse(_serialization.Model):
         "error": {"key": "error", "type": "ErrorDefinition"},
     }
 
-    def __init__(self, *, error: Optional["_models.ErrorDefinition"] = None, **kwargs):
+    def __init__(self, *, error: Optional["_models.ErrorDefinition"] = None, **kwargs: Any) -> None:
         """
         :keyword error: The error details.
         :paramtype error: ~azure.mgmt.baremetalinfrastructure.models.ErrorDefinition
@@ -390,7 +391,7 @@ class HardwareProfile(_serialization.Model):
     Variables are only populated by the server, and will be ignored when sending a request.
 
     :ivar hardware_type: Name of the hardware type (vendor and/or their product name). Known values
-     are: "Cisco_UCS" and "HPE".
+     are: "Cisco_UCS", "HPE", and "SDFLEX".
     :vartype hardware_type: str or
      ~azure.mgmt.baremetalinfrastructure.models.AzureBareMetalHardwareTypeNamesEnum
     :ivar azure_bare_metal_instance_size: Specifies the AzureBareMetal instance SKU. Known values
@@ -413,7 +414,7 @@ class HardwareProfile(_serialization.Model):
         "azure_bare_metal_instance_size": {"key": "azureBareMetalInstanceSize", "type": "str"},
     }
 
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs: Any) -> None:
         """ """
         super().__init__(**kwargs)
         self.hardware_type = None
@@ -431,7 +432,7 @@ class IpAddress(_serialization.Model):
         "ip_address": {"key": "ipAddress", "type": "str"},
     }
 
-    def __init__(self, *, ip_address: Optional[str] = None, **kwargs):
+    def __init__(self, *, ip_address: Optional[str] = None, **kwargs: Any) -> None:
         """
         :keyword ip_address: Specifies the IP address of the network interface.
         :paramtype ip_address: str
@@ -460,7 +461,7 @@ class NetworkProfile(_serialization.Model):
         "circuit_id": {"key": "circuitId", "type": "str"},
     }
 
-    def __init__(self, *, network_interfaces: Optional[List["_models.IpAddress"]] = None, **kwargs):
+    def __init__(self, *, network_interfaces: Optional[List["_models.IpAddress"]] = None, **kwargs: Any) -> None:
         """
         :keyword network_interfaces: Specifies the network interfaces for the AzureBareMetal instance.
         :paramtype network_interfaces: list[~azure.mgmt.baremetalinfrastructure.models.IpAddress]
@@ -495,7 +496,7 @@ class Operation(_serialization.Model):
         "is_data_action": {"key": "isDataAction", "type": "bool"},
     }
 
-    def __init__(self, *, display: Optional["_models.Display"] = None, **kwargs):
+    def __init__(self, *, display: Optional["_models.Display"] = None, **kwargs: Any) -> None:
         """
         :keyword display: Displayed AzureBareMetal operation information.
         :paramtype display: ~azure.mgmt.baremetalinfrastructure.models.Display
@@ -517,7 +518,7 @@ class OperationList(_serialization.Model):
         "value": {"key": "value", "type": "[Operation]"},
     }
 
-    def __init__(self, *, value: Optional[List["_models.Operation"]] = None, **kwargs):
+    def __init__(self, *, value: Optional[List["_models.Operation"]] = None, **kwargs: Any) -> None:
         """
         :keyword value: List of AzureBareMetal operations.
         :paramtype value: list[~azure.mgmt.baremetalinfrastructure.models.Operation]
@@ -553,7 +554,9 @@ class OSProfile(_serialization.Model):
         "ssh_public_key": {"key": "sshPublicKey", "type": "str"},
     }
 
-    def __init__(self, *, computer_name: Optional[str] = None, ssh_public_key: Optional[str] = None, **kwargs):
+    def __init__(
+        self, *, computer_name: Optional[str] = None, ssh_public_key: Optional[str] = None, **kwargs: Any
+    ) -> None:
         """
         :keyword computer_name: Specifies the host OS name of the AzureBareMetal instance.
         :paramtype computer_name: str
@@ -578,7 +581,7 @@ class Result(_serialization.Model):
         "sample_property": {"key": "sampleProperty", "type": "str"},
     }
 
-    def __init__(self, *, sample_property: Optional[str] = None, **kwargs):
+    def __init__(self, *, sample_property: Optional[str] = None, **kwargs: Any) -> None:
         """
         :keyword sample_property: Sample property of type string.
         :paramtype sample_property: str
@@ -608,7 +611,7 @@ class StorageProfile(_serialization.Model):
         "os_disks": {"key": "osDisks", "type": "[Disk]"},
     }
 
-    def __init__(self, *, os_disks: Optional[List["_models.Disk"]] = None, **kwargs):
+    def __init__(self, *, os_disks: Optional[List["_models.Disk"]] = None, **kwargs: Any) -> None:
         """
         :keyword os_disks: Specifies information about the operating system disk used by baremetal
          instance.
@@ -656,8 +659,8 @@ class SystemData(_serialization.Model):
         last_modified_by: Optional[str] = None,
         last_modified_by_type: Optional[Union[str, "_models.CreatedByType"]] = None,
         last_modified_at: Optional[datetime.datetime] = None,
-        **kwargs
-    ):
+        **kwargs: Any
+    ) -> None:
         """
         :keyword created_by: The identity that created the resource.
         :paramtype created_by: str
@@ -695,7 +698,7 @@ class Tags(_serialization.Model):
         "tags": {"key": "tags", "type": "{str}"},
     }
 
-    def __init__(self, *, tags: Optional[Dict[str, str]] = None, **kwargs):
+    def __init__(self, *, tags: Optional[Dict[str, str]] = None, **kwargs: Any) -> None:
         """
         :keyword tags: Tags field of the AzureBareMetal instance.
         :paramtype tags: dict[str, str]

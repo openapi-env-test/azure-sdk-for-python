@@ -14,7 +14,7 @@ from azure.mgmt.baremetalinfrastructure import BareMetalInfrastructureClient
     pip install azure-identity
     pip install azure-mgmt-baremetalinfrastructure
 # USAGE
-    python delete_tags_field_of_an_azure_bare_metal_instance.py
+    python azure_bare_metal_instances_patch_tags_delete.py
 
     Before run the sample, please set the values of the client ID, tenant ID and client secret
     of the AAD application as environment variables: AZURE_CLIENT_ID, AZURE_TENANT_ID,

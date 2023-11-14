@@ -15,6 +15,7 @@ class AzureBareMetalHardwareTypeNamesEnum(str, Enum, metaclass=CaseInsensitiveEn
 
     CISCO_UCS = "Cisco_UCS"
     HPE = "HPE"
+    SDFLEX = "SDFLEX"
 
 
 class AzureBareMetalInstancePowerStateEnum(str, Enum, metaclass=CaseInsensitiveEnumMeta):
