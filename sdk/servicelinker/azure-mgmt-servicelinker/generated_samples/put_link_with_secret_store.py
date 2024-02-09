@@ -14,7 +14,7 @@ from azure.mgmt.servicelinker import ServiceLinkerManagementClient
     pip install azure-identity
     pip install azure-mgmt-servicelinker
 # USAGE
-    python delete_dryrun.py
+    python put_link_with_secret_store.py
 
     Before run the sample, please set the values of the client ID, tenant ID and client secret
     of the AAD application as environment variables: AZURE_CLIENT_ID, AZURE_TENANT_ID,
@@ -28,13 +28,25 @@ def main():
         credential=DefaultAzureCredential(),
     )
 
-    response = client.linkers.delete_dryrun(
+    response = client.linker.begin_create_or_update(
         resource_uri="subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Web/sites/test-app",
-        dryrun_name="dryrunName",
-    )
+        linker_name="linkName",
+        parameters={
+            "properties": {
+                "authInfo": {"authType": "secret"},
+                "secretStore": {
+                    "keyVaultId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.KeyVault/vaults/test-kv"
+                },
+                "targetService": {
+                    "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.DocumentDb/databaseAccounts/test-acc/mongodbDatabases/test-db",
+                    "type": "AzureResource",
+                },
+            }
+        },
+    ).result()
     print(response)
 
 
-# x-ms-original-file: specification/servicelinker/resource-manager/Microsoft.ServiceLinker/preview/2022-11-01-preview/examples/DeleteDryrun.json
+# x-ms-original-file: specification/servicelinker/resource-manager/Microsoft.ServiceLinker/stable/2024-02-01/examples/PutLinkWithSecretStore.json
 if __name__ == "__main__":
     main()
