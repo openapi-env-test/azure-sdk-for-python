@@ -7,6 +7,7 @@
 # --------------------------------------------------------------------------
 
 from azure.identity import DefaultAzureCredential
+
 from azure.mgmt.servicelinker import ServiceLinkerManagementClient
 
 """
@@ -14,7 +15,7 @@ from azure.mgmt.servicelinker import ServiceLinkerManagementClient
     pip install azure-identity
     pip install azure-mgmt-servicelinker
 # USAGE
-    python linker.py
+    python validate_link_success.py
 
     Before run the sample, please set the values of the client ID, tenant ID and client secret
     of the AAD application as environment variables: AZURE_CLIENT_ID, AZURE_TENANT_ID,
@@ -28,13 +29,13 @@ def main():
         credential=DefaultAzureCredential(),
     )
 
-    response = client.linker.get(
+    response = client.linker.begin_validate(
         resource_uri="subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Web/sites/test-app",
         linker_name="linkName",
-    )
+    ).result()
     print(response)
 
 
-# x-ms-original-file: specification/servicelinker/resource-manager/Microsoft.ServiceLinker/preview/2023-04-01-preview/examples/Linker.json
+# x-ms-original-file: specification/servicelinker/resource-manager/Microsoft.ServiceLinker/stable/2022-05-01/examples/ValidateLinkSuccess.json
 if __name__ == "__main__":
     main()
