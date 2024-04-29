@@ -48,10 +48,6 @@ from ._models_py3 import Resource
 from ._models_py3 import ResourceUriList
 from ._models_py3 import ResourceWithOptionalLocation
 from ._models_py3 import ShareInfoElement
-from ._models_py3 import Snapshot
-from ._models_py3 import SnapshotList
-from ._models_py3 import SnapshotSku
-from ._models_py3 import SnapshotUpdate
 from ._models_py3 import SourceVault
 from ._models_py3 import SubResource
 from ._models_py3 import SubResourceReadOnly
@@ -78,7 +74,6 @@ from ._compute_management_client_enums import OperatingSystemTypes
 from ._compute_management_client_enums import PrivateEndpointConnectionProvisioningState
 from ._compute_management_client_enums import PrivateEndpointServiceConnectionStatus
 from ._compute_management_client_enums import PublicNetworkAccess
-from ._compute_management_client_enums import SnapshotStorageAccountTypes
 from ._patch import __all__ as _patch_all
 from ._patch import *  # pylint: disable=unused-wildcard-import
 from ._patch import patch_sdk as _patch_sdk
@@ -126,10 +121,6 @@ __all__ = [
     "ResourceUriList",
     "ResourceWithOptionalLocation",
     "ShareInfoElement",
-    "Snapshot",
-    "SnapshotList",
-    "SnapshotSku",
-    "SnapshotUpdate",
     "SourceVault",
     "SubResource",
     "SubResourceReadOnly",
@@ -155,7 +146,6 @@ __all__ = [
     "PrivateEndpointConnectionProvisioningState",
     "PrivateEndpointServiceConnectionStatus",
     "PublicNetworkAccess",
-    "SnapshotStorageAccountTypes",
 ]
 __all__.extend([p for p in _patch_all if p not in __all__])
 _patch_sdk()

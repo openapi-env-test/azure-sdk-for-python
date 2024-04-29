@@ -22,7 +22,6 @@ from .operations import (
     DiskEncryptionSetsOperations,
     DiskRestorePointOperations,
     DisksOperations,
-    SnapshotsOperations,
 )
 
 if TYPE_CHECKING:
@@ -43,8 +42,6 @@ class ComputeManagementClient:  # pylint: disable=client-accepts-api-version-key
     :ivar disk_restore_point: DiskRestorePointOperations operations
     :vartype disk_restore_point:
      azure.mgmt.compute.v2023_04_02.aio.operations.DiskRestorePointOperations
-    :ivar snapshots: SnapshotsOperations operations
-    :vartype snapshots: azure.mgmt.compute.v2023_04_02.aio.operations.SnapshotsOperations
     :param credential: Credential needed for the client to connect to Azure. Required.
     :type credential: ~azure.core.credentials_async.AsyncTokenCredential
     :param subscription_id: Subscription credentials which uniquely identify Microsoft Azure
@@ -101,9 +98,6 @@ class ComputeManagementClient:  # pylint: disable=client-accepts-api-version-key
             self._client, self._config, self._serialize, self._deserialize, "2023-04-02"
         )
         self.disk_restore_point = DiskRestorePointOperations(
-            self._client, self._config, self._serialize, self._deserialize, "2023-04-02"
-        )
-        self.snapshots = SnapshotsOperations(
             self._client, self._config, self._serialize, self._deserialize, "2023-04-02"
         )
 

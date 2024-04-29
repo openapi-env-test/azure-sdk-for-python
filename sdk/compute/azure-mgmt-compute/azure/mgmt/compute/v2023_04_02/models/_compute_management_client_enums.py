@@ -252,14 +252,3 @@ class PublicNetworkAccess(str, Enum, metaclass=CaseInsensitiveEnumMeta):
     """You cannot access the underlying data of the disk publicly on the internet even when
     NetworkAccessPolicy is set to AllowAll. You can access the data via the SAS URI only from your
     trusted Azure VNET when NetworkAccessPolicy is set to AllowPrivate."""
-
-
-class SnapshotStorageAccountTypes(str, Enum, metaclass=CaseInsensitiveEnumMeta):
-    """The sku name."""
-
-    STANDARD_LRS = "Standard_LRS"
-    """Standard HDD locally redundant storage"""
-    PREMIUM_LRS = "Premium_LRS"
-    """Premium SSD locally redundant storage"""
-    STANDARD_ZRS = "Standard_ZRS"
-    """Standard zone redundant storage"""
