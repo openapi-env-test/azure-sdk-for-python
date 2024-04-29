@@ -1756,7 +1756,6 @@ class ComputeManagementClient(MultiApiClientMixin, _SDKClient):
            * 2022-03-02: :class:`SnapshotsOperations<azure.mgmt.compute.v2022_03_02.operations.SnapshotsOperations>`
            * 2022-07-02: :class:`SnapshotsOperations<azure.mgmt.compute.v2022_07_02.operations.SnapshotsOperations>`
            * 2023-01-02: :class:`SnapshotsOperations<azure.mgmt.compute.v2023_01_02.operations.SnapshotsOperations>`
-           * 2023-04-02: :class:`SnapshotsOperations<azure.mgmt.compute.v2023_04_02.operations.SnapshotsOperations>`
            * 2023-10-02: :class:`SnapshotsOperations<azure.mgmt.compute.v2023_10_02.operations.SnapshotsOperations>`
         """
         api_version = self._get_api_version('snapshots')
@@ -1796,8 +1795,6 @@ class ComputeManagementClient(MultiApiClientMixin, _SDKClient):
             from .v2022_07_02.operations import SnapshotsOperations as OperationClass
         elif api_version == '2023-01-02':
             from .v2023_01_02.operations import SnapshotsOperations as OperationClass
-        elif api_version == '2023-04-02':
-            from .v2023_04_02.operations import SnapshotsOperations as OperationClass
         elif api_version == '2023-10-02':
             from .v2023_10_02.operations import SnapshotsOperations as OperationClass
         else:

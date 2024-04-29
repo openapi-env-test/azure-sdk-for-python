@@ -108,7 +108,6 @@
         "disks": "DisksOperations",
         "disk_accesses": "DiskAccessesOperations",
         "disk_encryption_sets": "DiskEncryptionSetsOperations",
-        "disk_restore_point": "DiskRestorePointOperations",
-        "snapshots": "SnapshotsOperations"
+        "disk_restore_point": "DiskRestorePointOperations"
     }
 }
